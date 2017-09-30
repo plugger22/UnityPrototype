@@ -159,6 +159,12 @@ public class TooltipNode : MonoBehaviour
         //get dimensions of dynamic tooltip
         float width = rectTransform.rect.width;
         float height = rectTransform.rect.height;
+        //height showing zero due to vertical layout group for first call
+        if (height == 0)
+        {
+            Canvas.ForceUpdateCanvases();
+            height = rectTransform.rect.height;
+        }
         //calculate offset - height (default above)
         if (screenPos.y + height + offset < Screen.height)
         { screenPos.y += height / 2 + offset; }

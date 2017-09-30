@@ -13,8 +13,9 @@ public class ActorArc : ScriptableObject
     public Sprite sprite;                             //face of actor -> NOTE: should be a list with a few variations, perhaps?
     public string actorName;
 
+    public List <Action> listOfActions = new List<Action>();            //list of actions able to be carried out by actor at any node except excluded
+
     //node preferences (which nodes are liable to be active on the map for this Actor type)
     public List<NodeArc> listPrefPrimary = new List<NodeArc>();         //full chance of node being active
-    //public List<NodeArc> listPrefSecondary = new List<NodeArc>();       //half chance of node being active  -> NOTE: Not needed, it's all  nodes except primary or excluded
     public List<NodeArc> listPrefExclude = new List<NodeArc>();         //NO chance of node being active
 }

@@ -31,6 +31,7 @@ namespace modalAPI
         public EventButtonDetails button4Details;
         public EventButtonDetails button5Details;
         //Button 6 is always 'Cancel'
+        public Vector3 nodePos;                             //position of node in world units (transform)
     }
 
 

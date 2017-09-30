@@ -93,7 +93,8 @@ public class Node : MonoBehaviour
             ModalPanelDetails details = new ModalPanelDetails()
             {
                 nodeName = arc.NodeName,
-                nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), nodeID)
+                nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), nodeID),
+                nodePos = transform.position
             };
             //activate menu
             GameManager.instance.actionMenuScript.SetActionMenu(details);
