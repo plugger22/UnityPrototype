@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using modalAPI;
 
 /// <summary>
 /// handles Actor related data and methods
@@ -53,8 +54,11 @@ public class ActorManager : MonoBehaviour
                     trait = GameManager.instance.dataScript.GetRandomTrait()
                 };
                 arrayOfActors[i] = actor;
+
                 Debug.Log("Actor added -> " + actor.arc.actorName + ", Ability " + actor.Connections + "\n");
-            }
+            }                
+            //add actions to dictionary
+            GameManager.instance.dataScript.AddActions(arrayOfActors);
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
 
@@ -110,6 +114,35 @@ public class ActorManager : MonoBehaviour
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
         return arrayOfActors[slotID].trait.name;
+    }
+
+    /// <summary>
+    /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). Max 4 Actor + 1 Target actions.
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public List<EventButtonDetails> GetActorActions(int nodeID)
+    {
+        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
+
+        //Debug
+        EventButtonDetails details1 = new EventButtonDetails()
+        {
+            buttonTitle = "Test Action",
+            buttonTooltip = "Test tooltip for this very special button",
+            action = GameManager.instance.actionMenuScript.CloseActionMenu
+        };
+        tempList.Add(details1);
+        EventButtonDetails details2 = new EventButtonDetails()
+        {
+            buttonTitle = string.Format("Node ID {0}", nodeID),
+            buttonTooltip = "Another test tooltip for this very special button",
+            action = GameManager.instance.actionMenuScript.CloseActionMenu
+        };
+        tempList.Add(details2);
+
+
+        return tempList;
     }
 
 }

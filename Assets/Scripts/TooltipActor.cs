@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Actor based tooltip
+/// Actor based tooltip, reference static instance in GameManager
 /// </summary>
 public class TooltipActor : MonoBehaviour
 {

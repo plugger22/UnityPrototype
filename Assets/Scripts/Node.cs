@@ -94,7 +94,8 @@ public class Node : MonoBehaviour
             {
                 nodeName = arc.NodeName,
                 nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), nodeID),
-                nodePos = transform.position
+                nodePos = transform.position,
+                listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(nodeID)
             };
             //activate menu
             GameManager.instance.actionMenuScript.SetActionMenu(details);

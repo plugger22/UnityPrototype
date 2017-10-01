@@ -32,6 +32,12 @@ public class ModalActionMenu : MonoBehaviour
     public TextMeshProUGUI button4Text;
     public TextMeshProUGUI button5Text;
     public TextMeshProUGUI button6Text;
+    [HideInInspector] public string tooltip1;
+    [HideInInspector] public string tooltip2;
+    [HideInInspector] public string tooltip3;
+    [HideInInspector] public string tooltip4;
+    [HideInInspector] public string tooltip5;
+
 
     //private static TooltipNode tooltipNode;
     private RectTransform rectTransform;
@@ -85,12 +91,58 @@ public class ModalActionMenu : MonoBehaviour
         //set up ModalActionObject
         this.nodeName.text = details.nodeName;
         nodeDetails.text = details.nodeDetails;
-
+        int counter = 0;
+        Button tempButton;
+        TextMeshProUGUI tempText;
+        string tempTooltip;
+        foreach(EventButtonDetails buttonDetails in details.listOfButtonDetails)
+        {
+            tempButton = null;
+            tempText = null;
+            counter++;
+            //get the relevent UI elements
+            switch (counter)
+            {
+                case 1:
+                    tempButton = button1;
+                    tempText = button1Text;
+                    break;
+                case 2:
+                    tempButton = button2;
+                    tempText = button2Text;
+                    break;
+                case 3:
+                    tempButton = button3;
+                    tempText = button3Text;
+                    break;
+                case 4:
+                    tempButton = button4;
+                    tempText = button4Text;
+                    break;
+                case 5:
+                    tempButton = button5;
+                    tempText = button5Text;
+                    break;
+                default:
+                    Debug.LogWarning("To many EventButtonDetails in list!\n");
+                    break;
+            }
+            //set up the UI elements
+            if (tempButton != null && tempText != null)
+            {
+                tempButton.onClick.RemoveAllListeners();
+                tempButton.onClick.AddListener(buttonDetails.action);
+                tempButton.onClick.AddListener(CloseActionMenu);
+                tempText.text = buttonDetails.buttonTitle;
+                tempButton.gameObject.SetActive(true);
+                tempTooltip = buttonDetails.buttonTooltip;
+            }
+        }
         //first button
-        if (details.button1Details != null)
+        /*if (details.button1Details != null)
         {
             button1.onClick.RemoveAllListeners();
-            button1.onClick.AddListener(details.button2Details.action);
+            button1.onClick.AddListener(details.button1Details.action);
             button1.onClick.AddListener(CloseActionMenu);
             button1Text.text = details.button1Details.buttonTitle;
             button1.gameObject.SetActive(true);
@@ -130,7 +182,8 @@ public class ModalActionMenu : MonoBehaviour
             button5.onClick.AddListener(CloseActionMenu);
             button5Text.text = details.button5Details.buttonTitle;
             button5.gameObject.SetActive(true);
-        }
+        }*/
+
         //sixth button is always 'Cancel'
         button6.onClick.RemoveAllListeners();
         button6.onClick.AddListener(CloseActionMenu);

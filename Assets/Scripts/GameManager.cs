@@ -27,11 +27,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public SideManager sideScript;                  //Side Manager
-    [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;         //actor tool tip static instance
+    [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tool tip static instance
     [HideInInspector] public TickerTextScroller tickerScript;         //Ticker Text Scroller
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
 
@@ -77,10 +77,10 @@ public class GameManager : MonoBehaviour
         connScript = GetComponent<ConnectionManager>();
         tooltipScript = GetComponent<TooltipManager>();
         sideScript = GetComponent<SideManager>();
-        actionScript = GetComponent<ActionManager>();
         //Get static references
         tooltipNodeScript = TooltipNode.Instance();
         tooltipActorScript = TooltipActor.Instance();
+        tooltipGenericScript = TooltipGeneric.Instance();
         tickerScript = TickerTextScroller.Instance();
         actionMenuScript = ModalActionMenu.Instance();
         //setup game

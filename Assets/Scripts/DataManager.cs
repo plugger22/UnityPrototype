@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using gameAPI;
 using Random = UnityEngine.Random;
 
 
@@ -23,9 +24,11 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
     
     //dictionaries
-    private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();       //Key -> nodeArcID, Value -> NodeArc
-    private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();    //Key -> actorArcID, Value -> ActorArc
-    private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();             //Key -> traitID, Value -> Trait
+    private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
+    private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
+    private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
+    private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
+    //private Dictionary<int, ActionEffect> dictOfEffects = new Dictionary<int, ActionEffect>();      //Key -> effectID, Value -> ActionEffect
 
     /// <summary>
     /// default constructor
@@ -174,4 +177,34 @@ public class DataManager : MonoBehaviour
     {
         return listOfAllTraits[Random.Range(0, listOfAllTraits.Count)];
     }
+
+    /// <summary>
+    /// add Actors and effects to dictionaries
+    /// </summary>
+    /// <param name="arrayOfActors"></param>
+    public void AddActions(Actor[] arrayOfActors)
+    {
+        int counter = 0;
+        List<Action> listOfActions = new List<Action>();
+        foreach(Actor actor in arrayOfActors)
+        {
+            listOfActions.Clear();
+            listOfActions.AddRange(actor.arc.listOfActions);
+            //loop actions
+            foreach(Action action in listOfActions)
+            {
+                //assign dynamic ID
+                action.ActionID = counter++;
+                //add to dictionary (only adding actions that are present in the level with the current selection of Actors)
+                try
+                { dictOfActions.Add(action.ActionID, action); Debug.Log(string.Format("Action Added -> {0}, ID {1}{2}", action.name, action.ActionID, "\n")); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Action Arc (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); }
+            }
+        }
+    }
 }
+
+
