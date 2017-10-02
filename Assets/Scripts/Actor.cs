@@ -15,9 +15,9 @@ namespace gameAPI
         public int SlotID { get; set; }                     //actor slot ID (eg, 0 to 3)
         public string Name { get; set; }
         public Trait trait { get; set; }
+        public bool isActive { get; set; }                  //actor can 'go silent' and be unavailable on occasion
 
         [HideInInspector] public ActorArc arc;
-        [HideInInspector] Sprite sprite;
 
         public Actor()
         { }

@@ -15,7 +15,9 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private float mouseOverFade;
     private bool onMouseFlag;
     private RectTransform rectTransform;
-    //private GameObject parent;
+    public string ToolTipHeader { get; set; }
+    public string ToolTipMain { get; set; }
+    public string ToolTipEffect { get; set; }
 
 
     private void Awake()
@@ -43,7 +45,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        StartCoroutine(ShowGenericTooltip());
+        if (string.IsNullOrEmpty(ToolTipMain) == false)
+        { StartCoroutine(ShowGenericTooltip()); }
     }
 
     /// <summary>
@@ -80,11 +83,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                GameManager.instance.tooltipGenericScript.SetTooltip
-                    (
-                        "To explain the situation would take an excessive amount of time.",
-                        transform.position
-                    );
+                GameManager.instance.tooltipGenericScript.SetTooltip (ToolTipMain, transform.position, ToolTipHeader, ToolTipEffect );
                 yield return null;
             }
             //fade in
@@ -98,10 +97,6 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             }
         }
     }
-
-
-
-
 
 
 }

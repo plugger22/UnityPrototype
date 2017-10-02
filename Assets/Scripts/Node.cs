@@ -10,11 +10,13 @@ public class Node : MonoBehaviour
 
     public int nodeID;                                  //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     public Material _Material { get; private set; }     //material renderer uses to draw node
+    public string nodeName { get; set; }                //name of node, eg. "Downtown Bronx"
     public NodeArc arc;                                 //archetype type
     
     [HideInInspector] public int stability;
     [HideInInspector] public int support;
     [HideInInspector] public int security;
+    
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
@@ -92,7 +94,8 @@ public class Node : MonoBehaviour
             //Action Menu
             ModalPanelDetails details = new ModalPanelDetails()
             {
-                nodeName = arc.NodeName,
+                nodeID = nodeID,
+                nodeName = this.nodeName,
                 nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), nodeID),
                 nodePos = transform.position,
                 listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(nodeID)
@@ -146,8 +149,8 @@ public class Node : MonoBehaviour
                 List<string> targetList = new List<string>() { "Power Grid", "All Nodes Stability -1", "Rolling Blackouts", "Info 3" };
                 //Transform transform = GetComponent<Transform>();
                 GameManager.instance.tooltipNodeScript.SetTooltip(
-                    "Placeholder ID " + nodeID,
-                    arc.name,
+                    nodeName,
+                    string.Format("{0} ID {1}", arc.name, nodeID),
                     activeList,
                     new int[] { stability, support, security },
                     targetList,
@@ -171,7 +174,7 @@ public class Node : MonoBehaviour
     /// returns a list of actors for whom this node is active
     /// </summary>
     /// <returns></returns>
-    private List<string> GetNodeActors()
+    public List<string> GetNodeActors()
     {
         List<string> tempList = new List<string>();
         int limit = GameManager.instance.actorScript.numOfActorsTotal;

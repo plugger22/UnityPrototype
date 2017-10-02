@@ -91,99 +91,59 @@ public class ModalActionMenu : MonoBehaviour
         //set up ModalActionObject
         this.nodeName.text = details.nodeName;
         nodeDetails.text = details.nodeDetails;
+        //pass nodeID onto text script to facilitate node tooltip on mouseover
+        ModalMenuUI modal = nodeDetails.GetComponent<ModalMenuUI>();
+        modal.NodeID = details.nodeID;
         int counter = 0;
         Button tempButton;
-        TextMeshProUGUI tempText;
-        string tempTooltip;
+        TextMeshProUGUI title;
         foreach(EventButtonDetails buttonDetails in details.listOfButtonDetails)
         {
             tempButton = null;
-            tempText = null;
+            title = null;
             counter++;
             //get the relevent UI elements
             switch (counter)
             {
                 case 1:
                     tempButton = button1;
-                    tempText = button1Text;
+                    title = button1Text;
                     break;
                 case 2:
                     tempButton = button2;
-                    tempText = button2Text;
+                    title = button2Text;
                     break;
                 case 3:
                     tempButton = button3;
-                    tempText = button3Text;
+                    title = button3Text;
                     break;
                 case 4:
                     tempButton = button4;
-                    tempText = button4Text;
+                    title = button4Text;
                     break;
                 case 5:
                     tempButton = button5;
-                    tempText = button5Text;
+                    title = button5Text;
                     break;
                 default:
                     Debug.LogWarning("To many EventButtonDetails in list!\n");
                     break;
             }
             //set up the UI elements
-            if (tempButton != null && tempText != null)
+            if (tempButton != null && title != null)
             {
                 tempButton.onClick.RemoveAllListeners();
                 tempButton.onClick.AddListener(buttonDetails.action);
                 tempButton.onClick.AddListener(CloseActionMenu);
-                tempText.text = buttonDetails.buttonTitle;
+                title.text = buttonDetails.buttonTitle;
                 tempButton.gameObject.SetActive(true);
-                tempTooltip = buttonDetails.buttonTooltip;
+                GenericTooltipUI generic = tempButton.GetComponent<GenericTooltipUI>();
+                generic.ToolTipHeader = buttonDetails.buttonTooltipHeader;
+                generic.ToolTipMain = buttonDetails.buttonTooltipMain;
+                generic.ToolTipEffect = buttonDetails.buttonTooltipDetail;
             }
         }
-        //first button
-        /*if (details.button1Details != null)
-        {
-            button1.onClick.RemoveAllListeners();
-            button1.onClick.AddListener(details.button1Details.action);
-            button1.onClick.AddListener(CloseActionMenu);
-            button1Text.text = details.button1Details.buttonTitle;
-            button1.gameObject.SetActive(true);
-        }
-        //second button
-        if (details.button2Details != null)
-        {
-            button2.onClick.RemoveAllListeners();
-            button2.onClick.AddListener(details.button2Details.action);
-            button2.onClick.AddListener(CloseActionMenu);
-            button2Text.text = details.button2Details.buttonTitle;
-            button2.gameObject.SetActive(true);
-        }
-        //third button
-        if (details.button3Details != null)
-        {
-            button3.onClick.RemoveAllListeners();
-            button3.onClick.AddListener(details.button3Details.action);
-            button3.onClick.AddListener(CloseActionMenu);
-            button3Text.text = details.button3Details.buttonTitle;
-            button3.gameObject.SetActive(true);
-        }
-        //fourth button
-        if (details.button4Details != null)
-        {
-            button4.onClick.RemoveAllListeners();
-            button4.onClick.AddListener(details.button4Details.action);
-            button4.onClick.AddListener(CloseActionMenu);
-            button4Text.text = details.button4Details.buttonTitle;
-            button4.gameObject.SetActive(true);
-        }
-        //fifth button
-        if (details.button5Details != null)
-        {
-            button5.onClick.RemoveAllListeners();
-            button5.onClick.AddListener(details.button5Details.action);
-            button5.onClick.AddListener(CloseActionMenu);
-            button5Text.text = details.button5Details.buttonTitle;
-            button5.gameObject.SetActive(true);
-        }*/
-
+       
         //sixth button is always 'Cancel'
         button6.onClick.RemoveAllListeners();
         button6.onClick.AddListener(CloseActionMenu);
@@ -207,7 +167,7 @@ public class ModalActionMenu : MonoBehaviour
         //calculate offset - height (default above)
         if (screenPos.y + height + offset < Screen.height)
         { screenPos.y += height + offset; }
-        else { screenPos.y -= height + offset; }
+        else { screenPos.y -= offset; }
         //width - default right
         if (screenPos.x + offset >= Screen.width)
         { screenPos.x -= + offset + screenPos.x - Screen.width; }

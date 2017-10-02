@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
 using modalAPI;
+using System;
+using Random = UnityEngine.Random;
+using System.Text;
 
 /// <summary>
 /// handles Actor related data and methods
@@ -51,7 +54,8 @@ public class ActorManager : MonoBehaviour
                     Connections = Random.Range(1, 4),
                     Motivation = Random.Range(1, 4),
                     Invisibility = Random.Range(1, 4),
-                    trait = GameManager.instance.dataScript.GetRandomTrait()
+                    trait = GameManager.instance.dataScript.GetRandomTrait(),
+                    isActive = true
                 };
                 arrayOfActors[i] = actor;
 
@@ -123,25 +127,77 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetActorActions(int nodeID)
     {
+        //color code for button tooltip header text, eg. "Operator"ss
+        string hexCode = "#87CEFA";
+        
+        if (GameManager.instance.playerSide == Side.Authority)
+        { hexCode = "#FF0000"; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
-
-        //Debug
-        EventButtonDetails details1 = new EventButtonDetails()
+        //string builder for info button (handles all no go cases
+        StringBuilder infoBuilder = new StringBuilder();
+        //Get Node
+        GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
+        if (nodeObject != null)
         {
-            buttonTitle = "Test Action",
-            buttonTooltip = "Test tooltip for this very special button",
-            action = GameManager.instance.actionMenuScript.CloseActionMenu
-        };
-        tempList.Add(details1);
-        EventButtonDetails details2 = new EventButtonDetails()
-        {
-            buttonTitle = string.Format("Node ID {0}", nodeID),
-            buttonTooltip = "Another test tooltip for this very special button",
-            action = GameManager.instance.actionMenuScript.CloseActionMenu
-        };
-        tempList.Add(details2);
+            Node node = nodeObject.GetComponent<Node>();
+            List<ActionEffect> listOfEffects = new List<ActionEffect>();
+            Action tempAction;
+            EventButtonDetails details;
+            //loop actors currently in game
+            foreach (Actor actor in arrayOfActors)
+            {
+                details = null;
+                //actor active?
+                if (actor.isActive == true)
+                {
+                    if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, actor.SlotID) == true)
+                    {
+                        //get node action
+                        tempAction = actor.arc.nodeAction;
+                        if (tempAction != null)
+                        {
+                            //effects
+                            StringBuilder builder = new StringBuilder();
+                            listOfEffects = tempAction.listOfEffects;
+                            foreach (ActionEffect effect in listOfEffects)
+                            {
+                                if (builder.Length > 0)
+                                { builder.AppendLine(); }
+                                builder.Append(effect.description);
+                            }
+                            //pass all relevant details to ModalActionMenu via Node.OnClick()
+                            details = new EventButtonDetails()
+                            {
+                                buttonTitle = tempAction.name,
+                                buttonTooltipHeader = string.Format("<color={0}>{1}</color>", hexCode, actor.arc.name.ToUpper()),
+                                buttonTooltipMain = tempAction.tooltipText,
+                                buttonTooltipDetail = builder.ToString(),
+                                action = GameManager.instance.actionMenuScript.CloseActionMenu
+                            };
 
+                        }
+                    }
+                    else
+                    {
+                        //actor not live at node
+                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                        infoBuilder.Append(string.Format("{0} isn't active at this node", actor.Name.ToUpper()));
+                    }
+                }
+                
+                else
+                {
+                    //actor gone silent
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                    infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Name.ToUpper()));
+                }
 
+                //add to list
+                if (details != null)
+                { tempList.Add(details); }
+            }
+
+        }
         return tempList;
     }
 

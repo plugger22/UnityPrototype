@@ -22,8 +22,9 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfThreeConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfFourConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
-    
+
     //dictionaries
+    private Dictionary<int, GameObject> dictOfNodes = new Dictionary<int, GameObject>();            //Key -> nodeID, Value -> Node gameObject
     private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
@@ -185,26 +186,68 @@ public class DataManager : MonoBehaviour
     public void AddActions(Actor[] arrayOfActors)
     {
         int counter = 0;
-        List<Action> listOfActions = new List<Action>();
-        foreach(Actor actor in arrayOfActors)
+        foreach (Actor actor in arrayOfActors)
         {
-            listOfActions.Clear();
-            listOfActions.AddRange(actor.arc.listOfActions);
-            //loop actions
-            foreach(Action action in listOfActions)
+            //add nodeAction
+            if (actor.arc.nodeAction != null)
             {
                 //assign dynamic ID
-                action.ActionID = counter++;
+                actor.arc.nodeAction.ActionID = counter++;
                 //add to dictionary (only adding actions that are present in the level with the current selection of Actors)
                 try
-                { dictOfActions.Add(action.ActionID, action); Debug.Log(string.Format("Action Added -> {0}, ID {1}{2}", action.name, action.ActionID, "\n")); }
+                { dictOfActions.Add(actor.arc.nodeAction.ActionID, actor.arc.nodeAction); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Action Arc (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); }
+                { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", actor.arc.nodeAction.ActionID, actor.arc.nodeAction.name)); }
+            }
+            //add webAction
+            if (actor.arc.webAction != null)
+            {
+                //assign dynamic ID
+                actor.arc.webAction.ActionID = counter++;
+                //add to dictionary (only adding actions that are present in the level with the current selection of Actors)
+                try
+                { dictOfActions.Add(actor.arc.webAction.ActionID, actor.arc.webAction); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Action Arc (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", actor.arc.webAction.ActionID, actor.arc.webAction.name)); }
             }
         }
     }
+
+
+    /// <summary>
+    /// returns a GameObject node from dictionary based on nodeID, Null if not found
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public GameObject GetNodeObject(int nodeID)
+    {
+        GameObject obj = null;
+        if (dictOfNodes.TryGetValue(nodeID, out obj))
+        {
+            return obj;
+        }
+        return null;
+    }
+
+
+    public void AddNodeObject(int nodeID, GameObject nodeObj)
+    {
+        try
+        { dictOfNodes.Add(nodeID, nodeObj); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Node Object (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid (duplicate) nodeID \"{0}\" for Node \"{1}\"", nodeID, nodeObj.name)); }
+    }
+
+
+
+
+
 }
 
 

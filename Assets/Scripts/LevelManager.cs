@@ -37,9 +37,7 @@ public class LevelManager : MonoBehaviour
     private List<GameObject> listOfConnections = new List<GameObject>();
     private List<Vector3> listOfCoordinates = new List<Vector3>();                  //used to provide a lookup to check spacing of nodes
     private List<List<int>> listOfSortedNodes = new List<List<int>>();              //each node has a sorted (closest to furthest) list of nodeID's of neighouring nodes
-    private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units
-    private Dictionary<int, GameObject> dictOfNodes = new Dictionary<int, GameObject>(); //lookup dictionary, key is nodeID, value is Node gameObject
-    
+    private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units    
     private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();             //list containing sublists, one each of all the active nodes for each actor in the level
     private int[] arrayOfNodeTypeTotals;                                                    //array of how many of each node type there is on the map
     private bool[,] arrayOfActiveNodes;                                                  //[total nodes, total actors] true if node active for that actor
@@ -53,7 +51,7 @@ public class LevelManager : MonoBehaviour
         InitialiseSortedDistances();
         RemoveInvalidNodes();
         InitialiseGraph();
-        AssignNodeTypes();
+        AssignNodeArcs();
         AssignSecurityLevels();
         AssignActorsToNodes();
     }
@@ -127,7 +125,8 @@ public class LevelManager : MonoBehaviour
                 listOfNodeObjects.Add(instance);
                 listOfNodes.Add(nodeTemp);
                 listOfCoordinates.Add(randomPos);
-                dictOfNodes.Add(nodeTemp.nodeID, instance);
+                //add to dictionary of Nodes
+                GameManager.instance.dataScript.AddNodeObject(nodeTemp.nodeID, instance);
             }
         }
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
@@ -436,7 +435,7 @@ public class LevelManager : MonoBehaviour
         //highlight player's current node
         if (GameManager.instance.nodeScript.nodeHighlight > -1)
         {
-            GameObject nodeObject = GetNodeObject(GameManager.instance.nodeScript.nodeHighlight);
+            GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(GameManager.instance.nodeScript.nodeHighlight);
             if (nodeObject != null)
             {
                 //only do so if it's a normal node, otherwise ignore
@@ -465,20 +464,7 @@ public class LevelManager : MonoBehaviour
         GameManager.instance.nodeScript.nodeRedraw = true;
     }
 
-    /// <summary>
-    /// returns a GameObject node from dictionary based on nodeID, Null if not found
-    /// </summary>
-    /// <param name="nodeID"></param>
-    /// <returns></returns>
-    public GameObject GetNodeObject(int nodeID)
-    {
-        GameObject obj = null;
-        if (dictOfNodes.TryGetValue(nodeID, out obj))
-        {
-            return obj;
-        }
-        return null;
-    }
+
 
 
     /*public void RedrawConnections()
@@ -681,7 +667,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// loops through a sorted list of nodes (by # of connections) and randomly assigning archetypes
     /// </summary>
-    private void AssignNodeTypes()
+    private void AssignNodeArcs()
     {
         int index;
         int numRecords = GameManager.instance.dataScript.GetNumNodeArcs();
@@ -692,6 +678,8 @@ public class LevelManager : MonoBehaviour
         {
             Node node = obj.GetComponent<Node>();
             int numNodes = node.GetNumOfNeighbours();
+            //node name
+            node.nodeName = "Placeholder";
             //get random node Arc from appropriate list
             node.arc = GameManager.instance.dataScript.GetRandomNodeArc(numNodes);
             //provide base level stats 
@@ -876,13 +864,13 @@ public class LevelManager : MonoBehaviour
             node1 = connection.GetNode1();
             node2 = connection.GetNode2();
             //get the highest node security level of the two
-            GameObject nodeObj1 = GetNodeObject(node1);
+            GameObject nodeObj1 = GameManager.instance.dataScript.GetNodeObject(node1);
             if (nodeObj1 != null)
             {
                 Node node = nodeObj1.GetComponent<Node>();
                 security = node.security;
             }
-            GameObject nodeObj2 = GetNodeObject(node2);
+            GameObject nodeObj2 = GameManager.instance.dataScript.GetNodeObject(node2);
             if (nodeObj2 != null)
             {
                 Node node = nodeObj2.GetComponent<Node>();

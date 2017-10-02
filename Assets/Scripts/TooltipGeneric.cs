@@ -10,7 +10,11 @@ using UnityEngine.UI;
 /// </summary>
 public class TooltipGeneric : MonoBehaviour
 {
-    public TextMeshProUGUI genericText;
+    public TextMeshProUGUI genericHeader;               //header (optional)
+    public TextMeshProUGUI genericText;                 //main text (Required)
+    public TextMeshProUGUI genericDetail;               //specific detail (optional)
+    public Image dividerTop;                            //use depends on text components
+    public Image dividerBottom;                         //use depends on text components
     public GameObject tooltipGenericObject;
 
     private static TooltipGeneric tooltipGeneric;
@@ -26,7 +30,7 @@ public class TooltipGeneric : MonoBehaviour
     {
         canvasGroup = tooltipGenericObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipGenericObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
+        fadeInTime = GameManager.instance.tooltipScript.tooltipFade / 2; 
         offset = GameManager.instance.tooltipScript.tooltipOffset;
 
     }
@@ -47,19 +51,40 @@ public class TooltipGeneric : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialise node Tool tip
+    /// Initialise node Tool tip. General Purpose. Can take one to three text segments and auto divides them as necessary.
     /// </summary>
-    /// <param name="tooltipText">Tool tip text (any length as autoresizes)</param>
+    /// <param name="tooltipText">Tool tip text (any length as autoresizes). Required</param>
     /// <param name="pos">Position of tooltip originator -> Use a transform position (it's screen units as it's derived from a UI element))</param>
-    public void SetTooltip(string tooltipText, Vector3 screenPos)
+    /// <param name="headerText">Optional</param>
+    /// <param name="detailText">Optional</param>
+    public void SetTooltip(string mainText, Vector3 screenPos, string headerText = null, string detailText = null)
     {
         //open panel at start
         tooltipGenericObject.SetActive(true);
+        genericText.gameObject.SetActive(true);
+        genericHeader.gameObject.SetActive(false);
+        genericDetail.gameObject.SetActive(false);
+        dividerTop.gameObject.SetActive(false);
+        dividerBottom.gameObject.SetActive(false);
         //set opacity to zero (invisible)
         SetOpacity(0f);
         //set state of all items in tooltip window
-        genericText.gameObject.SetActive(true);
-        genericText.text = tooltipText;
+        genericText.text = mainText;
+
+        //header
+        if (headerText != null)
+        {
+            genericHeader.text = headerText;
+            genericHeader.gameObject.SetActive(true);
+            dividerTop.gameObject.SetActive(true);
+        }
+        //details
+        if (detailText != null)
+        {
+            genericDetail.text = detailText;
+            genericDetail.gameObject.SetActive(true);
+            dividerBottom.gameObject.SetActive(true);
+        }
 
         //get dimensions of dynamic tooltip
         float width = rectTransform.rect.width;
@@ -70,46 +95,17 @@ public class TooltipGeneric : MonoBehaviour
             Canvas.ForceUpdateCanvases();
             height = rectTransform.rect.height;
         }
-        //calculate offset - height (default above)
-        if (screenPos.y + height / 2 < Screen.height)
-        { screenPos.y += height / 2; }
-        else { screenPos.y -= height / 2; }
-        //screenPos.y += height / 2;
-
-        screenPos.x -= width / 10;
-        //width
+        //place tooltip adjacent to the button
+        screenPos.y -= height / 4;
+        //to the right
         if (screenPos.x + width >= Screen.width)
-        { screenPos.x -= width + screenPos.x - Screen.width; }
+        { screenPos.x -= (width * 2 + screenPos.x - Screen.width); }
         else if (screenPos.x - width <= 0)
         { screenPos.x += width - screenPos.x; }
-
-
-        /*
-        //convert coordinates
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
-        //get dimensions of dynamic tooltip
-        float width = rectTransform.rect.width;
-        float height = rectTransform.rect.height;
-        //height showing zero due to vertical layout group for first call
-        if (height == 0)
-        {
-            Canvas.ForceUpdateCanvases();
-            height = rectTransform.rect.height;
-        }
-        //calculate offset - height (default above)
-        if (screenPos.y + height + offset < Screen.height)
-        { screenPos.y += height / 2 + offset; }
-        else { screenPos.y -= height / 2 + offset; }
-        //width - default centred
-        if (screenPos.x + width / 2 >= Screen.width)
-        { screenPos.x -= width / 2 + screenPos.x - Screen.width; }
-        else if (screenPos.x - width / 2 <= 0)
-        { screenPos.x += width / 2 - screenPos.x; }*/
+        else { screenPos.x += width / 4; }
 
         //set new position
         tooltipGenericObject.transform.position = screenPos;
-
-        Debug.Log("Node ID " + tooltipText + " Tooltip active" + "\n");
     }
 
 

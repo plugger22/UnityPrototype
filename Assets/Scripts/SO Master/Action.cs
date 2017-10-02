@@ -9,8 +9,8 @@ using UnityEngine;
 public class Action : ScriptableObject
 {
     public int ActionID { get; set; }
-
-    public string description;
+                                                //NOTE -> name of Scriptable Object is button title
+    public string tooltipText;                  //descriptive text
     public ActorArc intendedActor;              //for info purposes only to aid placing correct action with correct ActorArc
     public List<ActionEffect> listOfEffects;    //effects of action
 

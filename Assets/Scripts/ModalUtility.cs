@@ -11,7 +11,9 @@ namespace modalAPI
     public class EventButtonDetails
     {
         public string buttonTitle;
-        public string buttonTooltip;
+        public string buttonTooltipHeader;
+        public string buttonTooltipMain;
+        public string buttonTooltipDetail;
         //public Sprite buttonBackground;
         public UnityAction action;
     }
@@ -24,15 +26,8 @@ namespace modalAPI
     {
         public string nodeName;
         public string nodeDetails;
-        //public Sprite menuBackground;
-        //public Sprite menuDivider;
-        public List<EventButtonDetails> listOfButtonDetails;          //only the first five are used
-        /*public EventButtonDetails button1Details;
-        public EventButtonDetails button2Details;
-        public EventButtonDetails button3Details;
-        public EventButtonDetails button4Details;
-        public EventButtonDetails button5Details;*/
-        //Button 6 is always 'Cancel'
+        public int nodeID;
+        public List<EventButtonDetails> listOfButtonDetails;          //only the first five are used (Target + 1 action / actor + Cancel)
         public Vector3 nodePos;                             //position of node in world units (transform)
     }
 
