@@ -14,7 +14,6 @@ namespace modalAPI
         public string buttonTooltipHeader;
         public string buttonTooltipMain;
         public string buttonTooltipDetail;
-        //public Sprite buttonBackground;
         public UnityAction action;
     }
 
@@ -27,8 +26,8 @@ namespace modalAPI
         public string nodeName;
         public string nodeDetails;
         public int nodeID;
-        public List<EventButtonDetails> listOfButtonDetails;          //only the first five are used (Target + 1 action / actor + Cancel)
-        public Vector3 nodePos;                             //position of node in world units (transform)
+        public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
+        public Vector3 nodePos;                                         //position of node in world units (transform)
     }
 
 

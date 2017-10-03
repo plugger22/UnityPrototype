@@ -54,6 +54,7 @@ public class LevelManager : MonoBehaviour
         AssignNodeArcs();
         AssignSecurityLevels();
         AssignActorsToNodes();
+        RedrawNodes();
     }
 
 
@@ -421,7 +422,7 @@ public class LevelManager : MonoBehaviour
     //
     #region Redraw and Rest graph
     /// <summary>
-    /// Redraw any nodes. Show highlighted node (Player's current position), unless it's a non-normal node for the current redraw
+    /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
     /// </summary>
     public void RedrawNodes()
     {
@@ -432,7 +433,7 @@ public class LevelManager : MonoBehaviour
             nodeRenderer = obj.GetComponent<Renderer>();
             nodeRenderer.material = obj.GetComponent<Node>()._Material;
         }
-        //highlight player's current node
+        //highlighted node
         if (GameManager.instance.nodeScript.nodeHighlight > -1)
         {
             GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(GameManager.instance.nodeScript.nodeHighlight);
@@ -443,6 +444,20 @@ public class LevelManager : MonoBehaviour
                 {
                     nodeRenderer = nodeObject.GetComponent<Renderer>();
                     nodeRenderer.material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Highlight);
+                }
+            }
+        }
+        //player's current node
+        if (GameManager.instance.nodeScript.nodePlayer > -1)
+        {
+            GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(GameManager.instance.nodeScript.nodePlayer);
+            if (nodeObject != null)
+            {
+                //only do so if it's a normal node, otherwise ignore
+                if (nodeObject.GetComponent<Node>().GetMaterial() == GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal))
+                {
+                    nodeRenderer = nodeObject.GetComponent<Renderer>();
+                    nodeRenderer.material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Player);
                 }
             }
         }

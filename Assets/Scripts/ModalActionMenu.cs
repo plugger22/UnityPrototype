@@ -18,7 +18,6 @@ public class ModalActionMenu : MonoBehaviour
     public Image modalPanel;
     public Image background;
     public Image divider;
-    public TextMeshProUGUI nodeName;
     public TextMeshProUGUI nodeDetails;
     public Button button1;
     public Button button2;
@@ -89,11 +88,11 @@ public class ModalActionMenu : MonoBehaviour
         button6.gameObject.SetActive(false);
 
         //set up ModalActionObject
-        this.nodeName.text = details.nodeName;
-        nodeDetails.text = details.nodeDetails;
+        nodeDetails.text = string.Format("{0}{1}{2}", details.nodeName, "\n", details.nodeDetails);
         //pass nodeID onto text script to facilitate node tooltip on mouseover
         ModalMenuUI modal = nodeDetails.GetComponent<ModalMenuUI>();
         modal.NodeID = details.nodeID;
+        //There can be a max of 6 buttons (1 x target, 4 x actor actions, 1 x Cancel)
         int counter = 0;
         Button tempButton;
         TextMeshProUGUI title;
@@ -125,6 +124,10 @@ public class ModalActionMenu : MonoBehaviour
                     tempButton = button5;
                     title = button5Text;
                     break;
+                case 6:
+                    tempButton = button6;
+                    title = button6Text;
+                    break;
                 default:
                     Debug.LogWarning("To many EventButtonDetails in list!\n");
                     break;
@@ -144,11 +147,15 @@ public class ModalActionMenu : MonoBehaviour
             }
         }
        
-        //sixth button is always 'Cancel'
+        /*//sixth button is always 'Cancel'
         button6.onClick.RemoveAllListeners();
         button6.onClick.AddListener(CloseActionMenu);
         button6Text.text = "CANCEL";
         button6.gameObject.SetActive(true);
+        GenericTooltipUI genericCancel = button6.GetComponent<GenericTooltipUI>();
+        genericCancel.ToolTipHeader = details.cancelDetails.buttonTooltipHeader;
+        genericCancel.ToolTipMain = details.cancelDetails.buttonTooltipMain;
+        genericCancel.ToolTipEffect = details.cancelDetails.buttonTooltipDetail;*/
 
         //block raycasts to gameobjects
         GameManager.instance.isBlocked = true;

@@ -16,7 +16,11 @@ public class Node : MonoBehaviour
     [HideInInspector] public int stability;
     [HideInInspector] public int support;
     [HideInInspector] public int security;
-    
+
+    public int NumOfTeams { get; set; }
+    public int NumOfTracers { get; set; }
+    public int TargetInfo { get; set; }
+
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)

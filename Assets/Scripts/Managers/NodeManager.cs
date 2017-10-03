@@ -15,9 +15,10 @@ public class NodeManager : MonoBehaviour
 
     [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
-    [HideInInspector] public bool nodeRedraw = false;               //if true a node redraw is triggered in Update
-    [HideInInspector] public int nodeHighlight = -1;                   //nodeID of currently highlighted node, if any, otherwise -1
+    [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
+    [HideInInspector] public int nodePlayer = 0;                    //nodeID of player
     [HideInInspector] public int numOfNodeArcs;                     //total number of possible nodeArcs
+    [HideInInspector] public bool nodeRedraw = false;               //if true a node redraw is triggered in Update
 
     private void Awake()
     {

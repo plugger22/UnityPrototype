@@ -10,6 +10,10 @@ public class ActionEffect : ScriptableObject
 {
     public int EffectID { get; set; }
 
-    public string description;
+    public string description;                                  //tooltip, eg. "Stability +1"
+    //Criteria that needs to be met for the Effect to apply
+    public EffectType criteriaEffect;
+    public Comparison criteriaCompare;
+    public int criteriaValue;
 
 }

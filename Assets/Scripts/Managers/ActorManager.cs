@@ -121,20 +121,30 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). Max 4 Actor + 1 Target actions.
+    /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). 
+    /// Max 4 Actor + 1 Target actions wiht an additional 'Cancel' buttnn added last automatically
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
     public List<EventButtonDetails> GetActorActions(int nodeID)
     {
+        string colorBlue = GameManager.instance.colourScript.sideBlue;
+        string colorRed = GameManager.instance.colourScript.sideRed;
+        string colorCancel = GameManager.instance.colourScript.Moccassin;
+        string colorInvalid = GameManager.instance.colourScript.Salmon;
+        string hexCode;
+        string playerPresent = null;
+        string effectCriteria;
+        bool proceedFlag;
         //color code for button tooltip header text, eg. "Operator"ss
-        string hexCode = "#87CEFA";
-        
         if (GameManager.instance.playerSide == Side.Authority)
-        { hexCode = "#FF0000"; }
+        { hexCode = colorRed; }
+        else { hexCode = colorBlue; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
         //string builder for info button (handles all no go cases
         StringBuilder infoBuilder = new StringBuilder();
+        //player's current node
+        int playerID = GameManager.instance.nodeScript.nodePlayer;
         //Get Node
         GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
         if (nodeObject != null)
@@ -143,14 +153,19 @@ public class ActorManager : MonoBehaviour
             List<ActionEffect> listOfEffects = new List<ActionEffect>();
             Action tempAction;
             EventButtonDetails details;
+            //player present ('Cancel' tooltip)
+            if (nodeID == playerID)
+            { playerPresent = "You are present at the node"; }
+            else { playerPresent = "You are NOT present at the node"; }
             //loop actors currently in game
             foreach (Actor actor in arrayOfActors)
             {
+                proceedFlag = true;
                 details = null;
                 //actor active?
                 if (actor.isActive == true)
                 {
-                    if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, actor.SlotID) == true)
+                    if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, actor.SlotID) == true || nodeID == playerID )
                     {
                         //get node action
                         tempAction = actor.arc.nodeAction;
@@ -161,42 +176,70 @@ public class ActorManager : MonoBehaviour
                             listOfEffects = tempAction.listOfEffects;
                             foreach (ActionEffect effect in listOfEffects)
                             {
-                                if (builder.Length > 0)
-                                { builder.AppendLine(); }
-                                builder.Append(effect.description);
+                                //check effect criteria is valid
+                                effectCriteria = GameManager.instance.actionScript.CheckEffectCriteria(effect, nodeID);
+                                if (effectCriteria == null)
+                                {
+                                    //Effect criteria O.K -> tool tip text
+                                    if (builder.Length > 0)
+                                    { builder.AppendLine(); }
+                                    builder.Append(effect.description);
+                                }
+                                else
+                                {
+                                    //invalid effect criteria -> Action cancelled
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.Append(string.Format("<color={0}>{1} action invalid ({2}</color>)", colorInvalid, actor.arc.name.ToUpper(), effectCriteria));
+                                    proceedFlag = false;
+                                }
                             }
-                            //pass all relevant details to ModalActionMenu via Node.OnClick()
-                            details = new EventButtonDetails()
+                            if (proceedFlag == true)
                             {
-                                buttonTitle = tempAction.name,
-                                buttonTooltipHeader = string.Format("<color={0}>{1}</color>", hexCode, actor.arc.name.ToUpper()),
-                                buttonTooltipMain = tempAction.tooltipText,
-                                buttonTooltipDetail = builder.ToString(),
-                                action = GameManager.instance.actionMenuScript.CloseActionMenu
-                            };
-
+                                //renown to player if player at node, otherwise rebel
+                                builder.AppendLine();
+                                if (nodeID == playerID)
+                                { builder.Append(string.Format("<color={0}>Player Renown +1</color>", colorBlue)); }
+                                else { builder.Append(string.Format("<color={0}>{1} Renown +1</color>", colorRed, actor.arc.name)); }
+                                //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                details = new EventButtonDetails()
+                                {
+                                    buttonTitle = tempAction.name,
+                                    buttonTooltipHeader = string.Format("<color={0}>{1}</color>", hexCode, actor.arc.name.ToUpper()),
+                                    buttonTooltipMain = tempAction.tooltipText,
+                                    buttonTooltipDetail = builder.ToString(),
+                                    action = GameManager.instance.actionMenuScript.CloseActionMenu
+                                };
+                            }
                         }
                     }
                     else
                     {
                         //actor not live at node
                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                        infoBuilder.Append(string.Format("{0} isn't active at this node", actor.Name.ToUpper()));
+                        infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name.ToUpper()));
                     }
                 }
-                
                 else
                 {
                     //actor gone silent
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Name.ToUpper()));
+                    infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name.ToUpper()));
                 }
 
                 //add to list
                 if (details != null)
                 { tempList.Add(details); }
             }
-
+            //Cancel button is added last
+            EventButtonDetails cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("<color={0}>{1}</color>", hexCode, "INFO"),
+                buttonTooltipMain = playerPresent,
+                buttonTooltipDetail = string.Format("<color={0}>{1}</color>", colorCancel, infoBuilder.ToString()),
+                action = GameManager.instance.actionMenuScript.CloseActionMenu
+            };
+            tempList.Add(cancelDetails);
         }
         return tempList;
     }

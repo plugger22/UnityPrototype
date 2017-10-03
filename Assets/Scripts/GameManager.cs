@@ -9,9 +9,11 @@ using Random = UnityEngine.Random;
 using UnityEditor;
 #endif
 
-public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count};
-public enum NodeType { Normal, Highlight, Active, Count};
-public enum Side { Authority, Rebel};
+public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count };
+public enum NodeType { Normal, Highlight, Active, Player, Count };
+public enum Side { Authority, Rebel };
+public enum Comparison { None, LessThan, GreaterThan, EqualTo}
+public enum EffectType { None, NodeStability, NodeSecurity, NodeSupport, NumRecruits, NumTeams, NumTracers, NumGear, TargetInfo}     //Action Effects
 
 /// <summary>
 /// Main game controller
@@ -26,9 +28,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
+    [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
+    [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
+    [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;         //actor tool tip static instance
     [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tool tip static instance
@@ -73,8 +78,11 @@ public class GameManager : MonoBehaviour
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
         actorScript = GetComponent<ActorManager>();
+        actionScript = GetComponent<ActionManager>();
+        playerScript = GetComponent<PlayerManager>();
         nodeScript = GetComponent<NodeManager>();
         connScript = GetComponent<ConnectionManager>();
+        colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();
         sideScript = GetComponent<SideManager>();
         //Get static references
