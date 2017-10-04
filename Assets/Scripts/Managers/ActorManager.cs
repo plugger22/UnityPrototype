@@ -128,18 +128,19 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetActorActions(int nodeID)
     {
-        string colorBlue = GameManager.instance.colourScript.sideBlue;
-        string colorRed = GameManager.instance.colourScript.sideRed;
-        string colorCancel = GameManager.instance.colourScript.Moccassin;
-        string colorInvalid = GameManager.instance.colourScript.Salmon;
-        string hexCode;
+        string colourBlue = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        string colourRed = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        string colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
+        string colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
+        string endColour = GameManager.instance.colourScript.GetEndTag();
+        string sideColour;
         string playerPresent = null;
         string effectCriteria;
         bool proceedFlag;
         //color code for button tooltip header text, eg. "Operator"ss
         if (GameManager.instance.playerSide == Side.Authority)
-        { hexCode = colorRed; }
-        else { hexCode = colorBlue; }
+        { sideColour = colourRed; }
+        else { sideColour = colourBlue; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
         //string builder for info button (handles all no go cases
         StringBuilder infoBuilder = new StringBuilder();
@@ -189,7 +190,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //invalid effect criteria -> Action cancelled
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.Append(string.Format("<color={0}>{1} action invalid ({2}</color>)", colorInvalid, actor.arc.name.ToUpper(), effectCriteria));
+                                    infoBuilder.Append(string.Format("{0}{1} action invalid ({2}{3})", colourInvalid, actor.arc.name.ToUpper(), effectCriteria, endColour));
                                     proceedFlag = false;
                                 }
                             }
@@ -198,13 +199,13 @@ public class ActorManager : MonoBehaviour
                                 //renown to player if player at node, otherwise rebel
                                 builder.AppendLine();
                                 if (nodeID == playerID)
-                                { builder.Append(string.Format("<color={0}>Player Renown +1</color>", colorBlue)); }
-                                else { builder.Append(string.Format("<color={0}>{1} Renown +1</color>", colorRed, actor.arc.name)); }
+                                { builder.Append(string.Format("{0}Player Renown +1{1}", colourBlue, endColour)); }
+                                else { builder.Append(string.Format("{0}{1} Renown +1{2}", colourRed, actor.arc.name, endColour)); }
                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
                                 details = new EventButtonDetails()
                                 {
                                     buttonTitle = tempAction.name,
-                                    buttonTooltipHeader = string.Format("<color={0}>{1}</color>", hexCode, actor.arc.name.ToUpper()),
+                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), endColour),
                                     buttonTooltipMain = tempAction.tooltipText,
                                     buttonTooltipDetail = builder.ToString(),
                                     action = GameManager.instance.actionMenuScript.CloseActionMenu
@@ -231,14 +232,29 @@ public class ActorManager : MonoBehaviour
                 { tempList.Add(details); }
             }
             //Cancel button is added last
-            EventButtonDetails cancelDetails = new EventButtonDetails()
+            EventButtonDetails cancelDetails = null;
+            if (infoBuilder.Length > 0)
             {
-                buttonTitle = "CANCEL",
-                buttonTooltipHeader = string.Format("<color={0}>{1}</color>", hexCode, "INFO"),
-                buttonTooltipMain = playerPresent,
-                buttonTooltipDetail = string.Format("<color={0}>{1}</color>", colorCancel, infoBuilder.ToString()),
-                action = GameManager.instance.actionMenuScript.CloseActionMenu
-            };
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", endColour),
+                    buttonTooltipMain = playerPresent,
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), endColour),
+                    action = GameManager.instance.actionMenuScript.CloseActionMenu
+                };
+            }
+            else
+            {
+                //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", endColour),
+                    buttonTooltipMain = playerPresent,
+                    action = GameManager.instance.actionMenuScript.CloseActionMenu
+                };
+            }
             tempList.Add(cancelDetails);
         }
         return tempList;

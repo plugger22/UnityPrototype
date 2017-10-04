@@ -15,6 +15,7 @@ public enum Side { Authority, Rebel };
 public enum Comparison { None, LessThan, GreaterThan, EqualTo}
 public enum EffectType { None, NodeStability, NodeSecurity, NodeSupport, NumRecruits, NumTeams, NumTracers, NumGear, TargetInfo}     //Action Effects
 
+
 /// <summary>
 /// Main game controller
 /// </summary>
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
+    [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
         actorScript = GetComponent<ActorManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
+        optionScript = GetComponent<OptionManager>();
         nodeScript = GetComponent<NodeManager>();
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
