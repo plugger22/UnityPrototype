@@ -38,11 +38,14 @@ public class ModalActionMenu : MonoBehaviour
     [HideInInspector] public string tooltip5;
 
 
-    //private static TooltipNode tooltipNode;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;
+
+    //colour palette
+    /*private string colourEffects;
+    private string colourEnd;*/
 
     private static ModalActionMenu modalActionMenu;
 
@@ -55,7 +58,15 @@ public class ModalActionMenu : MonoBehaviour
         rectTransform = modalMenu.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
+        //SetColours();
     }
+
+
+   /* public void SetColours()
+    {
+        colourEffects = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }*/
 
     /// <summary>
     /// Static instance so the Modal Menu can be accessed from any script
@@ -146,16 +157,6 @@ public class ModalActionMenu : MonoBehaviour
                 generic.ToolTipEffect = buttonDetails.buttonTooltipDetail;
             }
         }
-       
-        /*//sixth button is always 'Cancel'
-        button6.onClick.RemoveAllListeners();
-        button6.onClick.AddListener(CloseActionMenu);
-        button6Text.text = "CANCEL";
-        button6.gameObject.SetActive(true);
-        GenericTooltipUI genericCancel = button6.GetComponent<GenericTooltipUI>();
-        genericCancel.ToolTipHeader = details.cancelDetails.buttonTooltipHeader;
-        genericCancel.ToolTipMain = details.cancelDetails.buttonTooltipMain;
-        genericCancel.ToolTipEffect = details.cancelDetails.buttonTooltipDetail;*/
 
         //block raycasts to gameobjects
         GameManager.instance.isBlocked = true;

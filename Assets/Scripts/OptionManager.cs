@@ -7,6 +7,18 @@ using UnityEngine;
 /// </summary>
 public class OptionManager : MonoBehaviour
 {
-    private ColourScheme colourOption;               //0 -> normal, 1 -> colourblind
+    public ColourScheme colourOption { get; set; }              //ColourManager.cs ColourScheme enum (eg. 0 -> normal, 1 -> colourblind)
+
+
+    /// <summary>
+    /// Change Colour Scheme
+    /// </summary>
+    /// <param name="colourScheme"></param>
+    public void SetColourScheme(ColourScheme colourScheme)
+    {
+        colourOption = colourScheme;
+        GameManager.instance.colourScript.ChangeColourPalettes();
+        Debug.Log("OptionManager -> Colour Scheme now " + colourScheme + "\n");
+    }
 
 }

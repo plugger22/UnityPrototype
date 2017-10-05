@@ -23,6 +23,13 @@ public class TooltipActor : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;
+    //colours
+    private string colourGood;
+    private string colourNeutral;
+    private string colourBad;
+    private string colourName;
+    private string colourTrait;
+    private string colourEnd;
 
 
     /// <summary>
@@ -34,6 +41,7 @@ public class TooltipActor : MonoBehaviour
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
+        SetColours();
 
     }
 
@@ -52,6 +60,19 @@ public class TooltipActor : MonoBehaviour
         return tooltipActor;
     }
 
+    /// <summary>
+    /// Set colour palette for tooltip
+    /// </summary>
+    public void SetColours()
+    {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourTrait = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
 
     /// <summary>
     /// Initialise node Tool tip
@@ -62,6 +83,7 @@ public class TooltipActor : MonoBehaviour
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
     public void SetTooltip(string name, int[] arrayOfStats, string trait, Vector3 screenPos, float width, float height)
     {
+
         //open panel at start
         tooltipActorObject.SetActive(true);
         //set opacity to zero (invisible)
@@ -72,8 +94,8 @@ public class TooltipActor : MonoBehaviour
         actorTrait.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
-        actorName.text = name;
-        actorTrait.text = trait;
+        actorName.text = string.Format("{0}{1}{2}", colourName, name, colourEnd);
+        actorTrait.text = string.Format("{0}{1}{2}", colourTrait, trait, colourEnd);
 
 
         //set up stats -> only takes the first three Connections / Motivation / Invisibility
@@ -90,15 +112,15 @@ public class TooltipActor : MonoBehaviour
                 {
                     case 3:
                         //good -> green
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", "<color=#0bff01>", data, "</color>")));
+                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourGood, data, colourEnd)));
                         break;
                     case 2:
                         //average -> yellow
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", "<color=#fdfe02>", data, "</color>")));
+                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourNeutral, data, colourEnd)));
                         break;
                     case 1:
                         //bad -> red (Security runs in reverse so that level 1 security is the highest)
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", "<color=#fe0000>", data, "</color>")));
+                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourBad, data, colourEnd)));
                         break;
                     default:
                         builder.Append(data);

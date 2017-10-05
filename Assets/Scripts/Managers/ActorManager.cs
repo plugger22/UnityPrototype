@@ -18,14 +18,31 @@ public class ActorManager : MonoBehaviour
 
     private Actor[] arrayOfActors;
 
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    private void Awake ()
-    {
+    //colour palette for Generic tool tip
+    private string colourBlue;
+    private string colourRed;
+    private string colourCancel;
+    private string colourInvalid;
+    private string colourEffect;
+    private string colourEnd;
 
+    private void Start()
+    {
+        SetColours();
     }
 
+    /// <summary>
+    /// set colour palette for Generic Tool tip
+    /// </summary>
+    public void SetColours()
+    {
+        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourRed = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
+        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
 
     /// <summary>
     /// Set up number of required actors (minions supporting play)
@@ -128,11 +145,6 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetActorActions(int nodeID)
     {
-        string colourBlue = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        string colourRed = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        string colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
-        string colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
-        string endColour = GameManager.instance.colourScript.GetEndTag();
         string sideColour;
         string playerPresent = null;
         string effectCriteria;
@@ -175,23 +187,26 @@ public class ActorManager : MonoBehaviour
                             //effects
                             StringBuilder builder = new StringBuilder();
                             listOfEffects = tempAction.listOfEffects;
-                            foreach (ActionEffect effect in listOfEffects)
+                            if (listOfEffects.Count > 0)
                             {
-                                //check effect criteria is valid
-                                effectCriteria = GameManager.instance.actionScript.CheckEffectCriteria(effect, nodeID);
-                                if (effectCriteria == null)
+                                for(int i = 0; i < listOfEffects.Count; i++)
                                 {
-                                    //Effect criteria O.K -> tool tip text
-                                    if (builder.Length > 0)
-                                    { builder.AppendLine(); }
-                                    builder.Append(effect.description);
-                                }
-                                else
-                                {
-                                    //invalid effect criteria -> Action cancelled
-                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.Append(string.Format("{0}{1} action invalid ({2}{3})", colourInvalid, actor.arc.name.ToUpper(), effectCriteria, endColour));
-                                    proceedFlag = false;
+                                    ActionEffect effect = listOfEffects[i];
+                                    //check effect criteria is valid
+                                    effectCriteria = GameManager.instance.actionScript.CheckEffectCriteria(effect, nodeID);
+                                    if (effectCriteria == null)
+                                    {
+                                        //Effect criteria O.K -> tool tip text
+                                        if (builder.Length > 0)  { builder.AppendLine(); }
+                                        builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd));
+                                    }
+                                    else
+                                    {
+                                        //invalid effect criteria -> Action cancelled
+                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                        infoBuilder.Append(string.Format("{0}{1} action invalid ({2}{3})", colourInvalid, actor.arc.name.ToUpper(), effectCriteria, colourEnd));
+                                        proceedFlag = false;
+                                    }
                                 }
                             }
                             if (proceedFlag == true)
@@ -199,13 +214,13 @@ public class ActorManager : MonoBehaviour
                                 //renown to player if player at node, otherwise rebel
                                 builder.AppendLine();
                                 if (nodeID == playerID)
-                                { builder.Append(string.Format("{0}Player Renown +1{1}", colourBlue, endColour)); }
-                                else { builder.Append(string.Format("{0}{1} Renown +1{2}", colourRed, actor.arc.name, endColour)); }
+                                { builder.Append(string.Format("{0}Player Renown +1{1}", colourBlue, colourEnd)); }
+                                else { builder.Append(string.Format("{0}{1} Renown +1{2}", colourRed, actor.arc.name, colourEnd)); }
                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
                                 details = new EventButtonDetails()
                                 {
                                     buttonTitle = tempAction.name,
-                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), endColour),
+                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), colourEnd),
                                     buttonTooltipMain = tempAction.tooltipText,
                                     buttonTooltipDetail = builder.ToString(),
                                     action = GameManager.instance.actionMenuScript.CloseActionMenu
@@ -238,9 +253,9 @@ public class ActorManager : MonoBehaviour
                 cancelDetails = new EventButtonDetails()
                 {
                     buttonTitle = "CANCEL",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", endColour),
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = playerPresent,
-                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), endColour),
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                     action = GameManager.instance.actionMenuScript.CloseActionMenu
                 };
             }
@@ -250,7 +265,7 @@ public class ActorManager : MonoBehaviour
                 cancelDetails = new EventButtonDetails()
                 {
                     buttonTitle = "CANCEL",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", endColour),
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = playerPresent,
                     action = GameManager.instance.actionMenuScript.CloseActionMenu
                 };

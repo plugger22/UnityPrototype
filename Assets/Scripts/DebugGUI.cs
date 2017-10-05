@@ -58,13 +58,19 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(15, 100, 80, 20), "Action"))
+            if (GUI.Button(new Rect(15, 100, 80, 20), "Colours"))
             {
-                Debug.Log("Button -> Toggle Action Menu");
+                Debug.Log("Button -> Toggle Colour Scheme");
+                if (GameManager.instance.optionScript.colourOption == ColourScheme.Normal)
+                { GameManager.instance.optionScript.SetColourScheme(ColourScheme.ColourBlind); }
+                else { GameManager.instance.optionScript.SetColourScheme(ColourScheme.Normal); }
+
+                /*Debug.Log("Button -> Toggle Action Menu");
                 if (GameManager.instance.isBlocked == false)
                 { GameManager.instance.actionMenuScript.SetActionMenu(new ModalPanelDetails()); }
                 else
-                { GameManager.instance.actionMenuScript.CloseActionMenu(); }
+                { GameManager.instance.actionMenuScript.CloseActionMenu(); }*/
+
                 /*Debug.Log("Button -> Toggle News Ticker");
                 GameManager.instance.tickerScript.ToggleTicker();*/
 

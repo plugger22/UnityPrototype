@@ -53,6 +53,7 @@ public class TooltipGeneric : MonoBehaviour
 
     /// <summary>
     /// Initialise node Tool tip. General Purpose. Can take one to three text segments and auto divides them as necessary.
+    /// Unique to the Generic tool tip, colours are set by the calling method
     /// </summary>
     /// <param name="tooltipText">Tool tip text (any length as autoresizes). Required</param>
     /// <param name="pos">Position of tooltip originator -> Use a transform position (it's screen units as it's derived from a UI element))</param>
