@@ -61,9 +61,9 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(15, 100, 80, 20), "Colours"))
             {
                 Debug.Log("Button -> Toggle Colour Scheme");
-                if (GameManager.instance.optionScript.colourOption == ColourScheme.Normal)
-                { GameManager.instance.optionScript.SetColourScheme(ColourScheme.ColourBlind); }
-                else { GameManager.instance.optionScript.SetColourScheme(ColourScheme.Normal); }
+                if (GameManager.instance.optionScript.ColourOption == ColourScheme.Normal)
+                { GameManager.instance.optionScript.ColourOption = ColourScheme.ColourBlind; }
+                else { GameManager.instance.optionScript.ColourOption = ColourScheme.Normal; }
 
                 /*Debug.Log("Button -> Toggle Action Menu");
                 if (GameManager.instance.isBlocked == false)
@@ -97,7 +97,9 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(15, 140, 80, 20), "Side"))
             {
                 Debug.Log("Button -> Swap sides");
-                GameManager.instance.SwapSides();
+                if (GameManager.instance.optionScript.PlayerSide == Side.Rebel)
+                { GameManager.instance.optionScript.PlayerSide = Side.Authority; }
+                else { GameManager.instance.optionScript.PlayerSide = Side.Rebel; }
             }
 
             //

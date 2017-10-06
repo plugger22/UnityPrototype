@@ -76,6 +76,7 @@ public class TooltipNode : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

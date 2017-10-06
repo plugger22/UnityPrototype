@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     public float showSplashTimeout = 2.0f;
 
-    [HideInInspector]public Side playerSide;                        //what side is the player?
+
     [HideInInspector] public bool isBlocked;                        //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
     [Tooltip("Leave as default 0 for random")]
@@ -97,9 +97,9 @@ public class GameManager : MonoBehaviour
         //setup game
         InitialiseGame();
         //set side
-        playerSide = Side.Rebel;
-        tooltipNodeScript.InitialiseTooltip(playerSide);
-        tooltipActorScript.InitialiseTooltip(playerSide);
+        GameManager.instance.optionScript.PlayerSide = Side.Rebel;
+        tooltipNodeScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
+        tooltipActorScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
         //make sure raycasts are active, eg. node tooltips
         isBlocked = false;
         //sets this to not be destroyed when reloading a scene
@@ -158,27 +158,6 @@ public class GameManager : MonoBehaviour
         Application.Quit();
         #endif
     }
-
-
-    /// <summary>
-    /// Debug function to swap sides mid-game
-    /// </summary>
-    public void SwapSides()
-    {
-        switch (playerSide)
-        {
-            case Side.Authority:
-                playerSide = Side.Rebel;
-                break;
-            case Side.Rebel:
-                playerSide = Side.Authority;
-                break;
-        }
-        //all other related side stuff
-        sideScript.SwapSides(playerSide);
-    }
-
-
 
 
 

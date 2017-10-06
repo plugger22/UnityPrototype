@@ -150,7 +150,7 @@ public class ActorManager : MonoBehaviour
         string effectCriteria;
         bool proceedFlag;
         //color code for button tooltip header text, eg. "Operator"ss
-        if (GameManager.instance.playerSide == Side.Authority)
+        if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
         { sideColour = colourRed; }
         else { sideColour = colourBlue; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
@@ -204,7 +204,9 @@ public class ActorManager : MonoBehaviour
                                     {
                                         //invalid effect criteria -> Action cancelled
                                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                        infoBuilder.Append(string.Format("{0}{1} action invalid ({2}{3})", colourInvalid, actor.arc.name.ToUpper(), effectCriteria, colourEnd));
+                                        infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}", 
+                                            colourInvalid, actor.arc.name.ToUpper(), "\n", colourEnd,
+                                            colourRed, effectCriteria, colourEnd));
                                         proceedFlag = false;
                                     }
                                 }

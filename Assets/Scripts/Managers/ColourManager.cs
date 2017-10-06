@@ -86,17 +86,17 @@ public class ColourManager : MonoBehaviour
         //automatically handle an access call to an arrayIndex that hasn't been populated
         try
         {
-            colourTag = arrayOfColours[(int)colour, (int)GameManager.instance.optionScript.colourOption].hexCode;
+            colourTag = arrayOfColours[(int)colour, (int)GameManager.instance.optionScript.ColourOption].hexCode;
         }
         catch (IndexOutOfRangeException)
         {
             //return default white colour if no entry present
-            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1}. Return default WHITE", colour, GameManager.instance.optionScript.colourOption));
+            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1}. Return default WHITE", colour, GameManager.instance.optionScript.ColourOption));
         }
         catch (NullReferenceException)
         {
             //return default white colour if no entry present
-            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1} (Null). Return default WHITE", colour, GameManager.instance.optionScript.colourOption));
+            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1} (Null). Return default WHITE", colour, GameManager.instance.optionScript.ColourOption));
         }
         return string.Format("{0}{1}{2}", "<color=", colourTag, ">");
     }
