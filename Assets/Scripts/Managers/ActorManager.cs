@@ -26,9 +26,26 @@ public class ActorManager : MonoBehaviour
     private string colourEffect;
     private string colourEnd;
 
-    private void Start()
+    public void Initialise()
     {
-        SetColours();
+        //event listener is registered in InitialiseActors() due to GameManager sequence.
+        GameManager.instance.eventScript.AddListener(EventType.ChangeColour, this.OnEvent);
+        InitialiseActors(numOfActorsTotal);
+    }
+
+    //Called when events happen
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
     }
 
     /// <summary>

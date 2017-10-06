@@ -34,8 +34,8 @@ namespace modalAPI
 }
 
 
-    public class ModalUtility : MonoBehaviour
+    /*public class ModalUtility : MonoBehaviour
     {
-    }
+    }*/
 
 

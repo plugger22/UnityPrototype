@@ -89,7 +89,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 position.y -= 100;
                 position = Camera.main.ScreenToWorldPoint(position);
                 GameManager.instance.tooltipNodeScript.SetTooltip(
-                    node.nodeName,
+                    node.NodeName,
                     string.Format("{0} ID {1}", node.arc.name, NodeID),
                     activeList,
                     new int[] { node.stability, node.support, node.security },

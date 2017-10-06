@@ -70,20 +70,20 @@ public class DataManager : MonoBehaviour
         foreach (ActorArc arc in listOfAllActorArcs)
         {
             //assign a zero based unique number & get first four letters of name, in CAPS, as the tag
-            arc.actorArcID = counter++;
+            arc.ActorArcID = counter++;
             length = arc.actorName.Length;
             length = length >= 4 ? 4 : length;
-            arc.actorTag = arc.actorName.Substring(0, length).ToUpper();
+            arc.ActorTag = arc.actorName.Substring(0, length).ToUpper();
 
             /*Debug.Log(string.Format("Actor {0}, actorArcID {1}, actorTag {2}{3}", arc.name, arc.actorArcID, arc.actorTag, "\n"));*/
 
             //add to dictionary
             try
-            { dictOfActorArcs.Add(arc.actorArcID, arc); }
+            { dictOfActorArcs.Add(arc.ActorArcID, arc); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Actor Arc (Null)"); }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid (duplicate) actorArcID \"{0}\" for Actor \"{1}\"", arc.actorArcID, arc.actorName)); }
+            { Debug.LogError(string.Format("Invalid (duplicate) actorArcID \"{0}\" for Actor \"{1}\"", arc.ActorArcID, arc.actorName)); }
         }
         Debug.Log("Actor Arcs total -> " + listOfAllActorArcs.Count + "\n");
     }

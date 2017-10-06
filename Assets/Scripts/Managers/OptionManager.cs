@@ -6,7 +6,11 @@ using UnityEngine;
 /// handles all game option matters
 /// </summary>
 public class OptionManager : MonoBehaviour
-{
+{   
+    //Backing fields (use underscore)
+    private Side _playerSide;
+    private ColourScheme _colourOption;
+
     //ColourManager.cs ColourScheme enum (eg. 0 -> normal, 1 -> colourblind)
     public ColourScheme ColourOption                             
     {
@@ -14,7 +18,8 @@ public class OptionManager : MonoBehaviour
         set
         {
             _colourOption = value;
-            GameManager.instance.colourScript.ChangeColourPalettes();
+            //Post notification - colour scheme has been changed
+            GameManager.instance.eventScript.PostNotification(EventType.ChangeColour, this);
             Debug.Log("OptionManager -> Colour Scheme now " + _colourOption + "\n");
         }
     }  
@@ -26,14 +31,22 @@ public class OptionManager : MonoBehaviour
         set
         {
             _playerSide = value;
-            GameManager.instance.sideScript.SwapSides(_playerSide);
+            //POst notification - Player side has been changed
+            GameManager.instance.eventScript.PostNotification(EventType.ChangeSide, this, _playerSide);
+            //GameManager.instance.sideScript.SwapSides(_playerSide);
             Debug.Log("OptionManager -> Player Side now " + _playerSide + "\n");
         }
-    }                        
+    }
 
-    //Backing fields (use underscore)
-    private Side _playerSide;
-    private ColourScheme _colourOption;
+
+    /// <summary>
+    /// Housekeep events
+    /// </summary>
+    public void OnDisable()
+    {
+        GameManager.instance.eventScript.RemoveEvent(EventType.ChangeSide);
+        GameManager.instance.eventScript.RemoveEvent(EventType.ChangeColour);
+    }
 
 
 

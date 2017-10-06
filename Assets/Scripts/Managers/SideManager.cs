@@ -15,6 +15,32 @@ public class SideManager : MonoBehaviour
     public Sprite toolTip_dividerAuthority;
     public Sprite toolTip_dividerRebel;
 
+    public void Initialise()
+    {
+        //event Listener
+        GameManager.instance.eventScript.AddListener(EventType.ChangeSide, OnEvent);
+    }
+
+
+    /// <summary>
+    /// Called when an event happens
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect Event type
+        switch(eventType)
+        {
+            case EventType.ChangeSide:
+                SwapSides((Side)Param);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
 
     /// <summary>
     /// Swaps gfx around for UI elements

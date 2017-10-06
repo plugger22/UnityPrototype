@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
+    [HideInInspector] public EventManager eventScript;                //Event Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
@@ -84,6 +85,7 @@ public class GameManager : MonoBehaviour
         playerScript = GetComponent<PlayerManager>();
         optionScript = GetComponent<OptionManager>();
         nodeScript = GetComponent<NodeManager>();
+        eventScript = GetComponent<EventManager>();
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();
@@ -94,16 +96,22 @@ public class GameManager : MonoBehaviour
         tooltipGenericScript = TooltipGeneric.Instance();
         tickerScript = TickerTextScroller.Instance();
         actionMenuScript = ModalActionMenu.Instance();
-        //setup game
-        InitialiseGame();
-        //set side
-        GameManager.instance.optionScript.PlayerSide = Side.Rebel;
-        tooltipNodeScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
-        tooltipActorScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
         //make sure raycasts are active, eg. node tooltips
         isBlocked = false;
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
+    }
+
+
+    private void Start()
+    {
+        //setup game
+        InitialiseGame();
+        //set side
+        GameManager.instance.optionScript.PlayerSide = Side.Rebel;
+        GameManager.instance.optionScript.ColourOption = ColourScheme.Normal;
+        tooltipNodeScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
+        tooltipActorScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
     }
 
     /// <summary>
@@ -111,10 +119,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseGame()
     {
+        sideScript.Initialise();
         dataScript.Initialise();
-        actorScript.InitialiseActors(actorScript.numOfActorsTotal);
+        actorScript.Initialise();
         levelScript.SetUpLevel();
         guiScript.Initialise(actorScript.GetActors());
+        
     }
 
 

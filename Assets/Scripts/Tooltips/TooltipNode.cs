@@ -48,7 +48,8 @@ public class TooltipNode : MonoBehaviour
         rectTransform = tooltipNodeObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
-        SetColours();
+        //event listener
+        GameManager.instance.eventScript.AddListener(EventType.ChangeColour, this.OnEvent);
     }
 
     /// <summary>
@@ -64,6 +65,21 @@ public class TooltipNode : MonoBehaviour
             { Debug.LogError("There needs to be one active TooltipNode script on a GameObject in your scene"); }
         }
         return tooltipNode;
+    }
+
+    //Called when events happen
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
     }
 
     /// <summary>

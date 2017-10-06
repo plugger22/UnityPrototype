@@ -10,7 +10,7 @@ public class Node : MonoBehaviour
 
     public int nodeID;                                  //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     public Material _Material { get; private set; }     //material renderer uses to draw node
-    public string nodeName { get; set; }                //name of node, eg. "Downtown Bronx"
+    public string NodeName { get; set; }                //name of node, eg. "Downtown Bronx"
     public NodeArc arc;                                 //archetype type
     
     [HideInInspector] public int stability;
@@ -99,7 +99,7 @@ public class Node : MonoBehaviour
             ModalPanelDetails details = new ModalPanelDetails()
             {
                 nodeID = nodeID,
-                nodeName = this.nodeName,
+                nodeName = this.NodeName,
                 nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), nodeID),
                 nodePos = transform.position,
                 listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(nodeID)
@@ -153,7 +153,7 @@ public class Node : MonoBehaviour
                 List<string> targetList = new List<string>() { "Power Grid", "All Nodes Stability -1", "Rolling Blackouts", "Info 3" };
                 //Transform transform = GetComponent<Transform>();
                 GameManager.instance.tooltipNodeScript.SetTooltip(
-                    nodeName,
+                    NodeName,
                     string.Format("{0} ID {1}", arc.name, nodeID),
                     activeList,
                     new int[] { stability, support, security },

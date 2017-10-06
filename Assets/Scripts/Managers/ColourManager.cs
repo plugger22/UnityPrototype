@@ -41,8 +41,22 @@ public class ColourManager : MonoBehaviour
         arrayOfColours = new Colour[(int)ColourType.Count, (int)ColourScheme.Count];
         //add each array of Colours into the List -> NOTE: change this whenever you add, or modify, a colour. 
         //Note: KEEP IN SAME ORDER AS ColourType enum
-        listOfColourTypes = new List<Colour[]>();
-        //generic tooltip
+        listOfColourTypes = new List<Colour[]>()
+        {
+            sideRebel,
+            sideAuthority,
+            cancelHighlight,
+            cancelNormal,
+            actionEffect,
+            dataGood,
+            dataNeutral,
+            dataBad,
+            normalText,
+            defaultText,
+            nodeActive
+        };
+
+        /*//generic tooltip
         listOfColourTypes.Add(sideRebel);
         listOfColourTypes.Add(sideAuthority);
         listOfColourTypes.Add(cancelHighlight);
@@ -56,7 +70,7 @@ public class ColourManager : MonoBehaviour
         listOfColourTypes.Add(normalText);
         listOfColourTypes.Add(defaultText);
         //tool tip Node
-        listOfColourTypes.Add(nodeActive);
+        listOfColourTypes.Add(nodeActive);*/
 
         //loop thorugh list and auto populate array
         int limit;
@@ -104,15 +118,15 @@ public class ColourManager : MonoBehaviour
     public string GetEndTag()
     { return "</color>"; }
 
-    /// <summary>
+    /*/// <summary>
     /// resets all colour palettes to the current colour scheme
     /// </summary>
     public void ChangeColourPalettes()
     {
-        GameManager.instance.actorScript.SetColours();
-        GameManager.instance.tooltipNodeScript.SetColours();
-        GameManager.instance.tooltipActorScript.SetColours();
+        //GameManager.instance.actorScript.SetColours();
+        //GameManager.instance.tooltipNodeScript.SetColours();
+        //GameManager.instance.tooltipActorScript.SetColours();
         //GameManager.instance.actionMenuScript.SetColours();
-    }
+    }*/
 
 }

@@ -694,7 +694,7 @@ public class LevelManager : MonoBehaviour
             Node node = obj.GetComponent<Node>();
             int numNodes = node.GetNumOfNeighbours();
             //node name
-            node.nodeName = "Placeholder";
+            node.NodeName = "Placeholder";
             //get random node Arc from appropriate list
             node.arc = GameManager.instance.dataScript.GetRandomNodeArc(numNodes);
             //provide base level stats 
