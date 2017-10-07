@@ -164,7 +164,7 @@ public class TooltipActor : MonoBehaviour
         //set new position
         tooltipActorObject.transform.position = screenPos;
 
-        Debug.Log("Actor " + name + " Tooltip active -> Pos " + screenPos.x + " : " + screenPos.y + "  W: " + width + " H: " + height + "\n");
+        Debug.Log("UI: Open -> TooltipActor" + "\n");
     }
 
 
@@ -199,7 +199,7 @@ public class TooltipActor : MonoBehaviour
     /// </summary>
     public void CloseTooltip()
     {
-        Debug.Log("Close: TooltipActor Active? -> " + tooltipActorObject.activeSelf + "\n");
+        Debug.Log("UI: Close -> TooltipActor" + "\n");
         tooltipActorObject.SetActive(false);
     }
 

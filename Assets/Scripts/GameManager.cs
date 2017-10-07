@@ -42,16 +42,18 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tool tip static instance
     [HideInInspector] public TickerTextScroller tickerScript;         //Ticker Text Scroller
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
+    [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
 
     public float showSplashTimeout = 2.0f;
 
 
-    [HideInInspector] public bool isBlocked;                        //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+    
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
 
     private bool allowQuitting = false;
+    private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
 
     #endregion
 
@@ -90,12 +92,13 @@ public class GameManager : MonoBehaviour
         colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();
         sideScript = GetComponent<SideManager>();
-        //Get static references
+        //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipActorScript = TooltipActor.Instance();
         tooltipGenericScript = TooltipGeneric.Instance();
         tickerScript = TickerTextScroller.Instance();
         actionMenuScript = ModalActionMenu.Instance();
+        outcomeScript = ModalOutcome.Instance(); 
         //make sure raycasts are active, eg. node tooltips
         isBlocked = false;
         //sets this to not be destroyed when reloading a scene
@@ -170,7 +173,14 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void Blocked(bool isBlocked)
+    {
+        this.isBlocked = isBlocked;
+        Debug.Log(string.Format("GM: Blocked -> {0}{1}", isBlocked, "\n"));
+    }
 
+    public bool IsBlocked()
+    { return isBlocked; }
 
 
     //place methods above here

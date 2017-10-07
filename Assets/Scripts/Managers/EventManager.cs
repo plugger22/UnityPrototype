@@ -5,7 +5,7 @@ using UnityEngine;
 
 //Enum defining all possible game events
 //More events should be added to the list
-public enum EventType { ChangeColour, ChangeSide };
+public enum EventType { ChangeColour, ChangeSide, CloseActionMenu, OpenOutcomeWindow };
 
 //EventManager to send events to listeners
 //Works with IListener implementations

@@ -222,8 +222,7 @@ public class TooltipNode : MonoBehaviour
         { screenPos.x += width / 2 - screenPos.x; }
         //set new position
         tooltipNodeObject.transform.position = screenPos;
-
-        Debug.Log("Node ID " + name + " Tooltip active" + "\n");
+        Debug.Log("UI: Open -> TooltipNode ID" + name + "\n");
     }
 
     /// <summary>
@@ -251,7 +250,7 @@ public class TooltipNode : MonoBehaviour
     /// </summary>
     public void CloseTooltip()
     {
-        Debug.Log("Close: TooltipNode Active? -> " + tooltipNodeObject.activeSelf + "\n");
+        Debug.Log("UI: Close -> TooltipNode" + "\n");
         tooltipNodeObject.SetActive(false);
     }
 

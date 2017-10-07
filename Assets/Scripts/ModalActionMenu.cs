@@ -58,15 +58,9 @@ public class ModalActionMenu : MonoBehaviour
         rectTransform = modalMenu.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
-        //SetColours();
+        //register listener
+        //GameManager.instance.eventScript.AddListener(EventType.CloseActionMenu, OnEvent);
     }
-
-
-   /* public void SetColours()
-    {
-        colourEffects = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
-    }*/
 
     /// <summary>
     /// Static instance so the Modal Menu can be accessed from any script
@@ -82,6 +76,21 @@ public class ModalActionMenu : MonoBehaviour
         }
         return modalActionMenu;
     }
+
+
+    /*public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch(eventType)
+        {
+            case EventType.CloseActionMenu:
+                CloseActionMenu();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }*/
 
     /// <summary>
     /// Initialise and activate modal Action Menu
@@ -147,8 +156,8 @@ public class ModalActionMenu : MonoBehaviour
             if (tempButton != null && title != null)
             {
                 tempButton.onClick.RemoveAllListeners();
-                tempButton.onClick.AddListener(buttonDetails.action);
                 tempButton.onClick.AddListener(CloseActionMenu);
+                tempButton.onClick.AddListener(buttonDetails.action);
                 title.text = buttonDetails.buttonTitle;
                 tempButton.gameObject.SetActive(true);
                 GenericTooltipUI generic = tempButton.GetComponent<GenericTooltipUI>();
@@ -159,7 +168,7 @@ public class ModalActionMenu : MonoBehaviour
         }
 
         //block raycasts to gameobjects
-        GameManager.instance.isBlocked = true;
+        GameManager.instance.Blocked(true);
 
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(details.nodePos);
@@ -186,6 +195,7 @@ public class ModalActionMenu : MonoBehaviour
         { screenPos.x += offset; }
         //set new position
         modalMenu.transform.position = screenPos;
+        Debug.Log("UI: Open -> ModalActionMenu" + "\n");
     }
 
 
@@ -195,9 +205,10 @@ public class ModalActionMenu : MonoBehaviour
     public void CloseActionMenu()
     {
         modalActionObject.SetActive(false);
-        GameManager.instance.isBlocked = false;
+        GameManager.instance.Blocked(false);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
+        Debug.Log("UI: Close -> ModalActionMenu" + "\n");
     }
 }
 

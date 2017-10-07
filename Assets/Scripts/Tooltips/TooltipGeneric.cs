@@ -110,6 +110,7 @@ public class TooltipGeneric : MonoBehaviour
 
         //set new position
         tooltipGenericObject.transform.position = screenPos;
+        Debug.Log("UI: Open -> TooltipGeneric" + "\n");
     }
 
 
@@ -144,7 +145,7 @@ public class TooltipGeneric : MonoBehaviour
     /// </summary>
     public void CloseTooltip()
     {
-        Debug.Log("Close: TooltipGeneric Active? -> " + tooltipGenericObject.activeSelf + "\n");
+        Debug.Log("UI: Close -> TooltipGeneric" + "\n");
         tooltipGenericObject.SetActive(false);
     }
 

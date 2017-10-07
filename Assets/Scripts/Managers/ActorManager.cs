@@ -235,6 +235,14 @@ public class ActorManager : MonoBehaviour
                                 if (nodeID == playerID)
                                 { builder.Append(string.Format("{0}Player Renown +1{1}", colourBlue, colourEnd)); }
                                 else { builder.Append(string.Format("{0}{1} Renown +1{2}", colourRed, actor.arc.name, colourEnd)); }
+
+                                //Outcome window details -> Placeholder test data
+                                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails() {
+                                    textTop = string.Format("{0} has worked their magic on the {1} node", actor.arc.name, node.arc.name),
+                                    textBottom = string.Format("Security -1{0}{1} Renown +1", "\n", actor.arc.name),
+                                    sprite = null
+                                };
+                                
                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
                                 details = new EventButtonDetails()
                                 {
@@ -242,7 +250,8 @@ public class ActorManager : MonoBehaviour
                                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), colourEnd),
                                     buttonTooltipMain = tempAction.tooltipText,
                                     buttonTooltipDetail = builder.ToString(),
-                                    action = GameManager.instance.actionMenuScript.CloseActionMenu
+                                    //use a Lambda to pass arguments to the action
+                                    action = () => { GameManager.instance.eventScript.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails); }
                                 };
                             }
                         }
@@ -275,7 +284,7 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = playerPresent,
                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
-                    action = GameManager.instance.actionMenuScript.CloseActionMenu
+                    //action = GameManager.instance.actionMenuScript.CloseActionMenu
                 };
             }
             else
@@ -286,7 +295,7 @@ public class ActorManager : MonoBehaviour
                     buttonTitle = "CANCEL",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = playerPresent,
-                    action = GameManager.instance.actionMenuScript.CloseActionMenu
+                    //action = GameManager.instance.actionMenuScript.CloseActionMenu
                 };
             }
             tempList.Add(cancelDetails);

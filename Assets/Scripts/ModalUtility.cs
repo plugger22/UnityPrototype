@@ -30,7 +30,15 @@ namespace modalAPI
         public Vector3 nodePos;                                         //position of node in world units (transform)
     }
 
-
+    /// <summary>
+    /// used to pass details for outcome window directly from button press via event system, eg. EventManager.cs -> PostNotification
+    /// </summary>
+    public class ModalOutcomeDetails
+    {
+        public string textTop;
+        public string textBottom;
+        public Sprite sprite;
+    }
 }
 
 

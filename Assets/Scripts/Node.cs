@@ -84,7 +84,7 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-        if (GameManager.instance.isBlocked == false)
+        if (GameManager.instance.IsBlocked() == false)
         {
             //highlight current node
             GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
@@ -114,7 +114,7 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseExit()
     {
-        if (GameManager.instance.isBlocked == false)
+        if (GameManager.instance.IsBlocked() == false)
         {
             onMouseFlag = false;
             StopCoroutine("ShowTooltip");
@@ -127,7 +127,7 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseOver()
     {
-        if (GameManager.instance.isBlocked == false)
+        if (GameManager.instance.IsBlocked() == false)
         {
             onMouseFlag = true;
             StartCoroutine(ShowTooltip());
