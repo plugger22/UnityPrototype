@@ -75,7 +75,7 @@ public class GUIManager : MonoBehaviour
                 for(int i = 0; i < numOfActors; i++)
                 {
                     listOfActorTypes[i].text = arrayOfActors[i].arc.name;
-                    listOfActorPortraits[i].sprite = arrayOfActors[i].arc.sprite;
+                    listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
                 }
             }
             else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }

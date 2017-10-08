@@ -10,7 +10,8 @@ public class ActorArc : ScriptableObject
 {
     public string ActorTag { get; set; }              //4 letter tag, UPPERCASE eg. 'FIXE', 'HACK' -> assigned automatically by DataManager.Initialise
     public int ActorArcID { get; set; }               //unique #, zero based -> assigned automatically by DataManager.Initialise
-    public Sprite sprite;                             //face of actor -> NOTE: should be a list with a few variations, perhaps?
+    public Sprite baseSprite;                         //face of actor -> NOTE: should be a list with a few variations, perhaps?
+    public Sprite actionSprite;                       //sprite used when carrying out an action
     public string actorName;
 
     public Action nodeAction;                           //one action for interacting with nodes

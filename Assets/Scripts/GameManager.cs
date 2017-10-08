@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 using UnityEditor;
 #endif
 
+public enum GameState { Normal, ModalOutcome, ModalActionMenu}
 public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count };
 public enum NodeType { Normal, Highlight, Active, Player, Count };
 public enum Side { Authority, Rebel };
@@ -31,10 +32,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
+    [HideInInspector] public InputManager inputScript;                //Input Manager
     [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
-    [HideInInspector] public EventManager eventScript;                //Event Manager
+    //[HideInInspector] public EventManager eventScript;                //Event Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
@@ -46,8 +48,6 @@ public class GameManager : MonoBehaviour
 
     public float showSplashTimeout = 2.0f;
 
-
-    
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
@@ -87,11 +87,12 @@ public class GameManager : MonoBehaviour
         playerScript = GetComponent<PlayerManager>();
         optionScript = GetComponent<OptionManager>();
         nodeScript = GetComponent<NodeManager>();
-        eventScript = GetComponent<EventManager>();
+        //eventScript = GetComponent<EventManager>();
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();
         sideScript = GetComponent<SideManager>();
+        inputScript = GetComponent<InputManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipActorScript = TooltipActor.Instance();
@@ -113,8 +114,12 @@ public class GameManager : MonoBehaviour
         //set side
         GameManager.instance.optionScript.PlayerSide = Side.Rebel;
         GameManager.instance.optionScript.ColourOption = ColourScheme.Normal;
-        tooltipNodeScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
-        tooltipActorScript.InitialiseTooltip(GameManager.instance.optionScript.PlayerSide);
+        //GUI elements
+        /*tooltipNodeScript.InitialiseTooltip(optionScript.PlayerSide);
+        tooltipActorScript.InitialiseTooltip(optionScript.PlayerSide);
+        outcomeScript.InitialiseOutcome(optionScript.PlayerSide);*/
+        //register listener
+        EventManager.instance.AddListener(EventType.ExitGame, OnEvent);
     }
 
     /// <summary>
@@ -122,12 +127,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseGame()
     {
-        sideScript.Initialise();
+        //sideScript.Initialise();
         dataScript.Initialise();
         actorScript.Initialise();
         levelScript.SetUpLevel();
         guiScript.Initialise(actorScript.GetActors());
-        
+        inputScript.GameState = GameState.Normal;
     }
 
 
@@ -136,14 +141,40 @@ public class GameManager : MonoBehaviour
         //redraw any Nodes where required
         if (nodeScript.nodeRedraw == true)
         { levelScript.RedrawNodes(); }
+        //Handle Game Input
+        if (Input.anyKey == true)
+        { inputScript.ProcessInput(); }
+    }
 
-        //application will quit on 'X'
-        if (Input.GetKeyDown(KeyCode.X))
+    /// <summary>
+    /// event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //detect event type
+        switch (eventType)
         {
-            Quit();
+            case EventType.ExitGame:
+                Quit();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
         }
     }
 
+
+    public void Blocked(bool isBlocked)
+    {
+        this.isBlocked = isBlocked;
+        Debug.Log(string.Format("GM: Blocked -> {0}{1}", isBlocked, "\n"));
+    }
+
+    public bool IsBlocked()
+    { return isBlocked; }
 
     /// <summary>
     /// Quit 
@@ -166,22 +197,15 @@ public class GameManager : MonoBehaviour
         allowQuitting = true;
         //editor quit or application quit
         #if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
+                EditorApplication.isPlaying = false;
         #else
-        Application.Quit();
+                Application.Quit();
         #endif
     }
 
-
-    public void Blocked(bool isBlocked)
+    public void OnDisable()
     {
-        this.isBlocked = isBlocked;
-        Debug.Log(string.Format("GM: Blocked -> {0}{1}", isBlocked, "\n"));
+        EventManager.instance.RemoveEvent(EventType.ExitGame);
     }
-
-    public bool IsBlocked()
-    { return isBlocked; }
-
-
     //place methods above here
 }

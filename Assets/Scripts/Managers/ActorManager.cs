@@ -29,7 +29,7 @@ public class ActorManager : MonoBehaviour
     public void Initialise()
     {
         //event listener is registered in InitialiseActors() due to GameManager sequence.
-        GameManager.instance.eventScript.AddListener(EventType.ChangeColour, this.OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, this.OnEvent);
         InitialiseActors(numOfActorsTotal);
     }
 
@@ -240,7 +240,7 @@ public class ActorManager : MonoBehaviour
                                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails() {
                                     textTop = string.Format("{0} has worked their magic on the {1} node", actor.arc.name, node.arc.name),
                                     textBottom = string.Format("Security -1{0}{1} Renown +1", "\n", actor.arc.name),
-                                    sprite = null
+                                    sprite = actor.arc.actionSprite
                                 };
                                 
                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
@@ -251,7 +251,7 @@ public class ActorManager : MonoBehaviour
                                     buttonTooltipMain = tempAction.tooltipText,
                                     buttonTooltipDetail = builder.ToString(),
                                     //use a Lambda to pass arguments to the action
-                                    action = () => { GameManager.instance.eventScript.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails); }
+                                    action = () => { EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails); }
                                 };
                             }
                         }

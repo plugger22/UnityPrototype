@@ -14,15 +14,17 @@ public class SideManager : MonoBehaviour
     public Sprite toolTip_backgroundRebel;
     public Sprite toolTip_dividerAuthority;
     public Sprite toolTip_dividerRebel;
+    public Sprite outcome_backgroundAuthority;
+    public Sprite outcome_backgroundRebel;
 
     public void Initialise()
     {
         //event Listener
-        GameManager.instance.eventScript.AddListener(EventType.ChangeSide, OnEvent);
+        //EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// Called when an event happens
     /// </summary>
     /// <param name="eventType"></param>
@@ -50,5 +52,6 @@ public class SideManager : MonoBehaviour
     {
         GameManager.instance.tooltipNodeScript.InitialiseTooltip(side);
         GameManager.instance.tooltipActorScript.InitialiseTooltip(side);
-    }
+        GameManager.instance.outcomeScript.InitialiseOutcome(side);
+    }*/
 }

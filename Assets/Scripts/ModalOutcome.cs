@@ -12,15 +12,15 @@ public class ModalOutcome : MonoBehaviour
 {
     public TextMeshProUGUI outcomeText;
     public TextMeshProUGUI effectText;
-    public Image dividerMiddle;
     public Image outcomeImage;
+    
 
     public GameObject modalOutcomeObject;
-    public GameObject modalPanelObject;
+    public GameObject modalOutcomeWindow;
 
-    //private Image background;
     private static ModalOutcome modalOutcome;
-    RectTransform rectTransform;
+    private RectTransform rectTransform;
+    private Image background;
     private CanvasGroup canvasGroup;
     private float fadeInTime;
 
@@ -41,7 +41,9 @@ public class ModalOutcome : MonoBehaviour
         rectTransform = modalOutcomeObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         //register a listener
-        GameManager.instance.eventScript.AddListener(EventType.OpenOutcomeWindow, OnEvent);
+        EventManager.instance.AddListener(EventType.OpenOutcomeWindow, OnEvent);
+        EventManager.instance.AddListener(EventType.CloseOutcomeWindow, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
 
     /// <summary>
@@ -60,7 +62,12 @@ public class ModalOutcome : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
     public void OnEvent(EventType eventType, Component Sender, object Param = null)
     {
         //detect event type
@@ -68,7 +75,13 @@ public class ModalOutcome : MonoBehaviour
         {
             case EventType.OpenOutcomeWindow:
                 ModalOutcomeDetails details = Param as ModalOutcomeDetails;
-                SetModalOutcome(details.textTop, details.textBottom);
+                SetModalOutcome(details.textTop, details.textBottom, details.sprite);
+                break;
+            case EventType.CloseOutcomeWindow:
+                CloseModalOutcome();
+                break;
+            case EventType.ChangeSide:
+                InitialiseOutcome((Side)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -76,27 +89,27 @@ public class ModalOutcome : MonoBehaviour
         }
     }
 
-    /*public void DebugSet()
+
+    public void OnDisable()
     {
-        //GameManager.instance.actionMenuScript.CloseActionMenu();
-        string textTop = "Node has been dealt with";
-        string textBottom = "Node Security +1";
-        SetModalOutcome(textTop, textBottom);
-    }*/
+        EventManager.instance.RemoveEvent(EventType.OpenOutcomeWindow);
+    }
+
 
     public void SetModalOutcome(string textTop, string textBottom, Sprite sprite = null)
     {
         //set modal true
         GameManager.instance.Blocked(true);
-        //open panel at start
+        //open panel at start, the modal window is already active on the panel
         modalOutcomeObject.SetActive(true);
-        modalPanelObject.SetActive(true);
         //set opacity to zero (invisible)
         //SetOpacity(0f);
 
         //set up modalOutcome elements
         outcomeText.text = string.Format("{0}{1}{2}", colourDefault, textTop, colourEnd);
         effectText.text = string.Format("{0}{1}{2}", colourDefault, textBottom.ToUpper(), colourEnd);
+        if (sprite != null)
+        { outcomeImage.sprite = sprite; }
 
         //get dimensions of dynamic tooltip
         float width = rectTransform.rect.width;
@@ -108,6 +121,8 @@ public class ModalOutcome : MonoBehaviour
         screenPos.y = Screen.height / 2;
         //set position
         modalOutcomeObject.transform.position = screenPos;
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.ModalOutcome;
         Debug.Log("UI: Open -> ModalOutcome window" + "\n");
     }
 
@@ -142,6 +157,8 @@ public class ModalOutcome : MonoBehaviour
         modalOutcomeObject.SetActive(false);
         //set modal false
         GameManager.instance.Blocked(false);
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.Normal;
     }
 
 
@@ -150,5 +167,25 @@ public class ModalOutcome : MonoBehaviour
 
     public float GetOpacity()
     { return canvasGroup.alpha; }
+
+    /// <summary>
+    /// set up sprites on outcome window for the appropriate side
+    /// </summary>
+    /// <param name="side"></param>
+    private void InitialiseOutcome(Side side)
+    {
+        //get component reference (done where because method called from GameManager which happens prior to this.Awake()
+        background = modalOutcomeWindow.GetComponent<Image>();
+        //assign side specific sprites
+        switch (side)
+        {
+            case Side.Authority:
+                background.sprite = GameManager.instance.sideScript.outcome_backgroundAuthority;
+                break;
+            case Side.Rebel:
+                background.sprite = GameManager.instance.sideScript.outcome_backgroundRebel;
+                break;
+        }
+    }
 
 }

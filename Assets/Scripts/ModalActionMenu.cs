@@ -59,7 +59,7 @@ public class ModalActionMenu : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
         //register listener
-        //GameManager.instance.eventScript.AddListener(EventType.CloseActionMenu, OnEvent);
+        EventManager.instance.AddListener(EventType.CloseActionMenu, OnEvent);
     }
 
     /// <summary>
@@ -77,8 +77,13 @@ public class ModalActionMenu : MonoBehaviour
         return modalActionMenu;
     }
 
-
-    /*public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
     {
         //select event type
         switch(eventType)
@@ -90,7 +95,7 @@ public class ModalActionMenu : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }*/
+    }
 
     /// <summary>
     /// Initialise and activate modal Action Menu
@@ -195,6 +200,8 @@ public class ModalActionMenu : MonoBehaviour
         { screenPos.x += offset; }
         //set new position
         modalMenu.transform.position = screenPos;
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.ModalActionMenu;
         Debug.Log("UI: Open -> ModalActionMenu" + "\n");
     }
 
@@ -208,6 +215,8 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.instance.Blocked(false);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.Normal;
         Debug.Log("UI: Close -> ModalActionMenu" + "\n");
     }
 }

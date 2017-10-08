@@ -5,12 +5,21 @@ using UnityEngine;
 
 //Enum defining all possible game events
 //More events should be added to the list
-public enum EventType { ChangeColour, ChangeSide, CloseActionMenu, OpenOutcomeWindow };
+//order independent
+public enum EventType {
+    ChangeColour,
+    ChangeSide,
+    CloseActionMenu,
+    OpenOutcomeWindow,
+    CloseOutcomeWindow,
+    ExitGame
+}; 
 
 //EventManager to send events to listeners
 //Works with IListener implementations
 public class EventManager : MonoBehaviour
 {
+    public static EventManager instance = null;
 
     // Declare a delegate type for events
     public delegate void OnEvent(EventType Event_Type, Component Sender, object Param = null);
@@ -18,7 +27,23 @@ public class EventManager : MonoBehaviour
     //Array of listener objects (all objects registered to listen for events)
     private Dictionary<EventType, List<OnEvent>> dictOfListeners = new Dictionary<EventType, List<OnEvent>>();
 
-    
+
+    /// <summary>
+    /// Internal initialisation
+    /// </summary>
+    private void Awake()
+    {
+        //check if instance already exists
+        if (instance == null)
+        { instance = this; }
+        //if instance already exists and it's not this
+        else if (instance != this)
+        {
+            //Then destroy this in order to reinforce the singleton pattern (can only ever be one instance of GameManager)
+            Destroy(gameObject);
+        }
+    }
+
     /// <summary>
     /// Function to add specified listener-object to array of listeners
     /// </summary>
@@ -42,7 +67,7 @@ public class EventManager : MonoBehaviour
             //Add to internal listeners list
             dictOfListeners.Add(eventType, ListenList); 
         }
-        //Debug.Log(string.Format("EventManager -> Listener Added -> {0} for {1}{2}", eventType, Listener.GetType(), "\n"));
+        Debug.Log(string.Format("EventManager -> Listener Added -> type: {0}  sender: {1}{2}", eventType, Listener.GetType(), "\n"));
     }
     
     /// <summary>
@@ -67,6 +92,7 @@ public class EventManager : MonoBehaviour
         {
             if (ListenList[i] != null)
             {
+                Debug.Log(string.Format("EventManager: PostNotification -> type: {0}  sender: {1}{2}", eventType, Sender, "\n"));
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);
                 //Debug.Log(string.Format("PostNotification -> eventType: {0} sender: {1}{2}", eventType, Sender.name, "\n"));

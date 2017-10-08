@@ -42,7 +42,8 @@ public class TooltipActor : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         //event listener
-        GameManager.instance.eventScript.AddListener(EventType.ChangeColour, this.OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, this.OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
 
     /// <summary>
@@ -69,6 +70,9 @@ public class TooltipActor : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.ChangeSide:
+                InitialiseTooltip((Side)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));

@@ -19,7 +19,7 @@ public class OptionManager : MonoBehaviour
         {
             _colourOption = value;
             //Post notification - colour scheme has been changed
-            GameManager.instance.eventScript.PostNotification(EventType.ChangeColour, this);
+            EventManager.instance.PostNotification(EventType.ChangeColour, this);
             Debug.Log("OptionManager -> Colour Scheme now " + _colourOption + "\n");
         }
     }  
@@ -32,7 +32,7 @@ public class OptionManager : MonoBehaviour
         {
             _playerSide = value;
             //POst notification - Player side has been changed
-            GameManager.instance.eventScript.PostNotification(EventType.ChangeSide, this, _playerSide);
+            EventManager.instance.PostNotification(EventType.ChangeSide, this, _playerSide);
             //GameManager.instance.sideScript.SwapSides(_playerSide);
             Debug.Log("OptionManager -> Player Side now " + _playerSide + "\n");
         }
@@ -44,8 +44,8 @@ public class OptionManager : MonoBehaviour
     /// </summary>
     public void OnDisable()
     {
-        GameManager.instance.eventScript.RemoveEvent(EventType.ChangeSide);
-        GameManager.instance.eventScript.RemoveEvent(EventType.ChangeColour);
+        EventManager.instance.RemoveEvent(EventType.ChangeSide);
+        EventManager.instance.RemoveEvent(EventType.ChangeColour);
     }
 
 
