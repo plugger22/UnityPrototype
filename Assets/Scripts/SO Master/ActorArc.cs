@@ -14,6 +14,8 @@ public class ActorArc : ScriptableObject
     public Sprite actionSprite;                       //sprite used when carrying out an action
     public string actorName;
 
+    //public EventType actionEvent;                       //used to trigger a relevant event when interacting with nodes
+
     public Action nodeAction;                           //one action for interacting with nodes
     public Action webAction;                            //one action for interacting with the web
 

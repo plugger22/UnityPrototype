@@ -102,12 +102,13 @@ public class ModalOutcome : MonoBehaviour
         GameManager.instance.Blocked(true);
         //open panel at start, the modal window is already active on the panel
         modalOutcomeObject.SetActive(true);
+        modalOutcomeWindow.SetActive(true);
         //set opacity to zero (invisible)
         //SetOpacity(0f);
 
         //set up modalOutcome elements
         outcomeText.text = string.Format("{0}{1}{2}", colourDefault, textTop, colourEnd);
-        effectText.text = string.Format("{0}{1}{2}", colourDefault, textBottom.ToUpper(), colourEnd);
+        effectText.text = string.Format("{0}{1}{2}", colourDefault, textBottom, colourEnd);
         if (sprite != null)
         { outcomeImage.sprite = sprite; }
 
@@ -120,7 +121,7 @@ public class ModalOutcome : MonoBehaviour
         screenPos.x = Screen.width / 2;
         screenPos.y = Screen.height / 2;
         //set position
-        modalOutcomeObject.transform.position = screenPos;
+        modalOutcomeWindow.transform.position = screenPos;
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ModalOutcome;
         Debug.Log("UI: Open -> ModalOutcome window" + "\n");

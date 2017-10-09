@@ -31,7 +31,18 @@ namespace modalAPI
     }
 
     /// <summary>
-    /// used to pass details for outcome window directly from button press via event system, eg. EventManager.cs -> PostNotification
+    /// data fed to ActionManager.cs -> ProcessNodeAction to facilitate processing the node action
+    /// </summary>
+    public class ModalActionDetails
+    {
+        public int NodeID { get; set; }
+        public int ActorSlotID { get; set; }
+        public EventType EventType { get; set; }
+    }
+
+
+    /// <summary>
+    /// data fed from ProcessNodeAction -> ModalOutcome.cs -> SetModalOutcome to populate the window with data
     /// </summary>
     public class ModalOutcomeDetails
     {
@@ -39,6 +50,8 @@ namespace modalAPI
         public string textBottom;
         public Sprite sprite;
     }
+
+
 }
 
 

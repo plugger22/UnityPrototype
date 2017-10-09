@@ -13,13 +13,13 @@ public class Node : MonoBehaviour
     public string NodeName { get; set; }                //name of node, eg. "Downtown Bronx"
     public NodeArc arc;                                 //archetype type
     
-    [HideInInspector] public int stability;
-    [HideInInspector] public int support;
-    [HideInInspector] public int security;
+    public int Stability { get; set; }                  //range 0 to 3
+    public int Support { get; set; }                    //range 0 to 3
+    public int Security { get; set; }                   //range 0 to 3
 
     public int NumOfTeams { get; set; }
     public int NumOfTracers { get; set; }
-    public int TargetInfo { get; set; }
+    public int TargetID { get; set; }                   //unique ID, 0+, -1 indicates no target
 
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
@@ -42,6 +42,7 @@ public class Node : MonoBehaviour
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
+        //TargetID = -1;
 	}
 
     /// <summary>
@@ -156,7 +157,7 @@ public class Node : MonoBehaviour
                     NodeName,
                     string.Format("{0} ID {1}", arc.name, nodeID),
                     activeList,
-                    new int[] { stability, support, security },
+                    new int[] { Stability, Support, Security },
                     targetList,
                     transform.position
                     );

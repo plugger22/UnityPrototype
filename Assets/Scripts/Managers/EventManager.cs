@@ -7,12 +7,26 @@ using UnityEngine;
 //More events should be added to the list
 //order independent
 public enum EventType {
+    //Options
     ChangeColour,
     ChangeSide,
+    ExitGame,
+    //UI
     CloseActionMenu,
     OpenOutcomeWindow,
     CloseOutcomeWindow,
-    ExitGame
+    //action menu
+    NodeAction,
+    TargetAction
+    /*ActionPlanner,
+    ActionObserver,
+    ActionHacker,
+    ActionHeavy,
+    ActionRecruiter,
+    ActionOperator,
+    ActionSpinner,
+    ActionAnarchist,
+    ActionFixer*/
 }; 
 
 //EventManager to send events to listeners

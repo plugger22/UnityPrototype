@@ -92,7 +92,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     node.NodeName,
                     string.Format("{0} ID {1}", node.arc.name, NodeID),
                     activeList,
-                    new int[] { node.stability, node.support, node.security },
+                    new int[] { node.Stability, node.Support, node.Security },
                     targetList,
                     position
                     );

@@ -698,16 +698,16 @@ public class LevelManager : MonoBehaviour
             //get random node Arc from appropriate list
             node.arc = GameManager.instance.dataScript.GetRandomNodeArc(numNodes);
             //provide base level stats 
-            node.stability = node.arc.Stability;
-            node.support = node.arc.Support;
-            node.security = node.arc.Security;
+            node.Stability = node.arc.Stability;
+            node.Support = node.arc.Support;
+            node.Security = node.arc.Security;
             //keep within range of 0 to 3
-            node.stability = node.stability > 3 ? 3 : node.stability;
-            node.stability = node.stability < 0 ? 0 : node.stability;
-            node.support = node.support > 3 ? 3 : node.support;
-            node.support = node.support < 0 ? 0 : node.support;
-            node.security = node.security > 3 ? 3 : node.security;
-            node.security = node.security < 0 ? 0 : node.security;
+            node.Stability = node.Stability > 3 ? 3 : node.Stability;
+            node.Stability = node.Stability < 0 ? 0 : node.Stability;
+            node.Support = node.Support > 3 ? 3 : node.Support;
+            node.Support = node.Support < 0 ? 0 : node.Support;
+            node.Security = node.Security > 3 ? 3 : node.Security;
+            node.Security = node.Security < 0 ? 0 : node.Security;
             //keep a tally of how many of each type have been generated
             index = node.arc.NodeArcID;
             if (index < numRecords)
@@ -883,13 +883,13 @@ public class LevelManager : MonoBehaviour
             if (nodeObj1 != null)
             {
                 Node node = nodeObj1.GetComponent<Node>();
-                security = node.security;
+                security = node.Security;
             }
             GameObject nodeObj2 = GameManager.instance.dataScript.GetNodeObject(node2);
             if (nodeObj2 != null)
             {
                 Node node = nodeObj2.GetComponent<Node>();
-                security = node.security < security ? node.security : security;
+                security = node.Security < security ? node.Security : security;
             }
             if (security > 0)
             {

@@ -33,7 +33,12 @@ public class ActorManager : MonoBehaviour
         InitialiseActors(numOfActorsTotal);
     }
 
-    //Called when events happen
+    /// <summary>
+    /// handles events
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
     public void OnEvent(EventType eventType, Component Sender, object Param = null)
     {
         //Detect event type
@@ -46,6 +51,15 @@ public class ActorManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
+    }
+
+    /// <summary>
+    /// deregisters events
+    /// </summary>
+    public void OnDisable()
+    {
+        EventManager.instance.RemoveEvent(EventType.NodeAction);
+        EventManager.instance.RemoveEvent(EventType.TargetAction);
     }
 
     /// <summary>
@@ -108,6 +122,17 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public Actor[] GetActors()
     { return arrayOfActors; }
+
+    /// <summary>
+    /// Get specific actor
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public Actor GetActor(int slotID)
+    {
+        Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
+        return arrayOfActors[slotID];
+    }
 
     /// <summary>
     /// returns type of Actor, eg. 'Fixer', based on slotID (0 to 3)
@@ -187,7 +212,25 @@ public class ActorManager : MonoBehaviour
             if (nodeID == playerID)
             { playerPresent = "You are present at the node"; }
             else { playerPresent = "You are NOT present at the node"; }
-            //loop actors currently in game
+
+            //Does the Node have a target attached? -> added first
+            if (node.TargetID >= 0)
+            {
+                EventButtonDetails targetDetails = null;
+
+                targetDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "Target",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = playerPresent,
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, "Placeholder Target tooltip", colourEnd),
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
+                };
+                tempList.Add(targetDetails);
+            }
+
+            //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
             foreach (Actor actor in arrayOfActors)
             {
                 proceedFlag = true;
@@ -199,6 +242,7 @@ public class ActorManager : MonoBehaviour
                     {
                         //get node action
                         tempAction = actor.arc.nodeAction;
+                        
                         if (tempAction != null)
                         {
                             //effects
@@ -237,12 +281,19 @@ public class ActorManager : MonoBehaviour
                                 else { builder.Append(string.Format("{0}{1} Renown +1{2}", colourRed, actor.arc.name, colourEnd)); }
 
                                 //Outcome window details -> Placeholder test data
-                                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails() {
+                                /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails()
+                                {
                                     textTop = string.Format("{0} has worked their magic on the {1} node", actor.arc.name, node.arc.name),
                                     textBottom = string.Format("Security -1{0}{1} Renown +1", "\n", actor.arc.name),
-                                    sprite = actor.arc.actionSprite
-                                };
-                                
+                                    sprite = actor.arc.actionSprite,
+                                };*/
+
+                                //Details to pass on for processing via button click
+                                ModalActionDetails actionDetails = new ModalActionDetails() { };
+                                actionDetails.NodeID = nodeID;
+                                actionDetails.ActorSlotID = actor.SlotID;
+                                //actionDetails.EventType = actor.arc.actionEvent;
+
                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
                                 details = new EventButtonDetails()
                                 {
@@ -251,7 +302,7 @@ public class ActorManager : MonoBehaviour
                                     buttonTooltipMain = tempAction.tooltipText,
                                     buttonTooltipDetail = builder.ToString(),
                                     //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails); }
+                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
                                 };
                             }
                         }
@@ -274,6 +325,7 @@ public class ActorManager : MonoBehaviour
                 if (details != null)
                 { tempList.Add(details); }
             }
+
             //Cancel button is added last
             EventButtonDetails cancelDetails = null;
             if (infoBuilder.Length > 0)
@@ -284,7 +336,8 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = playerPresent,
                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
-                    //action = GameManager.instance.actionMenuScript.CloseActionMenu
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
                 };
             }
             else
@@ -295,7 +348,8 @@ public class ActorManager : MonoBehaviour
                     buttonTitle = "CANCEL",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = playerPresent,
-                    //action = GameManager.instance.actionMenuScript.CloseActionMenu
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
                 };
             }
             tempList.Add(cancelDetails);

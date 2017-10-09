@@ -10,11 +10,13 @@ using UnityEditor;
 #endif
 
 public enum GameState { Normal, ModalOutcome, ModalActionMenu}
-public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count };
-public enum NodeType { Normal, Highlight, Active, Player, Count };
-public enum Side { Authority, Rebel };
+public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count }
+public enum NodeType { Normal, Highlight, Active, Player, Count }
+public enum Side { Authority, Rebel }
 public enum Comparison { None, LessThan, GreaterThan, EqualTo}
-public enum EffectType { None, NodeStability, NodeSecurity, NodeSupport, NumRecruits, NumTeams, NumTracers, NumGear, TargetInfo}     //Action Effects
+public enum Result { None, Add, Subtract, EqualTo}
+public enum EffectCriteria { None, NodeStability, NodeSecurity, NodeSupport, NumRecruits, NumTeams, NumTracers, NumGear, TargetInfo}     //Action Effects
+public enum EffectOutcome { None, NodeStability, NodeSecurity, NodeSupport, Recruit, NeutraliseTeam, AddTracer, GetGear, GetTargetInfo, SpreadChaos }
 
 
 /// <summary>
