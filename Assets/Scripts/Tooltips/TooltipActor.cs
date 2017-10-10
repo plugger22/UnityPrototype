@@ -4,6 +4,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using gameAPI;
 
 /// <summary>
 /// Actor based tooltip, reference static instance in GameManager

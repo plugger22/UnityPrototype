@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using gameAPI;
 
 /// <summary>
 /// Handles all node related matters
@@ -17,7 +18,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = 0;                    //nodeID of player
-    [HideInInspector] public int numOfNodeArcs;                     //total number of possible nodeArcs
+    //public int NumOfNodeArcs { get; set; }                          //total number of possible nodeArcs
     [HideInInspector] public bool nodeRedraw = false;               //if true a node redraw is triggered in Update
 
     private void Awake()

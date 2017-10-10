@@ -5,6 +5,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using gameAPI;
 
 /// <summary>
 /// Node based tooltip

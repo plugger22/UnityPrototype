@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace modalAPI
 {
     /// <summary>
-    /// Standard Event button details
+    /// Standard Event button details -> part of Modal Panel Details below
     /// </summary>
     public class EventButtonDetails
     {
@@ -14,6 +14,7 @@ namespace modalAPI
         public string buttonTooltipHeader;
         public string buttonTooltipMain;
         public string buttonTooltipDetail;
+        //public ActionEffect renownEffect;
         public UnityAction action;
     }
 
@@ -38,6 +39,7 @@ namespace modalAPI
         public int NodeID { get; set; }
         public int ActorSlotID { get; set; }
         public EventType EventType { get; set; }
+        public ActionEffect RenownEffect { get; set; }
     }
 
 

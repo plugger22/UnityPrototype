@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using modalAPI;
+using gameAPI;
 
 
 public class Node : MonoBehaviour
 {
     //NOTE -> LevelManager.arrayOfActiveNodes stores access data, eg. which nodes are active for which actor?
 
-    public int nodeID;                                  //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
+    public int NodeID { get; set; }                     //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     public Material _Material { get; private set; }     //material renderer uses to draw node
     public string NodeName { get; set; }                //name of node, eg. "Downtown Bronx"
     public NodeArc arc;                                 //archetype type
@@ -88,7 +89,7 @@ public class Node : MonoBehaviour
         if (GameManager.instance.IsBlocked() == false)
         {
             //highlight current node
-            GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
+            GameManager.instance.nodeScript.ToggleNodeHighlight(NodeID);
             //exit any tooltip
             if (onMouseFlag == true)
             {
@@ -99,11 +100,11 @@ public class Node : MonoBehaviour
             //Action Menu
             ModalPanelDetails details = new ModalPanelDetails()
             {
-                nodeID = nodeID,
+                nodeID = NodeID,
                 nodeName = this.NodeName,
-                nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), nodeID),
+                nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), NodeID),
                 nodePos = transform.position,
-                listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(nodeID)
+                listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(NodeID)
             };
             //activate menu
             GameManager.instance.actionMenuScript.SetActionMenu(details);
@@ -155,7 +156,7 @@ public class Node : MonoBehaviour
                 //Transform transform = GetComponent<Transform>();
                 GameManager.instance.tooltipNodeScript.SetTooltip(
                     NodeName,
-                    string.Format("{0} ID {1}", arc.name, nodeID),
+                    string.Format("{0} ID {1}", arc.name, NodeID),
                     activeList,
                     new int[] { Stability, Support, Security },
                     targetList,
@@ -185,7 +186,7 @@ public class Node : MonoBehaviour
         int limit = GameManager.instance.actorScript.numOfActorsTotal;
         for (int i = 0; i < limit; i++)
         {
-            if (GameManager.instance.levelScript.CheckNodeActive(nodeID, i))
+            if (GameManager.instance.levelScript.CheckNodeActive(NodeID, i))
             {
                 tempList.Add(GameManager.instance.actorScript.GetActorType(i));
             }

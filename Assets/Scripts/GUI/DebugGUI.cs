@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using modalAPI;
+using gameAPI;
 
 /// <summary>
 /// debug GUI, on demand (HotKey 'D' -> On, HotKey 'H' -> Off)

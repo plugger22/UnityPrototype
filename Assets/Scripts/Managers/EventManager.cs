@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Enum defining all possible game events
-//More events should be added to the list
-//order independent
-public enum EventType {
+//Event Manager -> Enum defining all possible game events, order independent
+public enum EventType
+{
     //Options
     ChangeColour,
     ChangeSide,
@@ -18,16 +17,7 @@ public enum EventType {
     //action menu
     NodeAction,
     TargetAction
-    /*ActionPlanner,
-    ActionObserver,
-    ActionHacker,
-    ActionHeavy,
-    ActionRecruiter,
-    ActionOperator,
-    ActionSpinner,
-    ActionAnarchist,
-    ActionFixer*/
-}; 
+};
 
 //EventManager to send events to listeners
 //Works with IListener implementations

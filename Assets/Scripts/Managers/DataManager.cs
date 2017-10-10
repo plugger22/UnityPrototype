@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using gameAPI;
 using Random = UnityEngine.Random;
 
@@ -12,9 +13,11 @@ using Random = UnityEngine.Random;
 public class DataManager : MonoBehaviour
 {
     //master lists 
-    public List<ActorArc> listOfAllActorArcs = new List<ActorArc>();
-    public List<NodeArc> listOfAllNodeArcs = new List<NodeArc>();
-    public List<Trait> listOfAllTraits = new List<Trait>();
+    private List<ActorArc> listOfAllActorArcs = new List<ActorArc>();
+    private List<Trait> listOfAllTraits = new List<Trait>();
+
+    //for fast access
+    private ActionEffect[] arrayOfRenownEffects = new ActionEffect[] { null, null, null, null }; //indexes correspond to enum 'RenownEffect'
     
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
     public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
@@ -29,7 +32,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
-    //private Dictionary<int, ActionEffect> dictOfEffects = new Dictionary<int, ActionEffect>();      //Key -> effectID, Value -> ActionEffect
+    private Dictionary<int, ActionEffect> dictOfEffects = new Dictionary<int, ActionEffect>();      //Key -> effectID, Value -> ActionEffect
 
     /// <summary>
     /// default constructor
@@ -38,54 +41,150 @@ public class DataManager : MonoBehaviour
     {
         int counter = 0;
         int length;
-        //Node Arcs
-        foreach(NodeArc arc in listOfAllNodeArcs)
+        string path;
+        //
+        // - - - Node Arcs - - -
+        //
+        counter = 0;
+        //get GUID of all SO Trait Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var nodeArcGUID = AssetDatabase.FindAssets("t:NodeArc");
+        foreach (var guid in nodeArcGUID)
         {
-            //assign a unique zero based number & get first four letters of name, in CAPS, as the tag
-            arc.NodeArcID = counter++;
-            length = arc.name.Length;
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object nodeArcObject = AssetDatabase.LoadAssetAtPath(path, typeof(NodeArc));
+            //assign a zero based unique ID number
+            NodeArc nodeArc = nodeArcObject as NodeArc;
+            nodeArc.NodeArcID = counter++;
+            //generate a four letter (first 4 of name in CAPS) as a short form tag
+            length = nodeArc.name.Length;
             length = length >= 4 ? 4 : length;
-            arc.NodeTag = arc.name.Substring(0, length).ToUpper();
-            
-            /*Debug.Log(string.Format("Node {0}, nodeArcID {1}, nodeTag {2}{3}", arc.name, arc.nodeArcID, arc.nodeTag, "\n"));*/
-
+            nodeArc.NodeArcTag = nodeArc.name.Substring(0, length).ToUpper();
             //add to dictionary
             try
-            { dictOfNodeArcs.Add(arc.NodeArcID, arc); }
+            { dictOfNodeArcs.Add(nodeArc.NodeArcID, nodeArc); }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Node Arc (Null)"); }
+            { Debug.LogError("Invalid NodeArc (Null)"); }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid (duplicate) nodeArcID \"{0}\" for Node \"{1}\"", arc.NodeArcID, arc.name)); }
+            { Debug.LogError(string.Format("Invalid NodeArc (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeArc.name)); }
         }
-        Debug.Log("Node Arcs total -> " + listOfAllNodeArcs.Count + "\n");
-        GameManager.instance.nodeScript.numOfNodeArcs = counter;
-        //Traits
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfNodeArcs has {0} entries{1}", counter, "\n"));
+
+        //
+        // - - - Traits - - -
+        //
         counter = 0;
-        foreach(Trait trait in listOfAllTraits)
+        //get GUID of all SO Trait Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var traitGUID = AssetDatabase.FindAssets("t:Trait");
+        foreach (var guid in traitGUID)
         {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object traitObject = AssetDatabase.LoadAssetAtPath(path, typeof(Trait));
+            //assign a zero based unique ID number
+            Trait trait = traitObject as Trait;
             trait.TraitID = counter++;
+            //add to dictionary
+            try
+            {
+                dictOfTraits.Add(trait.TraitID, trait);
+                //add to list
+                listOfAllTraits.Add(trait);
+            }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Trait (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); }
         }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfTraits has {0} entries{1}", counter, "\n"));
+        //
+        // - - - Actor Arcs - - 
+        //
         counter = 0;
-        //Actor Arcs
-        foreach (ActorArc arc in listOfAllActorArcs)
+        //get GUID of all SO ActorArc Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var arcGUID = AssetDatabase.FindAssets("t:ActorArc");
+        foreach (var guid in arcGUID)
         {
-            //assign a zero based unique number & get first four letters of name, in CAPS, as the tag
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object arcObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActorArc));
+            //assign a zero based unique ID number
+            ActorArc arc = arcObject as ActorArc;
             arc.ActorArcID = counter++;
+            //generate a four letter (first 4 of name in CAPS) as a short form tag
             length = arc.actorName.Length;
             length = length >= 4 ? 4 : length;
             arc.ActorTag = arc.actorName.Substring(0, length).ToUpper();
-
-            /*Debug.Log(string.Format("Actor {0}, actorArcID {1}, actorTag {2}{3}", arc.name, arc.actorArcID, arc.actorTag, "\n"));*/
-
             //add to dictionary
             try
-            { dictOfActorArcs.Add(arc.ActorArcID, arc); }
+            {
+                dictOfActorArcs.Add(arc.ActorArcID, arc);
+                //add to list
+                listOfAllActorArcs.Add(arc);
+
+            }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Actor Arc (Null)"); }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid (duplicate) actorArcID \"{0}\" for Actor \"{1}\"", arc.ActorArcID, arc.actorName)); }
+            { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); }
         }
-        Debug.Log("Actor Arcs total -> " + listOfAllActorArcs.Count + "\n");
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfActorArcs has {0} entries{1}", counter, "\n"));
+        //
+        // - - - Action Effects - - -
+        //
+        counter = 0;
+        //get GUID of all SO ActionEffect Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var effectsGUID = AssetDatabase.FindAssets("t:ActionEffect");
+        foreach (var guid in effectsGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object effectObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActionEffect));
+            //assign a zero based Unique ID number
+            ActionEffect effect = effectObject as ActionEffect;
+            effect.EffectID = counter++;
+            //add to dictionary
+            try
+            {
+                dictOfEffects.Add(effect.EffectID, effect);
+                //identify special Renown Effects for fast access (need 4, Player +/- & Actor +/-). Store Effects in arrayOfRenownEffects. Enum RenownEffect.
+                switch(effect.effectOutcome)
+                {
+                    case EffectOutcome.ActorRenown:
+                        switch(effect.effectResult)
+                        {
+                            case Result.Add:
+                                arrayOfRenownEffects[(int)RenownEffect.ActorRaise] = effect;
+                                break;
+                            case Result.Subtract:
+                                arrayOfRenownEffects[(int)RenownEffect.ActorLower] = effect;
+                                break;
+                        }
+                        break;
+                    case EffectOutcome.PlayerRenown:
+                        switch (effect.effectResult)
+                        {
+                            case Result.Add:
+                                arrayOfRenownEffects[(int)RenownEffect.PlayerRaise] = effect;
+                                break;
+                            case Result.Subtract:
+                                arrayOfRenownEffects[(int)RenownEffect.PlayerLower] = effect;
+                                break;
+                        }
+                        break;
+                }
+
+            }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Action Effect (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid ActionEffect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfEffects (ActionEffects) has {0} entries{1}", counter, "\n"));
     }
 
 
@@ -244,8 +343,15 @@ public class DataManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid (duplicate) nodeID \"{0}\" for Node \"{1}\"", nodeID, nodeObj.name)); }
     }
 
-
-
+    /// <summary>
+    /// returns one of four specific Renown Effects (select 
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    public ActionEffect GetRenownEffect(RenownEffect effect)
+    {
+        return arrayOfRenownEffects[(int)effect];
+    }
 
 
 }

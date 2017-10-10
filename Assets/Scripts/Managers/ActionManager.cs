@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using modalAPI;
 using gameAPI;
+using System.Text;
 
 /// <summary>
 /// Handles all action related matters
@@ -218,7 +219,13 @@ public class ActionManager : MonoBehaviour
                         List<ActionEffect> listOfEffects = action.GetEffects();
                         if (listOfEffects.Count > 0)
                         {
-                            //process effects
+                            //two builders for top and bottom texts
+                            StringBuilder builderTop = new StringBuilder();
+                            StringBuilder builderBottom = new StringBuilder();
+                            builderTop.Append(string.Format("{0}, ID {1}{2}", node.NodeName, node.NodeID, "\n\n"));
+                            //
+                            // - - - Process effects
+                            //
                             foreach (ActionEffect effect in listOfEffects)
                             {
                                 switch(effect.effectOutcome)
@@ -229,22 +236,22 @@ public class ActionManager : MonoBehaviour
                                             case Result.Add:
                                                 node.Security += effect.effectValue;
                                                 node.Security = Mathf.Min(3, node.Security);
-                                                outcomeDetails.textTop = string.Format("The security system has been swept and strengthened");
-                                                outcomeDetails.textBottom = string.Format("Node Security +{0}", effect.effectValue);
+                                                builderTop.Append(string.Format("The security system has been swept and strengthened"));
+                                                builderBottom.Append(string.Format("Node Security +{0}", effect.effectValue));
                                                 break;
                                             case Result.Subtract:
                                                 node.Security -= effect.effectValue;
                                                 node.Security = Mathf.Max(0, node.Security);
-                                                outcomeDetails.textTop = string.Format("The security system has been successfully hacked", node.NodeName);
-                                                outcomeDetails.textBottom = string.Format("Node Security -{0}", effect.effectValue);
+                                                builderTop.Append(string.Format("The security system has been successfully hacked", node.NodeName));
+                                                builderBottom.Append(string.Format("Node Security -{0}", effect.effectValue));
                                                 break;
                                             case Result.EqualTo:
                                                 //keep within allowable parameters
                                                 effect.effectValue = Mathf.Min(3, effect.effectValue);
                                                 effect.effectValue = Mathf.Max(0, effect.effectValue);
                                                 node.Security = effect.effectValue;
-                                                outcomeDetails.textTop = string.Format("The security system has been reset", node.NodeName);
-                                                outcomeDetails.textBottom = string.Format("Node Security now {0}", node.Security);
+                                                builderTop.Append(string.Format("The security system has been reset", node.NodeName));
+                                                builderBottom.Append(string.Format("Node Security now {0}", node.Security));
                                                 break;
                                             default:
                                                 Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
@@ -274,7 +281,7 @@ public class ActionManager : MonoBehaviour
                                     case EffectOutcome.NeutraliseTeam:
 
                                         break;
-                                    case EffectOutcome.SpreadChaos:
+                                    case EffectOutcome.SpreadInstability:
 
                                         break;
                                     default:
@@ -283,6 +290,58 @@ public class ActionManager : MonoBehaviour
                                         break;
                                 }
                                 if (errorFlag == true) { break; }
+                                else
+                                {
+                                    //
+                                    // - - - Renown - - - 
+                                    //
+                                    if (details.RenownEffect != null)
+                                    {
+                                        switch (details.RenownEffect.effectOutcome)
+                                        {
+                                            case EffectOutcome.PlayerRenown:
+                                                switch (details.RenownEffect.effectResult)
+                                                {
+                                                    case Result.Add:
+                                                        GameManager.instance.playerScript.Renown++;
+                                                        builderBottom.AppendLine();
+                                                        builderBottom.Append(details.RenownEffect.description);
+                                                        break;
+                                                    case Result.Subtract:
+                                                        if (GameManager.instance.playerScript.Renown > 0)
+                                                        { GameManager.instance.playerScript.Renown--; }
+                                                        builderBottom.AppendLine();
+                                                        builderBottom.Append(details.RenownEffect.description);
+                                                        break;
+                                                }
+                                                break;
+                                            case EffectOutcome.ActorRenown:
+                                                switch (details.RenownEffect.effectResult)
+                                                {
+                                                    case Result.Add:
+                                                        actor.Renown++;
+                                                        builderBottom.AppendLine();
+                                                        builderBottom.Append(string.Format("{0} {1}", actor.Name, details.RenownEffect.description));
+                                                        break;
+                                                    case Result.Subtract:
+                                                        if (actor.Renown > 0)
+                                                        { actor.Renown--; }
+                                                        builderBottom.AppendLine();
+                                                        builderBottom.Append(string.Format("{0} {1}", actor.Name, details.RenownEffect.description));
+                                                        break;
+                                                }
+                                                break;
+                                                break;
+                                            default:
+                                                Debug.LogError(string.Format("Invalid Renown Effect \"{0}\"", details.RenownEffect.effectOutcome));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                    }
+                                    //texts
+                                    outcomeDetails.textTop = builderTop.ToString();
+                                    outcomeDetails.textBottom = builderBottom.ToString();
+                                }
                             }
                         }
                         else

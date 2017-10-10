@@ -212,7 +212,9 @@ public class ActorManager : MonoBehaviour
             if (nodeID == playerID)
             { playerPresent = "You are present at the node"; }
             else { playerPresent = "You are NOT present at the node"; }
-
+            //
+            // - - -  Target - - -
+            //
             //Does the Node have a target attached? -> added first
             if (node.TargetID >= 0)
             {
@@ -229,16 +231,22 @@ public class ActorManager : MonoBehaviour
                 };
                 tempList.Add(targetDetails);
             }
-
+            //
+            // - - - Actors - - - 
+            //
+            ActionEffect playerRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.PlayerRaise);
+            ActionEffect actorRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.ActorRaise);
+            ActionEffect actualRenownEffect;
             //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
             foreach (Actor actor in arrayOfActors)
             {
                 proceedFlag = true;
                 details = null;
+                actualRenownEffect = null;
                 //actor active?
                 if (actor.isActive == true)
                 {
-                    if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, actor.SlotID) == true || nodeID == playerID )
+                    if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, actor.SlotID) == true || nodeID == playerID )
                     {
                         //get node action
                         tempAction = actor.arc.nodeAction;
@@ -277,21 +285,21 @@ public class ActorManager : MonoBehaviour
                                 //renown to player if player at node, otherwise rebel
                                 builder.AppendLine();
                                 if (nodeID == playerID)
-                                { builder.Append(string.Format("{0}Player Renown +1{1}", colourBlue, colourEnd)); }
-                                else { builder.Append(string.Format("{0}{1} Renown +1{2}", colourRed, actor.arc.name, colourEnd)); }
-
-                                //Outcome window details -> Placeholder test data
-                                /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails()
                                 {
-                                    textTop = string.Format("{0} has worked their magic on the {1} node", actor.arc.name, node.arc.name),
-                                    textBottom = string.Format("Security -1{0}{1} Renown +1", "\n", actor.arc.name),
-                                    sprite = actor.arc.actionSprite,
-                                };*/
+                                    actualRenownEffect = playerRenownEffect;
+                                    builder.Append(string.Format("{0}{1}{2}", colourBlue, actualRenownEffect.description, colourEnd));
+                                }
+                                else
+                                {
+                                    actualRenownEffect = actorRenownEffect;
+                                    builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, actualRenownEffect.description, colourEnd));
+                                }
 
                                 //Details to pass on for processing via button click
                                 ModalActionDetails actionDetails = new ModalActionDetails() { };
                                 actionDetails.NodeID = nodeID;
                                 actionDetails.ActorSlotID = actor.SlotID;
+                                actionDetails.RenownEffect = actualRenownEffect;
                                 //actionDetails.EventType = actor.arc.actionEvent;
 
                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
@@ -325,7 +333,9 @@ public class ActorManager : MonoBehaviour
                 if (details != null)
                 { tempList.Add(details); }
             }
-
+            //
+            // - - - Cancel
+            //
             //Cancel button is added last
             EventButtonDetails cancelDetails = null;
             if (infoBuilder.Length > 0)
