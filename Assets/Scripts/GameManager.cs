@@ -110,8 +110,8 @@ public class GameManager : MonoBehaviour
         //setup game
         InitialiseGame();
         //set side
-        GameManager.instance.optionScript.PlayerSide = Side.Rebel;
-        GameManager.instance.optionScript.ColourOption = ColourScheme.Normal;
+        optionScript.PlayerSide = Side.Rebel;
+        optionScript.ColourOption = ColourScheme.Normal;
         //GUI elements
         /*tooltipNodeScript.InitialiseTooltip(optionScript.PlayerSide);
         tooltipActorScript.InitialiseTooltip(optionScript.PlayerSide);
@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
         //sideScript.Initialise();
         dataScript.Initialise();
         actorScript.Initialise();
+        actionScript.Initialise();
         levelScript.SetUpLevel();
         guiScript.Initialise(actorScript.GetActors());
         inputScript.GameState = GameState.Normal;

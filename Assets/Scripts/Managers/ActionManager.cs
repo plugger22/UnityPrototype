@@ -14,12 +14,21 @@ public class ActionManager : MonoBehaviour
     public Sprite errorSprite;
     public Sprite targetSprite;
 
+    //colour palette for Modal Outcome
+    private string colourOutcome1; //good effect Rebel / bad effect Authority
+    private string colourOutcome2; //bad effect Authority / bad effect Rebel
+    private string colourOutcome3; //used when node is EqualsTo, eg. reset
+    private string colourNormal;
+    private string colourDefault;
+    private string colourError;
+    private string colourEnd;
 
-    private void Start()
+    public void Initialise()
     {
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
     /// <summary>
@@ -40,6 +49,9 @@ public class ActionManager : MonoBehaviour
             case EventType.TargetAction:
                 ProcessNodeTarget((int)Param);
                 break;
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -52,6 +64,29 @@ public class ActionManager : MonoBehaviour
     public void OnDisable()
     {
         EventManager.instance.RemoveEvent(EventType.OpenOutcomeWindow);
+    }
+
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        switch(GameManager.instance.optionScript.PlayerSide)
+        {
+            case Side.Rebel:
+                colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+                break;
+            case Side.Authority:
+                colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+                colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                break;
+        }
+        colourOutcome3 = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourError = GameManager.instance.colourScript.GetColour(ColourType.error);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -197,8 +232,8 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
-        outcomeDetails.textTop = "What, nothing happened?";
-        outcomeDetails.textBottom = "No effect";
+        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
         outcomeDetails.sprite = errorSprite;
         //resolve action
         if (details != null)
@@ -222,7 +257,9 @@ public class ActionManager : MonoBehaviour
                             //two builders for top and bottom texts
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
-                            builderTop.Append(string.Format("{0}, ID {1}{2}", node.NodeName, node.NodeID, "\n\n"));
+                            builderTop.Append(string.Format("{0}{1}, ID {2}{3}", colourNormal, node.NodeName, node.NodeID, colourEnd));
+                            builderTop.AppendLine();
+                            builderTop.AppendLine();
                             //
                             // - - - Process effects
                             //
@@ -236,22 +273,22 @@ public class ActionManager : MonoBehaviour
                                             case Result.Add:
                                                 node.Security += effect.effectValue;
                                                 node.Security = Mathf.Min(3, node.Security);
-                                                builderTop.Append(string.Format("The security system has been swept and strengthened"));
-                                                builderBottom.Append(string.Format("Node Security +{0}", effect.effectValue));
+                                                builderTop.Append(string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.effectValue, colourEnd));
                                                 break;
                                             case Result.Subtract:
                                                 node.Security -= effect.effectValue;
                                                 node.Security = Mathf.Max(0, node.Security);
-                                                builderTop.Append(string.Format("The security system has been successfully hacked", node.NodeName));
-                                                builderBottom.Append(string.Format("Node Security -{0}", effect.effectValue));
+                                                builderTop.Append(string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.effectValue, colourEnd));
                                                 break;
                                             case Result.EqualTo:
                                                 //keep within allowable parameters
                                                 effect.effectValue = Mathf.Min(3, effect.effectValue);
                                                 effect.effectValue = Mathf.Max(0, effect.effectValue);
                                                 node.Security = effect.effectValue;
-                                                builderTop.Append(string.Format("The security system has been reset", node.NodeName));
-                                                builderBottom.Append(string.Format("Node Security now {0}", node.Security));
+                                                builderTop.Append(string.Format("{0}The security system has been reset{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Security now {1}{2}", colourOutcome3, node.Security, colourEnd));
                                                 break;
                                             default:
                                                 Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
@@ -261,10 +298,64 @@ public class ActionManager : MonoBehaviour
                                         outcomeDetails.sprite = actor.arc.actionSprite;
                                         break;
                                     case EffectOutcome.NodeStability:
-                                        node.Stability--;
+                                        switch (effect.effectResult)
+                                        {
+                                            case Result.Add:
+                                                node.Stability += effect.effectValue;
+                                                node.Stability = Mathf.Min(3, node.Stability);
+                                                builderTop.Append(string.Format("{0}Law Enforcement teams have stabilised the situation{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Stability +{1}{2}", colourOutcome2, effect.effectValue, colourEnd));
+                                                break;
+                                            case Result.Subtract:
+                                                node.Stability -= effect.effectValue;
+                                                node.Stability = Mathf.Max(0, node.Stability);
+                                                builderTop.Append(string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.effectValue, colourEnd));
+                                                break;
+                                            case Result.EqualTo:
+                                                //keep within allowable parameters
+                                                effect.effectValue = Mathf.Min(3, effect.effectValue);
+                                                effect.effectValue = Mathf.Max(0, effect.effectValue);
+                                                node.Stability = effect.effectValue;
+                                                builderTop.Append(string.Format("{0}Civil obedience has been reset to a new level{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Stability now {1}{2}", colourOutcome3, node.Stability, colourEnd));
+                                                break;
+                                            default:
+                                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        outcomeDetails.sprite = actor.arc.actionSprite;
                                         break;
                                     case EffectOutcome.NodeSupport:
-                                        node.Support--;
+                                        switch (effect.effectResult)
+                                        {
+                                            case Result.Add:
+                                                node.Support += effect.effectValue;
+                                                node.Support = Mathf.Min(3, node.Support);
+                                                builderTop.Append(string.Format("{0}People are flocking to the Rebel cause{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.effectValue, colourEnd));
+                                                break;
+                                            case Result.Subtract:
+                                                node.Support -= effect.effectValue;
+                                                node.Support = Mathf.Max(0, node.Support);
+                                                builderTop.Append(string.Format("{0}The Rebel cause is losing popularity{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.effectValue, colourEnd));
+                                                break;
+                                            case Result.EqualTo:
+                                                //keep within allowable parameters
+                                                effect.effectValue = Mathf.Min(3, effect.effectValue);
+                                                effect.effectValue = Mathf.Max(0, effect.effectValue);
+                                                node.Support = effect.effectValue;
+                                                builderTop.Append(string.Format("{0}Support for te Rebel cause has been reset to a new level{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Node Support now {1}{2}", colourOutcome3, node.Support, colourEnd));
+                                                break;
+                                            default:
+                                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        outcomeDetails.sprite = actor.arc.actionSprite;
                                         break;
                                     case EffectOutcome.Recruit:
 
@@ -297,47 +388,53 @@ public class ActionManager : MonoBehaviour
                                     //
                                     if (details.RenownEffect != null)
                                     {
-                                        switch (details.RenownEffect.effectOutcome)
+                                        if (effect.effectOutcome > EffectOutcome.None)
                                         {
-                                            case EffectOutcome.PlayerRenown:
-                                                switch (details.RenownEffect.effectResult)
-                                                {
-                                                    case Result.Add:
-                                                        GameManager.instance.playerScript.Renown++;
-                                                        builderBottom.AppendLine();
-                                                        builderBottom.Append(details.RenownEffect.description);
-                                                        break;
-                                                    case Result.Subtract:
-                                                        if (GameManager.instance.playerScript.Renown > 0)
-                                                        { GameManager.instance.playerScript.Renown--; }
-                                                        builderBottom.AppendLine();
-                                                        builderBottom.Append(details.RenownEffect.description);
-                                                        break;
-                                                }
-                                                break;
-                                            case EffectOutcome.ActorRenown:
-                                                switch (details.RenownEffect.effectResult)
-                                                {
-                                                    case Result.Add:
-                                                        actor.Renown++;
-                                                        builderBottom.AppendLine();
-                                                        builderBottom.Append(string.Format("{0} {1}", actor.Name, details.RenownEffect.description));
-                                                        break;
-                                                    case Result.Subtract:
-                                                        if (actor.Renown > 0)
-                                                        { actor.Renown--; }
-                                                        builderBottom.AppendLine();
-                                                        builderBottom.Append(string.Format("{0} {1}", actor.Name, details.RenownEffect.description));
-                                                        break;
-                                                }
-                                                break;
-                                                break;
-                                            default:
-                                                Debug.LogError(string.Format("Invalid Renown Effect \"{0}\"", details.RenownEffect.effectOutcome));
-                                                errorFlag = true;
-                                                break;
+                                            switch (details.RenownEffect.effectOutcome)
+                                            {
+                                                case EffectOutcome.PlayerRenown:
+                                                    switch (details.RenownEffect.effectResult)
+                                                    {
+                                                        case Result.Add:
+                                                            GameManager.instance.playerScript.Renown++;
+                                                            builderBottom.AppendLine();
+                                                            builderBottom.Append(string.Format("{0}{1}{2}", colourOutcome1, details.RenownEffect.description, colourEnd));
+                                                            break;
+                                                        case Result.Subtract:
+                                                            if (GameManager.instance.playerScript.Renown >= details.RenownEffect.effectValue)
+                                                            { GameManager.instance.playerScript.Renown -= details.RenownEffect.effectValue; }
+                                                            builderBottom.AppendLine();
+                                                            builderBottom.Append(string.Format("{0}{1}{2}", colourOutcome2, details.RenownEffect.description, colourEnd));
+                                                            break;
+                                                    }
+                                                    break;
+                                                case EffectOutcome.ActorRenown:
+                                                    switch (details.RenownEffect.effectResult)
+                                                    {
+                                                        case Result.Add:
+                                                            actor.Renown++;
+                                                            builderBottom.AppendLine();
+                                                            builderBottom.Append(string.Format("{0}{1} {2}{3}", colourOutcome2, actor.Name, details.RenownEffect.description, colourEnd));
+                                                            break;
+                                                        case Result.Subtract:
+                                                            if (actor.Renown >= details.RenownEffect.effectValue)
+                                                            { actor.Renown -= details.RenownEffect.effectValue; }
+                                                            builderBottom.AppendLine();
+                                                            builderBottom.Append(string.Format("{0}{1} {2}{3}", colourOutcome1, actor.Name, details.RenownEffect.description, colourEnd));
+                                                            break;
+                                                    }
+                                                    break;
+                                                default:
+                                                    Debug.LogError(string.Format("Invalid Renown Effect \"{0}\"", details.RenownEffect.effectOutcome));
+                                                    errorFlag = true;
+                                                    break;
+                                            }
                                         }
+                                        else
+                                        { Debug.LogError("EffectOutcome invalid (\"None\")"); errorFlag = true;}
                                     }
+                                    else
+                                    { Debug.LogError("Invalid RenownEffect (null)"); errorFlag = true; }
                                     //texts
                                     outcomeDetails.textTop = builderTop.ToString();
                                     outcomeDetails.textBottom = builderBottom.ToString();

@@ -32,8 +32,9 @@ public class OptionManager : MonoBehaviour
         set
         {
             _playerSide = value;
-            //POst notification - Player side has been changed
+            //POst notification - Player side has been changed, update colours as well
             EventManager.instance.PostNotification(EventType.ChangeSide, this, _playerSide);
+            EventManager.instance.PostNotification(EventType.ChangeColour, this);
             //GameManager.instance.sideScript.SwapSides(_playerSide);
             Debug.Log("OptionManager -> Player Side now " + _playerSide + "\n");
         }

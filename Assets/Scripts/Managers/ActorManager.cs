@@ -29,7 +29,7 @@ public class ActorManager : MonoBehaviour
     public void Initialise()
     {
         //event listener is registered in InitialiseActors() due to GameManager sequence.
-        EventManager.instance.AddListener(EventType.ChangeColour, this.OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         InitialiseActors(numOfActorsTotal);
     }
 

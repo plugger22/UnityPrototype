@@ -3,9 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//NOTE: DO NOT change the order of either colour enum!
-public enum ColourScheme { Normal, ColourBlind, Count }                                     
-public enum ColourType { sideRebel, sideAuthority, cancelHighlight, cancelNormal, actionEffect, dataGood, dataNeutral, dataBad, normalText, defaultText, nodeActive, Count}
+//Colour Manager -?NOTE: DO NOT change the order of either colour enum!
+public enum ColourScheme { Normal, ColourBlind, Count }
+public enum ColourType
+{
+    sideRebel, sideAuthority,
+    cancelHighlight, cancelNormal,
+    actionEffect,
+    dataGood, dataNeutral, dataBad,
+    normalText, defaultText,                            //normal is slight off yellow text, default is white
+    goodEffect, neutralEffect, badEffect,                              //outcome window effects
+    nodeActive,
+    error,
+    Count
+}
 
 /// <summary>
 /// Handles all colour related matters
@@ -28,9 +39,15 @@ public class ColourManager : MonoBehaviour
     //default Text
     public Colour[] normalText;                     //normal non-coloured text, eg. white equivalent
     public Colour[] defaultText;                    //default White text if no colour provided
+    //outcome Effects
+    public Colour[] goodEffect;
+    public Colour[] neutralEffect;
+    public Colour[] badEffect;
 
     //tool tip Node
     public Colour[] nodeActive;                     //active actors in Node
+    //error (global)
+    public Colour[] error;                          //error text
 
     private Colour[,] arrayOfColours;               //repositry of colourTypes
     private List<Colour[]> listOfColourTypes;       //facilitates automatic population of array
@@ -53,24 +70,12 @@ public class ColourManager : MonoBehaviour
             dataBad,
             normalText,
             defaultText,
-            nodeActive
+            goodEffect,
+            neutralEffect,
+            badEffect,
+            nodeActive,
+            error
         };
-
-        /*//generic tooltip
-        listOfColourTypes.Add(sideRebel);
-        listOfColourTypes.Add(sideAuthority);
-        listOfColourTypes.Add(cancelHighlight);
-        listOfColourTypes.Add(cancelNormal);
-        listOfColourTypes.Add(actionEffect);
-        //data
-        listOfColourTypes.Add(dataGood);
-        listOfColourTypes.Add(dataNeutral);
-        listOfColourTypes.Add(dataBad);
-        //default text
-        listOfColourTypes.Add(normalText);
-        listOfColourTypes.Add(defaultText);
-        //tool tip Node
-        listOfColourTypes.Add(nodeActive);*/
 
         //loop thorugh list and auto populate array
         int limit;
@@ -117,16 +122,5 @@ public class ColourManager : MonoBehaviour
 
     public string GetEndTag()
     { return "</color>"; }
-
-    /*/// <summary>
-    /// resets all colour palettes to the current colour scheme
-    /// </summary>
-    public void ChangeColourPalettes()
-    {
-        //GameManager.instance.actorScript.SetColours();
-        //GameManager.instance.tooltipNodeScript.SetColours();
-        //GameManager.instance.tooltipActorScript.SetColours();
-        //GameManager.instance.actionMenuScript.SetColours();
-    }*/
 
 }
