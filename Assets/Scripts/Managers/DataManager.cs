@@ -17,7 +17,7 @@ public class DataManager : MonoBehaviour
     private List<Trait> listOfAllTraits = new List<Trait>();
 
     //for fast access
-    private ActionEffect[] arrayOfRenownEffects = new ActionEffect[] { null, null, null, null }; //indexes correspond to enum 'RenownEffect'
+    private Effect[] arrayOfRenownEffects = new Effect[] { null, null, null, null }; //indexes correspond to enum 'RenownEffect'
     
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
     public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
-    private Dictionary<int, ActionEffect> dictOfEffects = new Dictionary<int, ActionEffect>();      //Key -> effectID, Value -> ActionEffect
+    private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();      //Key -> effectID, Value -> ActionEffect
 
     /// <summary>
     /// default constructor
@@ -46,7 +46,7 @@ public class DataManager : MonoBehaviour
         // - - - Node Arcs - - -
         //
         counter = 0;
-        //get GUID of all SO Trait Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        //get GUID of all SO Node Objects -> Note that I'm searching the entire database here so it's not folder dependant
         var nodeArcGUID = AssetDatabase.FindAssets("t:NodeArc");
         foreach (var guid in nodeArcGUID)
         {
@@ -137,15 +137,15 @@ public class DataManager : MonoBehaviour
         //
         counter = 0;
         //get GUID of all SO ActionEffect Objects -> Note that I'm searching the entire database here so it's not folder dependant
-        var effectsGUID = AssetDatabase.FindAssets("t:ActionEffect");
+        var effectsGUID = AssetDatabase.FindAssets("t:Effect");
         foreach (var guid in effectsGUID)
         {
             //get path
             path = AssetDatabase.GUIDToAssetPath(guid);
             //get SO
-            UnityEngine.Object effectObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActionEffect));
+            UnityEngine.Object effectObject = AssetDatabase.LoadAssetAtPath(path, typeof(Effect));
             //assign a zero based Unique ID number
-            ActionEffect effect = effectObject as ActionEffect;
+            Effect effect = effectObject as Effect;
             effect.EffectID = counter++;
             //add to dictionary
             try
@@ -348,7 +348,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>
-    public ActionEffect GetRenownEffect(RenownEffect effect)
+    public Effect GetRenownEffect(RenownEffect effect)
     {
         return arrayOfRenownEffects[(int)effect];
     }

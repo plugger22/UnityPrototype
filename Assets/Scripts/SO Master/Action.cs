@@ -13,7 +13,7 @@ public class Action : ScriptableObject
 
     public string tooltipText;                  //descriptive text
     public ActorArc intendedActor;              //for info purposes only to aid placing correct action with correct ActorArc
-    public List<ActionEffect> listOfEffects;    //effects of action
+    public List<Effect> listOfEffects;    //effects of action
 
     public int CoolDown { get; set; }          //if '0' then ready to go, otherwise # of turns remaining
 
@@ -21,6 +21,6 @@ public class Action : ScriptableObject
     /// get list of effects
     /// </summary>
     /// <returns></returns>
-    public List<ActionEffect> GetEffects()
+    public List<Effect> GetEffects()
     { return listOfEffects; }
 }

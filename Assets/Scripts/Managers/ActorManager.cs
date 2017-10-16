@@ -205,7 +205,7 @@ public class ActorManager : MonoBehaviour
         if (nodeObject != null)
         {
             Node node = nodeObject.GetComponent<Node>();
-            List<ActionEffect> listOfEffects = new List<ActionEffect>();
+            List<Effect> listOfEffects = new List<Effect>();
             Action tempAction;
             EventButtonDetails details;
             //player present ('Cancel' tooltip)
@@ -234,9 +234,9 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Actors - - - 
             //
-            ActionEffect playerRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.PlayerRaise);
-            ActionEffect actorRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.ActorRaise);
-            ActionEffect actualRenownEffect;
+            Effect playerRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.PlayerRaise);
+            Effect actorRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.ActorRaise);
+            Effect actualRenownEffect;
             //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
             foreach (Actor actor in arrayOfActors)
             {
@@ -260,9 +260,9 @@ public class ActorManager : MonoBehaviour
                             {
                                 for(int i = 0; i < listOfEffects.Count; i++)
                                 {
-                                    ActionEffect effect = listOfEffects[i];
+                                    Effect effect = listOfEffects[i];
                                     //check effect criteria is valid
-                                    effectCriteria = GameManager.instance.actionScript.CheckEffectCriteria(effect, nodeID);
+                                    effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
                                     if (effectCriteria == null)
                                     {
                                         //Effect criteria O.K -> tool tip text

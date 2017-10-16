@@ -39,7 +39,7 @@ namespace modalAPI
         public int NodeID { get; set; }
         public int ActorSlotID { get; set; }
         public EventType EventType { get; set; }
-        public ActionEffect RenownEffect { get; set; }
+        public Effect RenownEffect { get; set; }
     }
 
 

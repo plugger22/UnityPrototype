@@ -89,139 +89,6 @@ public class ActionManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
-    /// <summary>
-    /// checks whether effect criteria is valid. Returns 'null' if O.K and a tooltip explanation string if not
-    /// </summary>
-    /// <param name="effect"></param>
-    /// <returns></returns>
-    public string CheckEffectCriteria(ActionEffect effect, int nodeID = -1)
-    {
-        string result = null;
-        string compareTip = null;
-        Node node = null;
-
-
-        if (effect.criteriaEffect != EffectCriteria.None)
-        {
-            //Get node regardless of whether the effect is node related or not
-            if (nodeID > -1)
-            {
-                GameObject objNode = GameManager.instance.dataScript.GetNodeObject(nodeID);
-                if (objNode != null)
-                {
-                    node = objNode.GetComponent<Node>();
-                }
-                if (node != null)
-                {
-                    //effect type
-                    switch (effect.criteriaEffect)
-                    {
-                        case EffectCriteria.NodeSecurity:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.Security, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Security ";
-                                result += compareTip;
-                            }
-                            break;
-                        case EffectCriteria.NodeStability:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.Stability, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Stability ";
-                                result += compareTip;
-                            }
-                            break;
-                        case EffectCriteria.NodeSupport:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.Support, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Support ";
-                                result += compareTip;
-                            }
-                            break;
-                        case EffectCriteria.NumRecruits:
-                            compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.NumOfRecruits, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "maxxed Recruit allowance";
-                            }
-                            break;
-                        case EffectCriteria.NumTeams:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.NumOfTeams, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "no Teams present";
-                            }
-                            break;
-                        case EffectCriteria.NumTracers:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.NumOfTracers, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Tracers already present";
-                            }
-                            break;
-                        case EffectCriteria.TargetInfo:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.TargetID, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Full Info already";
-                            }
-                            break;
-                        case EffectCriteria.NumGear:
-                            compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.NumOfGear, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "maxxed Gear Allowance";
-                            }
-                            break;
-                        default:
-                            result = "Error!";
-                            Debug.LogError("Invalid effect.criteriaEffect");
-                            break;
-                    }
-                }
-                else { Debug.LogError("Invalid node (null)"); }
-            }
-            //player related
-
-        
-        }
-        return result;
-    }
-
-
-    /// <summary>
-    /// returns null if all O.K and a tool tip string if not giving criteria, eg. "< 1"
-    /// </summary>
-    /// <param name="criteriaValue"></param>
-    /// <param name="actualValue"></param>
-    /// <param name="comparison"></param>
-    /// <returns></returns>
-    private string ComparisonCheck(int criteriaValue, int actualValue, Comparison comparison)
-    {
-        string result = null;
-        switch(comparison)
-        {
-            case Comparison.LessThan:
-                if (actualValue >= criteriaValue)
-                { result = string.Format("< {0}, currently {1}", criteriaValue, actualValue); }
-                break;
-            case Comparison.GreaterThan:
-                if (actualValue <= criteriaValue)
-                { result = string.Format("> {0}, currently {1}", criteriaValue, actualValue); }
-                break;
-            case Comparison.EqualTo:
-                if (criteriaValue != actualValue)
-                { result = string.Format("{0}, currently {1}", criteriaValue, actualValue); }
-                break;
-            default:
-                result = "Error!";
-                Debug.LogError("Invalid Comparison enum");
-                break;
-        }
-        return result;
-    }
 
     /// <summary>
     /// Processes node actor actions
@@ -251,9 +118,11 @@ public class ActionManager : MonoBehaviour
                     {
                         //Get Action & Effects
                         Action action = actor.arc.nodeAction;
-                        List<ActionEffect> listOfEffects = action.GetEffects();
+                        List<Effect> listOfEffects = action.GetEffects();
                         if (listOfEffects.Count > 0)
                         {
+                            //return class
+                            EffectReturn effectReturn = new EffectReturn();
                             //two builders for top and bottom texts
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
@@ -263,11 +132,17 @@ public class ActionManager : MonoBehaviour
                             //
                             // - - - Process effects
                             //
-                            foreach (ActionEffect effect in listOfEffects)
+
+
+                            foreach (Effect effect in listOfEffects)
                             {
-                                switch(effect.effectOutcome)
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node);
+                                outcomeDetails.sprite = actor.arc.actionSprite;
+                                /*
+                                switch (effect.effectOutcome)
                                 {
                                     case EffectOutcome.NodeSecurity:
+                                        
                                         switch (effect.effectResult)
                                         {
                                             case Result.Add:
@@ -295,6 +170,7 @@ public class ActionManager : MonoBehaviour
                                                 errorFlag = true;
                                                 break;
                                         }
+                                        
                                         outcomeDetails.sprite = actor.arc.actionSprite;
                                         break;
                                     case EffectOutcome.NodeStability:
@@ -333,13 +209,13 @@ public class ActionManager : MonoBehaviour
                                             case Result.Add:
                                                 node.Support += effect.effectValue;
                                                 node.Support = Mathf.Min(3, node.Support);
-                                                builderTop.Append(string.Format("{0}People are flocking to the Rebel cause{1}", colourDefault, colourEnd));
+                                                builderTop.Append(string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd));
                                                 builderBottom.Append(string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.effectValue, colourEnd));
                                                 break;
                                             case Result.Subtract:
                                                 node.Support -= effect.effectValue;
                                                 node.Support = Mathf.Max(0, node.Support);
-                                                builderTop.Append(string.Format("{0}The Rebel cause is losing popularity{1}", colourDefault, colourEnd));
+                                                builderTop.Append(string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd));
                                                 builderBottom.Append(string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.effectValue, colourEnd));
                                                 break;
                                             case Result.EqualTo:
@@ -347,7 +223,7 @@ public class ActionManager : MonoBehaviour
                                                 effect.effectValue = Mathf.Min(3, effect.effectValue);
                                                 effect.effectValue = Mathf.Max(0, effect.effectValue);
                                                 node.Support = effect.effectValue;
-                                                builderTop.Append(string.Format("{0}Support for te Rebel cause has been reset to a new level{1}", colourDefault, colourEnd));
+                                                builderTop.Append(string.Format("{0}Rebel sentiment has been reset to a new level{1}", colourDefault, colourEnd));
                                                 builderBottom.Append(string.Format("{0}Node Support now {1}{2}", colourOutcome3, node.Support, colourEnd));
                                                 break;
                                             default:
@@ -357,6 +233,42 @@ public class ActionManager : MonoBehaviour
                                         }
                                         outcomeDetails.sprite = actor.arc.actionSprite;
                                         break;
+                                    case EffectOutcome.RebelCause:
+                                        int rebelCause = GameManager.instance.playerScript.RebelCauseCurrent;
+                                        int maxCause = GameManager.instance.playerScript.RebelCauseMax;
+                                        switch (effect.effectResult)
+                                        {
+                                            case Result.Add:
+                                                rebelCause += effect.effectValue;
+                                                rebelCause = Mathf.Min(maxCause, rebelCause);
+                                                GameManager.instance.playerScript.RebelCauseCurrent = rebelCause;
+                                                builderTop.Append(string.Format("{0}The Rebel Cause gains traction{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Rebel Cause +{1}{2}", colourOutcome1, effect.effectValue, colourEnd));
+                                                break;
+                                            case Result.Subtract:
+                                                rebelCause -= effect.effectValue;
+                                                rebelCause = Mathf.Max(0, rebelCause);
+                                                GameManager.instance.playerScript.RebelCauseCurrent = rebelCause;
+                                                builderTop.Append(string.Format("{0}The Rebel Cause is losing ground{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Rebel Cause -{1}{2}", colourOutcome2, effect.effectValue, colourEnd));
+                                                break;
+                                            case Result.EqualTo:
+                                                //keep within allowable parameters
+                                                effect.effectValue = Mathf.Min(maxCause, effect.effectValue);
+                                                effect.effectValue = Mathf.Max(0, effect.effectValue);
+                                                rebelCause = effect.effectValue;
+                                                GameManager.instance.playerScript.RebelCauseCurrent = rebelCause;
+                                                builderTop.Append(string.Format("{0}The Rebel Cause adjusts to a new level{1}", colourDefault, colourEnd));
+                                                builderBottom.Append(string.Format("{0}Rebel Cause now {1}{2}", colourOutcome3, rebelCause, colourEnd));
+                                                break;
+                                            default:
+                                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        outcomeDetails.sprite = actor.arc.actionSprite;
+                                        break;
+                                        
                                     case EffectOutcome.Recruit:
 
                                         break;
@@ -380,7 +292,13 @@ public class ActionManager : MonoBehaviour
                                         errorFlag = true;
                                         break;
                                 }
-                                if (errorFlag == true) { break; }
+                                */
+
+                                //update stringBuilder texts
+                                builderTop.Append(effectReturn.topText);
+                                builderBottom.Append(effectReturn.bottomText);
+                                //exit effect loop on error
+                                if (effectReturn.errorFlag == true) { break; }
                                 else
                                 {
                                     //
@@ -390,6 +308,8 @@ public class ActionManager : MonoBehaviour
                                     {
                                         if (effect.effectOutcome > EffectOutcome.None)
                                         {
+                                            effectReturn = GameManager.instance.effectScript.ProcessRenownEffect(details.RenownEffect, actor);
+                                            /*
                                             switch (details.RenownEffect.effectOutcome)
                                             {
                                                 case EffectOutcome.PlayerRenown:
@@ -429,15 +349,24 @@ public class ActionManager : MonoBehaviour
                                                     errorFlag = true;
                                                     break;
                                             }
+                                            */
                                         }
                                         else
                                         { Debug.LogError("EffectOutcome invalid (\"None\")"); errorFlag = true;}
                                     }
                                     else
                                     { Debug.LogError("Invalid RenownEffect (null)"); errorFlag = true; }
-                                    //texts
-                                    outcomeDetails.textTop = builderTop.ToString();
-                                    outcomeDetails.textBottom = builderBottom.ToString();
+                                    if (effectReturn.errorFlag == false)
+                                    {
+                                        //update string Builder text
+                                        builderBottom.AppendLine();
+                                        builderBottom.Append(effectReturn.bottomText);
+                                        //texts
+                                        outcomeDetails.textTop = builderTop.ToString();
+                                        outcomeDetails.textBottom = builderBottom.ToString();
+                                    }
+                                    else
+                                    { errorFlag = true; }
                                 }
                             }
                         }

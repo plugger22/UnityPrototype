@@ -4,10 +4,10 @@ using UnityEngine;
 using gameAPI;
 
 /// <summary>
-/// Effects for Actions carried out at Nodes
+/// Multippurpose Effects -> Actions, Targets
 /// </summary>
-[CreateAssetMenu(menuName = "Action / Effect")]
-public class ActionEffect : ScriptableObject
+[CreateAssetMenu(menuName = "Effect")]
+public class Effect : ScriptableObject
 {
     public int EffectID { get; set; }                           //dynamically set {Edit -> I don't think this is hooked up yet, need to check]
 
@@ -17,7 +17,7 @@ public class ActionEffect : ScriptableObject
     public Comparison criteriaCompare;
     public int criteriaValue;
     //result of effect
-    public EffectOutcome effectOutcome;
+    public EffectOutcome effectOutcome;                         //standard effect
     public Result effectResult;                                 //leave as 'None' if there is no specific stat adjustment
     public int effectValue;                                     //leave as '0' if there is no specific stat adjustment
 }

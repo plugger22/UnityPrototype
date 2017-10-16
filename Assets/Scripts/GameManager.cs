@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
     [HideInInspector] public InputManager inputScript;                //Input Manager
+    [HideInInspector] public EffectManager effectScript;              //Effect Manager
     [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
@@ -46,13 +47,13 @@ public class GameManager : MonoBehaviour
 
     public float showSplashTimeout = 2.0f;
 
-                                                                    //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
+                                                                    
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
-
+    private MetaLevel metaLevel;
     private bool allowQuitting = false;
     private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
-
+                                                                    //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
     #endregion
 
 
@@ -75,7 +76,8 @@ public class GameManager : MonoBehaviour
         { seed = (int)DateTime.Now.Ticks & 0x0000FFFF; }
         Debug.Log("Seed: " + seed);
         Random.InitState(seed);
-
+        //MetaLevel
+        metaLevel = MetaLevel.City;
         //Get component references
         levelScript = GetComponent<LevelManager>();
         dataScript = GetComponent<DataManager>();
@@ -83,6 +85,7 @@ public class GameManager : MonoBehaviour
         actorScript = GetComponent<ActorManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
+        effectScript = GetComponent<EffectManager>();
         optionScript = GetComponent<OptionManager>();
         nodeScript = GetComponent<NodeManager>();
         //eventScript = GetComponent<EventManager>();
