@@ -12,7 +12,8 @@ public enum ColourType
     actionEffect,
     dataGood, dataNeutral, dataBad,
     normalText, defaultText,                            //normal is slight off yellow text, default is white
-    goodEffect, neutralEffect, badEffect,                              //outcome window effects
+    //outcome window effects
+    goodEffect, neutralEffect, badEffect,                              
     nodeActive,
     error,
     Count

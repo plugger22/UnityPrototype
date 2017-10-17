@@ -152,7 +152,9 @@ public class Node : MonoBehaviour
             while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
             {
                 List<string> activeList = GetNodeActors();
-                List<string> targetList = new List<string>() { "Power Grid", "All Nodes Stability -1", "Rolling Blackouts", "Info 3" };
+                List<string> targetList = new List<string>();
+                if (TargetID > -1)
+                { targetList = GameManager.instance.targetScript.GetTargetTooltip(TargetID); }
                 //Transform transform = GetComponent<Transform>();
                 GameManager.instance.tooltipNodeScript.SetTooltip(
                     NodeName,

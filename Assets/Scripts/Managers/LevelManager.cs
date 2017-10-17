@@ -708,6 +708,8 @@ public class LevelManager : MonoBehaviour
             node.Support = node.Support < 0 ? 0 : node.Support;
             node.Security = node.Security > 3 ? 3 : node.Security;
             node.Security = node.Security < 0 ? 0 : node.Security;
+            //target -> none
+            node.TargetID = -1;
             //keep a tally of how many of each type have been generated
             index = node.arc.NodeArcID;
             if (index < numRecords)
@@ -931,7 +933,6 @@ public class LevelManager : MonoBehaviour
     { return arrayOfNodeTypeTotals; }
 
 
-    public int GetNumOfNodes()
-    { return listOfNodeObjects.Count; }
+
 
 }

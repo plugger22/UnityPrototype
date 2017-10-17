@@ -13,7 +13,8 @@ using Random = UnityEngine.Random;
 public class DataManager : MonoBehaviour
 {
     //master info array
-    private int[,] arrayOfNodes;
+    private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
+    private List<List<Node>> listOfNodesByType = new List<List<Node>>();                                                 //List containing Lists of Nodes by type -> index[NodeArcID]
 
     //master lists 
     private List<ActorArc> listOfAllActorArcs = new List<ActorArc>();
@@ -44,7 +45,7 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// default constructor
     /// </summary>
-    public void EarlyInitialise()
+    public void InitialiseEarly()
     {
         int counter = 0;
         int length;
@@ -184,7 +185,6 @@ public class DataManager : MonoBehaviour
                         }
                         break;
                 }
-
             }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Effect (Null)"); }
@@ -214,12 +214,7 @@ public class DataManager : MonoBehaviour
             target.IsKnownByAI = false;
             //add to dictionary
             try
-            {
-                dictOfTargets.Add(target.TargetID, target);
-                //add to list pf Possible targets if a level 1 target
-                if (target.targetLevel == 1)
-                { listOfPossibleTargets.Add(target); }
-            }
+            { dictOfTargets.Add(target.TargetID, target); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Target (Null)"); }
             catch (ArgumentException)
@@ -228,16 +223,47 @@ public class DataManager : MonoBehaviour
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTargets has {0} entries{1}", counter, "\n"));
     }
 
+
     /// <summary>
     /// Stuff that is done after level Manager.SetUp
     /// </summary>
-    public void LateInitialise()
+    public void InitialiseLate()
     {
+        //arrayOfNodes -> contains all relevant info on nodes by type
         int[] tempArray = GameManager.instance.levelScript.GetNodeTypeTotals();
         arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
         for (int i = 0; i < tempArray.Length; i++)
         {
             arrayOfNodes[i, 0] = tempArray[i];
+        }
+        //List of Nodes by Types -> each index has a list of all nodes of that NodeArc type
+        int limit = GetNumOfNodeTypes();
+        for(int i = 0; i < limit; i++)
+        {
+            List<Node> tempList = new List<Node>();
+            listOfNodesByType.Add(tempList);
+        }
+        //Populate List of lists -> place node in the correct list
+        foreach(var nodeObj in dictOfNodes)
+        {
+            Node node = nodeObj.Value.GetComponent<Node>();
+            listOfNodesByType[node.arc.NodeArcID].Add(node);
+        }
+        //list of Possible Targets
+        foreach(var target in dictOfTargets)
+        {
+            //add to list pf Possible targets if a level 1 target & nodes of the required type are available
+            if (target.Value.targetLevel == 1)
+            {
+                //add to list of Possible targets
+                if (GetNodeInfo(target.Value.nodeArc.NodeArcID, NodeInfo.Number) > 0)
+                { listOfPossibleTargets.Add(target.Value); }
+                else
+                {
+                    Debug.Log(string.Format("DataManager: {0} has been ignored as there are no required node types present (\"{1}\"){2}",
+                        target.Value.name, target.Value.nodeArc.name, "\n"));
+                }
+            }
         }
     }
 
@@ -387,6 +413,22 @@ public class DataManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// returns a Target from dictionary based on TargetID key, null if not found
+    /// </summary>
+    /// <param name="targetID"></param>
+    /// <returns></returns>
+    public Target GetTarget(int targetID)
+    {
+        Target target = null;
+        if (dictOfTargets.TryGetValue(targetID, out target))
+        {
+            return target;
+        }
+        return null;
+    }
+
+
     public void AddNodeObject(int nodeID, GameObject nodeObj)
     {
         try
@@ -408,13 +450,6 @@ public class DataManager : MonoBehaviour
     }
 
 
-    public void AddPossibleTarget(Target target)
-    {
-        if (target != null)
-        { listOfPossibleTargets.Add(target); }
-        else { Debug.LogError("Invalid Target (null)"); }
-    }
-
     public List<Target> GetPossibleTargets()
     { return listOfPossibleTargets; }
 
@@ -429,8 +464,48 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int GetNodeInfo(int nodeIndex, NodeInfo info)
     {
-        Debug.Assert(nodeIndex > -1 && nodeIndex < arrayOfNodes.Length, "Invalid nodeIndex");
+        Debug.Assert(nodeIndex > -1 && nodeIndex < GetNumOfNodeTypes(), "Invalid nodeIndex");
         return arrayOfNodes[nodeIndex, (int)info];
+    }
+
+    /// <summary>
+    /// Change data in node info array
+    /// </summary>
+    /// <param name="nodeIndex"></param>
+    /// <param name="info"></param>
+    /// <param name="newData"></param>
+    public void SetNodeInfo(int nodeIndex, NodeInfo info, int newData)
+    {
+        Debug.Assert(nodeIndex > -1 && nodeIndex < GetNumOfNodeTypes(), "Invalid nodeIndex");
+        arrayOfNodes[nodeIndex, (int)info] = newData;
+    }
+
+    /// <summary>
+    /// return total number of nodes in the level
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumOfNodes()
+    { return dictOfNodes.Count; }
+
+    /// <summary>
+    /// returns number of different node arc types on level, eg. "Corporate" + "Utility" would return 2
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumOfNodeTypes()
+    { return arrayOfNodes.Length; }
+
+    public int GetNumOfPossibleTargets()
+    { return listOfPossibleTargets.Count; }
+
+    /// <summary>
+    /// return a list of Nodes, all of which are the same type (nodeArcID)
+    /// </summary>
+    /// <param name="nodeArcID"></param>
+    /// <returns></returns>
+    public List<Node> GetListOfNodesByType(int nodeArcID)
+    {
+        Debug.Assert(nodeArcID > -1 && nodeArcID < GetNumOfNodeTypes(), "Invalid nodeArcID parameter");
+        return listOfNodesByType[nodeArcID];
     }
 
 }

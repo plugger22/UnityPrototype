@@ -131,11 +131,11 @@ public class GameManager : MonoBehaviour
     private void InitialiseGame()
     {
         //sideScript.Initialise();
-        dataScript.EarlyInitialise();
+        dataScript.InitialiseEarly();
         actorScript.Initialise();
         levelScript.Initialise();
         //immediately after levelScript
-        dataScript.LateInitialise();
+        dataScript.InitialiseLate();
         guiScript.Initialise(actorScript.GetActors());
         inputScript.GameState = GameState.Normal;
         actionScript.Initialise();

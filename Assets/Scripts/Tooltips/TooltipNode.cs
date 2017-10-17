@@ -95,7 +95,6 @@ public class TooltipNode : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
@@ -126,8 +125,8 @@ public class TooltipNode : MonoBehaviour
         nodeActive.gameObject.SetActive(false);
         dividerMiddle.gameObject.SetActive(false);
         //show only if node has a target
-        nodeTarget.gameObject.SetActive(false);
-        dividerBottom.gameObject.SetActive(false);
+        nodeTarget.gameObject.SetActive(true);
+        dividerBottom.gameObject.SetActive(true);
         //set up tooltipNode object
         nodeName.text = string.Format("{0}{1}{2}", colourDefault, name, colourEnd);
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, type.ToUpper(), colourEnd);
@@ -154,8 +153,8 @@ public class TooltipNode : MonoBehaviour
         if (listOfTarget.Count > 0)
         {
             //set tooltip elements to show
-            nodeTarget.gameObject.SetActive(true);
-            dividerBottom.gameObject.SetActive(true);
+            //nodeTarget.gameObject.SetActive(true);
+            //dividerBottom.gameObject.SetActive(true);
             //build string
             StringBuilder builder = new StringBuilder();
             builder.Append(colourDefault);
@@ -168,6 +167,8 @@ public class TooltipNode : MonoBehaviour
             builder.Append(colourEnd);
             nodeTarget.text = builder.ToString();
         }
+        else
+        { nodeTarget.text = "No Target available"; }
 
         //set up stats -> only takes the first three Stability - Support - Security
         int checkCounter = 0;
