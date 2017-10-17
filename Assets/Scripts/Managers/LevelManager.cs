@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Master method that drives a level
     /// </summary>
-    public void SetUpLevel()
+    public void Initialise()
     {
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
@@ -916,6 +916,22 @@ public class LevelManager : MonoBehaviour
         return arrayOfActiveNodes[nodeID, slotID];
     }
 
+    /*/// <summary>
+    /// returns number of a particular node Arc present
+    /// </summary>
+    /// <param name="nodeArcID"></param>
+    /// <returns></returns>
+    public int CheckNodeArcPresent(int nodeArcID)
+    {
+        Debug.Assert(nodeArcID > -1 && nodeArcID < arrayOfNodeTypeTotals.Length, "Invalid nodeArcID parameter");
+        return arrayOfNodeTypeTotals[nodeArcID];
+    }*/
 
+    public int[] GetNodeTypeTotals()
+    { return arrayOfNodeTypeTotals; }
+
+
+    public int GetNumOfNodes()
+    { return listOfNodeObjects.Count; }
 
 }

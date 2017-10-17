@@ -29,9 +29,58 @@ public class EffectManager : MonoBehaviour
     private string colourOutcome3; //used when node is EqualsTo, eg. reset
     private string colourNormal;
     private string colourDefault;
-    private string colourError;
     private string colourEnd;
 
+
+
+    public void Initialise()
+    {
+        //register listener
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+    }
+
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        switch (GameManager.instance.optionScript.PlayerSide)
+        {
+            case Side.Rebel:
+                colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+                break;
+            case Side.Authority:
+                colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+                colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                break;
+        }
+        colourOutcome3 = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
 
     /// <summary>
     /// checks whether effect criteria is valid. Returns 'null' if O.K and a tooltip explanation string if not

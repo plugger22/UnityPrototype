@@ -12,12 +12,18 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class DataManager : MonoBehaviour
 {
+    //master info array
+    private int[,] arrayOfNodes;
+
     //master lists 
     private List<ActorArc> listOfAllActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
 
     //for fast access
     private Effect[] arrayOfRenownEffects = new Effect[] { null, null, null, null }; //indexes correspond to enum 'RenownEffect'
+    private List<Target> listOfPossibleTargets = new List<Target>();
+    private List<Target> listOfActiveTargets = new List<Target>();
+    private List<Target> listOfLiveTargets = new List<Target>();
     
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
     public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
@@ -32,12 +38,13 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
-    private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();      //Key -> effectID, Value -> ActionEffect
+    private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
+    private Dictionary<int, Target> dictOfTargets = new Dictionary<int, Target>();                  //Key -> targetID, Value -> Target
 
     /// <summary>
     /// default constructor
     /// </summary>
-    public void Initialise()
+    public void EarlyInitialise()
     {
         int counter = 0;
         int length;
@@ -133,10 +140,10 @@ public class DataManager : MonoBehaviour
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfActorArcs has {0} entries{1}", counter, "\n"));
         //
-        // - - - Action Effects - - -
+        // - - - Effects - - -
         //
         counter = 0;
-        //get GUID of all SO ActionEffect Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        //get GUID of all SO Effect Objects -> Note that I'm searching the entire database here so it's not folder dependant
         var effectsGUID = AssetDatabase.FindAssets("t:Effect");
         foreach (var guid in effectsGUID)
         {
@@ -180,11 +187,58 @@ public class DataManager : MonoBehaviour
 
             }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Action Effect (Null)"); }
+            { Debug.LogError("Invalid Effect (Null)"); }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid ActionEffect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); }
+            { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); }
         }
-        Debug.Log(string.Format("DataManager: Initialise -> dictOfEffects (ActionEffects) has {0} entries{1}", counter, "\n"));
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfEffects has {0} entries{1}", counter, "\n"));
+        //
+        // - - - Targets - - -
+        //
+        counter = 0;
+        //get GUID of all SO Target Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var targetGUID = AssetDatabase.FindAssets("t:Target");
+        foreach (var guid in targetGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object targetObject = AssetDatabase.LoadAssetAtPath(path, typeof(Target));
+            //assign a zero based unique ID number
+            Target target = targetObject as Target;
+            //set data
+            target.TargetID = counter++;
+            target.TargetStatus = Status.Dormant;
+            target.Timer = -1;
+            target.InfoLevel = 1;
+            target.IsKnownByAI = false;
+            //add to dictionary
+            try
+            {
+                dictOfTargets.Add(target.TargetID, target);
+                //add to list pf Possible targets if a level 1 target
+                if (target.targetLevel == 1)
+                { listOfPossibleTargets.Add(target); }
+            }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Target (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfTargets has {0} entries{1}", counter, "\n"));
+    }
+
+    /// <summary>
+    /// Stuff that is done after level Manager.SetUp
+    /// </summary>
+    public void LateInitialise()
+    {
+        int[] tempArray = GameManager.instance.levelScript.GetNodeTypeTotals();
+        arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
+        for (int i = 0; i < tempArray.Length; i++)
+        {
+            arrayOfNodes[i, 0] = tempArray[i];
+        }
     }
 
 
@@ -353,6 +407,31 @@ public class DataManager : MonoBehaviour
         return arrayOfRenownEffects[(int)effect];
     }
 
+
+    public void AddPossibleTarget(Target target)
+    {
+        if (target != null)
+        { listOfPossibleTargets.Add(target); }
+        else { Debug.LogError("Invalid Target (null)"); }
+    }
+
+    public List<Target> GetPossibleTargets()
+    { return listOfPossibleTargets; }
+
+    public Dictionary<int, Target> GetDictOfTargets()
+    { return dictOfTargets; }
+
+    /// <summary>
+    /// Get int data from Master node array
+    /// </summary>
+    /// <param name="nodeIndex"></param>
+    /// <param name="info"></param>
+    /// <returns></returns>
+    public int GetNodeInfo(int nodeIndex, NodeInfo info)
+    {
+        Debug.Assert(nodeIndex > -1 && nodeIndex < arrayOfNodes.Length, "Invalid nodeIndex");
+        return arrayOfNodes[nodeIndex, (int)info];
+    }
 
 }
 

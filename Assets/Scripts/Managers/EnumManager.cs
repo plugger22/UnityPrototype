@@ -9,6 +9,8 @@ namespace gameAPI
     public enum Side { Authority, Rebel }
     public enum GameState { Normal, ModalOutcome, ModalActionMenu }
     public enum MetaLevel { City, State, Nation }
+    public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count}    //DataManager arrayOfNodes index
+    
 
     //Level Manager
     public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count }

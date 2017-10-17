@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public SideManager sideScript;                  //Side Manager
     [HideInInspector] public InputManager inputScript;                //Input Manager
     [HideInInspector] public EffectManager effectScript;              //Effect Manager
+    [HideInInspector] public TargetManager targetScript;              //Target Manager
     [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
         effectScript = GetComponent<EffectManager>();
+        targetScript = GetComponent<TargetManager>();
         optionScript = GetComponent<OptionManager>();
         nodeScript = GetComponent<NodeManager>();
         //eventScript = GetComponent<EventManager>();
@@ -129,12 +131,17 @@ public class GameManager : MonoBehaviour
     private void InitialiseGame()
     {
         //sideScript.Initialise();
-        dataScript.Initialise();
+        dataScript.EarlyInitialise();
         actorScript.Initialise();
-        actionScript.Initialise();
-        levelScript.SetUpLevel();
+        levelScript.Initialise();
+        //immediately after levelScript
+        dataScript.LateInitialise();
         guiScript.Initialise(actorScript.GetActors());
         inputScript.GameState = GameState.Normal;
+        actionScript.Initialise();
+        effectScript.Initialise();
+        targetScript.Initialise();
+        
     }
 
 

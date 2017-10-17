@@ -71,20 +71,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        switch(GameManager.instance.optionScript.PlayerSide)
-        {
-            case Side.Rebel:
-                colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-                colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-                break;
-            case Side.Authority:
-                colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-                colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-                break;
-        }
-        colourOutcome3 = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.error);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -132,12 +119,11 @@ public class ActionManager : MonoBehaviour
                             //
                             // - - - Process effects
                             //
-
-
                             foreach (Effect effect in listOfEffects)
                             {
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node);
                                 outcomeDetails.sprite = actor.arc.actionSprite;
+                                #region archive
                                 /*
                                 switch (effect.effectOutcome)
                                 {
@@ -293,7 +279,7 @@ public class ActionManager : MonoBehaviour
                                         break;
                                 }
                                 */
-
+                                #endregion
                                 //update stringBuilder texts
                                 builderTop.Append(effectReturn.topText);
                                 builderBottom.Append(effectReturn.bottomText);
@@ -309,6 +295,7 @@ public class ActionManager : MonoBehaviour
                                         if (effect.effectOutcome > EffectOutcome.None)
                                         {
                                             effectReturn = GameManager.instance.effectScript.ProcessRenownEffect(details.RenownEffect, actor);
+                                            #region archive
                                             /*
                                             switch (details.RenownEffect.effectOutcome)
                                             {
@@ -350,6 +337,7 @@ public class ActionManager : MonoBehaviour
                                                     break;
                                             }
                                             */
+#endregion
                                         }
                                         else
                                         { Debug.LogError("EffectOutcome invalid (\"None\")"); errorFlag = true;}
