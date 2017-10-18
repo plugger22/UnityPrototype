@@ -37,7 +37,7 @@ namespace gameAPI
         None,
         NodeStability, NodeSecurity, NodeSupport,
         Recruit, NeutraliseTeam, AddTracer, GetGear, GetTargetInfo, SpreadInstability,
-        PlayerRenown, ActorRenown,
+        PlayerRenown, ActorRenown, Renown,
         RebelCause
     }
 
