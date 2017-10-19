@@ -234,15 +234,15 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Actors - - - 
             //
-            Effect playerRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.PlayerRaise);
-            Effect actorRenownEffect = GameManager.instance.dataScript.GetRenownEffect(RenownEffect.ActorRaise);
-            Effect actualRenownEffect;
+
             //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
             foreach (Actor actor in arrayOfActors)
             {
                 proceedFlag = true;
                 details = null;
-                actualRenownEffect = null;
+
+                //actualRenownEffect = null;
+
                 //actor active?
                 if (actor.isActive == true)
                 {
@@ -267,7 +267,22 @@ public class ActorManager : MonoBehaviour
                                     {
                                         //Effect criteria O.K -> tool tip text
                                         if (builder.Length > 0)  { builder.AppendLine(); }
-                                        builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd));
+                                        if (effect.effectOutcome != EffectOutcome.Renown)
+                                        { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
+                                        else
+                                        {
+                                            //handle renown situation - players or actors?
+                                            if (nodeID == playerID)
+                                            {
+                                                //actualRenownEffect = playerRenownEffect;
+                                                builder.Append(string.Format("{0}Player {1}{2}", colourBlue, effect.description, colourEnd));
+                                            }
+                                            else
+                                            {
+                                                //actualRenownEffect = actorRenownEffect;
+                                                builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd));
+                                            }
+                                        }
                                     }
                                     else
                                     {
@@ -282,26 +297,10 @@ public class ActorManager : MonoBehaviour
                             }
                             if (proceedFlag == true)
                             {
-                                //renown to player if player at node, otherwise rebel
-                                builder.AppendLine();
-                                if (nodeID == playerID)
-                                {
-                                    actualRenownEffect = playerRenownEffect;
-                                    builder.Append(string.Format("{0}{1}{2}", colourBlue, actualRenownEffect.description, colourEnd));
-                                }
-                                else
-                                {
-                                    actualRenownEffect = actorRenownEffect;
-                                    builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, actualRenownEffect.description, colourEnd));
-                                }
-
                                 //Details to pass on for processing via button click
                                 ModalActionDetails actionDetails = new ModalActionDetails() { };
                                 actionDetails.NodeID = nodeID;
                                 actionDetails.ActorSlotID = actor.SlotID;
-                                actionDetails.RenownEffect = actualRenownEffect;
-                                //actionDetails.EventType = actor.arc.actionEvent;
-
                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
                                 details = new EventButtonDetails()
                                 {

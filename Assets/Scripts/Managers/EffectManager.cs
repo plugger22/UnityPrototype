@@ -231,7 +231,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public EffectReturn ProcessEffect(Effect effect, Node node = null)
+    public EffectReturn ProcessEffect(Effect effect, Node node, Actor actor)
     {
         EffectReturn effectReturn = new EffectReturn();
         //set default values
@@ -406,6 +406,56 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.SpreadInstability:
 
                     break;
+                case EffectOutcome.Renown:
+                    if (node != null)
+                    {
+                        if (actor != null)
+                        {
+                            if (node.NodeID == GameManager.instance.nodeScript.nodePlayer)
+                            {
+                                //Player effect
+                                switch (effect.effectResult)
+                                {
+                                    case Result.Add:
+                                        GameManager.instance.playerScript.Renown++;
+                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome1, effect.description, colourEnd);
+                                        break;
+                                    case Result.Subtract:
+                                        if (GameManager.instance.playerScript.Renown >= effect.effectValue)
+                                        { GameManager.instance.playerScript.Renown -= effect.effectValue; }
+                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome2, effect.description, colourEnd);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                //Actor effect
+                                switch (effect.effectResult)
+                                {
+                                    case Result.Add:
+                                        actor.Renown++;
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.Name, effect.description, colourEnd);
+                                        break;
+                                    case Result.Subtract:
+                                        if (actor.Renown >= effect.effectValue)
+                                        { actor.Renown -= effect.effectValue; }
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.Name, effect.description, colourEnd);
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                            effectReturn.errorFlag = true;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        effectReturn.errorFlag = true;
+                    }
+                    break;
                 default:
                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.effectOutcome));
                     effectReturn.errorFlag = true;
@@ -422,63 +472,6 @@ public class EffectManager : MonoBehaviour
         return effectReturn;
     }
 
-
-    /// <summary>
-    /// process Renown Effect
-    /// </summary>
-    /// <returns></returns>
-    public EffectReturn ProcessRenownEffect(Effect renownEffect, Actor actor)
-    {
-        EffectReturn effectReturn = new EffectReturn();
-        //defaults
-        effectReturn.topText = "";
-        effectReturn.bottomText = "";
-        effectReturn.errorFlag = false;
-        if (actor != null)
-        {
-            switch (renownEffect.effectOutcome)
-            {
-                case EffectOutcome.PlayerRenown:
-                    switch (renownEffect.effectResult)
-                    {
-                        case Result.Add:
-                            GameManager.instance.playerScript.Renown++;
-                            effectReturn.bottomText = string.Format("{0}{1}{2}", colourOutcome1, renownEffect.description, colourEnd);
-                            break;
-                        case Result.Subtract:
-                            if (GameManager.instance.playerScript.Renown >= renownEffect.effectValue)
-                            { GameManager.instance.playerScript.Renown -= renownEffect.effectValue; }
-                            effectReturn.bottomText = string.Format("{0}{1}{2}", colourOutcome2, renownEffect.description, colourEnd);
-                            break;
-                    }
-                    break;
-                case EffectOutcome.ActorRenown:
-                    switch (renownEffect.effectResult)
-                    {
-                        case Result.Add:
-                            actor.Renown++;
-                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.Name, renownEffect.description, colourEnd);
-                            break;
-                        case Result.Subtract:
-                            if (actor.Renown >= renownEffect.effectValue)
-                            { actor.Renown -= renownEffect.effectValue; }
-                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.Name, renownEffect.description, colourEnd);
-                            break;
-                    }
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid Renown Effect \"{0}\"", renownEffect.effectOutcome));
-                    effectReturn.errorFlag = true;
-                    break;
-            }
-        }
-        else
-        {
-            Debug.LogError("Invalid Actor (null)");
-            effectReturn.errorFlag = true;
-        }
-        return effectReturn;
-    }
 
     //place methods above here
 }

@@ -14,7 +14,6 @@ namespace modalAPI
         public string buttonTooltipHeader;
         public string buttonTooltipMain;
         public string buttonTooltipDetail;
-        //public ActionEffect renownEffect;
         public UnityAction action;
     }
 
@@ -39,7 +38,6 @@ namespace modalAPI
         public int NodeID { get; set; }
         public int ActorSlotID { get; set; }
         public EventType EventType { get; set; }
-        public Effect RenownEffect { get; set; }
     }
 
 

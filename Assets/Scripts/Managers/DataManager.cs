@@ -21,7 +21,6 @@ public class DataManager : MonoBehaviour
     private List<Trait> listOfAllTraits = new List<Trait>();
 
     //for fast access
-    private Effect[] arrayOfRenownEffects = new Effect[] { null, null, null, null }; //indexes correspond to enum 'RenownEffect'
     private List<Target> listOfPossibleTargets = new List<Target>();
     private List<Target> listOfActiveTargets = new List<Target>();
     private List<Target> listOfLiveTargets = new List<Target>();
@@ -157,35 +156,7 @@ public class DataManager : MonoBehaviour
             effect.EffectID = counter++;
             //add to dictionary
             try
-            {
-                dictOfEffects.Add(effect.EffectID, effect);
-                //identify special Renown Effects for fast access (need 4, Player +/- & Actor +/-). Store Effects in arrayOfRenownEffects. Enum RenownEffect.
-                switch(effect.effectOutcome)
-                {
-                    case EffectOutcome.ActorRenown:
-                        switch(effect.effectResult)
-                        {
-                            case Result.Add:
-                                arrayOfRenownEffects[(int)RenownEffect.ActorRaise] = effect;
-                                break;
-                            case Result.Subtract:
-                                arrayOfRenownEffects[(int)RenownEffect.ActorLower] = effect;
-                                break;
-                        }
-                        break;
-                    case EffectOutcome.PlayerRenown:
-                        switch (effect.effectResult)
-                        {
-                            case Result.Add:
-                                arrayOfRenownEffects[(int)RenownEffect.PlayerRaise] = effect;
-                                break;
-                            case Result.Subtract:
-                                arrayOfRenownEffects[(int)RenownEffect.PlayerLower] = effect;
-                                break;
-                        }
-                        break;
-                }
-            }
+            { dictOfEffects.Add(effect.EffectID, effect); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Effect (Null)"); }
             catch (ArgumentException)
@@ -439,15 +410,6 @@ public class DataManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid (duplicate) nodeID \"{0}\" for Node \"{1}\"", nodeID, nodeObj.name)); }
     }
 
-    /// <summary>
-    /// returns one of four specific Renown Effects (select 
-    /// </summary>
-    /// <param name="effect"></param>
-    /// <returns></returns>
-    public Effect GetRenownEffect(RenownEffect effect)
-    {
-        return arrayOfRenownEffects[(int)effect];
-    }
 
 
     public List<Target> GetPossibleTargets()

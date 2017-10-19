@@ -23,7 +23,6 @@ namespace gameAPI
     //Action Manager
     public enum Comparison { None, LessThan, GreaterThan, EqualTo }
     public enum Result { None, Add, Subtract, EqualTo }
-    public enum RenownEffect { PlayerRaise, PlayerLower, ActorRaise, ActorLower} //used as indexes for DataManager.cs -> arrayOfRenownEffects
 
     //Effects
     public enum EffectCriteria {
@@ -37,7 +36,7 @@ namespace gameAPI
         None,
         NodeStability, NodeSecurity, NodeSupport,
         Recruit, NeutraliseTeam, AddTracer, GetGear, GetTargetInfo, SpreadInstability,
-        PlayerRenown, ActorRenown, Renown,
+        Renown,
         RebelCause
     }
 

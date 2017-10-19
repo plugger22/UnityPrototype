@@ -115,13 +115,12 @@ public class ActionManager : MonoBehaviour
                             StringBuilder builderBottom = new StringBuilder();
                             builderTop.Append(string.Format("{0}{1}, ID {2}{3}", colourNormal, node.NodeName, node.NodeID, colourEnd));
                             builderTop.AppendLine();
-                            builderTop.AppendLine();
                             //
                             // - - - Process effects
                             //
                             foreach (Effect effect in listOfEffects)
                             {
-                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node);
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                                 outcomeDetails.sprite = actor.arc.actionSprite;
                                 #region archive
                                 /*
@@ -281,82 +280,20 @@ public class ActionManager : MonoBehaviour
                                 */
                                 #endregion
                                 //update stringBuilder texts
-                                builderTop.Append(effectReturn.topText);
+                                if (effectReturn.topText.Length > 0)
+                                {
+                                    builderTop.AppendLine();
+                                    builderTop.Append(effectReturn.topText);
+                                }
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
                                 builderBottom.Append(effectReturn.bottomText);
                                 //exit effect loop on error
                                 if (effectReturn.errorFlag == true) { break; }
-                                else
-                                {
-                                    //
-                                    // - - - Renown - - - 
-                                    //
-                                    if (details.RenownEffect != null)
-                                    {
-                                        if (effect.effectOutcome > EffectOutcome.None)
-                                        {
-                                            effectReturn = GameManager.instance.effectScript.ProcessRenownEffect(details.RenownEffect, actor);
-                                            #region archive
-                                            /*
-                                            switch (details.RenownEffect.effectOutcome)
-                                            {
-                                                case EffectOutcome.PlayerRenown:
-                                                    switch (details.RenownEffect.effectResult)
-                                                    {
-                                                        case Result.Add:
-                                                            GameManager.instance.playerScript.Renown++;
-                                                            builderBottom.AppendLine();
-                                                            builderBottom.Append(string.Format("{0}{1}{2}", colourOutcome1, details.RenownEffect.description, colourEnd));
-                                                            break;
-                                                        case Result.Subtract:
-                                                            if (GameManager.instance.playerScript.Renown >= details.RenownEffect.effectValue)
-                                                            { GameManager.instance.playerScript.Renown -= details.RenownEffect.effectValue; }
-                                                            builderBottom.AppendLine();
-                                                            builderBottom.Append(string.Format("{0}{1}{2}", colourOutcome2, details.RenownEffect.description, colourEnd));
-                                                            break;
-                                                    }
-                                                    break;
-                                                case EffectOutcome.ActorRenown:
-                                                    switch (details.RenownEffect.effectResult)
-                                                    {
-                                                        case Result.Add:
-                                                            actor.Renown++;
-                                                            builderBottom.AppendLine();
-                                                            builderBottom.Append(string.Format("{0}{1} {2}{3}", colourOutcome2, actor.Name, details.RenownEffect.description, colourEnd));
-                                                            break;
-                                                        case Result.Subtract:
-                                                            if (actor.Renown >= details.RenownEffect.effectValue)
-                                                            { actor.Renown -= details.RenownEffect.effectValue; }
-                                                            builderBottom.AppendLine();
-                                                            builderBottom.Append(string.Format("{0}{1} {2}{3}", colourOutcome1, actor.Name, details.RenownEffect.description, colourEnd));
-                                                            break;
-                                                    }
-                                                    break;
-                                                default:
-                                                    Debug.LogError(string.Format("Invalid Renown Effect \"{0}\"", details.RenownEffect.effectOutcome));
-                                                    errorFlag = true;
-                                                    break;
-                                            }
-                                            */
-#endregion
-                                        }
-                                        else
-                                        { Debug.LogError("EffectOutcome invalid (\"None\")"); errorFlag = true;}
-                                    }
-                                    else
-                                    { Debug.LogError("Invalid RenownEffect (null)"); errorFlag = true; }
-                                    if (effectReturn.errorFlag == false)
-                                    {
-                                        //update string Builder text
-                                        builderBottom.AppendLine();
-                                        builderBottom.Append(effectReturn.bottomText);
-                                        //texts
-                                        outcomeDetails.textTop = builderTop.ToString();
-                                        outcomeDetails.textBottom = builderBottom.ToString();
-                                    }
-                                    else
-                                    { errorFlag = true; }
-                                }
                             }
+
+                            //texts
+                            outcomeDetails.textTop = builderTop.ToString();
+                            outcomeDetails.textBottom = builderBottom.ToString();
                         }
                         else
                         {
