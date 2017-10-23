@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
         AssignNodeArcs();
         AssignSecurityLevels();
         AssignActorsToNodes();
-        RedrawNodes();
+        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw);
     }
 
 
@@ -396,7 +396,7 @@ public class LevelManager : MonoBehaviour
     //
     // --- Show Active Nodes
     //
-    #region ShowActiveNodes
+    #region Show Nodes
     /// <summary>
     /// Show all active nodes for a particular actor. Use actor.slotID (0 to numOfActors)
     /// </summary>
@@ -405,7 +405,7 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
         //set all nodes to default colour first
-        ResetNodes();
+        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
         //change material for selected nodes
         List<GameObject> tempList = listOfActorNodes[slotID];
         foreach (GameObject obj in tempList)
@@ -415,69 +415,17 @@ public class LevelManager : MonoBehaviour
             nodeTemp.SetMaterial(nodeMaterial);
         }
     }
+
+
+
     #endregion
 
     //
     // - - - Redraw methods (GameManager)
     //
     #region Redraw and Rest graph
-    /// <summary>
-    /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
-    /// </summary>
-    public void RedrawNodes()
-    {
-        Renderer nodeRenderer;
-        //loop all nodes & assign current materials to their renderers (changes colour on screen)
-        foreach (GameObject obj in listOfNodeObjects)
-        {
-            nodeRenderer = obj.GetComponent<Renderer>();
-            nodeRenderer.material = obj.GetComponent<Node>()._Material;
-        }
-        //highlighted node
-        if (GameManager.instance.nodeScript.nodeHighlight > -1)
-        {
-            GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(GameManager.instance.nodeScript.nodeHighlight);
-            if (nodeObject != null)
-            {
-                //only do so if it's a normal node, otherwise ignore
-                if (nodeObject.GetComponent<Node>().GetMaterial() == GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal))
-                {
-                    nodeRenderer = nodeObject.GetComponent<Renderer>();
-                    nodeRenderer.material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Highlight);
-                }
-            }
-        }
-        //player's current node
-        if (GameManager.instance.nodeScript.nodePlayer > -1)
-        {
-            GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(GameManager.instance.nodeScript.nodePlayer);
-            if (nodeObject != null)
-            {
-                //only do so if it's a normal node, otherwise ignore
-                if (nodeObject.GetComponent<Node>().GetMaterial() == GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal))
-                {
-                    nodeRenderer = nodeObject.GetComponent<Renderer>();
-                    nodeRenderer.material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Player);
-                }
-            }
-        }
-        //reset flag to prevent constant redraws
-        GameManager.instance.nodeScript.nodeRedraw = false;
-    }
 
-    /// <summary>
-    /// Sets the material colour of all nodes to the default (doesn't change on screen, just sets them up). Call before making any changes to node colours
-    /// </summary>
-    public void ResetNodes()
-    {
-        //get default material
-        Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
-        //loop and assign
-        foreach (Node node in listOfNodes)
-        { node.SetMaterial(nodeMaterial); }
-        //trigger an automatic redraw
-        GameManager.instance.nodeScript.nodeRedraw = true;
-    }
+
 
 
 
@@ -932,7 +880,8 @@ public class LevelManager : MonoBehaviour
     public int[] GetNodeTypeTotals()
     { return arrayOfNodeTypeTotals; }
 
-
+    public List<Node> GetListOfNodes()
+    { return listOfNodes; }
 
 
 }

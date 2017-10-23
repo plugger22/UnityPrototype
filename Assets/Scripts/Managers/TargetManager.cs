@@ -140,10 +140,14 @@ public class TargetManager : MonoBehaviour
                             case Status.Active:
                                 totalActive = GameManager.instance.dataScript.GetNodeInfo(nodeArcID, NodeInfo.TargetsActive) + 1;
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsActive, totalActive);
+                                GameManager.instance.dataScript.AddActiveTarget(target);
                                 break;
                             case Status.Live:
                                 totalLive = GameManager.instance.dataScript.GetNodeInfo(nodeArcID, NodeInfo.TargetsLive) + 1;
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsLive, totalLive);
+                                GameManager.instance.dataScript.AddLiveTarget(target);
+                                //assign nodeID to target
+                                target.NodeID = node.NodeID;
                                 break;
                             default:
                                 Debug.LogError(string.Format("Invalid status \"{0}\"{1}", status, "\n"));
@@ -196,7 +200,9 @@ public class TargetManager : MonoBehaviour
                 for(int i = 0; i < target.listOfGoodEffects.Count; i++)
                 {
                     effect = target.listOfGoodEffects[i];
-                    tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd));
+                    if (effect != null)
+                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
+                    else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
                 }
                 //info level data colour graded
                 if (target.InfoLevel == 3) { infoColour = colourDataGood; }

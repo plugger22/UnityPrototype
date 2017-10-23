@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using gameAPI;
 
 /// <summary>
 /// handles all Actor image related mouse interaction
@@ -16,6 +17,7 @@ public class ActorInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
     }
+
 
     /// <summary>
     /// Mouse Over event
@@ -33,7 +35,7 @@ public class ActorInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerExit(PointerEventData eventData)
     {
         StopAllCoroutines();
-        GameManager.instance.levelScript.ResetNodes();
+        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
     }
 
     /// <summary>
@@ -45,4 +47,6 @@ public class ActorInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExi
         yield return new WaitForSeconds(mouseOverDelay);
         GameManager.instance.levelScript.ShowActiveNodes(actorSlotID);
     }
+
+
 }

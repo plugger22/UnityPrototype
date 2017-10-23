@@ -14,14 +14,14 @@ public class DataManager : MonoBehaviour
 {
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
-    private List<List<Node>> listOfNodesByType = new List<List<Node>>();                                                 //List containing Lists of Nodes by type -> index[NodeArcID]
+    private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
     //master lists 
     private List<ActorArc> listOfAllActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
 
     //for fast access
-    private List<Target> listOfPossibleTargets = new List<Target>();
+    private List<Target> listOfPossibleTargets = new List<Target>();                        //nodes that don't currently have any target
     private List<Target> listOfActiveTargets = new List<Target>();
     private List<Target> listOfLiveTargets = new List<Target>();
     
@@ -33,8 +33,10 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
 
     //dictionaries
-    private Dictionary<int, GameObject> dictOfNodes = new Dictionary<int, GameObject>();            //Key -> nodeID, Value -> Node gameObject
+    private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
+    private Dictionary<int, Node> dictOfNodes = new Dictionary<int, Node>();                        //Key -> nodeID, Value -> Node
     private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
+    private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();           //Key -> nodeArc name, Value -> nodeArcID
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
@@ -75,9 +77,15 @@ public class DataManager : MonoBehaviour
             { Debug.LogError("Invalid NodeArc (Null)"); }
             catch (ArgumentException)
             { Debug.LogError(string.Format("Invalid NodeArc (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeArc.name)); }
+            //add to lookup dictionary
+            try
+            { dictOfLookUpNodeArcs.Add(nodeArc.name, nodeArc.NodeArcID); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid NodeArc (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid NodeArc (duplicate) Name \"{0}\" for ID \"{1}\"", nodeArc.name, nodeArc.NodeArcID)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfNodeArcs has {0} entries{1}", counter, "\n"));
-
         //
         // - - - Traits - - -
         //
@@ -183,6 +191,7 @@ public class DataManager : MonoBehaviour
             target.Timer = -1;
             target.InfoLevel = 1;
             target.IsKnownByAI = false;
+            target.NodeID = -1;
             //add to dictionary
             try
             { dictOfTargets.Add(target.TargetID, target); }
@@ -215,13 +224,35 @@ public class DataManager : MonoBehaviour
             listOfNodesByType.Add(tempList);
         }
         //Populate List of lists -> place node in the correct list
-        foreach(var nodeObj in dictOfNodes)
+        foreach(var nodeObj in dictOfNodeObjects)
         {
             Node node = nodeObj.Value.GetComponent<Node>();
             listOfNodesByType[node.arc.NodeArcID].Add(node);
         }
-        //list of Possible Targets
-        foreach(var target in dictOfTargets)
+        //
+        // - - - Nodes - - -
+        //
+        int counter = 0;
+        List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
+        if (tempNodeList != null)
+        {
+            foreach (Node node in tempNodeList)
+            {
+                //add to dictionary
+                try
+                { dictOfNodes.Add(node.NodeID, node); counter++; }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Node (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.NodeID, node.name)); }
+            }
+            Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
+        //
+        // - - - Possible Targets - - -
+        //
+        foreach (var target in dictOfTargets)
         {
             //add to list pf Possible targets if a level 1 target & nodes of the required type are available
             if (target.Value.targetLevel == 1)
@@ -236,8 +267,14 @@ public class DataManager : MonoBehaviour
                 }
             }
         }
+
     }
 
+
+
+    //
+    // - - - NodeArcs - - -
+    //
 
     /// <summary>
     /// returns a random Arc from the appropriate list based on the number of Connections that the node has
@@ -297,6 +334,23 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns nodeArcID for specified nodeArc name, eg. "Corporate". Returns '-1' if not found in lookup dictionary
+    /// </summary>
+    /// <param name="nodeArcName"></param>
+    /// <returns></returns>
+    public int GetNodeArcID(string nodeArcName)
+    {
+        if (dictOfLookUpNodeArcs.ContainsKey(nodeArcName))
+        { return dictOfLookUpNodeArcs[nodeArcName]; }
+        else { Debug.LogWarning(string.Format("Not found in Lookup NodeArcID dict \"{0}\"{1}", nodeArcName, "\n")); }
+        return -1;
+    }
+
+    //
+    // - - - Actor Related - - - 
+    //
+
+    /// <summary>
     /// returns a number of randomly selected ActorArcs
     /// </summary>
     /// <param name="num"></param>
@@ -328,6 +382,10 @@ public class DataManager : MonoBehaviour
     {
         return listOfAllTraits[Random.Range(0, listOfAllTraits.Count)];
     }
+
+    //
+    // - - - Actions - - -
+    //
 
     /// <summary>
     /// add Actors and effects to dictionaries
@@ -367,6 +425,9 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    //
+    // - - - Nodes - - -
+    //
 
     /// <summary>
     /// returns a GameObject node from dictionary based on nodeID, Null if not found
@@ -376,25 +437,24 @@ public class DataManager : MonoBehaviour
     public GameObject GetNodeObject(int nodeID)
     {
         GameObject obj = null;
-        if (dictOfNodes.TryGetValue(nodeID, out obj))
+        if (dictOfNodeObjects.TryGetValue(nodeID, out obj))
         {
             return obj;
         }
         return null;
     }
 
-
     /// <summary>
-    /// returns a Target from dictionary based on TargetID key, null if not found
+    /// returns a Node from dictionary based on nodeID, Null if not found
     /// </summary>
-    /// <param name="targetID"></param>
+    /// <param name="nodeID"></param>
     /// <returns></returns>
-    public Target GetTarget(int targetID)
+    public Node GetNode(int nodeID)
     {
-        Target target = null;
-        if (dictOfTargets.TryGetValue(targetID, out target))
+        Node node = null;
+        if (dictOfNodes.TryGetValue(nodeID, out node))
         {
-            return target;
+            return node;
         }
         return null;
     }
@@ -403,7 +463,7 @@ public class DataManager : MonoBehaviour
     public void AddNodeObject(int nodeID, GameObject nodeObj)
     {
         try
-        { dictOfNodes.Add(nodeID, nodeObj); }
+        { dictOfNodeObjects.Add(nodeID, nodeObj); }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid Node Object (Null)"); }
         catch (ArgumentException)
@@ -411,12 +471,8 @@ public class DataManager : MonoBehaviour
     }
 
 
-
-    public List<Target> GetPossibleTargets()
-    { return listOfPossibleTargets; }
-
-    public Dictionary<int, Target> GetDictOfTargets()
-    { return dictOfTargets; }
+    public Dictionary<int, Node> GetAllNodes()
+    { return dictOfNodes; }
 
     /// <summary>
     /// Get int data from Master node array
@@ -447,7 +503,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public int GetNumOfNodes()
-    { return dictOfNodes.Count; }
+    { return dictOfNodeObjects.Count; }
 
     /// <summary>
     /// returns number of different node arc types on level, eg. "Corporate" + "Utility" would return 2
@@ -456,8 +512,6 @@ public class DataManager : MonoBehaviour
     public int GetNumOfNodeTypes()
     { return arrayOfNodes.Length; }
 
-    public int GetNumOfPossibleTargets()
-    { return listOfPossibleTargets.Count; }
 
     /// <summary>
     /// return a list of Nodes, all of which are the same type (nodeArcID)
@@ -469,6 +523,96 @@ public class DataManager : MonoBehaviour
         Debug.Assert(nodeArcID > -1 && nodeArcID < GetNumOfNodeTypes(), "Invalid nodeArcID parameter");
         return listOfNodesByType[nodeArcID];
     }
+
+    /// <summary>
+    /// returns a Random node of a particular NodeArc type, or (by default) ANY random node. Returns null if a problem.
+    /// </summary>
+    /// <param name="nodeArcID"></param>
+    /// <returns></returns>
+    public Node GetRandomNode(int nodeArcID = -1)
+    {
+        Node node = null;
+        int key;
+        if (nodeArcID == -1)
+        {
+            //return a Random Node (ANY)
+            List<int> keyList = new List<int>(dictOfNodes.Keys);
+            key = keyList[Random.Range(0, keyList.Count)];
+            node = GetNode(key);
+        }
+        else
+        {
+            //return a random node of a specific nodeArc type
+            List<Node> nodeList = GetListOfNodesByType(nodeArcID);
+            //no go if no nodes of that type present in scene
+            if (nodeList != null && nodeList.Count > 0)
+            {
+                //return a Random Node (specific nodeArc type)
+                node = nodeList[Random.Range(0, nodeList.Count)];
+            }
+            else
+            {
+                //return a Random Node (ANY)
+                List<int> keyList = new List<int>(dictOfNodes.Keys);
+                key = keyList[Random.Range(0, keyList.Count)];
+                node = GetNode(key);
+                Debug.LogWarning(string.Format("Alert: nodeList is either Null or Count Zero for nodeArcID \"{0}\", {1}{2}", 
+                    nodeArcID, GetNodeArc(nodeArcID), "\n"));
+            }
+        }
+        return node;
+    }
+
+
+    //
+    // - - - Targets - -  -
+    //
+
+    /// <summary>
+    /// returns a Target from dictionary based on TargetID key, null if not found
+    /// </summary>
+    /// <param name="targetID"></param>
+    /// <returns></returns>
+    public Target GetTarget(int targetID)
+    {
+        Target target = null;
+        if (dictOfTargets.TryGetValue(targetID, out target))
+        {
+            return target;
+        }
+        return null;
+    }
+
+    public List<Target> GetPossibleTargets()
+    { return listOfPossibleTargets; }
+
+    public int GetNumOfPossibleTargets()
+    { return listOfPossibleTargets.Count; }
+
+    public Dictionary<int, Target> GetDictOfTargets()
+    { return dictOfTargets; }
+
+
+    public List<Target> GetLiveTargets()
+    { return listOfLiveTargets; }
+
+
+    public void AddActiveTarget(Target target)
+    {
+        if (target != null)
+        { listOfActiveTargets.Add(target); }
+        else { Debug.LogError("Invalid Active Target parameter (Null)"); }
+    }
+
+    public void AddLiveTarget(Target target)
+    {
+        if (target != null)
+        { listOfLiveTargets.Add(target); }
+        else { Debug.LogError("Invalid Live Target parameter (Null)"); }
+    }
+
+
+
 
 }
 

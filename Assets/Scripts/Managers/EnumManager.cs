@@ -14,7 +14,10 @@ namespace gameAPI
 
     //Level Manager
     public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count }
+
+    //Node Manager
     public enum NodeType { Normal, Highlight, Active, Player, Count }
+    public enum NodeUI { None, Reset, Redraw, ShowTargets};             //parameter for NodeDisplay event
 
     //Events and Targets
     public enum Status {Dormant, Active, Live }

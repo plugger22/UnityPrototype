@@ -39,7 +39,11 @@ public class InputManager : MonoBehaviour
         switch (_gameState)
         {
             case GameState.Normal:
-
+                if (Input.GetButton("ShowTargets") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets);
+                    return;
+                }
                 break;
             case GameState.ModalOutcome:
                 if (Input.GetButton("Cancel") == true)

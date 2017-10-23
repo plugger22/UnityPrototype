@@ -117,10 +117,7 @@ public class GameManager : MonoBehaviour
         //set side
         optionScript.PlayerSide = Side.Rebel;
         optionScript.ColourOption = ColourScheme.Normal;
-        //GUI elements
-        /*tooltipNodeScript.InitialiseTooltip(optionScript.PlayerSide);
-        tooltipActorScript.InitialiseTooltip(optionScript.PlayerSide);
-        outcomeScript.InitialiseOutcome(optionScript.PlayerSide);*/
+
         //register listener
         EventManager.instance.AddListener(EventType.ExitGame, OnEvent);
     }
@@ -141,15 +138,18 @@ public class GameManager : MonoBehaviour
         actionScript.Initialise();
         effectScript.Initialise();
         targetScript.Initialise();
-        
+        playerScript.Initialise();
+        //do a final redraw before game start
+        //EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
+        nodeScript.NodeRedraw = true;
     }
 
 
     private void Update()
     {
         //redraw any Nodes where required
-        if (nodeScript.nodeRedraw == true)
-        { levelScript.RedrawNodes(); }
+        if (nodeScript.NodeRedraw == true)
+        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw); }
         //Handle Game Input
         if (Input.anyKey == true)
         { inputScript.ProcessInput(); }

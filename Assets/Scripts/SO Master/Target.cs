@@ -17,6 +17,7 @@ public class Target : ScriptableObject
     public int targetLevel = 1;                         //from 1 to 3, lowest to highest. Level 1 can trigger a Level 2 which can trigger a level 3
     public int InfoLevel { get; set; }                        //from 1 to 3 but can be zero in some cases
     public NodeArc nodeArc;                       //which Node Arc it applies to, eg. "Government"
+    public int NodeID;                            //assigned once target is live, -1 otherwise
     public Activation activation = Activation.Medium;                        //chance of going live each turn, if active
     public Status TargetStatus { get; set; }      //default status of Dormant
     public bool IsKnownByAI { get; set; }               //is known by the AI?

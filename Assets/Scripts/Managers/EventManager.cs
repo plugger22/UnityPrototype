@@ -14,9 +14,12 @@ public enum EventType
     CloseActionMenu,
     OpenOutcomeWindow,
     CloseOutcomeWindow,
+    ShowTargetNodes,
+    NodeDisplay,
     //action menu
     NodeAction,
     TargetAction
+    
 };
 
 //EventManager to send events to listeners
