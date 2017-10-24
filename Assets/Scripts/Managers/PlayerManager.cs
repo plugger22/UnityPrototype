@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour
     public int NumOfRecruits { get; set; }
     public int NumOfGear { get; set; }
 
+    private List<int> listOfGear = new List<int>();                 //gearID's of all gear items in inventory
+
 
 
     public void Initialise()
@@ -31,5 +33,13 @@ public class PlayerManager : MonoBehaviour
         //set player node
         GameManager.instance.nodeScript.nodePlayer = nodeID;
     }
+
+    /// <summary>
+    /// returns true if GearID present in player's inventory
+    /// </summary>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public bool CheckGearPresent(int gearID)
+    { return listOfGear.Exists(id => id == gearID); }
 
 }

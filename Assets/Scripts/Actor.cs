@@ -16,7 +16,7 @@ namespace gameAPI
         public int Renown { get; set; }                     //starts at '0' and goes up (no limit)
         public string Name { get; set; }
         public Trait trait { get; set; }
-        public bool isActive { get; set; }                  //actor can 'go silent' and be unavailable on occasion
+        public bool isLive { get; set; }                    //actor can 'go silent' and be unavailable on occasion
 
         [HideInInspector] public ActorArc arc;
 

@@ -103,7 +103,7 @@ public class ActorManager : MonoBehaviour
                     Motivation = Random.Range(1, 4),
                     Invisibility = Random.Range(1, 4),
                     trait = GameManager.instance.dataScript.GetRandomTrait(),
-                    isActive = true
+                    isLive = true
                 };
                 arrayOfActors[i] = actor;
 
@@ -201,10 +201,9 @@ public class ActorManager : MonoBehaviour
         //player's current node
         int playerID = GameManager.instance.nodeScript.nodePlayer;
         //Get Node
-        GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
-        if (nodeObject != null)
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
         {
-            Node node = nodeObject.GetComponent<Node>();
             List<Effect> listOfEffects = new List<Effect>();
             Action tempAction;
             EventButtonDetails details;
@@ -218,18 +217,22 @@ public class ActorManager : MonoBehaviour
             //Does the Node have a target attached? -> added first
             if (node.TargetID >= 0)
             {
-                EventButtonDetails targetDetails = null;
-
-                targetDetails = new EventButtonDetails()
+                Target target = GameManager.instance.dataScript.GetTarget(node.TargetID);
+                if (target != null)
                 {
-                    buttonTitle = "Target",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                    buttonTooltipMain = playerPresent,
-                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, "Placeholder Target tooltip", colourEnd),
-                    //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
-                };
-                tempList.Add(targetDetails);
+                    //button target details
+                    EventButtonDetails targetDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Target",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, target.name, colourEnd),
+                        buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.TargetID),
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, "Placeholder Target tooltip", colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
+                    };
+                    tempList.Add(targetDetails);
+                }
+                else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.TargetID, "\n")); }
             }
             //
             // - - - Actors - - - 
@@ -244,7 +247,7 @@ public class ActorManager : MonoBehaviour
                 //actualRenownEffect = null;
 
                 //actor active?
-                if (actor.isActive == true)
+                if (actor.isLive == true)
                 {
                     if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, actor.SlotID) == true || nodeID == playerID )
                     {
@@ -363,7 +366,24 @@ public class ActorManager : MonoBehaviour
             }
             tempList.Add(cancelDetails);
         }
+        else { Debug.LogError(string.Format("Invalid Node (null), ID {0}{1}", nodeID, "\n")); }
         return tempList;
+    }
+
+    /// <summary>
+    /// returns slotID of actor if present and available (live), '-1' if not
+    /// </summary>
+    /// <param name="actorArcID"></param>
+    /// <returns></returns>
+    public int CheckActorPresent(int actorArcID)
+    {
+        int slotID = -1;
+        foreach(Actor actor in arrayOfActors)
+        {
+            if (actor.arc.ActorArcID == actorArcID && actor.isLive == true)
+            { return actorArcID; }
+        }
+        return slotID;
     }
 
 }

@@ -82,7 +82,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
 
                 List<string> activeList = node.GetNodeActors();
-                List<string> targetList = new List<string>() { "Power Grid", "All Nodes Stability -1", "Rolling Blackouts", "Info 3" };
+                List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.TargetID);
                 //adjust position prior to sending
                 Vector3 position = transform.position;
                 position.x += 100;

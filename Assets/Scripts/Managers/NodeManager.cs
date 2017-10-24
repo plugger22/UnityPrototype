@@ -244,7 +244,8 @@ public class NodeManager : MonoBehaviour
             //set show node flag on success
             NodeShowFlag = 1;
             //active AlertUI
-            GameManager.instance.alertScript.SetAlertUI(displayText);
+            if (string.IsNullOrEmpty(displayText) != true)
+            { GameManager.instance.alertScript.SetAlertUI(displayText); }
         }
     }
 

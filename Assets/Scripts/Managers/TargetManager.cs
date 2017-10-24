@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using gameAPI;
+using System.Text;
+using System;
 
 /// <summary>
 /// Handles all node target related matters
@@ -14,6 +17,12 @@ public class TargetManager : MonoBehaviour
     [Range(20, 50)]
     [Tooltip("The % of the total Nodes on the level that can have a Live target at any one time")]
     public int maxPercentTargets = 25;
+    [Range(1, 3)]
+    [Tooltip("How much effect having the right Gear for a target will have on the chance of success")]
+    public int gearEffect = 2;
+    [Range(1, 3)]
+    [Tooltip("How much effect having the right Actor for a target will have on the chance of success")]
+    public int actorEffect = 2;
 
     public int StartTargets { get; private set; }
     public int ActiveTargets { get; private set; }
@@ -22,6 +31,8 @@ public class TargetManager : MonoBehaviour
 
     //colour Palette
     private string colourGood;
+    private string colourNeutral;
+    private string colourBad;
     private string colourGear;
     private string colourNormal;
     private string colourDefault;
@@ -77,6 +88,8 @@ public class TargetManager : MonoBehaviour
     public void SetColours()
     {
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
@@ -216,6 +229,88 @@ public class TargetManager : MonoBehaviour
         return tempList;
     }
 
+    /// <summary>
+    /// Returns all factors involved in a particular targets resolution (eg. effects chance of success). Used by ActorManager.cs -> GetActorActions for action button tooltip
+    /// </summary>
+    /// <param name="targetID"></param>
+    /// <returns></returns>
+    public string GetTargetFactors(int targetID)
+    {
+        List<string> tempList = new List<string>();
+        //get target
+        Target target = GameManager.instance.dataScript.GetTarget(targetID);
+        if (target != null)
+        {
+            //get node
+            Node node = GameManager.instance.dataScript.GetNode(target.NodeID);
+            if (node != null)
+            {
+                //good -> info
+                tempList.Add(string.Format("{0}Info {1}{2}{3}", colourGood, target.InfoLevel > 0 ? "+" : "", target.InfoLevel, colourEnd));
+                //player or Active Actor?
+                if (GameManager.instance.nodeScript.nodePlayer == node.NodeID)
+                {
+                    //player at node -> active actor not applicable
+                    if (target.actorArc != null)
+                    { tempList.Add(string.Format("{0}{1} n.a{2}", colourNeutral, target.actorArc.name, colourEnd)); }
+                    //player has special gear?
+                    if (target.gear != null)
+                    {
+                        if (GameManager.instance.playerScript.CheckGearPresent(target.gear.GearID) == true)
+                        { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.gear.name, gearEffect, colourEnd)); }
+                        else
+                        { tempList.Add(string.Format("{0}{1} n.a{2}", colourNeutral, target.gear.name, colourEnd)); }
+                    }
+                }
+                else
+                {
+                    //player not at node ->  check if node active for the correct actor
+                    if (target.actorArc != null)
+                    {
+                        int slotID = GameManager.instance.actorScript.CheckActorPresent(target.actorArc.ActorArcID);
+                        if (slotID > -1)
+                        {
+                            //actor present and available
+                            tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
 
-    
+                        }
+                        else
+                        {
+                            //actor either not present or unavailable
+                            tempList.Add(string.Format("{0}{1} n.a{2}", colourNeutral, target.actorArc.name, colourEnd));
+                        }
+                    }
+                    //gear not applicable (only when player at node)
+                    if (target.gear != null)
+                    { tempList.Add(string.Format("{0}{1} n.a{2}", colourNeutral, target.gear.name, colourEnd)); }
+                }
+                //bad -> security
+                tempList.Add(string.Format("{0}Node Security {1}{2}{3}", colourBad, node.Security > 0 ? "-" : "", node.Security, colourEnd));
+                //bad -> target level
+                tempList.Add(string.Format("{0}Target Level {1}{2}{3}", colourBad, target.targetLevel > 0 ? "-" : "", target.targetLevel, colourEnd));
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}",target.NodeID, "\n"));
+                tempList.Add(string.Format("{0}{1}{2}", colourBad, "Target Data inaccessible", colourEnd));
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Target (null), ID \"{0}\"{1}", targetID, "\n"));
+            tempList.Add(string.Format("{0}{1}{2}", colourBad, "Target Data inaccessible", colourEnd));
+        }
+        //convert list to string and return
+        StringBuilder builder = new StringBuilder();
+        foreach(string text in tempList)
+        {
+            if (builder.Length > 0)
+            { builder.AppendLine(); }
+            builder.Append(text);
+        }
+        return builder.ToString();
+    }
+
+
+    //place methods above here
 }
