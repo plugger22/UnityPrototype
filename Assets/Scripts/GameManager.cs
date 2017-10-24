@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TickerTextScroller tickerScript;         //Ticker Text Scroller
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
     [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
+    [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
 
     public float showSplashTimeout = 2.0f;
 
@@ -102,7 +103,8 @@ public class GameManager : MonoBehaviour
         tooltipGenericScript = TooltipGeneric.Instance();
         tickerScript = TickerTextScroller.Instance();
         actionMenuScript = ModalActionMenu.Instance();
-        outcomeScript = ModalOutcome.Instance(); 
+        outcomeScript = ModalOutcome.Instance();
+        alertScript = AlertUI.Instance();
         //make sure raycasts are active, eg. node tooltips
         isBlocked = false;
         //sets this to not be destroyed when reloading a scene
@@ -139,6 +141,7 @@ public class GameManager : MonoBehaviour
         effectScript.Initialise();
         targetScript.Initialise();
         playerScript.Initialise();
+        nodeScript.Initialise();
         //do a final redraw before game start
         //EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
         nodeScript.NodeRedraw = true;

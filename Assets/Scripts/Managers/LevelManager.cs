@@ -397,24 +397,7 @@ public class LevelManager : MonoBehaviour
     // --- Show Active Nodes
     //
     #region Show Nodes
-    /// <summary>
-    /// Show all active nodes for a particular actor. Use actor.slotID (0 to numOfActors)
-    /// </summary>
-    /// <param name="slotID"></param>
-    public void ShowActiveNodes(int slotID)
-    {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
-        //set all nodes to default colour first
-        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
-        //change material for selected nodes
-        List<GameObject> tempList = listOfActorNodes[slotID];
-        foreach (GameObject obj in tempList)
-        {
-            Node nodeTemp = obj.GetComponent<Node>();
-            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
-            nodeTemp.SetMaterial(nodeMaterial);
-        }
-    }
+
 
 
 
@@ -883,5 +866,7 @@ public class LevelManager : MonoBehaviour
     public List<Node> GetListOfNodes()
     { return listOfNodes; }
 
+    public List<List<GameObject>> GetListOfActorNodes()
+    { return listOfActorNodes; }
 
 }

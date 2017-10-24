@@ -45,7 +45,7 @@ public class ActorInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExi
     IEnumerator ShowActiveNodes()
     {
         yield return new WaitForSeconds(mouseOverDelay);
-        GameManager.instance.levelScript.ShowActiveNodes(actorSlotID);
+        GameManager.instance.nodeScript.ShowActiveNodes(actorSlotID);
     }
 
 

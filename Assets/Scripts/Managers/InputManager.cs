@@ -39,26 +39,77 @@ public class InputManager : MonoBehaviour
         switch (_gameState)
         {
             case GameState.Normal:
-                if (Input.GetButton("ShowTargets") == true)
+                if (Input.GetButtonDown("ShowTargets") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets);
                     return;
                 }
+                //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9
+                if (Input.GetButtonDown("NodeArc0") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc0);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc1") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc1);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc2") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc2);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc3") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc3);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc4") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc4);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc5") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc5);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc6") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc7") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc7);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc8") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc8);
+                    return;
+                }
+                if (Input.GetButtonDown("NodeArc9") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc9);
+                    return;
+                }
                 break;
             case GameState.ModalOutcome:
-                if (Input.GetButton("Cancel") == true)
+                if (Input.GetButtonDown("Cancel") == true)
                 {
                     EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this);
                     return;
                 }
-                if (Input.GetButton("Multipurpose") == true)
+                if (Input.GetButtonDown("Multipurpose") == true)
                 {
                     EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this);
                     return;
                 }
                 break;
             case GameState.ModalActionMenu:
-                if (Input.GetButton("Cancel") == true)
+                if (Input.GetButtonDown("Cancel") == true)
                 {
                     EventManager.instance.PostNotification(EventType.CloseActionMenu, this);
                     return;

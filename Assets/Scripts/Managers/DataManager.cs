@@ -24,7 +24,8 @@ public class DataManager : MonoBehaviour
     private List<Target> listOfPossibleTargets = new List<Target>();                        //nodes that don't currently have any target
     private List<Target> listOfActiveTargets = new List<Target>();
     private List<Target> listOfLiveTargets = new List<Target>();
-    
+    private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor in the level
+
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
     public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfTwoConnArcs = new List<NodeArc>();
@@ -267,6 +268,10 @@ public class DataManager : MonoBehaviour
                 }
             }
         }
+        //
+        // - - - Actor Nodes - - -
+        //
+        listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes();
 
     }
 
@@ -611,7 +616,20 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid Live Target parameter (Null)"); }
     }
 
+    //
+    // - - - Actor Nodes - - -
+    //
 
+    /// <summary>
+    /// return a list of all nodes where an actor (slotID) is active
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public List<GameObject> GetListOfActorNodes(int slotID)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
+        return listOfActorNodes[slotID];
+    }
 
 
 }
