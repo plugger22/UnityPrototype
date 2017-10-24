@@ -25,14 +25,6 @@ public class ModalOutcome : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
 
-    //colour Palette
-    /*private string colourGood;
-    private string colourNeutral;
-    private string colourBad;
-    private string colourActive;*/
-    private string colourDefault;
-    private string colourEnd;
-
     /// <summary>
     /// initialisation
     /// </summary>
@@ -96,6 +88,7 @@ public class ModalOutcome : MonoBehaviour
         EventManager.instance.RemoveEvent(EventType.OpenOutcomeWindow);
     }
 
+   
 
     public void SetModalOutcome(string textTop, string textBottom, Sprite sprite = null)
     {
@@ -108,8 +101,8 @@ public class ModalOutcome : MonoBehaviour
         //SetOpacity(0f);
 
         //set up modalOutcome elements
-        outcomeText.text = string.Format("{0}{1}{2}", colourDefault, textTop, colourEnd);
-        effectText.text = string.Format("{0}{1}{2}", colourDefault, textBottom, colourEnd);
+        outcomeText.text = textTop;
+        effectText.text = textBottom;
         if (sprite != null)
         { outcomeImage.sprite = sprite; }
 

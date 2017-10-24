@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
                                                                     
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
-    private MetaLevel metaLevel;
+    private MetaLevel metaLevel = MetaLevel.None;
     private bool allowQuitting = false;
     private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
