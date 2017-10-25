@@ -11,11 +11,12 @@ public enum ColourType
     cancelHighlight, cancelNormal,
     actionEffect,
     dataGood, dataNeutral, dataBad,
-    normalText, defaultText,                            //normal is slight off yellow text, default is white
+    normalText, defaultText, greyText,                           //normal is slight off yellow text, default is white, grey is greyed out
     //outcome window effects
     goodEffect, neutralEffect, badEffect,                              
     nodeActive,
     error,
+    black,
     Count
 }
 
@@ -40,6 +41,7 @@ public class ColourManager : MonoBehaviour
     //default Text
     public Colour[] normalText;                     //normal non-coloured text, eg. white equivalent
     public Colour[] defaultText;                    //default White text if no colour provided
+    public Colour[] greyText;                       //greyed out text
     //outcome Effects
     public Colour[] goodEffect;
     public Colour[] neutralEffect;
@@ -49,6 +51,8 @@ public class ColourManager : MonoBehaviour
     public Colour[] nodeActive;                     //active actors in Node
     //error (global)
     public Colour[] error;                          //error text
+
+    public Colour[] black;
 
     private Colour[,] arrayOfColours;               //repositry of colourTypes
     private List<Colour[]> listOfColourTypes;       //facilitates automatic population of array
@@ -71,11 +75,13 @@ public class ColourManager : MonoBehaviour
             dataBad,
             normalText,
             defaultText,
+            greyText,
             goodEffect,
             neutralEffect,
             badEffect,
             nodeActive,
-            error
+            error,
+            black,
         };
 
         //loop thorugh list and auto populate array

@@ -43,6 +43,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
     private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
     private Dictionary<int, Target> dictOfTargets = new Dictionary<int, Target>();                  //Key -> targetID, Value -> Target
+    private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();               //Key -> teamID, Value -> Team
 
     /// <summary>
     /// default constructor
@@ -202,6 +203,31 @@ public class DataManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTargets has {0} entries{1}", counter, "\n"));
+        //
+        // - - - Team Arcs - - -
+        //
+        counter = 0;
+        //get GUID of all SO Team Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var teamGUID = AssetDatabase.FindAssets("t:TeamArc");
+        foreach (var guid in teamGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object teamObject = AssetDatabase.LoadAssetAtPath(path, typeof(TeamArc));
+            //assign a zero based unique ID number
+            TeamArc teamArc = teamObject as TeamArc;
+            //set data
+            teamArc.TeamArcID = counter++;
+            //add to dictionary
+            try
+            { dictOfTeamArcs.Add(teamArc.TeamArcID, teamArc); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Team (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfTeamArcs has {0} entries{1}", counter, "\n"));
     }
 
 
@@ -272,7 +298,6 @@ public class DataManager : MonoBehaviour
         // - - - Actor Nodes - - -
         //
         listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes();
-
     }
 
 

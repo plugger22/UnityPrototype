@@ -24,6 +24,7 @@ public class ActorManager : MonoBehaviour
     private string colourCancel;
     private string colourInvalid;
     private string colourEffect;
+    private string colourDefault;
     private string colourEnd;
 
     public void Initialise()
@@ -72,6 +73,7 @@ public class ActorManager : MonoBehaviour
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -220,13 +222,14 @@ public class ActorManager : MonoBehaviour
                 Target target = GameManager.instance.dataScript.GetTarget(node.TargetID);
                 if (target != null)
                 {
+                    string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault, target.description, colourEnd);
                     //button target details
                     EventButtonDetails targetDetails = new EventButtonDetails()
                     {
                         buttonTitle = "Target",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, target.name, colourEnd),
+                        buttonTooltipHeader = targetHeader,
                         buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.TargetID),
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, "Placeholder Target tooltip", colourEnd),
+                        buttonTooltipDetail = GameManager.instance.targetScript.GetTargetGoodEffects(node.TargetID),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
                     };
@@ -237,7 +240,6 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Actors - - - 
             //
-
             //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
             foreach (Actor actor in arrayOfActors)
             {

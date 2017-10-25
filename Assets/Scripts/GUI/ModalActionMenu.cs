@@ -193,10 +193,10 @@ public class ModalActionMenu : MonoBehaviour
         else { screenPos.y -= offset; }
         //width - default right
         if (screenPos.x + offset >= Screen.width)
-        { screenPos.x -= + offset + screenPos.x - Screen.width; }
+        { screenPos.x -= offset + screenPos.x - Screen.width; }
         //go left if needed
         else if (screenPos.x - offset - width <= 0)
-        { screenPos.x += - offset - width - screenPos.x; }
+        { screenPos.x += offset - width; }
         else
         { screenPos.x += offset; }
         //set new position
