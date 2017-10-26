@@ -14,6 +14,7 @@ public class DataManager : MonoBehaviour
 {
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
+    private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
     //master lists 
@@ -44,6 +45,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
     private Dictionary<int, Target> dictOfTargets = new Dictionary<int, Target>();                  //Key -> targetID, Value -> Target
     private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();               //Key -> teamID, Value -> Team
+    private Dictionary<string, int> dictOfLookupTeamArcs = new Dictionary<string, int>();           //Key -> teamArc name, Value -> TeamArcID
+    private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
 
     /// <summary>
     /// default constructor
@@ -223,11 +226,20 @@ public class DataManager : MonoBehaviour
             try
             { dictOfTeamArcs.Add(teamArc.TeamArcID, teamArc); }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Team (Null)"); }
+            { Debug.LogError("Invalid TeamArc (Null)"); }
             catch (ArgumentException)
             { Debug.LogError(string.Format("Invalid TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
+            //add to lookup dictionary
+            try
+            { dictOfLookupTeamArcs.Add(teamArc.name, teamArc.TeamArcID); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Lookup TeamArc (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Lookup TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTeamArcs has {0} entries{1}", counter, "\n"));
+        //arrayOfTeams
+        arrayOfTeams = new int[counter, (int)TeamInfo.Count];
     }
 
 
@@ -489,7 +501,11 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-
+    /// <summary>
+    /// Add node GameObject to dictOfNodeObjects
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <param name="nodeObj"></param>
     public void AddNodeObject(int nodeID, GameObject nodeObj)
     {
         try
@@ -656,6 +672,77 @@ public class DataManager : MonoBehaviour
         return listOfActorNodes[slotID];
     }
 
+    //
+    // - - - Teams & TeamArcs - - -
+    //
+
+    public int GetNumOfTeamTypes()
+    { return dictOfTeamArcs.Count; }
+
+    /// <summary>
+    /// returns int data from arrayOfTeams based on teamArcID and TeamInfo enum
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <param name="info"></param>
+    /// <returns></returns>
+    public int GetTeamInfo(int teamArcID, TeamInfo info)
+    {
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamTypes(), "Invalid teamArcID");
+        return arrayOfTeams[teamArcID, (int)info];
+    }
+
+    /// <summary>
+    /// change a data value in array based on teamArcID and TeamInfo enum
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <param name="info"></param>
+    /// <param name="newData"></param>
+    public void SetTeamInfo(int teamArcID, TeamInfo info, int newData)
+    {
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamTypes(), "Invalid teamArcID");
+        arrayOfTeams[teamArcID, (int)info] = newData;
+    }
+
+    /// <summary>
+    /// returns TeamArcID of named teamArc type. returns '-1' if not found in dict
+    /// </summary>
+    /// <param name="teamArcName"></param>
+    /// <returns></returns>
+    public int GetTeamArcID(string teamArcName)
+    {
+        if (dictOfLookupTeamArcs.ContainsKey(teamArcName))
+        { return dictOfLookupTeamArcs[teamArcName]; }
+        else { Debug.LogWarning(string.Format("Not found in Lookup TeamArcID dict \"{0}\"{1}", teamArcName, "\n")); }
+        return -1;
+    }
+
+    /// <summary>
+    /// returns TeamArc based on teamArcID, null if not found in dictionary
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <returns></returns>
+    public TeamArc GetTeamArc(int teamArcID)
+    {
+        if (dictOfTeamArcs.ContainsKey(teamArcID))
+        { return dictOfTeamArcs[teamArcID]; }
+        else { Debug.LogWarning(string.Format("Not found inTeamArcID {0}, in dict {1}", teamArcID, "\n")); }
+        return null;
+    }
+
+    /// <summary>
+    /// Add team to dictOfTeams
+    /// </summary>
+    /// <param name="team"></param>
+    public void AddTeam(Team team)
+    {
+        //add to dictionary
+        try
+        { dictOfTeams.Add(team.TeamID, team); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Team (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.TeamID, team.arc.name, team.Name, "\n")); }
+    }
 
 }
 

@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
-    //[HideInInspector] public EventManager eventScript;                //Event Manager
+    [HideInInspector] public TeamManager teamScript;                  //Team Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
         targetScript = GetComponent<TargetManager>();
         optionScript = GetComponent<OptionManager>();
         nodeScript = GetComponent<NodeManager>();
-        //eventScript = GetComponent<EventManager>();
+        teamScript = GetComponent<TeamManager>();
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();
@@ -142,8 +142,8 @@ public class GameManager : MonoBehaviour
         targetScript.Initialise();
         playerScript.Initialise();
         nodeScript.Initialise();
+        teamScript.Initialise();
         //do a final redraw before game start
-        //EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
         nodeScript.NodeRedraw = true;
     }
 

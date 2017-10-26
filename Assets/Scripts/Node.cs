@@ -24,6 +24,7 @@ public class Node : MonoBehaviour
 
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
+    private List<Team> listOfTeams;                     //Authority teams present at the node
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     private float fadeInTime;                           //tooltip
@@ -40,6 +41,7 @@ public class Node : MonoBehaviour
 	private void Awake ()
     {
         listOfNeighbours = new List<Vector3>();
+        listOfTeams = new List<Team>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
@@ -205,5 +207,62 @@ public class Node : MonoBehaviour
     public Material GetMaterial()
     { return _Material; }
 
+    /// <summary>
+    /// add an authority team to the node. Returns true if placement successful.
+    /// Max one instance of each type of team at node
+    /// Max cap on number of teams at node
+    /// </summary>
+    /// <param name="team"></param>
+    public bool AddTeam(Team team)
+    {
+        if (team != null)
+        {
+            //check there is room for another team
+            if (listOfTeams.Count < GameManager.instance.teamScript.maxTeamsAtNode)
+            {
+                //check a similar type of team not already present
+                int nodeArcID = team.arc.TeamArcID;
+                if (listOfTeams.Count > 0)
+                {
+                    foreach(Team teamExisting in listOfTeams)
+                    {
+                        if (teamExisting.arc.TeamArcID == nodeArcID)
+                        {
+                            //already a similar team present -> no go
+                            Debug.LogWarning(string.Format("{0} Team NOT added to node {1}, ID {2} as already a similar team present{3}", 
+                                team.arc.name, NodeName, NodeID, "\n"));
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    //no teams currently present, must be O.K -> add new team
+                    listOfTeams.Add(team);
+                    Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, NodeName, NodeID, "\n"));
+                    return true;
+                }
+            }
+            else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", NodeName, NodeID, "\n")); }
+        }
+        else { Debug.LogError(string.Format("Invalid team (null) for Node {0}, ID {1}{2}", NodeName, NodeID, "\n")); }
+        return false;
+    }
 
+    /// <summary>
+    /// Returns number of teams present at node, '0' if none
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfTeams()
+    { return listOfTeams.Count; }
+
+    /// <summary>
+    /// returns empty list if none
+    /// </summary>
+    /// <returns></returns>
+    public List<Team> GetTeams()
+    { return listOfTeams; }
+
+
+    //place methods above here
 }
