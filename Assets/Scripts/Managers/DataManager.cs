@@ -692,15 +692,28 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// change a data value in array based on teamArcID and TeamInfo enum
+    /// change a data point to a new value in array based on teamArcID and TeamInfo enum
     /// </summary>
     /// <param name="teamArcID"></param>
     /// <param name="info"></param>
-    /// <param name="newData"></param>
+    /// <param name="newData">new value of data</param>
     public void SetTeamInfo(int teamArcID, TeamInfo info, int newData)
     {
         Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamTypes(), "Invalid teamArcID");
         arrayOfTeams[teamArcID, (int)info] = newData;
+    }
+
+    /// <summary>
+    /// adjust a data point by the input amount, eg. +1, -2, etc. Min capped at 0.
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <param name="info"></param>
+    /// <param name="adjustment"></param>
+    public void AdjustTeamInfo(int teamArcID, TeamInfo info, int adjustment)
+    {
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamTypes(), "Invalid teamArcID");
+        int afterValue = arrayOfTeams[teamArcID, (int)info] + adjustment;
+        arrayOfTeams[teamArcID, (int)info] = Math.Max(0, afterValue);
     }
 
     /// <summary>
@@ -744,6 +757,7 @@ public class DataManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.TeamID, team.arc.name, team.Name, "\n")); }
     }
 
+   //new methods above here
 }
 
 

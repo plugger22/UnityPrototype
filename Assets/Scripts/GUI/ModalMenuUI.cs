@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using gameAPI;
 
 /// <summary>
 /// allows Node tooltip to show with mouseover of Modal Action Menu header (node details)
@@ -83,6 +84,13 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
                 List<string> activeList = node.GetNodeActors();
                 List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.TargetID);
+                List<string> teamList = new List<string>();
+                List<Team> listOfTeams = node.GetTeams();
+                if (listOfTeams.Count > 0)
+                {
+                    foreach(Team team in listOfTeams)
+                    { teamList.Add(string.Format("{0 team", team.arc.name)); }
+                }
                 //adjust position prior to sending
                 Vector3 position = transform.position;
                 position.x += 100;
@@ -93,6 +101,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     string.Format("{0} ID {1}", node.arc.name, NodeID),
                     activeList,
                     new int[] { node.Stability, node.Support, node.Security },
+                    teamList,
                     targetList,
                     position
                     );

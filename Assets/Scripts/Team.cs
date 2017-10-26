@@ -38,7 +38,7 @@ namespace gameAPI
                     { Name = "Team " + (NATO)countOfTeams; }
                     else { Name = "Team Unknown"; }
                     //update teams count
-                    GameManager.instance.dataScript.SetTeamInfo(teamArcID, TeamInfo.Total, countOfTeams);
+                    GameManager.instance.dataScript.AdjustTeamInfo(teamArcID, TeamInfo.Total, +1);
                     //add to dictionary
                     GameManager.instance.dataScript.AddTeam(this);
                 }

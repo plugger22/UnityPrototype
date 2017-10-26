@@ -17,10 +17,12 @@ public class TooltipNode : MonoBehaviour
     public TextMeshProUGUI nodeActive;
     public TextMeshProUGUI nodeStatsFixed;
     public TextMeshProUGUI nodeStatsVar;
+    public TextMeshProUGUI nodeTeams;
     public TextMeshProUGUI nodeTarget;
 
     public Image dividerTop;                   //Side specific sprites for tooltips
-    public Image dividerMiddle;
+    public Image dividerUpperMiddle;
+    public Image dividerLowerMiddle;
     public Image dividerBottom;
 
     public GameObject tooltipNodeObject;
@@ -107,9 +109,10 @@ public class TooltipNode : MonoBehaviour
     /// <param name="type">Type of Node, eg. Sprawl, government, corporate (auto converted to CAPS)</param>
     /// <param name="listOfActive">place actor type here if node is active for them, eg. 'Hacker'. No limit to actors</param>
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
+    /// <param name="listOfTeams">List of Authority teams present at node</param>
     /// <param name="listOfTarget">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> Use a transform position (world units), not an Input.MousePosition (screen units)</param>
-    public void SetTooltip(string name, string type, List<string> listOfActive, int[] arrayOfStats, List<string> listOfTarget, Vector3 pos)
+    public void SetTooltip(string name, string type, List<string> listOfActive, int[] arrayOfStats, List<string> listOfTeams, List<string> listOfTarget, Vector3 pos)
     {
         //open panel at start
         tooltipNodeObject.SetActive(true);
@@ -123,7 +126,8 @@ public class TooltipNode : MonoBehaviour
         dividerTop.gameObject.SetActive(true);
         //show only if node active for at least one actor
         nodeActive.gameObject.SetActive(false);
-        dividerMiddle.gameObject.SetActive(false);
+        dividerUpperMiddle.gameObject.SetActive(false);
+        dividerLowerMiddle.gameObject.SetActive(true);
         //show only if node has a target
         nodeTarget.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
@@ -136,7 +140,7 @@ public class TooltipNode : MonoBehaviour
         {
             //set tooltip elements to show
             nodeActive.gameObject.SetActive(true);
-            dividerMiddle.gameObject.SetActive(true);
+            dividerUpperMiddle.gameObject.SetActive(true);
             //build string
             StringBuilder builder = new StringBuilder();
             builder.Append(colourActive);
@@ -148,8 +152,20 @@ public class TooltipNode : MonoBehaviour
             }
             nodeActive.text = builder.ToString();
         }
-
-        //Node has an identified target
+        //Teams
+        if (listOfTeams.Count > 0)
+        {
+            StringBuilder teamBuilder = new StringBuilder();
+            foreach (String teamText in listOfTeams)
+            {
+                if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
+                teamBuilder.Append(string.Format("{0}{1}{2}", colourBad, teamText, colourEnd));
+            }
+            nodeTeams.text = teamBuilder.ToString();
+        }
+        else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "No Teams present", colourEnd); }
+        
+        //Target
         if (listOfTarget.Count > 0)
         {
             //set tooltip elements to show
@@ -168,7 +184,7 @@ public class TooltipNode : MonoBehaviour
             nodeTarget.text = builder.ToString();
         }
         else
-        { nodeTarget.text = "No Target available"; }
+        { nodeTarget.text = string.Format("{0}{1}{2}", colourDefault, "No Target available", colourEnd); }
 
         //set up stats -> only takes the first three Stability - Support - Security
         int checkCounter = 0;
@@ -282,13 +298,15 @@ public class TooltipNode : MonoBehaviour
             case Side.Authority:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
             case Side.Rebel:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 break;
         }

@@ -383,7 +383,7 @@ public class ActorManager : MonoBehaviour
         foreach(Actor actor in arrayOfActors)
         {
             if (actor.arc.ActorArcID == actorArcID && actor.isLive == true)
-            { return actorArcID; }
+            { return actor.SlotID; }
         }
         return slotID;
     }

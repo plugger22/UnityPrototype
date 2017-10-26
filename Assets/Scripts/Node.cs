@@ -154,6 +154,12 @@ public class Node : MonoBehaviour
             while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
             {
                 List<string> activeList = GetNodeActors();
+                List<string> teamList = new List<string>();
+                if (listOfTeams.Count > 0)
+                {
+                    foreach (Team team in listOfTeams)
+                    { teamList.Add(string.Format("{0} team", team.arc.name)); }
+                }
                 List<string> targetList = new List<string>();
                 if (TargetID > -1)
                 { targetList = GameManager.instance.targetScript.GetTargetTooltip(TargetID); }
@@ -163,6 +169,7 @@ public class Node : MonoBehaviour
                     string.Format("{0} ID {1}", arc.name, NodeID),
                     activeList,
                     new int[] { Stability, Support, Security },
+                    teamList,
                     targetList,
                     transform.position
                     );
@@ -233,6 +240,9 @@ public class Node : MonoBehaviour
                                 team.arc.name, NodeName, NodeID, "\n"));
                             return false;
                         }
+                        listOfTeams.Add(team);
+                        Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, NodeName, NodeID, "\n"));
+                        return true;
                     }
                 }
                 else
@@ -255,6 +265,25 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public int CheckNumOfTeams()
     { return listOfTeams.Count; }
+
+
+    /// <summary>
+    /// returns true if a team of that type is present at the node
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <returns></returns>
+    public bool CheckTeamPresent(int teamArcID)
+    {
+        if (listOfTeams.Count > 0 && teamArcID > -1)
+        {
+            foreach (Team team in listOfTeams)
+            {
+                if (team.arc.TeamArcID == teamArcID)
+                { return true; }
+            }
+        }
+        return false;
+    }
 
     /// <summary>
     /// returns empty list if none
