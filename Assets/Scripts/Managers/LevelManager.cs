@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
         InitialiseGraph();
         AssignNodeArcs();
         AssignSecurityLevels();
-        AssignActorsToNodes();
+        AssignActorsToNodes(Side.Resistance);
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw);
     }
 
@@ -478,7 +478,7 @@ public class LevelManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("Actor Analysis" + "\n\n");
-        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors();
+        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors(GameManager.instance.optionScript.PlayerSide);
         //loop actors
         foreach (Actor actor in arrayOfActors)
         {
@@ -666,9 +666,9 @@ public class LevelManager : MonoBehaviour
     /// sets up nodes to be active, or not, for each of the selected actors
     /// </summary>
     /// <param name="arrayOfActors"></param>
-    private void AssignActorsToNodes()
+    private void AssignActorsToNodes(Side side)
     {
-        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors();           //the four, or less, available actors for the level
+        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors(side);           //the four, or less, available actors for the level
         int[] arrayOfArcs = new int[GameManager.instance.dataScript.GetNumNodeArcs()];    //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
         List<NodeArc> listOfNodeArcs = new List<NodeArc>();                 //temp list of NodeArcs used for an Actors primary and exclude nodeArc preference
 

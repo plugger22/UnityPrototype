@@ -6,7 +6,7 @@ using System.Text;
 namespace gameAPI
 {
     //Game Manager
-    public enum Side { Authority, Rebel }
+    public enum Side { Authority, Resistance, Count }
     public enum GameState { Normal, ModalOutcome, ModalActionMenu }
     public enum MetaLevel { None, City, State, Nation }
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count}    //DataManager arrayOfNodes index

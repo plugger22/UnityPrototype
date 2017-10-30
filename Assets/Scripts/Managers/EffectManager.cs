@@ -67,7 +67,7 @@ public class EffectManager : MonoBehaviour
     {
         switch (GameManager.instance.optionScript.PlayerSide)
         {
-            case Side.Rebel:
+            case Side.Resistance:
                 colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
                 colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
                 break;

@@ -114,12 +114,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //set side
+        optionScript.PlayerSide = Side.Resistance;
         //setup game
         InitialiseGame();
-        //set side
-        optionScript.PlayerSide = Side.Rebel;
+        //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
-
         //register listener
         EventManager.instance.AddListener(EventType.ExitGame, OnEvent);
     }
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
         levelScript.Initialise();
         //immediately after levelScript
         dataScript.InitialiseLate();
-        guiScript.Initialise(actorScript.GetActors());
+        guiScript.Initialise(actorScript.GetActors(optionScript.PlayerSide));
         inputScript.GameState = GameState.Normal;
         actionScript.Initialise();
         effectScript.Initialise();

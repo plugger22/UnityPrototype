@@ -177,7 +177,7 @@ public class ModalOutcome : MonoBehaviour
             case Side.Authority:
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundAuthority;
                 break;
-            case Side.Rebel:
+            case Side.Resistance:
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundRebel;
                 break;
         }

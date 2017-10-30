@@ -199,7 +199,7 @@ public class Node : MonoBehaviour
         {
             if (GameManager.instance.levelScript.CheckNodeActive(NodeID, i))
             {
-                tempList.Add(GameManager.instance.actorScript.GetActorType(i));
+                tempList.Add(GameManager.instance.actorScript.GetActorType(i, GameManager.instance.optionScript.PlayerSide));
             }
         }
         return tempList;

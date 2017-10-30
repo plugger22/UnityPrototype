@@ -97,9 +97,9 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(15, 140, 80, 20), "Side"))
             {
                 Debug.Log("Button -> Swap sides");
-                if (GameManager.instance.optionScript.PlayerSide == Side.Rebel)
+                if (GameManager.instance.optionScript.PlayerSide == Side.Resistance)
                 { GameManager.instance.optionScript.PlayerSide = Side.Authority; }
-                else { GameManager.instance.optionScript.PlayerSide = Side.Rebel; }
+                else { GameManager.instance.optionScript.PlayerSide = Side.Resistance; }
             }
 
             //

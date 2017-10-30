@@ -14,9 +14,10 @@ public class ActorManager : MonoBehaviour
 {
 
     [HideInInspector] public int numOfActorsCurrent;    //NOTE -> Not hooked up yet (need to show blank actors for any that aren't currently in use)
-    public int numOfActorsTotal = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4 
+    public int numOfActorsTotal = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
+                                          //is the total for one side (duplicated by the other side)
 
-    private Actor[] arrayOfActors;
+    private Actor[,] arrayOfActors;       //indexes [Side, numOfActors], two sets are created, one for each side
 
     //colour palette for Generic tool tip
     private string colourBlue;
@@ -31,7 +32,9 @@ public class ActorManager : MonoBehaviour
     {
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        InitialiseActors(numOfActorsTotal);
+        PreInitialiseActors();
+        InitialiseActors(numOfActorsTotal, Side.Resistance);
+        InitialiseActors(numOfActorsTotal, Side.Authority);
     }
 
     /// <summary>
@@ -77,22 +80,26 @@ public class ActorManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
-    /// <summary>
-    /// Set up number of required actors (minions supporting play)
-    /// </summary>
-    /// <param name="num"></param>
-    public void InitialiseActors(int num)
+    private void PreInitialiseActors()
     {
         //number of actors, default 4
         numOfActorsTotal = numOfActorsTotal == 4 ? numOfActorsTotal : 4;
         numOfActorsCurrent = numOfActorsCurrent < 1 ? 1 : numOfActorsCurrent;
         numOfActorsCurrent = numOfActorsCurrent > numOfActorsTotal ? numOfActorsTotal : numOfActorsCurrent;
+        //array
+        arrayOfActors = new Actor[(int)Side.Count, numOfActorsTotal];
+    }
 
-        arrayOfActors = new Actor[numOfActorsTotal];
+    /// <summary>
+    /// Set up number of required actors (minions supporting play)
+    /// </summary>
+    /// <param name="num"></param>
+    public void InitialiseActors(int num, Side side)
+    {
         if (num > 0)
         {
             //get a list of random actorArcs
-            List<ActorArc> tempActorArcs = GameManager.instance.dataScript.GetRandomActorArcs(num);
+            List<ActorArc> tempActorArcs = GameManager.instance.dataScript.GetRandomActorArcs(num, side);
             //Create actors
             for (int i = 0; i < num; i++)
             {
@@ -107,33 +114,36 @@ public class ActorManager : MonoBehaviour
                     trait = GameManager.instance.dataScript.GetRandomTrait(),
                     isLive = true
                 };
-                arrayOfActors[i] = actor;
+                arrayOfActors[(int)side, i] = actor;
 
                 Debug.Log("Actor added -> " + actor.arc.actorName + ", Ability " + actor.Connections + "\n");
-            }                
-            //add actions to dictionary
-            GameManager.instance.dataScript.AddActions(arrayOfActors);
+            }
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
 
     }
 
     /// <summary>
-    /// Get array of actors
+    /// Get array of actors for a specified side
     /// </summary>
     /// <returns></returns>
-    public Actor[] GetActors()
-    { return arrayOfActors; }
+    public Actor[] GetActors(Side side)
+    {
+        Actor[] tempArray = new Actor[numOfActorsTotal];
+        for (int i = 0; i < numOfActorsTotal; i++)
+        { tempArray[i] = arrayOfActors[(int)side, i]; }
+        return tempArray;
+    }
 
     /// <summary>
     /// Get specific actor
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public Actor GetActor(int slotID)
+    public Actor GetActor(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[slotID];
+        return arrayOfActors[(int)side, slotID];
     }
 
     /// <summary>
@@ -141,21 +151,21 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public string GetActorType(int slotID)
+    public string GetActorType(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[slotID].arc.name;
+        return arrayOfActors[(int)side, slotID].arc.name;
     }
 
     /// <summary>
-    /// returns array of Stats -> [0] Connections, [1] Motivation, [2] Invisibility
+    /// returns array of Stats -> [0] dataPoint0, [1] dataPoint1 , [2] dataPoint3
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public int[] GetActorStats(int slotID)
+    public int[] GetActorStats(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        int[] arrayOfStats = new int[]{ arrayOfActors[slotID].Connections, arrayOfActors[slotID].Motivation, arrayOfActors[slotID].Invisibility};
+        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].Connections, arrayOfActors[(int)side, slotID].Motivation, arrayOfActors[(int)side, slotID].Invisibility};
         return arrayOfStats;
     }
 
@@ -164,10 +174,10 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public string GetActorName(int slotID)
+    public string GetActorName(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[slotID].arc.actorName;
+        return arrayOfActors[(int)side, slotID].arc.actorName;
     }
 
     /// <summary>
@@ -175,10 +185,10 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public string GetActorTrait(int slotID)
+    public string GetActorTrait(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[slotID].trait.name;
+        return arrayOfActors[(int)side, slotID].trait.name;
     }
 
     /// <summary>

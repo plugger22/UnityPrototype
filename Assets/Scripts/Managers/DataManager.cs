@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -207,6 +208,31 @@ public class DataManager : MonoBehaviour
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTargets has {0} entries{1}", counter, "\n"));
         //
+        // - - - Actions - - -
+        //
+        counter = 0;
+        //get GUID of all SO Action Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var actionGUID = AssetDatabase.FindAssets("t:Action");
+        foreach (var guid in actionGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object actionObject = AssetDatabase.LoadAssetAtPath(path, typeof(Action));
+            //assign a zero based unique ID number
+            Action action = actionObject as Action;
+            //set data
+            action.ActionID = counter++;
+            //add to dictionary
+            try
+            { dictOfActions.Add(action.ActionID, action); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Action Arc (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfActions has {0} entries{1}", counter, "\n"));
+        //
         // - - - Team Arcs - - -
         //
         counter = 0;
@@ -397,12 +423,22 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="num"></param>
     /// <returns></returns>
-    public List<ActorArc> GetRandomActorArcs(int num)
+    public List<ActorArc> GetRandomActorArcs(int num, Side side)
     {
         //create a separate copy of ActorArcs list to use for randomly selection
-        List<ActorArc> tempMaster = new List<ActorArc>(listOfAllActorArcs);
+
+        //List<ActorArc> tempMaster = new List<ActorArc>(listOfAllActorArcs);
+
+        //filter for the required side
+        List<ActorArc> tempMaster = new List<ActorArc>();
+        IEnumerable<ActorArc> selectedActorArcs =
+            from arc in listOfAllActorArcs
+            where arc.side == side
+            select arc;
+        tempMaster = selectedActorArcs.ToList();
+
         //temp list for results
-        List<ActorArc> tempList = new List<ActorArc>();
+        List < ActorArc > tempList = new List<ActorArc>();
         //randomly select
         int index;
         for(int i = 0; i < num; i++)
@@ -429,7 +465,7 @@ public class DataManager : MonoBehaviour
     // - - - Actions - - -
     //
 
-    /// <summary>
+    /*/// <summary>
     /// add Actors and effects to dictionaries
     /// </summary>
     /// <param name="arrayOfActors"></param>
@@ -465,7 +501,7 @@ public class DataManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", actor.arc.webAction.ActionID, actor.arc.webAction.name)); }
             }
         }
-    }
+    }*/
 
     //
     // - - - Nodes - - -

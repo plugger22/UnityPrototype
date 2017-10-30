@@ -69,9 +69,9 @@ public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
             {
                 GameManager.instance.tooltipActorScript.SetTooltip(
-                    GameManager.instance.actorScript.GetActorName(slotID),
-                    GameManager.instance.actorScript.GetActorStats(slotID),
-                    GameManager.instance.actorScript.GetActorTrait(slotID),
+                    GameManager.instance.actorScript.GetActorName(slotID, GameManager.instance.optionScript.PlayerSide),
+                    GameManager.instance.actorScript.GetActorStats(slotID, GameManager.instance.optionScript.PlayerSide),
+                    GameManager.instance.actorScript.GetActorTrait(slotID, GameManager.instance.optionScript.PlayerSide),
                     //parent.GetComponent<RectTransform>().position, -> does the same job as the transform line below
                     parent.transform.position,
                     parent.GetComponent<RectTransform>().rect.width,
