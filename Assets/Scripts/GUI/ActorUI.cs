@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using gameAPI;
 
 /// <summary>
 /// handles UI interaction for Actors
@@ -65,13 +66,14 @@ public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (onMouseFlag == true)
         {
             //do once
-            
             while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
             {
+                Side side = GameManager.instance.optionScript.PlayerSide;
                 GameManager.instance.tooltipActorScript.SetTooltip(
-                    GameManager.instance.actorScript.GetActorName(slotID, GameManager.instance.optionScript.PlayerSide),
-                    GameManager.instance.actorScript.GetActorStats(slotID, GameManager.instance.optionScript.PlayerSide),
-                    GameManager.instance.actorScript.GetActorTrait(slotID, GameManager.instance.optionScript.PlayerSide),
+                    GameManager.instance.actorScript.GetActorName(slotID, side),
+                    GameManager.instance.dataScript.GetQualities(side),
+                    GameManager.instance.actorScript.GetActorStats(slotID, side),
+                    GameManager.instance.actorScript.GetActorTrait(slotID, side),
                     //parent.GetComponent<RectTransform>().position, -> does the same job as the transform line below
                     parent.transform.position,
                     parent.GetComponent<RectTransform>().rect.width,

@@ -58,13 +58,6 @@ public class DataManager : MonoBehaviour
         int counter = 0;
         int length;
         string path;
-        //name tags for Actor Qualities
-        arrayOfQualities = new string[(int)Side.Count, 3] {
-            //authority actor qualities
-            { "Influence", "Support", "Ability" },
-            //resistance actor qualities
-            { "Connections", "Motivation", "Invisibility" }
-        };
         //
         // - - - Node Arcs - - -
         //
@@ -274,6 +267,17 @@ public class DataManager : MonoBehaviour
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTeamArcs has {0} entries{1}", counter, "\n"));
         //arrayOfTeams
         arrayOfTeams = new int[counter, (int)TeamInfo.Count];
+        //
+        // - - - Actor Qualities - - -
+        //
+        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
+        arrayOfQualities = new string[(int)Side.Count, numOfQualities];
+        arrayOfQualities[(int)Side.Authority, 0] = "Influence";
+        arrayOfQualities[(int)Side.Authority, 1] = "Support";
+        arrayOfQualities[(int)Side.Authority, 2] = "Ability";
+        arrayOfQualities[(int)Side.Resistance, 0] = "Connections";
+        arrayOfQualities[(int)Side.Resistance, 1] = "Motivation";
+        arrayOfQualities[(int)Side.Resistance, 2] = "Invisibility";
     }
 
 
@@ -340,13 +344,37 @@ public class DataManager : MonoBehaviour
                 }
             }
         }
-        //
-        // - - - Actor Nodes - - -
-        //
-        listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.optionScript.PlayerSide);
+        //Actor Nodes
+        UpdateActorNodes();
+        //event listener
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
 
+    /// <summary>
+    /// handles events
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.ChangeSide:
+                UpdateActorNodes();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
 
+    /// <summary>
+    /// sets up list of active nodes for each actor slot
+    /// </summary>
+    public void UpdateActorNodes()
+    { listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.optionScript.PlayerSide);}
 
     //
     // - - - NodeArcs - - -
@@ -799,6 +827,34 @@ public class DataManager : MonoBehaviour
         { Debug.LogError("Invalid Team (Null)"); }
         catch (ArgumentException)
         { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.TeamID, team.arc.name, team.Name, "\n")); }
+    }
+
+    /// <summary>
+    /// returns and array of strings for actor quality tags, eg. "Connections, Invisibility" etc.
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public string[] GetQualities(Side side)
+    {
+        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
+        string[] tempArray = new string[numOfQualities];
+        for (int i = 0; i < numOfQualities; i++)
+        {
+            tempArray[i] = arrayOfQualities[(int)side, i];
+        }
+        return tempArray;
+    }
+
+    /// <summary>
+    /// returns a single string quality tag, eg. "Invisibility". Corresponds to side and qualityNumber, eg. Datapoint0 = 0, Datapoint1 = 1, Datapoint2 = 2
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="qualityNum"></param>
+    /// <returns></returns>
+    public string GetQuality(Side side, int qualityNum)
+    {
+        Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
+        return arrayOfQualities[(int)side, qualityNum];
     }
 
    //new methods above here

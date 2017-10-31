@@ -17,6 +17,8 @@ public class ActorManager : MonoBehaviour
     public int numOfActorsTotal = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
                                           //is the total for one side (duplicated by the other side)
 
+    public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
+
     private Actor[,] arrayOfActors;       //indexes [Side, numOfActors], two sets are created, one for each side
 
     //colour palette for Generic tool tip
@@ -108,15 +110,16 @@ public class ActorManager : MonoBehaviour
                     arc = tempActorArcs[i],
                     Name = tempActorArcs[i].actorName,
                     SlotID = i,
-                    Connections = Random.Range(1, 4),
-                    Motivation = Random.Range(1, 4),
-                    Invisibility = Random.Range(1, 4),
+                    Datapoint0 = Random.Range(1, 4),
+                    Datapoint1 = Random.Range(1, 4),
+                    Datapoint2 = Random.Range(1, 4),
                     trait = GameManager.instance.dataScript.GetRandomTrait(),
                     isLive = true
                 };
                 arrayOfActors[(int)side, i] = actor;
 
-                Debug.Log("Actor added -> " + actor.arc.actorName + ", Ability " + actor.Connections + "\n");
+                Debug.Log(string.Format("Actor added -> {0}, {1} {2}{3}", actor.arc.actorName,
+                    GameManager.instance.dataScript.GetQuality(GameManager.instance.optionScript.PlayerSide, 0), actor.Datapoint0, "\n"));
             }
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
@@ -165,7 +168,8 @@ public class ActorManager : MonoBehaviour
     public int[] GetActorStats(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].Connections, arrayOfActors[(int)side, slotID].Motivation, arrayOfActors[(int)side, slotID].Invisibility};
+        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].Datapoint0, arrayOfActors[(int)side, slotID].Datapoint1,
+            arrayOfActors[(int)side, slotID].Datapoint2};
         return arrayOfStats;
     }
 

@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
         levelScript.Initialise();
         //immediately after levelScript
         dataScript.InitialiseLate();
-        guiScript.Initialise(actorScript.GetActors(optionScript.PlayerSide));
+        guiScript.Initialise();
         inputScript.GameState = GameState.Normal;
         actionScript.Initialise();
         effectScript.Initialise();

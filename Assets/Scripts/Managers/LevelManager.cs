@@ -487,7 +487,7 @@ public class LevelManager : MonoBehaviour
         //loop actors
         foreach (Actor actor in arrayOfActors)
         {
-            builder.Append(string.Format("{0}   C: {1} star{2}", actor.arc.actorName, actor.Connections, "\n"));
+            builder.Append(string.Format("{0}   C: {1} star{2}", actor.arc.actorName, actor.Datapoint0, "\n"));
             switch (side)
             {
                 case Side.Authority:
@@ -722,7 +722,7 @@ public class LevelManager : MonoBehaviour
                 {
                     Actor actor = arrayOfActors[actorIndex];
                     //populate arrayOfArcs with default secondary chance of being active
-                    chance = secondary * actor.Connections;
+                    chance = secondary * actor.Datapoint0;
                     for (int j = 0; j < arrayOfArcs.Length; j++)
                     { arrayOfArcs[j] = chance; }
                     //get actors Primary NodeArc preferences
@@ -730,7 +730,7 @@ public class LevelManager : MonoBehaviour
                     listOfNodeArcs.AddRange(actor.arc.listPrefPrimary);
                     foreach(NodeArc arc in listOfNodeArcs)
                     {
-                        chance = primary * actor.Connections;
+                        chance = primary * actor.Datapoint0;
                         arrayOfArcs[arc.NodeArcID] = chance;
                         Debug.Log(string.Format("{0}  primary NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.NodeArcID, side, "\n"));
                     }

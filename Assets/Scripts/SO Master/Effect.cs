@@ -12,6 +12,7 @@ public class Effect : ScriptableObject
     public int EffectID { get; set; }                           //dynamically set {Edit -> I don't think this is hooked up yet, need to check]
 
     public string description;                                  //tooltip, eg. "Stability +1"
+    public Side side;                                           //which side does the effect apply to?
     //Criteria that needs to be met for the Effect to apply
     public EffectCriteria criteriaEffect;
     public Comparison criteriaCompare;
@@ -20,4 +21,5 @@ public class Effect : ScriptableObject
     public EffectOutcome effectOutcome;                         //standard effect
     public Result effectResult;                                 //leave as 'None' if there is no specific stat adjustment
     public int effectValue;                                     //leave as '0' if there is no specific stat adjustment
+
 }

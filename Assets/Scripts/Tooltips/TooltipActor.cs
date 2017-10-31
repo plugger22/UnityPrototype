@@ -12,6 +12,7 @@ using gameAPI;
 public class TooltipActor : MonoBehaviour
 {
     public TextMeshProUGUI actorName;
+    public TextMeshProUGUI actorQualities;
     public TextMeshProUGUI actorStats;
     public TextMeshProUGUI actorTrait;
     public Image dividerTop;                   //Side specific sprites for tooltips
@@ -29,6 +30,7 @@ public class TooltipActor : MonoBehaviour
     private string colourNeutral;
     private string colourBad;
     private string colourName;
+    private string colourQuality;
     private string colourTrait;
     private string colourEnd;
 
@@ -91,6 +93,7 @@ public class TooltipActor : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourTrait = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -102,7 +105,7 @@ public class TooltipActor : MonoBehaviour
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
     /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    public void SetTooltip(string name, int[] arrayOfStats, string trait, Vector3 screenPos, float width, float height)
+    public void SetTooltip(string name, string[] arrayOfQualities, int[] arrayOfStats, string trait, Vector3 screenPos, float width, float height)
     {
 
         //open panel at start
@@ -112,20 +115,33 @@ public class TooltipActor : MonoBehaviour
         //set state of all items in tooltip window
         actorName.gameObject.SetActive(true);
         actorStats.gameObject.SetActive(true);
+        actorQualities.gameObject.SetActive(true);
         actorTrait.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
         actorName.text = string.Format("{0}{1}{2}", colourName, name, colourEnd);
         actorTrait.text = string.Format("{0}{1}{2}", colourTrait, trait, colourEnd);
 
+        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
 
-        //set up stats -> only takes the first three Connections / Motivation / Invisibility
-        int checkCounter = 0;
-        int data;
-        if (arrayOfStats.Length > 0)
+        //qualities
+        if (arrayOfQualities.Length > 0)
         {
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < arrayOfStats.Length; i++)
+            for (int i = 0; i < numOfQualities; i++)
+            {
+                if (i > 0) { builder.AppendLine(); }
+                builder.Append(string.Format("{0}{1}{2}", colourQuality, arrayOfQualities[i], colourEnd));
+            }
+            actorQualities.text = builder.ToString();
+        }
+
+        //Stats -> only takes the first three Qualities, eg. "Connections, Motivation, Invisibility"
+        int data;
+        if (arrayOfStats.Length > 0 || arrayOfStats.Length < numOfQualities)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < numOfQualities; i++)
             {
                 data = arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
@@ -147,9 +163,6 @@ public class TooltipActor : MonoBehaviour
                         builder.Append(data);
                         break;
                 }
-                //idiot check to handle case of being too many stats
-                checkCounter++;
-                if (checkCounter >= 3) { break; }
             }
             actorStats.text = builder.ToString();
         }
