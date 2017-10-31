@@ -41,6 +41,7 @@ public class TooltipNode : MonoBehaviour
     private string colourActive;
     private string colourDefault;
     private string colourEnd;
+    private string colourTeam;
 
     /// <summary>
     /// initialisation
@@ -99,6 +100,7 @@ public class TooltipNode : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -159,7 +161,7 @@ public class TooltipNode : MonoBehaviour
             foreach (String teamText in listOfTeams)
             {
                 if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
-                teamBuilder.Append(string.Format("{0}{1}{2}", colourBad, teamText, colourEnd));
+                teamBuilder.Append(string.Format("{0}{1}{2}", colourTeam, teamText, colourEnd));
             }
             nodeTeams.text = teamBuilder.ToString();
         }

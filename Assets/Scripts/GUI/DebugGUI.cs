@@ -115,7 +115,7 @@ public class DebugGUI : MonoBehaviour
 
                 //Actor data, middle right
                 customBackground.alignment = TextAnchor.UpperLeft;
-                analysis = GameManager.instance.levelScript.GetActorAnalysis();
+                analysis = GameManager.instance.levelScript.GetActorAnalysis(GameManager.instance.optionScript.PlayerSide);
                 GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysis, customBackground);
 
                 // Node Type data, near centre right

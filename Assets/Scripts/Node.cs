@@ -195,11 +195,12 @@ public class Node : MonoBehaviour
     {
         List<string> tempList = new List<string>();
         int limit = GameManager.instance.actorScript.numOfActorsTotal;
+        Side side = GameManager.instance.optionScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {
-            if (GameManager.instance.levelScript.CheckNodeActive(NodeID, i))
+            if (GameManager.instance.levelScript.CheckNodeActive(NodeID, side, i) == true)
             {
-                tempList.Add(GameManager.instance.actorScript.GetActorType(i, GameManager.instance.optionScript.PlayerSide));
+                tempList.Add(GameManager.instance.actorScript.GetActorType(i, side));
             }
         }
         return tempList;

@@ -16,6 +16,7 @@ public class DataManager : MonoBehaviour
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
+    private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
     //master lists 
@@ -57,6 +58,13 @@ public class DataManager : MonoBehaviour
         int counter = 0;
         int length;
         string path;
+        //name tags for Actor Qualities
+        arrayOfQualities = new string[(int)Side.Count, 3] {
+            //authority actor qualities
+            { "Influence", "Support", "Ability" },
+            //resistance actor qualities
+            { "Connections", "Motivation", "Invisibility" }
+        };
         //
         // - - - Node Arcs - - -
         //
@@ -335,7 +343,7 @@ public class DataManager : MonoBehaviour
         //
         // - - - Actor Nodes - - -
         //
-        listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes();
+        listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.optionScript.PlayerSide);
     }
 
 

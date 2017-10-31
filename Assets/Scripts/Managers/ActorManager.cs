@@ -261,7 +261,8 @@ public class ActorManager : MonoBehaviour
                 //actor active?
                 if (actor.isLive == true)
                 {
-                    if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, actor.SlotID) == true || nodeID == playerID )
+                    if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true ||
+                        nodeID == playerID )
                     {
                         //get node action
                         tempAction = actor.arc.nodeAction;
