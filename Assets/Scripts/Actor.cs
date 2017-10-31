@@ -13,6 +13,7 @@ namespace gameAPI
         public int Datapoint1 { get; set; }                 //higher the better (1 to 3)
         public int Datapoint2 { get; set; }               //higher the better (1 to 3)
 
+        public Side ActorSide { get; set; }
         public int SlotID { get; set; }                     //actor slot ID (eg, 0 to 3)
         public int Renown { get; set; }                     //starts at '0' and goes up (no limit)
         public string Name { get; set; }

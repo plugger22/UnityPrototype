@@ -113,6 +113,7 @@ public class ActorManager : MonoBehaviour
                     Datapoint0 = Random.Range(1, 4),
                     Datapoint1 = Random.Range(1, 4),
                     Datapoint2 = Random.Range(1, 4),
+                    ActorSide = side,
                     trait = GameManager.instance.dataScript.GetRandomTrait(),
                     isLive = true
                 };
@@ -207,8 +208,9 @@ public class ActorManager : MonoBehaviour
         string playerPresent = null;
         string effectCriteria;
         bool proceedFlag;
+        Side side = GameManager.instance.optionScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
-        if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
+        if ( side == Side.Authority)
         { sideColour = colourRed; }
         else { sideColour = colourBlue; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
@@ -262,95 +264,100 @@ public class ActorManager : MonoBehaviour
 
                 //actualRenownEffect = null;
 
-                //actor active?
-                if (actor.isLive == true)
+                //correct side?
+                if (actor.ActorSide == side)
                 {
-                    if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true ||
-                        nodeID == playerID )
+                    //actor active?
+                    if (actor.isLive == true)
                     {
-                        //get node action
-                        tempAction = actor.arc.nodeAction;
-                        
-                        if (tempAction != null)
+                        //active node for actor or player at node
+                        if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true ||
+                            nodeID == playerID)
                         {
-                            //effects
-                            StringBuilder builder = new StringBuilder();
-                            listOfEffects = tempAction.listOfEffects;
-                            if (listOfEffects.Count > 0)
+                            //get node action
+                            tempAction = actor.arc.nodeAction;
+
+                            if (tempAction != null)
                             {
-                                for(int i = 0; i < listOfEffects.Count; i++)
+                                //effects
+                                StringBuilder builder = new StringBuilder();
+                                listOfEffects = tempAction.listOfEffects;
+                                if (listOfEffects.Count > 0)
                                 {
-                                    Effect effect = listOfEffects[i];
-                                    //check effect criteria is valid
-                                    effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
-                                    if (effectCriteria == null)
+                                    for (int i = 0; i < listOfEffects.Count; i++)
                                     {
-                                        //Effect criteria O.K -> tool tip text
-                                        if (builder.Length > 0)  { builder.AppendLine(); }
-                                        if (effect.effectOutcome != EffectOutcome.Renown)
-                                        { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
-                                        else
+                                        Effect effect = listOfEffects[i];
+                                        //check effect criteria is valid
+                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                        if (effectCriteria == null)
                                         {
-                                            //handle renown situation - players or actors?
-                                            if (nodeID == playerID)
-                                            {
-                                                //actualRenownEffect = playerRenownEffect;
-                                                builder.Append(string.Format("{0}Player {1}{2}", colourBlue, effect.description, colourEnd));
-                                            }
+                                            //Effect criteria O.K -> tool tip text
+                                            if (builder.Length > 0) { builder.AppendLine(); }
+                                            if (effect.effectOutcome != EffectOutcome.Renown)
+                                            { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
                                             else
                                             {
-                                                //actualRenownEffect = actorRenownEffect;
-                                                builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd));
+                                                //handle renown situation - players or actors?
+                                                if (nodeID == playerID)
+                                                {
+                                                    //actualRenownEffect = playerRenownEffect;
+                                                    builder.Append(string.Format("{0}Player {1}{2}", colourBlue, effect.description, colourEnd));
+                                                }
+                                                else
+                                                {
+                                                    //actualRenownEffect = actorRenownEffect;
+                                                    builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd));
+                                                }
                                             }
                                         }
-                                    }
-                                    else
-                                    {
-                                        //invalid effect criteria -> Action cancelled
-                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                        infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}", 
-                                            colourInvalid, actor.arc.name.ToUpper(), "\n", colourEnd,
-                                            colourRed, effectCriteria, colourEnd));
-                                        proceedFlag = false;
+                                        else
+                                        {
+                                            //invalid effect criteria -> Action cancelled
+                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                            infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                colourInvalid, actor.arc.name.ToUpper(), "\n", colourEnd,
+                                                colourRed, effectCriteria, colourEnd));
+                                            proceedFlag = false;
+                                        }
                                     }
                                 }
-                            }
-                            if (proceedFlag == true)
-                            {
-                                //Details to pass on for processing via button click
-                                ModalActionDetails actionDetails = new ModalActionDetails() { };
-                                actionDetails.NodeID = nodeID;
-                                actionDetails.ActorSlotID = actor.SlotID;
-                                //pass all relevant details to ModalActionMenu via Node.OnClick()
-                                details = new EventButtonDetails()
+                                if (proceedFlag == true)
                                 {
-                                    buttonTitle = tempAction.name,
-                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), colourEnd),
-                                    buttonTooltipMain = tempAction.tooltipText,
-                                    buttonTooltipDetail = builder.ToString(),
-                                    //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
-                                };
+                                    //Details to pass on for processing via button click
+                                    ModalActionDetails actionDetails = new ModalActionDetails() { };
+                                    actionDetails.NodeID = nodeID;
+                                    actionDetails.ActorSlotID = actor.SlotID;
+                                    //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                    details = new EventButtonDetails()
+                                    {
+                                        buttonTitle = tempAction.name,
+                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), colourEnd),
+                                        buttonTooltipMain = tempAction.tooltipText,
+                                        buttonTooltipDetail = builder.ToString(),
+                                        //use a Lambda to pass arguments to the action
+                                        action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
+                                    };
+                                }
                             }
+                        }
+                        else
+                        {
+                            //actor not live at node
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name.ToUpper()));
                         }
                     }
                     else
                     {
-                        //actor not live at node
+                        //actor gone silent
                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                        infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name.ToUpper()));
+                        infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name.ToUpper()));
                     }
-                }
-                else
-                {
-                    //actor gone silent
-                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name.ToUpper()));
-                }
 
-                //add to list
-                if (details != null)
-                { tempList.Add(details); }
+                    //add to list
+                    if (details != null)
+                    { tempList.Add(details); }
+                }
             }
             //
             // - - - Cancel
