@@ -57,15 +57,19 @@ namespace gameAPI
         Renown,
         RebelCause,
         //authority
-        PlaceTeam
+        AnyTeam,
+        CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam
     }
 
     //
     // - - - Teams - - -
     //
-    public enum TeamInfo { Total, OnMap, OffMap, Count}           //DataManager arrayOfTeams  index
-    public enum NATO { Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike, November, Oscar, Papa, Quebec, Romeo, Sierra, Tango,
-        Uniform, Victor, Whiskey, Xray, Yankee, Zulu, Count}
+    public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count}           //DataManager arrayOfTeams  index
+    public enum TeamPool { Reserve, OnMap, InTransit, Count}                  //Different pools that teams move between
+    public enum NATO {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
+        Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike,
+        November, Oscar, Papa, Quebec, Romeo, Sierra, Tango, Uniform, Victor, Whiskey, Xray, Yankee, Zulu,
+        Count }
 
 
 

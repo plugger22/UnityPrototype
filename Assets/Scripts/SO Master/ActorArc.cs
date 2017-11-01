@@ -13,6 +13,7 @@ public class ActorArc : ScriptableObject
     public int ActorArcID { get; set; }               //unique #, zero based -> assigned automatically by DataManager.Initialise
     public Sprite baseSprite;                         //face of actor -> NOTE: should be a list with a few variations, perhaps?
     public Sprite actionSprite;                       //sprite used when carrying out an action
+    public string description;
     public string actorName;
 
     public Side side;                              //to separate Resistance and authority actorArcs
@@ -21,7 +22,12 @@ public class ActorArc : ScriptableObject
 
     public Action nodeAction;                           //one action for interacting with nodes
 
+    //preferred team (applies to authority actors only)
+    public TeamArc preferredTeam;
+
     //node preferences (which nodes are liable to be active on the map for this Actor type)
     public List<NodeArc> listPrefPrimary = new List<NodeArc>();         //full chance of node being active
     public List<NodeArc> listPrefExclude = new List<NodeArc>();         //NO chance of node being active
+
+
 }

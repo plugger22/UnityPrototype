@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Team SO. Name of SO is the name of the Team, eg. "Security"
+/// Team SO. Name of SO is the name of the Team, eg. "Control"
 /// </summary>
 [CreateAssetMenu(menuName = "TeamArc")]
 public class TeamArc : ScriptableObject

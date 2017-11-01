@@ -99,11 +99,7 @@ public class EffectManager : MonoBehaviour
             //Get node regardless of whether the effect is node related or not
             if (nodeID > -1)
             {
-                GameObject objNode = GameManager.instance.dataScript.GetNodeObject(nodeID);
-                if (objNode != null)
-                {
-                    node = objNode.GetComponent<Node>();
-                }
+                node = GameManager.instance.dataScript.GetNode(nodeID);
                 if (node != null)
                 {
                     //effect type

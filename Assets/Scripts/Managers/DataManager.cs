@@ -81,9 +81,9 @@ public class DataManager : MonoBehaviour
             try
             { dictOfNodeArcs.Add(nodeArc.NodeArcID, nodeArc); }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid NodeArc (Null)"); }
+            { Debug.LogError("Invalid NodeArc (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid NodeArc (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeArc.name)); }
+            { Debug.LogError(string.Format("Invalid NodeArc (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeArc.name)); counter--; }
             //add to lookup dictionary
             try
             { dictOfLookUpNodeArcs.Add(nodeArc.name, nodeArc.NodeArcID); }
@@ -116,9 +116,9 @@ public class DataManager : MonoBehaviour
                 listOfAllTraits.Add(trait);
             }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Trait (Null)"); }
+            { Debug.LogError("Invalid Trait (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); }
+            { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTraits has {0} entries{1}", counter, "\n"));
         //
@@ -146,12 +146,11 @@ public class DataManager : MonoBehaviour
                 dictOfActorArcs.Add(arc.ActorArcID, arc);
                 //add to list
                 listOfAllActorArcs.Add(arc);
-
             }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Actor Arc (Null)"); }
+            { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); }
+            { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfActorArcs has {0} entries{1}", counter, "\n"));
         //
@@ -173,9 +172,9 @@ public class DataManager : MonoBehaviour
             try
             { dictOfEffects.Add(effect.EffectID, effect); }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Effect (Null)"); }
+            { Debug.LogError("Invalid Effect (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); }
+            { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfEffects has {0} entries{1}", counter, "\n"));
         //
@@ -203,9 +202,9 @@ public class DataManager : MonoBehaviour
             try
             { dictOfTargets.Add(target.TargetID, target); }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Target (Null)"); }
+            { Debug.LogError("Invalid Target (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); }
+            { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTargets has {0} entries{1}", counter, "\n"));
         //
@@ -228,9 +227,9 @@ public class DataManager : MonoBehaviour
             try
             { dictOfActions.Add(action.ActionID, action); }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid Action Arc (Null)"); }
+            { Debug.LogError("Invalid Action Arc (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); }
+            { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfActions has {0} entries{1}", counter, "\n"));
         //
@@ -253,9 +252,9 @@ public class DataManager : MonoBehaviour
             try
             { dictOfTeamArcs.Add(teamArc.TeamArcID, teamArc); }
             catch (ArgumentNullException)
-            { Debug.LogError("Invalid TeamArc (Null)"); }
+            { Debug.LogError("Invalid TeamArc (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
+            { Debug.LogError(string.Format("Invalid TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); counter--; }
             //add to lookup dictionary
             try
             { dictOfLookupTeamArcs.Add(teamArc.name, teamArc.TeamArcID); }
@@ -748,7 +747,7 @@ public class DataManager : MonoBehaviour
     // - - - Teams & TeamArcs - - -
     //
 
-    public int GetNumOfTeamTypes()
+    public int GetNumOfTeamArcs()
     { return dictOfTeamArcs.Count; }
 
     /// <summary>
@@ -759,9 +758,16 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int GetTeamInfo(int teamArcID, TeamInfo info)
     {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamTypes(), "Invalid teamArcID");
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
         return arrayOfTeams[teamArcID, (int)info];
     }
+
+    /// <summary>
+    /// return a list of teamArc ID's from dictOfTeamArcs
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetTeamArcIDs()
+    { return new List<int>(dictOfTeamArcs.Keys); }
 
     /// <summary>
     /// change a data point to a new value in array based on teamArcID and TeamInfo enum
@@ -771,7 +777,7 @@ public class DataManager : MonoBehaviour
     /// <param name="newData">new value of data</param>
     public void SetTeamInfo(int teamArcID, TeamInfo info, int newData)
     {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamTypes(), "Invalid teamArcID");
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
         arrayOfTeams[teamArcID, (int)info] = newData;
     }
 
@@ -783,7 +789,7 @@ public class DataManager : MonoBehaviour
     /// <param name="adjustment"></param>
     public void AdjustTeamInfo(int teamArcID, TeamInfo info, int adjustment)
     {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamTypes(), "Invalid teamArcID");
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
         int afterValue = arrayOfTeams[teamArcID, (int)info] + adjustment;
         arrayOfTeams[teamArcID, (int)info] = Math.Max(0, afterValue);
     }
@@ -830,6 +836,19 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets team from dictionary based on teamID, returns Null if not found
+    /// </summary>
+    /// <param name="teamID"></param>
+    /// <returns></returns>
+    public Team GetTeam(int teamID)
+    {
+        if (dictOfTeams.ContainsKey(teamID))
+        { return dictOfTeams[teamID]; }
+        else { Debug.LogWarning(string.Format("Not found in TeamID {0}, in dict {1}", teamID, "\n")); }
+        return null;
+    }
+
+    /// <summary>
     /// returns and array of strings for actor quality tags, eg. "Connections, Invisibility" etc.
     /// </summary>
     /// <param name="side"></param>
@@ -855,6 +874,56 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
         return arrayOfQualities[(int)side, qualityNum];
+    }
+
+    /// <summary>
+    /// handles all admin for moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
+    /// takes care of all checks, eg. enough teams present in reserve for one to move to the map
+    /// DOES NOT check if actor has the ability to handle another team onMap
+    /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <param name="teamID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public bool MoveTeam(TeamPool pool, int teamID, Node node = null)
+    {
+        Debug.Assert(teamID > -1 && teamID < GetNumOfTeamArcs(), "Invalid teamID");
+        Team team = GetTeam(teamID);
+        if (team != null)
+        {
+            switch (pool)
+            {
+                case TeamPool.Reserve:
+                    break;
+                case TeamPool.OnMap:
+                    if (node != null)
+                    {
+                        if (GetTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve) > 0)
+                        {
+                            node.AddTeam(team);
+                            //adjust tallies for onMap
+                            AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, +1);
+                            AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, -1);
+                        }
+                        else { Debug.LogWarning(string.Format("Not enough {0} teams present. Move cancelled", team.arc.name)); return false; }
+                    }
+                    else
+                    { Debug.LogError("Invalid node (Null) for OnMap -> move Cancelled"); return false; }
+                    break;
+                case TeamPool.InTransit:
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid pool \"{0}\"", pool));
+                    break;
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID));
+            return false;
+        }
+        return true;
     }
 
    //new methods above here
