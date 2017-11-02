@@ -14,7 +14,7 @@ public class TeamManager : MonoBehaviour
     public int maxTeamsAtNode = 3;
     [Range(1, 4)]
     [Tooltip("How long a team is deployed for before automatically being recalled")]
-    public int deployTime = 2;
+    public int deployTime = 3;
     [Range(1, 4)]
     [Tooltip("The increase to node security due to the presence of a SecurityTeam")]
     public int securityTeamEffect = 2;
@@ -25,10 +25,11 @@ public class TeamManager : MonoBehaviour
     public void Initialise()
     {
         InitialiseTeams();
+        SeedTeamsOnMap();     //DEBUG
     }
 
     /// <summary>
-    /// PlaceHolder -> place a random number of security teams on the map for testing purposes
+    /// Sets up intial Reserve pool of teams and related collections
     /// </summary>
     public void InitialiseTeams()
     {
@@ -37,20 +38,20 @@ public class TeamManager : MonoBehaviour
         if (listOfTeamArcIDs != null && listOfTeamArcIDs.Count > 0)
         {
             //loop list and add one team of each type to teamReserve pool
-            foreach(int arcID in listOfTeamArcIDs)
+            foreach (int arcID in listOfTeamArcIDs)
             {
                 GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
                 GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
             }
         }
         else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
-        
+
         //Add extra teams equal to each Authority actors ability level and off their preferred type
         Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors(Side.Authority);
         if (arrayOfActors.Length > 0)
         {
             int ability, arcID;
-            foreach(Actor actor in arrayOfActors)
+            foreach (Actor actor in arrayOfActors)
             {
                 //get actors Ability
                 ability = actor.Datapoint2;
@@ -65,57 +66,112 @@ public class TeamManager : MonoBehaviour
 
         //create actual teams and fill the reserve pool based on the number of teams decided upon above
         int numToCreate;
-        foreach(int teamArcID in listOfTeamArcIDs)
+        foreach (int teamArcID in listOfTeamArcIDs)
         {
             //how many present? (only check reserve as at start of game that's where all teams are)
-            numToCreate = GameManager.instance.dataScript.GetTeamInfo(teamArcID, TeamInfo.Reserve);
+            numToCreate = GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve);
             //create teams
             for (int i = 0; i < numToCreate; i++)
-            { Team team = new Team(teamArcID); }
+            { Team team = new Team(teamArcID, i); }
         }
+    }
 
-        /*
-        //loop all nodes, 40% chance of getting a security team
+
+    /// <summary>
+    /// Debug method -> each team in reserve pool at game start has a chance of being deployed
+    /// </summary>
+    public void SeedTeamsOnMap()
+    {
         List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetAllNodes().Values);
-        //add a random other team as well, if security team already present
-        int numOfTeamArcs = GameManager.instance.dataScript.GetNumOfTeamArcs();
-        int teamArcID;
-        TeamArc teamArc = null;
-        foreach(Node node in listOfNodes)
+        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetTeams();
+        if (dictOfTeams != null)
         {
-            if (Random.Range(0, 100) < 40)
+            //loop teams
+            foreach (var teamData in dictOfTeams)
             {
-
-                //NOTE: Need to redo this to accomodate pools of physical teams and DM:MoveTeam()
-
-                //create a new security team
-                Team team = new Team("Control");
-                if (team != null)
+                //40% chance of being deployed
+                if (Random.Range(0, 100) < 40 == true)
                 {
-                    node.AddTeam(team);
-                    //adjust tallies for onMap
-                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, +1);
-                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, -1);
-                }
-                //chance of a second, random, team
-                if (Random.Range(0, 100) < 50)
-                {
-                    teamArcID = Random.Range(0, numOfTeamArcs);
-                    teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
-                    if (teamArc != null)
+                    //get a random node
+                    Node node = listOfNodes[Random.Range(0, listOfNodes.Count)];
+                    if (node != null)
                     {
-                        Team secondTeam = new Team(teamArc.name);
-                        node.AddTeam(secondTeam);
-                        //adjust tallies for onMap
-                        GameManager.instance.dataScript.AdjustTeamInfo(secondTeam.arc.TeamArcID, TeamInfo.OnMap, +1);
+                        //get a random Actor
+                        Actor actor = GameManager.instance.actorScript.GetActor(Random.Range(0, 4), GameManager.instance.optionScript.PlayerSide);
+                        MoveTeam(TeamPool.OnMap, actor, teamData.Key, node);
                     }
-                    else { Debug.LogWarning(string.Format("Invalid teamArc (null) for teamArcID {0}{1}", teamArcID, "\n")); }
+                    else { Debug.LogError("Invalid node (Null)"); }
                 }
             }
         }
-        */
+        else { Debug.LogError("Invalid dictOfTeams (Null)"); }
     }
 
+
+    /// <summary>
+    /// handles all admin for moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
+    /// takes care of all checks, eg. enough teams present in reserve for one to move to the map
+    /// DOES NOT check if actor has the ability to handle another team onMap
+    /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
+    /// </summary>
+    /// <param name="destinationPool"></param>
+    /// <param name="teamID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public bool MoveTeam(TeamPool destinationPool, Actor actor, int teamID, Node node = null)
+    {
+        Debug.Assert(teamID > -1 && teamID < GameManager.instance.dataScript.CheckNumOfTeams(), "Invalid teamID");
+        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+        if (team != null)
+        {
+            if (actor != null)
+            {
+                switch (destinationPool)
+                {
+                    case TeamPool.Reserve:
+                        break;
+                    case TeamPool.OnMap:
+                        if (node != null)
+                        {
+                            if (GameManager.instance.dataScript.CheckTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve) > 0)
+                            {
+                                if (node.AddTeam(team, actor.SlotID) == true)
+                                {
+                                    //adjust tallies for onMap
+                                    GameManager.instance.dataScript.AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.OnMap, +1);
+                                    GameManager.instance.dataScript.AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve, -1);
+                                    //pools
+                                    GameManager.instance.dataScript.AddTeamToPool(TeamPool.OnMap, teamID);
+                                    GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID);
+
+                                    //alert
+                                    Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}, Node ID {4}{5}", team.Arc.name, team.Name, team.TeamID,
+                                        destinationPool, node.NodeID, "\n"));
+                                }
+                                else { Debug.LogWarning(string.Format("Move team operation failed for \"{0} {1}\"", team.Arc.name, team.Name)); }
+                            }
+                            else { Debug.LogWarning(string.Format("Not enough {0} teams present. Move cancelled", team.Arc.name)); return false; }
+                        }
+                        else
+                        { Debug.LogError("Invalid node (Null) for OnMap -> move Cancelled"); return false; }
+                        break;
+                    case TeamPool.InTransit:
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid pool \"{0}\"", destinationPool));
+                        break;
+                }
+            }
+            else
+            { Debug.LogError("Invalid actor (Null)"); }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID));
+            return false;
+        }
+        return true;
+    }
 
     /// <summary>
     /// Debug function to display a breakdown of the team pools
@@ -131,32 +187,32 @@ public class TeamManager : MonoBehaviour
             int reserve, onMap, inTransit, Total;
             string data;
             //header
-            builder.Append("        Team Pool Analysis");
+            builder.Append(" Team Pool Analysis");
             builder.AppendLine();
             builder.AppendLine();
             foreach (var teamData in tempDict)
             {
                 //get data
-                reserve = GameManager.instance.dataScript.GetTeamInfo(teamData.Key, TeamInfo.Reserve);
-                onMap = GameManager.instance.dataScript.GetTeamInfo(teamData.Key, TeamInfo.OnMap);
-                inTransit = GameManager.instance.dataScript.GetTeamInfo(teamData.Key, TeamInfo.InTransit);
-                Total = GameManager.instance.dataScript.GetTeamInfo(teamData.Key, TeamInfo.Total);
+                reserve = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.Reserve);
+                onMap = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.OnMap);
+                inTransit = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.InTransit);
+                Total = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.Total);
                 data = string.Format("r:{0,2}  m:{1,2}  t:{2,2}  T:{3,2}", reserve, onMap, inTransit, Total);
                 //display data
-                builder.Append(string.Format("{0,-12}{1,-12}", teamData.Value.name, data));
+                builder.Append(string.Format(" {0,-12}{1,-12}", teamData.Value.name, data));
                 builder.AppendLine();
             }
             //add team pool totals
             builder.AppendLine();
-            builder.Append(string.Format("{0, -20}{1,2} teams", "Reserve Pool", GameManager.instance.dataScript.GetTeamPoolCount(TeamPool.Reserve)));
+            builder.Append(string.Format(" {0, -20}{1,2} teams", "Reserve Pool", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve)));
             builder.AppendLine();
-            builder.Append(string.Format("{0, -20}{1,2} teams", "OnMap Pool", GameManager.instance.dataScript.GetTeamPoolCount(TeamPool.OnMap)));
+            builder.Append(string.Format(" {0, -20}{1,2} teams", "OnMap Pool", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap)));
             builder.AppendLine();
-            builder.Append(string.Format("{0, -20}{1,2} teams", "InTransit Pool", GameManager.instance.dataScript.GetTeamPoolCount(TeamPool.InTransit)));
+            builder.Append(string.Format(" {0, -20}{1,2} teams", "InTransit Pool", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit)));
             //total teams
             builder.AppendLine();
             builder.AppendLine();
-            builder.Append(string.Format("Teams in dictOfTeams   {0}", GameManager.instance.dataScript.GetNumOfTeams()));
+            builder.Append(string.Format(" Teams in dictOfTeams   {0}", GameManager.instance.dataScript.CheckNumOfTeams()));
         }
         return builder.ToString();
     }
@@ -174,13 +230,13 @@ public class TeamManager : MonoBehaviour
         {
             //header
             //header
-            builder.Append("        Teams in dictOfTeams");
+            builder.Append(" Teams in Dictionary");
             builder.AppendLine();
             builder.AppendLine();
             foreach (var teamData in teamDict)
             {
-                builder.Append(string.Format("ID {0}  {1}  P: {2}  N: {3}  T: {4}  A: {5}", teamData.Key, teamData.Value.Name, teamData.Value.Pool, teamData.Value.NodeID,
-                    teamData.Value.Timer, teamData.Value.ActorID));
+                builder.Append(string.Format(" ID {0}  {1} {2}  P: {3}  N: {4}  T: {5}  A: {6}", teamData.Key, teamData.Value.Arc.name, teamData.Value.Name, 
+                    teamData.Value.Pool, teamData.Value.NodeID, teamData.Value.Timer, teamData.Value.ActorID));
                 builder.AppendLine();
             }
         }

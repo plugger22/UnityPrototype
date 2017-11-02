@@ -24,7 +24,7 @@ namespace gameAPI
         /// Creates a new team of a particular TeamArcType, eg. "Security"
         /// </summary>
         /// <param name="arcType"></param>
-        public Team(string arcType)
+        public Team(string arcType, int count)
         {
             //valid arcType
             int teamArcID = GameManager.instance.dataScript.GetTeamArcID(arcType);
@@ -36,15 +36,8 @@ namespace gameAPI
                 {
                     TeamID = teamCounter++;
                     this.Arc = teamArc;
-                    InitialiseTeamData(this);
-                    //increment number of that type of team present in level (on map or off)
-                    int countOfTeams = GameManager.instance.dataScript.GetTeamInfo(teamArcID, TeamInfo.Total);
-                    countOfTeams++;
-                    if (countOfTeams > -1 && countOfTeams < (int)NATO.Count)
-                    { Name = "Team " + (NATO)countOfTeams; }
-                    else { Name = "Team Unknown"; }
-                    //add to dictionary (auto adjusts team counts)
-                    GameManager.instance.dataScript.AddTeam(this);
+                    InitialiseTeamData(this, count);
+                    AddToCollections(this);
                 }
                 else Debug.LogError(string.Format("TeamArc type \"{0}\", ID {1}, not found in dictionary -> Team not created{2}", arcType, teamArcID, "\n"));
             }
@@ -56,7 +49,7 @@ namespace gameAPI
         /// Creates a new team of a particular teamArcID
         /// </summary>
         /// <param name="arcType"></param>
-        public Team(int teamArcID)
+        public Team(int teamArcID, int count)
         {
             //valid arcType
             if (teamArcID > -1)
@@ -67,15 +60,8 @@ namespace gameAPI
                 {
                     TeamID = teamCounter++;
                     this.Arc = teamArc;
-                    InitialiseTeamData(this);
-                    //increment number of that type of team present in level (on map or off)
-                    int countOfTeams = GameManager.instance.dataScript.GetTeamInfo(teamArcID, TeamInfo.Total);
-                    countOfTeams++;
-                    if (countOfTeams > -1 && countOfTeams < (int)NATO.Count)
-                    { Name = "Team " + (NATO)countOfTeams; }
-                    else { Name = "Team Unknown"; }
-                    //add to dictionary (auto adjusts team counts)
-                    GameManager.instance.dataScript.AddTeam(this);
+                    InitialiseTeamData(this, count);
+                    AddToCollections(this);
                 }
                 else Debug.LogError(string.Format("TeamArc type \"{0}\", ID {1}, not found in dictionary -> Team not created{2}", teamArc.name, teamArcID, "\n"));
             }
@@ -88,15 +74,27 @@ namespace gameAPI
         /// subMethod to set up a team's base data
         /// </summary>
         /// <param name="team"></param>
-        private void InitialiseTeamData(Team team)
+        private void InitialiseTeamData(Team team, int count)
         {
             team.Pool = TeamPool.Reserve;
             team.ActorID = -1;
             team.NodeID = -1;
             team.Timer = -1;
             team.TurnDeployed = -1;
+            if (count > -1 && count < (int)NATO.Count)
+            { team.Name = "Team " + (NATO)count; }
+            else { team.Name = "Team Unknown"; }
         }
 
+        /// <summary>
+        /// subMethod to add team to collections
+        /// </summary>
+        /// <param name="team"></param>
+        private void AddToCollections(Team team)
+        {
+            if (GameManager.instance.dataScript.AddTeamToDict(team) == true)
+            { GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.TeamID); }
+        }
 
     }
 }

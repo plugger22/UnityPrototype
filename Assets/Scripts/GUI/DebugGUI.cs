@@ -85,6 +85,7 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("Button -> Toggle Node/Actors Analysis");
                 if (debugDisplay != 1)
                 { debugDisplay = 1; }
+                else { debugDisplay = 0; }
             }
 
             //seventh button
@@ -93,6 +94,7 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("Button -> Toggle Team Pool Analysis");
                 if (debugDisplay != 2)
                 { debugDisplay = 2; }
+                else { debugDisplay = 0; }
             }
 
             //eigth button
@@ -101,6 +103,7 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("Button -> Toggle Teams");
                 if (debugDisplay != 3)
                 { debugDisplay = 3; }
+                else { debugDisplay = 0; }
             }
 
             //

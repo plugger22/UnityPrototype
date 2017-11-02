@@ -18,13 +18,13 @@ public class Node : MonoBehaviour
     public int Support { get; set; }                    //range 0 to 3
     public int Security { get; set; }                   //range 0 to 3
 
-    public int NumOfTeams { get; set; }
     public int NumOfTracers { get; set; }
     public int TargetID { get; set; }                   //unique ID, 0+, -1 indicates no target
 
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
     private List<Team> listOfTeams;                     //Authority teams present at the node
+
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     private float fadeInTime;                           //tooltip
@@ -221,7 +221,7 @@ public class Node : MonoBehaviour
     /// Max cap on number of teams at node
     /// </summary>
     /// <param name="team"></param>
-    public bool AddTeam(Team team)
+    public bool AddTeam(Team team, int actorID)
     {
         if (team != null)
         {
@@ -241,18 +241,17 @@ public class Node : MonoBehaviour
                                 team.Arc.name, NodeName, NodeID, "\n"));
                             return false;
                         }
-                        listOfTeams.Add(team);
-                        Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, NodeName, NodeID, "\n"));
-                        return true;
                     }
                 }
-                else
-                {
-                    //no teams currently present, must be O.K -> add new team
-                    listOfTeams.Add(team);
-                    Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, NodeName, NodeID, "\n"));
-                    return true;
-                }
+                //Add team
+                listOfTeams.Add(team);
+                //initialise Team data
+                team.NodeID = NodeID;
+                team.ActorID = actorID;
+                team.Pool = TeamPool.OnMap;
+                team.Timer = GameManager.instance.teamScript.deployTime;
+                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, NodeName, NodeID, "\n"));
+                return true;
             }
             else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", NodeName, NodeID, "\n")); }
         }

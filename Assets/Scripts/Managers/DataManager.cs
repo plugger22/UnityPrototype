@@ -298,7 +298,7 @@ public class DataManager : MonoBehaviour
             arrayOfNodes[i, 0] = tempArray[i];
         }
         //List of Nodes by Types -> each index has a list of all nodes of that NodeArc type
-        int limit = GetNumOfNodeTypes();
+        int limit = CheckNumOfNodeTypes();
         for(int i = 0; i < limit; i++)
         {
             List<Node> tempList = new List<Node>();
@@ -339,7 +339,7 @@ public class DataManager : MonoBehaviour
             if (target.Value.targetLevel == 1)
             {
                 //add to list of Possible targets
-                if (GetNodeInfo(target.Value.nodeArc.NodeArcID, NodeInfo.Number) > 0)
+                if (CheckNodeInfo(target.Value.nodeArc.NodeArcID, NodeInfo.Number) > 0)
                 { listOfPossibleTargets.Add(target.Value); }
                 else
                 {
@@ -425,7 +425,7 @@ public class DataManager : MonoBehaviour
     /// Get number of NodeArcs in dictionary
     /// </summary>
     /// <returns></returns>
-    public int GetNumNodeArcs()
+    public int CheckNumNodeArcs()
     { return dictOfNodeArcs.Count; }
 
     /// <summary>
@@ -602,9 +602,9 @@ public class DataManager : MonoBehaviour
     /// <param name="nodeIndex"></param>
     /// <param name="info"></param>
     /// <returns></returns>
-    public int GetNodeInfo(int nodeIndex, NodeInfo info)
+    public int CheckNodeInfo(int nodeIndex, NodeInfo info)
     {
-        Debug.Assert(nodeIndex > -1 && nodeIndex < GetNumOfNodeTypes(), "Invalid nodeIndex");
+        Debug.Assert(nodeIndex > -1 && nodeIndex < CheckNumOfNodeTypes(), "Invalid nodeIndex");
         return arrayOfNodes[nodeIndex, (int)info];
     }
 
@@ -616,7 +616,7 @@ public class DataManager : MonoBehaviour
     /// <param name="newData"></param>
     public void SetNodeInfo(int nodeIndex, NodeInfo info, int newData)
     {
-        Debug.Assert(nodeIndex > -1 && nodeIndex < GetNumOfNodeTypes(), "Invalid nodeIndex");
+        Debug.Assert(nodeIndex > -1 && nodeIndex < CheckNumOfNodeTypes(), "Invalid nodeIndex");
         arrayOfNodes[nodeIndex, (int)info] = newData;
     }
 
@@ -624,14 +624,14 @@ public class DataManager : MonoBehaviour
     /// return total number of nodes in the level
     /// </summary>
     /// <returns></returns>
-    public int GetNumOfNodes()
+    public int CheckNumOfNodes()
     { return dictOfNodeObjects.Count; }
 
     /// <summary>
     /// returns number of different node arc types on level, eg. "Corporate" + "Utility" would return 2
     /// </summary>
     /// <returns></returns>
-    public int GetNumOfNodeTypes()
+    public int CheckNumOfNodeTypes()
     { return arrayOfNodes.Length; }
 
 
@@ -642,7 +642,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<Node> GetListOfNodesByType(int nodeArcID)
     {
-        Debug.Assert(nodeArcID > -1 && nodeArcID < GetNumOfNodeTypes(), "Invalid nodeArcID parameter");
+        Debug.Assert(nodeArcID > -1 && nodeArcID < CheckNumOfNodeTypes(), "Invalid nodeArcID parameter");
         return listOfNodesByType[nodeArcID];
     }
 
@@ -705,10 +705,10 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-    public List<Target> GetPossibleTargets()
+    public List<Target> CheckPossibleTargets()
     { return listOfPossibleTargets; }
 
-    public int GetNumOfPossibleTargets()
+    public int CheckNumOfPossibleTargets()
     { return listOfPossibleTargets.Count; }
 
     public Dictionary<int, Target> GetDictOfTargets()
@@ -784,14 +784,14 @@ public class DataManager : MonoBehaviour
         /// number of TeamArcs in dictOfTeamArcs
         /// </summary>
         /// <returns></returns>
-    public int GetNumOfTeamArcs()
+    public int CheckNumOfTeamArcs()
     { return dictOfTeamArcs.Count; }
 
     /// <summary>
     /// number of Teams in dictOfTeams
     /// </summary>
     /// <returns></returns>
-    public int GetNumOfTeams()
+    public int CheckNumOfTeams()
     { return dictOfTeams.Count; }
 
     /// <summary>
@@ -800,9 +800,9 @@ public class DataManager : MonoBehaviour
     /// <param name="teamArcID"></param>
     /// <param name="info"></param>
     /// <returns></returns>
-    public int GetTeamInfo(int teamArcID, TeamInfo info)
+    public int CheckTeamInfo(int teamArcID, TeamInfo info)
     {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
+        Debug.Assert(teamArcID > -1 && teamArcID < CheckNumOfTeamArcs(), "Invalid teamArcID");
         return arrayOfTeams[teamArcID, (int)info];
     }
 
@@ -822,7 +822,7 @@ public class DataManager : MonoBehaviour
     /// <param name="adjustment"></param>
     public void AdjustTeamInfo(int teamArcID, TeamInfo info, int adjustment)
     {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
+        Debug.Assert(teamArcID > -1 && teamArcID < CheckNumOfTeamArcs(), "Invalid teamArcID");
         int afterValue = arrayOfTeams[teamArcID, (int)info] + adjustment;
         arrayOfTeams[teamArcID, (int)info] = Math.Max(0, afterValue);
     }
@@ -862,10 +862,10 @@ public class DataManager : MonoBehaviour
 
 
     /// <summary>
-    /// Add team to dictOfTeams, automatically adds a new team to the Reserve Pool
+    /// Add team to dictOfTeams, returns true if successful
     /// </summary>
     /// <param name="team"></param>
-    public void AddTeam(Team team)
+    public bool AddTeamToDict(Team team)
     {
         bool successFlag = true;
         //add to dictionary
@@ -875,12 +875,56 @@ public class DataManager : MonoBehaviour
         { Debug.LogError("Invalid Team (Null)"); successFlag = false; }
         catch (ArgumentException)
         { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.TeamID, team.Arc.name, team.Name, "\n")); successFlag = false; }
-        //add to Reserve pool (all new teams are placed in the reserve)
-        if (successFlag == true)
+        return successFlag;
+    }
+
+    /// <summary>
+    /// Adds teamID to a particular pool
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <param name="teamID"></param>
+    public void AddTeamToPool(TeamPool pool, int teamID)
+    {
+        switch (pool)
         {
-            teamPoolReserve.Add(team.TeamID);
+            case TeamPool.Reserve:
+                teamPoolReserve.Add(teamID);
+                break;
+            case TeamPool.OnMap:
+                teamPoolOnMap.Add(teamID);
+                break;
+            case TeamPool.InTransit:
+                teamPoolInTransit.Add(teamID);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                break;
         }
-        
+
+    }
+
+    /// <summary>
+    /// Remove a team from a designated pool
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <param name="teamID"></param>
+    public void RemoveTeamFromPool(TeamPool pool, int teamID)
+    {
+        switch (pool)
+        {
+            case TeamPool.Reserve:
+                teamPoolReserve.Remove(teamID);
+                break;
+            case TeamPool.OnMap:
+                teamPoolOnMap.Remove(teamID);
+                break;
+            case TeamPool.InTransit:
+                teamPoolInTransit.Remove(teamID);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                break;
+        }
     }
 
     /// <summary>
@@ -903,62 +947,14 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Team> GetTeams()
     { return dictOfTeams; }
 
-    /// <summary>
-    /// handles all admin for moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
-    /// takes care of all checks, eg. enough teams present in reserve for one to move to the map
-    /// DOES NOT check if actor has the ability to handle another team onMap
-    /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
-    /// </summary>
-    /// <param name="destinationPool"></param>
-    /// <param name="teamID"></param>
-    /// <param name="node"></param>
-    /// <returns></returns>
-    public bool MoveTeam(TeamPool destinationPool, int teamID, Node node = null)
-    {
-        Debug.Assert(teamID > -1 && teamID < GetNumOfTeamArcs(), "Invalid teamID");
-        Team team = GetTeam(teamID);
-        if (team != null)
-        {
-            switch (destinationPool)
-            {
-                case TeamPool.Reserve:
-                    break;
-                case TeamPool.OnMap:
-                    if (node != null)
-                    {
-                        if (GetTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve) > 0)
-                        {
-                            node.AddTeam(team);
-                            //adjust tallies for onMap
-                            AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.OnMap, +1);
-                            AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve, -1);
-                        }
-                        else { Debug.LogWarning(string.Format("Not enough {0} teams present. Move cancelled", team.Arc.name)); return false; }
-                    }
-                    else
-                    { Debug.LogError("Invalid node (Null) for OnMap -> move Cancelled"); return false; }
-                    break;
-                case TeamPool.InTransit:
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid pool \"{0}\"", destinationPool));
-                    break;
-            }
-        }
-        else
-        {
-            Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID));
-            return false;
-        }
-        return true;
-    }
+
 
     /// <summary>
     /// returns number of teams in each pool (lists of teamIDs), '-1' if an error
     /// </summary>
     /// <param name="pool"></param>
     /// <returns></returns>
-    public int GetTeamPoolCount(TeamPool pool)
+    public int CheckTeamPoolCount(TeamPool pool)
     {
         int num = -1;
         switch(pool)

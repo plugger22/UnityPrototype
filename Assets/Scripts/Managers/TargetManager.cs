@@ -53,7 +53,7 @@ public class TargetManager : MonoBehaviour
     public void Initialise()
     {
         //calculate limits
-        int numOfNodes = GameManager.instance.dataScript.GetNumOfNodes();
+        int numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         StartTargets = numOfNodes * startPercentTargets / 100;
         MaxTargets = numOfNodes * maxPercentTargets / 100;
         ActiveTargets = MaxTargets - StartTargets;
@@ -117,11 +117,11 @@ public class TargetManager : MonoBehaviour
     /// <param name="status"></param>
     public void SetRandomTargets(int numOfTargets, Status status = Status.Active)
     {
-        Debug.Assert(numOfTargets > 0 && numOfTargets <= GameManager.instance.dataScript.GetNumOfPossibleTargets(), "Invalid numOfTargets parameter");
+        Debug.Assert(numOfTargets > 0 && numOfTargets <= GameManager.instance.dataScript.CheckNumOfPossibleTargets(), "Invalid numOfTargets parameter");
         int index, nodeArcID, totalOfType, totalOfTypewithTargets, totalActive, totalLive, totalTargets, endlessCounter;
         int counter = 0;
         bool successFlag;
-        List<Target> listOfPossibleTargets = GameManager.instance.dataScript.GetPossibleTargets();
+        List<Target> listOfPossibleTargets = GameManager.instance.dataScript.CheckPossibleTargets();
         for(int i = 0; i < numOfTargets; i++)
         {
             //successflag breaks out of while loop if a suitable node is found
@@ -136,8 +136,8 @@ public class TargetManager : MonoBehaviour
                 //get target nodeArcId
                 nodeArcID = target.nodeArc.NodeArcID;
                 //check that there is a suitable spare node available
-                totalOfType = GameManager.instance.dataScript.GetNodeInfo(nodeArcID, NodeInfo.Number);
-                totalOfTypewithTargets = GameManager.instance.dataScript.GetNodeInfo(nodeArcID, NodeInfo.TargetsAll);
+                totalOfType = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.Number);
+                totalOfTypewithTargets = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsAll);
                 if ((totalOfType - totalOfTypewithTargets) > 0)
                 {
                     //get a random node
@@ -157,17 +157,17 @@ public class TargetManager : MonoBehaviour
                         //Remove from listOfPossibleTargets
                         listOfPossibleTargets.RemoveAt(index);
                         //Update node Array info stats
-                        totalTargets = GameManager.instance.dataScript.GetNodeInfo(nodeArcID, NodeInfo.TargetsAll) + 1;
+                        totalTargets = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsAll) + 1;
                         GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsAll, totalTargets);
                         switch (status)
                         {
                             case Status.Active:
-                                totalActive = GameManager.instance.dataScript.GetNodeInfo(nodeArcID, NodeInfo.TargetsActive) + 1;
+                                totalActive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsActive) + 1;
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsActive, totalActive);
                                 GameManager.instance.dataScript.AddActiveTarget(target);
                                 break;
                             case Status.Live:
-                                totalLive = GameManager.instance.dataScript.GetNodeInfo(nodeArcID, NodeInfo.TargetsLive) + 1;
+                                totalLive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsLive) + 1;
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsLive, totalLive);
                                 GameManager.instance.dataScript.AddLiveTarget(target);
                                 //assign nodeID to target

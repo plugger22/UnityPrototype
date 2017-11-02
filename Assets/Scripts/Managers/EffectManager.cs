@@ -137,7 +137,7 @@ public class EffectManager : MonoBehaviour
                             }
                             break;
                         case EffectCriteria.NumTeams:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.NumOfTeams, effect.criteriaCompare);
+                            compareTip = ComparisonCheck(effect.criteriaValue, node.CheckNumOfTeams(), effect.criteriaCompare);
                             if (compareTip != null)
                             {
                                 result = "no Teams present";
