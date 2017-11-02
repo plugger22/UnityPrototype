@@ -39,6 +39,13 @@ public class InputManager : MonoBehaviour
         switch (_gameState)
         {
             case GameState.Normal:
+                if (Input.GetButtonDown("NewTurn") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.EndTurn, this);
+                    EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
+                    EventManager.instance.PostNotification(EventType.StartTurnLate, this);
+                    return;
+                }
                 if (Input.GetButtonDown("ShowTargets") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets);

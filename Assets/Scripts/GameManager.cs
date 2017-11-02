@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
+    [HideInInspector] public TurnManager turnScript;                  //Turn Manager
     [HideInInspector] public InputManager inputScript;                //Input Manager
     [HideInInspector] public EffectManager effectScript;              //Effect Manager
     [HideInInspector] public TargetManager targetScript;              //Target Manager
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
     private bool allowQuitting = false;
     private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
-    public int Turn { get; set; }                                   //turn number
+    
 
     #endregion
 
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour
         colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();
         sideScript = GetComponent<SideManager>();
+        turnScript = GetComponent<TurnManager>();
         inputScript = GetComponent<InputManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
@@ -145,6 +147,7 @@ public class GameManager : MonoBehaviour
         playerScript.Initialise();
         nodeScript.Initialise();
         teamScript.Initialise();
+        turnScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
     }

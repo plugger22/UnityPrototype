@@ -107,7 +107,7 @@ public class ActorManager : MonoBehaviour
             {
                 Actor actor = new Actor()
                 {
-                    arc = tempActorArcs[i],
+                    Arc = tempActorArcs[i],
                     Name = tempActorArcs[i].actorName,
                     SlotID = i,
                     Datapoint0 = Random.Range(1, 4),
@@ -119,7 +119,7 @@ public class ActorManager : MonoBehaviour
                 };
                 arrayOfActors[(int)side, i] = actor;
 
-                Debug.Log(string.Format("Actor added -> {0}, {1} {2}{3}", actor.arc.actorName,
+                Debug.Log(string.Format("Actor added -> {0}, {1} {2}{3}", actor.Arc.actorName,
                     GameManager.instance.dataScript.GetQuality(GameManager.instance.optionScript.PlayerSide, 0), actor.Datapoint0, "\n"));
             }
         }
@@ -158,7 +158,7 @@ public class ActorManager : MonoBehaviour
     public string GetActorType(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].arc.name;
+        return arrayOfActors[(int)side, slotID].Arc.name;
     }
 
     /// <summary>
@@ -182,7 +182,7 @@ public class ActorManager : MonoBehaviour
     public string GetActorName(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].arc.actorName;
+        return arrayOfActors[(int)side, slotID].Arc.actorName;
     }
 
     /// <summary>
@@ -280,7 +280,7 @@ public class ActorManager : MonoBehaviour
                                 nodeID == playerID)
                             {
                                 //get node action
-                                tempAction = actor.arc.nodeAction;
+                                tempAction = actor.Arc.nodeAction;
 
                                 if (tempAction != null)
                                 {
@@ -311,7 +311,7 @@ public class ActorManager : MonoBehaviour
                                                     else
                                                     {
                                                         //actualRenownEffect = actorRenownEffect;
-                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd));
+                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd));
                                                     }
                                                 }
                                             }
@@ -320,7 +320,7 @@ public class ActorManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, actor.arc.name.ToUpper(), "\n", colourEnd,
+                                                    colourInvalid, actor.Arc.name.ToUpper(), "\n", colourEnd,
                                                     colourRed, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -338,7 +338,7 @@ public class ActorManager : MonoBehaviour
                                         details = new EventButtonDetails()
                                         {
                                             buttonTitle = tempAction.name,
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), colourEnd),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name.ToUpper(), colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -351,14 +351,14 @@ public class ActorManager : MonoBehaviour
                             {
                                 //actor not live at node
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name.ToUpper()));
+                                infoBuilder.Append(string.Format("{0} has no connections", actor.Arc.name.ToUpper()));
                             }
                         }
                         else
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name.ToUpper()));
+                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name.ToUpper()));
                         }
 
                         //add to list
@@ -420,7 +420,7 @@ public class ActorManager : MonoBehaviour
                             if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true)
                             {
                                 //get node action
-                                tempAction = actor.arc.nodeAction;
+                                tempAction = actor.Arc.nodeAction;
 
                                 if (tempAction != null)
                                 {
@@ -452,7 +452,7 @@ public class ActorManager : MonoBehaviour
                                                     else
                                                     {
                                                         //actualRenownEffect = actorRenownEffect;
-                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd));
+                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd));
                                                     }
                                                 }
 
@@ -462,7 +462,7 @@ public class ActorManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, actor.arc.name.ToUpper(), "\n", colourEnd,
+                                                    colourInvalid, actor.Arc.name.ToUpper(), "\n", colourEnd,
                                                     colourRed, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -480,7 +480,7 @@ public class ActorManager : MonoBehaviour
                                         details = new EventButtonDetails()
                                         {
                                             buttonTitle = tempAction.name,
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name.ToUpper(), colourEnd),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name.ToUpper(), colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -493,14 +493,14 @@ public class ActorManager : MonoBehaviour
                             {
                                 //actor not live at node
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} has no influence", actor.arc.name.ToUpper()));
+                                infoBuilder.Append(string.Format("{0} has no influence", actor.Arc.name.ToUpper()));
                             }
                         }
                         else
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name.ToUpper()));
+                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name.ToUpper()));
                         }
                         //add to list
                         if (details != null)
@@ -558,7 +558,7 @@ public class ActorManager : MonoBehaviour
         int slotID = -1;
         foreach(Actor actor in arrayOfActors)
         {
-            if (actor.arc.ActorArcID == actorArcID && actor.isLive == true)
+            if (actor.Arc.ActorArcID == actorArcID && actor.isLive == true)
             { return actor.SlotID; }
         }
         return slotID;

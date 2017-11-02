@@ -56,7 +56,7 @@ public class TeamManager : MonoBehaviour
                 //get actors Ability
                 ability = actor.Datapoint2;
                 //get preferred team
-                arcID = actor.arc.preferredTeam.TeamArcID;
+                arcID = actor.Arc.preferredTeam.TeamArcID;
                 //add the ability number of teams to the reserve
                 GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, ability);
                 GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, ability);
@@ -86,6 +86,7 @@ public class TeamManager : MonoBehaviour
         Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetTeams();
         if (dictOfTeams != null)
         {
+            int actorSlotID;
             //loop teams
             foreach (var teamData in dictOfTeams)
             {
@@ -97,8 +98,8 @@ public class TeamManager : MonoBehaviour
                     if (node != null)
                     {
                         //get a random Actor
-                        Actor actor = GameManager.instance.actorScript.GetActor(Random.Range(0, 4), GameManager.instance.optionScript.PlayerSide);
-                        MoveTeam(TeamPool.OnMap, actor, teamData.Key, node);
+                        actorSlotID = Random.Range(0, GameManager.instance.actorScript.numOfActorsTotal);
+                        MoveTeam(TeamPool.OnMap, actorSlotID, teamData.Key, node);
                     }
                     else { Debug.LogError("Invalid node (Null)"); }
                 }
@@ -110,66 +111,111 @@ public class TeamManager : MonoBehaviour
 
     /// <summary>
     /// handles all admin for moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
-    /// takes care of all checks, eg. enough teams present in reserve for one to move to the map
-    /// DOES NOT check if actor has the ability to handle another team onMap
+    /// Takes care of all checks, eg. enough teams present in reserve for one to move to the map
+    /// Will check if actor has the ability to handle another team onMap
     /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
     /// </summary>
     /// <param name="destinationPool"></param>
     /// <param name="teamID"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public bool MoveTeam(TeamPool destinationPool, Actor actor, int teamID, Node node = null)
+    public bool MoveTeam(TeamPool destinationPool, int actorSlotID, int teamID, Node node = null)
     {
         Debug.Assert(teamID > -1 && teamID < GameManager.instance.dataScript.CheckNumOfTeams(), "Invalid teamID");
         Team team = GameManager.instance.dataScript.GetTeam(teamID);
+        bool successFlag = true;
         if (team != null)
         {
-            if (actor != null)
+            if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfActorsTotal)
             {
-                switch (destinationPool)
+                //Get Actor
+                Actor actor = GameManager.instance.actorScript.GetActor(actorSlotID, GameManager.instance.optionScript.PlayerSide);
+                if (actor != null)
                 {
-                    case TeamPool.Reserve:
-                        break;
-                    case TeamPool.OnMap:
-                        if (node != null)
+                    if (actor.isLive == true)
+                    {
+                        switch (destinationPool)
                         {
-                            if (GameManager.instance.dataScript.CheckTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve) > 0)
-                            {
-                                if (node.AddTeam(team, actor.SlotID) == true)
+                            case TeamPool.Reserve:
+                                break;
+                            case TeamPool.OnMap:
+                                if (node != null)
                                 {
-                                    //adjust tallies for onMap
-                                    GameManager.instance.dataScript.AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.OnMap, +1);
-                                    GameManager.instance.dataScript.AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve, -1);
-                                    //pools
-                                    GameManager.instance.dataScript.AddTeamToPool(TeamPool.OnMap, teamID);
-                                    GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID);
-
-                                    //alert
-                                    Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}, Node ID {4}{5}", team.Arc.name, team.Name, team.TeamID,
-                                        destinationPool, node.NodeID, "\n"));
+                                    //a team available in the reserve pool?
+                                    if (GameManager.instance.dataScript.CheckTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve) > 0)
+                                    {
+                                        //check if actor has capacity to deploy another team
+                                        if (actor.CheckCanDeployTeam() == true)
+                                        {
+                                            if (node.AddTeam(team, actorSlotID) == true)
+                                            {
+                                                //adjust tallies for onMap
+                                                GameManager.instance.dataScript.AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.OnMap, +1);
+                                                GameManager.instance.dataScript.AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve, -1);
+                                                //pools
+                                                GameManager.instance.dataScript.AddTeamToPool(TeamPool.OnMap, teamID);
+                                                GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID);
+                                                //add team to Actor list
+                                                actor.AddTeam(team.TeamID);
+                                                //confirmation
+                                                Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}, Node ID {4}{5}", team.Arc.name, team.Name, team.TeamID,
+                                                    destinationPool, node.NodeID, "\n"));
+                                            }
+                                            else
+                                            {
+                                                Debug.LogWarning(string.Format("Move team operation failed for \"{0} {1}\"", team.Arc.name, team.Name));
+                                                successFlag = false;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Debug.LogWarning(string.Format("Unable to deploy {0} {1} to {2} as Actor {3}, slotID {4}, has insufficient ability{5}",
+                                                team.Arc.name, team.Name, destinationPool, actor.Arc.name, actorSlotID, "\n"));
+                                            successFlag = false;
+                                        }
+                                    }
+                                    
+                                    else
+                                    {
+                                        Debug.LogWarning(string.Format("Not enough {0} teams present. Move cancelled", team.Arc.name));
+                                        successFlag = false;
+                                    }
                                 }
-                                else { Debug.LogWarning(string.Format("Move team operation failed for \"{0} {1}\"", team.Arc.name, team.Name)); }
-                            }
-                            else { Debug.LogWarning(string.Format("Not enough {0} teams present. Move cancelled", team.Arc.name)); return false; }
+                                else
+                                {
+                                    Debug.LogError("Invalid node (Null) for OnMap -> move Cancelled");
+                                    successFlag = false;
+                                }
+                                break;
+                            case TeamPool.InTransit:
+
+                                //don't forget to remove team from actor list
+
+                                break;
+                            default:
+                                Debug.LogError(string.Format("Invalid pool \"{0}\"", destinationPool));
+                                successFlag = false;
+                                break;
                         }
-                        else
-                        { Debug.LogError("Invalid node (Null) for OnMap -> move Cancelled"); return false; }
-                        break;
-                    case TeamPool.InTransit:
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid pool \"{0}\"", destinationPool));
-                        break;
+                        if (successFlag == false)
+                        {  return false; }
+                    }
+                    else
+                    {
+                        Debug.LogWarning(string.Format("{0}, ID {1} can't be deployed to {2} as Actor {3}, slotID {4} isn't Live{5}", team.Arc.name, teamID, destinationPool,
+                          actor.Name, actorSlotID, "\n"));
+                        return false;
+                    }
                 }
+                else
+                { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); return false; }
             }
             else
-            { Debug.LogError("Invalid actor (Null)"); }
+            { Debug.LogError(string.Format("Invalid actor slotID \"{0}\"", actorSlotID)); return false; }
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID));
-            return false;
-        }
+            Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID));  return false; }
         return true;
     }
 

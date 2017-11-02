@@ -272,7 +272,7 @@ public class NodeManager : MonoBehaviour
         if (actor != null)
         {
             displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5} {6}{7} node{8}{9}", colourDefault, actor.Name, colourEnd,
-                colourHighlight, actor.arc.name, colourEnd, colourDefault, tempList.Count, 
+                colourHighlight, actor.Arc.name, colourEnd, colourDefault, tempList.Count, 
                 tempList.Count != 1 ? "s" : "", colourEnd);
             GameManager.instance.alertScript.SetAlertUI(displayText);
             NodeShowFlag = 1;

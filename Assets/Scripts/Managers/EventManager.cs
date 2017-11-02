@@ -18,8 +18,11 @@ public enum EventType
     NodeDisplay,
     //action menu
     NodeAction,
-    TargetAction
-    
+    TargetAction,
+    //turn manager
+    StartTurnEarly,
+    StartTurnLate,
+    EndTurn
 };
 
 //EventManager to send events to listeners

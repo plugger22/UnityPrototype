@@ -20,11 +20,30 @@ namespace gameAPI
         public Trait trait { get; set; }
         public bool isLive { get; set; }                    //actor can 'go silent' and be unavailable on occasion
 
-        [HideInInspector] public ActorArc arc;
+        public ActorArc Arc { get; set; }
+
+        private List<int> listOfTeams = new List<int>();    //teamID of all teams that the actor has currently deployed OnMap
 
         public Actor()
         { }
 
+
+        /// <summary>
+        /// Authority method -> returns true if actors 'Ability' allows for the deployment of another team OnMap
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckCanDeployTeam()
+        {
+            if (listOfTeams.Count < Datapoint2)
+            { return true; }
+            return false;
+        }
+
+        public void AddTeam(int teamID)
+        { listOfTeams.Add(teamID); }
+
+        public void RemoveTeam(int teamID)
+        { listOfTeams.Remove(teamID); }
 
     }
 }
