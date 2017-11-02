@@ -522,5 +522,6 @@ public class TargetManager : MonoBehaviour
         return chance;
     }
 
+
     //place methods above here
 }

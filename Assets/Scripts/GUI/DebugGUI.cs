@@ -12,8 +12,11 @@ public class DebugGUI : MonoBehaviour
 
     private bool showGUI = false;
     private bool showAnalysis = false;
+    private bool showTeamPools = false;
+    private bool showTeams = false;
+    private int debugDisplay = 0;
 
-    
+
 
     // Update is called once per frame
     private void Update ()
@@ -64,37 +67,10 @@ public class DebugGUI : MonoBehaviour
                 if (GameManager.instance.optionScript.ColourOption == ColourScheme.Normal)
                 { GameManager.instance.optionScript.ColourOption = ColourScheme.ColourBlind; }
                 else { GameManager.instance.optionScript.ColourOption = ColourScheme.Normal; }
-
-                /*Debug.Log("Button -> Toggle Action Menu");
-                if (GameManager.instance.isBlocked == false)
-                { GameManager.instance.actionMenuScript.SetActionMenu(new ModalPanelDetails()); }
-                else
-                { GameManager.instance.actionMenuScript.CloseActionMenu(); }*/
-
-                /*Debug.Log("Button -> Toggle News Ticker");
-                GameManager.instance.tickerScript.ToggleTicker();*/
-
-                /*int nodeID = GameManager.instance.nodeActive;
-                GameManager.instance.levelScript.CheckConnected(nodeID);
-                Debug.Log("Connection Check to Node " + nodeID);*/
             }
 
             //fifth button
-            if (GUI.Button(new Rect(15, 120, 80, 20), "Analysis"))
-            {
-                //path too
-                /*int nodeID = GameManager.instance.nodeActive;
-                Debug.Log("Button -> Check path from node 0 to " + nodeID);
-                GameManager.instance.levelScript.CheckPath(nodeID);*/
-                Debug.Log("Button -> Toggle Analysis");
-                if (showAnalysis == false)
-                { showAnalysis = true; }
-                else { showAnalysis = false; }
-            }
-
-
-            //sixth button
-            if (GUI.Button(new Rect(15, 140, 80, 20), "Side"))
+            if (GUI.Button(new Rect(15, 120, 80, 20), "Side"))
             {
                 Debug.Log("Button -> Swap sides");
                 if (GameManager.instance.optionScript.PlayerSide == Side.Resistance)
@@ -102,27 +78,75 @@ public class DebugGUI : MonoBehaviour
                 else { GameManager.instance.optionScript.PlayerSide = Side.Resistance; }
             }
 
+
+            //sixth button
+            if (GUI.Button(new Rect(15, 140, 80, 20), "Node/Actors"))
+            {
+                Debug.Log("Button -> Toggle Node/Actors Analysis");
+                if (debugDisplay != 1)
+                { debugDisplay = 1; }
+            }
+
+            //seventh button
+            if (GUI.Button(new Rect(15, 160, 80, 20), "Team Pools"))
+            {
+                Debug.Log("Button -> Toggle Team Pool Analysis");
+                if (debugDisplay != 2)
+                { debugDisplay = 2; }
+            }
+
+            //eigth button
+            if (GUI.Button(new Rect(15, 180, 80, 20), "Teams"))
+            {
+                Debug.Log("Button -> Toggle Teams");
+                if (debugDisplay != 3)
+                { debugDisplay = 3; }
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
-
-            if (showAnalysis == true)
+            if (debugDisplay > 0)
             {
-                //graph data, far right
-                customBackground.alignment = TextAnchor.UpperLeft;
-                string analysis = GameManager.instance.levelScript.GetGraphAnalysis();
-                GUI.Box(new Rect(Screen.width - 115, 10, 110, 200), analysis, customBackground);
+                switch (debugDisplay)
+                {
+                    //general analysis of nodes and actors
+                    case 1:
+                        //graph data, far right
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        string analysisNodes = GameManager.instance.levelScript.GetGraphAnalysis();
+                        GUI.Box(new Rect(Screen.width - 115, 10, 110, 200), analysisNodes, customBackground);
 
-                //Actor data, middle right
-                customBackground.alignment = TextAnchor.UpperLeft;
-                analysis = GameManager.instance.levelScript.GetActorAnalysis(GameManager.instance.optionScript.PlayerSide);
-                GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysis, customBackground);
+                        //Actor data, middle right
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysisNodes = GameManager.instance.levelScript.GetActorAnalysis(GameManager.instance.optionScript.PlayerSide);
+                        GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysisNodes, customBackground);
 
-                // Node Type data, near centre right
-                customBackground.alignment = TextAnchor.UpperLeft;
-                analysis = GameManager.instance.levelScript.GetNodeAnalysis();
-                GUI.Box(new Rect(Screen.width - 485, 10, 150, 200), analysis, customBackground);
+                        // Node Type data, near centre right
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysisNodes = GameManager.instance.levelScript.GetNodeAnalysis();
+                        GUI.Box(new Rect(Screen.width - 485, 10, 150, 200), analysisNodes, customBackground);
+                        break;
+                    //team pool analysis
+                    case 2:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = GameManager.instance.teamScript.GetTeamAnalysis();
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
+                        }
+                        break;
+                    //teams
+                    case 3:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisTeams = GameManager.instance.teamScript.GetIndividualTeams();
+                            GUI.Box(new Rect(Screen.width - 405, 10, 400, 350), analysisTeams, customBackground);
+                        }
+                        break;
+                }
             }
+            
+
         }
     }
 }

@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     private bool allowQuitting = false;
     private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
+    public int Turn { get; set; }                                   //turn number
+
     #endregion
 
 

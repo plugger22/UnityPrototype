@@ -19,6 +19,11 @@ public class DataManager : MonoBehaviour
     private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
+    //team pools
+    private List<int> teamPoolReserve = new List<int>();
+    private List<int> teamPoolOnMap = new List<int>();
+    private List<int> teamPoolInTransit = new List<int>();
+
     //master lists 
     private List<ActorArc> listOfAllActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
@@ -729,7 +734,7 @@ public class DataManager : MonoBehaviour
     }
 
     //
-    // - - - Actor Nodes - - -
+    // - - - Actor Nodes & Qualities - - -
     //
 
     /// <summary>
@@ -741,111 +746,6 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
         return listOfActorNodes[slotID];
-    }
-
-    //
-    // - - - Teams & TeamArcs - - -
-    //
-
-    public int GetNumOfTeamArcs()
-    { return dictOfTeamArcs.Count; }
-
-    /// <summary>
-    /// returns int data from arrayOfTeams based on teamArcID and TeamInfo enum
-    /// </summary>
-    /// <param name="teamArcID"></param>
-    /// <param name="info"></param>
-    /// <returns></returns>
-    public int GetTeamInfo(int teamArcID, TeamInfo info)
-    {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
-        return arrayOfTeams[teamArcID, (int)info];
-    }
-
-    /// <summary>
-    /// return a list of teamArc ID's from dictOfTeamArcs
-    /// </summary>
-    /// <returns></returns>
-    public List<int> GetTeamArcIDs()
-    { return new List<int>(dictOfTeamArcs.Keys); }
-
-    /// <summary>
-    /// change a data point to a new value in array based on teamArcID and TeamInfo enum
-    /// </summary>
-    /// <param name="teamArcID"></param>
-    /// <param name="info"></param>
-    /// <param name="newData">new value of data</param>
-    public void SetTeamInfo(int teamArcID, TeamInfo info, int newData)
-    {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
-        arrayOfTeams[teamArcID, (int)info] = newData;
-    }
-
-    /// <summary>
-    /// adjust a data point by the input amount, eg. +1, -2, etc. Min capped at 0.
-    /// </summary>
-    /// <param name="teamArcID"></param>
-    /// <param name="info"></param>
-    /// <param name="adjustment"></param>
-    public void AdjustTeamInfo(int teamArcID, TeamInfo info, int adjustment)
-    {
-        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
-        int afterValue = arrayOfTeams[teamArcID, (int)info] + adjustment;
-        arrayOfTeams[teamArcID, (int)info] = Math.Max(0, afterValue);
-    }
-
-    /// <summary>
-    /// returns TeamArcID of named teamArc type. returns '-1' if not found in dict
-    /// </summary>
-    /// <param name="teamArcName"></param>
-    /// <returns></returns>
-    public int GetTeamArcID(string teamArcName)
-    {
-        if (dictOfLookupTeamArcs.ContainsKey(teamArcName))
-        { return dictOfLookupTeamArcs[teamArcName]; }
-        else { Debug.LogWarning(string.Format("Not found in Lookup TeamArcID dict \"{0}\"{1}", teamArcName, "\n")); }
-        return -1;
-    }
-
-    /// <summary>
-    /// returns TeamArc based on teamArcID, null if not found in dictionary
-    /// </summary>
-    /// <param name="teamArcID"></param>
-    /// <returns></returns>
-    public TeamArc GetTeamArc(int teamArcID)
-    {
-        if (dictOfTeamArcs.ContainsKey(teamArcID))
-        { return dictOfTeamArcs[teamArcID]; }
-        else { Debug.LogWarning(string.Format("Not found inTeamArcID {0}, in dict {1}", teamArcID, "\n")); }
-        return null;
-    }
-
-    /// <summary>
-    /// Add team to dictOfTeams
-    /// </summary>
-    /// <param name="team"></param>
-    public void AddTeam(Team team)
-    {
-        //add to dictionary
-        try
-        { dictOfTeams.Add(team.TeamID, team); }
-        catch (ArgumentNullException)
-        { Debug.LogError("Invalid Team (Null)"); }
-        catch (ArgumentException)
-        { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.TeamID, team.arc.name, team.Name, "\n")); }
-    }
-
-    /// <summary>
-    /// Gets team from dictionary based on teamID, returns Null if not found
-    /// </summary>
-    /// <param name="teamID"></param>
-    /// <returns></returns>
-    public Team GetTeam(int teamID)
-    {
-        if (dictOfTeams.ContainsKey(teamID))
-        { return dictOfTeams[teamID]; }
-        else { Debug.LogWarning(string.Format("Not found in TeamID {0}, in dict {1}", teamID, "\n")); }
-        return null;
     }
 
     /// <summary>
@@ -876,37 +776,164 @@ public class DataManager : MonoBehaviour
         return arrayOfQualities[(int)side, qualityNum];
     }
 
+    //
+    // - - - Teams & TeamArcs & TeamPools - - -
+    //
+
+        /// <summary>
+        /// number of TeamArcs in dictOfTeamArcs
+        /// </summary>
+        /// <returns></returns>
+    public int GetNumOfTeamArcs()
+    { return dictOfTeamArcs.Count; }
+
+    /// <summary>
+    /// number of Teams in dictOfTeams
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumOfTeams()
+    { return dictOfTeams.Count; }
+
+    /// <summary>
+    /// returns int data from arrayOfTeams based on teamArcID and TeamInfo enum
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <param name="info"></param>
+    /// <returns></returns>
+    public int GetTeamInfo(int teamArcID, TeamInfo info)
+    {
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
+        return arrayOfTeams[teamArcID, (int)info];
+    }
+
+    /// <summary>
+    /// return a list of teamArc ID's from dictOfTeamArcs
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetTeamArcIDs()
+    { return new List<int>(dictOfTeamArcs.Keys); }
+
+    /// <summary>
+    /// adjust a data point by the input amount, eg. +1, -2, etc. Min capped at 0.
+    /// ONLY CALL THIS WHEN FIRST SETTING UP TEAMS or adding additional teams. MoveTeam handles all interpool admin and calls this methiod internally
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <param name="info"></param>
+    /// <param name="adjustment"></param>
+    public void AdjustTeamInfo(int teamArcID, TeamInfo info, int adjustment)
+    {
+        Debug.Assert(teamArcID > -1 && teamArcID < GetNumOfTeamArcs(), "Invalid teamArcID");
+        int afterValue = arrayOfTeams[teamArcID, (int)info] + adjustment;
+        arrayOfTeams[teamArcID, (int)info] = Math.Max(0, afterValue);
+    }
+
+    /// <summary>
+    /// returns TeamArcID of named teamArc type. returns '-1' if not found in dict
+    /// </summary>
+    /// <param name="teamArcName"></param>
+    /// <returns></returns>
+    public int GetTeamArcID(string teamArcName)
+    {
+        if (dictOfLookupTeamArcs.ContainsKey(teamArcName))
+        { return dictOfLookupTeamArcs[teamArcName]; }
+        else { Debug.LogWarning(string.Format("Not found in Lookup TeamArcID dict \"{0}\"{1}", teamArcName, "\n")); }
+        return -1;
+    }
+
+    /// <summary>
+    /// returns dictOfTeamArcs
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<int, TeamArc> GetTeamArcs()
+    { return dictOfTeamArcs; }
+
+    /// <summary>
+    /// returns TeamArc based on teamArcID, null if not found in dictionary
+    /// </summary>
+    /// <param name="teamArcID"></param>
+    /// <returns></returns>
+    public TeamArc GetTeamArc(int teamArcID)
+    {
+        if (dictOfTeamArcs.ContainsKey(teamArcID))
+        { return dictOfTeamArcs[teamArcID]; }
+        else { Debug.LogWarning(string.Format("Not found inTeamArcID {0}, in dict {1}", teamArcID, "\n")); }
+        return null;
+    }
+
+
+    /// <summary>
+    /// Add team to dictOfTeams, automatically adds a new team to the Reserve Pool
+    /// </summary>
+    /// <param name="team"></param>
+    public void AddTeam(Team team)
+    {
+        bool successFlag = true;
+        //add to dictionary
+        try
+        { dictOfTeams.Add(team.TeamID, team); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Team (Null)"); successFlag = false; }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.TeamID, team.Arc.name, team.Name, "\n")); successFlag = false; }
+        //add to Reserve pool (all new teams are placed in the reserve)
+        if (successFlag == true)
+        {
+            teamPoolReserve.Add(team.TeamID);
+        }
+        
+    }
+
+    /// <summary>
+    /// Gets team from dictionary based on teamID, returns Null if not found
+    /// </summary>
+    /// <param name="teamID"></param>
+    /// <returns></returns>
+    public Team GetTeam(int teamID)
+    {
+        if (dictOfTeams.ContainsKey(teamID))
+        { return dictOfTeams[teamID]; }
+        else { Debug.LogWarning(string.Format("Not found in TeamID {0}, in dict {1}", teamID, "\n")); }
+        return null;
+    }
+
+    /// <summary>
+    /// return dictOfTeams
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<int, Team> GetTeams()
+    { return dictOfTeams; }
+
     /// <summary>
     /// handles all admin for moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
     /// takes care of all checks, eg. enough teams present in reserve for one to move to the map
     /// DOES NOT check if actor has the ability to handle another team onMap
     /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
     /// </summary>
-    /// <param name="pool"></param>
+    /// <param name="destinationPool"></param>
     /// <param name="teamID"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public bool MoveTeam(TeamPool pool, int teamID, Node node = null)
+    public bool MoveTeam(TeamPool destinationPool, int teamID, Node node = null)
     {
         Debug.Assert(teamID > -1 && teamID < GetNumOfTeamArcs(), "Invalid teamID");
         Team team = GetTeam(teamID);
         if (team != null)
         {
-            switch (pool)
+            switch (destinationPool)
             {
                 case TeamPool.Reserve:
                     break;
                 case TeamPool.OnMap:
                     if (node != null)
                     {
-                        if (GetTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve) > 0)
+                        if (GetTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve) > 0)
                         {
                             node.AddTeam(team);
                             //adjust tallies for onMap
-                            AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, +1);
-                            AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, -1);
+                            AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.OnMap, +1);
+                            AdjustTeamInfo(team.Arc.TeamArcID, TeamInfo.Reserve, -1);
                         }
-                        else { Debug.LogWarning(string.Format("Not enough {0} teams present. Move cancelled", team.arc.name)); return false; }
+                        else { Debug.LogWarning(string.Format("Not enough {0} teams present. Move cancelled", team.Arc.name)); return false; }
                     }
                     else
                     { Debug.LogError("Invalid node (Null) for OnMap -> move Cancelled"); return false; }
@@ -914,7 +941,7 @@ public class DataManager : MonoBehaviour
                 case TeamPool.InTransit:
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid pool \"{0}\"", pool));
+                    Debug.LogError(string.Format("Invalid pool \"{0}\"", destinationPool));
                     break;
             }
         }
@@ -925,6 +952,25 @@ public class DataManager : MonoBehaviour
         }
         return true;
     }
+
+    /// <summary>
+    /// returns number of teams in each pool (lists of teamIDs), '-1' if an error
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <returns></returns>
+    public int GetTeamPoolCount(TeamPool pool)
+    {
+        int num = -1;
+        switch(pool)
+        {
+            case TeamPool.Reserve: num = teamPoolReserve.Count; break;
+            case TeamPool.OnMap: num = teamPoolOnMap.Count; break;
+            case TeamPool.InTransit: num = teamPoolInTransit.Count; break;
+            default: Debug.LogError(string.Format("Invalid pool \"{0}\'", pool)); break;
+        }
+        return num;
+    }
+
 
    //new methods above here
 }

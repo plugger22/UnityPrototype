@@ -158,7 +158,7 @@ public class Node : MonoBehaviour
                 if (listOfTeams.Count > 0)
                 {
                     foreach (Team team in listOfTeams)
-                    { teamList.Add(string.Format("{0} team", team.arc.name)); }
+                    { teamList.Add(string.Format("{0} team", team.Arc.name)); }
                 }
                 List<string> targetList = new List<string>();
                 if (TargetID > -1)
@@ -229,20 +229,20 @@ public class Node : MonoBehaviour
             if (listOfTeams.Count < GameManager.instance.teamScript.maxTeamsAtNode)
             {
                 //check a similar type of team not already present
-                int nodeArcID = team.arc.TeamArcID;
+                int nodeArcID = team.Arc.TeamArcID;
                 if (listOfTeams.Count > 0)
                 {
                     foreach(Team teamExisting in listOfTeams)
                     {
-                        if (teamExisting.arc.TeamArcID == nodeArcID)
+                        if (teamExisting.Arc.TeamArcID == nodeArcID)
                         {
                             //already a similar team present -> no go
                             Debug.LogWarning(string.Format("{0} Team NOT added to node {1}, ID {2} as already a similar team present{3}", 
-                                team.arc.name, NodeName, NodeID, "\n"));
+                                team.Arc.name, NodeName, NodeID, "\n"));
                             return false;
                         }
                         listOfTeams.Add(team);
-                        Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, NodeName, NodeID, "\n"));
+                        Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, NodeName, NodeID, "\n"));
                         return true;
                     }
                 }
@@ -250,7 +250,7 @@ public class Node : MonoBehaviour
                 {
                     //no teams currently present, must be O.K -> add new team
                     listOfTeams.Add(team);
-                    Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, NodeName, NodeID, "\n"));
+                    Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, NodeName, NodeID, "\n"));
                     return true;
                 }
             }
@@ -279,7 +279,7 @@ public class Node : MonoBehaviour
         {
             foreach (Team team in listOfTeams)
             {
-                if (team.arc.TeamArcID == teamArcID)
+                if (team.Arc.TeamArcID == teamArcID)
                 { return true; }
             }
         }
