@@ -198,7 +198,7 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). 
-    /// Max 4 Actor + 1 Target actions wiht an additional 'Cancel' buttnn added last automatically
+    /// Max 4 Actor + 1 Target actions with an additional 'Cancel' buttnn added last automatically
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>

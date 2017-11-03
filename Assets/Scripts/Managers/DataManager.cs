@@ -928,6 +928,32 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a list of teamID's for the specified pool. Returns null if not found
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <returns></returns>
+    public List<int> GetTeamPool(TeamPool pool)
+    {
+        List<int> tempList = null;
+        switch (pool)
+        {
+            case TeamPool.Reserve:
+                tempList = teamPoolReserve;
+                break;
+            case TeamPool.OnMap:
+                tempList = teamPoolOnMap;
+                break;
+            case TeamPool.InTransit:
+                tempList = teamPoolInTransit;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                break;
+        }
+        return tempList;
+    }
+
+    /// <summary>
     /// Gets team from dictionary based on teamID, returns Null if not found
     /// </summary>
     /// <param name="teamID"></param>

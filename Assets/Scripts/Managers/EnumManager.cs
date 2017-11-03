@@ -48,7 +48,9 @@ namespace gameAPI
         NodeStability, NodeSecurity, NodeSupport,
         NumRecruits, NumTeams, NumTracers, NumGear,
         TargetInfo,
-        RebelCause
+        RebelCause,
+        //authority
+        ActorAbility, MatchingTeam
     }     
     public enum EffectOutcome {
         None,

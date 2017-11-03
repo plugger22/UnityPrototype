@@ -87,7 +87,7 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>
-    public string CheckEffectCriteria(Effect effect, int nodeID = -1)
+    public string CheckEffectCriteria(Effect effect, int nodeID = -1, int actorSlotID = -1, int teamID = -1)
     {
         string result = null;
         string compareTip = null;
@@ -102,81 +102,123 @@ public class EffectManager : MonoBehaviour
                 node = GameManager.instance.dataScript.GetNode(nodeID);
                 if (node != null)
                 {
-                    //effect type
-                    switch (effect.criteriaEffect)
+                    switch (GameManager.instance.optionScript.PlayerSide)
                     {
-                        case EffectCriteria.NodeSecurity:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.Security, effect.criteriaCompare);
-                            if (compareTip != null)
+                        case Side.Resistance:
+                            //check effect is the correct side
+                            if (effect.side == Side.Resistance)
                             {
-                                result = "Security ";
-                                result += compareTip;
+                                //effect type
+                                switch (effect.criteriaEffect)
+                                {
+                                    case EffectCriteria.NodeSecurity:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, node.Security, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "Security ";
+                                            result += compareTip;
+                                        }
+                                        break;
+                                    case EffectCriteria.NodeStability:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, node.Stability, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "Stability ";
+                                            result += compareTip;
+                                        }
+                                        break;
+                                    case EffectCriteria.NodeSupport:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, node.Support, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "Support ";
+                                            result += compareTip;
+                                        }
+                                        break;
+                                    case EffectCriteria.NumRecruits:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.NumOfRecruits, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "maxxed Recruit allowance";
+                                        }
+                                        break;
+                                    case EffectCriteria.NumTeams:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, node.CheckNumOfTeams(), effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "no Teams present";
+                                        }
+                                        break;
+                                    case EffectCriteria.NumTracers:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, node.NumOfTracers, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "Tracers already present";
+                                        }
+                                        break;
+                                    case EffectCriteria.TargetInfo:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, node.TargetID, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "Full Info already";
+                                        }
+                                        break;
+                                    case EffectCriteria.NumGear:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.NumOfGear, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "maxxed Gear Allowance";
+                                        }
+                                        break;
+                                    case EffectCriteria.RebelCause:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.RebelCauseCurrent, effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "Rebel Cause ";
+                                            result += compareTip;
+                                        }
+                                        break;
+                                    default:
+                                        result = "Error!";
+                                        Debug.LogError("Invalid Resistance effect.criteriaEffect");
+                                        break;
+                                }
                             }
+                            else { Debug.LogError("Effect side NOT Resistance -> Criteria check cancelled"); }
                             break;
-                        case EffectCriteria.NodeStability:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.Stability, effect.criteriaCompare);
-                            if (compareTip != null)
+                        case Side.Authority:
+                            //check effect is the correct side
+                            if (effect.side == Side.Authority)
                             {
-                                result = "Stability ";
-                                result += compareTip;
+                                //effect type
+                                switch (effect.criteriaEffect)
+                                {
+                                    case EffectCriteria.NumTeams:
+                                        compareTip = ComparisonCheck(effect.criteriaValue, node.CheckNumOfTeams(), effect.criteriaCompare);
+                                        if (compareTip != null)
+                                        {
+                                            result = "Too many teams present";
+                                        }
+                                        break;
+                                    case EffectCriteria.ActorAbility:
+                                        //TO DO
+                                        break;
+                                    case EffectCriteria.MatchingTeam:
+                                        //TO DO
+                                        break;
+                                    default:
+                                        result = "Error!";
+                                        Debug.LogError("Invalid Authority effect.criteriaEffect");
+                                        break;
+                                }
                             }
-                            break;
-                        case EffectCriteria.NodeSupport:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.Support, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Support ";
-                                result += compareTip;
-                            }
-                            break;
-                        case EffectCriteria.NumRecruits:
-                            compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.NumOfRecruits, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "maxxed Recruit allowance";
-                            }
-                            break;
-                        case EffectCriteria.NumTeams:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.CheckNumOfTeams(), effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "no Teams present";
-                            }
-                            break;
-                        case EffectCriteria.NumTracers:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.NumOfTracers, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Tracers already present";
-                            }
-                            break;
-                        case EffectCriteria.TargetInfo:
-                            compareTip = ComparisonCheck(effect.criteriaValue, node.TargetID, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Full Info already";
-                            }
-                            break;
-                        case EffectCriteria.NumGear:
-                            compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.NumOfGear, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "maxxed Gear Allowance";
-                            }
-                            break;
-                        case EffectCriteria.RebelCause:
-                            compareTip = ComparisonCheck(effect.criteriaValue, GameManager.instance.playerScript.RebelCauseCurrent, effect.criteriaCompare);
-                            if (compareTip != null)
-                            {
-                                result = "Rebel Cause ";
-                                result += compareTip;
-                            }
+                            else { Debug.LogError("Effect side NOT Authority -> Criteria check cancelled"); }
                             break;
                         default:
-                            result = "Error!";
-                            Debug.LogError("Invalid effect.criteriaEffect");
+                            Debug.LogError(string.Format("Invalid Side \"{0}\" -> effect criteria check cancelled", GameManager.instance.optionScript.PlayerSide));
                             break;
                     }
+                    
                 }
                 else { Debug.LogError("Invalid node (null)"); }
             }

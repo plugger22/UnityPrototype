@@ -36,7 +36,7 @@ namespace gameAPI
                 {
                     TeamID = teamCounter++;
                     this.Arc = teamArc;
-                    InitialiseTeamData(this, count);
+                    InitialiseTeamData(count);
                     AddToCollections(this);
                 }
                 else Debug.LogError(string.Format("TeamArc type \"{0}\", ID {1}, not found in dictionary -> Team not created{2}", arcType, teamArcID, "\n"));
@@ -60,7 +60,7 @@ namespace gameAPI
                 {
                     TeamID = teamCounter++;
                     this.Arc = teamArc;
-                    InitialiseTeamData(this, count);
+                    InitialiseTeamData(count);
                     AddToCollections(this);
                 }
                 else Debug.LogError(string.Format("TeamArc type \"{0}\", ID {1}, not found in dictionary -> Team not created{2}", teamArc.name, teamArcID, "\n"));
@@ -74,16 +74,29 @@ namespace gameAPI
         /// subMethod to set up a team's base data
         /// </summary>
         /// <param name="team"></param>
-        private void InitialiseTeamData(Team team, int count)
+        private void InitialiseTeamData(int count)
         {
-            team.Pool = TeamPool.Reserve;
-            team.ActorID = -1;
-            team.NodeID = -1;
-            team.Timer = -1;
-            team.TurnDeployed = -1;
+            Pool = TeamPool.Reserve;
+            ActorID = -1;
+            NodeID = -1;
+            Timer = -1;
+            TurnDeployed = -1;
             if (count > -1 && count < (int)NATO.Count)
-            { team.Name = "Team " + (NATO)count; }
-            else { team.Name = "Team Unknown"; }
+            { Name = "Team " + (NATO)count; }
+            else { Name = "Team Unknown"; }
+        }
+
+        /// <summary>
+        /// used by TeamManager.cs -> MoveTeam to reset data
+        /// </summary>
+        /// <param name="pool"></param>
+        public void ResetTeamData(TeamPool pool)
+        {
+            Pool = pool;
+            ActorID = -1;
+            NodeID = -1;
+            Timer = -1;
+            TurnDeployed = -1;
         }
 
         /// <summary>
