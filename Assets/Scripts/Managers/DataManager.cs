@@ -49,6 +49,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
+    private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();            //Key -> action name, Value -> actionID
     private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
     private Dictionary<int, Target> dictOfTargets = new Dictionary<int, Target>();                  //Key -> targetID, Value -> Target
     private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();               //Key -> teamID, Value -> Team
@@ -235,6 +236,13 @@ public class DataManager : MonoBehaviour
             { Debug.LogError("Invalid Action Arc (Null)"); counter--; }
             catch (ArgumentException)
             { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); counter--; }
+            //add to lookup dictionary
+            try
+            { dictOfLookUpActions.Add(action.name, action.ActionID); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Lookup Actions (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Lookup Actions (duplicate) ID \"{0}\" for \"{1}\"", counter, action.name)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfActions has {0} entries{1}", counter, "\n"));
         //
@@ -452,6 +460,36 @@ public class DataManager : MonoBehaviour
         { return dictOfLookUpNodeArcs[nodeArcName]; }
         else { Debug.LogWarning(string.Format("Not found in Lookup NodeArcID dict \"{0}\"{1}", nodeArcName, "\n")); }
         return -1;
+    }
+
+    //
+    // - - - Action Related - - -
+    //
+
+    /// <summary>
+    /// returns ActionID for a specified Action name, eg. "Any Team". Returns '-1' if not found in lookup dictionary
+    /// </summary>
+    /// <param name="actionName"></param>
+    /// <returns></returns>
+    public int GetActionID(string actionName)
+    {
+        if (dictOfLookUpActions.ContainsKey(actionName))
+        { return dictOfLookUpActions[actionName]; }
+        else { Debug.LogWarning(string.Format("Not found in Lookup Action dict \"{0}\"{1}", actionName, "\n")); }
+        return -1;
+    }
+
+    /// <summary>
+    /// returns
+    /// </summary>
+    /// <param name="actionID"></param>
+    /// <returns></returns>
+    public Action GetAction(int actionID)
+    {
+        if (dictOfActions.ContainsKey(actionID))
+        { return dictOfActions[actionID]; }
+        else { Debug.LogWarning("Not found in DictOfActions " + actionID); }
+        return null;
     }
 
     //

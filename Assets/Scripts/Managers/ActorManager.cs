@@ -208,6 +208,7 @@ public class ActorManager : MonoBehaviour
         string playerPresent = null;
         string effectCriteria;
         bool proceedFlag;
+        
         Side side = GameManager.instance.optionScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if ( side == Side.Authority)
@@ -401,28 +402,37 @@ public class ActorManager : MonoBehaviour
             //
             else if (side == Side.Authority)
             {
-                //
-                // - - - Actors - - -
-                //
+                int teamID;
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                 foreach (Actor actor in arrayOfActors)
                 {
                     proceedFlag = true;
                     details = null;
-
+                    
                     //correct side?
                     if (actor.ActorSide == side)
                     {
                         //actor active?
                         if (actor.isLive == true)
                         {
+                            //assign preferred team as default (doesn't matter if actor has ANY Team action)
+                            teamID = actor.Arc.preferredTeam.TeamArcID;
+                            tempAction = null;
                             //active node for actor
                             if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true)
                             {
-                                //get node action
+                                //get ANY TEAM node action
+                                int actionID = GameManager.instance.dataScript.GetActionID("Any Team");
+                                if (actionID > -1)
+                                { tempAction = GameManager.instance.dataScript.GetAction(actionID); }
+                            }
+                            //actor not live at node -> Preferred team
+                            else
+                            {
                                 tempAction = actor.Arc.nodeAction;
-
-                                if (tempAction != null)
+                            }
+                            //valid action?
+                            if (tempAction != null)
                                 {
                                     //effects
                                     StringBuilder builder = new StringBuilder();
@@ -433,7 +443,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             Effect effect = listOfEffects[i];
                                             //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.SlotID, teamID);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text
@@ -476,12 +486,11 @@ public class ActorManager : MonoBehaviour
                                         };
                                     }
                                 }
-                            }
                             else
                             {
-                                //actor not live at node
+                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.Arc.name.ToUpper(), actor.SlotID));
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} has no influence", actor.Arc.name.ToUpper()));
+                                infoBuilder.Append(string.Format("{0} is having a bad day", actor.Arc.name.ToUpper()));
                             }
                         }
                         else
@@ -495,10 +504,6 @@ public class ActorManager : MonoBehaviour
                         { tempList.Add(details); }
                     }
                 }
-
-                //
-                // - - - Any Team - - -  (Should be at top?)
-                //
             }
             //
             // - - - Cancel
