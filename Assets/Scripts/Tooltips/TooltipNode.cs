@@ -135,7 +135,7 @@ public class TooltipNode : MonoBehaviour
         dividerBottom.gameObject.SetActive(true);
         //set up tooltipNode object
         nodeName.text = string.Format("{0}{1}{2}", colourDefault, name, colourEnd);
-        nodeType.text = string.Format("{0}{1}{2}", colourDefault, type.ToUpper(), colourEnd);
+        nodeType.text = string.Format("{0}{1}{2}", colourDefault, type, colourEnd);
 
         //list of Actors for whom the is node is Active
         if (listOfActive.Count > 0)

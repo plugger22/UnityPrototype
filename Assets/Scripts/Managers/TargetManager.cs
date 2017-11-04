@@ -208,37 +208,40 @@ public class TargetManager : MonoBehaviour
     public List<string> GetTargetTooltip(int targetID)
     {
         List<string> tempList = new List<string>();
-        string infoColour = colourDataNeutral;
-        //find target
-        Target target = GameManager.instance.dataScript.GetTarget(targetID);
-        if (target != null)
+        if (targetID > -1)
         {
-            //target Live?
-            if (target.TargetStatus == Status.Live)
+            string infoColour = colourDataNeutral;
+            //find target
+            Target target = GameManager.instance.dataScript.GetTarget(targetID);
+            if (target != null)
             {
-                //put tooltip together
-                tempList.Add(string.Format("{0}{1}{2}", colourNormal, target.name, colourEnd));
-                tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
-                //good effects
-                Effect effect = null;
-                for(int i = 0; i < target.listOfGoodEffects.Count; i++)
+                //target Live?
+                if (target.TargetStatus == Status.Live)
                 {
-                    effect = target.listOfGoodEffects[i];
-                    if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                    //put tooltip together
+                    tempList.Add(string.Format("{0}{1}{2}", colourNormal, target.name, colourEnd));
+                    tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+                    //good effects
+                    Effect effect = null;
+                    for (int i = 0; i < target.listOfGoodEffects.Count; i++)
+                    {
+                        effect = target.listOfGoodEffects[i];
+                        if (effect != null)
+                        { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
+                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                    }
+                    //info level data colour graded
+                    if (target.InfoLevel == 3) { infoColour = colourDataGood; }
+                    else if (target.InfoLevel == 1) { infoColour = colourDataBad; }
+                    tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, infoColour, target.InfoLevel, colourEnd));
+                    if (target.gear != null)
+                    { tempList.Add(string.Format("{0}{1}{2}", colourGear, target.gear.name, colourEnd)); }
+                    tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
                 }
-                //info level data colour graded
-                if (target.InfoLevel == 3) { infoColour = colourDataGood; }
-                else if (target.InfoLevel == 1) { infoColour = colourDataBad; }
-                tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, infoColour, target.InfoLevel, colourEnd));
-                if (target.gear != null)
-                { tempList.Add(string.Format("{0}{1}{2}", colourGear, target.gear.name, colourEnd)); }
-                tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
             }
+            else
+            { Debug.LogError(string.Format("Invalid Target (null) for ID {0}{1}", targetID, "\n")); }
         }
-        else
-        { Debug.LogError(string.Format("Invalid Target (null) for ID {0}{1}", targetID, "\n")); }
         return tempList;
     }
 

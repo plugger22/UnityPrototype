@@ -321,7 +321,7 @@ public class ActorManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, actor.Arc.name.ToUpper(), "\n", colourEnd,
+                                                    colourInvalid, actor.Arc.name, "\n", colourEnd,
                                                     colourRed, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -339,7 +339,7 @@ public class ActorManager : MonoBehaviour
                                         details = new EventButtonDetails()
                                         {
                                             buttonTitle = tempAction.name,
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name.ToUpper(), colourEnd),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -352,14 +352,14 @@ public class ActorManager : MonoBehaviour
                             {
                                 //actor not live at node
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} has no connections", actor.Arc.name.ToUpper()));
+                                infoBuilder.Append(string.Format("{0} has no connections", actor.Arc.name));
                             }
                         }
                         else
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name.ToUpper()));
+                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name));
                         }
 
                         //add to list
@@ -460,7 +460,7 @@ public class ActorManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, actor.Arc.name.ToUpper(), "\n", colourEnd,
+                                                    colourInvalid, actor.Arc.name, "\n", colourEnd,
                                                     colourRed, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -478,7 +478,7 @@ public class ActorManager : MonoBehaviour
                                         details = new EventButtonDetails()
                                         {
                                             buttonTitle = tempAction.name,
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name.ToUpper(), colourEnd),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -488,16 +488,16 @@ public class ActorManager : MonoBehaviour
                                 }
                             else
                             {
-                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.Arc.name.ToUpper(), actor.SlotID));
+                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.Arc.name, actor.SlotID));
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} is having a bad day", actor.Arc.name.ToUpper()));
+                                infoBuilder.Append(string.Format("{0} is having a bad day", actor.Arc.name));
                             }
                         }
                         else
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name.ToUpper()));
+                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name));
                         }
                         //add to list
                         if (details != null)

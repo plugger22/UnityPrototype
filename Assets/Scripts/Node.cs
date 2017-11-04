@@ -104,7 +104,7 @@ public class Node : MonoBehaviour
             {
                 nodeID = NodeID,
                 nodeName = this.NodeName,
-                nodeDetails = string.Format("{0} ID {1}", arc.name.ToUpper(), NodeID),
+                nodeDetails = string.Format("{0} ID {1}", arc.name, NodeID),
                 nodePos = transform.position,
                 listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(NodeID)
             };

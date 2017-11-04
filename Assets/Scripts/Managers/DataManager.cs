@@ -145,7 +145,7 @@ public class DataManager : MonoBehaviour
             //generate a four letter (first 4 of name in CAPS) as a short form tag
             length = arc.actorName.Length;
             length = length >= 4 ? 4 : length;
-            arc.ActorTag = arc.actorName.Substring(0, length).ToUpper();
+            arc.ActorTag = arc.actorName.Substring(0, length);
             //add to dictionary
             try
             {
@@ -989,6 +989,43 @@ public class DataManager : MonoBehaviour
                 break;
         }
         return tempList;
+    }
+
+    /// <summary>
+    /// returns the teamID of the next team of the specified type (teamArc) in the specified pool, '-1' if none found
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <param name="teamArcID"></param>
+    /// <returns></returns>
+    public int GetTeamInPool(TeamPool pool, int teamArcID)
+    {
+        List<int> tempList = new List<int>();
+        switch(pool)
+        {
+            case TeamPool.Reserve:
+                tempList.AddRange(teamPoolReserve);
+                break;
+            case TeamPool.OnMap:
+                tempList.AddRange(teamPoolOnMap);
+                break;
+            case TeamPool.InTransit:
+                tempList.AddRange(teamPoolInTransit);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                break;
+        }
+        if (tempList.Count > 0)
+        {
+            //loop list of teamID's looking for a matching teamArc
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                if (GetTeam(tempList[i]).Arc.TeamArcID == teamArcID)
+                { return tempList[i]; }
+            }
+        }
+        //failed search
+        return -1;
     }
 
     /// <summary>

@@ -45,5 +45,8 @@ namespace gameAPI
         public void RemoveTeam(int teamID)
         { listOfTeams.Remove(teamID); }
 
+        public int CheckNumOfTeams()
+        { return listOfTeams.Count; }
+
     }
 }
