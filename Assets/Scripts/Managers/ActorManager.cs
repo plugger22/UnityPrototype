@@ -438,23 +438,11 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-
                                                 if (effect.effectOutcome != EffectOutcome.Renown)
                                                 { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
+                                                //actor automatically accumulates renown for their faction
                                                 else
-                                                {
-                                                    //handle renown situation - players or actors?
-                                                    if (nodeID == playerID)
-                                                    {
-                                                        //actualRenownEffect = playerRenownEffect;
-                                                        builder.Append(string.Format("{0}Player {1}{2}", colourBlue, effect.description, colourEnd));
-                                                    }
-                                                    else
-                                                    {
-                                                        //actualRenownEffect = actorRenownEffect;
-                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd));
-                                                    }
-                                                }
+                                                { builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd)); }
 
                                             }
                                             else

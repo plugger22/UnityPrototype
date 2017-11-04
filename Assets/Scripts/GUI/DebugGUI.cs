@@ -11,9 +11,6 @@ public class DebugGUI : MonoBehaviour
     public GUIStyle customBackground;
 
     private bool showGUI = false;
-    private bool showAnalysis = false;
-    private bool showTeamPools = false;
-    private bool showTeams = false;
     private int debugDisplay = 0;
 
 
