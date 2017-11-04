@@ -8,15 +8,16 @@ using UnityEngine;
 /// </summary>
 public class TurnManager : MonoBehaviour
 {
-    private int turn;
+    [SerializeField, HideInInspector]
+    private int _turn;
 
     public int Turn
     {
-        get { return turn; }
+        get { return _turn; }
         set
         {
-            turn = value;
-            Debug.Log(string.Format("TurnManager: Turn {0}{1}", turn, "\n"));
+            _turn = value;
+            Debug.Log(string.Format("TurnManager: Turn {0}{1}", _turn, "\n"));
         }
     }
 
@@ -65,7 +66,7 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log("TurnManager: - - - StartTurnEarly - - - " + "\n");
         //increment turn counter
-        Turn++;
+        _turn++;
     }
 
     /// <summary>

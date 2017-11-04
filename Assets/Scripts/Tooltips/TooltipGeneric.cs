@@ -22,7 +22,6 @@ public class TooltipGeneric : MonoBehaviour
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private float fadeInTime;
-    //private int offset;
 
     /// <summary>
     /// initialisation

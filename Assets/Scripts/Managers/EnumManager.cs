@@ -45,19 +45,22 @@ namespace gameAPI
     //
     public enum EffectCriteria {
         None,
+        //resistance
         NodeStability, NodeSecurity, NodeSupport,
         NumRecruits, NumTeams, NumTracers, NumGear,
         TargetInfo,
         RebelCause,
         //authority
-        ActorAbility, MatchingTeam
+        ActorAbility, TeamIdentical, TeamPreferred, TeamAny
     }     
     public enum EffectOutcome {
         None,
+        //resistance
         NodeStability, NodeSecurity, NodeSupport,
         Recruit, NeutraliseTeam, AddTracer, GetGear, GetTargetInfo, SpreadInstability,
-        Renown,
         RebelCause,
+        //both
+        Renown,
         //authority
         AnyTeam,
         CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam

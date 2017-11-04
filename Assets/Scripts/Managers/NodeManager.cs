@@ -24,20 +24,22 @@ public class NodeManager : MonoBehaviour
     string colourError;
     string colourEnd;
 
-    private int nodeShowFlag = 0;                                   //true if a ShowNodes() is active, false otherwise
-    private bool nodeRedraw = false;                                //if true a node redraw is triggered in GameManager.Update
+    [SerializeField, HideInInspector]
+    private int _nodeShowFlag = 0;                                   //true if a ShowNodes() is active, false otherwise
+    [SerializeField, HideInInspector]
+    private bool _nodeRedraw = false;                                //if true a node redraw is triggered in GameManager.Update
 
     //properties
     public int NodeShowFlag
     {
-        get { return nodeShowFlag; }
-        set { nodeShowFlag = value; Debug.Log(string.Format("NodeShowFlag -> {0}{1}", value, "\n"));}
+        get { return _nodeShowFlag; }
+        set { _nodeShowFlag = value; Debug.Log(string.Format("NodeShowFlag -> {0}{1}", value, "\n"));}
     }
 
     public bool NodeRedraw
     {
-        get { return nodeRedraw; }
-        set { nodeRedraw = value; }
+        get { return _nodeRedraw; }
+        set { _nodeRedraw = value; }
     }
 
 

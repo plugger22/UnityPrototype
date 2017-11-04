@@ -143,7 +143,7 @@ public class DebugGUI : MonoBehaviour
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisTeams = GameManager.instance.teamScript.GetIndividualTeams();
-                            GUI.Box(new Rect(Screen.width - 405, 10, 400, 350), analysisTeams, customBackground);
+                            GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysisTeams, customBackground);
                         }
                         break;
                 }
