@@ -120,7 +120,7 @@ public class EffectManager : MonoBehaviour
                     if (actorSlotID != -1)
                     {
                         //get actor
-                        actor = GameManager.instance.actorScript.GetActor(actorSlotID, Side.Authority);
+                        actor = GameManager.instance.dataScript.GetActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (teamArcID > -1)

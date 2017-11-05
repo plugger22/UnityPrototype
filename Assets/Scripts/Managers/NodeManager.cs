@@ -269,7 +269,7 @@ public class NodeManager : MonoBehaviour
             nodeTemp.SetMaterial(nodeMaterial);
         }
         //Get Actor
-        Actor actor = GameManager.instance.actorScript.GetActor(slotID, GameManager.instance.optionScript.PlayerSide);
+        Actor actor = GameManager.instance.dataScript.GetActor(slotID, GameManager.instance.optionScript.PlayerSide);
         string displayText;
         if (actor != null)
         {

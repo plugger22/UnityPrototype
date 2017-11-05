@@ -16,6 +16,7 @@ public class DataManager : MonoBehaviour
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
+    private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side
     private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
@@ -290,6 +291,8 @@ public class DataManager : MonoBehaviour
         arrayOfQualities[(int)Side.Resistance, 0] = "Connections";
         arrayOfQualities[(int)Side.Resistance, 1] = "Motivation";
         arrayOfQualities[(int)Side.Resistance, 2] = "Invisibility";
+        //arrayOfActors
+        arrayOfActors = new Actor[(int)Side.Count, GameManager.instance.actorScript.numOfActorsTotal];
     }
 
 
@@ -771,48 +774,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid Live Target parameter (Null)"); }
     }
 
-    //
-    // - - - Actor Nodes & Qualities - - -
-    //
 
-    /// <summary>
-    /// return a list of all nodes where an actor (slotID) is active
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public List<GameObject> GetListOfActorNodes(int slotID)
-    {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
-        return listOfActorNodes[slotID];
-    }
-
-    /// <summary>
-    /// returns and array of strings for actor quality tags, eg. "Connections, Invisibility" etc.
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public string[] GetQualities(Side side)
-    {
-        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
-        string[] tempArray = new string[numOfQualities];
-        for (int i = 0; i < numOfQualities; i++)
-        {
-            tempArray[i] = arrayOfQualities[(int)side, i];
-        }
-        return tempArray;
-    }
-
-    /// <summary>
-    /// returns a single string quality tag, eg. "Invisibility". Corresponds to side and qualityNumber, eg. Datapoint0 = 0, Datapoint1 = 1, Datapoint2 = 2
-    /// </summary>
-    /// <param name="side"></param>
-    /// <param name="qualityNum"></param>
-    /// <returns></returns>
-    public string GetQuality(Side side, int qualityNum)
-    {
-        Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
-        return arrayOfQualities[(int)side, qualityNum];
-    }
 
     //
     // - - - Teams & TeamArcs & TeamPools - - -
@@ -1120,7 +1082,157 @@ public class DataManager : MonoBehaviour
         return tempList;
     }
 
-   //new methods above here
+
+    //
+    // - - - Actors - - -
+    //
+
+    /// <summary>
+    /// add an actor to the arrayOfActors
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="actor"></param>
+    /// <param name="slotID"></param>
+    public void AddActor(Side side, Actor actor, int slotID)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        if (actor != null)
+        {
+            arrayOfActors[(int)side, slotID] = actor;
+        }
+        else { Debug.LogError("Invalid actor (null)"); }
+    }
+    
+    /// <summary>
+    /// Get array of actors for a specified side
+    /// </summary>
+    /// <returns></returns>
+    public Actor[] GetActors(Side side)
+    {
+        int total = GameManager.instance.actorScript.numOfActorsTotal;
+        Actor[] tempArray = new Actor[total];
+        for (int i = 0; i < total; i++)
+        { tempArray[i] = arrayOfActors[(int)side, i]; }
+        return tempArray;
+    }
+
+    /// <summary>
+    /// Get specific actor
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public Actor GetActor(int slotID, Side side)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID];
+    }
+
+    /// <summary>
+    /// returns type of Actor, eg. 'Fixer', based on slotID (0 to 3)
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public string GetActorType(int slotID, Side side)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID].Arc.name;
+    }
+
+    /// <summary>
+    /// returns array of Stats -> [0] dataPoint0, [1] dataPoint1 , [2] dataPoint3
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public int[] GetActorStats(int slotID, Side side)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].Datapoint0, arrayOfActors[(int)side, slotID].Datapoint1,
+            arrayOfActors[(int)side, slotID].Datapoint2};
+        return arrayOfStats;
+    }
+
+    /// <summary>
+    /// return a specific actor's name
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public string GetActorName(int slotID, Side side)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID].Arc.actorName;
+    }
+
+    /// <summary>
+    /// return a specific actor's trait
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public string GetActorTrait(int slotID, Side side)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID].trait.name;
+    }
+
+    /// <summary>
+    /// returns slotID of actor if present and available (live), '-1' if not
+    /// </summary>
+    /// <param name="actorArcID"></param>
+    /// <returns></returns>
+    public int CheckActorPresent(int actorArcID)
+    {
+        int slotID = -1;
+        foreach (Actor actor in arrayOfActors)
+        {
+            if (actor.Arc.ActorArcID == actorArcID && actor.isLive == true)
+            { return actor.SlotID; }
+        }
+        return slotID;
+    }
+
+    //
+    // - - - Actor Nodes & Qualities - - -
+    //
+
+    /// <summary>
+    /// return a list of all nodes where an actor (slotID) is active
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public List<GameObject> GetListOfActorNodes(int slotID)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
+        return listOfActorNodes[slotID];
+    }
+
+    /// <summary>
+    /// returns and array of strings for actor quality tags, eg. "Connections, Invisibility" etc.
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public string[] GetQualities(Side side)
+    {
+        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
+        string[] tempArray = new string[numOfQualities];
+        for (int i = 0; i < numOfQualities; i++)
+        {
+            tempArray[i] = arrayOfQualities[(int)side, i];
+        }
+        return tempArray;
+    }
+
+    /// <summary>
+    /// returns a single string quality tag, eg. "Invisibility". Corresponds to side and qualityNumber, eg. Datapoint0 = 0, Datapoint1 = 1, Datapoint2 = 2
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="qualityNum"></param>
+    /// <returns></returns>
+    public string GetQuality(Side side, int qualityNum)
+    {
+        Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
+        return arrayOfQualities[(int)side, qualityNum];
+    }
+
+    //new methods above here
 }
 
 

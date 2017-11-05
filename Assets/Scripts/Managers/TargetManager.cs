@@ -350,7 +350,7 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 {
                                     //check if actor present in team
-                                    int slotID = GameManager.instance.actorScript.CheckActorPresent(target.actorArc.ActorArcID);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID);
                                     if (slotID > -1)
                                     {
                                         //check if node is active for actor
@@ -471,7 +471,7 @@ public class TargetManager : MonoBehaviour
                                 //player not at node ->  check if node active for the correct actor
                                 if (target.actorArc != null)
                                 {
-                                    int slotID = GameManager.instance.actorScript.CheckActorPresent(target.actorArc.ActorArcID);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID);
                                     if (slotID > -1)
                                     {
                                         if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, slotID) == true)

@@ -200,7 +200,7 @@ public class Node : MonoBehaviour
         {
             if (GameManager.instance.levelScript.CheckNodeActive(NodeID, side, i) == true)
             {
-                tempList.Add(GameManager.instance.actorScript.GetActorType(i, side));
+                tempList.Add(GameManager.instance.dataScript.GetActorType(i, side));
             }
         }
         return tempList;

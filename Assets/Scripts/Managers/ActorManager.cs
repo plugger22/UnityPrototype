@@ -19,7 +19,7 @@ public class ActorManager : MonoBehaviour
 
     public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
 
-    private Actor[,] arrayOfActors;       //indexes [Side, numOfActors], two sets are created, one for each side
+    //private Actor[,] arrayOfActors;       //indexes [Side, numOfActors], two sets are created, one for each side
 
     //colour palette for Generic tool tip
     private string colourBlue;
@@ -30,11 +30,21 @@ public class ActorManager : MonoBehaviour
     private string colourDefault;
     private string colourEnd;
 
+
+    public void PreInitialiseActors()
+    {
+        //number of actors, default 4
+        numOfActorsTotal = numOfActorsTotal == 4 ? numOfActorsTotal : 4;
+        numOfActorsCurrent = numOfActorsCurrent < 1 ? 1 : numOfActorsCurrent;
+        numOfActorsCurrent = numOfActorsCurrent > numOfActorsTotal ? numOfActorsTotal : numOfActorsCurrent;
+    }
+
+
     public void Initialise()
     {
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        PreInitialiseActors();
+        
         InitialiseActors(numOfActorsTotal, Side.Resistance);
         InitialiseActors(numOfActorsTotal, Side.Authority);
     }
@@ -82,15 +92,7 @@ public class ActorManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
-    private void PreInitialiseActors()
-    {
-        //number of actors, default 4
-        numOfActorsTotal = numOfActorsTotal == 4 ? numOfActorsTotal : 4;
-        numOfActorsCurrent = numOfActorsCurrent < 1 ? 1 : numOfActorsCurrent;
-        numOfActorsCurrent = numOfActorsCurrent > numOfActorsTotal ? numOfActorsTotal : numOfActorsCurrent;
-        //array
-        arrayOfActors = new Actor[(int)Side.Count, numOfActorsTotal];
-    }
+
 
     /// <summary>
     /// Set up number of required actors (minions supporting play)
@@ -117,7 +119,9 @@ public class ActorManager : MonoBehaviour
                     trait = GameManager.instance.dataScript.GetRandomTrait(),
                     isLive = true
                 };
-                arrayOfActors[(int)side, i] = actor;
+
+                //add actor to array
+                GameManager.instance.dataScript.AddActor(side, actor, i);
 
                 Debug.Log(string.Format("Actor added -> {0}, {1} {2}{3}", actor.Arc.actorName,
                     GameManager.instance.dataScript.GetQuality(GameManager.instance.optionScript.PlayerSide, 0), actor.Datapoint0, "\n"));
@@ -127,74 +131,6 @@ public class ActorManager : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// Get array of actors for a specified side
-    /// </summary>
-    /// <returns></returns>
-    public Actor[] GetActors(Side side)
-    {
-        Actor[] tempArray = new Actor[numOfActorsTotal];
-        for (int i = 0; i < numOfActorsTotal; i++)
-        { tempArray[i] = arrayOfActors[(int)side, i]; }
-        return tempArray;
-    }
-
-    /// <summary>
-    /// Get specific actor
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public Actor GetActor(int slotID, Side side)
-    {
-        Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID];
-    }
-
-    /// <summary>
-    /// returns type of Actor, eg. 'Fixer', based on slotID (0 to 3)
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public string GetActorType(int slotID, Side side)
-    {
-        Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].Arc.name;
-    }
-
-    /// <summary>
-    /// returns array of Stats -> [0] dataPoint0, [1] dataPoint1 , [2] dataPoint3
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public int[] GetActorStats(int slotID, Side side)
-    {
-        Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].Datapoint0, arrayOfActors[(int)side, slotID].Datapoint1,
-            arrayOfActors[(int)side, slotID].Datapoint2};
-        return arrayOfStats;
-    }
-
-    /// <summary>
-    /// return a specific actor's name
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public string GetActorName(int slotID, Side side)
-    {
-        Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].Arc.actorName;
-    }
-
-    /// <summary>
-    /// return a specific actor's trait
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public string GetActorTrait(int slotID, Side side)
-    {
-        Debug.Assert(slotID > -1 && slotID < numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].trait.name;
-    }
 
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). 
@@ -209,7 +145,7 @@ public class ActorManager : MonoBehaviour
         string effectCriteria;
         bool proceedFlag;
         int actionID;
-        
+        Actor[] arrayOfActors;
         Side side = GameManager.instance.optionScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if ( side == Side.Authority)
@@ -264,6 +200,7 @@ public class ActorManager : MonoBehaviour
                 // - - - Actors - - - 
                 //
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
+                arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Resistance);
                 foreach (Actor actor in arrayOfActors)
                 {
                     proceedFlag = true;
@@ -379,6 +316,7 @@ public class ActorManager : MonoBehaviour
                 string tooltipMain;
                 //get a list pre-emptively as it's computationally expensive to do so on demand
                 List<string> tempTeamList = GameManager.instance.dataScript.GetAvailableReserveTeams(node);
+                arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Authority);
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                 foreach (Actor actor in arrayOfActors)
                 {
@@ -532,22 +470,6 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError(string.Format("Invalid Node (null), ID {0}{1}", nodeID, "\n")); }
         return tempList;
-    }
-
-    /// <summary>
-    /// returns slotID of actor if present and available (live), '-1' if not
-    /// </summary>
-    /// <param name="actorArcID"></param>
-    /// <returns></returns>
-    public int CheckActorPresent(int actorArcID)
-    {
-        int slotID = -1;
-        foreach(Actor actor in arrayOfActors)
-        {
-            if (actor.Arc.ActorArcID == actorArcID && actor.isLive == true)
-            { return actor.SlotID; }
-        }
-        return slotID;
     }
 
 }

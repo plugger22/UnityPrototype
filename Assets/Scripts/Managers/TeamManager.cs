@@ -151,7 +151,7 @@ public void InitialiseTeams()
         else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
 
         //Add extra teams equal to each Authority actors ability level and off their preferred type
-        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors(Side.Authority);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Authority);
         if (arrayOfActors.Length > 0)
         {
             int ability, arcID;
@@ -251,7 +251,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfActorsTotal)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.actorScript.GetActor(actorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (actor.isLive == true)
@@ -327,7 +327,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfActorsTotal)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.actorScript.GetActor(actorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (actor.isLive == true)
@@ -444,7 +444,7 @@ public void InitialiseTeams()
         StringBuilder builder = new StringBuilder();
         builder.Append(" OnMap Teams by Actor");
         builder.AppendLine();
-        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors(Side.Authority);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Authority);
         foreach(Actor actor in arrayOfActors)
         {
             builder.AppendLine();

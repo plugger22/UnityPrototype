@@ -102,7 +102,7 @@ public class GUIManager : MonoBehaviour
     public void UpdateActorGUI()
     {
         int numOfActors = GameManager.instance.actorScript.numOfActorsTotal;
-        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors(GameManager.instance.optionScript.PlayerSide);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetActors(GameManager.instance.optionScript.PlayerSide);
         if (arrayOfActors != null)
         {
             if (arrayOfActors.Length == numOfActors)

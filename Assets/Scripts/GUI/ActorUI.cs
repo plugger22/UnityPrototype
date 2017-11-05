@@ -70,10 +70,10 @@ public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             {
                 Side side = GameManager.instance.optionScript.PlayerSide;
                 GameManager.instance.tooltipActorScript.SetTooltip(
-                    GameManager.instance.actorScript.GetActorName(slotID, side),
+                    GameManager.instance.dataScript.GetActorName(slotID, side),
                     GameManager.instance.dataScript.GetQualities(side),
-                    GameManager.instance.actorScript.GetActorStats(slotID, side),
-                    GameManager.instance.actorScript.GetActorTrait(slotID, side),
+                    GameManager.instance.dataScript.GetActorStats(slotID, side),
+                    GameManager.instance.dataScript.GetActorTrait(slotID, side),
                     //parent.GetComponent<RectTransform>().position, -> does the same job as the transform line below
                     parent.transform.position,
                     parent.GetComponent<RectTransform>().rect.width,
