@@ -251,7 +251,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfActorsTotal)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.actorScript.GetActor(actorSlotID, GameManager.instance.optionScript.PlayerSide);
+                        Actor actor = GameManager.instance.actorScript.GetActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (actor.isLive == true)
@@ -327,7 +327,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfActorsTotal)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.actorScript.GetActor(actorSlotID, GameManager.instance.optionScript.PlayerSide);
+                        Actor actor = GameManager.instance.actorScript.GetActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (actor.isLive == true)
@@ -430,6 +430,45 @@ public void InitialiseTeams()
             builder.AppendLine();
             builder.AppendLine();
             builder.Append(string.Format(" Teams in dictOfTeams   {0}", GameManager.instance.dataScript.CheckNumOfTeams()));
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug method to show which actors xurrently have which teams OnMap
+    /// </summary>
+    /// <returns></returns>
+    public string GetTeamActorAnalysis()
+    {
+        List<int> listOfTeams = new List<int>();
+        StringBuilder builder = new StringBuilder();
+        builder.Append(" OnMap Teams by Actor");
+        builder.AppendLine();
+        Actor[] arrayOfActors = GameManager.instance.actorScript.GetActors(Side.Authority);
+        foreach(Actor actor in arrayOfActors)
+        {
+            builder.AppendLine();
+            builder.Append(string.Format("{0}  Ability {1}", actor.Arc.name, actor.Datapoint2));
+            builder.AppendLine();
+            listOfTeams.Clear();
+            listOfTeams.AddRange(actor.GetTeams());
+            if (listOfTeams.Count > 0)
+            {
+                //loop teams
+                for (int i = 0; i < listOfTeams.Count; i++)
+                {
+                    Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
+                    if (team != null)
+                    {
+                        if (i > 0) { builder.AppendLine(); }
+                        builder.Append(string.Format("{0} {1}", team.Arc.name, team.Name));
+                    }
+                }
+
+            }
+            else
+            { builder.Append("none"); }
+            builder.AppendLine();
         }
         return builder.ToString();
     }

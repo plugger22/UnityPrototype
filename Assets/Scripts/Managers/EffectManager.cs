@@ -120,7 +120,7 @@ public class EffectManager : MonoBehaviour
                     if (actorSlotID != -1)
                     {
                         //get actor
-                        actor = GameManager.instance.actorScript.GetActor(actorSlotID, GameManager.instance.optionScript.PlayerSide);
+                        actor = GameManager.instance.actorScript.GetActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (teamArcID > -1)
@@ -259,7 +259,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case EffectCriteria.ActorAbility:
                                             //actor can only have a number of teams OnMap equal to their ability at any time
-                                            if (node.CheckNumOfTeams() >= actor.Datapoint2)
+                                            if (actor.CheckNumOfTeams() >= actor.Datapoint2)
                                             { BuildString(result, "Actor Ability exceeded"); }
                                             break;
                                         case EffectCriteria.TeamIdentical:

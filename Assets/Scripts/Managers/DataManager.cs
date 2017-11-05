@@ -1068,6 +1068,57 @@ public class DataManager : MonoBehaviour
         return num;
     }
 
+    /// <summary>
+    /// returns a list of available team types (arc names) for deployment for an 'ANY TEAM' situation for the button tooltip. Returns "None Available" if none
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public List<string> GetAvailableReserveTeams(Node node)
+    {
+        int teamArcID;
+        List<string> tempList = new List<string>();                 //return list of team name strings
+        List<int> tempArcs = new List<int>();                       //list of unique team arcs present at node
+        List<int> duplicatesList = new List<int>();                 //prevents duplicate team names being returned
+
+        if (node != null)
+        {
+            List<Team> listOfTeams = node.GetTeams();
+            if (listOfTeams.Count > 0)
+            {
+                for (int i = 0; i < listOfTeams.Count; i++)
+                {
+                    teamArcID = listOfTeams[i].Arc.TeamArcID;
+                    //if not present in list Of Arcs (tempArcs) then add
+                    if (tempArcs.Exists(x => x == teamArcID) == true)
+                    { tempList.Add(listOfTeams[i].Arc.name); }
+                }
+            }
+        }
+        else
+        { Debug.LogError("Invalid node (Null)"); }
+        if (tempList.Count == 0)
+        {
+            //loop reserve pool
+            for(int i = 0; i < teamPoolReserve.Count; i++)
+            {
+                Team team = GetTeam(teamPoolReserve[i]);
+                //check team not present at node
+                if (tempArcs.Exists(x => x == team.Arc.TeamArcID) == false)
+                {
+                    //check team not present in duplicatesList
+                    if (duplicatesList.Exists(x => x == team.Arc.TeamArcID) == false)
+                    {
+                        //add team type name to both return list & duplicates list
+                        tempList.Add(team.Arc.name.ToUpper());
+                        duplicatesList.Add(team.Arc.TeamArcID);
+                    }
+                }
+            }
+            if (tempList.Count == 0)
+            { tempList.Add("No Teams available"); }
+        }
+        return tempList;
+    }
 
    //new methods above here
 }

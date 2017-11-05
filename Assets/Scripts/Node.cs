@@ -158,7 +158,7 @@ public class Node : MonoBehaviour
                 if (listOfTeams.Count > 0)
                 {
                     foreach (Team team in listOfTeams)
-                    { teamList.Add(string.Format("{0} team", team.Arc.name)); }
+                    { teamList.Add(string.Format("{0} team", team.Arc.name.ToUpper())); }
                 }
                 List<string> targetList = new List<string>();
                 if (TargetID > -1)

@@ -208,6 +208,7 @@ public class ActorManager : MonoBehaviour
         string playerPresent = null;
         string effectCriteria;
         bool proceedFlag;
+        int actionID;
         
         Side side = GameManager.instance.optionScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
@@ -367,35 +368,6 @@ public class ActorManager : MonoBehaviour
                         { tempList.Add(details); }
                     }
                 }
-                /*//
-                // - - - Cancel
-                //
-                //Cancel button is added last
-                EventButtonDetails cancelDetails = null;
-                if (infoBuilder.Length > 0)
-                {
-                    cancelDetails = new EventButtonDetails()
-                    {
-                        buttonTitle = "CANCEL",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = playerPresent,
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
-                    };
-                }
-                else
-                {
-                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
-                    cancelDetails = new EventButtonDetails()
-                    {
-                        buttonTitle = "CANCEL",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = playerPresent,
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
-                    };
-                }*/
             }
             //
             // - - - Authority - - -
@@ -403,12 +375,16 @@ public class ActorManager : MonoBehaviour
             else if (side == Side.Authority)
             {
                 int teamID;
+                bool isAnyTeam;
+                string tooltipMain;
+                //get a list pre-emptively as it's computationally expensive to do so on demand
+                List<string> tempTeamList = GameManager.instance.dataScript.GetAvailableReserveTeams(node);
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                 foreach (Actor actor in arrayOfActors)
                 {
                     proceedFlag = true;
                     details = null;
-                    
+                    isAnyTeam = false;
                     //correct side?
                     if (actor.ActorSide == side)
                     {
@@ -422,15 +398,21 @@ public class ActorManager : MonoBehaviour
                             if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true)
                             {
                                 //get ANY TEAM node action
-                                int actionID = GameManager.instance.dataScript.GetActionID("Any Team");
+                                actionID = GameManager.instance.dataScript.GetActionID("Any Team");
                                 if (actionID > -1)
-                                { tempAction = GameManager.instance.dataScript.GetAction(actionID); }
+                                {
+                                    tempAction = GameManager.instance.dataScript.GetAction(actionID);
+                                    isAnyTeam = true;
+                                }
                             }
                             //actor not live at node -> Preferred team
                             else
-                            {
-                                tempAction = actor.Arc.nodeAction;
-                            }
+                            { tempAction = actor.Arc.nodeAction; }
+                            //default main tooltip text body
+                            tooltipMain = tempAction.tooltipText;
+                            //tweak if ANY TEAM
+                            if (isAnyTeam == true)
+                            { tooltipMain = string.Format("{0} as the {1} has Influence here", tooltipMain, (AuthorityActor)GameManager.instance.GetMetaLevel()); }
                             //valid action?
                             if (tempAction != null)
                                 {
@@ -446,13 +428,24 @@ public class ActorManager : MonoBehaviour
                                             effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.SlotID, teamID);
                                             if (effectCriteria == null)
                                             {
-                                                //Effect criteria O.K -> tool tip text
-                                                if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.effectOutcome != EffectOutcome.Renown)
-                                                { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
-                                                //actor automatically accumulates renown for their faction
-                                                else
-                                                { builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd)); }
+                                            //Effect criteria O.K -> tool tip text
+                                            if (builder.Length > 0) { builder.AppendLine(); }
+                                            if (effect.effectOutcome != EffectOutcome.Renown)
+                                            {
+                                                builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd));
+                                                //if an ANY TEAM action then display available teams
+                                                if (isAnyTeam == true)
+                                                {
+                                                    foreach(string teamName in tempTeamList)
+                                                    {
+                                                        builder.AppendLine();
+                                                        builder.Append(string.Format("{0}{1}{2}", colourEffect,teamName, colourEnd));
+                                                    }
+                                                }
+                                            }
+                                            //actor automatically accumulates renown for their faction
+                                            else
+                                            { builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd)); }
 
                                             }
                                             else
@@ -479,7 +472,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             buttonTitle = tempAction.name,
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
-                                            buttonTooltipMain = tempAction.tooltipText,
+                                            buttonTooltipMain = tooltipMain,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
                                             action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }

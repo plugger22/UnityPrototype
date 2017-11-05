@@ -48,5 +48,8 @@ namespace gameAPI
         public int CheckNumOfTeams()
         { return listOfTeams.Count; }
 
+        public List<int> GetTeams()
+        { return listOfTeams; }
+
     }
 }

@@ -103,6 +103,15 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //ninth button
+            if (GUI.Button(new Rect(15, 200, 80, 20), "Actor Teams"))
+            {
+                Debug.Log("Button -> Toggle Actor Teams");
+                if (debugDisplay != 4)
+                { debugDisplay = 4; }
+                else { debugDisplay = 0; }
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
@@ -141,6 +150,14 @@ public class DebugGUI : MonoBehaviour
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisTeams = GameManager.instance.teamScript.GetIndividualTeams();
                             GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysisTeams, customBackground);
+                        }
+                        break;
+                    //actor Teams
+                    case 4:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisActors = GameManager.instance.teamScript.GetTeamActorAnalysis();
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysisActors, customBackground);
                         }
                         break;
                 }

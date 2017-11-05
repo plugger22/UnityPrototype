@@ -11,6 +11,7 @@ namespace gameAPI
     public enum Side { Authority, Resistance, Count }
     public enum GameState { Normal, ModalOutcome, ModalActionMenu }
     public enum MetaLevel { None, City, State, Nation }
+    public enum AuthorityActor { None, Superintendent, Minister, Secretary}              //different names for authority actors depending on MetaLevel
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count}    //DataManager arrayOfNodes index
     
     //

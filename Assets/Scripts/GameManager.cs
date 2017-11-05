@@ -224,5 +224,8 @@ public class GameManager : MonoBehaviour
     {
         EventManager.instance.RemoveEvent(EventType.ExitGame);
     }
+
+    public int GetMetaLevel()
+    { return (int)metaLevel; }
     //place methods above here
 }
