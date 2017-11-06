@@ -10,5 +10,5 @@ public class TeamArc : ScriptableObject
 {
     public int TeamArcID { get; set; }
     public string description;
-
+    public Sprite sprite;
 }

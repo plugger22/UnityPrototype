@@ -151,6 +151,7 @@ public class GameManager : MonoBehaviour
         nodeScript.Initialise();
         teamScript.Initialise();
         turnScript.Initialise();
+        teamPickerScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
     }
