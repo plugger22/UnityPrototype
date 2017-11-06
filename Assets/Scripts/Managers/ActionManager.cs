@@ -24,6 +24,7 @@ public class ActionManager : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
+        EventManager.instance.AddListener(EventType.RecallAction, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
@@ -44,6 +45,9 @@ public class ActionManager : MonoBehaviour
                 break;
             case EventType.TargetAction:
                 ProcessNodeTarget((int)Param);
+                break;
+            case EventType.RecallAction:
+                ProcessTeamRecall((int)Param);
                 break;
             case EventType.ChangeColour:
                 SetColours();
@@ -201,7 +205,31 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
+    /// <summary>
+    /// Handles Authority "Recall Team" action
+    /// </summary>
+    /// <param name="nodeID"></param>
+    public void ProcessTeamRecall(int nodeID)
+    {
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //default data 
+        outcomeDetails.textTop = "Team has been recalled";
+        outcomeDetails.textBottom = "Home for Tea!";
+        outcomeDetails.sprite = targetSprite;
 
+        //recall team - - -  TO DO -> note this should be replaced by a generic pick list UI of available teams
+
+        if (errorFlag == true)
+        {
+            //fault, pass default data to window
+            outcomeDetails.textTop = "There is a fault in the system. Teams are not responding";
+            outcomeDetails.textBottom = "Team recall Failed";
+            outcomeDetails.sprite = errorSprite;
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
 
     //methods above here
 }

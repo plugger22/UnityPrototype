@@ -19,6 +19,7 @@ public enum EventType
     //action menu
     NodeAction,
     TargetAction,
+    RecallAction,
     //turn manager
     StartTurnEarly,
     StartTurnLate,

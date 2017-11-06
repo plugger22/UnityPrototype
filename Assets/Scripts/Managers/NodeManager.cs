@@ -271,11 +271,17 @@ public class NodeManager : MonoBehaviour
         //Get Actor
         Actor actor = GameManager.instance.dataScript.GetActor(slotID, GameManager.instance.optionScript.PlayerSide);
         string displayText;
+        string minionTitle;
+        //work out minion's appropriate title
+        if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
+        { minionTitle = string.Format("{0} of ", (AuthorityActor)GameManager.instance.GetMetaLevel()); }
+        else { minionTitle = "Rebel "; }
         if (actor != null)
         {
-            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5} {6}{7} node{8}{9}", colourDefault, actor.Name, colourEnd,
-                colourHighlight, actor.Arc.name, colourEnd, colourDefault, tempList.Count, 
-                tempList.Count != 1 ? "s" : "", colourEnd);
+            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} node{11}{12}", colourHighlight, actor.Name, colourEnd, 
+                colourDefault, minionTitle, colourEnd,
+                colourHighlight, actor.Arc.name, colourEnd, 
+                colourDefault, tempList.Count, tempList.Count != 1 ? "s" : "", colourEnd);
             GameManager.instance.alertScript.SetAlertUI(displayText);
             NodeShowFlag = 1;
         }

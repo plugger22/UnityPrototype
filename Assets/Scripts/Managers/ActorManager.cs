@@ -141,7 +141,7 @@ public class ActorManager : MonoBehaviour
     public List<EventButtonDetails> GetActorActions(int nodeID)
     {
         string sideColour;
-        string playerPresent = null;
+        string cancelText = null;
         string effectCriteria;
         bool proceedFlag;
         int actionID;
@@ -163,15 +163,15 @@ public class ActorManager : MonoBehaviour
             List<Effect> listOfEffects = new List<Effect>();
             Action tempAction;
             EventButtonDetails details;
-            //player present ('Cancel' tooltip)
-            if (nodeID == playerID)
-            { playerPresent = "You are present at the node"; }
-            else { playerPresent = "You are NOT present at the node"; }
             //
             // - - - Resistance - - -
             //
             if (side == Side.Resistance)
             {
+                //'Cancel' button tooltip)
+                if (nodeID == playerID)
+                { cancelText = "You are present at the node"; }
+                else { cancelText = "You are NOT present at the node"; }
                 //
                 // - - -  Target - - -
                 //
@@ -314,6 +314,41 @@ public class ActorManager : MonoBehaviour
                 int teamID;
                 bool isAnyTeam;
                 string tooltipMain;
+                //'Cancel' button tooltip)
+                int numOfTeams = node.CheckNumOfTeams();
+                cancelText = string.Format("There {0} {1} team{2} present at the node", numOfTeams == 1 ? "is" : "are", numOfTeams,
+                    numOfTeams != 1 ? "s" : "");
+                //
+                // - - -  Recall Team - - -
+                //
+                //Does the Node have any teams present? -> added first
+                if (node.CheckNumOfTeams() > 0)
+                {
+                    //get list of teams
+                    List<Team> listOfTeams = node.GetTeams();
+                    if (listOfTeams != null)
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        foreach(Team team in listOfTeams)
+                        {
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.Append(string.Format("{0}{1} {2}{3}", colourEffect, team.Arc.name, team.Name, colourEnd));
+                        }
+                        //button target details
+                        EventButtonDetails targetDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "Recall Team",
+                            buttonTooltipHeader = string.Format("{0}Recall Team{1}", sideColour, colourEnd),
+                            buttonTooltipMain = "The following teams can be withdrawn early",
+                            buttonTooltipDetail = builder.ToString(),
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.RecallAction, this, nodeID); }
+                        };
+                        tempList.Add(targetDetails);
+                    }
+                    else { Debug.LogError(string.Format("Invalid listOfTeams (Null) for Node {0} \"{1}\", ID {2}", node.arc.name, node.NodeName, node.NodeID)); }
+                }
+
                 //get a list pre-emptively as it's computationally expensive to do so on demand
                 List<string> tempTeamList = GameManager.instance.dataScript.GetAvailableReserveTeams(node);
                 arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Authority);
@@ -447,7 +482,7 @@ public class ActorManager : MonoBehaviour
                 {
                     buttonTitle = "CANCEL",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                    buttonTooltipMain = playerPresent,
+                    buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
@@ -460,7 +495,7 @@ public class ActorManager : MonoBehaviour
                 {
                     buttonTitle = "CANCEL",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                    buttonTooltipMain = playerPresent,
+                    buttonTooltipMain = cancelText,
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
                 };
