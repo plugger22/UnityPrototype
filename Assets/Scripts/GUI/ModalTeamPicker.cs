@@ -129,13 +129,16 @@ public class ModalTeamPicker : MonoBehaviour
     /// </summary>
     public void SetTeamPicker(ModalActionDetails details)
     {
+        StringBuilder builder = new StringBuilder();
+        CanvasGroup teamCanvasGroup;
+        string textTooltip;
         GameManager.instance.Blocked(true);
         modalTeamObject.SetActive(true);
         canvasGroup.alpha = 100;
         //Set up texts
         topText.text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
         //node details
-        StringBuilder builder = new StringBuilder();
+        
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
@@ -146,6 +149,69 @@ public class ModalTeamPicker : MonoBehaviour
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for details.NodeID {0}", details.NodeID)); }
         middleText.text = builder.ToString();
+        //
+        // - - - Teams - - -
+        //
+        //Get list of team Arcs
+        int teamID;
+        List<int> listOfTeamArcIDs = GameManager.instance.dataScript.GetTeamArcIDs();       //all lists are keyed off this one, index-wise
+        List<int> listOfTeamIDs = new List<int>();                                          //place teamID of first available team in reserve pool of that type
+        List<string> listOfTeamTooltips = new List<string>();                               //holds tooltip for team options, one for each team Arc
+        {
+            if (listOfTeamArcIDs != null || listOfTeamArcIDs.Count > 0)
+            {
+                //loop team Arcs
+                for (int arcIndex = 0; arcIndex < listOfTeamArcIDs.Count; arcIndex++)
+                {
+                    textTooltip = "Unknown";
+                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, arcIndex);
+                    if (teamID == -1)
+                    { textTooltip = "No teams of this type are currently in the Reserve Pool"; }
+                    //if a team of that type is available (teamID > -1) check if a duplicate team already exists at node
+                    else
+                    {
+                        if (node.CheckTeamPresent(arcIndex) == true)
+                        {
+                            //change teamID to -1 (invalid team as you can't insert a team of a type already present at the node)
+                            teamID = -1;
+                            textTooltip = "A team of this type is already present at the Node";
+                        }
+                    }
+                    //add to list
+                    listOfTeamIDs.Add(teamID);
+                    if (teamID > 0)
+                    {
+                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                        if (team != null)
+                        { textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.Arc.name, team.Name); }
+                    }
+                    listOfTeamTooltips.Add(textTooltip);
+                }
+            }
+            else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty)"); }
+        }
+
+        //loop list of Teams and deactivate those that are valid picks
+        int limit = arrayOfTeamImages.Length;
+        for (int teamIndex = 0; teamIndex < listOfTeamIDs.Count; teamIndex++)
+        {
+            if (listOfTeamIDs[teamIndex] == -1 && teamIndex < limit)
+            {
+                //get option canvas
+                teamCanvasGroup = arrayOfTeamImages[teamIndex].GetComponent<CanvasGroup>();
+                if (teamCanvasGroup != null)
+                {
+                    //deactivate the team pick
+                    teamCanvasGroup.alpha = 0.5f;
+                    teamCanvasGroup.interactable = false;
+                }
+                else { Debug.LogError(string.Format("Invalid teamCanvasGroup (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
+            }
+        }
+
+        //are their teams available in the reserve pool?
+        //can't have identical teams to what already exists on node
+
         //set Cancel Button
         buttonCancel.onClick.RemoveAllListeners();
         buttonCancel.onClick.AddListener(CloseTeamPicker);
