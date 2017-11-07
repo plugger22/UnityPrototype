@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using modalAPI;
 using gameAPI;
+using System.Text;
 
 /// <summary>
 /// Handles Modal Team Picker UI
@@ -17,6 +18,9 @@ public class ModalTeamPicker : MonoBehaviour
     public TextMeshProUGUI topText;
     public TextMeshProUGUI middleText;
     public TextMeshProUGUI bottomText;
+
+    public Button buttonCancel;
+    public Button buttonConfirm;
     
     public Image[] arrayOfTeamImages;                //place team image UI elements here (should be seven)
     public TextMeshProUGUI[] arrayOfTeamTexts;       //place team texts UI elements here (should be seven)
@@ -24,6 +28,11 @@ public class ModalTeamPicker : MonoBehaviour
 
     private CanvasGroup canvasGroup;
     private static ModalTeamPicker modalTeamPicker;
+
+    private string colourEffect;
+    private string colourDefault;
+    private string colourNormal;
+    private string colourEnd;
 
     private void Start()
     {
@@ -67,7 +76,7 @@ public class ModalTeamPicker : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent);
         EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent);
-        //EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
 
@@ -104,9 +113,11 @@ public class ModalTeamPicker : MonoBehaviour
                 break;
             case EventType.CloseTeamPicker:
                 ModalActionDetails detailsTeam = Param as ModalActionDetails;
-                //TO DO
+                CloseTeamPicker();
                 break;
-
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -118,7 +129,57 @@ public class ModalTeamPicker : MonoBehaviour
     /// </summary>
     public void SetTeamPicker(ModalActionDetails details)
     {
+        GameManager.instance.Blocked(true);
         modalTeamObject.SetActive(true);
         canvasGroup.alpha = 100;
+        //Set up texts
+        topText.text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
+        //node details
+        StringBuilder builder = new StringBuilder();
+        Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
+        if (node != null)
+        {
+            int numTeams = node.CheckNumOfTeams();
+            builder.Append(string.Format("{0}{1} \"{2}\"{3}", colourNormal, node.arc.name.ToUpper(), node.NodeName, colourEnd));
+            builder.AppendLine();
+            builder.Append(string.Format("{0}Currently {1} Team{2} present{3}", colourNormal, numTeams, numTeams != 1 ? "s" : "", colourEnd));
+        }
+        else { Debug.LogError(string.Format("Invalid node (Null) for details.NodeID {0}", details.NodeID)); }
+        middleText.text = builder.ToString();
+        //set Cancel Button
+        buttonCancel.onClick.RemoveAllListeners();
+        buttonCancel.onClick.AddListener(CloseTeamPicker);
+        //set Confirm Button
+        buttonConfirm.onClick.RemoveAllListeners();
+        buttonConfirm.onClick.AddListener(CloseTeamPicker);
+        //buttonConfirm.onClick.AddListener(buttonDetails.action);
+
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.ModalTeamPicker;
+        Debug.Log("UI: Open -> ModalTeamPicker" + "\n");
+    }
+
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
+    /// <summary>
+    /// close Action Menu
+    /// </summary>
+    public void CloseTeamPicker()
+    {
+        modalTeamObject.SetActive(false);
+        GameManager.instance.Blocked(false);
+
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.Normal;
+        Debug.Log("UI: Close -> ModalTeamPicker" + "\n");
     }
 }
