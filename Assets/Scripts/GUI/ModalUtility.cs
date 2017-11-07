@@ -54,9 +54,27 @@ namespace modalAPI
 
 }
 
+/*
+/// <summary>
+/// details for an individual team in the ModalTeamPicker
+/// </summary>
+public class TeamOptionDetails
+{
+    public string teamTitle;
+    public string teamTooltipHeader;
+    public string teamTooltipMain;
+    public string teamTooltipDetail;
+    public UnityAction action;
+}
 
-    /*public class ModalUtility : MonoBehaviour
-    {
-    }*/
-
-
+/// <summary>
+/// Specific setup for Modal Team Picker
+/// </summary>
+public class ModalTeamDetails
+{
+    public string nodeName;
+    public string nodeDetails;
+    public int nodeID;
+    public List<TeamOptionDetails> listOfTeamDetails;            //only the first seven are used (one for each target arc)
+}
+*/

@@ -6,6 +6,7 @@ using modalAPI;
 using System;
 using Random = UnityEngine.Random;
 using System.Text;
+using UnityEngine.Events;
 
 /// <summary>
 /// handles Actor related data and methods
@@ -388,19 +389,19 @@ public class ActorManager : MonoBehaviour
                             { tooltipMain = string.Format("{0} as the {1} has Influence here", tooltipMain, (AuthorityActor)GameManager.instance.GetMetaLevel()); }
                             //valid action?
                             if (tempAction != null)
+                            {
+                                //effects
+                                StringBuilder builder = new StringBuilder();
+                                listOfEffects = tempAction.listOfEffects;
+                                if (listOfEffects.Count > 0)
                                 {
-                                    //effects
-                                    StringBuilder builder = new StringBuilder();
-                                    listOfEffects = tempAction.listOfEffects;
-                                    if (listOfEffects.Count > 0)
+                                    for (int i = 0; i < listOfEffects.Count; i++)
                                     {
-                                        for (int i = 0; i < listOfEffects.Count; i++)
+                                        Effect effect = listOfEffects[i];
+                                        //check effect criteria is valid
+                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.SlotID, teamID);
+                                        if (effectCriteria == null)
                                         {
-                                            Effect effect = listOfEffects[i];
-                                            //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.SlotID, teamID);
-                                            if (effectCriteria == null)
-                                            {
                                             //Effect criteria O.K -> tool tip text
                                             if (builder.Length > 0) { builder.AppendLine(); }
                                             if (effect.effectOutcome != EffectOutcome.Renown)
@@ -409,10 +410,10 @@ public class ActorManager : MonoBehaviour
                                                 //if an ANY TEAM action then display available teams
                                                 if (isAnyTeam == true)
                                                 {
-                                                    foreach(string teamName in tempTeamList)
+                                                    foreach (string teamName in tempTeamList)
                                                     {
                                                         builder.AppendLine();
-                                                        builder.Append(string.Format("{0}{1}{2}", colourEffect,teamName, colourEnd));
+                                                        builder.Append(string.Format("{0}{1}{2}", colourEffect, teamName, colourEnd));
                                                     }
                                                 }
                                             }
@@ -420,38 +421,46 @@ public class ActorManager : MonoBehaviour
                                             else
                                             { builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd)); }
 
-                                            }
-                                            else
-                                            {
-                                                //invalid effect criteria -> Action cancelled
-                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, actor.Arc.name, "\n", colourEnd,
-                                                    colourRed, effectCriteria, colourEnd));
-                                                proceedFlag = false;
-                                            }
+                                        }
+                                        else
+                                        {
+                                            //invalid effect criteria -> Action cancelled
+                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                            infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                colourInvalid, actor.Arc.name, "\n", colourEnd,
+                                                colourRed, effectCriteria, colourEnd));
+                                            proceedFlag = false;
                                         }
                                     }
-                                    else
-                                    { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
-                                    if (proceedFlag == true)
-                                    {
-                                        //Details to pass on for processing via button click
-                                        ModalActionDetails actionDetails = new ModalActionDetails() { };
-                                        actionDetails.NodeID = nodeID;
-                                        actionDetails.ActorSlotID = actor.SlotID;
-                                        //pass all relevant details to ModalActionMenu via Node.OnClick()
-                                        details = new EventButtonDetails()
-                                        {
-                                            buttonTitle = tempAction.name,
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
-                                            buttonTooltipMain = tooltipMain,
-                                            buttonTooltipDetail = builder.ToString(),
-                                            //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
-                                        };
-                                    }
                                 }
+                                else
+                                { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
+                                if (proceedFlag == true)
+                                {
+                                    //Details to pass on for processing via button click
+                                    ModalActionDetails actionDetails = new ModalActionDetails() { };
+                                    actionDetails.NodeID = nodeID;
+                                    actionDetails.ActorSlotID = actor.SlotID;
+                                    //Node action is standard but other actions are possible
+                                    UnityAction clickAction = null;
+                                    //Team action
+                                    if (isAnyTeam)
+                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.TeamAction, this, actionDetails); };  }
+                                    //Node action
+                                    else
+                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); };  }
+                                    //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                    details = new EventButtonDetails()
+                                    {
+                                        buttonTitle = tempAction.name,
+                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                        buttonTooltipMain = tooltipMain,
+                                        buttonTooltipDetail = builder.ToString(),
+                                        //use a Lambda to pass arguments to the action
+                                        action = clickAction
+                                    };
+                                }
+                            }
                             else
                             {
                                 Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.Arc.name, actor.SlotID));

@@ -27,7 +27,7 @@ public class ModalTeamPicker : MonoBehaviour
 
     private void Start()
     {
-        canvasGroup = modalTeamObject.GetComponent<CanvasGroup>();
+        canvasGroup = modalPanel.GetComponent<CanvasGroup>();
     }
 
     public void Initialise()
@@ -64,7 +64,13 @@ public class ModalTeamPicker : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTeamArcs (null) -> Sprites not assigned to ModalTeamPicker"); }
+        //register listener
+        EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent);
+        EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent);
+        //EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
+
+
 
     /// <summary>
     /// Static instance so the Modal Team Picker can be accessed from any script
@@ -81,12 +87,38 @@ public class ModalTeamPicker : MonoBehaviour
         return modalTeamPicker;
     }
 
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.OpenTeamPicker:
+                ModalActionDetails details = Param as ModalActionDetails;
+                SetTeamPicker(details);
+                break;
+            case EventType.CloseTeamPicker:
+                ModalActionDetails detailsTeam = Param as ModalActionDetails;
+                //TO DO
+                break;
+
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
 
     /// <summary>
     /// Initialise and Activate Team Picker (insert ANY TEAM)
     /// </summary>
-    public void SetTeamPicker()
+    public void SetTeamPicker(ModalActionDetails details)
     {
-
+        modalTeamObject.SetActive(true);
+        canvasGroup.alpha = 100;
     }
 }

@@ -597,9 +597,7 @@ public class EffectManager : MonoBehaviour
                 // - - - Authority Effects
                 //
                 case EffectOutcome.AnyTeam:
-
-                    // TO DO -> UI pick list required
-
+                    // Not needed as handled by a different process, keep for reference
                     break;
                 case EffectOutcome.CivilTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Civil");

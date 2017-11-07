@@ -14,12 +14,15 @@ public enum EventType
     CloseActionMenu,
     OpenOutcomeWindow,
     CloseOutcomeWindow,
+    OpenTeamPicker,
+    CloseTeamPicker,
     ShowTargetNodes,
     NodeDisplay,
     //action menu
     NodeAction,
     TargetAction,
     RecallAction,
+    TeamAction,
     //turn manager
     StartTurnEarly,
     StartTurnLate,

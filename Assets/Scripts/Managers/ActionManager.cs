@@ -26,6 +26,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
         EventManager.instance.AddListener(EventType.RecallAction, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.TeamAction, OnEvent);
     }
 
     /// <summary>
@@ -40,8 +41,12 @@ public class ActionManager : MonoBehaviour
         switch (eventType)
         {
             case EventType.NodeAction:
-                ModalActionDetails details = Param as ModalActionDetails;
-                ProcessNodeAction(details);
+                ModalActionDetails detailsNode = Param as ModalActionDetails;
+                ProcessNodeAction(detailsNode);
+                break;
+            case EventType.TeamAction:
+                ModalActionDetails detailsTeam = Param as ModalActionDetails;
+                ProcessTeamAction(detailsTeam);
                 break;
             case EventType.TargetAction:
                 ProcessNodeTarget((int)Param);
@@ -122,7 +127,7 @@ public class ActionManager : MonoBehaviour
                             {
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                                 outcomeDetails.sprite = actor.Arc.actionSprite;
-                                
+
                                 //update stringBuilder texts
                                 if (effectReturn.topText.Length > 0)
                                 {
@@ -203,6 +208,16 @@ public class ActionManager : MonoBehaviour
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
+
+    /// <summary>
+    /// Handles Authority "ANY TEAM" action
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessTeamAction(ModalActionDetails details)
+    {
+        GameManager.instance.teamPickerScript.SetTeamPicker(details);
+        EventManager.instance.PostNotification(EventType.OpenTeamPicker, this, details);
     }
 
     /// <summary>
