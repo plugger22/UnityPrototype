@@ -22,7 +22,7 @@ public class ModalTeamPicker : MonoBehaviour
     public Button buttonCancel;
     public Button buttonConfirm;
     
-    public Image[] arrayOfTeamImages;                //place team image UI elements here (should be seven)
+    public GameObject[] arrayOfTeamOptions;                //place team image UI elements here (should be seven)
     public TextMeshProUGUI[] arrayOfTeamTexts;       //place team texts UI elements here (should be seven)
 
 
@@ -45,15 +45,15 @@ public class ModalTeamPicker : MonoBehaviour
         Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetTeamArcs();
         if (dictOfTeamArcs != null)
         {
-            if (dictOfTeamArcs.Count != arrayOfTeamImages.Length)
-            { Debug.LogWarning(string.Format("dictOfTeamArcs.Count {0} != arrayOfTeamImages.Length {1}", dictOfTeamArcs.Count, arrayOfTeamImages.Length)); }
+            if (dictOfTeamArcs.Count != arrayOfTeamOptions.Length)
+            { Debug.LogWarning(string.Format("dictOfTeamArcs.Count {0} != arrayOfTeamImages.Length {1}", dictOfTeamArcs.Count, arrayOfTeamOptions.Length)); }
             else
             {
                 if (dictOfTeamArcs.Count != arrayOfTeamTexts.Length)
                 { Debug.LogWarning(string.Format("dictOfTeamArcs.Count {0} != arrayOfTeamTexts.Length {1}", dictOfTeamArcs.Count, arrayOfTeamTexts.Length)); }
                 else
                 {
-                    int limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamImages.Length);
+                    int limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamOptions.Length);
                     limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamTexts.Length);
                     for (int index = 0; index < limit; index++)
                     {
@@ -62,10 +62,17 @@ public class ModalTeamPicker : MonoBehaviour
                         if (dictOfTeamArcs.ContainsKey(index) == true)
                         {
                             arc = dictOfTeamArcs[index];
-                            //assign to sprite
-                            arrayOfTeamImages[index].sprite = arc.sprite;
-                            //assign to text (name of teamArc)
-                            arrayOfTeamTexts[index].text = arc.name;
+                            TeamChoiceUI teamUI = arrayOfTeamOptions[index].GetComponent<TeamChoiceUI>();
+                            if (teamUI != null)
+                            {
+                                //assign to sprite 
+                                teamUI.teamImage.sprite = arc.sprite;
+                                //assign to text (name of teamArc)
+                                teamUI.name.text = arc.name;
+                            }
+                            else { Debug.LogError("Invalid TeamChoicUI component (Null)"); }
+
+
                         }
                         else { Debug.LogWarning(string.Format("Invalid arc index \"{0}\" for \"{1}\" -> No Sprite assigned", index, arc.name)); }
                     }
@@ -156,7 +163,8 @@ public class ModalTeamPicker : MonoBehaviour
         int teamID;
         List<int> listOfTeamArcIDs = GameManager.instance.dataScript.GetTeamArcIDs();       //all lists are keyed off this one, index-wise
         List<int> listOfTeamIDs = new List<int>();                                          //place teamID of first available team in reserve pool of that type
-        List<string> listOfTeamTooltips = new List<string>();                               //holds tooltip for team options, one for each team Arc
+        List<string> listOfTeamTooltipsMain = new List<string>();                           //holds tooltip for team options, one for each team Arc, main text
+        List<string> listOfTeamTooltipsHeader = new List<string>();                         //tooltip header ("CORPORATE")
         {
             if (listOfTeamArcIDs != null || listOfTeamArcIDs.Count > 0)
             {
@@ -179,34 +187,51 @@ public class ModalTeamPicker : MonoBehaviour
                     }
                     //add to list
                     listOfTeamIDs.Add(teamID);
-                    if (teamID > 0)
+                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                    if (team != null)
                     {
-                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                        if (team != null)
+                        if (teamID > -1)
                         { textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.Arc.name, team.Name); }
+                        //default team tooltip header
+                        listOfTeamTooltipsHeader.Add(team.Arc.name);
                     }
-                    listOfTeamTooltips.Add(textTooltip);
+                    else
+                    {
+                        listOfTeamTooltipsHeader.Add("Team Info");
+                    }
                 }
+
             }
             else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty)"); }
         }
 
         //loop list of Teams and deactivate those that are valid picks
-        int limit = arrayOfTeamImages.Length;
+        int limit = arrayOfTeamOptions.Length;
         for (int teamIndex = 0; teamIndex < listOfTeamIDs.Count; teamIndex++)
-        {
+        {                
+            //get option canvas
+            teamCanvasGroup = arrayOfTeamOptions[teamIndex].GetComponent<CanvasGroup>();
             if (listOfTeamIDs[teamIndex] == -1 && teamIndex < limit)
             {
-                //get option canvas
-                teamCanvasGroup = arrayOfTeamImages[teamIndex].GetComponent<CanvasGroup>();
+
                 if (teamCanvasGroup != null)
                 {
-                    //deactivate the team pick
-                    teamCanvasGroup.alpha = 0.5f;
+                    //deactivate option
+                    teamCanvasGroup.alpha = 0.25f;
                     teamCanvasGroup.interactable = false;
                 }
                 else { Debug.LogError(string.Format("Invalid teamCanvasGroup (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
             }
+            else
+            {
+                //activate option
+                teamCanvasGroup.alpha = 1.0f;
+                teamCanvasGroup.interactable = true;
+            }
+            //add tooltip
+            GenericTooltipUI optionTooltip = arrayOfTeamOptions[teamIndex].GetComponent<GenericTooltipUI>();
+            optionTooltip.ToolTipHeader = "Team";
+            optionTooltip.ToolTipMain = listOfTeamTooltipsMain[teamIndex];
         }
 
         //are their teams available in the reserve pool?
