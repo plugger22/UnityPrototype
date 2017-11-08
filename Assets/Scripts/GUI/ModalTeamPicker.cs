@@ -30,6 +30,7 @@ public class ModalTeamPicker : MonoBehaviour
     private static ModalTeamPicker modalTeamPicker;
 
     private string colourEffect;
+    private string colourSide;
     private string colourDefault;
     private string colourNormal;
     private string colourEnd;
@@ -160,11 +161,13 @@ public class ModalTeamPicker : MonoBehaviour
         // - - - Teams - - -
         //
         //Get list of team Arcs
-        int teamID;
+        int teamID, numOfTeams;
+        string teamType = "Unknown";
         List<int> listOfTeamArcIDs = GameManager.instance.dataScript.GetTeamArcIDs();       //all lists are keyed off this one, index-wise
         List<int> listOfTeamIDs = new List<int>();                                          //place teamID of first available team in reserve pool of that type
         List<string> listOfTeamTooltipsMain = new List<string>();                           //holds tooltip for team options, one for each team Arc, main text
         List<string> listOfTeamTooltipsHeader = new List<string>();                         //tooltip header ("CORPORATE")
+        List<string> listOfTeamTooltipsDetails = new List<string>();                        //breakdown of team type details
         {
             if (listOfTeamArcIDs != null || listOfTeamArcIDs.Count > 0)
             {
@@ -187,18 +190,43 @@ public class ModalTeamPicker : MonoBehaviour
                     }
                     //add to list
                     listOfTeamIDs.Add(teamID);
-                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                    if (team != null)
+                    //tooltip data
+                    if (teamID > -1)
                     {
-                        if (teamID > -1)
-                        { textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.Arc.name, team.Name); }
-                        //default team tooltip header
-                        listOfTeamTooltipsHeader.Add(team.Arc.name);
+                        //get team
+                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                        if (team != null)
+                        {
+                            textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.Arc.name, team.Name);
+                            //default team tooltip header
+                            teamType = string.Format("{0}{1}{2}", colourSide, team.Arc.name.ToUpper(), colourEnd);
+                        }
+                        else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", teamID)); }
                     }
                     else
                     {
-                        listOfTeamTooltipsHeader.Add("Team Info");
+                        teamType = string.Format("{0}{1}{2}", colourSide, GameManager.instance.dataScript.GetTeamArc(arcIndex).name.ToUpper(), 
+                            colourEnd);
                     }
+                    //header tooltip text
+                    listOfTeamTooltipsHeader.Add(teamType);
+                    //main tooltip text
+                    listOfTeamTooltipsMain.Add(textTooltip);
+                    //details tooltip text
+                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Total);
+                    StringBuilder builderDetails = new StringBuilder();
+                    builderDetails.Append(string.Format("{0}{1} {2} team{3}{4}", colourEffect, numOfTeams, teamType, 
+                        numOfTeams != 1 ? "s" : "", colourEnd));
+                    builderDetails.AppendLine();
+                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Reserve);
+                    builderDetails.Append(string.Format("{0}{1} in Reserve{2}", colourEffect, numOfTeams, colourEnd));
+                    builderDetails.AppendLine();
+                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.OnMap);
+                    builderDetails.Append(string.Format("{0}{1} Deployed{2}", colourEffect, numOfTeams, colourEnd));
+                    builderDetails.AppendLine();
+                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.InTransit);
+                    builderDetails.Append(string.Format("{0}{1} in Transit{2}", colourEffect, numOfTeams, colourEnd));
+                    listOfTeamTooltipsDetails.Add(builderDetails.ToString());
                 }
 
             }
@@ -211,27 +239,32 @@ public class ModalTeamPicker : MonoBehaviour
         {                
             //get option canvas
             teamCanvasGroup = arrayOfTeamOptions[teamIndex].GetComponent<CanvasGroup>();
-            if (listOfTeamIDs[teamIndex] == -1 && teamIndex < limit)
+            if (teamIndex < limit)
             {
-
-                if (teamCanvasGroup != null)
+                if (listOfTeamIDs[teamIndex] == -1)
                 {
-                    //deactivate option
-                    teamCanvasGroup.alpha = 0.25f;
-                    teamCanvasGroup.interactable = false;
+
+                    if (teamCanvasGroup != null)
+                    {
+                        //deactivate option
+                        teamCanvasGroup.alpha = 0.25f;
+                        teamCanvasGroup.interactable = false;
+                    }
+                    else { Debug.LogError(string.Format("Invalid teamCanvasGroup (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
                 }
-                else { Debug.LogError(string.Format("Invalid teamCanvasGroup (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
+                else
+                {
+                    //activate option
+                    teamCanvasGroup.alpha = 1.0f;
+                    teamCanvasGroup.interactable = true;
+                }
+                //add tooltip
+                GenericTooltipUI optionTooltip = arrayOfTeamOptions[teamIndex].GetComponent<GenericTooltipUI>();
+                optionTooltip.ToolTipHeader = listOfTeamTooltipsHeader[teamIndex];
+                optionTooltip.ToolTipMain = listOfTeamTooltipsMain[teamIndex];
+                optionTooltip.ToolTipEffect = listOfTeamTooltipsDetails[teamIndex];
             }
-            else
-            {
-                //activate option
-                teamCanvasGroup.alpha = 1.0f;
-                teamCanvasGroup.interactable = true;
-            }
-            //add tooltip
-            GenericTooltipUI optionTooltip = arrayOfTeamOptions[teamIndex].GetComponent<GenericTooltipUI>();
-            optionTooltip.ToolTipHeader = "Team";
-            optionTooltip.ToolTipMain = listOfTeamTooltipsMain[teamIndex];
+            else { Debug.LogWarning(string.Format("teamIndex \"{0}\" has exceeded limit \"{1}\"", teamIndex, limit)); }
         }
 
         //are their teams available in the reserve pool?
@@ -256,6 +289,7 @@ public class ModalTeamPicker : MonoBehaviour
     public void SetColours()
     {
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
