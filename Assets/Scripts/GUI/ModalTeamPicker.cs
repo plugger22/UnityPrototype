@@ -29,6 +29,8 @@ public class ModalTeamPicker : MonoBehaviour
     private CanvasGroup canvasGroup;
     private static ModalTeamPicker modalTeamPicker;
 
+    private int teamArcSelected;                        //teamArcID of currently selected team, default '-1' value
+
     private string colourEffect;
     private string colourSide;
     private string colourDefault;
@@ -284,8 +286,7 @@ public class ModalTeamPicker : MonoBehaviour
         buttonCancel.onClick.AddListener(CloseTeamPicker);
         //set Confirm Button
         buttonConfirm.onClick.RemoveAllListeners();
-        buttonConfirm.onClick.AddListener(CloseTeamPicker);
-        //buttonConfirm.onClick.AddListener(buttonDetails.action);
+        buttonConfirm.onClick.AddListener(ConfirmTeamChoice);
 
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ModalTeamPicker;
@@ -330,7 +331,8 @@ public class ModalTeamPicker : MonoBehaviour
         EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
-        Debug.Log("UI: Close -> ModalTeamPicker" + "\n");
+        Debug.Log(string.Format("UI: Close -> ModalTeamPicker" + "\n"));
+        Debug.Log(string.Format("TeamPicker: Confirm teamArcID {0}{1}", teamArcSelected, "\n"));
     }
 
     /// <summary>
@@ -340,6 +342,8 @@ public class ModalTeamPicker : MonoBehaviour
     public void SetConfirmButton(bool isActive, int teamArcID = -1)
     {
         string text = "Unknown";
+        //set a default value for most recently selected arc
+        teamArcSelected = -1;
         if (isActive == true)
         {
             buttonConfirm.gameObject.SetActive(true);
@@ -348,7 +352,12 @@ public class ModalTeamPicker : MonoBehaviour
                 //change Top text to show which team is selected
                 TeamArc arc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
                 if (arc != null)
-                { text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, arc.name.ToUpper(), colourEnd, colourDefault, colourEnd); }
+                {
+                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                    //record most recently chosen selection
+                    teamArcSelected = teamArcID;
+                    Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", teamArcID, "\n"));
+                }
                 else { Debug.LogError(string.Format("Invalid teamArc (Null) for teamArcID {0}", teamArcID)); }
             }
         }
