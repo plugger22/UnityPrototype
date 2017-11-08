@@ -40,6 +40,8 @@ public class ModalTeamPicker : MonoBehaviour
         canvasGroup = modalPanel.GetComponent<CanvasGroup>();
     }
 
+
+
     public void Initialise()
     {
         //assign sprites to team Images
@@ -63,13 +65,13 @@ public class ModalTeamPicker : MonoBehaviour
                         if (dictOfTeamArcs.ContainsKey(index) == true)
                         {
                             arc = dictOfTeamArcs[index];
-                            TeamChoiceUI teamUI = arrayOfTeamOptions[index].GetComponent<TeamChoiceUI>();
+                            TeamInteraction teamUI = arrayOfTeamOptions[index].GetComponent<TeamInteraction>();
                             if (teamUI != null)
                             {
                                 //assign to sprite 
                                 teamUI.teamImage.sprite = arc.sprite;
                                 //assign to text (name of teamArc)
-                                teamUI.name.text = arc.name;
+                                teamUI.teamText.text = arc.name;
                             }
                             else { Debug.LogError("Invalid TeamChoicUI component (Null)"); }
 
@@ -85,6 +87,8 @@ public class ModalTeamPicker : MonoBehaviour
         EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent);
         EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ConfirmActivate, OnEvent);
+        EventManager.instance.AddListener(EventType.ConfirmDeactivate, OnEvent);
     }
 
 
@@ -125,6 +129,12 @@ public class ModalTeamPicker : MonoBehaviour
                 break;
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.ConfirmActivate:
+                SetConfirmButton(true, (int)Param);
+                break;
+            case EventType.ConfirmDeactivate:
+                SetConfirmButton(false);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -199,17 +209,16 @@ public class ModalTeamPicker : MonoBehaviour
                         {
                             textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.Arc.name, team.Name);
                             //default team tooltip header
-                            teamType = string.Format("{0}{1}{2}", colourSide, team.Arc.name.ToUpper(), colourEnd);
+                            teamType = team.Arc.name.ToUpper();
                         }
                         else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", teamID)); }
                     }
                     else
                     {
-                        teamType = string.Format("{0}{1}{2}", colourSide, GameManager.instance.dataScript.GetTeamArc(arcIndex).name.ToUpper(), 
-                            colourEnd);
+                        teamType = GameManager.instance.dataScript.GetTeamArc(arcIndex).name.ToUpper();
                     }
                     //header tooltip text
-                    listOfTeamTooltipsHeader.Add(teamType);
+                    listOfTeamTooltipsHeader.Add(string.Format("{0}{1}{2}", colourSide, teamType, colourEnd));
                     //main tooltip text
                     listOfTeamTooltipsMain.Add(textTooltip);
                     //details tooltip text
@@ -298,13 +307,57 @@ public class ModalTeamPicker : MonoBehaviour
     /// <summary>
     /// close Action Menu
     /// </summary>
-    public void CloseTeamPicker()
+    private void CloseTeamPicker()
     {
         modalTeamObject.SetActive(false);
         GameManager.instance.Blocked(false);
-
+        //deselect all teams to prevent picker opening next time with a preselected team
+        EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
+        SetConfirmButton(false);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
         Debug.Log("UI: Close -> ModalTeamPicker" + "\n");
+    }
+
+    /// <summary>
+    /// Click confirm, carry out Team insert and exit picker
+    /// </summary>
+    private void ConfirmTeamChoice()
+    {
+        modalTeamObject.SetActive(false);
+        GameManager.instance.Blocked(false);
+        //deselect all teams to prevent picker opening next time with a preselected team
+        EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.Normal;
+        Debug.Log("UI: Close -> ModalTeamPicker" + "\n");
+    }
+
+    /// <summary>
+    /// Confirm button switched on/off. Only ON and visible if a team has been selected
+    /// </summary>
+    /// <param name="activate"></param>
+    public void SetConfirmButton(bool isActive, int teamArcID = -1)
+    {
+        string text = "Unknown";
+        if (isActive == true)
+        {
+            buttonConfirm.gameObject.SetActive(true);
+            if (teamArcID > -1)
+            {
+                //change Top text to show which team is selected
+                TeamArc arc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
+                if (arc != null)
+                { text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, arc.name.ToUpper(), colourEnd, colourDefault, colourEnd); }
+                else { Debug.LogError(string.Format("Invalid teamArc (Null) for teamArcID {0}", teamArcID)); }
+            }
+        }
+        else
+        {
+            buttonConfirm.gameObject.SetActive(false);
+            text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
+        }
+        //update top text
+        topText.text = text;
     }
 }

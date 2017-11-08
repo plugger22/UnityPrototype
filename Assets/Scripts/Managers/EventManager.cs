@@ -26,7 +26,11 @@ public enum EventType
     //turn manager
     StartTurnEarly,
     StartTurnLate,
-    EndTurn
+    EndTurn,
+    //team Picker
+    DeselectOtherTeams,
+    ConfirmActivate,
+    ConfirmDeactivate
 };
 
 //EventManager to send events to listeners
