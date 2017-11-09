@@ -14,7 +14,7 @@ namespace gameAPI
         public Image teamImage;
         public TextMeshProUGUI teamText;
 
-        [HideInInspector] public int teamArcID;             //assigned in ModalTeamPicker.cs -> Initialise()
+        //[HideInInspector] public int teamArcID;             //assigned in ModalTeamPicker.cs -> Initialise()
         [HideInInspector] public int teamID;                //teamID of next available team in Reserve pool that matches type -> passed back by event on 'Confirm' click
 
         private bool isSelected;                            //has the team been selected

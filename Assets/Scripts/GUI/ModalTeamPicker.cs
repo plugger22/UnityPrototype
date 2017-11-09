@@ -32,7 +32,6 @@ public class ModalTeamPicker : MonoBehaviour
     private int teamActorSlotID;                        //actorSlotID of actor who initiated the 'ANY TEAM' option
     private Node teamNode;                              //Node where the team is to be inserted
 
-    private List<int> listOfTeamIDs = new List<int>();  //needed to gain access to the correct TeamID when carrying out insert team option
 
     private string colourEffect;
     private string colourSide;
@@ -75,8 +74,8 @@ public class ModalTeamPicker : MonoBehaviour
                             teamUI.teamImage.sprite = arc.sprite;
                             //assign to text (name of teamArc)
                             teamUI.teamText.text = arc.name;
-                            //assign team Arc
-                            teamUI.teamArcID = arc.TeamArcID;
+                            /*//assign team Arc
+                            teamUI.teamArcID = arc.TeamArcID;*/
                         }
                         else { Debug.LogError("Invalid TeamChoicUI component (Null)"); }
 
@@ -181,7 +180,7 @@ public class ModalTeamPicker : MonoBehaviour
         int teamID, numOfTeams;
         string teamType = "Unknown";
         List<int> listOfTeamArcIDs = GameManager.instance.dataScript.GetTeamArcIDs();       //all lists are keyed off this one, index-wise
-        listOfTeamIDs.Clear();                                                              //place teamID of first available team in reserve pool of that type
+        List<int> listOfTeamIDs = new List<int>();                                          //place teamID of first available team in reserve pool of that type
         List<string> listOfTeamTooltipsMain = new List<string>();                           //holds tooltip for team options, one for each team Arc, main text
         List<string> listOfTeamTooltipsHeader = new List<string>();                         //tooltip header ("CORPORATE")
         List<string> listOfTeamTooltipsDetails = new List<string>();                        //breakdown of team type details
