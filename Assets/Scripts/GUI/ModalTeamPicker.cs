@@ -23,13 +23,16 @@ public class ModalTeamPicker : MonoBehaviour
     public Button buttonConfirm;
     
     public GameObject[] arrayOfTeamOptions;                //place team image UI elements here (should be seven)
-    public TextMeshProUGUI[] arrayOfTeamTexts;       //place team texts UI elements here (should be seven)
 
 
     private CanvasGroup canvasGroup;
     private static ModalTeamPicker modalTeamPicker;
 
-    private int teamArcSelected;                        //teamArcID of currently selected team, default '-1' value
+    private int teamIDSelected;                        //teamID of currently selected team, default '-1' value
+    private int teamActorSlotID;                        //actorSlotID of actor who initiated the 'ANY TEAM' option
+    private Node teamNode;                              //Node where the team is to be inserted
+
+    private List<int> listOfTeamIDs = new List<int>();  //needed to gain access to the correct TeamID when carrying out insert team option
 
     private string colourEffect;
     private string colourSide;
@@ -43,7 +46,9 @@ public class ModalTeamPicker : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Initial set up
+    /// </summary>
     public void Initialise()
     {
         //assign sprites to team Images
@@ -54,40 +59,37 @@ public class ModalTeamPicker : MonoBehaviour
             { Debug.LogWarning(string.Format("dictOfTeamArcs.Count {0} != arrayOfTeamImages.Length {1}", dictOfTeamArcs.Count, arrayOfTeamOptions.Length)); }
             else
             {
-                if (dictOfTeamArcs.Count != arrayOfTeamTexts.Length)
-                { Debug.LogWarning(string.Format("dictOfTeamArcs.Count {0} != arrayOfTeamTexts.Length {1}", dictOfTeamArcs.Count, arrayOfTeamTexts.Length)); }
-                else
+                int limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamOptions.Length);
+                //limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamTexts.Length);
+                for (int index = 0; index < limit; index++)
                 {
-                    int limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamOptions.Length);
-                    limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamTexts.Length);
-                    for (int index = 0; index < limit; index++)
+                    //get TeamArc from dict based on index
+                    TeamArc arc = null;
+                    if (dictOfTeamArcs.ContainsKey(index) == true)
                     {
-                        //get TeamArc from dict based on index
-                        TeamArc arc = null;
-                        if (dictOfTeamArcs.ContainsKey(index) == true)
+                        arc = dictOfTeamArcs[index];
+                        TeamInteraction teamUI = arrayOfTeamOptions[index].GetComponent<TeamInteraction>();
+                        if (teamUI != null)
                         {
-                            arc = dictOfTeamArcs[index];
-                            TeamInteraction teamUI = arrayOfTeamOptions[index].GetComponent<TeamInteraction>();
-                            if (teamUI != null)
-                            {
-                                //assign to sprite 
-                                teamUI.teamImage.sprite = arc.sprite;
-                                //assign to text (name of teamArc)
-                                teamUI.teamText.text = arc.name;
-                            }
-                            else { Debug.LogError("Invalid TeamChoicUI component (Null)"); }
-
-
+                            //assign to sprite 
+                            teamUI.teamImage.sprite = arc.sprite;
+                            //assign to text (name of teamArc)
+                            teamUI.teamText.text = arc.name;
+                            //assign team Arc
+                            teamUI.teamArcID = arc.TeamArcID;
                         }
-                        else { Debug.LogWarning(string.Format("Invalid arc index \"{0}\" for \"{1}\" -> No Sprite assigned", index, arc.name)); }
+                        else { Debug.LogError("Invalid TeamChoicUI component (Null)"); }
+
+
                     }
+                    else { Debug.LogWarning(string.Format("Invalid arc index \"{0}\" for \"{1}\" -> No Sprite assigned", index, arc.name)); }
                 }
             }
         }
         else { Debug.LogError("Invalid dictOfTeamArcs (null) -> Sprites not assigned to ModalTeamPicker"); }
         //register listener
         EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent);
-        EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent);
+        //EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.ConfirmActivate, OnEvent);
         EventManager.instance.AddListener(EventType.ConfirmDeactivate, OnEvent);
@@ -125,10 +127,10 @@ public class ModalTeamPicker : MonoBehaviour
                 ModalActionDetails details = Param as ModalActionDetails;
                 SetTeamPicker(details);
                 break;
-            case EventType.CloseTeamPicker:
+            /*case EventType.CloseTeamPicker:
                 ModalActionDetails detailsTeam = Param as ModalActionDetails;
                 CloseTeamPicker();
-                break;
+                break;*/
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -151,17 +153,20 @@ public class ModalTeamPicker : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         CanvasGroup teamCanvasGroup;
+        TeamInteraction teamInteract;
         string textTooltip;
         GameManager.instance.Blocked(true);
         modalTeamObject.SetActive(true);
         canvasGroup.alpha = 100;
         //Set up texts
         topText.text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
-        //node details
-        
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
+            //track core data needed to resolve Insert team action
+            teamNode = node;
+            teamActorSlotID = details.ActorSlotID;
+            //node details
             int numTeams = node.CheckNumOfTeams();
             builder.Append(string.Format("{0}{1} \"{2}\"{3}", colourNormal, node.arc.name.ToUpper(), node.NodeName, colourEnd));
             builder.AppendLine();
@@ -176,7 +181,7 @@ public class ModalTeamPicker : MonoBehaviour
         int teamID, numOfTeams;
         string teamType = "Unknown";
         List<int> listOfTeamArcIDs = GameManager.instance.dataScript.GetTeamArcIDs();       //all lists are keyed off this one, index-wise
-        List<int> listOfTeamIDs = new List<int>();                                          //place teamID of first available team in reserve pool of that type
+        listOfTeamIDs.Clear();                                                              //place teamID of first available team in reserve pool of that type
         List<string> listOfTeamTooltipsMain = new List<string>();                           //holds tooltip for team options, one for each team Arc, main text
         List<string> listOfTeamTooltipsHeader = new List<string>();                         //tooltip header ("CORPORATE")
         List<string> listOfTeamTooltipsDetails = new List<string>();                        //breakdown of team type details
@@ -226,7 +231,7 @@ public class ModalTeamPicker : MonoBehaviour
                     //details tooltip text
                     numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Total);
                     StringBuilder builderDetails = new StringBuilder();
-                    builderDetails.Append(string.Format("{0}{1} {2} team{3}{4}", colourEffect, numOfTeams, teamType, 
+                    builderDetails.Append(string.Format("{0}{1} {2} team{3}{4}", colourEffect, numOfTeams, teamType,
                         numOfTeams != 1 ? "s" : "", colourEnd));
                     builderDetails.AppendLine();
                     numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Reserve);
@@ -247,9 +252,11 @@ public class ModalTeamPicker : MonoBehaviour
         //loop list of Teams and deactivate those that are valid picks
         int limit = arrayOfTeamOptions.Length;
         for (int teamIndex = 0; teamIndex < listOfTeamIDs.Count; teamIndex++)
-        {                
+        {
             //get option canvas
             teamCanvasGroup = arrayOfTeamOptions[teamIndex].GetComponent<CanvasGroup>();
+            //get TeamInteraction component
+            teamInteract = arrayOfTeamOptions[teamIndex].GetComponent<TeamInteraction>();
             if (teamIndex < limit)
             {
                 if (listOfTeamIDs[teamIndex] == -1)
@@ -262,12 +269,30 @@ public class ModalTeamPicker : MonoBehaviour
                         teamCanvasGroup.interactable = false;
                     }
                     else { Debug.LogError(string.Format("Invalid teamCanvasGroup (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
+                    if (teamInteract != null)
+                    {
+                        //deactivate team selection
+                        teamInteract.isActive = false;
+                        teamInteract.teamID = -1;
+                    }
+                    else { Debug.LogError(string.Format("Invalid teamInteract (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
                 }
                 else
                 {
-                    //activate option
-                    teamCanvasGroup.alpha = 1.0f;
-                    teamCanvasGroup.interactable = true;
+                    if (teamCanvasGroup != null)
+                    {
+                        //activate option
+                        teamCanvasGroup.alpha = 1.0f;
+                        teamCanvasGroup.interactable = true;
+                    }
+                    else { Debug.LogError(string.Format("Invalid teamCanvasGroup (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
+                    if (teamInteract != null)
+                    {
+                        //Activate team selection
+                        teamInteract.isActive = true;
+                        teamInteract.teamID = listOfTeamIDs[teamIndex];
+                    }
+                    else { Debug.LogError(string.Format("Invalid teamInteract (Null) for listOfTeamIDs[\"{0}\"]", teamIndex)); }
                 }
                 //add tooltip
                 GenericTooltipUI optionTooltip = arrayOfTeamOptions[teamIndex].GetComponent<GenericTooltipUI>();
@@ -320,6 +345,41 @@ public class ModalTeamPicker : MonoBehaviour
         Debug.Log("UI: Close -> ModalTeamPicker" + "\n");
     }
 
+
+    /// <summary>
+    /// Confirm button switched on/off. Only ON and visible if a team has been selected
+    /// </summary>
+    /// <param name="activate"></param>
+    public void SetConfirmButton(bool isActive, int teamID = -1)
+    {
+        string text = "Unknown";;
+        if (isActive == true)
+        {
+            buttonConfirm.gameObject.SetActive(true);
+            if (teamID > -1)
+            {
+                //change Top text to show which team is selected
+                Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                if (team != null)
+                {
+                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                    //record most recently chosen selection
+                    teamIDSelected = teamID;
+                    Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", teamID, "\n"));
+                }
+                else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+            }
+        }
+        else
+        {
+            buttonConfirm.gameObject.SetActive(false);
+            text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
+        }
+        //update top text
+        topText.text = text;
+    }
+
+
     /// <summary>
     /// Click confirm, carry out Team insert and exit picker
     /// </summary>
@@ -332,41 +392,12 @@ public class ModalTeamPicker : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
         Debug.Log(string.Format("UI: Close -> ModalTeamPicker" + "\n"));
-        Debug.Log(string.Format("TeamPicker: Confirm teamArcID {0}{1}", teamArcSelected, "\n"));
-    }
-
-    /// <summary>
-    /// Confirm button switched on/off. Only ON and visible if a team has been selected
-    /// </summary>
-    /// <param name="activate"></param>
-    public void SetConfirmButton(bool isActive, int teamArcID = -1)
-    {
-        string text = "Unknown";
-        //set a default value for most recently selected arc
-        teamArcSelected = -1;
-        if (isActive == true)
+        Debug.Log(string.Format("TeamPicker: Confirm teamID {0}{1}", teamIDSelected, "\n"));
+        //insert team
+        if (teamIDSelected > -1)
         {
-            buttonConfirm.gameObject.SetActive(true);
-            if (teamArcID > -1)
-            {
-                //change Top text to show which team is selected
-                TeamArc arc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
-                if (arc != null)
-                {
-                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
-                    //record most recently chosen selection
-                    teamArcSelected = teamArcID;
-                    Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", teamArcID, "\n"));
-                }
-                else { Debug.LogError(string.Format("Invalid teamArc (Null) for teamArcID {0}", teamArcID)); }
-            }
+            GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamIDSelected, teamActorSlotID, teamNode);
         }
-        else
-        {
-            buttonConfirm.gameObject.SetActive(false);
-            text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
-        }
-        //update top text
-        topText.text = text;
+        else { Debug.LogError(string.Format("Invalid teamIDSelected \"{0}\" -> insert team operation cancelled", teamIDSelected)); }
     }
 }

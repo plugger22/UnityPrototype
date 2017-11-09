@@ -14,8 +14,7 @@ public enum EventType
     CloseActionMenu,
     OpenOutcomeWindow,
     CloseOutcomeWindow,
-    OpenTeamPicker,
-    CloseTeamPicker,
+    //CloseTeamPicker,
     ShowTargetNodes,
     NodeDisplay,
     //action menu
@@ -28,6 +27,7 @@ public enum EventType
     StartTurnLate,
     EndTurn,
     //team Picker
+    OpenTeamPicker,
     DeselectOtherTeams,
     ConfirmActivate,
     ConfirmDeactivate
@@ -110,7 +110,7 @@ public class EventManager : MonoBehaviour
         {
             if (ListenList[i] != null)
             {
-                Debug.Log(string.Format("EventManager: PostNotification -> type: {0}  sender: {1}{2}", eventType, Sender, "\n"));
+                Debug.Log(string.Format("EventManager: PostNotification -> type: {0}{1}", eventType, "\n"));
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);
                 //Debug.Log(string.Format("PostNotification -> eventType: {0} sender: {1}{2}", eventType, Sender.name, "\n"));
