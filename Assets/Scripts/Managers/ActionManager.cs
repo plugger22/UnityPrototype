@@ -83,7 +83,7 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes node actor actions
+    /// Processes node actor actions (Resistance Node actions & Authority team actions)
     /// </summary>
     /// <param name="details"></param>
     public void ProcessNodeAction(ModalActionDetails details)
@@ -91,6 +91,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
+        outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
         outcomeDetails.sprite = errorSprite;
@@ -193,6 +194,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
+        outcomeDetails.side = Side.Resistance;
         outcomeDetails.textTop = "Target is in our sights!";
         outcomeDetails.textBottom = "Fire when ready";
         outcomeDetails.sprite = targetSprite;
@@ -229,6 +231,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
+        outcomeDetails.side = Side.Authority;
         outcomeDetails.textTop = "Team has been recalled";
         outcomeDetails.textBottom = "Home for Tea!";
         outcomeDetails.sprite = targetSprite;

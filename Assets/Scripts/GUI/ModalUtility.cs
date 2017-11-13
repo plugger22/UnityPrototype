@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using gameAPI;
 
 namespace modalAPI
 {
@@ -35,6 +36,7 @@ namespace modalAPI
     /// </summary>
     public class ModalActionDetails
     {
+        public Side side;
         public int NodeID { get; set; }
         public int ActorSlotID { get; set; }
         public EventType EventType { get; set; }
@@ -46,6 +48,7 @@ namespace modalAPI
     /// </summary>
     public class ModalOutcomeDetails
     {
+        public Side side;
         public string textTop;
         public string textBottom;
         public Sprite sprite;
@@ -54,27 +57,3 @@ namespace modalAPI
 
 }
 
-/*
-/// <summary>
-/// details for an individual team in the ModalTeamPicker
-/// </summary>
-public class TeamOptionDetails
-{
-    public string teamTitle;
-    public string teamTooltipHeader;
-    public string teamTooltipMain;
-    public string teamTooltipDetail;
-    public UnityAction action;
-}
-
-/// <summary>
-/// Specific setup for Modal Team Picker
-/// </summary>
-public class ModalTeamDetails
-{
-    public string nodeName;
-    public string nodeDetails;
-    public int nodeID;
-    public List<TeamOptionDetails> listOfTeamDetails;            //only the first seven are used (one for each target arc)
-}
-*/

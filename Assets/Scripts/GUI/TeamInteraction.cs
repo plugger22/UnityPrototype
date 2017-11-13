@@ -72,13 +72,13 @@ namespace gameAPI
                     tempColour.a = 0.0f;
                     isSelected = false;
                     //deactivate Confirm button (only shows when a team is selected)
-                    EventManager.instance.PostNotification(EventType.ConfirmDeactivate, this);
+                    EventManager.instance.PostNotification(EventType.ConfirmTeamDeactivate, this);
                 }
                 else
                 {
                     //deactivate any other currently selected team and switch Confirm button on
                     EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
-                    EventManager.instance.PostNotification(EventType.ConfirmActivate, this, teamID);
+                    EventManager.instance.PostNotification(EventType.ConfirmTeamActivate, this, teamID);
                     //NOTE: Event call must be made BEFORE activating this choice otherwise it'll deactivate it immediately
                     tempColour.a = 1.0f;
                     isSelected = true;

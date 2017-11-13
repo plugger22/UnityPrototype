@@ -7,13 +7,20 @@ using UnityEngine.UI;
 using gameAPI;
 
 /// <summary>
-/// Handles Modal Outcome window
+/// Handles Modal Outcome window.
+/// Uses ModalOutcomeDetails (ModalUtility.cs) to pass the appropriate details
 /// </summary>
 public class ModalOutcome : MonoBehaviour
 {
     public TextMeshProUGUI outcomeText;
     public TextMeshProUGUI effectText;
     public Image outcomeImage;
+    public Button confirmButton;
+
+    [Tooltip("Sprite used to skin Confirm button for an Authority Outcome")]
+    public Sprite buttonSpriteAuthority;
+    [Tooltip("Sprite used to skin Confirm button for a Rebel Outcome")]
+    public Sprite buttonSpriteResistance;
     
 
     public GameObject modalOutcomeObject;
@@ -68,7 +75,7 @@ public class ModalOutcome : MonoBehaviour
         {
             case EventType.OpenOutcomeWindow:
                 ModalOutcomeDetails details = Param as ModalOutcomeDetails;
-                SetModalOutcome(details.textTop, details.textBottom, details.sprite);
+                SetModalOutcome(details.side, details.textTop, details.textBottom, details.sprite);
                 break;
             case EventType.CloseOutcomeWindow:
                 CloseModalOutcome();
@@ -90,13 +97,27 @@ public class ModalOutcome : MonoBehaviour
 
    
 
-    public void SetModalOutcome(string textTop, string textBottom, Sprite sprite = null)
+    public void SetModalOutcome(Side side, string textTop, string textBottom, Sprite sprite = null)
     {
         //set modal true
         GameManager.instance.Blocked(true);
         //open panel at start, the modal window is already active on the panel
         modalOutcomeObject.SetActive(true);
         modalOutcomeWindow.SetActive(true);
+        //set confirm button image
+        switch (side)
+        {
+            case Side.Authority:
+                Image buttonImageAuthority = confirmButton.GetComponent<Image>();
+                if (buttonImageAuthority != null)
+                { buttonImageAuthority.sprite = buttonSpriteAuthority; }
+                break;
+            case Side.Resistance:
+                Image buttonImageResistance = confirmButton.GetComponent<Image>();
+                if (buttonImageResistance != null)
+                { buttonImageResistance.sprite = buttonSpriteResistance; }
+                break;
+        }
         //set opacity to zero (invisible)
         //SetOpacity(0f);
 

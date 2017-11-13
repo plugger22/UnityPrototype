@@ -272,6 +272,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         //Details to pass on for processing via button click
                                         ModalActionDetails actionDetails = new ModalActionDetails() { };
+                                        actionDetails.side = Side.Resistance;
                                         actionDetails.NodeID = nodeID;
                                         actionDetails.ActorSlotID = actor.SlotID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
@@ -439,6 +440,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //Details to pass on for processing via button click
                                     ModalActionDetails actionDetails = new ModalActionDetails() { };
+                                    actionDetails.side = Side.Authority;
                                     actionDetails.NodeID = nodeID;
                                     actionDetails.ActorSlotID = actor.SlotID;
                                     //Node action is standard but other actions are possible

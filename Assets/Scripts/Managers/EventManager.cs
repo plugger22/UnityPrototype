@@ -6,6 +6,7 @@ using UnityEngine;
 //Event Manager -> Enum defining all possible game events, order independent
 public enum EventType
 {
+    None,
     //Options
     ChangeColour,
     ChangeSide,
@@ -28,9 +29,11 @@ public enum EventType
     EndTurn,
     //team Picker
     OpenTeamPicker,
+    CloseTeamPicker,
     DeselectOtherTeams,
-    ConfirmActivate,
-    ConfirmDeactivate
+    ConfirmTeamActivate,
+    ConfirmTeamDeactivate,
+    ConfirmTeamChoice
 };
 
 //EventManager to send events to listeners

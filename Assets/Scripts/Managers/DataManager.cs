@@ -542,47 +542,6 @@ public class DataManager : MonoBehaviour
         return listOfAllTraits[Random.Range(0, listOfAllTraits.Count)];
     }
 
-    //
-    // - - - Actions - - -
-    //
-
-    /*/// <summary>
-    /// add Actors and effects to dictionaries
-    /// </summary>
-    /// <param name="arrayOfActors"></param>
-    public void AddActions(Actor[] arrayOfActors)
-    {
-        int counter = 0;
-        foreach (Actor actor in arrayOfActors)
-        {
-            //add nodeAction
-            if (actor.arc.nodeAction != null)
-            {
-                //assign dynamic ID
-                actor.arc.nodeAction.ActionID = counter++;
-                //add to dictionary (only adding actions that are present in the level with the current selection of Actors)
-                try
-                { dictOfActions.Add(actor.arc.nodeAction.ActionID, actor.arc.nodeAction); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Action Arc (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", actor.arc.nodeAction.ActionID, actor.arc.nodeAction.name)); }
-            }
-            //add webAction
-            if (actor.arc.webAction != null)
-            {
-                //assign dynamic ID
-                actor.arc.webAction.ActionID = counter++;
-                //add to dictionary (only adding actions that are present in the level with the current selection of Actors)
-                try
-                { dictOfActions.Add(actor.arc.webAction.ActionID, actor.arc.webAction); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Action Arc (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", actor.arc.webAction.ActionID, actor.arc.webAction.name)); }
-            }
-        }
-    }*/
 
     //
     // - - - Nodes - - -
