@@ -158,7 +158,7 @@ public class Node : MonoBehaviour
                 if (listOfTeams.Count > 0)
                 {
                     foreach (Team team in listOfTeams)
-                    { teamList.Add(string.Format("{0} team", team.Arc.name.ToUpper())); }
+                    { teamList.Add(team.Arc.name.ToUpper()); }
                 }
                 List<string> targetList = new List<string>();
                 if (TargetID > -1)
@@ -247,7 +247,7 @@ public class Node : MonoBehaviour
                 listOfTeams.Add(team);
                 //initialise Team data
                 team.NodeID = NodeID;
-                team.ActorID = actorID;
+                team.ActorSlotID = actorID;
                 team.Pool = TeamPool.OnMap;
                 team.Timer = GameManager.instance.teamScript.deployTime;
                 Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, NodeName, NodeID, "\n"));

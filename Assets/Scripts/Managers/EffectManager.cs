@@ -26,9 +26,11 @@ public class EffectManager : MonoBehaviour
     //colour palette for Modal Outcome
     private string colourOutcome1; //good effect Rebel / bad effect Authority
     private string colourOutcome2; //bad effect Authority / bad effect Rebel
-    private string colourOutcome3; //used when node is EqualsTo, eg. reset
+    private string colourOutcome3; //used when node is EqualsTo, eg. reset, or for Team Names
     private string colourNormal;
     private string colourDefault;
+    private string colourGood;
+    private string colourBad;
     private string colourEnd;
 
 
@@ -79,6 +81,8 @@ public class EffectManager : MonoBehaviour
         colourOutcome3 = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -602,65 +606,59 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.CivilTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Civil");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                    //move team
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
                     //return texts
-                    effectReturn.topText = string.Format("{0}Civil Team inserted{1}", colourDefault, colourEnd);
-                    effectReturn.bottomText = string.Format("{0}{1} has deployed {2} of {3} teams{4}", colourOutcome3, actor.Arc.name, 
-                        actor.CheckNumOfTeams(), actor.Datapoint2, colourEnd);
+                    effectReturn.topText = SetTopText(teamID);
+                    effectReturn.bottomText = SetBottomText(actor);
                     break;
                 case EffectOutcome.ControlTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Control");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
                     //return texts
-                    effectReturn.topText = string.Format("{0}Control Team inserted{1}", colourDefault, colourEnd);
-                    effectReturn.bottomText = string.Format("{0}{1} has deployed {2} of {3} teams{4}", colourOutcome3, actor.Arc.name,
-                        actor.CheckNumOfTeams(), actor.Datapoint2, colourEnd);
+                    effectReturn.topText = SetTopText(teamID);
+                    effectReturn.bottomText = SetBottomText(actor);
                     break;
                 case EffectOutcome.DamageTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Damage");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
                     //return texts
-                    effectReturn.topText = string.Format("{0}Damage Team inserted{1}", colourDefault, colourEnd);
-                    effectReturn.bottomText = string.Format("{0}{1} has deployed {2} of {3} teams{4}", colourOutcome3, actor.Arc.name,
-                        actor.CheckNumOfTeams(), actor.Datapoint2, colourEnd);
+                    effectReturn.topText = SetTopText(teamID);
+                    effectReturn.bottomText = SetBottomText(actor);
                     break;
                 case EffectOutcome.ErasureTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
                     //return texts
-                    effectReturn.topText = string.Format("{0}Erasure Team inserted{1}", colourDefault, colourEnd);
-                    effectReturn.bottomText = string.Format("{0}{1} has deployed {2} of {3} teams{4}", colourOutcome3, actor.Arc.name,
-                        actor.CheckNumOfTeams(), actor.Datapoint2, colourEnd);
+                    effectReturn.topText = SetTopText(teamID);
+                    effectReturn.bottomText = SetBottomText(actor);
                     break;
                 case EffectOutcome.MediaTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Media");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
                     //return texts
-                    effectReturn.topText = string.Format("{0}Media Team inserted{1}", colourDefault, colourEnd);
-                    effectReturn.bottomText = string.Format("{0}{1} has deployed {2} of {3} teams{4}", colourOutcome3, actor.Arc.name,
-                        actor.CheckNumOfTeams(), actor.Datapoint2, colourEnd);
+                    effectReturn.topText = SetTopText(teamID);
+                    effectReturn.bottomText = SetBottomText(actor);
                     break;
                 case EffectOutcome.ProbeTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Probe");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
                     //return texts
-                    effectReturn.topText = string.Format("{0}Probe Team inserted{1}", colourDefault, colourEnd);
-                    effectReturn.bottomText = string.Format("{0}{1} has deployed {2} of {3} teams{4}", colourOutcome3, actor.Arc.name,
-                        actor.CheckNumOfTeams(), actor.Datapoint2, colourEnd);
+                    effectReturn.topText = SetTopText(teamID);
+                    effectReturn.bottomText = SetBottomText(actor);
                     break;
                 case EffectOutcome.SpiderTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Spider");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
                     //return texts
-                    effectReturn.topText = string.Format("{0}Spider Team inserted{1}", colourDefault, colourEnd);
-                    effectReturn.bottomText = string.Format("{0}{1} has deployed {2} of {3} teams{4}", colourOutcome3, actor.Arc.name,
-                        actor.CheckNumOfTeams(), actor.Datapoint2, colourEnd);
+                    effectReturn.topText = SetTopText(teamID);
+                    effectReturn.bottomText = SetBottomText(actor);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.effectOutcome));
@@ -678,6 +676,59 @@ public class EffectManager : MonoBehaviour
         return effectReturn;
     }
 
+    /// <summary>
+    /// Formats string for details.TopText (authority), returns "unknown" if a problem. Also used by ModalTeamPicker.cs -> ProcessTeamChoice
+    /// </summary>
+    /// <param name="team"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string SetTopText(int teamID)
+    {
+        //get team
+        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+        if (team != null)
+        {
+            //get node
+            Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
+            if (node != null)
+            {
+                return string.Format("{0}{1} {2}{3}{4} have been inserted at {5}{6}{7}{8}{9} {10}{11}", colourOutcome3, team.Arc.name.ToUpper(), colourEnd, colourNormal,
+                    team.Name, colourEnd, colourOutcome2, node.arc.name.ToUpper(), colourEnd, colourNormal, node.NodeName, colourEnd);
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid node (Null) for team.NodeID {0}", team.NodeID));
+                return "Unknown";
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID));
+            return "Unknown";
+        }
 
+    }
+
+    /// <summary>
+    /// Formats string for details.BottomText (authority), returns "unknown" if parameter is null. Also used by ModalTeamPicker.cs -> ProcessTeamChoice
+    /// </summary>
+    /// <returns></returns>
+    public string SetBottomText(Actor actor)
+    {
+        if (actor != null)
+        {
+            string colourNumbers = colourGood;
+            if (actor.CheckNumOfTeams() == actor.Datapoint2)
+            { colourNumbers = colourBad; }
+            return string.Format("{0}, {1} of {2} has now deployed {3}{4}{5} of {6}{7}{8} teams",
+                actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), actor.Arc.name,
+                colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.Datapoint2, colourEnd);
+        }
+        else
+        {
+            Debug.LogError("Invalid actor (Null)");
+            return "Unknown";
+        }
+    }
     //place methods above here
 }

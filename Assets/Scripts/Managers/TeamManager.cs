@@ -98,7 +98,7 @@ public class TeamManager : MonoBehaviour
                 if (team != null)
                 {
                     //Automatically move any teams to reserve (they spend in turn in transit and are unavailable for deployment)
-                    MoveTeam(TeamPool.Reserve, team.TeamID, team.ActorID);
+                    MoveTeam(TeamPool.Reserve, team.TeamID, team.ActorSlotID);
                 }
                 else { Debug.LogError(string.Format("Invalid team (null) for TeamID {0}", teamPool[i])); }
             }
@@ -121,7 +121,7 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
                         if (node != null)
                         {
-                            MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorID,node);
+                            MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID,node);
                         }
                         else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.NodeID)); }
                     }
@@ -274,6 +274,11 @@ public void InitialiseTeams()
                                                 GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID);
                                                 //add team to Actor list
                                                 actor.AddTeam(team.TeamID);
+                                                //update team stats
+                                                team.NodeID = node.NodeID;
+                                                team.ActorSlotID = actor.SlotID;
+                                                team.Timer = deployTime;
+                                                team.TurnDeployed = GameManager.instance.turnScript.Turn;
                                                 //confirmation
                                                 Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}, Node ID {4}{5}", team.Arc.name, team.Name, team.TeamID,
                                                     destinationPool, node.NodeID, "\n"));
@@ -492,7 +497,7 @@ public void InitialiseTeams()
             foreach (var teamData in teamDict)
             {
                 builder.Append(string.Format(" ID {0}  {1} {2}  P: {3}  N: {4}  T: {5}  A: {6}", teamData.Key, teamData.Value.Arc.name, teamData.Value.Name, 
-                    teamData.Value.Pool, teamData.Value.NodeID, teamData.Value.Timer, teamData.Value.ActorID));
+                    teamData.Value.Pool, teamData.Value.NodeID, teamData.Value.Timer, teamData.Value.ActorSlotID));
                 builder.AppendLine();
             }
         }

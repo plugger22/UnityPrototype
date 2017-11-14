@@ -119,8 +119,10 @@ public class ActionManager : MonoBehaviour
                             //two builders for top and bottom texts
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
-                            builderTop.Append(string.Format("{0}{1}, ID {2}{3}", colourNormal, node.NodeName, node.NodeID, colourEnd));
-                            builderTop.AppendLine();
+
+                            //builderTop.Append(string.Format("{0}{1}, ID {2}{3}", colourNormal, node.NodeName, node.NodeID, colourEnd));
+                            //builderTop.AppendLine();
+
                             //
                             // - - - Process effects
                             //

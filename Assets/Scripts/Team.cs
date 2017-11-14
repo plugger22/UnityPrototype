@@ -8,17 +8,17 @@ namespace gameAPI
 
     public class Team
     {
-        public int TeamID { get; set; }
-        public string Name { get; set; }
+        [HideInInspector] public int TeamID;
+        [HideInInspector] public string Name;
 
         private static int teamCounter = 0;
 
-        public TeamPool Pool { get; set; }
-        public TeamArc Arc { get; set; }
-        public int ActorID { get; set; }                //which actor has deployed the team, '-1' if none
-        public int NodeID { get; set; }                 //nodeID where team is located if 'OnMap'. '-1' if none.
-        public int Timer { get; set; }                  //countdown timer for deployment OnMap. '-1' if none.
-        public int TurnDeployed { get; set; }           //if deployed OnMap, turn number of when it first happened.
+        [HideInInspector] public TeamPool Pool;
+        [HideInInspector] public TeamArc Arc;
+        [HideInInspector] public int ActorSlotID;                //which actor has deployed the team, '-1' if none
+        [HideInInspector] public int NodeID;                 //nodeID where team is located if 'OnMap'. '-1' if none.
+        [HideInInspector] public int Timer;                 //countdown timer for deployment OnMap. '-1' if none.
+        [HideInInspector] public int TurnDeployed;          //if deployed OnMap, turn number of when it first happened.
 
         /// <summary>
         /// Creates a new team of a particular TeamArcType, eg. "Security"
@@ -77,7 +77,7 @@ namespace gameAPI
         private void InitialiseTeamData(int count)
         {
             Pool = TeamPool.Reserve;
-            ActorID = -1;
+            ActorSlotID = -1;
             NodeID = -1;
             Timer = -1;
             TurnDeployed = -1;
@@ -93,7 +93,7 @@ namespace gameAPI
         public void ResetTeamData(TeamPool pool)
         {
             Pool = pool;
-            ActorID = -1;
+            ActorSlotID = -1;
             NodeID = -1;
             Timer = -1;
             TurnDeployed = -1;

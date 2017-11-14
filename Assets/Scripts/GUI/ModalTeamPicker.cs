@@ -449,29 +449,20 @@ public class ModalTeamPicker : MonoBehaviour
         bool successFlag = true;
         if (teamIDSelected > -1)
         {
+            details.textTop = GameManager.instance.effectScript.SetTopText(teamIDSelected);
+            Actor actor = GameManager.instance.dataScript.GetActor(teamActorSlotID, Side.Authority);
+            if (actor != null)
+            { details.textBottom = GameManager.instance.effectScript.SetBottomText(actor); }
+            else { successFlag = false; }
             Team team = GameManager.instance.dataScript.GetTeam(teamIDSelected);
-            if (team != null && teamNode != null)
+            if (team != null)
             {
-                details.textTop = string.Format("{0}{1} {2} have been inserted at {3} {4}{5}", colourNormal, team.Arc.name, team.Name, teamNode.arc.name, 
-                    teamNode.NodeName, colourEnd);
-                Actor actor = GameManager.instance.dataScript.GetActor(teamActorSlotID, Side.Authority);
-                if (actor != null)
-                {
-                    string colourNumbers = colourGood;
-                    if (actor.CheckNumOfTeams() == actor.Datapoint2)
-                    { colourNumbers = colourBad; }
-                    details.textBottom = string.Format("{0}, {1} of {2} has now deployed {3}{4}{5} of {6}{7}{8} teams", 
-                        actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), actor.Arc.name, 
-                        colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.Datapoint2, colourEnd);
-                }
-                else { successFlag = false; }
                 TeamInteraction teamInteract = arrayOfTeamOptions[team.Arc.TeamArcID].GetComponent<TeamInteraction>();
                 if (teamInteract != null)
                 { details.sprite = teamInteract.teamImage.sprite; }
                 else { successFlag = false; }
             }
             else { successFlag = false; }
-
         }
         //something went wrong, default message
         if (successFlag == false)
