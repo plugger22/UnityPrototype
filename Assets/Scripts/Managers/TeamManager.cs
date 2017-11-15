@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using modalAPI;
 using System.Text;
 
 /// <summary>
@@ -29,7 +30,8 @@ public class TeamManager : MonoBehaviour
         //event Listeners
         EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
-        //EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
+        EventManager.instance.AddListener(EventType.RecallAction, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent);
     }
 
 
@@ -50,9 +52,12 @@ public class TeamManager : MonoBehaviour
             case EventType.StartTurnEarly:
                 StartTurnEarly();
                 break;
-            /*case EventType.StartTurnLate:
-                StartTurnLate();
-                break;*/
+            case EventType.RecallAction:
+                InitialiseGenericPicker((int)Param);
+                break;
+            case EventType.GenericTeamRecall:
+                ProcessRecallTeam((int)Param);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -503,6 +508,131 @@ public void InitialiseTeams()
         }
         return builder.ToString();
     }
+
+    /// <summary>
+    /// sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
+    /// does this for 1, 2 or 3 teams present at the node, immediate outcome window if none present.
+    /// </summary>
+    /// <param name="details"></param>
+    private void InitialiseGenericPicker(int nodeID)
+    {
+        bool errorFlag = false;
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        //does the node have any teams that can be recalled?
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            //double check to see if there are teams present at the node
+            List<Team> listOfTeams = node.GetTeams();
+            if (listOfTeams != null && listOfTeams.Count > 0)
+            {
+                genericDetails.returnEvent = EventType.GenericTeamRecall;
+                genericDetails.side = Side.Authority;
+                genericDetails.nodeID = nodeID;
+                genericDetails.actorSlotID = -1;
+                //picker text
+
+                //loop teams present at node
+                for (int i = 0; i < listOfTeams.Count; i++)
+                {
+                    //option details
+                    GenericOptionDetails optionDetails = new GenericOptionDetails();
+                    optionDetails.optionID = listOfTeams[i].TeamID;
+                    optionDetails.text = listOfTeams[i].Arc.name.ToUpper();
+                    optionDetails.sprite = listOfTeams[i].Arc.sprite;
+                    //tooltip -> TO DO
+                    GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                    tooltipDetails.textHeader = "tooltip Header";
+                    tooltipDetails.textMain = "tooltip Main";
+                    tooltipDetails.textDetails = "tooltip Details";
+                    //add to master arrays
+                    genericDetails.arrayOfOptions[i] = optionDetails;
+                    genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                    //check that limit hasn't been exceeded (max 3 options)
+                    if (i > 2)
+                    {
+                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", nodeID));
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid listOfTeams (Empty or Null) for NodeID {0}", nodeID));
+                errorFlag = true;
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", nodeID));
+            errorFlag = true;
+        }
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.textTop = "There has been an error in communication and No teams have been recalled";
+            outcomeDetails.textBottom = "Heads will roll!";
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //activate Generic Picker window
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+        }
+    }
+
+    /// <summary>
+    /// 'Recall Team' node action. Implements action.
+    /// </summary>
+    /// <param name="teamID"></param>
+    public void ProcessRecallTeam(int teamID)
+    {
+        if (teamID > -1)
+        {
+            //get currently selected node
+            int nodeID = GameManager.instance.nodeScript.nodeHighlight;
+            string textTop = "Unknown";
+            string textBottom = "Unknown";
+            if (nodeID != -1)
+            {
+                Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                Sprite sprite = team.Arc.sprite;
+                if (team != null)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                    if (node != null)
+                    {
+                        if (node.RemoveTeam(teamID) == true)
+                        {
+                            //team successfully removed
+                            textTop = "Team successfully removed";
+                            textBottom = "Well done Cameron";
+                        }
+                        else
+                        {
+                            //Problem occurred, team not removed
+                            textTop = "Problem occured, team NOT removed";
+                            textBottom = "Bad boy Cameron";
+                        }
+                        //OUTCOME Window
+                        ModalOutcomeDetails details = new ModalOutcomeDetails();
+                        details.textTop = textTop;
+                        details.textBottom = textBottom;
+                        details.sprite = sprite;
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                    }
+                    else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", nodeID)); }
+                }
+                else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", teamID)); }
+            }
+            else { Debug.LogError("Highlighted node invalid (default '-1' value)"); }
+        }
+        else { Debug.LogError("Invalid TeamID (default '-1')"); }
+    }
+
+
 
     //place new method above here
 }

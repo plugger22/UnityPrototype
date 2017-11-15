@@ -344,7 +344,7 @@ public class ActorManager : MonoBehaviour
                             buttonTooltipMain = "The following teams can be withdrawn early",
                             buttonTooltipDetail = builder.ToString(),
                             //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.RecallAction, this, nodeID); }
+                            action = () => { EventManager.instance.PostNotification(EventType.RecallAction, this, node.NodeID); }
                         };
                         tempList.Add(targetDetails);
                     }

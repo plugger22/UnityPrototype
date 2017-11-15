@@ -22,6 +22,8 @@ public enum EventType
     NodeAction,
     TargetAction,
     RecallAction,
+    GearAction,
+    RecruitAction,
     TeamAction,
     //turn manager
     StartTurnEarly,
@@ -33,7 +35,19 @@ public enum EventType
     DeselectOtherTeams,
     ConfirmTeamActivate,
     ConfirmTeamDeactivate,
-    ConfirmTeamChoice
+    ConfirmTeamChoice,
+    //generic picker
+    OpenGenericPicker,
+    CloseGenericPicker,
+    DeselectOtherGenerics,
+    ConfirmGenericActivate,
+    ConfirmGenericDeactivate,
+    ConfirmGenericChoice,
+    //generic picker returns
+    GenericTeamRecall,
+    GenericNeutraliseTeam,
+    GenericGearChoice,
+    GenericRecruitActor
 };
 
 //EventManager to send events to listeners

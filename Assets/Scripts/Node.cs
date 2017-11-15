@@ -260,10 +260,10 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
-    /// Remove a team with the matching teamID from the listOfTeams and adjust team status
+    /// Remove a team with the matching teamID from the listOfTeams and adjust team status. Returns true if successful, false otherwise.
     /// </summary>
     /// <param name="teamID"></param>
-    public void RemoveTeam(int teamID)
+    public bool RemoveTeam(int teamID)
     {
         for(int i = 0; i < listOfTeams.Count; i++)
         {
@@ -272,11 +272,12 @@ public class Node : MonoBehaviour
             {
                 listOfTeams.RemoveAt(i);
                 Debug.Log(string.Format("TeamID {0} removed from Node ID {1}", teamID, NodeID));
-                return;
+                return true;
             }
         }
         //failed to find team
         Debug.LogError(string.Format("TeamID {0} not found in listOfTeams. Failed to remove team", teamID));
+        return false;
     }
 
 

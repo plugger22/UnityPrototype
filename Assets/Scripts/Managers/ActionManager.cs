@@ -24,7 +24,7 @@ public class ActionManager : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
-        EventManager.instance.AddListener(EventType.RecallAction, OnEvent);
+        
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.TeamAction, OnEvent);
     }
@@ -51,9 +51,9 @@ public class ActionManager : MonoBehaviour
             case EventType.TargetAction:
                 ProcessNodeTarget((int)Param);
                 break;
-            case EventType.RecallAction:
+            /*case EventType.RecallAction:
                 ProcessTeamRecall((int)Param);
-                break;
+                break;*/
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -224,6 +224,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenTeamPicker, this, details);
     }
 
+    /*
     /// <summary>
     /// Handles Authority "Recall Team" action
     /// </summary>
@@ -250,6 +251,7 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
+    */
 
     //methods above here
 }

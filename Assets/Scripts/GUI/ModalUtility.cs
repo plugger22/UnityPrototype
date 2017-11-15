@@ -39,7 +39,7 @@ namespace modalAPI
         public Side side;
         public int NodeID { get; set; }
         public int ActorSlotID { get; set; }
-        public EventType EventType { get; set; }
+        public EventType EventType { get; set; }                       //event that is triggered when action button clicked
     }
 
 
@@ -54,6 +54,44 @@ namespace modalAPI
         public Sprite sprite;
     }
 
+    //
+    // - - - Modal Generic Picker - - -
+    //
+
+    /// <summary>
+    /// main class passed to ModalGenericPicker as an event param to provide initialisation details
+    /// </summary>
+    public class GenericPickerDetails
+    {
+        public EventType returnEvent;                //event that is triggered by ModalGenericPicker to return selection to originating class
+        public string textTop;
+        public string textMiddle;
+        public Side side;
+        public int nodeID;
+        public int actorSlotID;
+        public GenericOptionDetails[] arrayOfOptions = new GenericOptionDetails[3];                 //only the first three are recognised
+        public GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];              //same [index] for both arrays. Keep in synch!!
+    }
+
+    /// <summary>
+    /// sub class for GenericPickerDetails specifying Option sprite, display text and optionId (value returned if selected)
+    /// </summary>
+    public class GenericOptionDetails
+    {
+        public Sprite sprite;
+        public string text;                 //keep SHORT
+        public int optionID;
+    }
+
+    /// <summary>
+    /// sub class for GenericPickerDetails specifying tooltip details for each option
+    /// </summary>
+    public class GenericTooltipDetails
+    {
+        public string textHeader;
+        public string textMain;
+        public string textDetails;
+    }
 
 }
 
