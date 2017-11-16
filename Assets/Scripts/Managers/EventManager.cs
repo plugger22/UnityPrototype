@@ -21,10 +21,11 @@ public enum EventType
     //action menu
     NodeAction,
     TargetAction,
-    RecallAction,
+    InsertTeamAction,
+    RecallTeamAction,
+    NeutraliseTeamAction,
     GearAction,
     RecruitAction,
-    TeamAction,
     //turn manager
     StartTurnEarly,
     StartTurnLate,

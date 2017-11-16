@@ -30,7 +30,7 @@ public class TeamManager : MonoBehaviour
         //event Listeners
         EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
-        EventManager.instance.AddListener(EventType.RecallAction, OnEvent);
+        EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent);
         EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent);
     }
 
@@ -52,11 +52,12 @@ public class TeamManager : MonoBehaviour
             case EventType.StartTurnEarly:
                 StartTurnEarly();
                 break;
-            case EventType.RecallAction:
+            case EventType.RecallTeamAction:
                 InitialiseGenericPicker((int)Param);
                 break;
             case EventType.GenericTeamRecall:
-                ProcessRecallTeam((int)Param);
+                GenericReturnData returnData = Param as GenericReturnData;
+                ProcessRecallTeam(returnData);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -589,24 +590,23 @@ public void InitialiseTeams()
     /// 'Recall Team' node action. Implements action.
     /// </summary>
     /// <param name="teamID"></param>
-    public void ProcessRecallTeam(int teamID)
+    public void ProcessRecallTeam(GenericReturnData data)
     {
-        if (teamID > -1)
+        if (data.optionID > -1)
         {
             //get currently selected node
-            int nodeID = GameManager.instance.nodeScript.nodeHighlight;
             string textTop = "Unknown";
             string textBottom = "Unknown";
-            if (nodeID != -1)
+            if (data.nodeID != -1)
             {
-                Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                Team team = GameManager.instance.dataScript.GetTeam(data.optionID);
                 Sprite sprite = team.Arc.sprite;
                 if (team != null)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                    Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        if (node.RemoveTeam(teamID) == true)
+                        if (node.RemoveTeam(data.optionID) == true)
                         {
                             //team successfully removed
                             textTop = "Team successfully removed";
@@ -625,9 +625,9 @@ public void InitialiseTeams()
                         details.sprite = sprite;
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
-                    else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", nodeID)); }
+                    else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }
-                else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", teamID)); }
+                else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", data.optionID)); }
             }
             else { Debug.LogError("Highlighted node invalid (default '-1' value)"); }
         }

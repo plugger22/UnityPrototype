@@ -26,7 +26,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
         
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.TeamAction, OnEvent);
+        EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class ActionManager : MonoBehaviour
                 ModalActionDetails detailsNode = Param as ModalActionDetails;
                 ProcessNodeAction(detailsNode);
                 break;
-            case EventType.TeamAction:
+            case EventType.InsertTeamAction:
                 ModalActionDetails detailsTeam = Param as ModalActionDetails;
                 ProcessTeamAction(detailsTeam);
                 break;

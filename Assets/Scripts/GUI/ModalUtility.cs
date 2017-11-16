@@ -94,5 +94,13 @@ namespace modalAPI
         public string textDetails;
     }
 
+    /// <summary>
+    /// used to return data to the originating class once 'Confirm' has been clicked. Part of ButtonInteraction.cs
+    /// </summary>
+    public class GenericReturnData
+    {
+        public int optionID;
+        public int nodeID;
+    }
 }
 

@@ -5,7 +5,7 @@ using TMPro;
 using modalAPI;
 using gameAPI;
 using System.Text;
-
+using System;
 
 /// <summary>
 /// handles Modal Generic UI (picker with 2 to 3 choices that can be used for a wide range of purposes)
@@ -33,6 +33,7 @@ public class ModalGenericPicker : MonoBehaviour
     private static ModalGenericPicker modalGenericPicker;
 
     private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
+    private int nodeIDSelected;
     private EventType returnEvent;                          //event to trigger once confirmation button is clicked
 
     private string colourEffect;
@@ -141,7 +142,7 @@ public class ModalGenericPicker : MonoBehaviour
         modalGenericObject.SetActive(true);
         //confirm button should be switched off at the start
         buttonConfirm.gameObject.SetActive(false);
-
+        
         //canvasGroup.alpha = 100;
 
         //populate dialogue
@@ -149,6 +150,7 @@ public class ModalGenericPicker : MonoBehaviour
         {
             if (details.arrayOfOptions.Length > 0)
             {
+                nodeIDSelected = details.nodeID;
                 //assign sprites, texts, optionID's and tooltips
                 for (int i = 0; i < details.arrayOfOptions.Length; i++)
                 {
@@ -169,6 +171,8 @@ public class ModalGenericPicker : MonoBehaviour
                                 //activate option (in Generic picker assumed all options are active)
                                 genericData.isActive = true;
                             }
+                            else
+                            { arrayOfGenericOptions[i].SetActive(false); }
                         }
                         else
                         {
@@ -251,12 +255,12 @@ public class ModalGenericPicker : MonoBehaviour
             {
                 //update currently selected option
                 optionIDSelected = optionID;
-                //pass to Confirm button
-                if (buttonInteraction != null)
-                { buttonInteraction.SetReturnData(optionID); }
-                else { Debug.LogError("Invalid buttonInteraction (Null)"); }
-                
 
+                /*//pass to Confirm button
+                if (buttonInteraction != null)
+                { buttonInteraction.SetReturnDataOption(optionID); }
+                else { Debug.LogError("Invalid buttonInteraction (Null)"); }*/
+                
                 /*
                 //change Top text to show which option is selected
                 Team team = GameManager.instance.dataScript.GetTeam(teamID);
@@ -286,11 +290,16 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     private void ProcessGenericChoice()
     {
+        GenericReturnData returnData = new GenericReturnData();
+        returnData.optionID = optionIDSelected;
+        returnData.nodeID = nodeIDSelected;
+        //close picker window regardless
+        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this);
         //trigger the appropriate return Event and pass selected optionID back to the originating class
         switch (returnEvent)
         {
             case EventType.GenericTeamRecall:
-                EventManager.instance.PostNotification(returnEvent, this, optionIDSelected);
+                EventManager.instance.PostNotification(returnEvent, this, returnData);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", returnEvent));

@@ -334,7 +334,7 @@ public class ActorManager : MonoBehaviour
                         foreach(Team team in listOfTeams)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(string.Format("{0}{1} {2}{3}", colourEffect, team.Arc.name, team.Name, colourEnd));
+                            builder.Append(string.Format("{0}{1} {2}{3}", colourEffect, team.Arc.name.ToUpper(), team.Name, colourEnd));
                         }
                         //button target details
                         EventButtonDetails targetDetails = new EventButtonDetails()
@@ -344,7 +344,7 @@ public class ActorManager : MonoBehaviour
                             buttonTooltipMain = "The following teams can be withdrawn early",
                             buttonTooltipDetail = builder.ToString(),
                             //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.RecallAction, this, node.NodeID); }
+                            action = () => { EventManager.instance.PostNotification(EventType.RecallTeamAction, this, node.NodeID); }
                         };
                         tempList.Add(targetDetails);
                     }
@@ -447,7 +447,7 @@ public class ActorManager : MonoBehaviour
                                     UnityAction clickAction = null;
                                     //Team action
                                     if (isAnyTeam)
-                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.TeamAction, this, actionDetails); };  }
+                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.InsertTeamAction, this, actionDetails); };  }
                                     //Node action
                                     else
                                     { clickAction = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); };  }

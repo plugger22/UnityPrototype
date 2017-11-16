@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
 using UnityEngine.EventSystems;
+using modalAPI;
 using UnityEngine.UI;
 
 /// <summary>
@@ -11,38 +12,53 @@ using UnityEngine.UI;
 public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
 {
 
-    [Tooltip("Select the event that is triggered when the button is clicked")]
+    [Tooltip("Select the  event that is triggered when the button is clicked (REQUIRED)")]
     public EventType eventType = EventType.None;
-    [Tooltip("Does the button return an <int> value when clicked?")]
-    public bool isReturn = false;
+    /*[Tooltip("Does the  button event return <int> data when clicked? (Optional)")]
+    public bool isReturn = false;*/
 
+    /*[Tooltip("Select the Second event that is triggered when the button is clicked (Optional)")]
+    public EventType eventType2 = EventType.None;
+    [Tooltip("Does the Second button event return GenericReturnData value when clicked? (Optional)")]
+    public bool isReturn2 = false;*/
 
-    private int returnData;
+    /*private GenericReturnData returnData;           //there is only one set of return data, it can be returned by either the first or second event
 
+    /// <summary>
+    /// internal initialisation
+    /// </summary>
+    private void Awake()
+    {
+        //returnData = new GenericReturnData();
+    }
 
 
     /// <summary>
     /// Data to be returned if isReturn = true
     /// </summary>
     /// <param name="data"></param>
-    public void SetReturnData(int data)
-    { returnData = data; }
+    public void SetReturnDataOption(int data)
+    { returnData.optionID = data; }
 
+    public void SetReturnDataNode(int data)
+    { returnData.nodeID = data; }
+    */
 
     /// <summary>
-    /// Generate an event when button clicked
+    /// Generate event/s when button clicked
     /// </summary>
     /// <param name="eventData"></param>
-    public void OnPointerClick (PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
+        //event 1
         if (eventType != EventType.None)
         {
-            if (isReturn == true)
+            EventManager.instance.PostNotification(eventType, this);
+
+            /*if (isReturn == true)
             { EventManager.instance.PostNotification(eventType, this, returnData); }
             else
-            { EventManager.instance.PostNotification(eventType, this); }
-
+            { EventManager.instance.PostNotification(eventType, this); }*/
         }
-
     }
 }
