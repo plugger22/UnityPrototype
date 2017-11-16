@@ -531,7 +531,9 @@ public void InitialiseTeams()
                 genericDetails.nodeID = nodeID;
                 genericDetails.actorSlotID = -1;
                 //picker text
-
+                genericDetails.textTop = "Recall Team";
+                genericDetails.textMiddle = "The team is ready to be recalled at your whim";
+                genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Recall team. Mouseover teams for more information.";
                 //loop teams present at node
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
@@ -542,9 +544,9 @@ public void InitialiseTeams()
                     optionDetails.sprite = listOfTeams[i].Arc.sprite;
                     //tooltip -> TO DO
                     GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                    tooltipDetails.textHeader = "tooltip Header";
-                    tooltipDetails.textMain = "tooltip Main";
-                    tooltipDetails.textDetails = "tooltip Details";
+                    tooltipDetails.textHeader = "Recall Team";
+                    tooltipDetails.textMain = "text Main";
+                    tooltipDetails.textDetails = "text Details";
                     //add to master arrays
                     genericDetails.arrayOfOptions[i] = optionDetails;
                     genericDetails.arrayOfTooltips[i] = tooltipDetails;

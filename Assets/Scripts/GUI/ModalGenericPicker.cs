@@ -28,6 +28,8 @@ public class ModalGenericPicker : MonoBehaviour
     public GameObject[] arrayOfGenericOptions;                //place generic image UI elements here (3 options)
 
     private CanvasGroup canvasGroup;
+    private ButtonInteraction buttonInteraction;
+
     private static ModalGenericPicker modalGenericPicker;
 
     private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
@@ -58,6 +60,10 @@ public class ModalGenericPicker : MonoBehaviour
         return modalGenericPicker;
     }
 
+    private void Awake()
+    {
+        buttonInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
+    }
 
     private void Start()
     {
@@ -129,6 +135,16 @@ public class ModalGenericPicker : MonoBehaviour
     private void SetGenericPicker(GenericPickerDetails details)
     {
         bool errorFlag = false;
+        //set modal status
+        GameManager.instance.Blocked(true);
+        //activate dialogue window
+        modalGenericObject.SetActive(true);
+        //confirm button should be switched off at the start
+        buttonConfirm.gameObject.SetActive(false);
+
+        //canvasGroup.alpha = 100;
+
+        //populate dialogue
         if (details != null)
         {
             if (details.arrayOfOptions.Length > 0)
@@ -136,7 +152,39 @@ public class ModalGenericPicker : MonoBehaviour
                 //assign sprites, texts, optionID's and tooltips
                 for (int i = 0; i < details.arrayOfOptions.Length; i++)
                 {
-
+                    if (arrayOfGenericOptions[i] != null)
+                    {
+                        GenericInteraction genericData = arrayOfGenericOptions[i].GetComponent<GenericInteraction>();
+                        if (genericData != null)
+                        {
+                            //there are 3 options but not all of them may be used
+                            if (details.arrayOfOptions[i] != null)
+                            {
+                                //activate option
+                                arrayOfGenericOptions[i].SetActive(true);
+                                //populate data
+                                genericData.optionImage.sprite = details.arrayOfOptions[i].sprite;
+                                genericData.optionText.text = details.arrayOfOptions[i].text;
+                                genericData.optionID = details.arrayOfOptions[i].optionID;
+                                //activate option (in Generic picker assumed all options are active)
+                                genericData.isActive = true;
+                            }
+                        }
+                        else
+                        {
+                            //error -> Null Interaction data
+                            Debug.LogError(string.Format("Invalid arrayOfGenericOptions[\"{0}\"] genericData (Null)", i));
+                            errorFlag = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        //error -> Null array
+                        Debug.LogError(string.Format("Invalid arrayOfGenericOptions[\"{0}\"] (Null)", i));
+                        errorFlag = true;
+                        break;
+                    }
                 }
                 //register return event for reference once user confirms a choice
                 returnEvent = details.returnEvent;
@@ -144,17 +192,30 @@ public class ModalGenericPicker : MonoBehaviour
         }
         else
         {
+            //error -> null parameter
             Debug.LogError("Invalid GenericPickerDetails (Null)");
             errorFlag = true;
         }
         //if a problem then generate an outcome window instead
         if (errorFlag == true)
         {
+            modalGenericObject.SetActive(false);
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.textTop = "There has been a SNAFU and mo teams can be recalled";
             outcomeDetails.textBottom = "Heads, toes and other limbswill be removed";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        //all good, generate
+        else
+        {
+            //texts
+            topText.text = details.textTop;
+            middleText.text = details.textMiddle;
+            bottomText.text = details.textBottom;
+            //set game state
+            GameManager.instance.inputScript.GameState = GameState.ModalPicker;
+            Debug.Log("UI: Open -> ModalGenericPicker" + "\n");
         }
     }
 
@@ -190,6 +251,11 @@ public class ModalGenericPicker : MonoBehaviour
             {
                 //update currently selected option
                 optionIDSelected = optionID;
+                //pass to Confirm button
+                if (buttonInteraction != null)
+                { buttonInteraction.SetReturnData(optionID); }
+                else { Debug.LogError("Invalid buttonInteraction (Null)"); }
+                
 
                 /*
                 //change Top text to show which option is selected

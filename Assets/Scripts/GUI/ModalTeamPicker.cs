@@ -366,7 +366,7 @@ public class ModalTeamPicker : MonoBehaviour
         }
 
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.ModalTeamPicker;
+        GameManager.instance.inputScript.GameState = GameState.ModalPicker;
         Debug.Log("UI: Open -> ModalTeamPicker" + "\n");
     }
 

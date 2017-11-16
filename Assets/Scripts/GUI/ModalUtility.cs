@@ -66,6 +66,7 @@ namespace modalAPI
         public EventType returnEvent;                //event that is triggered by ModalGenericPicker to return selection to originating class
         public string textTop;
         public string textMiddle;
+        public string textBottom;
         public Side side;
         public int nodeID;
         public int actorSlotID;
