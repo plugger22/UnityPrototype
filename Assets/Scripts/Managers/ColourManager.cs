@@ -17,6 +17,8 @@ public enum ColourType
     nodeActive,
     error,
     black,
+    //other
+    actorArc,
     Count
 }
 
@@ -53,6 +55,7 @@ public class ColourManager : MonoBehaviour
     public Colour[] error;                          //error text
 
     public Colour[] black;
+    public Colour[] actorArc;                       //violet colour for "WORKS"
 
     private Colour[,] arrayOfColours;               //repositry of colourTypes
     private List<Colour[]> listOfColourTypes;       //facilitates automatic population of array
@@ -82,6 +85,7 @@ public class ColourManager : MonoBehaviour
             nodeActive,
             error,
             black,
+            actorArc,
         };
 
         //loop thorugh list and auto populate array

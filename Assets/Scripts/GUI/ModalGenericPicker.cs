@@ -170,6 +170,22 @@ public class ModalGenericPicker : MonoBehaviour
                                 genericData.optionID = details.arrayOfOptions[i].optionID;
                                 //activate option (in Generic picker assumed all options are active)
                                 genericData.isActive = true;
+
+                                //tooltips
+                                GenericTooltipUI tooltipUI = arrayOfGenericOptions[i].GetComponent<GenericTooltipUI>();
+                                if (tooltipUI != null)
+                                {
+                                    GenericTooltipDetails tooltipDetails = details.arrayOfTooltips[i];
+                                    if (tooltipDetails != null)
+                                    {
+                                        tooltipUI.ToolTipHeader = details.arrayOfTooltips[i].textHeader;
+                                        tooltipUI.ToolTipMain = details.arrayOfTooltips[i].textMain;
+                                        tooltipUI.ToolTipEffect = details.arrayOfTooltips[i].textDetails;
+                                    }
+                                    else { Debug.LogError(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                }
+                                else
+                                { Debug.LogError(string.Format("Invalid tooltipUI (Null) for arrayOfOptions[\"{0}\"]", i)); }
                             }
                             else
                             { arrayOfGenericOptions[i].SetActive(false); }
@@ -181,6 +197,7 @@ public class ModalGenericPicker : MonoBehaviour
                             errorFlag = true;
                             break;
                         }
+
                     }
                     else
                     {

@@ -20,6 +20,17 @@ public class TeamManager : MonoBehaviour
     [Tooltip("The increase to node security due to the presence of a SecurityTeam")]
     public int securityTeamEffect = 2;
 
+
+    private string colourEffect;
+    private string colourSide;
+    private string colourTeam;
+    private string colourDefault;
+    private string colourNormal;
+    private string colourGood;
+    private string colourActor;
+    private string colourBad;
+    private string colourEnd;
+
     /// <summary>
     /// Set up at start
     /// </summary>
@@ -28,6 +39,7 @@ public class TeamManager : MonoBehaviour
         InitialiseTeams();
         SeedTeamsOnMap();     //DEBUG
         //event Listeners
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
         EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent);
@@ -52,6 +64,9 @@ public class TeamManager : MonoBehaviour
             case EventType.StartTurnEarly:
                 StartTurnEarly();
                 break;
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             case EventType.RecallTeamAction:
                 InitialiseGenericPicker((int)Param);
                 break;
@@ -63,6 +78,22 @@ public class TeamManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
+    }
+
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -532,25 +563,45 @@ public void InitialiseTeams()
                 genericDetails.nodeID = nodeID;
                 genericDetails.actorSlotID = -1;
                 //picker text
-                genericDetails.textTop = "Recall Team";
-                genericDetails.textMiddle = "The team is ready to be recalled at your whim";
+                genericDetails.textTop = string.Format("{0}Recall{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                genericDetails.textMiddle = string.Format("{0}The team is ready to be recalled at your whim. Any team effects will be cancelled{1}", 
+                    colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Recall team. Mouseover teams for more information.";
                 //loop teams present at node
+                int turnsAgo, deployedTeams; 
+                string dataColour;
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
-                    //option details
-                    GenericOptionDetails optionDetails = new GenericOptionDetails();
-                    optionDetails.optionID = listOfTeams[i].TeamID;
-                    optionDetails.text = listOfTeams[i].Arc.name.ToUpper();
-                    optionDetails.sprite = listOfTeams[i].Arc.sprite;
-                    //tooltip -> TO DO
-                    GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                    tooltipDetails.textHeader = "Recall Team";
-                    tooltipDetails.textMain = "text Main";
-                    tooltipDetails.textDetails = "text Details";
-                    //add to master arrays
-                    genericDetails.arrayOfOptions[i] = optionDetails;
-                    genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                    Team team = listOfTeams[i];
+                    if (team != null)
+                    {
+                        //option details
+                        GenericOptionDetails optionDetails = new GenericOptionDetails();
+                        optionDetails.optionID = team.TeamID;
+                        optionDetails.text = team.Arc.name.ToUpper();
+                        optionDetails.sprite = team.Arc.sprite;
+                        //tooltip -> TO DO
+                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                        tooltipDetails.textHeader = string.Format("{0}{1} {2}{3}", colourTeam, team.Arc.name.ToUpper(), team.Name, colourEnd);
+                        turnsAgo = GameManager.instance.turnScript.Turn - team.TurnDeployed;
+                        if (team.Timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
+                        tooltipDetails.textMain = string.Format("Team deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}", 
+                            dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.Timer, colourEnd, team.Timer != 1 ? "s" : "");
+                        Actor actor = GameManager.instance.dataScript.GetActor(team.ActorSlotID, Side.Authority);
+                        if (actor != null)
+                        {
+                            deployedTeams = actor.CheckNumOfTeams();
+                            if (deployedTeams < actor.Datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
+                            tooltipDetails.textDetails = string.Format("{0}Team inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}", 
+                                colourNormal, actor.Name, colourEnd, colourActor, actor.Arc.name, colourEnd, colourNormal, colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd, 
+                                dataColour, actor.Datapoint2, colourEnd, colourNormal, colourEnd);
+                        }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.ActorSlotID)); }
+                        //add to master arrays
+                        genericDetails.arrayOfOptions[i] = optionDetails;
+                        genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                    }
+                    else { Debug.LogError(string.Format("Invalid team (Null) for listOfTeams[{0}]", i)); }
                     //check that limit hasn't been exceeded (max 3 options)
                     if (i > 2)
                     {
