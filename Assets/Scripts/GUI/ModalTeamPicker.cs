@@ -42,6 +42,7 @@ public class ModalTeamPicker : MonoBehaviour
     private string colourNormal;
     private string colourGood;
     private string colourBad;
+    private string colourActor;
     private string colourEnd;
 
     private void Start()
@@ -166,6 +167,7 @@ public class ModalTeamPicker : MonoBehaviour
         colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -229,8 +231,8 @@ public class ModalTeamPicker : MonoBehaviour
                 string colourNumbers = colourGood;
                 if (actor.CheckNumOfTeams() == actor.Datapoint2)
                 { colourNumbers = colourBad; }
-                builder.Append(string.Format("{0}, {1} of {2} has deployed {3}{4}{5} of {6}{7}{8} teams",
-                    actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), actor.Arc.name,
+                builder.Append(string.Format("{0}, {1} of {2}{3}{4} has deployed {5}{6}{7} of {8}{9}{10} teams",
+                    actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourActor, actor.Arc.name, colourEnd,
                     colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.Datapoint2, colourEnd));
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) from ActorSlotID {0}", teamActorSlotID)); }

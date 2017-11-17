@@ -272,31 +272,26 @@ public class ModalGenericPicker : MonoBehaviour
             {
                 //update currently selected option
                 optionIDSelected = optionID;
-
-                /*//pass to Confirm button
-                if (buttonInteraction != null)
-                { buttonInteraction.SetReturnDataOption(optionID); }
-                else { Debug.LogError("Invalid buttonInteraction (Null)"); }*/
-                
-                /*
-                //change Top text to show which option is selected
-                Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                if (team != null)
+                //change top text to show which option selected
+                switch(returnEvent)
                 {
-                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
-                    //record most recently chosen selection
-                    teamIDSelected = teamID;
-                    Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", teamID, "\n"));
+                    case EventType.GenericTeamRecall:
+                        Team team = GameManager.instance.dataScript.GetTeam(optionID);
+                        if (team != null)
+                        {
+                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                            Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", optionID, "\n"));
+                        }
+                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }
+                        break;
                 }
-                else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
-                */
-
             }
         }
         else
         {
             buttonConfirm.gameObject.SetActive(false);
             text = string.Format("{0}Select {1}{2}ANY{3}{4} Option{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
+            text = string.Format("{0}Recall{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
         }
         //update top text
         topText.text = text;

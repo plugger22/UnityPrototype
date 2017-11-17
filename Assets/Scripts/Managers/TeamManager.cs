@@ -582,18 +582,19 @@ public void InitialiseTeams()
                         optionDetails.sprite = team.Arc.sprite;
                         //tooltip -> TO DO
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                        tooltipDetails.textHeader = string.Format("{0}{1} {2}{3}", colourTeam, team.Arc.name.ToUpper(), team.Name, colourEnd);
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2} {3}{4}{5}", colourTeam, team.Arc.name.ToUpper(), colourEnd, colourNormal, team.Name, colourEnd);
                         turnsAgo = GameManager.instance.turnScript.Turn - team.TurnDeployed;
                         if (team.Timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
-                        tooltipDetails.textMain = string.Format("Team deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}", 
+                        tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}", 
                             dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.Timer, colourEnd, team.Timer != 1 ? "s" : "");
                         Actor actor = GameManager.instance.dataScript.GetActor(team.ActorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             deployedTeams = actor.CheckNumOfTeams();
                             if (deployedTeams < actor.Datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
-                            tooltipDetails.textDetails = string.Format("{0}Team inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}", 
-                                colourNormal, actor.Name, colourEnd, colourActor, actor.Arc.name, colourEnd, colourNormal, colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd, 
+                            tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}", 
+                                colourNormal, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourEnd, colourActor, actor.Arc.name, colourEnd, colourNormal, 
+                                colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd, 
                                 dataColour, actor.Datapoint2, colourEnd, colourNormal, colourEnd);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.ActorSlotID)); }
@@ -660,14 +661,14 @@ public void InitialiseTeams()
                         if (node.RemoveTeam(data.optionID) == true)
                         {
                             //team successfully removed
-                            textTop = "Team successfully removed";
-                            textBottom = "Well done Cameron";
+                            textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
+                            textBottom = "The team will spend one turn in Transit and be available thereafter";
                         }
                         else
                         {
                             //Problem occurred, team not removed
                             textTop = "Problem occured, team NOT removed";
-                            textBottom = "Bad boy Cameron";
+                            textBottom = "Who did this? Speak up and step forward immediately!";
                         }
                         //OUTCOME Window
                         ModalOutcomeDetails details = new ModalOutcomeDetails();

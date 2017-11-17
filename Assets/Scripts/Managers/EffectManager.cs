@@ -31,6 +31,7 @@ public class EffectManager : MonoBehaviour
     private string colourDefault;
     private string colourGood;
     private string colourBad;
+    private string colourActor;
     private string colourEnd;
 
 
@@ -83,6 +84,7 @@ public class EffectManager : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -677,12 +679,13 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Formats string for details.TopText (authority), returns "unknown" if a problem. Also used by ModalTeamPicker.cs -> ProcessTeamChoice
+    /// Formats string for details.TopText (authority), returns "unknown" if a problem. Also used by ModalTeamPicker.cs -> ProcessTeamChoice and TeamNanager.cs
+    /// Can be used for both Inserting and Recalling a team
     /// </summary>
     /// <param name="team"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public string SetTopText(int teamID)
+    public string SetTopText(int teamID, bool isInserted = true)
     {
         //get team
         Team team = GameManager.instance.dataScript.GetTeam(teamID);
@@ -692,8 +695,12 @@ public class EffectManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
             if (node != null)
             {
-                return string.Format("{0}{1} {2}{3}{4} have been inserted at {5}{6}{7}{8}{9} {10}{11}", colourOutcome3, team.Arc.name.ToUpper(), colourEnd, colourNormal,
-                    team.Name, colourEnd, colourOutcome2, node.arc.name.ToUpper(), colourEnd, colourNormal, node.NodeName, colourEnd);
+                string operation = "inserted";
+                if (isInserted == false) { operation = "recalled"; }
+                return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}", 
+                    colourOutcome3, team.Arc.name.ToUpper(), colourEnd, 
+                    colourNormal, team.Name, operation, colourEnd,  
+                    colourOutcome2, node.arc.name.ToUpper(), colourEnd, colourNormal, node.NodeName, colourEnd);
             }
             else
             {
@@ -720,8 +727,8 @@ public class EffectManager : MonoBehaviour
             string colourNumbers = colourGood;
             if (actor.CheckNumOfTeams() == actor.Datapoint2)
             { colourNumbers = colourBad; }
-            return string.Format("{0}, {1} of {2} has now deployed {3}{4}{5} of {6}{7}{8} teams",
-                actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), actor.Arc.name,
+            return string.Format("{0}, {1} of {2}{3}{4} has now deployed {5}{6}{7} of {8}{9}{10} teams",
+                actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourActor, actor.Arc.name, colourEnd,
                 colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.Datapoint2, colourEnd);
         }
         else
