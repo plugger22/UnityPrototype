@@ -23,6 +23,8 @@ public class EffectReturn
 public class EffectManager : MonoBehaviour
 {
 
+    EffectReturn genericEffectReturn;               //used to return data from a ModalGenericPicker
+
     //colour palette for Modal Outcome
     private string colourOutcome1; //good effect Rebel / bad effect Authority
     private string colourOutcome2; //bad effect Authority / bad effect Rebel
@@ -40,6 +42,12 @@ public class EffectManager : MonoBehaviour
     {
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericEffectReturn, OnEvent);
+        //DEBUG
+        genericEffectReturn = new EffectReturn();
+        genericEffectReturn.topText = "Operatives have done their work. Team Neutralised!";
+        genericEffectReturn.bottomText = "CONTROL team has been removed";
+        genericEffectReturn.errorFlag = false;
     }
 
     /// <summary>
@@ -55,6 +63,11 @@ public class EffectManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.GenericEffectReturn:
+                EffectReturn returnDetails = Param as EffectReturn;
+                genericEffectReturn.topText = returnDetails.topText;
+                genericEffectReturn.bottomText = returnDetails.bottomText;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -544,7 +557,13 @@ public class EffectManager : MonoBehaviour
 
                     break;
                 case EffectOutcome.NeutraliseTeam:
-
+                    EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, node.NodeID);
+                    if (genericEffectReturn != null)
+                    {
+                        effectReturn.topText = genericEffectReturn.topText;
+                        effectReturn.bottomText = genericEffectReturn.bottomText;
+                    }
+                    else { effectReturn.errorFlag = true; }
                     break;
                 case EffectOutcome.SpreadInstability:
 

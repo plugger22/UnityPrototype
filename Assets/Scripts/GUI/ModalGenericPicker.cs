@@ -265,6 +265,7 @@ public class ModalGenericPicker : MonoBehaviour
     public void SetConfirmButton(bool isActive, int optionID = -1)
     {
         string text = "Unknown"; ;
+        //An option is selected
         if (isActive == true)
         {
             buttonConfirm.gameObject.SetActive(true);
@@ -276,10 +277,19 @@ public class ModalGenericPicker : MonoBehaviour
                 switch(returnEvent)
                 {
                     case EventType.GenericTeamRecall:
-                        Team team = GameManager.instance.dataScript.GetTeam(optionID);
-                        if (team != null)
+                        Team teamRecall = GameManager.instance.dataScript.GetTeam(optionID);
+                        if (teamRecall != null)
                         {
-                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                            Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", optionID, "\n"));
+                        }
+                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }
+                        break;
+                    case EventType.GenericNeutraliseTeam:
+                        Team teamNeutralise = GameManager.instance.dataScript.GetTeam(optionID);
+                        if (teamNeutralise != null)
+                        {
+                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
                             Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", optionID, "\n"));
                         }
                         else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }
@@ -289,9 +299,20 @@ public class ModalGenericPicker : MonoBehaviour
         }
         else
         {
+            //Nothing currently selected, show generic message
             buttonConfirm.gameObject.SetActive(false);
-            text = string.Format("{0}Select {1}{2}ANY{3}{4} Option{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
-            text = string.Format("{0}Recall{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+            switch (returnEvent)
+            {
+                case EventType.GenericTeamRecall:
+                    text = string.Format("{0}Recall{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
+                case EventType.GenericNeutraliseTeam:
+                    text = string.Format("{0}Neutralise{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
+                default:
+                    text = string.Format("{0}Select {1}{2}ANY{3}{4} Option{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
+                    break;
+            }
         }
         //update top text
         topText.text = text;
@@ -311,6 +332,9 @@ public class ModalGenericPicker : MonoBehaviour
         switch (returnEvent)
         {
             case EventType.GenericTeamRecall:
+                EventManager.instance.PostNotification(returnEvent, this, returnData);
+                break;
+            case EventType.GenericNeutraliseTeam:
                 EventManager.instance.PostNotification(returnEvent, this, returnData);
                 break;
             default:

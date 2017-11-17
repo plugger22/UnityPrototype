@@ -44,6 +44,8 @@ public class TeamManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
         EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent);
         EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent);
+        EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericNeutraliseTeam, OnEvent);
     }
 
 
@@ -68,11 +70,18 @@ public class TeamManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.RecallTeamAction:
-                InitialiseGenericPicker((int)Param);
+                InitialiseGenericPickerRecall((int)Param);
+                break;
+            case EventType.NeutraliseTeamAction:
+                InitialiseGenericPickerNeutralise((int)Param);
                 break;
             case EventType.GenericTeamRecall:
-                GenericReturnData returnData = Param as GenericReturnData;
-                ProcessRecallTeam(returnData);
+                GenericReturnData returnDataRecall = Param as GenericReturnData;
+                ProcessRecallTeam(returnDataRecall);
+                break;
+            case EventType.GenericNeutraliseTeam:
+                GenericReturnData returnDataNeutralise = Param as GenericReturnData;
+                ProcessNeutraliseTeam(returnDataNeutralise);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -542,11 +551,11 @@ public void InitialiseTeams()
     }
 
     /// <summary>
-    /// sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
+    /// Recall Team (Authority): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// does this for 1, 2 or 3 teams present at the node, immediate outcome window if none present.
     /// </summary>
     /// <param name="details"></param>
-    private void InitialiseGenericPicker(int nodeID)
+    private void InitialiseGenericPickerRecall(int nodeID)
     {
         bool errorFlag = false;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
@@ -564,7 +573,7 @@ public void InitialiseTeams()
                 genericDetails.actorSlotID = -1;
                 //picker text
                 genericDetails.textTop = string.Format("{0}Recall{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
-                genericDetails.textMiddle = string.Format("{0}The team is ready to be recalled at your whim. Any team effects will be cancelled{1}", 
+                genericDetails.textMiddle = string.Format("{0}Procedures are in place to Recall a team. Any team effects will be cancelled. We await your orders{1}", 
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Recall team. Mouseover teams for more information.";
                 //loop teams present at node
@@ -627,7 +636,104 @@ public void InitialiseTeams()
         {
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.textTop = "There has been an error in communication and No teams have been recalled";
+            outcomeDetails.textTop = "There has been an error in communication and No teams can be Recalled.";
+            outcomeDetails.textBottom = "Heads will roll!";
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //activate Generic Picker window
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+        }
+    }
+
+    /// <summary>
+    /// Neutralise Team (Resistance): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
+    /// does this for 1, 2 or 3 teams present at the node, immediate outcome window if none present.
+    /// </summary>
+    /// <param name="details"></param>
+    private void InitialiseGenericPickerNeutralise(int nodeID)
+    {
+        bool errorFlag = false;
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        //does the node have any teams that can be neutralised?
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            //double check to see if there are teams present at the node
+            List<Team> listOfTeams = node.GetTeams();
+            if (listOfTeams != null && listOfTeams.Count > 0)
+            {
+                genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
+                genericDetails.side = Side.Resistance;
+                genericDetails.nodeID = nodeID;
+                genericDetails.actorSlotID = -1;
+                //picker text
+                genericDetails.textTop = string.Format("{0}Neutralise{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                genericDetails.textMiddle = string.Format("{0}Operatives are in place to Neutralise a team. The team will be forced to retire immediately{1}",
+                    colourNormal, colourEnd);
+                genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Neutralise team. Mouseover teams for more information.";
+                //loop teams present at node
+                int turnsAgo, deployedTeams;
+                string dataColour;
+                for (int i = 0; i < listOfTeams.Count; i++)
+                {
+                    Team team = listOfTeams[i];
+                    if (team != null)
+                    {
+                        //option details
+                        GenericOptionDetails optionDetails = new GenericOptionDetails();
+                        optionDetails.optionID = team.TeamID;
+                        optionDetails.text = team.Arc.name.ToUpper();
+                        optionDetails.sprite = team.Arc.sprite;
+                        //tooltip -> TO DO
+                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2} {3}{4}{5}", colourTeam, team.Arc.name.ToUpper(), colourEnd, colourNormal, team.Name, colourEnd);
+                        turnsAgo = GameManager.instance.turnScript.Turn - team.TurnDeployed;
+                        if (team.Timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
+                        tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}",
+                            dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.Timer, colourEnd, team.Timer != 1 ? "s" : "");
+                        Actor actor = GameManager.instance.dataScript.GetActor(team.ActorSlotID, Side.Authority);
+                        if (actor != null)
+                        {
+                            deployedTeams = actor.CheckNumOfTeams();
+                            if (deployedTeams < actor.Datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
+                            tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}",
+                                colourNormal, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourEnd, colourActor, actor.Arc.name, colourEnd, colourNormal,
+                                colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd,
+                                dataColour, actor.Datapoint2, colourEnd, colourNormal, colourEnd);
+                        }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.ActorSlotID)); }
+                        //add to master arrays
+                        genericDetails.arrayOfOptions[i] = optionDetails;
+                        genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                    }
+                    else { Debug.LogError(string.Format("Invalid team (Null) for listOfTeams[{0}]", i)); }
+                    //check that limit hasn't been exceeded (max 3 options)
+                    if (i > 2)
+                    {
+                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", nodeID));
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid listOfTeams (Empty or Null) for NodeID {0}", nodeID));
+                errorFlag = true;
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", nodeID));
+            errorFlag = true;
+        }
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
@@ -687,6 +793,54 @@ public void InitialiseTeams()
     }
 
 
+    /// <summary>
+    /// 'Neutralise Team' Resistance node action. Implements action.
+    /// </summary>
+    /// <param name="teamID"></param>
+    public void ProcessNeutraliseTeam(GenericReturnData data)
+    {
+        if (data.optionID > -1)
+        {
+            //get currently selected node
+            string textTop = "Unknown";
+            string textBottom = "Unknown";
+            if (data.nodeID != -1)
+            {
+                Team team = GameManager.instance.dataScript.GetTeam(data.optionID);
+                Sprite sprite = team.Arc.sprite;
+                if (team != null)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                    if (node != null)
+                    {
+                        if (node.RemoveTeam(data.optionID) == true)
+                        {
+                            //team successfully removed
+                            textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
+                            textBottom = "The team will spend one turn in Transit and be available thereafter";
+                        }
+                        else
+                        {
+                            //Problem occurred, team not removed
+                            textTop = "Problem occured, team NOT removed";
+                            textBottom = "Who did this? Speak up and step forward immediately!";
+                        }
+                        //OUTCOME Window
+                        EffectReturn details = new EffectReturn();
+                        details.topText = textTop;
+                        details.bottomText = textBottom;
+                        details.errorFlag = false;
+                        //details.sprite = sprite;
+                        EventManager.instance.PostNotification(EventType.GenericEffectReturn, this, details);
+                    }
+                    else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
+                }
+                else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", data.optionID)); }
+            }
+            else { Debug.LogError("Highlighted node invalid (default '-1' value)"); }
+        }
+        else { Debug.LogError("Invalid TeamID (default '-1')"); }
+    }
 
     //place new method above here
 }
