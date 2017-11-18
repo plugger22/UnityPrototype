@@ -825,7 +825,7 @@ public void InitialiseTeams()
                             textTop = "Problem occured, team NOT removed";
                             textBottom = "Who did this? Speak up and step forward immediately!";
                         }
-                        //OUTCOME Window
+                        //return data to EffectManager.cs -> ProcessEffect
                         EffectReturn details = new EffectReturn();
                         details.topText = textTop;
                         details.bottomText = textBottom;

@@ -129,18 +129,30 @@ public class ActionManager : MonoBehaviour
                             foreach (Effect effect in listOfEffects)
                             {
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
-                                outcomeDetails.sprite = actor.Arc.actionSprite;
+                                if (effectReturn != null)
+                                {
+                                    outcomeDetails.sprite = actor.Arc.actionSprite;
 
-                                //update stringBuilder texts
-                                if (effectReturn.topText.Length > 0)
+                                    //update stringBuilder texts
+                                    if (effectReturn.topText.Length > 0)
+                                    {
+                                        builderTop.AppendLine();
+                                        builderTop.Append(effectReturn.topText);
+                                    }
+                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
+                                    builderBottom.Append(effectReturn.bottomText);
+                                    //exit effect loop on error
+                                    if (effectReturn.errorFlag == true) { break; }
+                                }
+                                else
                                 {
                                     builderTop.AppendLine();
-                                    builderTop.Append(effectReturn.topText);
+                                    builderTop.Append("Error");
+                                    builderBottom.AppendLine();
+                                    builderBottom.Append("Error");
+                                    effectReturn.errorFlag = true;
+                                    break;
                                 }
-                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
-                                builderBottom.Append(effectReturn.bottomText);
-                                //exit effect loop on error
-                                if (effectReturn.errorFlag == true) { break; }
                             }
 
                             //texts
@@ -178,7 +190,7 @@ public class ActionManager : MonoBehaviour
         }
         if (errorFlag == true)
         { 
-            //fault, pass default data to window
+            //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
             outcomeDetails.sprite = errorSprite;

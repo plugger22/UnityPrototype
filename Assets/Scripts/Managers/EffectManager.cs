@@ -36,18 +36,21 @@ public class EffectManager : MonoBehaviour
     private string colourActor;
     private string colourEnd;
 
+    /// <summary>
+    /// internal initialisation
+    /// </summary>
+    private void Awake()
+    {
+       genericEffectReturn = new EffectReturn(); 
+    }
 
 
     public void Initialise()
     {
+        
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.GenericEffectReturn, OnEvent);
-        //DEBUG
-        genericEffectReturn = new EffectReturn();
-        genericEffectReturn.topText = "Operatives have done their work. Team Neutralised!";
-        genericEffectReturn.bottomText = "CONTROL team has been removed";
-        genericEffectReturn.errorFlag = false;
     }
 
     /// <summary>
@@ -557,13 +560,15 @@ public class EffectManager : MonoBehaviour
 
                     break;
                 case EffectOutcome.NeutraliseTeam:
+                    // genericEffectReturn = null;
+                    //hold processing until the ModalGenericPicker has done it's thing for the Neutralise Team node Action
+                    /*StartCoroutine(GetNeutraliseTeam(node.NodeID));
+                    //continue
+                    effectReturn.topText = genericEffectReturn.topText;
+                    effectReturn.bottomText = genericEffectReturn.bottomText;*/
                     EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, node.NodeID);
-                    if (genericEffectReturn != null)
-                    {
-                        effectReturn.topText = genericEffectReturn.topText;
-                        effectReturn.bottomText = genericEffectReturn.bottomText;
-                    }
-                    else { effectReturn.errorFlag = true; }
+                    effectReturn.topText = "Unknown";
+                    effectReturn.bottomText = "unknown";
                     break;
                 case EffectOutcome.SpreadInstability:
 
@@ -756,5 +761,19 @@ public class EffectManager : MonoBehaviour
             return "Unknown";
         }
     }
+
+    /// <summary>
+    /// holds ProcessEffect execution until ModalGenericPicker has done it's job for 'NeutraliseTeam' node Action
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    IEnumerator GetNeutraliseTeam(int nodeID)
+    {
+        EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, nodeID);
+        while (genericEffectReturn != null)
+        { yield return null; }
+        
+    }
+
     //place methods above here
 }
