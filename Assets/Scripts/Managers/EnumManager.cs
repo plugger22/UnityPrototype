@@ -40,6 +40,7 @@ namespace gameAPI
     //
     public enum Comparison { None, LessThan, GreaterThan, EqualTo }
     public enum Result { None, Add, Subtract, EqualTo }
+    public enum ActionType { None, Node, NeutraliseTeam, Gear, Recruit}
 
     //
     // - - - Effects - - -

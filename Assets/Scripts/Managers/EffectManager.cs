@@ -23,8 +23,6 @@ public class EffectReturn
 public class EffectManager : MonoBehaviour
 {
 
-    EffectReturn genericEffectReturn;               //used to return data from a ModalGenericPicker
-
     //colour palette for Modal Outcome
     private string colourOutcome1; //good effect Rebel / bad effect Authority
     private string colourOutcome2; //bad effect Authority / bad effect Rebel
@@ -36,21 +34,12 @@ public class EffectManager : MonoBehaviour
     private string colourActor;
     private string colourEnd;
 
-    /// <summary>
-    /// internal initialisation
-    /// </summary>
-    private void Awake()
-    {
-       genericEffectReturn = new EffectReturn(); 
-    }
-
 
     public void Initialise()
     {
         
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericEffectReturn, OnEvent);
     }
 
     /// <summary>
@@ -66,11 +55,6 @@ public class EffectManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
-                break;
-            case EventType.GenericEffectReturn:
-                EffectReturn returnDetails = Param as EffectReturn;
-                genericEffectReturn.topText = returnDetails.topText;
-                genericEffectReturn.bottomText = returnDetails.bottomText;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -548,27 +532,19 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 case EffectOutcome.Recruit:
-
+                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
                 case EffectOutcome.AddTracer:
 
                     break;
                 case EffectOutcome.GetGear:
-
+                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
                 case EffectOutcome.GetTargetInfo:
 
                     break;
                 case EffectOutcome.NeutraliseTeam:
-                    // genericEffectReturn = null;
-                    //hold processing until the ModalGenericPicker has done it's thing for the Neutralise Team node Action
-                    /*StartCoroutine(GetNeutraliseTeam(node.NodeID));
-                    //continue
-                    effectReturn.topText = genericEffectReturn.topText;
-                    effectReturn.bottomText = genericEffectReturn.bottomText;*/
-                    EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, node.NodeID);
-                    effectReturn.topText = "Unknown";
-                    effectReturn.bottomText = "unknown";
+                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
                 case EffectOutcome.SpreadInstability:
 
@@ -762,18 +738,7 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// holds ProcessEffect execution until ModalGenericPicker has done it's job for 'NeutraliseTeam' node Action
-    /// </summary>
-    /// <param name="nodeID"></param>
-    /// <returns></returns>
-    IEnumerator GetNeutraliseTeam(int nodeID)
-    {
-        EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, nodeID);
-        while (genericEffectReturn != null)
-        { yield return null; }
-        
-    }
+
 
     //place methods above here
 }

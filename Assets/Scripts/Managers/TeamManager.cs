@@ -825,13 +825,20 @@ public void InitialiseTeams()
                             textTop = "Problem occured, team NOT removed";
                             textBottom = "Who did this? Speak up and step forward immediately!";
                         }
-                        //return data to EffectManager.cs -> ProcessEffect
+                        /*//return data to EffectManager.cs -> ProcessEffect
                         EffectReturn details = new EffectReturn();
                         details.topText = textTop;
                         details.bottomText = textBottom;
                         details.errorFlag = false;
                         //details.sprite = sprite;
-                        EventManager.instance.PostNotification(EventType.GenericEffectReturn, this, details);
+                        EventManager.instance.PostNotification(EventType.GenericEffectReturn, this, details);*/
+
+                        //OUTCOME Window
+                        ModalOutcomeDetails details = new ModalOutcomeDetails();
+                        details.textTop = textTop;
+                        details.textBottom = textBottom;
+                        details.sprite = sprite;
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }

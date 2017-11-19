@@ -272,19 +272,41 @@ public class ActorManager : MonoBehaviour
                                     {
                                         //Details to pass on for processing via button click
                                         ModalActionDetails actionDetails = new ModalActionDetails() { };
+
                                         actionDetails.side = Side.Resistance;
                                         actionDetails.NodeID = nodeID;
                                         actionDetails.ActorSlotID = actor.SlotID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
-                                        details = new EventButtonDetails()
+
+                                        switch (actor.Arc.nodeAction.type)
                                         {
-                                            buttonTitle = tempAction.name,
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
-                                            buttonTooltipMain = tempAction.tooltipText,
-                                            buttonTooltipDetail = builder.ToString(),
-                                            //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
-                                        };
+                                            case ActionType.Node:
+                                            case ActionType.None:
+                                                details = new EventButtonDetails()
+                                                {
+                                                    buttonTitle = tempAction.name,
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                                    buttonTooltipMain = tempAction.tooltipText,
+                                                    buttonTooltipDetail = builder.ToString(),
+                                                    //use a Lambda to pass arguments to the action
+                                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
+                                                };
+                                                break;
+                                            case ActionType.NeutraliseTeam:
+                                                details = new EventButtonDetails()
+                                                {
+                                                    buttonTitle = tempAction.name,
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                                    buttonTooltipMain = tempAction.tooltipText,
+                                                    buttonTooltipDetail = builder.ToString(),
+                                                    //use a Lambda to pass arguments to the action
+                                                    action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, node.NodeID); }
+                                                };
+                                                break;
+                                            default:
+                                                Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.type \"{0}\"", actor.Arc.nodeAction.type));
+                                                break;
+                                        }
                                     }
                                 }
                             }
