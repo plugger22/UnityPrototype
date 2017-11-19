@@ -17,10 +17,10 @@ public class ModalOutcome : MonoBehaviour
     public Image outcomeImage;
     public Button confirmButton;
 
-    [Tooltip("Sprite used to skin Confirm button for an Authority Outcome")]
+    /*[Tooltip("Sprite used to skin Confirm button for an Authority Outcome")]
     public Sprite buttonSpriteAuthority;
     [Tooltip("Sprite used to skin Confirm button for a Rebel Outcome")]
-    public Sprite buttonSpriteResistance;
+    public Sprite buttonSpriteResistance;*/
     
 
     public GameObject modalOutcomeObject;
@@ -104,20 +104,34 @@ public class ModalOutcome : MonoBehaviour
         //open panel at start, the modal window is already active on the panel
         modalOutcomeObject.SetActive(true);
         modalOutcomeWindow.SetActive(true);
-        //set confirm button image
+        //set confirm button image and sprite states
         switch (side)
         {
             case Side.Authority:
-                Image buttonImageAuthority = confirmButton.GetComponent<Image>();
-                if (buttonImageAuthority != null)
-                { buttonImageAuthority.sprite = buttonSpriteAuthority; }
+                //set button sprites
+                confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                //set sprite transitions
+                SpriteState spriteStateAuthority = new SpriteState();
+                spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
+                spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                confirmButton.spriteState = spriteStateAuthority;
                 break;
             case Side.Resistance:
-                Image buttonImageResistance = confirmButton.GetComponent<Image>();
-                if (buttonImageResistance != null)
-                { buttonImageResistance.sprite = buttonSpriteResistance; }
+                //set button sprites
+                confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
+                //set sprite transitions
+                SpriteState spriteStateRebel = new SpriteState();
+                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Rebel;
+                spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                confirmButton.spriteState = spriteStateRebel;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid side \"{0}\"", side));
                 break;
         }
+        //set transition
+        confirmButton.transition = Selectable.Transition.SpriteSwap;
+
         //set opacity to zero (invisible)
         //SetOpacity(0f);
 

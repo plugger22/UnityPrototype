@@ -16,6 +16,13 @@ public class SideManager : MonoBehaviour
     public Sprite toolTip_dividerRebel;
     public Sprite outcome_backgroundAuthority;
     public Sprite outcome_backgroundRebel;
+    public Sprite picker_background_Authority;
+    public Sprite picker_background_Rebel;
+    public Sprite button_Authority;
+    public Sprite button_highlight_Authority;
+    public Sprite button_Rebel;
+    public Sprite button_highlight_Rebel;
+    public Sprite button_Click;
 
     public void Initialise()
     {

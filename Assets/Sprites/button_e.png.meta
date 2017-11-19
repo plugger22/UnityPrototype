@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 91172d674b5508441bfa2aa20ac8e7f3
-timeCreated: 1509940674
+guid: 20a58138803019b41be30d481caaf3c0
+timeCreated: 1511071851
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: UIPickerPanel_0
-    21300002: UIPickerPanel_1
+    21300000: button_e_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -30,7 +29,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -80,29 +79,16 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UIPickerPanel_0
+      name: button_e_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 200
-        height: 200
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: UIPickerPanel_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 12, y: 12, z: 12, w: 13}
+      border: {x: 17, y: 19, z: 17, w: 19}
       outline: []
       tessellationDetail: 0
     outline: []

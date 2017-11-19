@@ -638,6 +638,7 @@ public void InitialiseTeams()
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Recalled.";
             outcomeDetails.textBottom = "Heads will roll!";
+            outcomeDetails.side = Side.Authority;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else
@@ -733,6 +734,7 @@ public void InitialiseTeams()
         {
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = Side.Resistance;
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -781,6 +783,7 @@ public void InitialiseTeams()
                         details.textTop = textTop;
                         details.textBottom = textBottom;
                         details.sprite = sprite;
+                        details.side = Side.Authority;
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
@@ -825,19 +828,13 @@ public void InitialiseTeams()
                             textTop = "Problem occured, team NOT removed";
                             textBottom = "Who did this? Speak up and step forward immediately!";
                         }
-                        /*//return data to EffectManager.cs -> ProcessEffect
-                        EffectReturn details = new EffectReturn();
-                        details.topText = textTop;
-                        details.bottomText = textBottom;
-                        details.errorFlag = false;
-                        //details.sprite = sprite;
-                        EventManager.instance.PostNotification(EventType.GenericEffectReturn, this, details);*/
 
                         //OUTCOME Window
                         ModalOutcomeDetails details = new ModalOutcomeDetails();
                         details.textTop = textTop;
                         details.textBottom = textBottom;
                         details.sprite = sprite;
+                        details.side = Side.Resistance;
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }

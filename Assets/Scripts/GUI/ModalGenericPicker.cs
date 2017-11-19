@@ -148,6 +148,37 @@ public class ModalGenericPicker : MonoBehaviour
         //populate dialogue
         if (details != null)
         {
+            //set up modal panel & buttons to be side appropriate
+            switch(details.side)
+            {
+                case Side.Authority:
+                    modalPanel.sprite = GameManager.instance.sideScript.picker_background_Authority;
+                    //set button sprites
+                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                    buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                    //set sprite transitions
+                    SpriteState spriteStateAuthority = new SpriteState();
+                    spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
+                    spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    buttonCancel.spriteState = spriteStateAuthority;
+                    buttonConfirm.spriteState = spriteStateAuthority;
+                    break;
+                case Side.Resistance:
+                    modalPanel.sprite = GameManager.instance.sideScript.picker_background_Rebel;
+                    //set button sprites
+                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
+                    buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
+                    //set sprite transitions
+                    SpriteState spriteStateRebel = new SpriteState();
+                    spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Rebel;
+                    spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    buttonCancel.spriteState = spriteStateRebel;
+                    buttonConfirm.spriteState = spriteStateRebel;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid side \"{0}\"", details.side));
+                    break;
+            }
             if (details.arrayOfOptions.Length > 0)
             {
                 nodeIDSelected = details.nodeID;
@@ -225,6 +256,7 @@ public class ModalGenericPicker : MonoBehaviour
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.textTop = "There has been a SNAFU and mo teams can be recalled";
             outcomeDetails.textBottom = "Heads, toes and other limbswill be removed";
+            outcomeDetails.side = details.side;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         //all good, generate

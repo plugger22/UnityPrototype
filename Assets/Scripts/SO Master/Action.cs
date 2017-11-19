@@ -17,6 +17,7 @@ public class Action : ScriptableObject
     public string tooltipText;                  //descriptive text
     public ActorArc intendedActor;              //for info purposes only to aid placing correct action with correct ActorArc
     public List<Effect> listOfEffects;          //effects of action
+    [Tooltip("Normally a 'Node' type of action but if a GenericModalPicker is needed then select an appropriate type. Can be left at 'None' for all Authority actions")]
     public ActionType type;                     //broad category of actions (used to identify special cases that require the ModalGenericPicker)
 
     public int CoolDown { get; set; }           //if '0' then ready to go, otherwise # of turns remaining
