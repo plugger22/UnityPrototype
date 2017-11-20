@@ -300,7 +300,7 @@ public class ActorManager : MonoBehaviour
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
                                                     //use a Lambda to pass arguments to the action
-                                                    action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, node.NodeID); }
+                                                    action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
                                                 };
                                                 break;
                                             default:

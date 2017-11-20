@@ -73,7 +73,8 @@ public class TeamManager : MonoBehaviour
                 InitialiseGenericPickerRecall((int)Param);
                 break;
             case EventType.NeutraliseTeamAction:
-                InitialiseGenericPickerNeutralise((int)Param);
+                ModalActionDetails details = Param as ModalActionDetails;
+                InitialiseGenericPickerNeutralise(details);
                 break;
             case EventType.GenericTeamRecall:
                 GenericReturnData returnDataRecall = Param as GenericReturnData;
@@ -653,12 +654,12 @@ public void InitialiseTeams()
     /// does this for 1, 2 or 3 teams present at the node, immediate outcome window if none present.
     /// </summary>
     /// <param name="details"></param>
-    private void InitialiseGenericPickerNeutralise(int nodeID)
+    private void InitialiseGenericPickerNeutralise(ModalActionDetails details)
     {
         bool errorFlag = false;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         //does the node have any teams that can be neutralised?
-        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
             //double check to see if there are teams present at the node
@@ -667,8 +668,8 @@ public void InitialiseTeams()
             {
                 genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
                 genericDetails.side = Side.Resistance;
-                genericDetails.nodeID = nodeID;
-                genericDetails.actorSlotID = -1;
+                genericDetails.nodeID = details.NodeID;
+                genericDetails.actorSlotID = details.ActorSlotID;
                 //picker text
                 genericDetails.textTop = string.Format("{0}Neutralise{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                 genericDetails.textMiddle = string.Format("{0}Operatives are in place to Neutralise a team. The team will be forced to retire immediately{1}",
@@ -713,20 +714,20 @@ public void InitialiseTeams()
                     //check that limit hasn't been exceeded (max 3 options)
                     if (i > 2)
                     {
-                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", nodeID));
+                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", details.NodeID));
                         break;
                     }
                 }
             }
             else
             {
-                Debug.LogError(string.Format("Invalid listOfTeams (Empty or Null) for NodeID {0}", nodeID));
+                Debug.LogError(string.Format("Invalid listOfTeams (Empty or Null) for NodeID {0}", details.NodeID));
                 errorFlag = true;
             }
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", nodeID));
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.NodeID));
             errorFlag = true;
         }
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
@@ -766,25 +767,25 @@ public void InitialiseTeams()
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        if (node.RemoveTeam(data.optionID) == true)
-                        {
-                            //team successfully removed
-                            textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
-                            textBottom = "The team will spend one turn in Transit and be available thereafter";
-                        }
-                        else
-                        {
-                            //Problem occurred, team not removed
-                            textTop = "Problem occured, team NOT removed";
-                            textBottom = "Who did this? Speak up and step forward immediately!";
-                        }
-                        //OUTCOME Window
-                        ModalOutcomeDetails details = new ModalOutcomeDetails();
-                        details.textTop = textTop;
-                        details.textBottom = textBottom;
-                        details.sprite = sprite;
-                        details.side = Side.Authority;
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                            if (node.RemoveTeam(data.optionID) == true)
+                            {
+                                //team successfully removed
+                                textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
+                                textBottom = "The team will spend one turn in Transit and be available thereafter";
+                            }
+                            else
+                            {
+                                //Problem occurred, team not removed
+                                textTop = "Problem occured, team NOT removed";
+                                textBottom = "Who did this? Speak up and step forward immediately!";
+                            }
+                            //OUTCOME Window
+                            ModalOutcomeDetails details = new ModalOutcomeDetails();
+                            details.textTop = textTop;
+                            details.textBottom = textBottom;
+                            details.sprite = sprite;
+                            details.side = Side.Authority;
+                            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }
@@ -805,8 +806,6 @@ public void InitialiseTeams()
         if (data.optionID > -1)
         {
             //get currently selected node
-            string textTop = "Unknown";
-            string textBottom = "Unknown";
             if (data.nodeID != -1)
             {
                 Team team = GameManager.instance.dataScript.GetTeam(data.optionID);
@@ -816,26 +815,59 @@ public void InitialiseTeams()
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        if (node.RemoveTeam(data.optionID) == true)
+                        Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID, Side.Resistance);
+                        if (actor != null)
                         {
-                            //team successfully removed
-                            textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
-                            textBottom = "The team will spend one turn in Transit and be available thereafter";
-                        }
-                        else
-                        {
-                            //Problem occurred, team not removed
-                            textTop = "Problem occured, team NOT removed";
-                            textBottom = "Who did this? Speak up and step forward immediately!";
-                        }
+                            StringBuilder builderTop = new StringBuilder();
+                            StringBuilder builderBottom = new StringBuilder();
 
-                        //OUTCOME Window
-                        ModalOutcomeDetails details = new ModalOutcomeDetails();
-                        details.textTop = textTop;
-                        details.textBottom = textBottom;
-                        details.sprite = sprite;
-                        details.side = Side.Resistance;
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                            if (node.RemoveTeam(data.optionID) == true)
+                            {
+                                //team successfully removed
+                                builderTop.Append(string.Format("{0}Operatives have succeeded!{1}", colourNormal, colourEnd));
+                                builderBottom.Append(string.Format("{0}{1}{2}{3} team removed{4}", colourTeam, team.Arc.name.ToUpper(), colourEnd, 
+                                    colourEffect, colourEnd));
+
+                                //Process any other effects, if Neutralise was successfull, ignore otherwise
+                                Action action = actor.Arc.nodeAction;
+                                List<Effect> listOfEffects = action.GetEffects();
+                                if (listOfEffects.Count > 0)
+                                {
+                                    foreach (Effect effect in listOfEffects)
+                                    {
+                                        if (effect.ignoreEffect == false)
+                                        {
+                                            EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                                            if (effectReturn != null)
+                                            {
+                                                builderTop.AppendLine();
+                                                builderTop.Append(effectReturn.topText);
+                                                builderBottom.AppendLine();
+                                                builderBottom.Append(effectReturn.bottomText);
+                                            }
+                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //Problem occurred, team not removed
+                                builderTop.Append("Problem occured, team NOT removed");
+                                builderBottom.Append("Who did this? Speak up and step forward immediately!");
+                            }
+
+
+
+                            //OUTCOME Window
+                            ModalOutcomeDetails details = new ModalOutcomeDetails();
+                            details.textTop = builderTop.ToString();
+                            details.textBottom = builderBottom.ToString();
+                            details.sprite = sprite;
+                            details.side = Side.Resistance;
+                            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                        }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }

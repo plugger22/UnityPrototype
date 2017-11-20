@@ -34,6 +34,7 @@ public class ModalGenericPicker : MonoBehaviour
 
     private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
     private int nodeIDSelected;
+    private int actorSlotIDSelected; 
     private EventType returnEvent;                          //event to trigger once confirmation button is clicked
 
     private string colourEffect;
@@ -182,6 +183,7 @@ public class ModalGenericPicker : MonoBehaviour
             if (details.arrayOfOptions.Length > 0)
             {
                 nodeIDSelected = details.nodeID;
+                actorSlotIDSelected = details.actorSlotID;
                 //assign sprites, texts, optionID's and tooltips
                 for (int i = 0; i < details.arrayOfOptions.Length; i++)
                 {
@@ -358,6 +360,7 @@ public class ModalGenericPicker : MonoBehaviour
         GenericReturnData returnData = new GenericReturnData();
         returnData.optionID = optionIDSelected;
         returnData.nodeID = nodeIDSelected;
+        returnData.actorSlotID = actorSlotIDSelected;
         //close picker window regardless
         EventManager.instance.PostNotification(EventType.CloseGenericPicker, this);
         //trigger the appropriate return Event and pass selected optionID back to the originating class

@@ -119,10 +119,6 @@ public class ActionManager : MonoBehaviour
                             //two builders for top and bottom texts
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
-
-                            //builderTop.Append(string.Format("{0}{1}, ID {2}{3}", colourNormal, node.NodeName, node.NodeID, colourEnd));
-                            //builderTop.AppendLine();
-
                             //
                             // - - - Process effects
                             //
@@ -236,34 +232,6 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenTeamPicker, this, details);
     }
 
-    /*
-    /// <summary>
-    /// Handles Authority "Recall Team" action
-    /// </summary>
-    /// <param name="nodeID"></param>
-    public void ProcessTeamRecall(int nodeID)
-    {
-        bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        //default data 
-        outcomeDetails.side = Side.Authority;
-        outcomeDetails.textTop = "Team has been recalled";
-        outcomeDetails.textBottom = "Home for Tea!";
-        outcomeDetails.sprite = targetSprite;
-
-        //recall team - - -  TO DO -> note this should be replaced by a generic pick list UI of available teams
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to window
-            outcomeDetails.textTop = "There is a fault in the system. Teams are not responding";
-            outcomeDetails.textBottom = "Team recall Failed";
-            outcomeDetails.sprite = errorSprite;
-        }
-        //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-    }
-    */
 
     //methods above here
 }

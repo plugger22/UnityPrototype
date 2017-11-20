@@ -14,16 +14,14 @@ public class Effect : ScriptableObject
     public string description;                                  //tooltip, eg. "Stability +1"
     public Side side;                                           //which side does the effect apply to?
 
-    /*//Criteria that needs to be met for the Effect to apply
-    public EffectCriteria criteriaEffect;
-    public Comparison criteriaCompare;
-    public int criteriaValue;*/
-
     public List<Criteria> listOfCriteria;                       //list of effect criteria that must be true for an effect to occur
 
     //result of effect
     public EffectOutcome effectOutcome;                         //standard effect
     public Result effectResult;                                 //leave as 'None' if there is no specific stat adjustment
     public int effectValue;                                     //leave as '0' if there is no specific stat adjustment
+    [Tooltip("True only for cases where a ModalGenericPicker is needed rather than a straight ProcessEffect. False by default")]
+    public bool ignoreEffect;                           
+
 
 }

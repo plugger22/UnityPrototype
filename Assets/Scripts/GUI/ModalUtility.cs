@@ -101,6 +101,7 @@ namespace modalAPI
     {
         public int optionID;
         public int nodeID;
+        public int actorSlotID;                    
     }
 }
 
