@@ -42,6 +42,11 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfFourConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
 
+    //gear lists (available gear for this level) -> gearID's
+    public List<int> listOfCommonGear = new List<int>();
+    public List<int> listOfRareGear = new List<int>();
+    public List<int> listOfUniqueGear = new List<int>();
+
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
     private Dictionary<int, Node> dictOfNodes = new Dictionary<int, Node>();                        //Key -> nodeID, Value -> Node
@@ -56,6 +61,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();               //Key -> teamID, Value -> Team
     private Dictionary<string, int> dictOfLookupTeamArcs = new Dictionary<string, int>();           //Key -> teamArc name, Value -> TeamArcID
     private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
+    private Dictionary<int, Gear> dictOfGear = new Dictionary<int, Gear>();                         //Key -> gearID, Value -> Gear
 
     /// <summary>
     /// default constructor
@@ -280,6 +286,31 @@ public class DataManager : MonoBehaviour
         Debug.Log(string.Format("DataManager: Initialise -> dictOfTeamArcs has {0} entries{1}", counter, "\n"));
         //arrayOfTeams
         arrayOfTeams = new int[counter, (int)TeamInfo.Count];
+        //
+        // - - - Gear - - -
+        //
+        counter = 0;
+        //get GUID of all SO Gear Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var gearGUID = AssetDatabase.FindAssets("t:Gear");
+        foreach (var guid in gearGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object gearObject = AssetDatabase.LoadAssetAtPath(path, typeof(Gear));
+            //assign a zero based unique ID number
+            Gear gear = gearObject as Gear;
+            //set data
+            gear.gearID = counter++;
+            //add to dictionary
+            try
+            { dictOfGear.Add(gear.gearID, gear); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Gear (Null)"); counter--; }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGear has {0} entries{1}", counter, "\n"));
         //
         // - - - Actor Qualities - - -
         //
@@ -1189,6 +1220,63 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
         return arrayOfQualities[(int)side, qualityNum];
+    }
+
+    //
+    // - - - Gear - - -
+    //
+
+    /// <summary>
+    /// returns dictionary of Gear (all metaLevels)
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<int, Gear> GetAllGear()
+    { return dictOfGear; }
+
+    /// <summary>
+    /// returns item of Gear, Null if not found
+    /// </summary>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public Gear GetGear(int gearID)
+    {
+        if (dictOfGear.ContainsKey(gearID))
+        { return dictOfGear[gearID]; }
+        else { Debug.LogWarning(string.Format("Not found in gearID {0}, in dict {1}", gearID, "\n")); }
+        return null;
+    }
+
+    /// <summary>
+    /// Initialise lists of gear that are available in the current level
+    /// </summary>
+    /// <param name="listOfGearID"></param>
+    /// <param name="rarity"></param>
+    public void SetGearList(List<int> listOfGearID, GearLevel rarity)
+    {
+        if (listOfGearID != null)
+        {
+            if (listOfGearID.Count > 0)
+            {
+                switch(rarity)
+                {
+                    case GearLevel.Common:
+                        listOfCommonGear.AddRange(listOfGearID);
+                        break;
+                    case GearLevel.Rare:
+                        listOfRareGear.AddRange(listOfGearID);
+                        break;
+                    case GearLevel.Unique:
+                        listOfUniqueGear.AddRange(listOfGearID);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity));
+                        break;
+                }
+                Debug.Log(string.Format("DataManager -> SetGearList {0} records for GearLevel \"{1}\"{2}", listOfGearID.Count, rarity, "\n"));
+            }
+            else { Debug.LogError("Empty listOfGearID"); }
+        }
+        else { Debug.LogError("Invalid listOfGearID (Null)"); }
     }
 
     //new methods above here

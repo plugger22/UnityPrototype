@@ -303,6 +303,17 @@ public class ActorManager : MonoBehaviour
                                                     action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
                                                 };
                                                 break;
+                                            case ActionType.Gear:
+                                                details = new EventButtonDetails()
+                                                {
+                                                    buttonTitle = tempAction.name,
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                                    buttonTooltipMain = tempAction.tooltipText,
+                                                    buttonTooltipDetail = builder.ToString(),
+                                                    //use a Lambda to pass arguments to the action
+                                                    action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
+                                                };
+                                                break;
                                             default:
                                                 Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.type \"{0}\"", actor.Arc.nodeAction.type));
                                                 break;

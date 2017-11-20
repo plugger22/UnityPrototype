@@ -9,8 +9,11 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Gear")]
 public class Gear : ScriptableObject
 {
-    public int GearID { get; set; }
+    [HideInInspector] public int gearID;
+
     public string description;
+    public GearLevel rarity;
+    public MetaLevel metaLevel;
       
 
 }

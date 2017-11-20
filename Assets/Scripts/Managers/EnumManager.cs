@@ -43,6 +43,11 @@ namespace gameAPI
     public enum ActionType { None, Node, NeutraliseTeam, Gear, Recruit}
 
     //
+    // - - - Gear - - -
+    //
+    public enum GearLevel { Common, Rare, Unique, Count}
+
+    //
     // - - - Effects - - -
     //
     public enum EffectCriteria {

@@ -338,7 +338,7 @@ public class TargetManager : MonoBehaviour
                                 //player has special gear?
                                 if (target.gear != null)
                                 {
-                                    if (GameManager.instance.playerScript.CheckGearPresent(target.gear.GearID) == true)
+                                    if (GameManager.instance.playerScript.CheckGearPresent(target.gear.gearID) == true)
                                     { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.gear.name, gearEffect, colourEnd)); }
                                     else
                                     { tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.gear.name, colourEnd)); }
@@ -462,7 +462,7 @@ public class TargetManager : MonoBehaviour
                                 //player has special gear?
                                 if (target.gear != null)
                                 {
-                                    if (GameManager.instance.playerScript.CheckGearPresent(target.gear.GearID) == true)
+                                    if (GameManager.instance.playerScript.CheckGearPresent(target.gear.gearID) == true)
                                     { tally += gearEffect; }
                                 }
                             }

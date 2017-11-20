@@ -676,7 +676,7 @@ public void InitialiseTeams()
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Neutralise team. Mouseover teams for more information.";
                 //loop teams present at node
-                int turnsAgo, deployedTeams;
+                int turnsAgo;
                 string dataColour;
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
@@ -693,19 +693,8 @@ public void InitialiseTeams()
                         tooltipDetails.textHeader = string.Format("{0}{1}{2} {3}{4}{5}", colourTeam, team.Arc.name.ToUpper(), colourEnd, colourNormal, team.Name, colourEnd);
                         turnsAgo = GameManager.instance.turnScript.Turn - team.TurnDeployed;
                         if (team.Timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
-                        tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}",
-                            dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.Timer, colourEnd, team.Timer != 1 ? "s" : "");
-                        Actor actor = GameManager.instance.dataScript.GetActor(team.ActorSlotID, Side.Authority);
-                        if (actor != null)
-                        {
-                            deployedTeams = actor.CheckNumOfTeams();
-                            if (deployedTeams < actor.Datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
-                            tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}",
-                                colourNormal, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourEnd, colourActor, actor.Arc.name, colourEnd, colourNormal,
-                                colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd,
-                                dataColour, actor.Datapoint2, colourEnd, colourNormal, colourEnd);
-                        }
-                        else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.ActorSlotID)); }
+                        tooltipDetails.textMain = string.Format("Will be immediately removed from the location.");
+                        tooltipDetails.textDetails = string.Format("{0}Automatic success{1}", colourEffect, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
