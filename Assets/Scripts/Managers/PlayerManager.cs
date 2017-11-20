@@ -42,4 +42,10 @@ public class PlayerManager : MonoBehaviour
     public bool CheckGearPresent(int gearID)
     { return listOfGear.Exists(id => id == gearID); }
 
+    /// <summary>
+    /// returns the amount of gear the player has in their inventory
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumOfGear()
+    { return listOfGear.Count; }
 }

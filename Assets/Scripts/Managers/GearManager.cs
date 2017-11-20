@@ -9,8 +9,7 @@ using gameAPI;
 /// </summary>
 public class GearManager : MonoBehaviour
 {
-
-    
+    [Range(0, 4)] public int maxNumOfGear = 3;
 
 
     private string colourEffect;
@@ -117,10 +116,6 @@ public class GearManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
-            //double check to see if there are teams present at the node
-            List<Team> listOfTeams = node.GetTeams();
-            if (listOfTeams != null && listOfTeams.Count > 0)
-            {
                 genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
                 genericDetails.side = Side.Resistance;
                 genericDetails.nodeID = details.NodeID;
@@ -131,7 +126,7 @@ public class GearManager : MonoBehaviour
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Neutralise team. Mouseover teams for more information.";
                 //loop teams present at node
-                int turnsAgo;
+                /*int turnsAgo;
                 string dataColour;
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
@@ -161,13 +156,7 @@ public class GearManager : MonoBehaviour
                         Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", details.NodeID));
                         break;
                     }
-                }
-            }
-            else
-            {
-                Debug.LogError(string.Format("Invalid listOfTeams (Empty or Null) for NodeID {0}", details.NodeID));
-                errorFlag = true;
-            }
+                }*/
         }
         else
         {
@@ -180,7 +169,7 @@ public class GearManager : MonoBehaviour
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.side = Side.Resistance;
-            outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
+            outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
             outcomeDetails.textBottom = "Heads will roll!";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
