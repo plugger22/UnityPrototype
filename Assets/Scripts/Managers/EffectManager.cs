@@ -224,7 +224,8 @@ public class EffectManager : MonoBehaviour
                                             }
                                             break;
                                         case EffectCriteria.NumGear:
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, GameManager.instance.playerScript.NumOfGear, criteria.criteriaCompare);
+                                            //Note: effect criteria value is ignored in this case
+                                            compareTip = ComparisonCheck(GameManager.instance.gearScript.maxNumOfGear, GameManager.instance.playerScript.GetNumOfGear(), criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "maxxed Gear Allowance");

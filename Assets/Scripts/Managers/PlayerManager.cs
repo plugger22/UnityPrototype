@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using System.Text;
 
 /// <summary>
 /// handles all player related data and methods
@@ -14,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     public int Renown { get; set; }
 
     public int NumOfRecruits { get; set; }
-    public int NumOfGear { get; set; }
+    //public int NumOfGear { get; set; }
 
     private List<int> listOfGear = new List<int>();                 //gearID's of all gear items in inventory
 
@@ -48,4 +49,31 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public int GetNumOfGear()
     { return listOfGear.Count; }
+
+    /// <summary>
+    /// DEBUG method to show players gear in lieu of a working UI element
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayGear()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append("Player's Gear");
+        builder.AppendLine();
+        builder.AppendLine();
+        foreach(int gearID in listOfGear)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+            if (gear != null)
+            {
+                builder.Append(gear.name);
+                builder.AppendLine();
+                builder.Append(string.Format("Metalevel \"{0}\", gearID {1}, rarity \"{2}\"", gear.metaLevel, gearID, gear.rarity));
+                builder.AppendLine();
+            }
+        }
+        return builder.ToString();
+    }
+
+    public List<int> GetListOfGear()
+    { return listOfGear; }
 }

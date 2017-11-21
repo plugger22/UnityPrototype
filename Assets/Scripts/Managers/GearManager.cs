@@ -10,6 +10,8 @@ using gameAPI;
 public class GearManager : MonoBehaviour
 {
     [Range(0, 4)] public int maxNumOfGear = 3;
+    [Tooltip("Whenever a random selection of gear is provided there is a chance * actor Ability of it being a Rare item, otherwise it's the standard Common")]
+    [Range(1, 10)] public int chanceOfRareGear = 5;
 
 
     private string colourEffect;
@@ -30,6 +32,7 @@ public class GearManager : MonoBehaviour
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.GearAction, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent);
     }
 
 
@@ -51,6 +54,10 @@ public class GearManager : MonoBehaviour
             case EventType.GearAction:
                 ModalActionDetails details = Param as ModalActionDetails;
                 InitialiseGenericPickerGear(details);
+                break;
+            case EventType.GenericGearChoice:
+                GenericReturnData returnDataGear = Param as GenericReturnData;
+                ProcessGearChoice(returnDataGear);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -111,52 +118,127 @@ public class GearManager : MonoBehaviour
     private void InitialiseGenericPickerGear(ModalActionDetails details)
     {
         bool errorFlag = false;
+        int gearID, index;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         //does the node have any teams that can be neutralised?
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
-                genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
-                genericDetails.side = Side.Resistance;
-                genericDetails.nodeID = details.NodeID;
-                genericDetails.actorSlotID = details.ActorSlotID;
-                //picker text
-                genericDetails.textTop = string.Format("{0}Neutralise{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
-                genericDetails.textMiddle = string.Format("{0}Operatives are in place to Neutralise a team. The team will be forced to retire immediately{1}",
-                    colourNormal, colourEnd);
-                genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Neutralise team. Mouseover teams for more information.";
-                //loop teams present at node
-                /*int turnsAgo;
-                string dataColour;
-                for (int i = 0; i < listOfTeams.Count; i++)
+            genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
+            genericDetails.side = Side.Resistance;
+            genericDetails.nodeID = details.NodeID;
+            genericDetails.actorSlotID = details.ActorSlotID;
+            //picker text
+            genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+            genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
+                colourNormal, colourEnd);
+            genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
+            //
+            //generate temp list of gear to choose from
+            //
+            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
+            List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Rare));
+            //remove from lists any gear that the player currently has
+            List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
+            if (tempPlayerGear.Count > 0)
+            {
+
+                for (int i = 0; i < tempPlayerGear.Count; i++)
                 {
-                    Team team = listOfTeams[i];
-                    if (team != null)
+                    gearID = tempPlayerGear[i];
+                    if (tempCommonGear.Exists(id => id == gearID) == true)
+                    { tempCommonGear.Remove(gearID); }
+                    else if (tempRareGear.Exists(id => id == gearID) == true)
+                    { tempRareGear.Remove(gearID); }
+                }
+            }
+            //
+            //select two items of gear for the picker
+            //
+            int[] arrayOfGear = new int[2];
+            int countOfGear = 0;
+            gearID = -1;
+            for (int i = 0; i < arrayOfGear.Length; i++)
+            {
+                //any rare gear available?
+                if (tempRareGear.Count > 0)
+                {
+                    //chance of rare gear -> base chance * actor ability (or 1 if player)
+                    int chance = chanceOfRareGear;
+                    Actor actor = GameManager.instance.dataScript.GetActor(details.ActorSlotID, Side.Resistance);
+                    if (actor != null)
+                    {
+                        //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
+                        if (node.NodeID != GameManager.instance.nodeScript.nodePlayer)
+                        { chance *= actor.Datapoint2; }
+                    }
+                    else
+                    {
+                        chance = 0;
+                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.ActorSlotID));
+                    }
+                    if (Random.Range(0, 100) < chance)
+                    {
+                        index = Random.Range(0, tempRareGear.Count);
+                        gearID = tempRareGear[index];
+                        tempRareGear.RemoveAt(index);
+                    }
+                    //if failed chance for rare gear then need to get common
+                    else if (tempCommonGear.Count > 0)
+                    {
+                        index = Random.Range(0, tempCommonGear.Count);
+                        gearID = tempCommonGear[index];
+                        tempCommonGear.RemoveAt(index);
+                    }
+                }
+                //common gear
+                else
+                {
+                    if (tempCommonGear.Count > 0)
+                    {
+                        index = Random.Range(0, tempCommonGear.Count);
+                        gearID = tempCommonGear[index];
+                        tempCommonGear.RemoveAt(index);
+                    }
+                }
+                //found some gear?
+                if (gearID > -1)
+                { arrayOfGear[i] = gearID; countOfGear++; }
+            }
+            //check there is at least one item of gear available
+            if (countOfGear < 1)
+            {
+                //OUTCOME -> No gear available
+                Debug.LogWarning("GearManager: No gear available in InitaliseGenericPickerGear");
+                errorFlag = true;
+            }
+            else
+            {
+                //
+                //loop gearID's that have been selected and package up ready for ModalGenericPicker
+                //
+                for (int i = 0; i < countOfGear; i++)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(arrayOfGear[i]);
+                    if (gear != null)
                     {
                         //option details
                         GenericOptionDetails optionDetails = new GenericOptionDetails();
-                        optionDetails.optionID = team.TeamID;
-                        optionDetails.text = team.Arc.name.ToUpper();
-                        optionDetails.sprite = team.Arc.sprite;
+                        optionDetails.optionID = gear.gearID;
+                        optionDetails.text = gear.name.ToUpper();
+                        optionDetails.sprite = gear.sprite;
                         //tooltip -> TO DO
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                        tooltipDetails.textHeader = string.Format("{0}{1}{2} {3}{4}{5}", colourGear, team.Arc.name.ToUpper(), colourEnd, colourNormal, team.Name, colourEnd);
-                        turnsAgo = GameManager.instance.turnScript.Turn - team.TurnDeployed;
-                        if (team.Timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
-                        tooltipDetails.textMain = string.Format("Will be immediately removed from the location.");
-                        tooltipDetails.textDetails = string.Format("{0}Automatic success{1}", colourEffect, colourEnd);
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd);
+                        tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}", colourEffect, gear.rarity, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
                     }
-                    else { Debug.LogError(string.Format("Invalid team (Null) for listOfTeams[{0}]", i)); }
-                    //check that limit hasn't been exceeded (max 3 options)
-                    if (i > 2)
-                    {
-                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", details.NodeID));
-                        break;
-                    }
-                }*/
+                    else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
+                }
+            }
         }
         else
         {
@@ -180,7 +262,14 @@ public class GearManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Processes choice of Gear
+    /// </summary>
+    /// <param name="returnDetails"></param>
+    public void ProcessGearChoice(GenericReturnData returnDetails)
+    {
 
+    }
 
     //new methods above here
 }

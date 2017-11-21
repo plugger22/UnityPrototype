@@ -299,7 +299,6 @@ public class ActorManager : MonoBehaviour
                                                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
-                                                    //use a Lambda to pass arguments to the action
                                                     action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
                                                 };
                                                 break;
@@ -310,7 +309,6 @@ public class ActorManager : MonoBehaviour
                                                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
-                                                    //use a Lambda to pass arguments to the action
                                                     action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
                                                 };
                                                 break;

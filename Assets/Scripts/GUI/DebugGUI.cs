@@ -51,10 +51,13 @@ public class DebugGUI : MonoBehaviour
             }
 
             //third button
-            if (GUI.Button(new Rect(15, 80, 80, 20), "Sec High"))
+            if (GUI.Button(new Rect(15, 80, 80, 20), "Gear"))
             {
-                Debug.Log("Button -> Switch Connection to High Security");
-                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.HighSec);
+                Debug.Log("Button -> Toggle Gear");
+                if (debugDisplay != 5)
+                { debugDisplay = 5; }
+                else { debugDisplay = 0; }
+                
             }
 
             //fourth button
@@ -157,6 +160,14 @@ public class DebugGUI : MonoBehaviour
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisActors = GameManager.instance.teamScript.GetTeamActorAnalysis();
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysisActors, customBackground);
+                        }
+                        break;
+                    //player's gear
+                    case 5:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisActors = GameManager.instance.playerScript.DisplayGear();
                             GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysisActors, customBackground);
                         }
                         break;

@@ -845,9 +845,6 @@ public void InitialiseTeams()
                                 builderTop.Append("Problem occured, team NOT removed");
                                 builderBottom.Append("Who did this? Speak up and step forward immediately!");
                             }
-
-
-
                             //OUTCOME Window
                             ModalOutcomeDetails details = new ModalOutcomeDetails();
                             details.textTop = builderTop.ToString();

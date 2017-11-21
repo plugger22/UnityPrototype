@@ -1278,6 +1278,33 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfGearID (Null)"); }
     }
+    
+    /// <summary>
+    /// returns a list of gear according to rarity that is appropriate for the current level
+    /// </summary>
+    /// <param name="rarity"></param>
+    /// <returns></returns>
+    public List<int> GetListOfGear(GearLevel rarity)
+    {
+        List<int> tempList = new List<int>();
+        switch (rarity)
+        {
+            case GearLevel.Common:
+                tempList = listOfCommonGear;
+                break;
+            case GearLevel.Rare:
+                tempList = listOfRareGear;
+                break;
+            case GearLevel.Unique:
+                tempList = listOfUniqueGear;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity));
+                break;
+        }
+        //return list
+        return tempList;
+    }
 
     //new methods above here
 }

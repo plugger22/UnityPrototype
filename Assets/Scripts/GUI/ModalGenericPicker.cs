@@ -372,6 +372,9 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.GenericNeutraliseTeam:
                 EventManager.instance.PostNotification(returnEvent, this, returnData);
                 break;
+            case EventType.GenericGearChoice:
+                EventManager.instance.PostNotification(returnEvent, this, returnData);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", returnEvent));
                 break;
