@@ -280,6 +280,7 @@ public class ActorManager : MonoBehaviour
 
                                         switch (actor.Arc.nodeAction.type)
                                         {
+                                            case ActionType.Recruit:    //Placeholder
                                             case ActionType.Node:
                                             case ActionType.None:
                                                 details = new EventButtonDetails()

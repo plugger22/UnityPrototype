@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 using modalAPI;
 using gameAPI;
 
@@ -25,10 +26,34 @@ public class GearManager : MonoBehaviour
     private string colourEnd;
 
 
-
-    // internal initialization
-    void Start ()
+    /// <summary>
+    /// Initialisation
+    /// </summary>
+    public void Initialise()
     {
+        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
+        if (dictOfGear != null)
+        {
+            int gameLevel = GameManager.instance.GetMetaLevel();
+            //set up an array of Lists, with index corresponding to GearLevel enum, eg. Common / Rare / Unique
+            List<int>[] arrayOfGearLists = new List<int>[(int)GearLevel.Count];
+            for (int i = 0; i < arrayOfGearLists.Length; i++)
+            { arrayOfGearLists[i] = new List<int>(); }
+            //loop dict and allocate gear to various lists
+            foreach (var gearEntry in dictOfGear)
+            {
+                //check appropraite for metaLevel (same level or 'none', both are acceptable)
+                if (gearEntry.Value.metaLevel == MetaLevel.None || (int)gearEntry.Value.metaLevel == gameLevel)
+                {
+                    //assign to a list based on rarity
+                    arrayOfGearLists[(int)gearEntry.Value.rarity].Add(gearEntry.Key);
+                }
+            }
+            //initialise dataManager lists with local lists
+            for (int i = 0; i < arrayOfGearLists.Length; i++)
+            { GameManager.instance.dataScript.SetGearList(arrayOfGearLists[i], (GearLevel)i); }
+        }
+        else { Debug.LogError("Invalid dictOfGear (Null) -> Gear not initialised"); }
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.GearAction, OnEvent);
@@ -71,7 +96,7 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -83,32 +108,7 @@ public class GearManager : MonoBehaviour
     }
 
 
-    public void Initialise()
-    {
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
-        if (dictOfGear != null)
-        {
-            int gameLevel = GameManager.instance.GetMetaLevel();
-            //set up an array of Lists, with index corresponding to GearLevel enum, eg. Common / Rare / Unique
-            List<int>[] arrayOfGearLists = new List<int>[(int)GearLevel.Count];
-            for(int i = 0; i < arrayOfGearLists.Length; i++)
-            { arrayOfGearLists[i] = new List<int>(); }
-            //loop dict and allocate gear to various lists
-            foreach(var gearEntry in dictOfGear)
-            {
-                //check appropraite for metaLevel (same level or 'none', both are acceptable)
-                if (gearEntry.Value.metaLevel == MetaLevel.None || (int)gearEntry.Value.metaLevel == gameLevel)
-                {
-                    //assign to a list based on rarity
-                    arrayOfGearLists[(int)gearEntry.Value.rarity].Add(gearEntry.Key);
-                }
-            }
-            //initialise dataManager lists with local lists
-            for(int i = 0; i < arrayOfGearLists.Length; i++)
-            { GameManager.instance.dataScript.SetGearList(arrayOfGearLists[i], (GearLevel)i); }
-        }
-        else { Debug.LogError("Invalid dictOfGear (Null) -> Gear not initialised"); }
-    }
+
 
 
     /// <summary>
@@ -124,7 +124,7 @@ public class GearManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
-            genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
+            genericDetails.returnEvent = EventType.GenericGearChoice;
             genericDetails.side = Side.Resistance;
             genericDetails.nodeID = details.NodeID;
             genericDetails.actorSlotID = details.ActorSlotID;
@@ -157,9 +157,9 @@ public class GearManager : MonoBehaviour
             //
             int[] arrayOfGear = new int[2];
             int countOfGear = 0;
-            gearID = -1;
             for (int i = 0; i < arrayOfGear.Length; i++)
             {
+                gearID = -1;
                 //any rare gear available?
                 if (tempRareGear.Count > 0)
                 {
@@ -266,9 +266,79 @@ public class GearManager : MonoBehaviour
     /// Processes choice of Gear
     /// </summary>
     /// <param name="returnDetails"></param>
-    public void ProcessGearChoice(GenericReturnData returnDetails)
+    public void ProcessGearChoice(GenericReturnData data)
     {
+        if (data.optionID > -1)
+        {
+            //get currently selected node
+            if (data.nodeID != -1)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
+                
+                if (gear != null)
+                {
+                    Sprite sprite = gear.sprite;
+                    Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                    if (node != null)
+                    {
+                        Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID, Side.Resistance);
+                        if (actor != null)
+                        {
+                            StringBuilder builderTop = new StringBuilder();
+                            StringBuilder builderBottom = new StringBuilder();
 
+                            if (GameManager.instance.playerScript.AddGear(data.optionID) == true)
+                            {
+                                //team successfully removed
+                                builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
+                                builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
+                                    colourEffect, colourEnd));
+
+                                //Process any other effects, if Neutralise was successfull, ignore otherwise
+                                Action action = actor.Arc.nodeAction;
+                                List<Effect> listOfEffects = action.GetEffects();
+                                if (listOfEffects.Count > 0)
+                                {
+                                    foreach (Effect effect in listOfEffects)
+                                    {
+                                        if (effect.ignoreEffect == false)
+                                        {
+                                            EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                                            if (effectReturn != null)
+                                            {
+                                                builderTop.AppendLine();
+                                                builderTop.Append(effectReturn.topText);
+                                                builderBottom.AppendLine();
+                                                builderBottom.Append(effectReturn.bottomText);
+                                            }
+                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //Problem occurred, team not removed
+                                builderTop.Append("Problem occured, gear NOT obtained");
+                                builderBottom.Append("Who did this? B*stard!");
+                            }
+                            //OUTCOME Window
+                            ModalOutcomeDetails details = new ModalOutcomeDetails();
+                            details.textTop = builderTop.ToString();
+                            details.textBottom = builderBottom.ToString();
+                            details.sprite = sprite;
+                            details.side = Side.Resistance;
+                            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                        }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }
+                    }
+                    else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
+                }
+                else { Debug.LogError(string.Format("Invalid Gear (Null) for teamID {0}", data.optionID)); }
+            }
+            else { Debug.LogError("Highlighted node invalid (default '-1' value)"); }
+        }
+        else { Debug.LogError("Invalid gearID (default '-1')"); }
     }
 
     //new methods above here

@@ -750,9 +750,9 @@ public void InitialiseTeams()
             if (data.nodeID != -1)
             {
                 Team team = GameManager.instance.dataScript.GetTeam(data.optionID);
-                Sprite sprite = team.Arc.sprite;
                 if (team != null)
                 {
+                    Sprite sprite = team.Arc.sprite;
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
@@ -798,9 +798,9 @@ public void InitialiseTeams()
             if (data.nodeID != -1)
             {
                 Team team = GameManager.instance.dataScript.GetTeam(data.optionID);
-                Sprite sprite = team.Arc.sprite;
                 if (team != null)
                 {
+                    Sprite sprite = team.Arc.sprite;
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {

@@ -35,6 +35,10 @@ public class PlayerManager : MonoBehaviour
         GameManager.instance.nodeScript.nodePlayer = nodeID;
     }
 
+    //
+    /// - - - Gear - - -
+    /// 
+
     /// <summary>
     /// returns true if GearID present in player's inventory
     /// </summary>
@@ -57,17 +61,21 @@ public class PlayerManager : MonoBehaviour
     public string DisplayGear()
     {
         StringBuilder builder = new StringBuilder();
-        builder.Append("Player's Gear");
-        builder.AppendLine();
+        builder.Append(" Player's Gear");
         builder.AppendLine();
         foreach(int gearID in listOfGear)
         {
             Gear gear = GameManager.instance.dataScript.GetGear(gearID);
             if (gear != null)
             {
-                builder.Append(gear.name);
                 builder.AppendLine();
-                builder.Append(string.Format("Metalevel \"{0}\", gearID {1}, rarity \"{2}\"", gear.metaLevel, gearID, gear.rarity));
+                builder.Append(string.Format(" {0}", gear.name.ToUpper()));
+                builder.AppendLine();
+                builder.Append(string.Format(" Metalevel \"{0}\"", gear.metaLevel));
+                builder.AppendLine();
+                builder.Append(string.Format(" gearID {0}", gear.gearID));
+                builder.AppendLine();
+                builder.Append(string.Format(" rarity \"{0}\"", gear.rarity));
                 builder.AppendLine();
             }
         }
@@ -76,4 +84,34 @@ public class PlayerManager : MonoBehaviour
 
     public List<int> GetListOfGear()
     { return listOfGear; }
+
+    /// <summary>
+    /// add gear to player's inventory. Checks for duplicates and null Gear. Returns true if successful.
+    /// </summary>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public bool AddGear(int gearID)
+    {
+        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+        if (gear != null)
+        {
+            //check gear not already in inventory
+            if (CheckGearPresent(gearID) == false)
+            {
+                listOfGear.Add(gearID);
+                Debug.Log(string.Format("PlayerManager: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n"));
+                return true;
+            }
+            else
+            {
+                Debug.LogError(string.Format("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID));
+                return false;
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
+            return false;
+        }
+    }
 }

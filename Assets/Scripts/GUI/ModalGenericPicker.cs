@@ -328,6 +328,15 @@ public class ModalGenericPicker : MonoBehaviour
                         }
                         else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }
                         break;
+                    case EventType.GenericGearChoice:
+                        Gear gear = GameManager.instance.dataScript.GetGear(optionID);
+                        if (gear != null)
+                        {
+                            text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                            Debug.Log(string.Format("TeamPicker: gearID {0} selected{1}", optionID, "\n"));
+                        }
+                        else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", optionID)); }
+                        break;
                 }
             }
         }
@@ -342,6 +351,9 @@ public class ModalGenericPicker : MonoBehaviour
                     break;
                 case EventType.GenericNeutraliseTeam:
                     text = string.Format("{0}Neutralise{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
+                case EventType.GenericGearChoice:
+                    text = string.Format("{0}Gear{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
                 default:
                     text = string.Format("{0}Select {1}{2}ANY{3}{4} Option{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
