@@ -231,6 +231,29 @@ public class EffectManager : MonoBehaviour
                                                 BuildString(result, "maxxed Gear Allowance");
                                             }
                                             break;
+                                        case EffectCriteria.GearAvailability:
+                                            //checks to see if at least 1 piece of unused common gear is available
+                                            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
+                                            if (tempCommonGear.Count > 0)
+                                            {
+                                                //remove from lists any gear that the player currently has
+                                                List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
+                                                int gearID;
+                                                if (tempPlayerGear.Count > 0)
+                                                {
+                                                    for (int i = 0; i < tempPlayerGear.Count; i++)
+                                                    {
+                                                        gearID = tempPlayerGear[i];
+                                                        if (tempCommonGear.Exists(id => id == gearID) == true)
+                                                        { tempCommonGear.Remove(gearID); }
+                                                    }
+                                                }
+                                                if (tempCommonGear.Count > 0)
+                                                { compareTip = null; }
+                                                else { BuildString(result, "No Gear available"); }
+                                            }
+                                            else { BuildString(result, "No Gear available"); }
+                                            break;
                                         case EffectCriteria.RebelCause:
                                             compareTip = ComparisonCheck(criteria.criteriaValue, GameManager.instance.playerScript.RebelCauseCurrent, criteria.criteriaCompare);
                                             if (compareTip != null)

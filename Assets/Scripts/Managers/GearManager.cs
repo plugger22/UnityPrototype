@@ -120,7 +120,6 @@ public class GearManager : MonoBehaviour
         bool errorFlag = false;
         int gearID, index;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        //does the node have any teams that can be neutralised?
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {

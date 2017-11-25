@@ -54,7 +54,7 @@ namespace gameAPI
         None,
         //resistance
         NodeStability, NodeSecurity, NodeSupport,
-        NumRecruits, NumTeams, NumTracers, NumGear,
+        NumRecruits, NumTeams, NumTracers, NumGear, GearAvailability,
         TargetInfo,
         RebelCause,
         //authority
