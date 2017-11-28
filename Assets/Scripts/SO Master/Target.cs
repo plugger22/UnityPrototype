@@ -23,7 +23,8 @@ public class Target : ScriptableObject
     public bool IsKnownByAI { get; set; }               //is known by the AI?
     public int Timer { get; set; }                      //countdown timer, default '-1' for ignore
     public ActorArc actorArc;                       //actor arc with special bonus for target resolution (max. 1)
-    public Gear gear;                               //specific gear that provides bonus for target resolution (max. 1)
+    public GearType gearType;
     public List<Effect> listOfGoodEffects;        //all effects (SO's) that happen as a result of target successfully being resolved
     public List<Effect> listOfBadEffects;         //all effects (SO's) that happen as a result of target failing to be resolved
+
 }

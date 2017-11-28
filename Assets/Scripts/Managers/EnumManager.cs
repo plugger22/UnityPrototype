@@ -46,6 +46,7 @@ namespace gameAPI
     // - - - Gear - - -
     //
     public enum GearLevel { Common, Rare, Unique, Count}
+    public enum GearType { None, Infiltrate, Kinetic, Hacking, Stealth}
 
     //
     // - - - Effects - - -

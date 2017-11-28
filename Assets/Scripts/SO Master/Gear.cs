@@ -13,6 +13,7 @@ public class Gear : ScriptableObject
 
     public string description;
     public GearLevel rarity;
+    public GearType type;
     public MetaLevel metaLevel;
 
     public Sprite sprite;
