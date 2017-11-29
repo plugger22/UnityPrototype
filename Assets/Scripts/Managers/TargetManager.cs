@@ -234,7 +234,7 @@ public class TargetManager : MonoBehaviour
                     if (target.InfoLevel == 3) { infoColour = colourDataGood; }
                     else if (target.InfoLevel == 1) { infoColour = colourDataBad; }
                     tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, infoColour, target.InfoLevel, colourEnd));
-                    tempList.Add(string.Format("{0}{1}{2}", colourGear, target.gearType, colourEnd));
+                    tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gearType, colourEnd));
                     tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
                 }
             }
@@ -337,10 +337,16 @@ public class TargetManager : MonoBehaviour
                                 //player has special gear?
                                 if (target.gearType != GearType.None)
                                 {
-                                    if (GameManager.instance.playerScript.CheckGearPresent(target.gear.gearID) == true)
-                                    { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.gear.name, gearEffect, colourEnd)); }
+                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gearType);
+                                    if (gearID > -1)
+                                    {
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        if (gear != null)
+                                        { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, gear.name, gearEffect * (int)gear.rarity, colourEnd)); }
+                                        else { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+                                    }
                                     else
-                                    { tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.gear.name, colourEnd)); }
+                                    { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gearType, colourEnd)); }
                                 }
                             }
                             else
@@ -371,8 +377,8 @@ public class TargetManager : MonoBehaviour
                                     }
                                 }
                                 //gear not applicable (only when player at node)
-                                if (target.gear != null)
-                                { tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.gear.name, colourEnd)); }
+                                if (target.gearType != GearType.None)
+                                { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gearType, colourEnd)); }
                             }
                             break;
                         case TargetFactors.NodeSecurity:
@@ -459,10 +465,16 @@ public class TargetManager : MonoBehaviour
                             if (GameManager.instance.nodeScript.nodePlayer == node.NodeID)
                             {
                                 //player has special gear?
-                                if (target.gear != null)
+                                if (target.gearType != GearType.None)
                                 {
-                                    if (GameManager.instance.playerScript.CheckGearPresent(target.gear.gearID) == true)
-                                    { tally += gearEffect; }
+                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gearType);
+                                    if (gearID > -1)
+                                    {
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        if (gear != null)
+                                        { tally += gearEffect * (int)gear.rarity; }
+                                        else { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+                                    }
                                 }
                             }
                             else

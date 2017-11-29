@@ -368,8 +368,8 @@ public class ActorManager : MonoBehaviour
                             if (builder.Length > 0) { builder.AppendLine(); }
                             builder.Append(string.Format("{0}{1} {2}{3}", colourEffect, team.Arc.name.ToUpper(), team.Name, colourEnd));
                         }
-                        //button target details
-                        EventButtonDetails targetDetails = new EventButtonDetails()
+                        //button details
+                        EventButtonDetails recallDetails = new EventButtonDetails()
                         {
                             buttonTitle = "Recall Team",
                             buttonTooltipHeader = string.Format("{0}Recall Team{1}", sideColour, colourEnd),
@@ -378,7 +378,7 @@ public class ActorManager : MonoBehaviour
                             //use a Lambda to pass arguments to the action
                             action = () => { EventManager.instance.PostNotification(EventType.RecallTeamAction, this, node.NodeID); }
                         };
-                        tempList.Add(targetDetails);
+                        tempList.Add(recallDetails);
                     }
                     else { Debug.LogError(string.Format("Invalid listOfTeams (Null) for Node {0} \"{1}\", ID {2}", node.arc.name, node.NodeName, node.NodeID)); }
                 }

@@ -97,7 +97,7 @@ public class GearManager : MonoBehaviour
     public void SetColours()
     {
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
@@ -230,7 +230,8 @@ public class GearManager : MonoBehaviour
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
                         tooltipDetails.textHeader = string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd);
                         tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}", colourEffect, gear.rarity, colourEnd);
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffect, gear.rarity, colourEnd, 
+                            "\n", colourSide, gear.type, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;

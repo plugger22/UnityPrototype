@@ -48,6 +48,41 @@ public class PlayerManager : MonoBehaviour
     { return listOfGear.Exists(id => id == gearID); }
 
     /// <summary>
+    /// returns gearID of best piece of gear that matches type, '-1' if none
+    /// </summary>
+    /// <param name="gearType"></param>
+    /// <returns></returns>
+    public int CheckGearTypePresent(GearType gearType)
+    {
+        int gearID = -1;
+        int rarity = -1;
+        if (listOfGear.Count > 0)
+        {
+            //loop through looking for best piece of gear that matches the type
+            for (int i = 0; i < listOfGear.Count; i++)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                if (gear != null)
+                {
+                    if (gear.type == gearType)
+                    {
+                        //is it a better piece of gear (higher rarity) than already found?
+                        if ((int)gear.rarity > rarity)
+                        {
+                            rarity = (int)gear.rarity;
+                            gearID = gear.gearID;
+                        }
+                    }
+                }
+                else
+                { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+            }
+            return gearID;
+        }
+        else { return -1; }
+    }
+
+    /// <summary>
     /// returns the amount of gear the player has in their inventory
     /// </summary>
     /// <returns></returns>
@@ -77,6 +112,7 @@ public class PlayerManager : MonoBehaviour
                 builder.AppendLine();
                 builder.Append(string.Format(" rarity \"{0}\"", gear.rarity));
                 builder.AppendLine();
+                builder.Append(string.Format(" gearType \"{0}\"", gear.type));
             }
         }
         return builder.ToString();
