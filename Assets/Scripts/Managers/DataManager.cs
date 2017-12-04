@@ -21,8 +21,8 @@ public class DataManager : MonoBehaviour
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
     //actor quality input arrays (used to populate arrayOfQualities)
-    public string[] authorityQualities = new string[3];
-    public string[] resistanceQualities = new string[3];
+    public Quality[] authorityQualities = new Quality[3];
+    public Quality[] resistanceQualities = new Quality[3];
 
     //team pools
     private List<int> teamPoolReserve = new List<int>();
@@ -321,12 +321,33 @@ public class DataManager : MonoBehaviour
         //
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         arrayOfQualities = new string[(int)Side.Count, numOfQualities];
-        arrayOfQualities[(int)Side.Authority, 0] = authorityQualities[0];
-        arrayOfQualities[(int)Side.Authority, 1] = authorityQualities[1];
-        arrayOfQualities[(int)Side.Authority, 2] = authorityQualities[2];
-        arrayOfQualities[(int)Side.Resistance, 0] = resistanceQualities[0];
-        arrayOfQualities[(int)Side.Resistance, 1] = resistanceQualities[1];
-        arrayOfQualities[(int)Side.Resistance, 2] = resistanceQualities[2];
+        for(int i = 0; i < 3; i++)
+        {
+            //authority qualities
+            if (authorityQualities[i] != null)
+            {
+                if (authorityQualities[i].side == Side.Authority)
+                { arrayOfQualities[(int)Side.Authority, i] = authorityQualities[i].name; }
+                else
+                {
+                    Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", authorityQualities[i].name, authorityQualities[i].side, "\n"));
+                    arrayOfQualities[(int)Side.Authority, i] = "Unknown";
+                }
+            }
+            else { arrayOfQualities[(int)Side.Authority, i] = "Unknown"; }
+            //resistance qualities
+            if (resistanceQualities[i] != null)
+            {
+                if (resistanceQualities[i].side == Side.Resistance)
+                { arrayOfQualities[(int)Side.Resistance, i] = resistanceQualities[i].name; }
+                else
+                {
+                    Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", resistanceQualities[i].name, resistanceQualities[i].side, "\n"));
+                    arrayOfQualities[(int)Side.Resistance, i] = "Unknown";
+                }
+            }
+            else { arrayOfQualities[(int)Side.Resistance, i] = "Unknown"; }
+        }
         //arrayOfActors
         arrayOfActors = new Actor[(int)Side.Count, GameManager.instance.actorScript.numOfOnMapActors];
     }
