@@ -14,13 +14,15 @@ using UnityEngine.Events;
 public class ActorManager : MonoBehaviour
 {
 
-    [HideInInspector] public int numOfActorsCurrent;    //NOTE -> Not hooked up yet (need to show blank actors for any that aren't currently in use)
-    public int numOfActorsTotal = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
-                                          //is the total for one side (duplicated by the other side)
+    [HideInInspector] public int numOfActiveActors;    //NOTE -> Not hooked up yet (need to show blank actors for any that aren't currently in use)
+    
+    [Range(1, 4)] public int numOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
+                                                        //is the total for one side (duplicated by the other side)
+    [Range(1, 6)] public int numOfReserveActors = 4;    //total number of actors that can be in the replacement pool (both sides)
 
     public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
 
-    //private Actor[,] arrayOfActors;       //indexes [Side, numOfActors], two sets are created, one for each side
+    private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
     //colour palette for Generic tool tip
     private string colourBlue;
@@ -35,9 +37,9 @@ public class ActorManager : MonoBehaviour
     public void PreInitialiseActors()
     {
         //number of actors, default 4
-        numOfActorsTotal = numOfActorsTotal == 4 ? numOfActorsTotal : 4;
-        numOfActorsCurrent = numOfActorsCurrent < 1 ? 1 : numOfActorsCurrent;
-        numOfActorsCurrent = numOfActorsCurrent > numOfActorsTotal ? numOfActorsTotal : numOfActorsCurrent;
+        numOfOnMapActors = numOfOnMapActors == 4 ? numOfOnMapActors : 4;
+        numOfActiveActors = numOfActiveActors < 1 ? 1 : numOfActiveActors;
+        numOfActiveActors = numOfActiveActors > numOfOnMapActors ? numOfOnMapActors : numOfActiveActors;
     }
 
 
@@ -45,9 +47,8 @@ public class ActorManager : MonoBehaviour
     {
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        
-        InitialiseActors(numOfActorsTotal, Side.Resistance);
-        InitialiseActors(numOfActorsTotal, Side.Authority);
+        InitialiseActors(numOfOnMapActors, Side.Resistance);
+        InitialiseActors(numOfOnMapActors, Side.Authority);
     }
 
     /// <summary>
@@ -108,28 +109,79 @@ public class ActorManager : MonoBehaviour
             //Create actors
             for (int i = 0; i < num; i++)
             {
-                Actor actor = new Actor()
+                Actor actor = CreateActor(side, tempActorArcs[i].ActorArcID, 1, i);
+                if (actor != null)
                 {
-                    Arc = tempActorArcs[i],
-                    Name = tempActorArcs[i].actorName,
-                    SlotID = i,
-                    Datapoint0 = Random.Range(1, 4),
-                    Datapoint1 = Random.Range(1, 4),
-                    Datapoint2 = Random.Range(1, 4),
-                    ActorSide = side,
-                    trait = GameManager.instance.dataScript.GetRandomTrait(),
-                    isLive = true
-                };
-
-                //add actor to array
-                GameManager.instance.dataScript.AddActor(side, actor, i);
-
-                Debug.Log(string.Format("Actor added -> {0}, {1} {2}{3}", actor.Arc.actorName,
-                    GameManager.instance.dataScript.GetQuality(GameManager.instance.optionScript.PlayerSide, 0), actor.Datapoint0, "\n"));
+                    Debug.Log(string.Format("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
+                        GameManager.instance.dataScript.GetQuality(side, 0), actor.datapoint0, 
+                        GameManager.instance.dataScript.GetQuality(side, 1), actor.datapoint1, 
+                        GameManager.instance.dataScript.GetQuality(side, 2), actor.datapoint2, actor.level, "\n"));
+                }
+                else { Debug.LogWarning("Actor not created"); }
             }
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
 
+    }
+
+    /// <summary>
+    /// creates a new actor of the specified actor arc type, side and level (1 worst -> 3 best). SlotID (0 to 3) for current actor, default '-1' for reserve pool actor.
+    /// adds actor to dataManager.cs ArrayOfActors if OnMap (slot ID > -1). NOT added to dictOfActors if slotID -1 (do so after actor is chosen in generic picker)
+    /// returns null if a problem
+    /// </summary>
+    /// <param name="arc"></param>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public Actor CreateActor(Side side, int actorArcID, int level, int slotID = -1)
+    {
+        Debug.Assert(level > 0 && level < 4, "Invalid level (must be between 1 and 3)");
+        Debug.Assert(slotID >= -1 && slotID <= numOfOnMapActors, "Invalid slotID (must be -1 (default) or between 1 and 3");
+        //check a valid actor Arc parameter
+        ActorArc arc = GameManager.instance.dataScript.GetActorArc(actorArcID);
+        if (arc != null)
+        {
+            //check actor arc is the correct side
+            if (arc.side == side)
+            {
+                //create new actor
+                Actor actor = new Actor();
+                //data
+                actor.actorID = actorIDCounter++;
+                actor.slotID = slotID;
+                actor.level = level;
+                actor.actorSide = side;
+                actor.arc = arc;
+                actor.actorName = arc.actorName;
+                actor.trait = GameManager.instance.dataScript.GetRandomTrait();
+                //level -> range limits
+                int limitLower = 1;
+                if (level == 3) { limitLower = 2; }
+                int limitUpper = Math.Min(4, level + 2);
+                //level -> assign
+                actor.datapoint0 = Random.Range(limitLower, limitUpper); //connections and influence
+                actor.datapoint1 = Random.Range(limitLower, limitUpper); //motivation and support
+                if (side == Side.Resistance)
+                { actor.datapoint2 = 0; /*invisibility (always starts at zero*/}
+                else if (side == Side.Authority)
+                { actor.datapoint2 = Random.Range(limitLower, limitUpper); /*Ability*/}
+                //OnMap actor
+                if (slotID > -1)
+                {
+                    actor.isLive = true;
+                    //add to data collections
+                    GameManager.instance.dataScript.AddCurrentActor(side, actor, slotID);
+                    GameManager.instance.dataScript.AddActorToDict(actor);
+                }
+                //Reserve pool actor or perhaps and actor for a generic pick list
+                else
+                { actor.isLive = false; }
+                //return actor
+                return actor;
+            }
+            else { Debug.LogError(string.Format("ActorArc (\"{0}\") is the wrong side for actorArcID {1}", arc.name, actorArcID)); }
+        }
+        else { Debug.LogError(string.Format("Invalid ActorArc (Null) for actorArcID {0}", actorArcID)); }
+        return null;
     }
 
 
@@ -177,9 +229,9 @@ public class ActorManager : MonoBehaviour
                 // - - -  Target - - -
                 //
                 //Does the Node have a target attached? -> added first
-                if (node.TargetID >= 0)
+                if (node.targetID >= 0)
                 {
-                    Target target = GameManager.instance.dataScript.GetTarget(node.TargetID);
+                    Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
                     if (target != null)
                     {
                         string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault, target.description, colourEnd);
@@ -188,14 +240,14 @@ public class ActorManager : MonoBehaviour
                         {
                             buttonTitle = "Target",
                             buttonTooltipHeader = targetHeader,
-                            buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.TargetID),
-                            buttonTooltipDetail = GameManager.instance.targetScript.GetTargetGoodEffects(node.TargetID),
+                            buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
+                            buttonTooltipDetail = GameManager.instance.targetScript.GetTargetGoodEffects(node.targetID),
                             //use a Lambda to pass arguments to the action
                             action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
                         };
                         tempList.Add(targetDetails);
                     }
-                    else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.TargetID, "\n")); }
+                    else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.targetID, "\n")); }
                 }
                 //
                 // - - - Actors - - - 
@@ -210,17 +262,17 @@ public class ActorManager : MonoBehaviour
                     //actualRenownEffect = null;
 
                     //correct side?
-                    if (actor.ActorSide == side)
+                    if (actor.actorSide == side)
                     {
                         //actor active?
                         if (actor.isLive == true)
                         {
                             //active node for actor or player at node
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true ||
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true ||
                                 nodeID == playerID)
                             {
                                 //get node action
-                                tempAction = actor.Arc.nodeAction;
+                                tempAction = actor.arc.nodeAction;
 
                                 if (tempAction != null)
                                 {
@@ -251,7 +303,7 @@ public class ActorManager : MonoBehaviour
                                                     else
                                                     {
                                                         //actualRenownEffect = actorRenownEffect;
-                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd));
+                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd));
                                                     }
                                                 }
                                             }
@@ -260,7 +312,7 @@ public class ActorManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, actor.Arc.name, "\n", colourEnd,
+                                                    colourInvalid, actor.arc.name, "\n", colourEnd,
                                                     colourRed, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -275,10 +327,10 @@ public class ActorManager : MonoBehaviour
 
                                         actionDetails.side = Side.Resistance;
                                         actionDetails.NodeID = nodeID;
-                                        actionDetails.ActorSlotID = actor.SlotID;
+                                        actionDetails.ActorSlotID = actor.slotID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
 
-                                        switch (actor.Arc.nodeAction.type)
+                                        switch (actor.arc.nodeAction.type)
                                         {
                                             case ActionType.Recruit:    //Placeholder
                                             case ActionType.Node:
@@ -286,7 +338,7 @@ public class ActorManager : MonoBehaviour
                                                 details = new EventButtonDetails()
                                                 {
                                                     buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
                                                     //use a Lambda to pass arguments to the action
@@ -297,7 +349,7 @@ public class ActorManager : MonoBehaviour
                                                 details = new EventButtonDetails()
                                                 {
                                                     buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
                                                     action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
@@ -307,14 +359,14 @@ public class ActorManager : MonoBehaviour
                                                 details = new EventButtonDetails()
                                                 {
                                                     buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
                                                     action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
                                                 };
                                                 break;
                                             default:
-                                                Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.type \"{0}\"", actor.Arc.nodeAction.type));
+                                                Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.type \"{0}\"", actor.arc.nodeAction.type));
                                                 break;
                                         }
                                     }
@@ -324,14 +376,14 @@ public class ActorManager : MonoBehaviour
                             {
                                 //actor not live at node
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} has no connections", actor.Arc.name));
+                                infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name));
                             }
                         }
                         else
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name));
+                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name));
                         }
 
                         //add to list
@@ -393,16 +445,16 @@ public class ActorManager : MonoBehaviour
                     details = null;
                     isAnyTeam = false;
                     //correct side?
-                    if (actor.ActorSide == side)
+                    if (actor.actorSide == side)
                     {
                         //actor active?
                         if (actor.isLive == true)
                         {
                             //assign preferred team as default (doesn't matter if actor has ANY Team action)
-                            teamID = actor.Arc.preferredTeam.TeamArcID;
+                            teamID = actor.arc.preferredTeam.TeamArcID;
                             tempAction = null;
                             //active node for actor
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.SlotID) == true)
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true)
                             {
                                 //get ANY TEAM node action
                                 actionID = GameManager.instance.dataScript.GetActionID("Any Team");
@@ -414,7 +466,7 @@ public class ActorManager : MonoBehaviour
                             }
                             //actor not live at node -> Preferred team
                             else
-                            { tempAction = actor.Arc.nodeAction; }
+                            { tempAction = actor.arc.nodeAction; }
                             //default main tooltip text body
                             tooltipMain = tempAction.tooltipText;
                             //tweak if ANY TEAM
@@ -432,7 +484,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         Effect effect = listOfEffects[i];
                                         //check effect criteria is valid
-                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.SlotID, teamID);
+                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.slotID, teamID);
                                         if (effectCriteria == null)
                                         {
                                             //Effect criteria O.K -> tool tip text
@@ -452,7 +504,7 @@ public class ActorManager : MonoBehaviour
                                             }
                                             //actor automatically accumulates renown for their faction
                                             else
-                                            { builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.Arc.name, effect.description, colourEnd)); }
+                                            { builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd)); }
 
                                         }
                                         else
@@ -460,7 +512,7 @@ public class ActorManager : MonoBehaviour
                                             //invalid effect criteria -> Action cancelled
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                             infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                colourInvalid, actor.Arc.name, "\n", colourEnd,
+                                                colourInvalid, actor.arc.name, "\n", colourEnd,
                                                 colourRed, effectCriteria, colourEnd));
                                             proceedFlag = false;
                                         }
@@ -474,7 +526,7 @@ public class ActorManager : MonoBehaviour
                                     ModalActionDetails actionDetails = new ModalActionDetails() { };
                                     actionDetails.side = Side.Authority;
                                     actionDetails.NodeID = nodeID;
-                                    actionDetails.ActorSlotID = actor.SlotID;
+                                    actionDetails.ActorSlotID = actor.slotID;
                                     //Node action is standard but other actions are possible
                                     UnityAction clickAction = null;
                                     //Team action
@@ -487,7 +539,7 @@ public class ActorManager : MonoBehaviour
                                     details = new EventButtonDetails()
                                     {
                                         buttonTitle = tempAction.name,
-                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.Arc.name, colourEnd),
+                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                         buttonTooltipMain = tooltipMain,
                                         buttonTooltipDetail = builder.ToString(),
                                         //use a Lambda to pass arguments to the action
@@ -497,16 +549,16 @@ public class ActorManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.Arc.name, actor.SlotID));
+                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.slotID));
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} is having a bad day", actor.Arc.name));
+                                infoBuilder.Append(string.Format("{0} is having a bad day", actor.arc.name));
                             }
                         }
                         else
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.Arc.name));
+                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name));
                         }
                         //add to list
                         if (details != null)

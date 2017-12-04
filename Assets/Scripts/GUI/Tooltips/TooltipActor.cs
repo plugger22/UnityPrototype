@@ -31,7 +31,6 @@ public class TooltipActor : MonoBehaviour
     private string colourBad;
     private string colourName;
     private string colourQuality;
-    private string colourTrait;
     private string colourEnd;
 
 
@@ -92,7 +91,6 @@ public class TooltipActor : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourTrait = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -105,7 +103,7 @@ public class TooltipActor : MonoBehaviour
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
     /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    public void SetTooltip(string name, string[] arrayOfQualities, int[] arrayOfStats, string trait, Vector3 screenPos, float width, float height)
+    public void SetTooltip(string name, string[] arrayOfQualities, int[] arrayOfStats, Trait trait, Vector3 screenPos, float width, float height)
     {
 
         //open panel at start
@@ -120,8 +118,17 @@ public class TooltipActor : MonoBehaviour
         dividerTop.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
         actorName.text = string.Format("{0}{1}{2}", colourName, name, colourEnd);
-        actorTrait.text = string.Format("{0}{1}{2}", colourTrait, trait, colourEnd);
-
+        if (trait != null)
+        {
+            string colourTrait = colourQuality;
+            switch(trait.type)
+            {
+                case TraitType.Good: colourTrait = colourGood; break;
+                case TraitType.Neutral: colourTrait = colourNeutral; break;
+                case TraitType.Bad: colourTrait = colourBad; break;
+            }
+            actorTrait.text = string.Format("{0}{1}{2}", colourTrait, trait.name, colourEnd);
+        }
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
 
         //qualities

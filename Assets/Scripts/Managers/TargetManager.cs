@@ -146,7 +146,7 @@ public class TargetManager : MonoBehaviour
                     {
                         Node node = tempNodes[Random.Range(0, tempNodes.Count)];
                         //assign targetID to node
-                        node.TargetID = target.TargetID;
+                        node.targetID = target.TargetID;
                         counter++;
                         Debug.Log(string.Format("TargetManager: Node ID {0}, type \"{1}\", assigned Target ID {2}, \"{3}\"{4}",
                             node.NodeID, node.arc.name, target.TargetID, target.name, "\n"));

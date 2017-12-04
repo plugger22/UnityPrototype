@@ -110,7 +110,7 @@ public class ActionManager : MonoBehaviour
                     if (node != null)
                     {
                         //Get Action & Effects
-                        Action action = actor.Arc.nodeAction;
+                        Action action = actor.arc.nodeAction;
                         List<Effect> listOfEffects = action.GetEffects();
                         if (listOfEffects.Count > 0)
                         {
@@ -127,7 +127,7 @@ public class ActionManager : MonoBehaviour
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                                 if (effectReturn != null)
                                 {
-                                    outcomeDetails.sprite = actor.Arc.actionSprite;
+                                    outcomeDetails.sprite = actor.arc.actionSprite;
 
                                     //update stringBuilder texts
                                     if (effectReturn.topText.Length > 0)

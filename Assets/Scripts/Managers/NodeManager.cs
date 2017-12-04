@@ -257,7 +257,7 @@ public class NodeManager : MonoBehaviour
     /// <param name="slotID"></param>
     public void ShowActiveNodes(int slotID)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID");
         //set all nodes to default colour first
         ResetNodes();
         //change material for selected nodes
@@ -278,9 +278,9 @@ public class NodeManager : MonoBehaviour
         else { minionTitle = "Rebel "; }
         if (actor != null)
         {
-            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} node{11}{12}", colourHighlight, actor.Name, colourEnd, 
+            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} node{11}{12}", colourHighlight, actor.actorName, colourEnd, 
                 colourDefault, minionTitle, colourEnd,
-                colourHighlight, actor.Arc.name, colourEnd, 
+                colourHighlight, actor.arc.name, colourEnd, 
                 colourDefault, tempList.Count, tempList.Count != 1 ? "s" : "", colourEnd);
             GameManager.instance.alertScript.SetAlertUI(displayText);
             NodeShowFlag = 1;

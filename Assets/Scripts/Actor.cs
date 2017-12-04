@@ -9,18 +9,23 @@ namespace gameAPI
     /// </summary>
     public class Actor
     {
-        public int Datapoint0 { get; set; }                //higher the number (1 to 3), see DM: arrayOfQualities for string tags
-        public int Datapoint1 { get; set; }                 //higher the better (1 to 3)
-        public int Datapoint2 { get; set; }               //higher the better (1 to 3)
+        [HideInInspector] public int datapoint0;               //higher the number (1 to 3), see DM: arrayOfQualities for string tags
+        [HideInInspector] public int datapoint1;               //higher the better (1 to 3)
+        [HideInInspector] public int datapoint2;               //higher the better (1 to 3)
 
-        public Side ActorSide { get; set; }
-        public int SlotID { get; set; }                     //actor slot ID (eg, 0 to 3)
-        public int Renown { get; set; }                     //starts at '0' and goes up (no limit)
-        public string Name { get; set; }
-        public Trait trait { get; set; }
-        public bool isLive { get; set; }                    //actor can 'go silent' and be unavailable on occasion
+        [HideInInspector] public Side actorSide;
+        [HideInInspector] public int slotID;                     //actor slot ID (eg, 0 to 3)
+        [HideInInspector] public int actorID;
+        [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
+        [HideInInspector] public int renown;                   //starts at '0' and goes up (no limit)
+        [HideInInspector] public string actorName;
+        [HideInInspector] public Trait trait;
+        [HideInInspector] public bool isLive;                   //actor can 'go silent' and be unavailable on occasion
+        [HideInInspector] public ActorArc arc;
 
-        public ActorArc Arc { get; set; }
+        
+
+        
 
         private List<int> listOfTeams = new List<int>();    //teamID of all teams that the actor has currently deployed OnMap
 
@@ -34,7 +39,7 @@ namespace gameAPI
         /// <returns></returns>
         public bool CheckCanDeployTeam()
         {
-            if (listOfTeams.Count < Datapoint2)
+            if (listOfTeams.Count < datapoint2)
             { return true; }
             return false;
         }

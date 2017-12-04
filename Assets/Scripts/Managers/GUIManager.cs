@@ -101,7 +101,7 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     public void UpdateActorGUI()
     {
-        int numOfActors = GameManager.instance.actorScript.numOfActorsTotal;
+        int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetActors(GameManager.instance.optionScript.PlayerSide);
         if (arrayOfActors != null)
         {
@@ -109,8 +109,8 @@ public class GUIManager : MonoBehaviour
             {
                 for (int i = 0; i < numOfActors; i++)
                 {
-                    listOfActorTypes[i].text = arrayOfActors[i].Arc.name;
-                    listOfActorPortraits[i].sprite = arrayOfActors[i].Arc.baseSprite;
+                    listOfActorTypes[i].text = arrayOfActors[i].arc.name;
+                    listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
                 }
             }
             else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }

@@ -229,11 +229,11 @@ public class ModalTeamPicker : MonoBehaviour
                      actor.Arc.name, actor.CheckNumOfTeams(), actor.Datapoint2));*/
 
                 string colourNumbers = colourGood;
-                if (actor.CheckNumOfTeams() == actor.Datapoint2)
+                if (actor.CheckNumOfTeams() == actor.datapoint2)
                 { colourNumbers = colourBad; }
                 builder.Append(string.Format("{0}, {1} of {2}{3}{4} has deployed {5}{6}{7} of {8}{9}{10} teams",
-                    actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourActor, actor.Arc.name, colourEnd,
-                    colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.Datapoint2, colourEnd));
+                    actor.actorName, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourActor, actor.arc.name, colourEnd,
+                    colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd));
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) from ActorSlotID {0}", teamActorSlotID)); }
         }

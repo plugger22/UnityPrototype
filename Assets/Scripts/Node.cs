@@ -19,7 +19,7 @@ public class Node : MonoBehaviour
     public int Security { get; set; }                   //range 0 to 3
 
     public int NumOfTracers { get; set; }
-    public int TargetID { get; set; }                   //unique ID, 0+, -1 indicates no target
+    [HideInInspector] public int targetID;                   //unique ID, 0+, -1 indicates no target
 
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
@@ -161,8 +161,8 @@ public class Node : MonoBehaviour
                     { teamList.Add(team.Arc.name.ToUpper()); }
                 }
                 List<string> targetList = new List<string>();
-                if (TargetID > -1)
-                { targetList = GameManager.instance.targetScript.GetTargetTooltip(TargetID); }
+                if (targetID > -1)
+                { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
                 //Transform transform = GetComponent<Transform>();
                 GameManager.instance.tooltipNodeScript.SetTooltip(
                     NodeName,
@@ -194,7 +194,7 @@ public class Node : MonoBehaviour
     public List<string> GetNodeActors()
     {
         List<string> tempList = new List<string>();
-        int limit = GameManager.instance.actorScript.numOfActorsTotal;
+        int limit = GameManager.instance.actorScript.numOfOnMapActors;
         Side side = GameManager.instance.optionScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {

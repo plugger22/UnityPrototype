@@ -217,10 +217,17 @@ public class EffectManager : MonoBehaviour
                                             }
                                             break;
                                         case EffectCriteria.TargetInfo:
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.TargetID, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.targetID, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Full Info already");
+                                            }
+                                            break;
+                                        case EffectCriteria.TargetPresent:
+                                            //check that a target is present at the node
+                                            if (node.targetID < 0)
+                                            {
+                                                BuildString(result, "No Target present");
                                             }
                                             break;
                                         case EffectCriteria.NumGear:
@@ -289,7 +296,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case EffectCriteria.ActorAbility:
                                             //actor can only have a number of teams OnMap equal to their ability at any time
-                                            if (actor.CheckNumOfTeams() >= actor.Datapoint2)
+                                            if (actor.CheckNumOfTeams() >= actor.datapoint2)
                                             { BuildString(result, "Actor Ability exceeded"); }
                                             break;
                                         case EffectCriteria.TeamIdentical:
@@ -600,13 +607,13 @@ public class EffectManager : MonoBehaviour
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
-                                        actor.Renown++;
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.Name, effect.description, colourEnd);
+                                        actor.renown++;
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
                                         break;
                                     case Result.Subtract:
-                                        if (actor.Renown >= effect.effectValue)
-                                        { actor.Renown -= effect.effectValue; }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.Name, effect.description, colourEnd);
+                                        if (actor.renown >= effect.effectValue)
+                                        { actor.renown -= effect.effectValue; }
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.actorName, effect.description, colourEnd);
                                         break;
                                 }
                             }
@@ -633,7 +640,7 @@ public class EffectManager : MonoBehaviour
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Civil");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     //move team
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
@@ -641,7 +648,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.ControlTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Control");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
@@ -649,7 +656,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.DamageTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Damage");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
@@ -657,7 +664,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.ErasureTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
@@ -665,7 +672,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.MediaTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Media");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
@@ -673,7 +680,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.ProbeTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Probe");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
@@ -681,7 +688,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.SpiderTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Spider");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.SlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
@@ -749,11 +756,11 @@ public class EffectManager : MonoBehaviour
         if (actor != null)
         {
             string colourNumbers = colourGood;
-            if (actor.CheckNumOfTeams() == actor.Datapoint2)
+            if (actor.CheckNumOfTeams() == actor.datapoint2)
             { colourNumbers = colourBad; }
             return string.Format("{0}, {1} of {2}{3}{4} has now deployed {5}{6}{7} of {8}{9}{10} teams",
-                actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourActor, actor.Arc.name, colourEnd,
-                colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.Datapoint2, colourEnd);
+                actor.actorName, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourActor, actor.arc.name, colourEnd,
+                colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd);
         }
         else
         {

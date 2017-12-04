@@ -30,10 +30,15 @@ namespace gameAPI
         NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6, NodeArc7, NodeArc8, NodeArc9};             
 
     //
-    // - - - Events and Targets
+    // - - - Events and Targets - - -
     //
     public enum Status {Dormant, Active, Live }
     public enum Activation { Low, Medium, High}                                     //chance of becoming 'Live' once 'Active'
+
+    //
+    // - - - Actors - - -
+    //
+    public enum TraitType { Good, Neutral, Bad}
 
     //
     // - - - Action Manager - - -
@@ -56,7 +61,7 @@ namespace gameAPI
         //resistance
         NodeStability, NodeSecurity, NodeSupport,
         NumRecruits, NumTeams, NumTracers, NumGear, GearAvailability,
-        TargetInfo,
+        TargetInfo, TargetPresent,
         RebelCause,
         //authority
         ActorAbility, TeamIdentical, TeamPreferred, TeamAny

@@ -205,9 +205,9 @@ public void InitialiseTeams()
             foreach (Actor actor in arrayOfActors)
             {
                 //get actors Ability
-                ability = actor.Datapoint2;
+                ability = actor.datapoint2;
                 //get preferred team
-                arcID = actor.Arc.preferredTeam.TeamArcID;
+                arcID = actor.arc.preferredTeam.TeamArcID;
                 //add the ability number of teams to the reserve
                 GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, ability);
                 GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, ability);
@@ -249,7 +249,7 @@ public void InitialiseTeams()
                     if (node != null)
                     {
                         //get a random Actor
-                        actorSlotID = Random.Range(0, GameManager.instance.actorScript.numOfActorsTotal);
+                        actorSlotID = Random.Range(0, GameManager.instance.actorScript.numOfOnMapActors);
                         MoveTeam(TeamPool.OnMap, teamData.Key, actorSlotID, node);
                     }
                     else { Debug.LogError("Invalid node (Null)"); }
@@ -295,7 +295,7 @@ public void InitialiseTeams()
                     Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}{4}", team.Arc.name, team.Name, team.TeamID, destinationPool, "\n"));
                     break;
                 case TeamPool.OnMap:
-                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfActorsTotal)
+                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
                     {
                         //Get Actor
                         Actor actor = GameManager.instance.dataScript.GetActor(actorSlotID, Side.Authority);
@@ -323,7 +323,7 @@ public void InitialiseTeams()
                                                 actor.AddTeam(team.TeamID);
                                                 //update team stats
                                                 team.NodeID = node.NodeID;
-                                                team.ActorSlotID = actor.SlotID;
+                                                team.ActorSlotID = actor.slotID;
                                                 team.Timer = deployTime;
                                                 team.TurnDeployed = GameManager.instance.turnScript.Turn;
                                                 //confirmation
@@ -340,7 +340,7 @@ public void InitialiseTeams()
                                         else
                                         {
                                             Debug.LogWarning(string.Format("Unable to deploy {0} {1} to {2} as Actor {3}, slotID {4}, has insufficient ability{5}",
-                                                team.Arc.name, team.Name, destinationPool, actor.Arc.name, actorSlotID, "\n"));
+                                                team.Arc.name, team.Name, destinationPool, actor.arc.name, actorSlotID, "\n"));
                                             successFlag = false;
                                         }
                                     }
@@ -359,7 +359,7 @@ public void InitialiseTeams()
                             else
                             {
                                 Debug.LogWarning(string.Format("{0}, ID {1} can't be deployed to {2} as Actor {3}, slotID {4} isn't Live{5}", team.Arc.name, teamID, destinationPool,
-                                  actor.Name, actorSlotID, "\n"));
+                                  actor.actorName, actorSlotID, "\n"));
                                 successFlag = false;
                             }
                         }
@@ -376,7 +376,7 @@ public void InitialiseTeams()
                     }
                     break;
                 case TeamPool.InTransit:
-                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfActorsTotal)
+                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
                     {
                         //Get Actor
                         Actor actor = GameManager.instance.dataScript.GetActor(actorSlotID, Side.Authority);
@@ -411,7 +411,7 @@ public void InitialiseTeams()
                             else
                             {
                                 Debug.LogWarning(string.Format("{0}, ID {1} can't be deployed to {2} as Actor {3}, slotID {4} isn't Live{5}", team.Arc.name, teamID, destinationPool,
-                                  actor.Name, actorSlotID, "\n"));
+                                  actor.actorName, actorSlotID, "\n"));
                                 successFlag = false;
                             }
                         }
@@ -500,7 +500,7 @@ public void InitialiseTeams()
         foreach(Actor actor in arrayOfActors)
         {
             builder.AppendLine();
-            builder.Append(string.Format("{0}  Ability {1}", actor.Arc.name, actor.Datapoint2));
+            builder.Append(string.Format("{0}  Ability {1}", actor.arc.name, actor.datapoint2));
             builder.AppendLine();
             listOfTeams.Clear();
             listOfTeams.AddRange(actor.GetTeams());
@@ -601,11 +601,11 @@ public void InitialiseTeams()
                         if (actor != null)
                         {
                             deployedTeams = actor.CheckNumOfTeams();
-                            if (deployedTeams < actor.Datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
+                            if (deployedTeams < actor.datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
                             tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}", 
-                                colourNormal, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourEnd, colourActor, actor.Arc.name, colourEnd, colourNormal, 
+                                colourNormal, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal, 
                                 colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd, 
-                                dataColour, actor.Datapoint2, colourEnd, colourNormal, colourEnd);
+                                dataColour, actor.datapoint2, colourEnd, colourNormal, colourEnd);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.ActorSlotID)); }
                         //add to master arrays
@@ -818,7 +818,7 @@ public void InitialiseTeams()
                                     colourEffect, colourEnd));
 
                                 //Process any other effects, if Neutralise was successfull, ignore otherwise
-                                Action action = actor.Arc.nodeAction;
+                                Action action = actor.arc.nodeAction;
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)
                                 {

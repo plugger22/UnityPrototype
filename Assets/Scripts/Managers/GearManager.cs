@@ -169,7 +169,7 @@ public class GearManager : MonoBehaviour
                     {
                         //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
                         if (node.NodeID != GameManager.instance.nodeScript.nodePlayer)
-                        { chance *= actor.Datapoint2; }
+                        { chance *= actor.datapoint2; }
                     }
                     else
                     {
@@ -295,7 +295,7 @@ public class GearManager : MonoBehaviour
                                     colourEffect, colourEnd));
 
                                 //Process any other effects, if Neutralise was successfull, ignore otherwise
-                                Action action = actor.Arc.nodeAction;
+                                Action action = actor.arc.nodeAction;
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)
                                 {

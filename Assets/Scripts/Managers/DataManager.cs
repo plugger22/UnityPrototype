@@ -20,6 +20,10 @@ public class DataManager : MonoBehaviour
     private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
+    //actor quality input arrays (used to populate arrayOfQualities)
+    public string[] authorityQualities = new string[3];
+    public string[] resistanceQualities = new string[3];
+
     //team pools
     private List<int> teamPoolReserve = new List<int>();
     private List<int> teamPoolOnMap = new List<int>();
@@ -53,6 +57,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
     private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();           //Key -> nodeArc name, Value -> nodeArcID
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
+    private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
     private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();            //Key -> action name, Value -> actionID
@@ -316,14 +321,14 @@ public class DataManager : MonoBehaviour
         //
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         arrayOfQualities = new string[(int)Side.Count, numOfQualities];
-        arrayOfQualities[(int)Side.Authority, 0] = "Influence";
-        arrayOfQualities[(int)Side.Authority, 1] = "Support";
-        arrayOfQualities[(int)Side.Authority, 2] = "Ability";
-        arrayOfQualities[(int)Side.Resistance, 0] = "Connections";
-        arrayOfQualities[(int)Side.Resistance, 1] = "Motivation";
-        arrayOfQualities[(int)Side.Resistance, 2] = "Invisibility";
+        arrayOfQualities[(int)Side.Authority, 0] = authorityQualities[0];
+        arrayOfQualities[(int)Side.Authority, 1] = authorityQualities[1];
+        arrayOfQualities[(int)Side.Authority, 2] = authorityQualities[2];
+        arrayOfQualities[(int)Side.Resistance, 0] = resistanceQualities[0];
+        arrayOfQualities[(int)Side.Resistance, 1] = resistanceQualities[1];
+        arrayOfQualities[(int)Side.Resistance, 2] = resistanceQualities[2];
         //arrayOfActors
-        arrayOfActors = new Actor[(int)Side.Count, GameManager.instance.actorScript.numOfActorsTotal];
+        arrayOfActors = new Actor[(int)Side.Count, GameManager.instance.actorScript.numOfOnMapActors];
     }
 
 
@@ -537,10 +542,6 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<ActorArc> GetRandomActorArcs(int num, Side side)
     {
-        //create a separate copy of ActorArcs list to use for randomly selection
-
-        //List<ActorArc> tempMaster = new List<ActorArc>(listOfAllActorArcs);
-
         //filter for the required side
         List<ActorArc> tempMaster = new List<ActorArc>();
         IEnumerable<ActorArc> selectedActorArcs =
@@ -563,9 +564,24 @@ public class DataManager : MonoBehaviour
         return tempList;
     }
 
+    /// <summary>
+    /// Gets specified actor Arc, returns null if not found
+    /// </summary>
+    /// <param name="actorArcID"></param>
+    /// <returns></returns>
+    public ActorArc GetActorArc(int actorArcID)
+    {
+        ActorArc arc = null;
+        if (dictOfActorArcs.TryGetValue(actorArcID, out arc))
+        {
+            return arc;
+        }
+        return null;
+    }
+
 
     /// <summary>
-    /// return a random trait (could be good or bad)
+    /// return a random trait (could be good, bad or neutral)
     /// </summary>
     /// <returns></returns>
     public Trait GetRandomTrait()
@@ -1078,14 +1094,14 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// add an actor to the arrayOfActors
+    /// add a currently active actor to the arrayOfActors
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actor"></param>
     /// <param name="slotID"></param>
-    public void AddActor(Side side, Actor actor, int slotID)
+    public void AddCurrentActor(Side side, Actor actor, int slotID)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         if (actor != null)
         {
             arrayOfActors[(int)side, slotID] = actor;
@@ -1094,12 +1110,29 @@ public class DataManager : MonoBehaviour
     }
     
     /// <summary>
+    /// Adds any actor (whether current or reserve) to dictOfActors, returns true if successful
+    /// </summary>
+    /// <param name="actor"></param>
+    public bool AddActorToDict(Actor actor)
+    {
+        bool successFlag = true;
+        //add to dictionary
+        try
+        { dictOfActors.Add(actor.actorID, actor); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Actor (Null)"); successFlag = false; }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid Actor (duplicate) actorID \"{0}\" for {1} \"{2}\"", actor.actorID, actor.arc.name, actor.actorName)); successFlag = false; }
+        return successFlag;
+    }
+
+    /// <summary>
     /// Get array of actors for a specified side
     /// </summary>
     /// <returns></returns>
     public Actor[] GetActors(Side side)
     {
-        int total = GameManager.instance.actorScript.numOfActorsTotal;
+        int total = GameManager.instance.actorScript.numOfOnMapActors;
         Actor[] tempArray = new Actor[total];
         for (int i = 0; i < total; i++)
         { tempArray[i] = arrayOfActors[(int)side, i]; }
@@ -1113,7 +1146,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public Actor GetActor(int slotID, Side side)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[(int)side, slotID];
     }
 
@@ -1124,8 +1157,8 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string GetActorType(int slotID, Side side)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].Arc.name;
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID].arc.name;
     }
 
     /// <summary>
@@ -1135,9 +1168,9 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int[] GetActorStats(int slotID, Side side)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
-        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].Datapoint0, arrayOfActors[(int)side, slotID].Datapoint1,
-            arrayOfActors[(int)side, slotID].Datapoint2};
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].datapoint0, arrayOfActors[(int)side, slotID].datapoint1,
+            arrayOfActors[(int)side, slotID].datapoint2};
         return arrayOfStats;
     }
 
@@ -1148,8 +1181,8 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string GetActorName(int slotID, Side side)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].Arc.actorName;
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID].arc.actorName;
     }
 
     /// <summary>
@@ -1157,10 +1190,10 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public string GetActorTrait(int slotID, Side side)
+    public Trait GetActorTrait(int slotID, Side side)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].trait.name;
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID].trait;
     }
 
     /// <summary>
@@ -1173,8 +1206,8 @@ public class DataManager : MonoBehaviour
         int slotID = -1;
         foreach (Actor actor in arrayOfActors)
         {
-            if (actor.Arc.ActorArcID == actorArcID && actor.isLive == true)
-            { return actor.SlotID; }
+            if (actor.arc.ActorArcID == actorArcID && actor.isLive == true)
+            { return actor.slotID; }
         }
         return slotID;
     }
@@ -1190,7 +1223,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<GameObject> GetListOfActorNodes(int slotID)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfActorsTotal, "Invalid slotID");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID");
         return listOfActorNodes[slotID];
     }
 
