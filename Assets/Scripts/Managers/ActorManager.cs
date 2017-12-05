@@ -31,6 +31,8 @@ public class ActorManager : MonoBehaviour
     private string colourInvalid;
     private string colourEffect;
     private string colourDefault;
+    private string colourNormal;
+    private string colourRecruit;
     private string colourEnd;
 
 
@@ -105,6 +107,8 @@ public class ActorManager : MonoBehaviour
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -709,127 +713,107 @@ public class ActorManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseGenericPickerRecruit(ModalActionDetails details)
     {
-        /*
         bool errorFlag = false;
-        int recruitID, index;
+        int index, countOfRecruits;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
-            genericDetails.returnEvent = EventType.GenericGearChoice;
-            genericDetails.side = Side.Resistance;
+            genericDetails.returnEvent = EventType.GenericRecruitActor;
+            genericDetails.side = details.side;
             genericDetails.nodeID = details.NodeID;
             genericDetails.actorSlotID = details.ActorSlotID;
             //picker text
-            genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
-            genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
+            genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+            genericDetails.textMiddle = string.Format("{0}Recruit will be waiting on your reserve list{1}",
                 colourNormal, colourEnd);
-            genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
+            genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
             //
-            //generate temp list of gear to choose from
+            //generate temp list of Recruits to choose from and a list of ones for the picker
             //
-            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
-            List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Rare));
-            //remove from lists any gear that the player currently has
-            List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
-            if (tempPlayerGear.Count > 0)
+            int numOfOptions;
+            List<int> listOfPoolActors = new List<int>();
+            List<int> listOfPickerActors = new List<int>();
+            List<int> listOfCurrentArcIDs = new List<int>(GameManager.instance.dataScript.GetAllCurrentActorArcIDs(details.side));
+            if (node.NodeID == GameManager.instance.nodeScript.nodePlayer)
             {
-
-                for (int i = 0; i < tempPlayerGear.Count; i++)
+                //player at node, select from 3 x level 1 options, different from current OnMap actor types
+                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(1, details.side));
+                //loop backwards through pool of actors and remove any that match the curent OnMap types
+                for(int i = listOfPoolActors.Count - 1; i >= 0; i--)
                 {
-                    gearID = tempPlayerGear[i];
-                    if (tempCommonGear.Exists(id => id == gearID) == true)
-                    { tempCommonGear.Remove(gearID); }
-                    else if (tempRareGear.Exists(id => id == gearID) == true)
-                    { tempRareGear.Remove(gearID); }
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfPoolActors[i]);
+                    if (actor != null)
+                    {
+                        if(listOfCurrentArcIDs.Exists(x => x == actor.arc.ActorArcID))
+                        { listOfPoolActors.RemoveAt(i); }
+                    }
+                    else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
+                }
+                //select 3 random actors
+                numOfOptions = Math.Min(3, listOfPoolActors.Count);
+                for (int i = 0; i < numOfOptions; i++)
+                {
+                    index = Random.Range(0, listOfPoolActors.Count);
+                    listOfPickerActors.Add(listOfPoolActors[index]);
+                    //remove actor from pool to prevent duplicate types
+                    listOfPoolActors.RemoveAt(index);
+                }
+            }
+            else
+            {
+                //actor at node, select from 4 x level 2 options (random types, could be the same as currently OnMap)
+                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(2, details.side));
+                //select 4 random actors
+                numOfOptions = Math.Min(3, listOfPoolActors.Count);
+                for (int i = 0; i < numOfOptions; i++)
+                {
+                    index = Random.Range(0, listOfPoolActors.Count);
+                    listOfPickerActors.Add(listOfPoolActors[index]);
+                    //remove actor from pool to prevent duplicate types
+                    listOfPoolActors.RemoveAt(index);
                 }
             }
             //
             //select two items of gear for the picker
             //
-            int[] arrayOfGear = new int[2];
-            int countOfGear = 0;
-            for (int i = 0; i < arrayOfGear.Length; i++)
-            {
-                gearID = -1;
-                //any rare gear available?
-                if (tempRareGear.Count > 0)
-                {
-                    //chance of rare gear -> base chance * actor ability (or 1 if player)
-                    int chance = chanceOfRareGear;
-                    Actor actor = GameManager.instance.dataScript.GetActor(details.ActorSlotID, Side.Resistance);
-                    if (actor != null)
-                    {
-                        //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
-                        if (node.NodeID != GameManager.instance.nodeScript.nodePlayer)
-                        { chance *= actor.datapoint2; }
-                    }
-                    else
-                    {
-                        chance = 0;
-                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.ActorSlotID));
-                    }
-                    if (Random.Range(0, 100) < chance)
-                    {
-                        index = Random.Range(0, tempRareGear.Count);
-                        gearID = tempRareGear[index];
-                        tempRareGear.RemoveAt(index);
-                    }
-                    //if failed chance for rare gear then need to get common
-                    else if (tempCommonGear.Count > 0)
-                    {
-                        index = Random.Range(0, tempCommonGear.Count);
-                        gearID = tempCommonGear[index];
-                        tempCommonGear.RemoveAt(index);
-                    }
-                }
-                //common gear
-                else
-                {
-                    if (tempCommonGear.Count > 0)
-                    {
-                        index = Random.Range(0, tempCommonGear.Count);
-                        gearID = tempCommonGear[index];
-                        tempCommonGear.RemoveAt(index);
-                    }
-                }
-                //found some gear?
-                if (gearID > -1)
-                { arrayOfGear[i] = gearID; countOfGear++; }
-            }
+            countOfRecruits = listOfPickerActors.Count;
+
+            /*int[] arrayOfRecruits = new int[2];
+            int countOfGear = 0;*/
+
             //check there is at least one item of gear available
-            if (countOfGear < 1)
+            if (countOfRecruits < 1)
             {
-                //OUTCOME -> No gear available
-                Debug.LogWarning("GearManager: No gear available in InitaliseGenericPickerGear");
+                //OUTCOME -> No recruits available
+                Debug.LogWarning("ActorManager: No recruits available in InitaliseGenericPickerRecruits");
                 errorFlag = true;
             }
             else
             {
                 //
-                //loop gearID's that have been selected and package up ready for ModalGenericPicker
+                //loop actorID's that have been selected and package up ready for ModalGenericPicker
                 //
-                for (int i = 0; i < countOfGear; i++)
+                for (int i = 0; i < countOfRecruits; i++)
                 {
-                    Gear gear = GameManager.instance.dataScript.GetGear(arrayOfGear[i]);
-                    if (gear != null)
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfPickerActors[i]);
+                    if (actor != null)
                     {
                         //option details
                         GenericOptionDetails optionDetails = new GenericOptionDetails();
-                        optionDetails.optionID = gear.gearID;
-                        optionDetails.text = gear.name.ToUpper();
-                        optionDetails.sprite = gear.sprite;
-                        //tooltip -> TO DO
+                        optionDetails.optionID = actor.actorID;
+                        optionDetails.text = actor.arc.name;
+                        optionDetails.sprite = actor.arc.baseSprite;
+                        //tooltip
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                        tooltipDetails.textHeader = string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd);
-                        tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffect, gear.rarity, colourEnd,
-                            "\n", colourSide, gear.type, colourEnd);
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2}", colourRecruit, actor.arc.name, colourEnd);
+                        tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, actor.actorName, colourEnd);
+                        tooltipDetails.textDetails = string.Format("{0}level {1}{2}", colourEffect, actor.level , colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
                     }
-                    else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
+                    else { Debug.LogError(string.Format("Invalid actor (Null) for gearID {0}", listOfPickerActors[i])); }
                 }
             }
         }
@@ -844,7 +828,7 @@ public class ActorManager : MonoBehaviour
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.side = Side.Resistance;
-            outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
+            outcomeDetails.textTop = "There has been a Snafu in communication and no recruits can be found.";
             outcomeDetails.textBottom = "Heads will roll!";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
@@ -853,7 +837,7 @@ public class ActorManager : MonoBehaviour
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
         }
-        */
+     
     }
 
     /// <summary>
@@ -863,6 +847,46 @@ public class ActorManager : MonoBehaviour
     private void ProcessRecruitChoice(GenericReturnData data)
     {
 
+    }
+
+    /// <summary>
+    /// Debug method to display actor pools (both sides)
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayPools()
+    {
+        List<int> listOfActors = new List<int>();
+        StringBuilder builder = new StringBuilder();
+        //Resistance
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, Side.Resistance), " ResistanceActorPoolLevelOne"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, Side.Resistance), " ResistanceActorPoolLevelTwo"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, Side.Resistance), " ResistanceActorPoolLevelThree"));
+        //Authority
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, Side.Authority), " AuthorityActorPoolLevelOne"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, Side.Authority), " AuthorityActorPoolLevelTwo"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, Side.Authority), " AuthorityActorPoolLevelThree"));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// submethod for DisplayPools
+    /// </summary>
+    /// <param name="listOfActors"></param>
+    /// <param name="header"></param>
+    /// <returns></returns>
+    private string DisplaySubPool(List<int> listOfActors, string header)
+    {
+        StringBuilder subBuilder = new StringBuilder();
+        subBuilder.Append(header);
+        subBuilder.AppendLine();
+        for (int i = 0; i < listOfActors.Count; i++)
+        {
+            Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+            subBuilder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name.ToLower(), actor.level,
+                actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n"));
+        }
+        subBuilder.AppendLine();
+        return subBuilder.ToString();
     }
 
     //new methods above here

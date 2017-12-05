@@ -613,7 +613,7 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// returns number of individual actor arcs for a side, '-1' if a problem
     /// </summary>
     /// <param name="side"></param>
@@ -624,7 +624,7 @@ public class DataManager : MonoBehaviour
         else if (side == Side.Resistance) { return resistanceActorArcs.Count; }
         else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side)); }
         return -1; 
-    }
+    }*/
 
     /// <summary>
     /// Gets specified actor Arc, returns null if not found
@@ -1257,6 +1257,16 @@ public class DataManager : MonoBehaviour
         return tempArray;
     }
 
+
+    public Actor GetActor(int actorID)
+    {
+        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, string.Format("Invalid actorID {0}", actorID));
+        if (dictOfActors.ContainsKey(actorID))
+        { return dictOfActors[actorID]; }
+        else { Debug.LogWarning(string.Format("Not found in actorID {0}, in dictOfActors", actorID)); }
+        return null;
+    }
+
     /// <summary>
     /// Get specific actor (OnMap, active or inactive)
     /// </summary>
@@ -1277,6 +1287,20 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[(int)side, slotID].arc.name;
+    }
+
+    /// <summary>
+    /// returns a list containing the actorArcID's of all current, OnMap, actors (active or inactive) for a side. Null if a problem.
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<int> GetAllCurrentActorArcIDs(Side side)
+    {
+        List<int> tempList = new List<int>();
+        for (int i = 0; i < GameManager.instance.actorScript.numOfOnMapActors; i++)
+        { tempList.Add(arrayOfActors[(int)side, i].arc.ActorArcID); }
+        if (tempList.Count > 0) { return tempList; }
+        return null;
     }
 
     /// <summary>

@@ -61,9 +61,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(15, 100, 80, 20), "Colours"))
+            if (GUI.Button(new Rect(15, 100, 80, 20), "Colour Blind"))
             {
-                Debug.Log("Button -> Toggle Colour Scheme");
+                Debug.Log("Button -> Toggle Colour Schemes");
                 if (GameManager.instance.optionScript.ColourOption == ColourScheme.Normal)
                 { GameManager.instance.optionScript.ColourOption = ColourScheme.ColourBlind; }
                 else { GameManager.instance.optionScript.ColourOption = ColourScheme.Normal; }
@@ -80,7 +80,7 @@ public class DebugGUI : MonoBehaviour
 
 
             //sixth button
-            if (GUI.Button(new Rect(15, 140, 80, 20), "Node/Actors"))
+            if (GUI.Button(new Rect(15, 140, 80, 20), "Node/Actrs"))
             {
                 Debug.Log("Button -> Toggle Node/Actors Analysis");
                 if (debugDisplay != 1)
@@ -107,11 +107,20 @@ public class DebugGUI : MonoBehaviour
             }
 
             //ninth button
-            if (GUI.Button(new Rect(15, 200, 80, 20), "Actor Teams"))
+            if (GUI.Button(new Rect(15, 200, 80, 20), "Actr Teams"))
             {
                 Debug.Log("Button -> Toggle Actor Teams");
                 if (debugDisplay != 4)
                 { debugDisplay = 4; }
+                else { debugDisplay = 0; }
+            }
+
+            //tenth button
+            if (GUI.Button(new Rect(15, 220, 80, 20), "Actor Pools"))
+            {
+                Debug.Log("Button -> Toggle Actor Pools");
+                if (debugDisplay != 6)
+                { debugDisplay = 6; }
                 else { debugDisplay = 0; }
             }
 
@@ -169,6 +178,14 @@ public class DebugGUI : MonoBehaviour
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisActors = GameManager.instance.playerScript.DisplayGear();
                             GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysisActors, customBackground);
+                        }
+                        break;
+                    //actor Pools
+                    case 6:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = GameManager.instance.actorScript.DisplayPools();
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 900), analysisPools, customBackground);
                         }
                         break;
                 }

@@ -27,7 +27,7 @@ public class ModalGenericPicker : MonoBehaviour
 
     public GameObject[] arrayOfGenericOptions;                //place generic image UI elements here (3 options)
 
-    private CanvasGroup canvasGroup;
+    //private CanvasGroup canvasGroup;
     private ButtonInteraction buttonInteraction;
 
     private static ModalGenericPicker modalGenericPicker;
@@ -333,9 +333,18 @@ public class ModalGenericPicker : MonoBehaviour
                         if (gear != null)
                         {
                             text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.name.ToUpper(), colourEnd, colourDefault, colourEnd);
-                            Debug.Log(string.Format("TeamPicker: gearID {0} selected{1}", optionID, "\n"));
+                            Debug.Log(string.Format("GearPicker: gearID {0} selected{1}", optionID, "\n"));
                         }
                         else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", optionID)); }
+                        break;
+                    case EventType.GenericRecruitActor:
+                        Actor actor = GameManager.instance.dataScript.GetActor(optionID);
+                        if (actor != null)
+                        {
+                            text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
+                            Debug.Log(string.Format("RecruitPicker: actorID {0} selected{1}", optionID, "\n"));
+                        }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) for gearID {0}", optionID)); }
                         break;
                 }
             }
@@ -354,6 +363,9 @@ public class ModalGenericPicker : MonoBehaviour
                     break;
                 case EventType.GenericGearChoice:
                     text = string.Format("{0}Gear{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
+                case EventType.GenericRecruitActor:
+                    text = string.Format("{0}Recruit{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
                 default:
                     text = string.Format("{0}Select {1}{2}ANY{3}{4} Option{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
@@ -379,12 +391,9 @@ public class ModalGenericPicker : MonoBehaviour
         switch (returnEvent)
         {
             case EventType.GenericTeamRecall:
-                EventManager.instance.PostNotification(returnEvent, this, returnData);
-                break;
             case EventType.GenericNeutraliseTeam:
-                EventManager.instance.PostNotification(returnEvent, this, returnData);
-                break;
             case EventType.GenericGearChoice:
+            case EventType.GenericRecruitActor:
                 EventManager.instance.PostNotification(returnEvent, this, returnData);
                 break;
             default:
