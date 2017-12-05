@@ -75,7 +75,6 @@ public class GearManager : MonoBehaviour
             case EventType.ChangeColour:
                 SetColours();
                 break;
-
             case EventType.GearAction:
                 ModalActionDetails details = Param as ModalActionDetails;
                 InitialiseGenericPickerGear(details);
@@ -164,7 +163,7 @@ public class GearManager : MonoBehaviour
                 {
                     //chance of rare gear -> base chance * actor ability (or 1 if player)
                     int chance = chanceOfRareGear;
-                    Actor actor = GameManager.instance.dataScript.GetActor(details.ActorSlotID, Side.Resistance);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, Side.Resistance);
                     if (actor != null)
                     {
                         //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
@@ -281,7 +280,7 @@ public class GearManager : MonoBehaviour
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID, Side.Resistance);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, Side.Resistance);
                         if (actor != null)
                         {
                             StringBuilder builderTop = new StringBuilder();

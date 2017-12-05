@@ -39,6 +39,7 @@ namespace gameAPI
     // - - - Actors - - -
     //
     public enum TraitType { Good, Neutral, Bad}
+    public enum ActorStatus { Active, Inactive, Reserve, Pool}
 
     //
     // - - - Action Manager - - -

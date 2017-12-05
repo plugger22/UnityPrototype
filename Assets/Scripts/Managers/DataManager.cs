@@ -29,8 +29,17 @@ public class DataManager : MonoBehaviour
     private List<int> teamPoolOnMap = new List<int>();
     private List<int> teamPoolInTransit = new List<int>();
 
+    //actor pools
+    private List<int> authorityActorPoolLevelOne = new List<int>();
+    private List<int> authorityActorPoolLevelTwo = new List<int>();
+    private List<int> authorityActorPoolLevelThree = new List<int>();
+    private List<int> resistanceActorPoolLevelOne = new List<int>();
+    private List<int> resistanceActorPoolLevelTwo = new List<int>();
+    private List<int> resistanceActorPoolLevelThree = new List<int>();
+
     //master lists 
-    private List<ActorArc> listOfAllActorArcs = new List<ActorArc>();
+    private List<ActorArc> authorityActorArcs = new List<ActorArc>();
+    private List<ActorArc> resistanceActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
 
     //for fast access
@@ -163,7 +172,9 @@ public class DataManager : MonoBehaviour
             {
                 dictOfActorArcs.Add(arc.ActorArcID, arc);
                 //add to list
-                listOfAllActorArcs.Add(arc);
+                if (arc.side == Side.Authority) { authorityActorArcs.Add(arc); }
+                else if (arc.side == Side.Resistance) { resistanceActorArcs.Add(arc); }
+                else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.side, arc.name)); }
             }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }
@@ -553,11 +564,11 @@ public class DataManager : MonoBehaviour
     }
 
     //
-    // - - - Actor Related - - - 
+    // - - - Actor Arcs and Traits - - - 
     //
 
     /// <summary>
-    /// returns a number of randomly selected ActorArcs
+    /// returns a number of randomly selected ActorArcs. Returns null if a problem.
     /// </summary>
     /// <param name="num"></param>
     /// <returns></returns>
@@ -565,24 +576,54 @@ public class DataManager : MonoBehaviour
     {
         //filter for the required side
         List<ActorArc> tempMaster = new List<ActorArc>();
-        IEnumerable<ActorArc> selectedActorArcs =
-            from arc in listOfAllActorArcs
-            where arc.side == side
-            select arc;
-        tempMaster = selectedActorArcs.ToList();
+        if(side == Side.Authority) { tempMaster.AddRange(authorityActorArcs); }
+        else if (side == Side.Resistance) { tempMaster.AddRange(resistanceActorArcs); }
 
-        //temp list for results
-        List < ActorArc > tempList = new List<ActorArc>();
-        //randomly select
-        int index;
-        for(int i = 0; i < num; i++)
+        if (tempMaster.Count > 0)
         {
-            index = Random.Range(0, tempMaster.Count);
-            tempList.Add(tempMaster[index]);
-            //remove from list to prevent being selected again
-            tempMaster.RemoveAt(index);
+            //temp list for results
+            List<ActorArc> tempList = new List<ActorArc>();
+            //randomly select
+            int index;
+            int limit = Math.Min(num, tempMaster.Count);
+            for (int i = 0; i < limit; i++)
+            {
+                index = Random.Range(0, tempMaster.Count);
+                tempList.Add(tempMaster[index]);
+                //remove from list to prevent being selected again
+                tempMaster.RemoveAt(index);
+            }
+            return tempList;
         }
-        return tempList;
+        else
+        { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side)); }
+        return null;
+    }
+
+    /// <summary>
+    /// returns list of ActorArcs by side, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<ActorArc> GetActorArcs(Side side)
+    {
+        if (side == Side.Authority) { return authorityActorArcs; }
+        else if (side == Side.Resistance) { return resistanceActorArcs; }
+        else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side)); }
+        return null;
+    }
+
+    /// <summary>
+    /// returns number of individual actor arcs for a side, '-1' if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public int GetNumOfActorArcs(Side side)
+    {
+        if (side == Side.Authority) { return authorityActorArcs.Count; }
+        else if (side == Side.Resistance) { return resistanceActorArcs.Count; }
+        else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side)); }
+        return -1; 
     }
 
     /// <summary>
@@ -1148,10 +1189,66 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get array of actors for a specified side
+    /// Adds an actor to one of the three (by level and side) pools from which actors can be recruited from
+    /// </summary>
+    /// <param name="level"></param>
+    public void AddActorToPool(int actorID, int level, Side side)
+    {
+        Debug.Assert(level > 0 && level < 4, "Invalid actor level");
+        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        if (side == Side.Authority)
+        {
+            switch (level)
+            {
+                case 1: authorityActorPoolLevelOne.Add(actorID); break;
+                case 2: authorityActorPoolLevelTwo.Add(actorID); break;
+                case 3: authorityActorPoolLevelThree.Add(actorID); break;
+            }
+        }
+        else if (side == Side.Resistance)
+        {
+            switch (level)
+            {
+                case 1: resistanceActorPoolLevelOne.Add(actorID); break;
+                case 2: resistanceActorPoolLevelTwo.Add(actorID); break;
+                case 3: resistanceActorPoolLevelThree.Add(actorID); break;
+            }
+        }
+        else { Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side)); }
+    }
+
+    /// <summary>
+    /// return a list (of a specified level and side in the pick pool) of actorID's. Returns null if a problem.
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public List<int> GetActorPool(int level, Side side)
+    {
+        Debug.Assert(level > 0 && level < 4, "Invalid actor level");
+        if (side == Side.Authority)
+        {
+            if (level == 1) { return authorityActorPoolLevelOne; }
+            else if (level == 2) { return authorityActorPoolLevelTwo; }
+            else { return authorityActorPoolLevelThree; }
+        }
+        else if (side == Side.Resistance)
+        {
+            if (level == 1) { return resistanceActorPoolLevelOne; }
+            else if (level == 2) { return resistanceActorPoolLevelTwo; }
+            else { return resistanceActorPoolLevelThree; }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Side \"{0}\"", side));
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Get array of OnMap (active and inactive) actors for a specified side
     /// </summary>
     /// <returns></returns>
-    public Actor[] GetActors(Side side)
+    public Actor[] GetCurrentActors(Side side)
     {
         int total = GameManager.instance.actorScript.numOfOnMapActors;
         Actor[] tempArray = new Actor[total];
@@ -1161,11 +1258,11 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get specific actor
+    /// Get specific actor (OnMap, active or inactive)
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public Actor GetActor(int slotID, Side side)
+    public Actor GetCurrentActor(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[(int)side, slotID];
@@ -1176,7 +1273,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public string GetActorType(int slotID, Side side)
+    public string GetCurrentActorType(int slotID, Side side)
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[(int)side, slotID].arc.name;

@@ -19,10 +19,10 @@ namespace gameAPI
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
         [HideInInspector] public int renown;                   //starts at '0' and goes up (no limit)
         [HideInInspector] public string actorName;
-        [HideInInspector] public Trait trait;
         [HideInInspector] public bool isLive;                   //actor can 'go silent' and be unavailable on occasion
         [HideInInspector] public ActorArc arc;
-
+        [HideInInspector] public Trait trait;
+        [HideInInspector] public ActorStatus status;
         
 
         

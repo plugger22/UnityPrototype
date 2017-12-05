@@ -47,8 +47,14 @@ public class ActorManager : MonoBehaviour
     {
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.RecruitAction, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericRecruitActor, OnEvent);
+        //create active, OnMap actors
         InitialiseActors(numOfOnMapActors, Side.Resistance);
         InitialiseActors(numOfOnMapActors, Side.Authority);
+        //create pool actors
+        InitialisePoolActors();
+
     }
 
     /// <summary>
@@ -64,6 +70,14 @@ public class ActorManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.RecruitAction:
+                ModalActionDetails details = Param as ModalActionDetails;
+                InitialiseGenericPickerRecruit(details);
+                break;
+            case EventType.GenericRecruitActor:
+                GenericReturnData returnDataRecruit = Param as GenericReturnData;
+                ProcessRecruitChoice(returnDataRecruit);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -109,7 +123,7 @@ public class ActorManager : MonoBehaviour
             //Create actors
             for (int i = 0; i < num; i++)
             {
-                Actor actor = CreateActor(side, tempActorArcs[i].ActorArcID, 1, i);
+                Actor actor = CreateActor(side, tempActorArcs[i].ActorArcID, 1, ActorStatus.Active, i);
                 if (actor != null)
                 {
                     Debug.Log(string.Format("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
@@ -121,7 +135,84 @@ public class ActorManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
+    }
 
+    /// <summary>
+    /// populate the pools to recruit from (one full set of actor arcs for each side and each level)
+    /// </summary>
+    public void InitialisePoolActors()
+    {
+        int numOfArcs;
+        //Authority
+        List<ActorArc> listOfArcs = GameManager.instance.dataScript.GetActorArcs(Side.Authority);
+        if (listOfArcs != null)
+        {
+            numOfArcs = listOfArcs.Count;
+            for (int i = 0; i < numOfArcs; i++)
+            {
+                //level one actor
+                Actor actorOne = CreateActor(Side.Authority, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
+                if (actorOne != null)
+                {
+                    //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
+                    GameManager.instance.dataScript.AddActorToDict(actorOne);
+                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, Side.Authority);
+                }
+                else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
+                //level two actor
+                Actor actorTwo = CreateActor(Side.Authority, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
+                if (actorTwo != null)
+                {
+                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
+                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, Side.Authority);
+                }
+                else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
+                //level three actor
+                Actor actorThree = CreateActor(Side.Authority, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
+                if (actorThree != null)
+                {
+                    GameManager.instance.dataScript.AddActorToDict(actorThree);
+                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, Side.Authority);
+                }
+                else { Debug.LogWarning(string.Format("Invalid Authority actorThree (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
+            }
+        }
+        else { Debug.LogError("Invalid list of Authority Actor Arcs (Null)"); }
+        //Resistance
+        listOfArcs = GameManager.instance.dataScript.GetActorArcs(Side.Resistance);
+        if (listOfArcs != null)
+        {
+            numOfArcs = listOfArcs.Count;
+            for (int i = 0; i < numOfArcs; i++)
+            {
+                //level one actor
+                Actor actorOne = CreateActor(Side.Resistance, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
+                if (actorOne != null)
+                {
+                    //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
+                    GameManager.instance.dataScript.AddActorToDict(actorOne);
+                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, Side.Resistance);
+                }
+                else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
+                //level two actor
+                Actor actorTwo = CreateActor(Side.Resistance, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
+                if (actorTwo != null)
+                {
+                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
+                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, Side.Resistance);
+                }
+                else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
+                //level three actor
+                Actor actorThree = CreateActor(Side.Resistance, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
+                if (actorThree != null)
+                {
+                    GameManager.instance.dataScript.AddActorToDict(actorThree);
+                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, Side.Resistance);
+                }
+                else { Debug.LogWarning(string.Format("Invalid Resistance actorThree (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
+            }
+        }
+        else { Debug.LogError("Invalid list of Resistance Actor Arcs (Null)"); }
     }
 
     /// <summary>
@@ -132,7 +223,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="arc"></param>
     /// <param name="level"></param>
     /// <returns></returns>
-    public Actor CreateActor(Side side, int actorArcID, int level, int slotID = -1)
+    public Actor CreateActor(Side side, int actorArcID, int level, ActorStatus status, int slotID = -1)
     {
         Debug.Assert(level > 0 && level < 4, "Invalid level (must be between 1 and 3)");
         Debug.Assert(slotID >= -1 && slotID <= numOfOnMapActors, "Invalid slotID (must be -1 (default) or between 1 and 3");
@@ -153,6 +244,7 @@ public class ActorManager : MonoBehaviour
                 actor.arc = arc;
                 actor.actorName = arc.actorName;
                 actor.trait = GameManager.instance.dataScript.GetRandomTrait();
+                actor.status = status;
                 //level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }
@@ -253,7 +345,7 @@ public class ActorManager : MonoBehaviour
                 // - - - Actors - - - 
                 //
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
-                arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Resistance);
+                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Resistance);
                 foreach (Actor actor in arrayOfActors)
                 {
                     proceedFlag = true;
@@ -332,7 +424,6 @@ public class ActorManager : MonoBehaviour
 
                                         switch (actor.arc.nodeAction.type)
                                         {
-                                            case ActionType.Recruit:    //Placeholder
                                             case ActionType.Node:
                                             case ActionType.None:
                                                 details = new EventButtonDetails()
@@ -363,6 +454,16 @@ public class ActorManager : MonoBehaviour
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
                                                     action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
+                                                };
+                                                break;
+                                            case ActionType.Recruit:
+                                                details = new EventButtonDetails()
+                                                {
+                                                    buttonTitle = tempAction.name,
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                    buttonTooltipMain = tempAction.tooltipText,
+                                                    buttonTooltipDetail = builder.ToString(),
+                                                    action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails); }
                                                 };
                                                 break;
                                             default:
@@ -437,7 +538,7 @@ public class ActorManager : MonoBehaviour
 
                 //get a list pre-emptively as it's computationally expensive to do so on demand
                 List<string> tempTeamList = GameManager.instance.dataScript.GetAvailableReserveTeams(node);
-                arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Authority);
+                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Authority);
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                 foreach (Actor actor in arrayOfActors)
                 {
@@ -602,4 +703,167 @@ public class ActorManager : MonoBehaviour
         return tempList;
     }
 
+    /// <summary>
+    /// Choose Recruit (Both sides): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
+    /// </summary>
+    /// <param name="details"></param>
+    private void InitialiseGenericPickerRecruit(ModalActionDetails details)
+    {
+        /*
+        bool errorFlag = false;
+        int recruitID, index;
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
+        if (node != null)
+        {
+            genericDetails.returnEvent = EventType.GenericGearChoice;
+            genericDetails.side = Side.Resistance;
+            genericDetails.nodeID = details.NodeID;
+            genericDetails.actorSlotID = details.ActorSlotID;
+            //picker text
+            genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+            genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
+                colourNormal, colourEnd);
+            genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
+            //
+            //generate temp list of gear to choose from
+            //
+            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
+            List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Rare));
+            //remove from lists any gear that the player currently has
+            List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
+            if (tempPlayerGear.Count > 0)
+            {
+
+                for (int i = 0; i < tempPlayerGear.Count; i++)
+                {
+                    gearID = tempPlayerGear[i];
+                    if (tempCommonGear.Exists(id => id == gearID) == true)
+                    { tempCommonGear.Remove(gearID); }
+                    else if (tempRareGear.Exists(id => id == gearID) == true)
+                    { tempRareGear.Remove(gearID); }
+                }
+            }
+            //
+            //select two items of gear for the picker
+            //
+            int[] arrayOfGear = new int[2];
+            int countOfGear = 0;
+            for (int i = 0; i < arrayOfGear.Length; i++)
+            {
+                gearID = -1;
+                //any rare gear available?
+                if (tempRareGear.Count > 0)
+                {
+                    //chance of rare gear -> base chance * actor ability (or 1 if player)
+                    int chance = chanceOfRareGear;
+                    Actor actor = GameManager.instance.dataScript.GetActor(details.ActorSlotID, Side.Resistance);
+                    if (actor != null)
+                    {
+                        //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
+                        if (node.NodeID != GameManager.instance.nodeScript.nodePlayer)
+                        { chance *= actor.datapoint2; }
+                    }
+                    else
+                    {
+                        chance = 0;
+                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.ActorSlotID));
+                    }
+                    if (Random.Range(0, 100) < chance)
+                    {
+                        index = Random.Range(0, tempRareGear.Count);
+                        gearID = tempRareGear[index];
+                        tempRareGear.RemoveAt(index);
+                    }
+                    //if failed chance for rare gear then need to get common
+                    else if (tempCommonGear.Count > 0)
+                    {
+                        index = Random.Range(0, tempCommonGear.Count);
+                        gearID = tempCommonGear[index];
+                        tempCommonGear.RemoveAt(index);
+                    }
+                }
+                //common gear
+                else
+                {
+                    if (tempCommonGear.Count > 0)
+                    {
+                        index = Random.Range(0, tempCommonGear.Count);
+                        gearID = tempCommonGear[index];
+                        tempCommonGear.RemoveAt(index);
+                    }
+                }
+                //found some gear?
+                if (gearID > -1)
+                { arrayOfGear[i] = gearID; countOfGear++; }
+            }
+            //check there is at least one item of gear available
+            if (countOfGear < 1)
+            {
+                //OUTCOME -> No gear available
+                Debug.LogWarning("GearManager: No gear available in InitaliseGenericPickerGear");
+                errorFlag = true;
+            }
+            else
+            {
+                //
+                //loop gearID's that have been selected and package up ready for ModalGenericPicker
+                //
+                for (int i = 0; i < countOfGear; i++)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(arrayOfGear[i]);
+                    if (gear != null)
+                    {
+                        //option details
+                        GenericOptionDetails optionDetails = new GenericOptionDetails();
+                        optionDetails.optionID = gear.gearID;
+                        optionDetails.text = gear.name.ToUpper();
+                        optionDetails.sprite = gear.sprite;
+                        //tooltip -> TO DO
+                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd);
+                        tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffect, gear.rarity, colourEnd,
+                            "\n", colourSide, gear.type, colourEnd);
+                        //add to master arrays
+                        genericDetails.arrayOfOptions[i] = optionDetails;
+                        genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                    }
+                    else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.NodeID));
+            errorFlag = true;
+        }
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = Side.Resistance;
+            outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
+            outcomeDetails.textBottom = "Heads will roll!";
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //activate Generic Picker window
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+        }
+        */
+    }
+
+    /// <summary>
+    /// Processes choice of Recruit
+    /// </summary>
+    /// <param name="returnDetails"></param>
+    private void ProcessRecruitChoice(GenericReturnData data)
+    {
+
+    }
+
+    //new methods above here
 }

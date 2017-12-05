@@ -194,7 +194,7 @@ public class ModalTeamPicker : MonoBehaviour
             //track core data needed to resolve Insert team action
             teamNode = node;
             teamActorSlotID = details.ActorSlotID;
-            Actor actor = GameManager.instance.dataScript.GetActor(teamActorSlotID, Side.Authority);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, Side.Authority);
             int numTeams = node.CheckNumOfTeams();
             builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.arc.name.ToUpper(), node.NodeName, numTeams, 
                 numTeams != 1 ? "s" : "", colourEnd));
@@ -452,7 +452,7 @@ public class ModalTeamPicker : MonoBehaviour
         if (teamIDSelected > -1)
         {
             details.textTop = GameManager.instance.effectScript.SetTopText(teamIDSelected);
-            Actor actor = GameManager.instance.dataScript.GetActor(teamActorSlotID, Side.Authority);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, Side.Authority);
             if (actor != null)
             { details.textBottom = GameManager.instance.effectScript.SetBottomText(actor); }
             else { successFlag = false; }

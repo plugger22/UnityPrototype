@@ -269,7 +269,7 @@ public class NodeManager : MonoBehaviour
             nodeTemp.SetMaterial(nodeMaterial);
         }
         //Get Actor
-        Actor actor = GameManager.instance.dataScript.GetActor(slotID, GameManager.instance.optionScript.PlayerSide);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.optionScript.PlayerSide);
         string displayText;
         string minionTitle;
         //work out minion's appropriate title

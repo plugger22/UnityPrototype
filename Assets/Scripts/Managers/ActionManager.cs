@@ -99,7 +99,7 @@ public class ActionManager : MonoBehaviour
         if (details != null)
         {
             //get Actor
-            Actor actor = GameManager.instance.dataScript.GetActor(details.ActorSlotID, GameManager.instance.optionScript.PlayerSide);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, GameManager.instance.optionScript.PlayerSide);
             if (actor != null)
             {
                 //get node

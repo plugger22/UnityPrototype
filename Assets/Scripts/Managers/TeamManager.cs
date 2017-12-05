@@ -198,7 +198,7 @@ public void InitialiseTeams()
         else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
 
         //Add extra teams equal to each Authority actors ability level and off their preferred type
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Authority);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Authority);
         if (arrayOfActors.Length > 0)
         {
             int ability, arcID;
@@ -298,7 +298,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.dataScript.GetActor(actorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (actor.isLive == true)
@@ -379,7 +379,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.dataScript.GetActor(actorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (actor.isLive == true)
@@ -496,7 +496,7 @@ public void InitialiseTeams()
         StringBuilder builder = new StringBuilder();
         builder.Append(" OnMap Teams by Actor");
         builder.AppendLine();
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetActors(Side.Authority);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Authority);
         foreach(Actor actor in arrayOfActors)
         {
             builder.AppendLine();
@@ -597,7 +597,7 @@ public void InitialiseTeams()
                         if (team.Timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
                         tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}", 
                             dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.Timer, colourEnd, team.Timer != 1 ? "s" : "");
-                        Actor actor = GameManager.instance.dataScript.GetActor(team.ActorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             deployedTeams = actor.CheckNumOfTeams();
@@ -804,7 +804,7 @@ public void InitialiseTeams()
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID, Side.Resistance);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, Side.Resistance);
                         if (actor != null)
                         {
                             StringBuilder builderTop = new StringBuilder();
