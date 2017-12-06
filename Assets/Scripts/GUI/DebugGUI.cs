@@ -44,10 +44,12 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(15, 60, 80, 20), "Sec Med"))
+            if (GUI.Button(new Rect(15, 60, 80, 20), "Reserves"))
             {
-                Debug.Log("Button -> Switch Connection to Medium Security");
-                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.MedSec);
+                Debug.Log("Button -> Toggle Reserve Lists");
+                if (debugDisplay != 7)
+                { debugDisplay = 7; }
+                else { debugDisplay = 0; }
             }
 
             //third button
@@ -186,6 +188,14 @@ public class DebugGUI : MonoBehaviour
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisPools = GameManager.instance.actorScript.DisplayPools();
                             GUI.Box(new Rect(Screen.width - 205, 10, 200, 900), analysisPools, customBackground);
+                        }
+                        break;
+                    //Reserve Lists
+                    case 7:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = GameManager.instance.dataScript.DisplayReserveLists();
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
                         }
                         break;
                 }

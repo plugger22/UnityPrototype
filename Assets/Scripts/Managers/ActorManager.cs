@@ -896,7 +896,7 @@ public class ActorManager : MonoBehaviour
                             actorRecruited.arc.name,  colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
 
                         //Process any other effects, if acquisition was successfull, ignore otherwise
-                        Action action = actorRecruited.arc.nodeAction;
+                        Action action = actorCurrent.arc.nodeAction;
                         List<Effect> listOfEffects = action.GetEffects();
                         if (listOfEffects.Count > 0)
                         {
@@ -907,7 +907,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     if (effect.ignoreEffect == false)
                                     {
-                                        EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actorRecruited);
+                                        EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actorCurrent);
                                         if (effectReturn != null)
                                         {
                                             builderTop.AppendLine();

@@ -9,13 +9,10 @@ using System.Text;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    public int RebelCauseMax { get; set; }                         //level of Rebel Support. Max out to Win the level. Max level is a big part of difficulty.
-    public int RebelCauseCurrent { get; set; }                      //current level of Rebel Support
-
-    public int Renown { get; set; }
-
-    public int NumOfRecruits { get; set; }
-    //public int NumOfGear { get; set; }
+    [HideInInspector] public int rebelCauseMax;                         //level of Rebel Support. Max out to Win the level. Max level is a big part of difficulty.
+    [HideInInspector] public int rebelCauseCurrent;                    //current level of Rebel Support
+    [HideInInspector] public int renown;
+    [HideInInspector] public int numOfRecruits;
 
     private List<int> listOfGear = new List<int>();                 //gearID's of all gear items in inventory
 

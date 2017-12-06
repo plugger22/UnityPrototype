@@ -198,7 +198,7 @@ public class EffectManager : MonoBehaviour
                                         case EffectCriteria.NumRecruits:
                                             //criteria value overriden in this case
                                             criteria.criteriaValue = GameManager.instance.dataScript.GetNumOfActorsInReserve();
-                                            compareTip = ComparisonCheck(GameManager.instance.playerScript.NumOfRecruits, criteria.criteriaValue, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, criteria.criteriaValue, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "maxxed Recruit allowance");
@@ -264,7 +264,7 @@ public class EffectManager : MonoBehaviour
                                             else { BuildString(result, "No Gear available"); }
                                             break;
                                         case EffectCriteria.RebelCause:
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, GameManager.instance.playerScript.RebelCauseCurrent, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(criteria.criteriaValue, GameManager.instance.playerScript.rebelCauseCurrent, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Rebel Cause  " + compareTip);
@@ -531,21 +531,21 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 case EffectOutcome.RebelCause:
-                    int rebelCause = GameManager.instance.playerScript.RebelCauseCurrent;
-                    int maxCause = GameManager.instance.playerScript.RebelCauseMax;
+                    int rebelCause = GameManager.instance.playerScript.rebelCauseCurrent;
+                    int maxCause = GameManager.instance.playerScript.rebelCauseMax;
                     switch (effect.effectResult)
                     {
                         case Result.Add:
                             rebelCause += effect.effectValue;
                             rebelCause = Mathf.Min(maxCause, rebelCause);
-                            GameManager.instance.playerScript.RebelCauseCurrent = rebelCause;
+                            GameManager.instance.playerScript.rebelCauseCurrent = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause gains traction{1}", colourDefault, colourEnd);
                             effectReturn.bottomText = string.Format("{0}Rebel Cause +{1}{2}", colourOutcome1, effect.effectValue, colourEnd);
                             break;
                         case Result.Subtract:
                             rebelCause -= effect.effectValue;
                             rebelCause = Mathf.Max(0, rebelCause);
-                            GameManager.instance.playerScript.RebelCauseCurrent = rebelCause;
+                            GameManager.instance.playerScript.rebelCauseCurrent = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause is losing ground{1}", colourDefault, colourEnd);
                             effectReturn.bottomText = string.Format("{0}Rebel Cause -{1}{2}", colourOutcome2, effect.effectValue, colourEnd);
                             break;
@@ -554,7 +554,7 @@ public class EffectManager : MonoBehaviour
                             effect.effectValue = Mathf.Min(maxCause, effect.effectValue);
                             effect.effectValue = Mathf.Max(0, effect.effectValue);
                             rebelCause = effect.effectValue;
-                            GameManager.instance.playerScript.RebelCauseCurrent = rebelCause;
+                            GameManager.instance.playerScript.rebelCauseCurrent = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause adjusts to a new level{1}", colourDefault, colourEnd);
                             effectReturn.bottomText = string.Format("{0}Rebel Cause now {1}{2}", colourOutcome3, rebelCause, colourEnd);
                             break;
@@ -593,12 +593,12 @@ public class EffectManager : MonoBehaviour
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
-                                        GameManager.instance.playerScript.Renown++;
+                                        GameManager.instance.playerScript.renown++;
                                         effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome1, effect.description, colourEnd);
                                         break;
                                     case Result.Subtract:
-                                        if (GameManager.instance.playerScript.Renown >= effect.effectValue)
-                                        { GameManager.instance.playerScript.Renown -= effect.effectValue; }
+                                        if (GameManager.instance.playerScript.renown >= effect.effectValue)
+                                        { GameManager.instance.playerScript.renown -= effect.effectValue; }
                                         effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome2, effect.description, colourEnd);
                                         break;
                                 }
