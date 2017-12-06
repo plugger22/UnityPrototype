@@ -33,6 +33,7 @@ public class TooltipActor : MonoBehaviour
     private string colourName;
     private string colourQuality;
     private string colourAction;
+    private string colourArc;
     private string colourEnd;
 
 
@@ -95,6 +96,7 @@ public class TooltipActor : MonoBehaviour
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourAction = GameManager.instance.colourScript.GetColour(ColourType.actorAction);
+        colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -106,7 +108,7 @@ public class TooltipActor : MonoBehaviour
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
     /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    public void SetTooltip(string name, string[] arrayOfQualities, int[] arrayOfStats, Trait trait, Action action, Vector3 screenPos, float width, float height)
+    public void SetTooltip(Actor actor, string[] arrayOfQualities, int[] arrayOfStats, Action action, Vector3 screenPos, float width, float height)
     {
 
         //open panel at start
@@ -121,18 +123,20 @@ public class TooltipActor : MonoBehaviour
         actorAction.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
-        actorName.text = string.Format("{0}{1}{2}", colourName, name, colourEnd);
+        if (actor != null)
+        { actorName.text = string.Format("{0}<b>{1}</b>{2}{3}{4}{5}{6}", colourArc, actor.arc.name, colourEnd, "\n", colourName, actor.actorName, colourEnd); }
+        else { Debug.LogWarning("Invalid Actor (Null)"); }
         //trait
-        if (trait != null)
+        if (actor != null)
         {
             string colourTrait = colourQuality;
-            switch(trait.type)
+            switch(actor.trait.type)
             {
                 case TraitType.Good: colourTrait = colourGood; break;
                 case TraitType.Neutral: colourTrait = colourNeutral; break;
                 case TraitType.Bad: colourTrait = colourBad; break;
             }
-            actorTrait.text = string.Format("{0}{1}{2}", colourTrait, trait.name, colourEnd);
+            actorTrait.text = string.Format("{0}{1}{2}", colourTrait, actor.trait.name, colourEnd);
         }
         else { Debug.LogWarning(string.Format("Actor \"[0}\" has an invalid Trait (Null)", name)); }
         //action
@@ -162,24 +166,8 @@ public class TooltipActor : MonoBehaviour
             {
                 data = arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-                switch (data)
-                {
-                    case 3:
-                        //good -> green
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourGood, data, colourEnd)));
-                        break;
-                    case 2:
-                        //average -> yellow
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourNeutral, data, colourEnd)));
-                        break;
-                    case 1:
-                        //bad -> red (Security runs in reverse so that level 1 security is the highest)
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourBad, data, colourEnd)));
-                        break;
-                    default:
-                        builder.Append(data);
-                        break;
-                }
+
+                builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(data), data, colourEnd));
             }
             actorStats.text = builder.ToString();
         }

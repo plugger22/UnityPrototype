@@ -16,6 +16,7 @@ public class ModalOutcome : MonoBehaviour
     public TextMeshProUGUI effectText;
     public Image outcomeImage;
     public Button confirmButton;
+    public Sprite errorSprite;
 
     /*[Tooltip("Sprite used to skin Confirm button for an Authority Outcome")]
     public Sprite buttonSpriteAuthority;

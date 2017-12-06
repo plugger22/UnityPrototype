@@ -33,9 +33,7 @@ public class ActorManager : MonoBehaviour
     private string colourDefault;
     private string colourNormal;
     private string colourRecruit;
-    private string colourGood;
-    private string colourNeutral;
-    private string colourBad;
+    private string colourArc;
     private string colourEnd;
 
 
@@ -112,9 +110,7 @@ public class ActorManager : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -263,7 +259,22 @@ public class ActorManager : MonoBehaviour
                 actor.datapoint0 = Random.Range(limitLower, limitUpper); //connections and influence
                 actor.datapoint1 = Random.Range(limitLower, limitUpper); //motivation and support
                 if (side == Side.Resistance)
-                { actor.datapoint2 = 3; /*invisibility (always starts at 3*/}
+                {
+                    //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
+                    switch(actor.level)
+                    {
+                        case 3: actor.datapoint2 = 3; break;
+                        case 2: 
+                            if (Random.Range(0,100) <= 25) { actor.datapoint2 = 2; }
+                            else { actor.datapoint2 = 3; }
+                            break;
+                        case 1:
+                            if (Random.Range(0, 100) <= 50) { actor.datapoint2 = 2; }
+                            else { actor.datapoint2 = 3; }
+                            break;
+                    }
+                    
+                }
                 else if (side == Side.Authority)
                 { actor.datapoint2 = Random.Range(limitLower, limitUpper); /*Ability*/}
                 //OnMap actor
@@ -756,35 +767,25 @@ public class ActorManager : MonoBehaviour
                     }
                     else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
                 }
-                //select 3 random actors
-                numOfOptions = Math.Min(3, listOfPoolActors.Count);
-                for (int i = 0; i < numOfOptions; i++)
-                {
-                    index = Random.Range(0, listOfPoolActors.Count);
-                    listOfPickerActors.Add(listOfPoolActors[index]);
-                    //remove actor from pool to prevent duplicate types
-                    listOfPoolActors.RemoveAt(index);
-                }
             }
             else
             {
-                //actor at node, select from 4 x level 2 options (random types, could be the same as currently OnMap)
+                //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
                 listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(2, details.side));
-                //select 4 random actors
-                numOfOptions = Math.Min(3, listOfPoolActors.Count);
-                for (int i = 0; i < numOfOptions; i++)
-                {
-                    index = Random.Range(0, listOfPoolActors.Count);
-                    listOfPickerActors.Add(listOfPoolActors[index]);
-                    //remove actor from pool to prevent duplicate types
-                    listOfPoolActors.RemoveAt(index);
-                }
             }
             //
-            //select two items of gear for the picker
+            //select three actors for the picker
             //
+            numOfOptions = Math.Min(3, listOfPoolActors.Count);
+            for (int i = 0; i < numOfOptions; i++)
+            {
+                index = Random.Range(0, listOfPoolActors.Count);
+                listOfPickerActors.Add(listOfPoolActors[index]);
+                //remove actor from pool to prevent duplicate types
+                listOfPoolActors.RemoveAt(index);
+            }
+            //check there is at least one recruit available
             countOfRecruits = listOfPickerActors.Count;
-            //check there is at least one item of gear available
             if (countOfRecruits < 1)
             {
                 //OUTCOME -> No recruits available
@@ -816,13 +817,17 @@ public class ActorManager : MonoBehaviour
                         StringBuilder builder = new StringBuilder();
                         if (arrayOfQualities.Length > 0)
                         {
-                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GetColour(actor.datapoint0), actor.datapoint0, colourEnd,"\n"));
-                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GetColour(actor.datapoint1), actor.datapoint1, colourEnd, "\n"));
-                            builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GetColour(actor.datapoint2), actor.datapoint2, colourEnd));
+                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0), 
+                                actor.datapoint0, colourEnd,"\n"));
+                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1), 
+                                actor.datapoint1, colourEnd, "\n"));
+                            builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2), 
+                                actor.datapoint2, colourEnd));
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">", GetColour(3 - (int)actor.trait.type), 
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">", 
+                            GameManager.instance.colourScript.GetValueColour(3 - (int)actor.trait.type), 
                             "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
@@ -856,30 +861,102 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod for InitialiseGenericPickerRecruit to provide correct colour for various good/neutral/bad texts, eg. stats and trait
-    /// </summary>
-    /// <param name="datapoint"></param>
-    /// <returns></returns>
-    private string GetColour(int value)
-    {
-        string colourReturn;
-        switch(value)
-        {
-            case 1: colourReturn = colourBad; break;
-            case 2: colourReturn = colourNeutral; break;
-            case 3: colourReturn = colourGood; break;
-            default: colourReturn = colourDefault; break;
-        }
-        return colourReturn;
-    }
-
-    /// <summary>
     /// Processes choice of Recruit
     /// </summary>
     /// <param name="returnDetails"></param>
     private void ProcessRecruitChoice(GenericReturnData data)
     {
+        bool successFlag = true;
+        StringBuilder builderTop = new StringBuilder();
+        StringBuilder builderBottom = new StringBuilder();
+        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        Side side = GameManager.instance.optionScript.PlayerSide;
+        if (data.optionID > -1)
+        {
+            //find actor
+            Actor actorCurrent = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, side);
+            if (actorCurrent != null)
+            {
+                Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
+                if (actorRecruited != null)
+                {
+                    //add actor to reserve pool
+                    if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
+                    {
+                        //change actor's status
+                        actorRecruited.status = ActorStatus.Reserve;
+                        //remove actor from appropriate pool list
+                        GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
+                        //sprite of recruited actor
+                        sprite = actorRecruited.arc.baseSprite;
 
+                        //gear successfully acquired
+                        builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
+                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc, 
+                            actorRecruited.arc.name,  colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+
+                        //Process any other effects, if acquisition was successfull, ignore otherwise
+                        Action action = actorRecruited.arc.nodeAction;
+                        List<Effect> listOfEffects = action.GetEffects();
+                        if (listOfEffects.Count > 0)
+                        {
+                            Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                            if (node != null)
+                            {
+                                foreach (Effect effect in listOfEffects)
+                                {
+                                    if (effect.ignoreEffect == false)
+                                    {
+                                        EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actorRecruited);
+                                        if (effectReturn != null)
+                                        {
+                                            builderTop.AppendLine();
+                                            builderTop.Append(effectReturn.topText);
+                                            builderBottom.AppendLine();
+                                            builderBottom.Append(effectReturn.bottomText);
+                                        }
+                                        else { Debug.LogError("Invalid effectReturn (Null)"); }
+                                    }
+                                }
+                            }
+                            else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", data.nodeID)); }
+                        }
+                    }
+                    else
+                    {
+                        //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                        successFlag = false;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
+                    successFlag = false;
+                }
+            }
+            else
+            {
+                Debug.LogWarning(string.Format("Invalid Current Actor (Null) for actorSlotID {0}", data.actorSlotID));
+                successFlag = false;
+            }
+        }
+        else
+        { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
+        //failed outcome
+        if (successFlag == false)
+        {
+            builderTop.Append("Something has gone wrong. Our Recruit has gone missing");
+            builderBottom.Append("This is a matter of concern");
+        }
+        //
+        // - - - Outcome - - - 
+        //
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.textTop = builderTop.ToString();
+        details.textBottom = builderBottom.ToString();
+        details.sprite = sprite;
+        details.side = side;
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
 
     /// <summary>

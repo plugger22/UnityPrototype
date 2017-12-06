@@ -33,9 +33,11 @@ public class DataManager : MonoBehaviour
     private List<int> authorityActorPoolLevelOne = new List<int>();
     private List<int> authorityActorPoolLevelTwo = new List<int>();
     private List<int> authorityActorPoolLevelThree = new List<int>();
+    private List<int> authorityActorReserve = new List<int>();
     private List<int> resistanceActorPoolLevelOne = new List<int>();
     private List<int> resistanceActorPoolLevelTwo = new List<int>();
     private List<int> resistanceActorPoolLevelThree = new List<int>();
+    private List<int> resistanceActorReserve = new List<int>();
 
     //master lists 
     private List<ActorArc> authorityActorArcs = new List<ActorArc>();
@@ -1218,6 +1220,81 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Removes an actor from one of the three (by level and side) pools from which actors can be recruited from
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <param name="level"></param>
+    /// <param name="side"></param>
+    public void RemoveActorFromPool(int actorID, int level, Side side)
+    {
+        Debug.Assert(level > 0 && level < 4, "Invalid actor level");
+        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        if (side == Side.Authority)
+        {
+            switch (level)
+            {
+                case 1: authorityActorPoolLevelOne.Remove(actorID); break;
+                case 2: authorityActorPoolLevelTwo.Remove(actorID); break;
+                case 3: authorityActorPoolLevelThree.Remove(actorID); break;
+            }
+        }
+        else if (side == Side.Resistance)
+        {
+            switch (level)
+            {
+                case 1: resistanceActorPoolLevelOne.Remove(actorID); break;
+                case 2: resistanceActorPoolLevelTwo.Remove(actorID); break;
+                case 3: resistanceActorPoolLevelThree.Remove(actorID); break;
+            }
+        }
+        else { Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT removed from pool", side)); }
+    }
+
+    /// <summary>
+    /// add an actor to the reserve pool for that side. Returns true if successful (checks if pool is full)
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <param name="side"></param>
+    public bool AddActorToReserve(int actorID, Side side)
+    {
+        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        bool successFlag = true;
+        if (side == Side.Authority)
+        {
+            //check space in Authority reserve pool
+            if (authorityActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
+            { authorityActorReserve.Add(actorID); }
+            else { successFlag = false; }
+        }
+        else if (side == Side.Resistance)
+        {
+            //check space in Resistance reserve pool
+            if (resistanceActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
+            { resistanceActorReserve.Add(actorID); }
+            else { successFlag = false; }
+        }
+        else
+        {
+            Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side));
+            successFlag = false;
+        }
+        return successFlag;
+    }
+
+    /// <summary>
+    /// returns number of actors currently in the relevant reserve pool (auto figures out side from optionManager.cs -> playerSide). '0' if an issue.
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumOfActorsInReserve()
+    {
+        if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
+        { return authorityActorReserve.Count; }
+        else if (GameManager.instance.optionScript.PlayerSide == Side.Resistance)
+        { return resistanceActorReserve.Count; }
+        else { return 0; }
+    }
+
+    /// <summary>
     /// return a list (of a specified level and side in the pick pool) of actorID's. Returns null if a problem.
     /// </summary>
     /// <param name="level"></param>
@@ -1316,7 +1393,7 @@ public class DataManager : MonoBehaviour
         return arrayOfStats;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// return a specific actor's name
     /// </summary>
     /// <param name="slotID"></param>
@@ -1336,7 +1413,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[(int)side, slotID].trait;
-    }
+    }*/
 
     /// <summary>
     /// returns a specific actor's action

@@ -288,12 +288,12 @@ public class GearManager : MonoBehaviour
 
                             if (GameManager.instance.playerScript.AddGear(data.optionID) == true)
                             {
-                                //team successfully removed
+                                //gear successfully acquired
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
                                     colourEffect, colourEnd));
 
-                                //Process any other effects, if Neutralise was successfull, ignore otherwise
+                                //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)

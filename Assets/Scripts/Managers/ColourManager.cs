@@ -10,7 +10,7 @@ public enum ColourType
     sideRebel, sideAuthority,
     cancelHighlight, cancelNormal,
     actionEffect,
-    dataGood, dataNeutral, dataBad,
+    dataGood, dataNeutral, dataBad, dataTerrible,
     normalText, defaultText, greyText,                           //normal is slight off yellow text, default is white, grey is greyed out
     //outcome window effects
     goodEffect, neutralEffect, badEffect,                              
@@ -38,9 +38,10 @@ public class ColourManager : MonoBehaviour
     public Colour[] cancelNormal;                   //Cancel button generic tool tip
     public Colour[] actionEffect;                   //effects for action menu buttons
     //stats
-    public Colour[] dataGood;                       //number in good range
-    public Colour[] dataNeutral;                    //neutral
-    public Colour[] dataBad;                        //bad
+    public Colour[] dataGood;                       //number in good range (value 3)
+    public Colour[] dataNeutral;                    //neutral (value 2)
+    public Colour[] dataBad;                        //bad (value 1)
+    public Colour[] dataTerrible;                   //terrible (value 0)
     //default Text
     public Colour[] normalText;                     //normal non-coloured text, eg. white equivalent
     public Colour[] defaultText;                    //default White text if no colour provided
@@ -78,6 +79,7 @@ public class ColourManager : MonoBehaviour
             dataGood,
             dataNeutral,
             dataBad,
+            dataTerrible,
             normalText,
             defaultText,
             greyText,
@@ -136,5 +138,26 @@ public class ColourManager : MonoBehaviour
 
     public string GetEndTag()
     { return "</color>"; }
+
+
+
+    /// <summary>
+    /// subMethod  to provide correct colour for various good/neutral/bad texts, eg. stats and trait
+    /// </summary>
+    /// <param name="datapoint"></param>
+    /// <returns></returns>
+    public string GetValueColour(int value)
+    {
+        string colourReturn;
+        switch (value)
+        {
+            case 0: colourReturn = dataTerrible[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
+            case 1: colourReturn = dataBad[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
+            case 2: colourReturn = dataNeutral[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
+            case 3: colourReturn = dataGood[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
+            default: colourReturn = defaultText[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
+        }
+        return string.Format("{0}{1}{2}", "<color=", colourReturn, ">");
+    }
 
 }

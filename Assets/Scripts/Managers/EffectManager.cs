@@ -196,7 +196,9 @@ public class EffectManager : MonoBehaviour
                                             }
                                             break;
                                         case EffectCriteria.NumRecruits:
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, GameManager.instance.playerScript.NumOfRecruits, criteria.criteriaCompare);
+                                            //criteria value overriden in this case
+                                            criteria.criteriaValue = GameManager.instance.dataScript.GetNumOfActorsInReserve();
+                                            compareTip = ComparisonCheck(GameManager.instance.playerScript.NumOfRecruits, criteria.criteriaValue, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "maxxed Recruit allowance");

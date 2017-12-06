@@ -210,7 +210,6 @@ public class TargetManager : MonoBehaviour
         List<string> tempList = new List<string>();
         if (targetID > -1)
         {
-            string infoColour = colourDataNeutral;
             //find target
             Target target = GameManager.instance.dataScript.GetTarget(targetID);
             if (target != null)
@@ -231,9 +230,12 @@ public class TargetManager : MonoBehaviour
                         else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
                     }
                     //info level data colour graded
-                    if (target.InfoLevel == 3) { infoColour = colourDataGood; }
-                    else if (target.InfoLevel == 1) { infoColour = colourDataBad; }
-                    tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, infoColour, target.InfoLevel, colourEnd));
+
+                    /*if (target.InfoLevel == 3) { infoColour = colourDataGood; }
+                    else if (target.InfoLevel == 1) { infoColour = colourDataBad; }*/
+
+                    tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, 
+                        GameManager.instance.colourScript.GetValueColour(target.InfoLevel), target.InfoLevel, colourEnd));
                     tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gearType, colourEnd));
                     tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
                 }
