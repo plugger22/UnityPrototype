@@ -19,6 +19,7 @@ public enum ColourType
     black,
     //other
     actorArc,
+    actorAction,
     Count
 }
 
@@ -56,6 +57,7 @@ public class ColourManager : MonoBehaviour
 
     public Colour[] black;
     public Colour[] actorArc;                       //violet colour for "WORKS"
+    public Colour[] actorAction;                    //salmon colour for "Blow Stuff Up"
 
     private Colour[,] arrayOfColours;               //repositry of colourTypes
     private List<Colour[]> listOfColourTypes;       //facilitates automatic population of array
@@ -86,6 +88,7 @@ public class ColourManager : MonoBehaviour
             error,
             black,
             actorArc,
+            actorAction,
         };
 
         //loop thorugh list and auto populate array

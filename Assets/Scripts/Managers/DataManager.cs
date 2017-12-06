@@ -1304,7 +1304,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns array of Stats -> [0] dataPoint0, [1] dataPoint1 , [2] dataPoint3
+    /// returns array of Stats for an OnMap actor-> [0] dataPoint0, [1] dataPoint1 , [2] dataPoint3
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
@@ -1336,6 +1336,18 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[(int)side, slotID].trait;
+    }
+
+    /// <summary>
+    /// returns a specific actor's action
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Action GetActorAction(int slotID, Side side)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        return arrayOfActors[(int)side, slotID].arc.nodeAction;
     }
 
     /// <summary>

@@ -15,6 +15,7 @@ public class TooltipActor : MonoBehaviour
     public TextMeshProUGUI actorQualities;
     public TextMeshProUGUI actorStats;
     public TextMeshProUGUI actorTrait;
+    public TextMeshProUGUI actorAction;
     public Image dividerTop;                   //Side specific sprites for tooltips
     public Image dividerBottom;
     public GameObject tooltipActorObject;
@@ -31,6 +32,7 @@ public class TooltipActor : MonoBehaviour
     private string colourBad;
     private string colourName;
     private string colourQuality;
+    private string colourAction;
     private string colourEnd;
 
 
@@ -92,18 +94,19 @@ public class TooltipActor : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourAction = GameManager.instance.colourScript.GetColour(ColourType.actorAction);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
 
     /// <summary>
-    /// Initialise node Tool tip
+    /// Initialise actor Tool tip
     /// </summary>
     /// <param name="name">Name of Node, eg. 'Downtown Manhattan'</param>
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
     /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    public void SetTooltip(string name, string[] arrayOfQualities, int[] arrayOfStats, Trait trait, Vector3 screenPos, float width, float height)
+    public void SetTooltip(string name, string[] arrayOfQualities, int[] arrayOfStats, Trait trait, Action action, Vector3 screenPos, float width, float height)
     {
 
         //open panel at start
@@ -115,9 +118,11 @@ public class TooltipActor : MonoBehaviour
         actorStats.gameObject.SetActive(true);
         actorQualities.gameObject.SetActive(true);
         actorTrait.gameObject.SetActive(true);
+        actorAction.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
         actorName.text = string.Format("{0}{1}{2}", colourName, name, colourEnd);
+        //trait
         if (trait != null)
         {
             string colourTrait = colourQuality;
@@ -129,9 +134,14 @@ public class TooltipActor : MonoBehaviour
             }
             actorTrait.text = string.Format("{0}{1}{2}", colourTrait, trait.name, colourEnd);
         }
-        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
+        else { Debug.LogWarning(string.Format("Actor \"[0}\" has an invalid Trait (Null)", name)); }
+        //action
+        if (action != null)
+        { actorAction.text = string.Format("{0}{1}{2}", colourAction, action.name, colourEnd); }
+        else { Debug.LogWarning(string.Format("Actor \"[0}\" has an invalid Action (Null)", name)); }
 
         //qualities
+        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         if (arrayOfQualities.Length > 0)
         {
             StringBuilder builder = new StringBuilder();

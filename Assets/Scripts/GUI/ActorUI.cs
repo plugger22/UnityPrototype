@@ -74,6 +74,7 @@ public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     GameManager.instance.dataScript.GetQualities(side),
                     GameManager.instance.dataScript.GetActorStats(slotID, side),
                     GameManager.instance.dataScript.GetActorTrait(slotID, side),
+                    GameManager.instance.dataScript.GetActorAction(slotID, side),
                     //parent.GetComponent<RectTransform>().position, -> does the same job as the transform line below
                     parent.transform.position,
                     parent.GetComponent<RectTransform>().rect.width,

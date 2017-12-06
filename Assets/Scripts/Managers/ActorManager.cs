@@ -33,6 +33,9 @@ public class ActorManager : MonoBehaviour
     private string colourDefault;
     private string colourNormal;
     private string colourRecruit;
+    private string colourGood;
+    private string colourNeutral;
+    private string colourBad;
     private string colourEnd;
 
 
@@ -109,6 +112,9 @@ public class ActorManager : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -257,7 +263,7 @@ public class ActorManager : MonoBehaviour
                 actor.datapoint0 = Random.Range(limitLower, limitUpper); //connections and influence
                 actor.datapoint1 = Random.Range(limitLower, limitUpper); //motivation and support
                 if (side == Side.Resistance)
-                { actor.datapoint2 = 0; /*invisibility (always starts at zero*/}
+                { actor.datapoint2 = 3; /*invisibility (always starts at 3*/}
                 else if (side == Side.Authority)
                 { actor.datapoint2 = Random.Range(limitLower, limitUpper); /*Ability*/}
                 //OnMap actor
@@ -725,7 +731,7 @@ public class ActorManager : MonoBehaviour
             genericDetails.actorSlotID = details.ActorSlotID;
             //picker text
             genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
-            genericDetails.textMiddle = string.Format("{0}Recruit will be waiting on your reserve list{1}",
+            genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
                 colourNormal, colourEnd);
             genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
             //
@@ -778,10 +784,6 @@ public class ActorManager : MonoBehaviour
             //select two items of gear for the picker
             //
             countOfRecruits = listOfPickerActors.Count;
-
-            /*int[] arrayOfRecruits = new int[2];
-            int countOfGear = 0;*/
-
             //check there is at least one item of gear available
             if (countOfRecruits < 1)
             {
@@ -806,9 +808,22 @@ public class ActorManager : MonoBehaviour
                         optionDetails.sprite = actor.arc.baseSprite;
                         //tooltip
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                        tooltipDetails.textHeader = string.Format("{0}{1}{2}", colourRecruit, actor.arc.name, colourEnd);
-                        tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, actor.actorName, colourEnd);
-                        tooltipDetails.textDetails = string.Format("{0}level {1}{2}", colourEffect, actor.level , colourEnd);
+                        //arc type and name
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRecruit, actor.arc.name, colourEnd,
+                            "\n", colourNormal, actor.actorName, colourEnd);
+                        //stats
+                        string[] arrayOfQualities = GameManager.instance.dataScript.GetQualities(details.side);
+                        StringBuilder builder = new StringBuilder();
+                        if (arrayOfQualities.Length > 0)
+                        {
+                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GetColour(actor.datapoint0), actor.datapoint0, colourEnd,"\n"));
+                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GetColour(actor.datapoint1), actor.datapoint1, colourEnd, "\n"));
+                            builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GetColour(actor.datapoint2), actor.datapoint2, colourEnd));
+                            tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
+                        }
+                        //trait and action
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">", GetColour(3 - (int)actor.trait.type), 
+                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
@@ -838,6 +853,24 @@ public class ActorManager : MonoBehaviour
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
         }
      
+    }
+
+    /// <summary>
+    /// subMethod for InitialiseGenericPickerRecruit to provide correct colour for various good/neutral/bad texts, eg. stats and trait
+    /// </summary>
+    /// <param name="datapoint"></param>
+    /// <returns></returns>
+    private string GetColour(int value)
+    {
+        string colourReturn;
+        switch(value)
+        {
+            case 1: colourReturn = colourBad; break;
+            case 2: colourReturn = colourNeutral; break;
+            case 3: colourReturn = colourGood; break;
+            default: colourReturn = colourDefault; break;
+        }
+        return colourReturn;
     }
 
     /// <summary>
