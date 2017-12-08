@@ -40,6 +40,7 @@ namespace modalAPI
         public int NodeID { get; set; }
         public int ActorSlotID { get; set; }
         public EventType EventType { get; set; }                       //event that is triggered when action button clicked
+        public int Level { get; set; }                                 //Authority only: level of actor to recruit (1 to 3)
     }
 
 

@@ -35,24 +35,18 @@ public class DebugGUI : MonoBehaviour
 
             //background box
             customBackground.alignment = TextAnchor.UpperCenter;
-            GUI.Box(new Rect(10, 10, 90, 220), "Debug Menu", customBackground);
+            GUI.Box(new Rect(10, 10, 130, 220), "Debug Menu", customBackground);
 
             //first button
-            if (GUI.Button(new Rect(15, 40, 80, 20), "A_Recruit"))
+            if (GUI.Button(new Rect(15, 40, 120, 20), "Authority Recruit"))
             {
                 Debug.Log("Button -> Authority Recruit Actor");
-                ModalActionDetails details = new ModalActionDetails()
-                {
-                    side = Side.Authority,
-                    NodeID = -1,
-                    ActorSlotID = -1,
-                    EventType = EventType.GenericRecruitActorAuthority
-                };
-                EventManager.instance.PostNotification(EventType.RecruitAction, this, details);
+                if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
+                { GameManager.instance.actorScript.RecruitAuthorityActor(2); }
             }
 
             //second button
-            if (GUI.Button(new Rect(15, 60, 80, 20), "Reserves"))
+            if (GUI.Button(new Rect(15, 60, 120, 20), "Reserve Lists"))
             {
                 Debug.Log("Button -> Toggle Reserve Lists");
                 if (debugDisplay != 7)
@@ -61,7 +55,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //third button
-            if (GUI.Button(new Rect(15, 80, 80, 20), "Gear"))
+            if (GUI.Button(new Rect(15, 80, 120, 20), "Gear Display"))
             {
                 Debug.Log("Button -> Toggle Gear");
                 if (debugDisplay != 5)
@@ -71,7 +65,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(15, 100, 80, 20), "Colour Blind"))
+            if (GUI.Button(new Rect(15, 100, 120, 20), "Colour Blind"))
             {
                 Debug.Log("Button -> Toggle Colour Schemes");
                 if (GameManager.instance.optionScript.ColourOption == ColourScheme.Normal)
@@ -80,7 +74,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(15, 120, 80, 20), "Side"))
+            if (GUI.Button(new Rect(15, 120, 120, 20), "Change Side"))
             {
                 Debug.Log("Button -> Swap sides");
                 if (GameManager.instance.optionScript.PlayerSide == Side.Resistance)
@@ -90,7 +84,7 @@ public class DebugGUI : MonoBehaviour
 
 
             //sixth button
-            if (GUI.Button(new Rect(15, 140, 80, 20), "Node/Actrs"))
+            if (GUI.Button(new Rect(15, 140, 120, 20), "Analysis"))
             {
                 Debug.Log("Button -> Toggle Node/Actors Analysis");
                 if (debugDisplay != 1)
@@ -99,7 +93,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //seventh button
-            if (GUI.Button(new Rect(15, 160, 80, 20), "Team Pools"))
+            if (GUI.Button(new Rect(15, 160, 120, 20), "Team Pools"))
             {
                 Debug.Log("Button -> Toggle Team Pool Analysis");
                 if (debugDisplay != 2)
@@ -108,7 +102,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eigth button
-            if (GUI.Button(new Rect(15, 180, 80, 20), "Teams"))
+            if (GUI.Button(new Rect(15, 180, 120, 20), "Teams by Type"))
             {
                 Debug.Log("Button -> Toggle Teams");
                 if (debugDisplay != 3)
@@ -117,7 +111,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //ninth button
-            if (GUI.Button(new Rect(15, 200, 80, 20), "Actr Teams"))
+            if (GUI.Button(new Rect(15, 200, 120, 20), "Teams by Actor"))
             {
                 Debug.Log("Button -> Toggle Actor Teams");
                 if (debugDisplay != 4)
@@ -126,7 +120,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(15, 220, 80, 20), "Actor Pools"))
+            if (GUI.Button(new Rect(15, 220, 120, 20), "Actor Pools"))
             {
                 Debug.Log("Button -> Toggle Actor Pools");
                 if (debugDisplay != 6)

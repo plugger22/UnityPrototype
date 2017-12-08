@@ -730,6 +730,24 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// call this to recruit an authority actor of a specified level (1 to 3)
+    /// </summary>
+    /// <param name="level"></param>
+    public void RecruitAuthorityActor(int level)
+    {
+        Debug.Assert(level > 0 && level <= 3, string.Format("Invalid level {0}", level));
+        ModalActionDetails details = new ModalActionDetails()
+        {
+            side = Side.Authority,
+            NodeID = -1,
+            ActorSlotID = -1,
+            EventType = EventType.GenericRecruitActorAuthority,
+            Level = level
+        };
+        EventManager.instance.PostNotification(EventType.RecruitAction, this, details);
+    }
+
+    /// <summary>
     /// Choose Recruit (Both sides): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// </summary>
     /// <param name="details"></param>
@@ -788,11 +806,11 @@ public class ActorManager : MonoBehaviour
                     listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(2, details.side));
                 }
             }
-            //TO DO
+            //Authority
             else if (details.side == Side.Authority)
             {
-                //placeholder -> select from 3 x level 2 options (random types, could be the same as currently OnMap)
-                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(2, details.side));
+                //placeholder -> select from 3 x specified level options (random types, could be the same as currently OnMap)
+                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(details.Level, details.side));
             }
             else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
             //
@@ -912,7 +930,7 @@ public class ActorManager : MonoBehaviour
                         //sprite of recruited actor
                         sprite = actorRecruited.arc.baseSprite;
 
-                        //gear successfully acquired
+                        //actor successfully recruited
                         builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
                         builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc, 
                             actorRecruited.arc.name,  colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
@@ -987,6 +1005,61 @@ public class ActorManager : MonoBehaviour
     /// <param name="returnDetails"></param>
     private void ProcessRecruitChoiceAuthority(GenericReturnData data)
     {
+        bool successFlag = true;
+        StringBuilder builderTop = new StringBuilder();
+        StringBuilder builderBottom = new StringBuilder();
+        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        Side side = GameManager.instance.optionScript.PlayerSide;
+        if (data.optionID > -1)
+        {
+            //find actor
+                Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
+                if (actorRecruited != null)
+                {
+                    //add actor to reserve pool
+                    if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
+                    {
+                        //change actor's status
+                        actorRecruited.status = ActorStatus.Reserve;
+                        //remove actor from appropriate pool list
+                        GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
+                        //sprite of recruited actor
+                        sprite = actorRecruited.arc.baseSprite;
+
+                        //actor successfully recruited
+                        builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
+                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
+                            actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+                    }
+                    else
+                    {
+                        //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                        successFlag = false;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
+                    successFlag = false;
+                }
+        }
+        else
+        { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
+        //failed outcome
+        if (successFlag == false)
+        {
+            builderTop.Append("Something has gone wrong. Our Recruit has gone missing");
+            builderBottom.Append("This is a matter of concern");
+        }
+        //
+        // - - - Outcome - - - 
+        //
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.textTop = builderTop.ToString();
+        details.textBottom = builderBottom.ToString();
+        details.sprite = sprite;
+        details.side = side;
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
 
     /// <summary>
