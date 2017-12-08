@@ -337,7 +337,8 @@ public class ModalGenericPicker : MonoBehaviour
                         }
                         else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", optionID)); }
                         break;
-                    case EventType.GenericRecruitActor:
+                    case EventType.GenericRecruitActorResistance:
+                    case EventType.GenericRecruitActorAuthority:
                         Actor actor = GameManager.instance.dataScript.GetActor(optionID);
                         if (actor != null)
                         {
@@ -364,7 +365,8 @@ public class ModalGenericPicker : MonoBehaviour
                 case EventType.GenericGearChoice:
                     text = string.Format("{0}Gear{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
-                case EventType.GenericRecruitActor:
+                case EventType.GenericRecruitActorResistance:
+                case EventType.GenericRecruitActorAuthority:
                     text = string.Format("{0}Recruit{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
                 default:
@@ -393,7 +395,8 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.GenericTeamRecall:
             case EventType.GenericNeutraliseTeam:
             case EventType.GenericGearChoice:
-            case EventType.GenericRecruitActor:
+            case EventType.GenericRecruitActorResistance:
+            case EventType.GenericRecruitActorAuthority:
                 EventManager.instance.PostNotification(returnEvent, this, returnData);
                 break;
             default:

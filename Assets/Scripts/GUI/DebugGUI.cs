@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using modalAPI;
 
 /// <summary>
 /// debug GUI, on demand (HotKey 'D' -> On, HotKey 'H' -> Off)
@@ -37,10 +38,17 @@ public class DebugGUI : MonoBehaviour
             GUI.Box(new Rect(10, 10, 90, 220), "Debug Menu", customBackground);
 
             //first button
-            if (GUI.Button(new Rect(15, 40, 80, 20), "Sec Low"))
+            if (GUI.Button(new Rect(15, 40, 80, 20), "A_Recruit"))
             {
-                Debug.Log("Button -> Switch Connections to Low Security");
-                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.LowSec);
+                Debug.Log("Button -> Authority Recruit Actor");
+                ModalActionDetails details = new ModalActionDetails()
+                {
+                    side = Side.Authority,
+                    NodeID = -1,
+                    ActorSlotID = -1,
+                    EventType = EventType.GenericRecruitActorAuthority
+                };
+                EventManager.instance.PostNotification(EventType.RecruitAction, this, details);
             }
 
             //second button

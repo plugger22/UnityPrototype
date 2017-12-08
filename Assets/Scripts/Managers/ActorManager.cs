@@ -51,7 +51,8 @@ public class ActorManager : MonoBehaviour
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.RecruitAction, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericRecruitActor, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent);
         //create active, OnMap actors
         InitialiseActors(numOfOnMapActors, Side.Resistance);
         InitialiseActors(numOfOnMapActors, Side.Authority);
@@ -78,9 +79,13 @@ public class ActorManager : MonoBehaviour
                 ModalActionDetails details = Param as ModalActionDetails;
                 InitialiseGenericPickerRecruit(details);
                 break;
-            case EventType.GenericRecruitActor:
-                GenericReturnData returnDataRecruit = Param as GenericReturnData;
-                ProcessRecruitChoice(returnDataRecruit);
+            case EventType.GenericRecruitActorResistance:
+                GenericReturnData returnDataRecruitResistance = Param as GenericReturnData;
+                ProcessRecruitChoiceResistance(returnDataRecruitResistance);
+                break;
+            case EventType.GenericRecruitActorAuthority:
+                GenericReturnData returnDataRecruitAuthority = Param as GenericReturnData;
+                ProcessRecruitChoiceAuthority(returnDataRecruitAuthority);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -505,7 +510,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name));
+                            infoBuilder.Append(string.Format("{0} is lying low and unavailable", actor.arc.name));
                         }
 
                         //add to list
@@ -733,12 +738,18 @@ public class ActorManager : MonoBehaviour
         bool errorFlag = false;
         int index, countOfRecruits;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
-        if (node != null)
+        Node node = null;
+        if (details.side == Side.Resistance)
+        { node = GameManager.instance.dataScript.GetNode(details.NodeID); }
+        if (details.side == Side.Authority || node != null)
         {
-            genericDetails.returnEvent = EventType.GenericRecruitActor;
+            if (details.side == Side.Resistance) { genericDetails.returnEvent = EventType.GenericRecruitActorResistance; }
+            else if (details.side == Side.Authority) { genericDetails.returnEvent = EventType.GenericRecruitActorAuthority; }
+            else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
             genericDetails.side = details.side;
-            genericDetails.nodeID = details.NodeID;
+            if (details.side == Side.Resistance)
+            { genericDetails.nodeID = details.NodeID; }
+            else { genericDetails.nodeID = -1; }
             genericDetails.actorSlotID = details.ActorSlotID;
             //picker text
             genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
@@ -752,27 +763,38 @@ public class ActorManager : MonoBehaviour
             List<int> listOfPoolActors = new List<int>();
             List<int> listOfPickerActors = new List<int>();
             List<int> listOfCurrentArcIDs = new List<int>(GameManager.instance.dataScript.GetAllCurrentActorArcIDs(details.side));
-            if (node.NodeID == GameManager.instance.nodeScript.nodePlayer)
+            //selection methodology varies for each side -> need to populate 'listOfPoolActors'
+            if (details.side == Side.Resistance)
             {
-                //player at node, select from 3 x level 1 options, different from current OnMap actor types
-                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(1, details.side));
-                //loop backwards through pool of actors and remove any that match the curent OnMap types
-                for(int i = listOfPoolActors.Count - 1; i >= 0; i--)
+                if (node.NodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetActor(listOfPoolActors[i]);
-                    if (actor != null)
+                    //player at node, select from 3 x level 1 options, different from current OnMap actor types
+                    listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(1, details.side));
+                    //loop backwards through pool of actors and remove any that match the curent OnMap types
+                    for (int i = listOfPoolActors.Count - 1; i >= 0; i--)
                     {
-                        if(listOfCurrentArcIDs.Exists(x => x == actor.arc.ActorArcID))
-                        { listOfPoolActors.RemoveAt(i); }
+                        Actor actor = GameManager.instance.dataScript.GetActor(listOfPoolActors[i]);
+                        if (actor != null)
+                        {
+                            if (listOfCurrentArcIDs.Exists(x => x == actor.arc.ActorArcID))
+                            { listOfPoolActors.RemoveAt(i); }
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
                     }
-                    else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
+                }
+                else
+                {
+                    //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
+                    listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(2, details.side));
                 }
             }
-            else
+            //TO DO
+            else if (details.side == Side.Authority)
             {
-                //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
+                //placeholder -> select from 3 x level 2 options (random types, could be the same as currently OnMap)
                 listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(2, details.side));
             }
+            else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
             //
             //select three actors for the picker
             //
@@ -861,10 +883,10 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Processes choice of Recruit
+    /// Processes choice of Recruit Resistance Actor
     /// </summary>
     /// <param name="returnDetails"></param>
-    private void ProcessRecruitChoice(GenericReturnData data)
+    private void ProcessRecruitChoiceResistance(GenericReturnData data)
     {
         bool successFlag = true;
         StringBuilder builderTop = new StringBuilder();
@@ -957,6 +979,14 @@ public class ActorManager : MonoBehaviour
         details.sprite = sprite;
         details.side = side;
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+    }
+
+    /// <summary>
+    /// Processes choice of Recruit Authority Actor
+    /// </summary>
+    /// <param name="returnDetails"></param>
+    private void ProcessRecruitChoiceAuthority(GenericReturnData data)
+    {
     }
 
     /// <summary>

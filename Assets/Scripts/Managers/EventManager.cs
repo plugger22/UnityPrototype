@@ -49,7 +49,8 @@ public enum EventType
     GenericTeamRecall,
     GenericNeutraliseTeam,
     GenericGearChoice,
-    GenericRecruitActor
+    GenericRecruitActorResistance,
+    GenericRecruitActorAuthority
 };
 
 //EventManager to send events to listeners

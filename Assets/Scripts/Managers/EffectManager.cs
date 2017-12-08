@@ -221,24 +221,18 @@ public class EffectManager : MonoBehaviour
                                         case EffectCriteria.TargetInfo:
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.targetID, criteria.criteriaCompare);
                                             if (compareTip != null)
-                                            {
-                                                BuildString(result, "Full Info already");
-                                            }
+                                            { BuildString(result, "Full Info already"); }
                                             break;
                                         case EffectCriteria.TargetPresent:
                                             //check that a target is present at the node
                                             if (node.targetID < 0)
-                                            {
-                                                BuildString(result, "No Target present");
-                                            }
+                                            { BuildString(result, "No Target present"); }
                                             break;
                                         case EffectCriteria.NumGear:
                                             //Note: effect criteria value is ignored in this case
                                             compareTip = ComparisonCheck(GameManager.instance.gearScript.maxNumOfGear, GameManager.instance.playerScript.GetNumOfGear(), criteria.criteriaCompare);
                                             if (compareTip != null)
-                                            {
-                                                BuildString(result, "maxxed Gear Allowance");
-                                            }
+                                            { BuildString(result, "maxxed Gear Allowance"); }
                                             break;
                                         case EffectCriteria.GearAvailability:
                                             //checks to see if at least 1 piece of unused common gear is available
@@ -292,9 +286,7 @@ public class EffectManager : MonoBehaviour
                                             //there is a maximum limit to the number of teams that can be present at a node
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.CheckNumOfTeams(), criteria.criteriaCompare);
                                             if (compareTip != null)
-                                            {
-                                                BuildString(result, "Too many teams present");
-                                            }
+                                            { BuildString(result, "Too many teams present"); }
                                             break;
                                         case EffectCriteria.ActorAbility:
                                             //actor can only have a number of teams OnMap equal to their ability at any time
@@ -318,7 +310,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         default:
                                             BuildString(result, "Error!");
-                                            Debug.LogError(string.Format("Invalid Authority effect.criteriaEffect \"{0}\"", criteria.criteriaEffect));
+                                            Debug.LogWarning(string.Format("Invalid Authority effect.criteriaEffect \"{0}\"", criteria.criteriaEffect));
                                             errorFlag = true;
                                             break;
                                     }
