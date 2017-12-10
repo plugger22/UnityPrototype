@@ -26,6 +26,8 @@ public enum EventType
     NeutraliseTeamAction,
     GearAction,
     RecruitAction,
+    //decisions
+    RecruitDecision,
     //turn manager
     StartTurnEarly,
     StartTurnLate,

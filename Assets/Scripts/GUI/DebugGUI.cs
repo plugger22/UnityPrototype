@@ -42,7 +42,7 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("Button -> Authority Recruit Actor");
                 if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
-                { GameManager.instance.actorScript.RecruitAuthorityActor(2); }
+                { GameManager.instance.actorScript.RecruitActor(2); }
             }
 
             //second button

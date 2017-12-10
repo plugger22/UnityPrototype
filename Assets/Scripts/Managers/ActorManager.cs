@@ -51,6 +51,7 @@ public class ActorManager : MonoBehaviour
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.RecruitAction, OnEvent);
+        EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent);
         EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent);
         EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent);
         //create active, OnMap actors
@@ -78,6 +79,9 @@ public class ActorManager : MonoBehaviour
             case EventType.RecruitAction:
                 ModalActionDetails details = Param as ModalActionDetails;
                 InitialiseGenericPickerRecruit(details);
+                break;
+            case EventType.RecruitDecision:
+                RecruitActor((int)Param);
                 break;
             case EventType.GenericRecruitActorResistance:
                 GenericReturnData returnDataRecruitResistance = Param as GenericReturnData;
@@ -730,21 +734,33 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// call this to recruit an authority actor of a specified level (1 to 3)
+    /// call this to recruit an actor of a specified level (1 to 3) from a Decision
     /// </summary>
     /// <param name="level"></param>
-    public void RecruitAuthorityActor(int level)
+    public void RecruitActor(int level = 0)
     {
         Debug.Assert(level > 0 && level <= 3, string.Format("Invalid level {0}", level));
-        ModalActionDetails details = new ModalActionDetails()
+        ModalActionDetails details = new ModalActionDetails();
+        Side side = GameManager.instance.optionScript.PlayerSide;
+        //ignore node and actorSlotID
+        details.side = side;
+        details.Level = level;
+        details.NodeID = -1;
+        details.ActorSlotID = -1;
+        //get event
+        switch (side)
         {
-            side = Side.Authority,
-            NodeID = -1,
-            ActorSlotID = -1,
-            EventType = EventType.GenericRecruitActorAuthority,
-            Level = level
-        };
-        EventManager.instance.PostNotification(EventType.RecruitAction, this, details);
+            case Side.Authority:
+                details.EventType = EventType.GenericRecruitActorAuthority;
+                break;
+            case Side.Resistance:
+                details.EventType = EventType.GenericRecruitActorResistance;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid side \"{0}\"", side));
+                break;
+        }
+        InitialiseGenericPickerRecruit(details);
     }
 
     /// <summary>

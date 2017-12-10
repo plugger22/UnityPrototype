@@ -345,7 +345,7 @@ public class ModalGenericPicker : MonoBehaviour
                             text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
                             Debug.Log(string.Format("RecruitPicker: actorID {0} selected{1}", optionID, "\n"));
                         }
-                        else { Debug.LogError(string.Format("Invalid actor (Null) for gearID {0}", optionID)); }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", optionID)); }
                         break;
                 }
             }
