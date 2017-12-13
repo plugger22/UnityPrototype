@@ -25,7 +25,7 @@ namespace gameAPI
     public enum NodeType { Normal, Highlight, Active, Player, Count }
     public enum NodeUI {                                                            //parameter for NodeDisplay event
         None,
-        Reset, Redraw,
+        Reset, Redraw, Move,
         ShowTargets,
         NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6, NodeArc7, NodeArc8, NodeArc9};             
 

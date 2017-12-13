@@ -25,7 +25,11 @@ public class PlayerManager : MonoBehaviour
         int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("Sprawl");
         Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
         if (node != null)
-        { nodeID = node.NodeID; }
+        {
+            nodeID = node.NodeID;
+            //initialise move list
+            node.SetMoveNodes();
+        }
         else
         { Debug.LogError("Invalid node (Null). Player placed in node '0' by default"); }
         //set player node

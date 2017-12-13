@@ -23,6 +23,7 @@ public class Node : MonoBehaviour
 
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
+    private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
     private List<Team> listOfTeams;                     //Authority teams present at the node
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
@@ -41,6 +42,7 @@ public class Node : MonoBehaviour
 	private void Awake ()
     {
         listOfNeighbours = new List<Vector3>();
+        listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
@@ -56,6 +58,16 @@ public class Node : MonoBehaviour
     {
         listOfNeighbours.Add(pos);
         //Debug.Log("Neighbour added: " + pos);
+    }
+
+    /// <summary>
+    /// add neighbouring node to list of possible move locations
+    /// </summary>
+    /// <param name="node"></param>
+    public void AddMoveNeighbour(Node node)
+    {
+        Debug.Assert(node != null, "Invalid Node (Null)");
+        listOfMoves.Add(node);
     }
 
     /// <summary>
@@ -83,34 +95,56 @@ public class Node : MonoBehaviour
     public List<Vector3> GetNeighbours()
     { return listOfNeighbours; }
 
+
+    /// <summary>
+    /// Everytime player moves to a new node you have to call this to update master list of NodeID's that contain all valid move locations for the player's next move
+    /// </summary>
+    public void SetMoveNodes()
+    {
+        List<int> listOfNodeID = new List<int>();
+        foreach (Node node in listOfMoves)
+        { listOfNodeID.Add(node.NodeID); }
+        if (listOfNodeID.Count > 0)
+        { GameManager.instance.dataScript.UpdateMoveNodes(listOfNodeID); }
+        else { Debug.LogError("listOfMoves has no records, listOfNodeID has no records -> MoveNodes not updated"); }
+    }
+
+    /// <summary>
+    /// get list of all valid Move nodes (neighbouring nodes)
+    /// </summary>
+    /// <returns></returns>
+    public List<Node> GetMoveNodes()
+    { return listOfMoves; }
+
+
     /// <summary>
     /// Mouse click
     /// </summary>
     private void OnMouseDown()
     {
-        if (GameManager.instance.IsBlocked() == false)
-        {
-            //highlight current node
-            GameManager.instance.nodeScript.ToggleNodeHighlight(NodeID);
-            //exit any tooltip
-            if (onMouseFlag == true)
+            if (GameManager.instance.IsBlocked() == false)
             {
-                onMouseFlag = false;
-                StopCoroutine("ShowTooltip");
-                GameManager.instance.tooltipNodeScript.CloseTooltip();
+                //highlight current node
+                GameManager.instance.nodeScript.ToggleNodeHighlight(NodeID);
+                //exit any tooltip
+                if (onMouseFlag == true)
+                {
+                    onMouseFlag = false;
+                    StopCoroutine("ShowTooltip");
+                    GameManager.instance.tooltipNodeScript.CloseTooltip();
+                }
+                //Action Menu
+                ModalPanelDetails details = new ModalPanelDetails()
+                {
+                    nodeID = NodeID,
+                    nodeName = this.NodeName,
+                    nodeDetails = string.Format("{0} ID {1}", arc.name, NodeID),
+                    nodePos = transform.position,
+                    listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(NodeID)
+                };
+                //activate menu
+                GameManager.instance.actionMenuScript.SetActionMenu(details);
             }
-            //Action Menu
-            ModalPanelDetails details = new ModalPanelDetails()
-            {
-                nodeID = NodeID,
-                nodeName = this.NodeName,
-                nodeDetails = string.Format("{0} ID {1}", arc.name, NodeID),
-                nodePos = transform.position,
-                listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(NodeID)
-            };
-            //activate menu
-            GameManager.instance.actionMenuScript.SetActionMenu(details);
-        }
     }
 
     /// <summary>
@@ -133,8 +167,29 @@ public class Node : MonoBehaviour
     {
         if (GameManager.instance.IsBlocked() == false)
         {
-            onMouseFlag = true;
-            StartCoroutine(ShowTooltip());
+            if (Input.GetMouseButtonDown(1) == true)
+            {
+                //Right click node -> Show either move options (node highlights) or Move Menu
+                Debug.Log("NOde: Right Mouse Click detected");
+                
+                if (GameManager.instance.dataScript.CheckValidMoveNode(NodeID) == true)
+                {
+                    //Create a Move Menu at the node
+                    EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, NodeID);
+                }
+                else
+                {
+                    //Trigger event to highlight all possible move options
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move);
+                }
+            }
+            
+            else
+            {
+                //Tool tip
+                onMouseFlag = true;
+                StartCoroutine(ShowTooltip());
+            }
         }
     }
 

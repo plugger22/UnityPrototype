@@ -298,7 +298,9 @@ public class LevelManager : MonoBehaviour
         nodeStart = listOfNodeObjects[node1].GetComponent<Node>();
         nodeEnd = listOfNodeObjects[node2].GetComponent<Node>();
         nodeStart.AddNeighbour(pos2);
+        nodeStart.AddMoveNeighbour(nodeEnd);
         nodeEnd.AddNeighbour(pos1);
+        nodeEnd.AddMoveNeighbour(nodeStart);
     }
     #endregion
     #region ChangeAllConnections

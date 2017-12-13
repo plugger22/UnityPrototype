@@ -15,6 +15,7 @@ public enum EventType
     CloseActionMenu,
     OpenOutcomeWindow,
     CloseOutcomeWindow,
+    CreateMoveMenu,
     //CloseTeamPicker,
     ShowTargetNodes,
     NodeDisplay,
@@ -26,6 +27,7 @@ public enum EventType
     NeutraliseTeamAction,
     GearAction,
     RecruitAction,
+    MoveAction,
     //decisions
     RecruitDecision,
     //turn manager
@@ -47,7 +49,6 @@ public enum EventType
     ConfirmGenericDeactivate,
     ConfirmGenericChoice,
     //generic picker returns
-    /*GenericEffectReturn,*/
     GenericTeamRecall,
     GenericNeutraliseTeam,
     GenericGearChoice,

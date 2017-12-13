@@ -49,6 +49,7 @@ public class DataManager : MonoBehaviour
     private List<Target> listOfActiveTargets = new List<Target>();
     private List<Target> listOfLiveTargets = new List<Target>();
     private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor in the level
+    private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
     public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
@@ -794,6 +795,27 @@ public class DataManager : MonoBehaviour
             }
         }
         return node;
+    }
+
+    /// <summary>
+    /// Update list of valid node move options for Player (clears out any previous data)
+    /// </summary>
+    /// <param name="listOfNodeIDs"></param>
+    public void UpdateMoveNodes(List<int> listOfNodeIDs)
+    {
+        Debug.Assert(listOfNodeIDs != null, "Invalid listOfNodeIDs (Null)");
+        listOfMoveNodes.Clear();
+        listOfMoveNodes.AddRange(listOfNodeIDs);
+    }
+
+    /// <summary>
+    /// returns true if nodeID exists in the list of Valid Move Nodes, false otherwise
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public bool CheckValidMoveNode(int nodeID)
+    {
+        return listOfMoveNodes.Exists(x => x == nodeID);
     }
 
 

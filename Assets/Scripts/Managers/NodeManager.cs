@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
-
+using modalAPI;
+using System.Text;
 
 /// <summary>
 /// Handles all node related matters
@@ -21,6 +22,7 @@ public class NodeManager : MonoBehaviour
 
     string colourDefault;
     string colourHighlight;
+    string colourResistance;
     string colourError;
     string colourEnd;
 
@@ -59,6 +61,7 @@ public class NodeManager : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
     }
 
 
@@ -87,6 +90,7 @@ public class NodeManager : MonoBehaviour
                         RedrawNodes();
                         break;
                     case NodeUI.ShowTargets:
+                    case NodeUI.Move:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -106,6 +110,9 @@ public class NodeManager : MonoBehaviour
                         break;
                 }
                 break;
+            case EventType.CreateMoveMenu:
+                CreateMoveMenu((int)param);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -119,6 +126,7 @@ public class NodeManager : MonoBehaviour
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -195,6 +203,40 @@ public class NodeManager : MonoBehaviour
                 }
                 else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
                 break;
+
+            //show all viable move locations for player (nodes adjacent to current location)
+            case NodeUI.Move:
+                Node nodeRef = GameManager.instance.dataScript.GetNode(nodePlayer);
+                if (nodeRef != null)
+                {
+                    List<Node> nodeList = nodeRef.GetMoveNodes();
+                    if (nodeList != null)
+                    {
+                        NodeArc nodeArc = GameManager.instance.dataScript.GetNodeArc(data);
+                        if (nodeList.Count > 0)
+                        {
+                            foreach (Node node in nodeList)
+                            {
+                                if (node != null)
+                                {
+                                    Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                    node.SetMaterial(nodeMaterial);
+                                    displayText = string.Format("{0}{1}{2} {3}valid Move Node{4}{5}", colourDefault, nodeList.Count, colourEnd,
+                                        colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (nodeArc != null)
+                            { displayText = string.Format("{0}There are no {1} nodes{2}", colourError, nodeArc.name, colourEnd); }
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid nodeList (null) for NodeArcID {0}{1}", data, "\n")); }
+                }
+                else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", nodePlayer)); }
+                break;
+
             //show specific NodeArcTypes
             case NodeUI.NodeArc0: data = 0; nodeTypeFlag = true; break;
             case NodeUI.NodeArc1: data = 1; nodeTypeFlag = true; break;
@@ -362,5 +404,37 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfNodes (Null) returned from dataManager in ResetNodes"); }
     }
 
+    /// <summary>
+    /// Put an action Menu together at the selected node that has 'Move' and 'Cancel' options
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private List<EventButtonDetails> CreateMoveMenu(int nodeID)
+    {
+        Debug.Log("CreateMoveMenu");
 
+        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
+        //string builder for info button (handles all no go cases
+        StringBuilder infoBuilder = new StringBuilder();
+        //Get Node
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            List<Effect> listOfEffects = new List<Effect>();
+            //Move Button
+            string moveHeader = string.Format("{0}{1}{2}{3}{4}, ID {5}{6}", colourResistance, node.NodeName, colourEnd, "\n", colourDefault, node.NodeID, colourEnd);
+            //button target details
+            EventButtonDetails moveDetails = new EventButtonDetails()
+            {
+                buttonTitle = "Move",
+                buttonTooltipHeader = moveHeader,
+                buttonTooltipMain = "Move to here",
+                buttonTooltipDetail = "It's a good move",
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, nodeID); }
+            };
+            tempList.Add(moveDetails);
+        }
+        else { Debug.LogError(string.Format("Invalid Node (null), ID {0}{1}", nodeID, "\n")); }
+        return tempList;
+    }
 }
