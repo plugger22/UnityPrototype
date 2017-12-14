@@ -55,6 +55,17 @@ namespace modalAPI
         public Sprite sprite;
     }
 
+    /// <summary>
+    /// data stored from NodeManager.cs -> CreateMoveMenu -> ProcessPlayerMove
+    /// </summary>
+    public class ModalMoveDetails
+    {
+        public int nodeID;
+        public int changeInvisibility;      //adjustment to player invisibility
+        public int gearID;
+        public int changeGear;              //adjustment to gear variable
+    }
+
     //
     // - - - Modal Generic Picker - - -
     //
