@@ -167,26 +167,26 @@ public class Node : MonoBehaviour
     {
         if (GameManager.instance.IsBlocked() == false)
         {
+            //Right click node -> Show either move options (node highlights) or Move Menu
             if (Input.GetMouseButtonDown(1) == true)
             {
-                //Right click node -> Show either move options (node highlights) or Move Menu
-                Debug.Log("NOde: Right Mouse Click detected");
-                
+                //exit any tooltip
+                if (onMouseFlag == true)
+                {
+                    onMouseFlag = false;
+                    StopCoroutine("ShowTooltip");
+                    GameManager.instance.tooltipNodeScript.CloseTooltip();
+                }
+                //Create a Move Menu at the node
                 if (GameManager.instance.dataScript.CheckValidMoveNode(NodeID) == true)
-                {
-                    //Create a Move Menu at the node
-                    EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, NodeID);
-                }
+                { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, NodeID); }
+                //highlight all possible move options
                 else
-                {
-                    //Trigger event to highlight all possible move options
-                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move);
-                }
+                { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move); }
             }
-            
+            //Tool tip
             else
             {
-                //Tool tip
                 onMouseFlag = true;
                 StartCoroutine(ShowTooltip());
             }

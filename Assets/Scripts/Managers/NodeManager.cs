@@ -62,6 +62,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
+        EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
     }
 
 
@@ -71,7 +72,7 @@ public class NodeManager : MonoBehaviour
     /// <param name="eventType"></param>
     /// <param name="Sender"></param>
     /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object param = null)
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
     {
         //detect event type
         switch (eventType)
@@ -80,7 +81,7 @@ public class NodeManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.NodeDisplay:
-                NodeUI nodeUI = (NodeUI)param;
+                NodeUI nodeUI = (NodeUI)Param;
                 switch(nodeUI)
                 {
                     case NodeUI.Reset:
@@ -106,12 +107,15 @@ public class NodeManager : MonoBehaviour
                         else { ShowNodes(nodeUI); }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", param.ToString(), "\n"));
+                        Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", Param.ToString(), "\n"));
                         break;
                 }
                 break;
             case EventType.CreateMoveMenu:
-                CreateMoveMenu((int)param);
+                CreateMoveMenu((int)Param);
+                break;
+            case EventType.MoveAction:
+                ProcessPlayerMove((int)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -408,19 +412,20 @@ public class NodeManager : MonoBehaviour
     /// Put an action Menu together at the selected node that has 'Move' and 'Cancel' options
     /// </summary>
     /// <param name="nodeID"></param>
-    private List<EventButtonDetails> CreateMoveMenu(int nodeID)
+    private void CreateMoveMenu(int nodeID)
     {
         Debug.Log("CreateMoveMenu");
 
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
-        //string builder for info button (handles all no go cases
-        StringBuilder infoBuilder = new StringBuilder();
+        
         //Get Node
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
             List<Effect> listOfEffects = new List<Effect>();
-            //Move Button
+            //
+            // - - - Move Button
+            //
             string moveHeader = string.Format("{0}{1}{2}{3}{4}, ID {5}{6}", colourResistance, node.NodeName, colourEnd, "\n", colourDefault, node.NodeID, colourEnd);
             //button target details
             EventButtonDetails moveDetails = new EventButtonDetails()
@@ -433,8 +438,60 @@ public class NodeManager : MonoBehaviour
                 action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, nodeID); }
             };
             tempList.Add(moveDetails);
+            //
+            // - - - Cancel
+            //
+            //Cancel button is added last
+            EventButtonDetails cancelDetails = null;
+            //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                buttonTooltipMain = "You'd like to think about it",
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+            };
+            //add Cancel button to list
+            tempList.Add(cancelDetails);
         }
         else { Debug.LogError(string.Format("Invalid Node (null), ID {0}{1}", nodeID, "\n")); }
-        return tempList;
+        //
+        // - - - Action Menu
+        //
+        ModalPanelDetails details = new ModalPanelDetails()
+        {
+            nodeID = nodeID,
+            nodeName = node.NodeName,
+            nodeDetails = string.Format("{0} ID {1}", node.arc.name, node.NodeID),
+            nodePos = node.transform.position,
+            listOfButtonDetails = tempList
+        };
+        //activate menu
+        GameManager.instance.actionMenuScript.SetActionMenu(details);
     }
+
+    /// <summary>
+    /// Move player to the specified node
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void ProcessPlayerMove(int nodeID)
+    {
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            //update Player node
+            nodePlayer = nodeID;
+            //update move list
+            node.SetMoveNodes();
+            //outcome dialogue
+            ModalOutcomeDetails details = new ModalOutcomeDetails();
+            details.textTop = "Player Move";
+            details.textBottom = string.Format("Successful move to {0}, {1}, ID {2}", node.NodeName, node.arc.name, node.NodeID);
+            details.sprite = GameManager.instance.outcomeScript.errorSprite;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
+    }
+
+    //place new methods above here
 }
