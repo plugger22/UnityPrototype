@@ -24,6 +24,7 @@ public class Node : MonoBehaviour
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
     private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
+    private List<Connection> listOfConnections;                //list of neighbouring connections
     private List<Team> listOfTeams;                     //Authority teams present at the node
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
@@ -44,78 +45,16 @@ public class Node : MonoBehaviour
         listOfNeighbours = new List<Vector3>();
         listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
+        listOfConnections = new List<Connection>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         //TargetID = -1;
 	}
 
-    /// <summary>
-    /// add neighbouring vector3 to list
-    /// </summary>
-    /// <param name="pos"></param>
-    public void AddNeighbour(Vector3 pos)
-    {
-        listOfNeighbours.Add(pos);
-        //Debug.Log("Neighbour added: " + pos);
-    }
-
-    /// <summary>
-    /// add neighbouring node to list of possible move locations
-    /// </summary>
-    /// <param name="node"></param>
-    public void AddMoveNeighbour(Node node)
-    {
-        Debug.Assert(node != null, "Invalid Node (Null)");
-        listOfMoves.Add(node);
-    }
-
-    /// <summary>
-    /// Checks if a Vector3 node position is already present in the list of neighbours, e.g returns true if a connection already present
-    /// </summary>
-    /// <param name="newPos"></param>
-    /// <returns></returns>
-    public bool CheckNeighbours(Vector3 newPos)
-    {
-        if (listOfNeighbours.Count == 0)
-        { return false; }
-        else
-        {
-            if (listOfNeighbours.Exists(pos => pos == newPos))
-            { return true;  }
-            //default condition -> no match found
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// get list of neighbours
-    /// </summary>
-    /// <returns></returns>
-    public List<Vector3> GetNeighbours()
-    { return listOfNeighbours; }
 
 
-    /// <summary>
-    /// Everytime player moves to a new node you have to call this to update master list of NodeID's that contain all valid move locations for the player's next move
-    /// </summary>
-    public void SetMoveNodes()
-    {
-        List<int> listOfNodeID = new List<int>();
-        foreach (Node node in listOfMoves)
-        { listOfNodeID.Add(node.NodeID); }
-        if (listOfNodeID.Count > 0)
-        { GameManager.instance.dataScript.UpdateMoveNodes(listOfNodeID); }
-        else { Debug.LogError("listOfMoves has no records, listOfNodeID has no records -> MoveNodes not updated"); }
-    }
-
-    /// <summary>
-    /// get list of all valid Move nodes (neighbouring nodes)
-    /// </summary>
-    /// <returns></returns>
-    public List<Node> GetMoveNodes()
-    { return listOfMoves; }
-
+    
 
     /// <summary>
     /// Mouse click
@@ -240,6 +179,118 @@ public class Node : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    //
+    // - - - Methods
+    //
+
+    /// <summary>
+    /// add neighbouring vector3 to list
+    /// </summary>
+    /// <param name="pos"></param>
+    public void AddNeighbour(Vector3 pos)
+    {
+        listOfNeighbours.Add(pos);
+        //Debug.Log("Neighbour added: " + pos);
+    }
+
+    /// <summary>
+    /// add neighbouring node to list of possible move locations
+    /// </summary>
+    /// <param name="node"></param>
+    public void AddMoveNeighbour(Node node)
+    {
+        Debug.Assert(node != null, "Invalid Node (Null)");
+        listOfMoves.Add(node);
+    }
+
+    /// <summary>
+    /// Checks if a Vector3 node position is already present in the list of neighbours, e.g returns true if a connection already present
+    /// </summary>
+    /// <param name="newPos"></param>
+    /// <returns></returns>
+    public bool CheckNeighbours(Vector3 newPos)
+    {
+        if (listOfNeighbours.Count == 0)
+        { return false; }
+        else
+        {
+            if (listOfNeighbours.Exists(pos => pos == newPos))
+            { return true; }
+            //default condition -> no match found
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// get list of neighbours
+    /// </summary>
+    /// <returns></returns>
+    public List<Vector3> GetNeighbours()
+    { return listOfNeighbours; }
+
+
+    /// <summary>
+    /// Everytime player moves to a new node you have to call this to update master list of NodeID's that contain all valid move locations for the player's next move
+    /// </summary>
+    public void SetMoveNodes()
+    {
+        List<int> listOfNodeID = new List<int>();
+        foreach (Node node in listOfMoves)
+        { listOfNodeID.Add(node.NodeID); }
+        if (listOfNodeID.Count > 0)
+        { GameManager.instance.dataScript.UpdateMoveNodes(listOfNodeID); }
+        else { Debug.LogError("listOfMoves has no records, listOfNodeID has no records -> MoveNodes not updated"); }
+    }
+
+    /// <summary>
+    /// get list of all valid Move nodes (neighbouring nodes)
+    /// </summary>
+    /// <returns></returns>
+    public List<Node> GetMoveNodes()
+    { return listOfMoves; }
+
+    /// <summary>
+    /// Add a connection to the list of neighbouring connections
+    /// </summary>
+    /// <param name="connection"></param>
+    public void AddConnection(Connection connection)
+    {
+        if (connection != null)
+        { listOfConnections.Add(connection); }
+        else { Debug.LogError("Invalid Connection (Null)"); }
+    }
+
+    /// <summary>
+    /// returns a neighbouring connection between the current node and the specified nodeId. 'Null' if none found
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public Connection GetConnection(int nodeID)
+    {
+        Connection connection = null;
+        int node1, node2;
+        if (GameManager.instance.dataScript.GetNode(nodeID) != null)
+        {
+            //loop list and find matching connection
+            foreach (Connection connTemp in listOfConnections)
+            {
+                node1 = connTemp.GetNode1();
+                node2 = connTemp.GetNode2();
+                if (NodeID == node1)
+                {
+                    if (nodeID == node2) { connection = connTemp; }
+                }
+                else if (NodeID == node2)
+                {
+                    if (nodeID == node1) { connection = connTemp; }
+                }
+                //break loop if connection found
+                if (connection != null) { break; }
+            }
+        }
+        return connection;
     }
 
     /// <summary>
@@ -368,6 +419,8 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<Team> GetTeams()
     { return listOfTeams; }
+
+
 
 
     //place methods above here

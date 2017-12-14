@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int rebelCauseCurrent;                    //current level of Rebel Support
     [HideInInspector] public int renown;
     [HideInInspector] public int numOfRecruits;
+    [HideInInspector] public int invisibility;
 
     private List<int> listOfGear = new List<int>();                 //gearID's of all gear items in inventory
 
@@ -34,6 +35,12 @@ public class PlayerManager : MonoBehaviour
         { Debug.LogError("Invalid node (Null). Player placed in node '0' by default"); }
         //set player node
         GameManager.instance.nodeScript.nodePlayer = nodeID;
+        //set stats
+        renown = 0;
+        invisibility = 3;
+        numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
+        rebelCauseMax = 10;
+        rebelCauseCurrent = 0;
     }
 
     //
@@ -151,4 +158,26 @@ public class PlayerManager : MonoBehaviour
             return false;
         }
     }
+
+    //
+    // - - - Other
+    //
+
+    /// <summary>
+    /// Debug function to display all player related stats
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayPlayerStats()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
+        builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n"));
+        builder.Append(string.Format(" Renown {0}{1}", renown, "\n"));
+        builder.Append(string.Format(" NumOfRecruits {0}{1}{2}", numOfRecruits, "\n", "\n"));
+        builder.Append(string.Format(" Resistance Cause  {0} of {1}", rebelCauseCurrent, rebelCauseMax));
+        return builder.ToString();
+    }
+
+
+    //place new methods above here
 }

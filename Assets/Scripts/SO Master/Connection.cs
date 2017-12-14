@@ -11,6 +11,7 @@ public class Connection : MonoBehaviour {
     private int v2;
 
     public int connID;                              //unique connectionID 
+
     public int VerticeOne { get { return v1; } }
     public int VerticeTwo { get { return v2; } }
 
@@ -41,4 +42,7 @@ public class Connection : MonoBehaviour {
 
     public int GetNode2()
     { return v2; }
+
+    public ConnectionType GetSecurity()
+    { return securityLevel; }
 }

@@ -17,7 +17,7 @@ namespace gameAPI
     //
     // - - - Level Manager
     //
-    public enum ConnectionType { Neutral, HighSec, MedSec, LowSec, Count }
+    public enum ConnectionType { None, HIGH, MEDIUM, LOW, Count }
 
     //
     // - - - Node Manager - - 

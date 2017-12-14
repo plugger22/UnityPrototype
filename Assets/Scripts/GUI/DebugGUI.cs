@@ -65,12 +65,12 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(15, 100, 120, 20), "Colour Blind"))
+            if (GUI.Button(new Rect(15, 100, 120, 20), "Player Stats"))
             {
-                Debug.Log("Button -> Toggle Colour Schemes");
-                if (GameManager.instance.optionScript.ColourOption == ColourScheme.Normal)
-                { GameManager.instance.optionScript.ColourOption = ColourScheme.ColourBlind; }
-                else { GameManager.instance.optionScript.ColourOption = ColourScheme.Normal; }
+                Debug.Log("Button -> Toggle Player Stats");
+                if (debugDisplay != 8)
+                { debugDisplay = 8; }
+                else { debugDisplay = 0; }
             }
 
             //fifth button
@@ -197,6 +197,14 @@ public class DebugGUI : MonoBehaviour
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisPools = GameManager.instance.dataScript.DisplayReserveLists();
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
+                        }
+                        break;
+                    //Player stats
+                    case 8:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = GameManager.instance.playerScript.DisplayPlayerStats();
                             GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
                         }
                         break;

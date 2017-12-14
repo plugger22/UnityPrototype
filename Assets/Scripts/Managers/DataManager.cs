@@ -79,6 +79,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, int> dictOfLookupTeamArcs = new Dictionary<string, int>();           //Key -> teamArc name, Value -> TeamArcID
     private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
     private Dictionary<int, Gear> dictOfGear = new Dictionary<int, Gear>();                         //Key -> gearID, Value -> Gear
+    private Dictionary<int, Connection> dictOfConnections = new Dictionary<int, Connection>();      //Key -> connID, Value -> Connection
 
     /// <summary>
     /// default constructor
@@ -818,6 +819,20 @@ public class DataManager : MonoBehaviour
         return listOfMoveNodes.Exists(x => x == nodeID);
     }
 
+
+    public bool AddConnection(Connection connection)
+    {
+        bool successFlag = true;
+        //add to dictionary
+        try
+        { dictOfConnections.Add(connection.connID, connection); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Connection (Null)"); successFlag = false; }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid Connection (duplicate) connID \"{0}\"", connection.connID)); successFlag = false; }
+        return successFlag;
+    }
+    
 
     //
     // - - - Targets - -  -

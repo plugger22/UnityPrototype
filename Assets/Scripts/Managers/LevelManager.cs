@@ -292,15 +292,21 @@ public class LevelManager : MonoBehaviour
         connectionTemp.ChangeSecurityLevel(secLvl);
         //set parent
         instanceConnection.transform.SetParent(connectionHolder);
-        //add to list
-        listOfConnections.Add(instanceConnection);
-        //add to neighbours list
-        nodeStart = listOfNodeObjects[node1].GetComponent<Node>();
-        nodeEnd = listOfNodeObjects[node2].GetComponent<Node>();
-        nodeStart.AddNeighbour(pos2);
-        nodeStart.AddMoveNeighbour(nodeEnd);
-        nodeEnd.AddNeighbour(pos1);
-        nodeEnd.AddMoveNeighbour(nodeStart);
+        //add to collections
+        if (GameManager.instance.dataScript.AddConnection(connectionTemp) == true)
+        {
+            listOfConnections.Add(instanceConnection);
+            //add to neighbours list
+            nodeStart = listOfNodeObjects[node1].GetComponent<Node>();
+            nodeEnd = listOfNodeObjects[node2].GetComponent<Node>();
+            nodeStart.AddNeighbour(pos2);
+            nodeStart.AddMoveNeighbour(nodeEnd);
+            nodeStart.AddConnection(connectionTemp);
+            nodeEnd.AddNeighbour(pos1);
+            nodeEnd.AddMoveNeighbour(nodeStart);
+            nodeEnd.AddConnection(connectionTemp);
+        }
+        else { Debug.LogError(string.Format("Invalid Connection, ID {0} -> Not added to collections", connectionTemp.connID)); }
     }
     #endregion
     #region ChangeAllConnections
@@ -391,7 +397,7 @@ public class LevelManager : MonoBehaviour
                         if (CheckForDuplicateConnection(v, other, vOne, vTwo) == false)
                         {
                             //create new connection
-                            PlaceConnection(v, other, vOne, vTwo, ConnectionType.HighSec);
+                            PlaceConnection(v, other, vOne, vTwo, ConnectionType.HIGH);
                         }
                     }
                 }
@@ -547,7 +553,7 @@ public class LevelManager : MonoBehaviour
             if (tempArray[node1] == true && tempArray[node2] == true)
             {
                 //reset connection color to neutral
-                conn.ChangeSecurityLevel(ConnectionType.Neutral);
+                conn.ChangeSecurityLevel(ConnectionType.None);
             }
         }
     }
@@ -575,7 +581,7 @@ public class LevelManager : MonoBehaviour
             if (pathList.Exists(v => v == node1) && pathList.Exists(v => v == node2))
             {
                 //reset connection color to nuetral
-                conn.ChangeSecurityLevel(ConnectionType.Neutral);
+                conn.ChangeSecurityLevel(ConnectionType.None);
             }
         }
     }
@@ -624,7 +630,7 @@ public class LevelManager : MonoBehaviour
             vOne = listOfCoordinates[idTwo];
             vTwo = listOfCoordinates[idOne];
             //draw connection
-            PlaceConnection(idTwo, idOne, vOne, vTwo, ConnectionType.LowSec);
+            PlaceConnection(idTwo, idOne, vOne, vTwo, ConnectionType.LOW);
         }
         //add in random additional connections
         AddRandomConnections();
@@ -846,7 +852,7 @@ public class LevelManager : MonoBehaviour
         int chance = GameManager.instance.connScript.connectionSecurityChance;
         int node1, node2, security = 0;       //node ID's either end of connection
         //set all to default level
-        ChangeAllConnections(ConnectionType.Neutral);
+        ChangeAllConnections(ConnectionType.None);
         //loop connections
         foreach (GameObject obj in listOfConnections)
         {

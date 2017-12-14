@@ -422,18 +422,49 @@ public class NodeManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
+            //Get Connection (between new node and Player's current location)
+            Connection connection = node.GetConnection(nodePlayer);
             List<Effect> listOfEffects = new List<Effect>();
             //
-            // - - - Move Button
+            // - - - Move Button (No gear used)
             //
-            string moveHeader = string.Format("{0}{1}{2}{3}{4}, ID {5}{6}", colourResistance, node.NodeName, colourEnd, "\n", colourDefault, node.NodeID, colourEnd);
+            string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.NodeName, colourEnd, "\n",
+                colourDefault, node.arc.name.ToUpper(), node.NodeID, colourEnd);
+            string moveMain = "Connection Security UNKNOWN";
+            string moveDetail = "Consequences UNKNOWN";
+            if (connection != null)
+            {
+                ConnectionType connSecType = connection.GetSecurity();
+                int secLevel = (int)connSecType; 
+                if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
+                moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.instance.colourScript.GetValueColour(secLevel), connSecType, colourEnd);
+                //security conseqences (currently ignores gear)
+                if (secLevel < 4)
+                {
+                    int turnsKnown = secLevel;
+                    if (GameManager.instance.playerScript.invisibility <= 1)
+                    {
+                        //invisibility will be zero, or less, if move. Immediate notification
+                        moveDetail = string.Format("{0}Invisibility -1{1}Authority will know IMMEDIATELY{2}", GameManager.instance.colourScript.GetValueColour(0), "\n",
+                          colourEnd);
+                    }
+                    else
+                    {
+                        //invisibility reduces, still above zero
+                        moveDetail = string.Format("{0}Invisibility -1{1}Authority will know in {2} turn{3}{4}", GameManager.instance.colourScript.GetValueColour(1), "\n",
+                          turnsKnown, turnsKnown != 1 ? "s" : "", colourEnd);
+                    }
+                }
+                else { moveDetail = string.Format("{0}No change to Invisibility{1}", GameManager.instance.colourScript.GetValueColour(2), colourEnd); }
+            }
+             
             //button target details
             EventButtonDetails moveDetails = new EventButtonDetails()
             {
                 buttonTitle = "Move",
                 buttonTooltipHeader = moveHeader,
-                buttonTooltipMain = "Move to here",
-                buttonTooltipDetail = "It's a good move",
+                buttonTooltipMain = moveMain,
+                buttonTooltipDetail = moveDetail,
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, nodeID); }
             };
@@ -455,7 +486,7 @@ public class NodeManager : MonoBehaviour
             //add Cancel button to list
             tempList.Add(cancelDetails);
         }
-        else { Debug.LogError(string.Format("Invalid Node (null), ID {0}{1}", nodeID, "\n")); }
+        else { Debug.LogError(string.Format("Invalid Node (null), ID {0}", nodeID)); }
         //
         // - - - Action Menu
         //
@@ -487,10 +518,17 @@ public class NodeManager : MonoBehaviour
             //outcome dialogue
             ModalOutcomeDetails details = new ModalOutcomeDetails();
             details.textTop = "Player Move";
-            details.textBottom = string.Format("Successful move to {0}, {1}, ID {2}", node.NodeName, node.arc.name, node.NodeID);
+            StringBuilder builder = new StringBuilder();
+            builder.Append(string.Format("Successful move to \"{0}\", {1}, ID {2}", node.NodeName, node.arc.name.ToUpper(), node.NodeID));
+            //change to invisibility?
+            details.textBottom = builder.ToString();
+
+
             details.sprite = GameManager.instance.outcomeScript.errorSprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
         }
+        else
+        { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
     }
 
     //place new methods above here
