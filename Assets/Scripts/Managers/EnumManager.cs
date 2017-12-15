@@ -57,7 +57,7 @@ namespace gameAPI
     //
     // - - - Messages - - -
     //
-    public enum MessageType { None, Movement, Team}
+    public enum MessageType { None, MOVEMENT, TEAM}
 
     //
     // - - - Effects - - -

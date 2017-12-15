@@ -32,7 +32,7 @@ public class PlayerManager : MonoBehaviour
             node.SetMoveNodes();
         }
         else
-        { Debug.LogError("Invalid node (Null). Player placed in node '0' by default"); }
+        { Debug.LogWarning("PlayerManager: Invalid node (Null). Player placed in node '0' by default"); }
         //set player node
         GameManager.instance.nodeScript.nodePlayer = nodeID;
         //set stats
@@ -41,6 +41,10 @@ public class PlayerManager : MonoBehaviour
         numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
         rebelCauseMax = 10;
         rebelCauseCurrent = 0;
+        //message
+        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.NodeName, node.arc.name.ToUpper(), node.NodeID);
+        Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
+        if (message != null) { GameManager.instance.dataScript.AddArchiveMessage(message); }
     }
 
     //

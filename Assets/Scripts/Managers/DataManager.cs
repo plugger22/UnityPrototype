@@ -1674,17 +1674,17 @@ public class DataManager : MonoBehaviour
             switch (record.Value.side)
             {
                 case Side.Resistance:
-                    builderResistance.Append(string.Format(" t{0}: \"{1}\"{2}", record.Value.turnCreated, record.Value.text, "\n"));
+                    builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
                     builderResistance.Append(string.Format(" id {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
                         record.Value.data2, "\n"));
                     break;
                 case Side.Authority:
-                    builderAuthority.Append(string.Format(" t{0}: \"{1}\"{2}", record.Value.turnCreated, record.Value.text, record.Value.side, "\n"));
-                    builderAuthority.Append(string.Format(" id {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
+                    builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, record.Value.side, "\n"));
+                    builderAuthority.Append(string.Format(" ID {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
                         record.Value.data2, "\n"));
                     break;
                 default:
-                    builderAuthority.Append(string.Format("UNKNOWN side \"{0}\", id {1}{2}", record.Value.side, record.Key, "\n"));
+                    builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side, record.Key, "\n"));
                     break;
             }
            

@@ -551,13 +551,9 @@ public class NodeManager : MonoBehaviour
                 details.sprite = GameManager.instance.outcomeScript.errorSprite;
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                 //message
-                Message message = new Message();
-                message.text = string.Format("Player has moved to {0}", destination);
-                message.type = MessageType.Movement;
-                message.side = Side.Resistance;
-                message.isPublic = false;
-                message.data0 = moveDetails.nodeID;
-                GameManager.instance.dataScript.AddArchiveMessage(message);
+                string text = string.Format("Player has moved to {0}", destination);
+                Message message = GameManager.instance.messageScript.PlayerMove(text, moveDetails.nodeID);
+                if (message != null) { GameManager.instance.dataScript.AddArchiveMessage(message); }
             }
             else
             { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }
