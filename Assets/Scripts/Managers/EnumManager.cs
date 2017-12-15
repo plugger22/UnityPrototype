@@ -52,7 +52,12 @@ namespace gameAPI
     // - - - Gear - - -
     //
     public enum GearLevel { Common, Rare, Unique, Count}
-    public enum GearType { None, Infiltration, Kinetic, Hacking, Stealth, Invisibility}
+    public enum GearType { None, Infiltration, Kinetic, Hacking, Stealth, Invisibility, Movement}
+
+    //
+    // - - - Messages - - -
+    //
+    public enum MessageType { None, Movement, Team}
 
     //
     // - - - Effects - - -

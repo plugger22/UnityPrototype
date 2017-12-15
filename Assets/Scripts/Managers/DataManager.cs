@@ -80,6 +80,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
     private Dictionary<int, Gear> dictOfGear = new Dictionary<int, Gear>();                         //Key -> gearID, Value -> Gear
     private Dictionary<int, Connection> dictOfConnections = new Dictionary<int, Connection>();      //Key -> connID, Value -> Connection
+    private Dictionary<int, Message> dictOfArchiveMessages = new Dictionary<int, Message>();               //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
 
     /// <summary>
     /// default constructor
@@ -1434,28 +1436,6 @@ public class DataManager : MonoBehaviour
         return arrayOfStats;
     }
 
-    /*/// <summary>
-    /// return a specific actor's name
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public string GetActorName(int slotID, Side side)
-    {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].arc.actorName;
-    }
-
-    /// <summary>
-    /// return a specific actor's trait
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public Trait GetActorTrait(int slotID, Side side)
-    {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].trait;
-    }*/
-
     /// <summary>
     /// returns a specific actor's action
     /// </summary>
@@ -1643,6 +1623,77 @@ public class DataManager : MonoBehaviour
         }
         //return list
         return tempList;
+    }
+
+    //
+    // - - - Messages - - -
+    //
+
+    /// <summary>
+    /// Add message to Archive dictionary (messages that have been displayed or don't need to be)
+    /// </summary>
+    /// <param name="message"></param>
+    public void AddArchiveMessage(Message message)
+    {
+        //add to dictionary
+        try
+        { dictOfArchiveMessages.Add(message.msgID, message); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Archive Message (Null)");}
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid Archive Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text));}
+    }
+
+    /// <summary>
+    /// Add message to Pending dictionary (messages that have been displayed or don't need to be)
+    /// </summary>
+    /// <param name="message"></param>
+    public void AddPendingMessage(Message message)
+    {
+        //add to dictionary
+        try
+        { dictOfPendingMessages.Add(message.msgID, message); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Pending Message (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid Pending Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }
+    }
+
+    /// <summary>
+    /// debug method to display archive messages
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayArchiveMessages()
+    {
+        StringBuilder builderAuthority = new StringBuilder();
+        StringBuilder builderResistance = new StringBuilder();
+        builderResistance.Append(string.Format(" Archived Messages -> Resistance{0}", "\n"));
+        builderAuthority.Append(string.Format(" {0}{1}Archived Messages -> Authority{2}", "\n", "\n", "\n"));
+        foreach (var record in dictOfArchiveMessages)
+        {
+            switch (record.Value.side)
+            {
+                case Side.Resistance:
+                    builderResistance.Append(string.Format(" t{0}: \"{1}\"{2}", record.Value.turnCreated, record.Value.text, "\n"));
+                    builderResistance.Append(string.Format(" id {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
+                        record.Value.data2, "\n"));
+                    break;
+                case Side.Authority:
+                    builderAuthority.Append(string.Format(" t{0}: \"{1}\"{2}", record.Value.turnCreated, record.Value.text, record.Value.side, "\n"));
+                    builderAuthority.Append(string.Format(" id {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
+                        record.Value.data2, "\n"));
+                    break;
+                default:
+                    builderAuthority.Append(string.Format("UNKNOWN side \"{0}\", id {1}{2}", record.Value.side, record.Key, "\n"));
+                    break;
+            }
+           
+        }
+        //combine two lists
+        StringBuilder builderOverall = new StringBuilder();
+        builderOverall.Append(builderResistance.ToString());
+        builderOverall.Append(builderAuthority.ToString());
+        return builderOverall.ToString();
     }
 
     //new methods above here

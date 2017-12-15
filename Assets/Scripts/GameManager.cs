@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
     [HideInInspector] public TeamManager teamScript;                  //Team Manager
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
+    [HideInInspector] public MessageManager messageScript;            //Message Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
@@ -99,6 +100,7 @@ public class GameManager : MonoBehaviour
         nodeScript = GetComponent<NodeManager>();
         teamScript = GetComponent<TeamManager>();
         gearScript = GetComponent<GearManager>();
+        messageScript = GetComponent<MessageManager>();
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();

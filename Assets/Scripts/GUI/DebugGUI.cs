@@ -14,7 +14,21 @@ public class DebugGUI : MonoBehaviour
     private bool showGUI = false;
     private int debugDisplay = 0;
 
+    public int button_height;
+    public int offset_x;        //space between left edge of box and button
+    public int offset_y;        //space between buttons
+    public int box_x;
+    public int box_y;
+    public int box_width;
+    public int box_height;
+    public int gap_y;           //gap at start between header and first button
 
+    private int button_width;
+
+    private void Awake()
+    {
+        button_width = box_width - (2 * offset_x);
+    }
 
     // Update is called once per frame
     private void Update ()
@@ -35,10 +49,10 @@ public class DebugGUI : MonoBehaviour
 
             //background box
             customBackground.alignment = TextAnchor.UpperCenter;
-            GUI.Box(new Rect(10, 10, 130, 220), "Debug Menu", customBackground);
+            GUI.Box(new Rect(box_x, box_y, box_width, box_height), "Debug Menu", customBackground);
 
             //first button
-            if (GUI.Button(new Rect(15, 40, 120, 20), "Authority Recruit"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Authority Recruit"))
             {
                 Debug.Log("Button -> Authority Recruit Actor");
                 if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
@@ -46,7 +60,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(15, 60, 120, 20), "Reserve Lists"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Reserve Lists"))
             {
                 Debug.Log("Button -> Toggle Reserve Lists");
                 if (debugDisplay != 7)
@@ -55,7 +69,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //third button
-            if (GUI.Button(new Rect(15, 80, 120, 20), "Gear Display"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Gear Display"))
             {
                 Debug.Log("Button -> Toggle Gear");
                 if (debugDisplay != 5)
@@ -65,7 +79,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(15, 100, 120, 20), "Player Stats"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Player Stats"))
             {
                 Debug.Log("Button -> Toggle Player Stats");
                 if (debugDisplay != 8)
@@ -74,7 +88,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(15, 120, 120, 20), "Change Side"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Change Side"))
             {
                 Debug.Log("Button -> Swap sides");
                 if (GameManager.instance.optionScript.PlayerSide == Side.Resistance)
@@ -84,7 +98,7 @@ public class DebugGUI : MonoBehaviour
 
 
             //sixth button
-            if (GUI.Button(new Rect(15, 140, 120, 20), "Analysis"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Analysis"))
             {
                 Debug.Log("Button -> Toggle Node/Actors Analysis");
                 if (debugDisplay != 1)
@@ -93,7 +107,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //seventh button
-            if (GUI.Button(new Rect(15, 160, 120, 20), "Team Pools"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Team Pools"))
             {
                 Debug.Log("Button -> Toggle Team Pool Analysis");
                 if (debugDisplay != 2)
@@ -102,7 +116,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eigth button
-            if (GUI.Button(new Rect(15, 180, 120, 20), "Teams by Type"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 7+ button_height * 7, button_width, button_height), "Teams by Type"))
             {
                 Debug.Log("Button -> Toggle Teams");
                 if (debugDisplay != 3)
@@ -111,7 +125,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //ninth button
-            if (GUI.Button(new Rect(15, 200, 120, 20), "Teams by Actor"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Teams by Actor"))
             {
                 Debug.Log("Button -> Toggle Actor Teams");
                 if (debugDisplay != 4)
@@ -120,11 +134,29 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(15, 220, 120, 20), "Actor Pools"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Actor Pools"))
             {
                 Debug.Log("Button -> Toggle Actor Pools");
                 if (debugDisplay != 6)
                 { debugDisplay = 6; }
+                else { debugDisplay = 0; }
+            }
+
+            //eleventh button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Pending Messages"))
+            {
+                Debug.Log("Button -> Toggle Pending Messages");
+                if (debugDisplay != 9)
+                { debugDisplay = 9; }
+                else { debugDisplay = 0; }
+            }
+
+            //twelth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Archive Messages"))
+            {
+                Debug.Log("Button -> Toggle Archive Messages");
+                if (debugDisplay != 10)
+                { debugDisplay = 10; }
                 else { debugDisplay = 0; }
             }
 
@@ -206,6 +238,22 @@ public class DebugGUI : MonoBehaviour
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisPools = GameManager.instance.playerScript.DisplayPlayerStats();
                             GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
+                        }
+                        break;
+                    //Pending Messages
+                    case 9:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = "Pending Messages";
+                            GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
+                        }
+                        break;
+                    //Archive Messages
+                    case 10:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = GameManager.instance.dataScript.DisplayArchiveMessages();
+                            GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
                         }
                         break;
                 }
