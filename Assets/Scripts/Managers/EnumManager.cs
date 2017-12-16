@@ -65,7 +65,7 @@ namespace gameAPI
         //Team
         Team_Deploy,
         Team_Withdraw,
-        Team_AutoWithdraw,
+        Team_AutoRecall,
         //AI
         AI_SpotMove
     }

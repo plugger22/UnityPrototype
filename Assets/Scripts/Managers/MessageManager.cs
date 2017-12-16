@@ -91,4 +91,35 @@ public class MessageManager : MonoBehaviour
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
+
+    /// <summary>
+    /// Team is autorecalled from OnMap when their timer expires. Returns null if text invalid.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="teamID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Message TeamAutoRecall(string text, int nodeID, int teamID, int actorID)
+    { 
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.TEAM;
+            message.subType = MessageSubType.Team_AutoRecall;
+            message.side = Side.Authority;
+            message.isPublic = true;
+            message.displayDelay = 0;
+            message.data0 = nodeID;
+            message.data1 = teamID;
+            message.data2 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
 }

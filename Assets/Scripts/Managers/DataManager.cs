@@ -1405,7 +1405,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public Actor GetCurrentActor(int slotID, Side side)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, string.Format("Invalid slotID {0}", slotID));
         return arrayOfActors[(int)side, slotID];
     }
 
@@ -1690,13 +1690,15 @@ public class DataManager : MonoBehaviour
             {
                 case Side.Resistance:
                     builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                    builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}{6}", record.Key, record.Value.type, record.Value.subType, 
-                        record.Value.data0, record.Value.data1, record.Value.data2, "\n"));
+                    builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type, 
+                        record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
+                        record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
                     break;
                 case Side.Authority:
                     builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                    builderAuthority.Append(string.Format(" ID {0}, type: {1} subType: {2}, data: {3} - {4} - {5}{6}", record.Key, record.Value.type, record.Value.subType, 
-                        record.Value.data0, record.Value.data1, record.Value.data2, "\n"));
+                    builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
+                        record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
+                        record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
                     break;
                 default:
                     builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side, record.Key, "\n"));

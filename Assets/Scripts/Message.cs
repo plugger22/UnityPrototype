@@ -14,7 +14,7 @@ namespace gameAPI
 
         public int msgID;
         public int turnCreated;
-        public int displayDelay = 0;            //number of turns delay before message is displayed (if isPublic == true)
+        public int displayDelay;            //number of turns delay before message is displayed (if isPublic == true)
         public int data0;                   //3 x general purpose data points whose meaning depends on MessageType
         public int data1;
         public int data2;

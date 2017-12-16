@@ -168,7 +168,12 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
                         if (node != null)
                         {
-                            MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID,node);
+                            int actorID = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority).actorID;
+                            MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node);
+                            //message
+                            string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.NodeName, node.NodeID);
+                            Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.NodeID, team.TeamID, actorID);
+                            if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                         }
                         else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.NodeID)); }
                     }
