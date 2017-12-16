@@ -57,7 +57,18 @@ namespace gameAPI
     //
     // - - - Messages - - -
     //
-    public enum MessageType { None, MOVEMENT, TEAM, AI_MOVEMENT}
+    public enum MessageType { None, PLAYER, TEAM, AI}
+    public enum MessageSubType {
+        None,
+        //Player
+        Plyr_Move,
+        //Team
+        Team_Deploy,
+        Team_Withdraw,
+        Team_AutoWithdraw,
+        //AI
+        AI_SpotMove
+    }
 
     //
     // - - - Effects - - -

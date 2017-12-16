@@ -1683,26 +1683,25 @@ public class DataManager : MonoBehaviour
         StringBuilder builderAuthority = new StringBuilder();
         StringBuilder builderResistance = new StringBuilder();
         builderResistance.Append(string.Format(" Archived Messages -> Resistance{0}", "\n"));
-        builderAuthority.Append(string.Format(" {0}{1}Archived Messages -> Authority{2}", "\n", "\n", "\n"));
+        builderAuthority.Append(string.Format("{0}{1} Archived Messages -> Authority{2}", "\n", "\n", "\n"));
         foreach (var record in tempDict)
         {
             switch (record.Value.side)
             {
                 case Side.Resistance:
                     builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                    builderResistance.Append(string.Format(" id {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
-                        record.Value.data2, "\n"));
+                    builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}{6}", record.Key, record.Value.type, record.Value.subType, 
+                        record.Value.data0, record.Value.data1, record.Value.data2, "\n"));
                     break;
                 case Side.Authority:
                     builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                    builderAuthority.Append(string.Format(" ID {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
-                        record.Value.data2, "\n"));
+                    builderAuthority.Append(string.Format(" ID {0}, type: {1} subType: {2}, data: {3} - {4} - {5}{6}", record.Key, record.Value.type, record.Value.subType, 
+                        record.Value.data0, record.Value.data1, record.Value.data2, "\n"));
                     break;
                 default:
                     builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side, record.Key, "\n"));
                     break;
             }
-           
         }
         //combine two lists
         StringBuilder builderOverall = new StringBuilder();

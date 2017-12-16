@@ -495,7 +495,7 @@ public class LevelManager : MonoBehaviour
         //loop actors
         foreach (Actor actor in arrayOfActors)
         {
-            builder.Append(string.Format("{0}   C: {1} star{2}", actor.arc.actorName, actor.datapoint0, "\n"));
+            builder.Append(string.Format("{0}   Renown: {1}{2}", actor.arc.actorName, actor.renown, "\n"));
             switch (side)
             {
                 case Side.Authority:

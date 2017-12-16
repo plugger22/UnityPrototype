@@ -327,8 +327,12 @@ public void InitialiseTeams()
                                                 team.Timer = deployTime;
                                                 team.TurnDeployed = GameManager.instance.turnScript.Turn;
                                                 //confirmation
-                                                Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}, Node ID {4}{5}", team.Arc.name, team.Name, team.TeamID,
-                                                    destinationPool, node.NodeID, "\n"));
+                                                string text = string.Format("{0} {1}, ID {2}, deployed to {3}, Node ID {4}", team.Arc.name, team.Name, team.TeamID,
+                                                    destinationPool, node.NodeID);
+                                                Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
+                                                //message
+                                                Message message = GameManager.instance.messageScript.TeamDeploy(text, node.NodeID, team.TeamID, actor.actorID);
+                                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                                             }
                                             else
                                             {

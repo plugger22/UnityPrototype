@@ -558,7 +558,7 @@ public class NodeManager : MonoBehaviour
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, nodeID {2}",
                             node.NodeName, node.arc.name.ToUpper(), moveDetails.nodeID);
-                        Message messageAI = GameManager.instance.messageScript.AIPlayerMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
+                        Message messageAI = GameManager.instance.messageScript.AISpotMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
                         if (messageAI != null) { GameManager.instance.dataScript.AddMessage(messageAI); }
                     }
                     else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }
