@@ -27,7 +27,33 @@ public class MessageManager : MonoBehaviour
             message.data0 = nodeID;
             return message;
         }
-        else { Debug.LogWarning("Invalid text (Null or Empty)"); }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// AI notification of a Player move if they were spotted, returns Null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="destinationNode"></param>
+    /// <param name="connectionID"></param>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    public Message AIPlayerMove(string text, int destinationNodeID, int connectionID, int delay)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI_MOVEMENT;
+            message.side = Side.Authority;
+            message.isPublic = true;
+            message.displayDelay = delay;
+            message.data0 = destinationNodeID;
+            message.data1 = connectionID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
 }

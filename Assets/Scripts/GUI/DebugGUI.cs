@@ -244,7 +244,7 @@ public class DebugGUI : MonoBehaviour
                     case 9:
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = "Pending Messages";
+                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(false);
                             GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
                         }
                         break;
@@ -252,7 +252,7 @@ public class DebugGUI : MonoBehaviour
                     case 10:
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.dataScript.DisplayArchiveMessages();
+                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(true);
                             GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
                         }
                         break;

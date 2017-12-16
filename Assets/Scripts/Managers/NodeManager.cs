@@ -23,7 +23,8 @@ public class NodeManager : MonoBehaviour
     string colourDefault;
     string colourHighlight;
     string colourResistance;
-    string colourEffect;
+    string colourEffectBad;
+    string colourEffectGood;
     string colourError;
     string colourEnd;
 
@@ -133,7 +134,8 @@ public class NodeManager : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourEffectBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourEffectGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -436,6 +438,7 @@ public class NodeManager : MonoBehaviour
                 colourDefault, node.arc.name.ToUpper(), node.NodeID, colourEnd);
             string moveMain = "Connection Security UNKNOWN";
             string moveDetail = "Consequences UNKNOWN";
+            ModalMoveDetails moveDetails = new ModalMoveDetails();
             if (connection != null)
             {
                 ConnectionType connSecType = connection.GetSecurity();
@@ -451,21 +454,23 @@ public class NodeManager : MonoBehaviour
                     if (GameManager.instance.playerScript.invisibility <= 1)
                     {
                         //invisibility will be zero, or less, if move. Immediate notification
-                        moveDetail = string.Format("{0}Invisibility -1{1}Authority will know IMMEDIATELY{2}", GameManager.instance.colourScript.GetValueColour(0), "\n",
+                        moveDetail = string.Format("{0}Invisibility -1{1}Authority will know IMMEDIATELY{2}", colourEffectBad, "\n",
                           colourEnd);
+                        moveDetails.ai_Delay = 0;
                     }
                     else
                     {
                         //invisibility reduces, still above zero
-                        moveDetail = string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", GameManager.instance.colourScript.GetValueColour(1), "\n",
+                        moveDetail = string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
                           turnsKnown, turnsKnown != 1 ? "s" : "", colourEnd);
+                        moveDetails.ai_Delay = turnsKnown;
                     }
                 }
-                else { moveDetail = string.Format("{0}No change to Invisibility{1}", GameManager.instance.colourScript.GetValueColour(2), colourEnd); }
+                else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourEffectGood, colourEnd); }
             }
             //Move details
-            ModalMoveDetails moveDetails = new ModalMoveDetails();
             moveDetails.nodeID = nodeID;
+            moveDetails.connectionID = connection.connID;
             moveDetails.changeInvisibility = adjustInvisibility;
             moveDetails.gearID = -1;
             moveDetails.changeGear = 0;
@@ -522,6 +527,7 @@ public class NodeManager : MonoBehaviour
         if (moveDetails != null)
         {
             Node node = GameManager.instance.dataScript.GetNode(moveDetails.nodeID);
+            int nodeOriginal = nodePlayer;
             if (node != null)
             {
                 //update Player node
@@ -544,8 +550,23 @@ public class NodeManager : MonoBehaviour
                     GameManager.instance.playerScript.invisibility = invisibility;
                     //display
                     builder.AppendLine();
-                    builder.Append(string.Format("{0}Invisibility {1}{2}{3}", colourEffect, moveDetails.changeInvisibility > 0 ? "+" : "",
+                    builder.Append(string.Format("{0}Invisibility {1}{2}{3}", colourEffectBad, moveDetails.changeInvisibility > 0 ? "+" : "",
                         moveDetails.changeInvisibility, colourEnd));
+                    //message
+                    Connection connection = GameManager.instance.dataScript.GetConnection(moveDetails.connectionID);
+                    if (connection != null)
+                    {
+                        string textAI = string.Format("Player spotted moving to \"{0}\", {1}, nodeID {2}",
+                            node.NodeName, node.arc.name.ToUpper(), moveDetails.nodeID);
+                        Message messageAI = GameManager.instance.messageScript.AIPlayerMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
+                        if (messageAI != null) { GameManager.instance.dataScript.AddMessage(messageAI); }
+                    }
+                    else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }
+                }
+                else
+                {
+                    builder.AppendLine();
+                    builder.Append(string.Format("{0}Player not spotted{1}", colourEffectGood, colourEnd));
                 }
                 details.textBottom = builder.ToString();
                 details.sprite = GameManager.instance.outcomeScript.errorSprite;
@@ -553,7 +574,7 @@ public class NodeManager : MonoBehaviour
                 //message
                 string text = string.Format("Player has moved to {0}", destination);
                 Message message = GameManager.instance.messageScript.PlayerMove(text, moveDetails.nodeID);
-                if (message != null) { GameManager.instance.dataScript.AddArchiveMessage(message); }
+                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
             }
             else
             { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }

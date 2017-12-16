@@ -834,6 +834,19 @@ public class DataManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid Connection (duplicate) connID \"{0}\"", connection.connID)); successFlag = false; }
         return successFlag;
     }
+
+    /// <summary>
+    /// returns connection with specified ID from dict, "Null" if not found
+    /// </summary>
+    /// <param name="connectionID"></param>
+    /// <returns></returns>
+    public Connection GetConnection(int connectionID)
+    {
+        Connection connection = null;
+        if (dictOfConnections.TryGetValue(connectionID, out connection))
+        { return connection; }
+        return null;
+    }
     
 
     //
@@ -849,9 +862,7 @@ public class DataManager : MonoBehaviour
     {
         Target target = null;
         if (dictOfTargets.TryGetValue(targetID, out target))
-        {
-            return target;
-        }
+        { return target; }
         return null;
     }
 
@@ -1630,46 +1641,50 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Add message to Archive dictionary (messages that have been displayed or don't need to be)
+    /// add a new message. Auto sorted to Pending dict (isPublic = true) or Archive dict (isPublic = false)
     /// </summary>
     /// <param name="message"></param>
-    public void AddArchiveMessage(Message message)
+    public void AddMessage(Message message)
     {
-        //add to dictionary
-        try
-        { dictOfArchiveMessages.Add(message.msgID, message); }
-        catch (ArgumentNullException)
-        { Debug.LogError("Invalid Archive Message (Null)");}
-        catch (ArgumentException)
-        { Debug.LogError(string.Format("Invalid Archive Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text));}
+        if (message != null)
+        {
+            switch (message.isPublic)
+            {
+                case true:
+                    //if isPublic True then store in Pending dictionary
+                    try
+                    { dictOfPendingMessages.Add(message.msgID, message); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid Pending Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }
+                    break;
+                case false:
+                    //if isPublic False then store in Archive dictionary
+                    try
+                    { dictOfArchiveMessages.Add(message.msgID, message); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid Archive Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid Pending Message (Null)"); }
     }
 
     /// <summary>
-    /// Add message to Pending dictionary (messages that have been displayed or don't need to be)
-    /// </summary>
-    /// <param name="message"></param>
-    public void AddPendingMessage(Message message)
-    {
-        //add to dictionary
-        try
-        { dictOfPendingMessages.Add(message.msgID, message); }
-        catch (ArgumentNullException)
-        { Debug.LogError("Invalid Pending Message (Null)"); }
-        catch (ArgumentException)
-        { Debug.LogError(string.Format("Invalid Pending Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }
-    }
-
-    /// <summary>
-    /// debug method to display archive messages
+    /// debug method to display messages. isArchive true then display dictOfArchiveMessages, otherwise dictOfPendingMessages
     /// </summary>
     /// <returns></returns>
-    public string DisplayArchiveMessages()
+    public string DisplayMessages(bool isArchive)
     {
+        //which dictionary to use
+        Dictionary<int, Message> tempDict;
+        if (isArchive == true) { tempDict = new Dictionary<int, Message>(dictOfArchiveMessages); }
+        else { tempDict = new Dictionary<int, Message>(dictOfPendingMessages); }
+        //stringbuilders (creating two separate lists, one for each side
         StringBuilder builderAuthority = new StringBuilder();
         StringBuilder builderResistance = new StringBuilder();
         builderResistance.Append(string.Format(" Archived Messages -> Resistance{0}", "\n"));
         builderAuthority.Append(string.Format(" {0}{1}Archived Messages -> Authority{2}", "\n", "\n", "\n"));
-        foreach (var record in dictOfArchiveMessages)
+        foreach (var record in tempDict)
         {
             switch (record.Value.side)
             {
@@ -1679,7 +1694,7 @@ public class DataManager : MonoBehaviour
                         record.Value.data2, "\n"));
                     break;
                 case Side.Authority:
-                    builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, record.Value.side, "\n"));
+                    builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
                     builderAuthority.Append(string.Format(" ID {0}, {1}, data: {2} - {3} - {4}{5}", record.Key, record.Value.type, record.Value.data0, record.Value.data1,
                         record.Value.data2, "\n"));
                     break;

@@ -60,10 +60,15 @@ namespace modalAPI
     /// </summary>
     public class ModalMoveDetails
     {
-        public int nodeID;
+        public int nodeID;                  //destination node
+        public int connectionID;           
         public int changeInvisibility;      //adjustment to player invisibility
+        public int ai_Delay;                //number of turns before AI is notified that player was spotted, default -1 (Constructor)
         public int gearID;
         public int changeGear;              //adjustment to gear variable
+
+        public ModalMoveDetails()
+        { ai_Delay = -1; }
     }
 
     //
