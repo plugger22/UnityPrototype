@@ -168,12 +168,16 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
                         if (node != null)
                         {
-                            int actorID = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority).actorID;
+                            Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
                             MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node);
-                            //message
-                            string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.NodeName, node.NodeID);
-                            Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.NodeID, team.TeamID, actorID);
-                            if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                            if (actor != null)
+                            {
+                                //message
+                                string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.NodeName, node.NodeID);
+                                Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.NodeID, team.TeamID, actor.actorID);
+                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                            }
+                            else { Debug.LogError(string.Format("Invalid actor (null) for actorSlotID {0}", team.ActorSlotID)); }
                         }
                         else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.NodeID)); }
                     }
@@ -765,25 +769,30 @@ public void InitialiseTeams()
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                            if (node.RemoveTeam(data.optionID) == true)
-                            {
-                                //team successfully removed
-                                textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
-                                textBottom = "The team will spend one turn in Transit and be available thereafter";
-                            }
-                            else
-                            {
-                                //Problem occurred, team not removed
-                                textTop = "Problem occured, team NOT removed";
-                                textBottom = "Who did this? Speak up and step forward immediately!";
-                            }
-                            //OUTCOME Window
-                            ModalOutcomeDetails details = new ModalOutcomeDetails();
-                            details.textTop = textTop;
-                            details.textBottom = textBottom;
-                            details.sprite = sprite;
-                            details.side = Side.Authority;
-                            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                        //need to do prior to move team as data will be reset
+                        textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
+                        textBottom = "The team will spend one turn in Transit and be available thereafter";
+                        if (MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node) == true)
+                        {
+                            //message
+                            string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, 
+                                node.NodeName, node.NodeID);
+                            Message message = GameManager.instance.messageScript.TeamWithdraw(text, data.nodeID, team.TeamID);
+                            if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                        }
+                        else
+                        {
+                            //Problem occurred, team not removed
+                            textTop = "Problem occured, team NOT removed";
+                            textBottom = "Who did this? Speak up and step forward immediately!";
+                        }
+                        //OUTCOME Window
+                        ModalOutcomeDetails details = new ModalOutcomeDetails();
+                        details.textTop = textTop;
+                        details.textBottom = textBottom;
+                        details.sprite = sprite;
+                        details.side = Side.Authority;
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }
