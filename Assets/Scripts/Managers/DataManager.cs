@@ -80,8 +80,9 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
     private Dictionary<int, Gear> dictOfGear = new Dictionary<int, Gear>();                         //Key -> gearID, Value -> Gear
     private Dictionary<int, Connection> dictOfConnections = new Dictionary<int, Connection>();      //Key -> connID, Value -> Connection
-    private Dictionary<int, Message> dictOfArchiveMessages = new Dictionary<int, Message>();               //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfArchiveMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
 
     /// <summary>
     /// default constructor
@@ -1641,10 +1642,10 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// add a new message. Auto sorted to Pending dict (isPublic = true) or Archive dict (isPublic = false)
+    /// add a New message. Auto sorted to Pending dict (isPublic = true) or Archive dict (isPublic = false)
     /// </summary>
     /// <param name="message"></param>
-    public void AddMessage(Message message)
+    public void AddMessageNew(Message message)
     {
         if (message != null)
         {
@@ -1670,43 +1671,232 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// debug method to display messages. isArchive true then display dictOfArchiveMessages, otherwise dictOfPendingMessages
+    /// add an Existing message to a dictionary
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="category"></param>
+    private bool AddMessageExisting(Message message, MessageCategory category)
+    {
+        bool successFlag = true;
+        Dictionary<int, Message> dictOfMessages = null;
+        //get appropriate dictionary
+        switch (category)
+        {
+            case MessageCategory.Archive:
+                dictOfMessages = dictOfArchiveMessages;
+                break;
+            case MessageCategory.Pending:
+                dictOfMessages = dictOfPendingMessages;
+                break;
+            case MessageCategory.Current:
+                dictOfMessages = dictOfCurrentMessages;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
+                successFlag = false;
+                break;
+        }
+        if (dictOfMessages != null)
+        {
+            //add to dictionary
+            try
+            { dictOfMessages.Add(message.msgID, message); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Message (Null)"); successFlag = false; }
+            catch (ArgumentException)
+            {
+                Debug.LogError(string.Format("Invalid Message (duplicate) msgID \"{0}\" for {1} \"{2}\"{3}", message.msgID, message.subType, message.text, "\n"));
+                successFlag = false;
+            }
+        }
+        return successFlag;
+    }
+
+    /// <summary>
+    /// Remove (delete) a message from a dictionary
+    /// </summary>
+    /// <param name="msgID"></param>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    private bool RemoveMessage(int msgID, MessageCategory category)
+    {
+        bool successFlag = true;
+        Dictionary<int, Message> dictOfMessages = null;
+        //get appropriate dictionary
+        switch (category)
+        {
+            case MessageCategory.Archive:
+                dictOfMessages = dictOfArchiveMessages;
+                break;
+            case MessageCategory.Pending:
+                dictOfMessages = dictOfPendingMessages;
+                break;
+            case MessageCategory.Current:
+                dictOfMessages = dictOfCurrentMessages;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
+                successFlag = false;
+                break;
+        }
+        if (dictOfMessages != null)
+        {
+            //remove from dictionary
+            if (dictOfMessages.ContainsKey(msgID) == true)
+            { dictOfMessages.Remove(msgID); }
+            else { successFlag = false; }
+        }
+        return successFlag;
+    }
+
+    /// <summary>
+    /// Gets a message of a specified ID from the specified dictionary (category). Returns null if not found
+    /// </summary>
+    /// <param name="msgID"></param>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public Message GetMessage(int msgID, MessageCategory category)
+    {
+        Dictionary<int, Message> dictOfMessages = null;
+        //get appropriate dictionary
+        switch(category)
+        {
+            case MessageCategory.Archive:
+                dictOfMessages = new Dictionary<int, Message>(dictOfArchiveMessages);
+                break;
+            case MessageCategory.Pending:
+                dictOfMessages = new Dictionary<int, Message>(dictOfPendingMessages);
+                break;
+            case MessageCategory.Current:
+                dictOfMessages = new Dictionary<int, Message>(dictOfCurrentMessages);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
+                break;
+        }
+        if (dictOfMessages != null)
+        {
+            //get msg from originating dictionary
+            if (dictOfMessages.ContainsKey(msgID))
+            { return dictOfMessages[msgID]; }
+            else { Debug.LogWarning(string.Format("Not found in msgID {0}, in {1} dict{2}", msgID, category, "\n")); }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// returns specified dictionary of messages, returns null if an invalid categoary
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public Dictionary<int, Message> GetMessageDict(MessageCategory category)
+    {
+        Dictionary<int, Message> dictOfMessages = null;
+        //get appropriate dictionary
+        switch (category)
+        {
+            case MessageCategory.Archive:
+                dictOfMessages = dictOfArchiveMessages;
+                break;
+            case MessageCategory.Pending:
+                dictOfMessages = dictOfPendingMessages;
+                break;
+            case MessageCategory.Current:
+                dictOfMessages = dictOfCurrentMessages;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
+                break;
+        }
+        return dictOfMessages;
+    }
+
+    /// <summary>
+    /// Moves a message from one category (dict) to another while removing it from the original category. Handles all admin. Returns true if successful
+    /// </summary>
+    /// <param name="msgID"></param>
+    /// <param name="fromCategory"></param>
+    /// <param name="toCategory"></param>
+    public bool MoveMessage(int msgID, MessageCategory fromCategory, MessageCategory toCategory)
+    {
+        bool successFlag = true;
+        //get message
+        Message message = GetMessage(msgID, fromCategory);
+        if (message != null)
+        {
+            //add message to new dictionary
+            if (AddMessageExisting(message, toCategory) == true)
+            {
+                //remove message form original dictionary
+                if (RemoveMessage(message.msgID, fromCategory) == false)
+                { Debug.LogWarning(string.Format("Delete message ID {0}, \"{1}\" to {2} has failed", message.msgID, message.text, fromCategory)); successFlag = false; }
+            }
+            else { Debug.LogWarning(string.Format("Move message ID {0}, \"{1}\" to {2} has failed", message.msgID, message.text, toCategory)); successFlag = false; }
+        }
+        else { Debug.LogError(string.Format("Invalid message (Null) for msgID {0}, category \"{1}\"", msgID, fromCategory)); successFlag = false; }
+        return successFlag;
+    }
+
+    /// <summary>
+    /// debug method to display messages. Returns display string or empty if category is invalid.
     /// </summary>
     /// <returns></returns>
-    public string DisplayMessages(bool isArchive)
+    public string DisplayMessages(MessageCategory category)
     {
         //which dictionary to use
-        Dictionary<int, Message> tempDict;
-        if (isArchive == true) { tempDict = new Dictionary<int, Message>(dictOfArchiveMessages); }
-        else { tempDict = new Dictionary<int, Message>(dictOfPendingMessages); }
+        Dictionary<int, Message> tempDict = null;
         //stringbuilders (creating two separate lists, one for each side
         StringBuilder builderAuthority = new StringBuilder();
         StringBuilder builderResistance = new StringBuilder();
-        builderResistance.Append(string.Format(" Archived Messages -> Resistance{0}", "\n"));
-        builderAuthority.Append(string.Format("{0}{1} Archived Messages -> Authority{2}", "\n", "\n", "\n"));
-        foreach (var record in tempDict)
+        StringBuilder builderOverall = new StringBuilder();
+        //get the required dictionary
+        switch (category)
         {
-            switch (record.Value.side)
+            case MessageCategory.Archive:
+                tempDict = new Dictionary<int, Message>(dictOfArchiveMessages);
+                builderOverall.Append(string.Format(" ARCHIVE Messages{0}{1}", "\n", "\n"));
+                break;
+            case MessageCategory.Pending:
+                tempDict = new Dictionary<int, Message>(dictOfPendingMessages);
+                builderOverall.Append(string.Format(" PENDING Messages{0}{1}", "\n", "\n"));
+                break;
+            case MessageCategory.Current:
+                tempDict = new Dictionary<int, Message>(dictOfCurrentMessages);
+                builderOverall.Append(string.Format(" CURRENT Messages{0}{1}", "\n", "\n"));
+                break;
+            default:
+                builderOverall.Append(string.Format(" UNKNOWN Messages{0}{1}", "\n", "\n"));
+                Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
+                break;
+        }
+        if (tempDict != null)
+        {
+            builderResistance.Append(string.Format(" Messages -> Resistance{0}", "\n"));
+            builderAuthority.Append(string.Format("{0}{1} Messages -> Authority{2}", "\n", "\n", "\n"));
+            foreach (var record in tempDict)
             {
-                case Side.Resistance:
-                    builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                    builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type, 
-                        record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
-                        record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
-                    break;
-                case Side.Authority:
-                    builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                    builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
-                        record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
-                        record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
-                    break;
-                default:
-                    builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side, record.Key, "\n"));
-                    break;
+                switch (record.Value.side)
+                {
+                    case Side.Resistance:
+                        builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
+                        builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
+                            record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
+                            record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
+                        break;
+                    case Side.Authority:
+                        builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
+                        builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
+                            record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
+                            record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
+                        break;
+                    default:
+                        builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side, record.Key, "\n"));
+                        break;
+                }
             }
         }
         //combine two lists
-        StringBuilder builderOverall = new StringBuilder();
+        
         builderOverall.Append(builderResistance.ToString());
         builderOverall.Append(builderAuthority.ToString());
         return builderOverall.ToString();

@@ -49,7 +49,7 @@ public class DebugGUI : MonoBehaviour
 
             //background box
             customBackground.alignment = TextAnchor.UpperCenter;
-            GUI.Box(new Rect(box_x, box_y, box_width, box_height), "Debug Menu", customBackground);
+            GUI.Box(new Rect(box_x, box_y, box_width, box_height), string.Format("Debug Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
 
             //first button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Authority Recruit"))
@@ -160,6 +160,15 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //thirteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Current Messages"))
+            {
+                Debug.Log("Button -> Toggle Current Messages");
+                if (debugDisplay != 11)
+                { debugDisplay = 11; }
+                else { debugDisplay = 0; }
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
@@ -244,7 +253,7 @@ public class DebugGUI : MonoBehaviour
                     case 9:
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(false);
+                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Pending);
                             GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
                         }
                         break;
@@ -252,10 +261,19 @@ public class DebugGUI : MonoBehaviour
                     case 10:
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(true);
+                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Archive);
                             GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
                         }
                         break;
+                    //Current Messages
+                    case 11:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
+                            GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysisPools, customBackground);
+                        }
+                        break;
+
                 }
             }
             

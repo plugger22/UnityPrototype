@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.NodeName, node.arc.name.ToUpper(), node.NodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
-        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+        if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
     }
 
     //

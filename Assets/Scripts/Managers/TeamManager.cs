@@ -175,7 +175,7 @@ public class TeamManager : MonoBehaviour
                                 //message
                                 string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.NodeName, node.NodeID);
                                 Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.NodeID, team.TeamID, actor.actorID);
-                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                             }
                             else { Debug.LogError(string.Format("Invalid actor (null) for actorSlotID {0}", team.ActorSlotID)); }
                         }
@@ -341,7 +341,7 @@ public void InitialiseTeams()
                                                 Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                                                 //message
                                                 Message message = GameManager.instance.messageScript.TeamDeploy(text, node.NodeID, team.TeamID, actor.actorID);
-                                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                                                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                                             }
                                             else
                                             {
@@ -772,13 +772,18 @@ public void InitialiseTeams()
                         //need to do prior to move team as data will be reset
                         textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
                         textBottom = "The team will spend one turn in Transit and be available thereafter";
+                        int actorID = -1;
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
+                        if (actor != null) { actorID = actor.actorID; }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", team.ActorSlotID)); }
                         if (MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node) == true)
                         {
                             //message
                             string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, 
                                 node.NodeName, node.NodeID);
-                            Message message = GameManager.instance.messageScript.TeamWithdraw(text, data.nodeID, team.TeamID);
-                            if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                            Message message = GameManager.instance.messageScript.TeamWithdraw(text, data.nodeID, team.TeamID, actorID);
+                            if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                            Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                         }
                         else
                         {
@@ -828,8 +833,14 @@ public void InitialiseTeams()
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
 
-                            if (node.RemoveTeam(data.optionID) == true)
+                            if (MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node) == true)
                             {
+                                //message (notification to Authority Side)
+                                string text = string.Format("{0} {1}, ID {2}, neutralised at {3}, ID {4}", team.Arc.name, team.Name, team.TeamID,
+                                    node.NodeName, node.NodeID);
+                                Message message = GameManager.instance.messageScript.TeamNeutralise(text, data.nodeID, team.TeamID, actor.actorID);
+                                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                                Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                                 //team successfully removed
                                 builderTop.Append(string.Format("{0}Operatives have succeeded!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} team removed{4}", colourTeam, team.Arc.name.ToUpper(), colourEnd, 

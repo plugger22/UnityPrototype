@@ -57,6 +57,7 @@ namespace gameAPI
     //
     // - - - Messages - - -
     //
+    public enum MessageCategory { None, Current, Pending, Archive}
     public enum MessageType { None, PLAYER, TEAM, AI}
     public enum MessageSubType {
         None,
@@ -66,6 +67,7 @@ namespace gameAPI
         Team_Deploy,
         Team_Withdraw,
         Team_AutoRecall,
+        Team_Neutralise,
         //AI
         AI_SpotMove
     }
