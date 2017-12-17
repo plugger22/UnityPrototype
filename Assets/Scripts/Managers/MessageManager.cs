@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
 
+
 /// <summary>
 /// handles all message matters
 /// </summary>
@@ -79,13 +80,18 @@ public class MessageManager : MonoBehaviour
     /// </summary>
     private void EndTurn()
     {
-        Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>(GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current));
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
         if (dictOfCurrentMessages != null)
         {
-            int limit = dictOfCurrentMessages.Count;
-            for (int i = 0; i < limit; i++)
-            {
-            }
+            List<int> listOfMessagesToMove = new List<int>();
+            foreach(var record in dictOfCurrentMessages)
+            { listOfMessagesToMove.Add(record.Key); }
+            //loop list and move all specified messages to the Archive dictionary for display
+            for (int i = 0; i < listOfMessagesToMove.Count; i++)
+            { GameManager.instance.dataScript.MoveMessage(listOfMessagesToMove[i], MessageCategory.Current, MessageCategory.Archive); }
+            //error check
+            if (dictOfCurrentMessages.Count > 0)
+            { Debug.LogError(string.Format("There are {0} records in dictOfCurrentMethods (should be empty)", dictOfCurrentMessages.Count)); }
         }
         else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
     }
