@@ -13,6 +13,8 @@ public class GearManager : MonoBehaviour
     [Range(0, 4)] public int maxNumOfGear = 3;
     [Tooltip("Whenever a random selection of gear is provided there is a chance * actor Ability of it being a Rare item, otherwise it's the standard Common")]
     [Range(1, 10)] public int chanceOfRareGear = 5;
+    [Tooltip("Chance gear will be compromised and be no longer of any benefit after each use")]
+    [Range(25, 75)] public int chanceOfCompromise = 50;
 
 
     private string colourEffect;

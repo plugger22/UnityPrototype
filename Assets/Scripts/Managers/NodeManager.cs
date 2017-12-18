@@ -432,7 +432,7 @@ public class NodeManager : MonoBehaviour
             string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.NodeName, colourEnd, "\n",
                 colourDefault, node.arc.name.ToUpper(), node.NodeID, colourEnd);
             string moveMain = "Connection Security UNKNOWN";
-            string moveDetail = "Consequences UNKNOWN";
+            
             int adjustInvisibility = 0;
             //Get Connection (between new node and Player's current location)
             Connection connection = node.GetConnection(nodePlayer);
@@ -455,6 +455,7 @@ public class NodeManager : MonoBehaviour
                     {
                         for (int i = 0; i < listOfGear.Count; i++)
                         {
+                            StringBuilder builderDetail = new StringBuilder();
                             Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                             if (gear != null)
                             {
@@ -469,7 +470,7 @@ public class NodeManager : MonoBehaviour
                                     {
                                         //gear handles security level
                                         adjustInvisibility = 0;
-                                        moveDetail = string.Format("{0}No risk of being spotted{1}", colourEffectGood, colourEnd);
+                                        builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourEffectGood, colourEnd));
                                     }
                                     else
                                     {
@@ -478,19 +479,22 @@ public class NodeManager : MonoBehaviour
                                         if (GameManager.instance.playerScript.invisibility <= 1)
                                         {
                                             //invisibility will be zero, or less, if move. Immediate notification
-                                            moveDetail = string.Format("{0}Invisibility -1{1}Authority will know IMMEDIATELY{2}", colourEffectBad, "\n",
-                                              colourEnd);
+                                            builderDetail.Append(string.Format("{0}Invisibility -1{1}Authority will know IMMEDIATELY{2}", colourEffectBad, "\n",
+                                              colourEnd));
                                             moveGearDetails.ai_Delay = 0;
                                         }
                                         else
                                         {
                                             //invisibility reduces, still above zero
-                                            moveDetail = string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
-                                              turnsKnown, turnsKnown != 1 ? "s" : "", colourEnd);
+                                            builderDetail.Append(string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
+                                              turnsKnown, turnsKnown != 1 ? "s" : "", colourEnd));
                                             moveGearDetails.ai_Delay = gear.data - secLevel;
                                         }
                                     }
-                                    
+                                    //add gear chance of compromise
+                                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}% chance of being compromised{3}", "\n", colourEffectBad, 
+                                        GameManager.instance.gearScript.chanceOfCompromise, colourEnd));
+
                                     //Move details
                                     moveGearDetails.nodeID = nodeID;
                                     moveGearDetails.connectionID = connection.connID;
@@ -498,12 +502,16 @@ public class NodeManager : MonoBehaviour
                                     moveGearDetails.gearID = gear.gearID;
                                     moveGearDetails.changeGear = -1;
                                     //button target details
+                                    string colourGearLevel = colourEffectNeutral;
+                                    if (gear.data == 1) { colourGearLevel = colourEffectGood; }
+                                    else if (gear.data == 3) { colourGearLevel = colourEffectBad; }
                                     EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                     {
                                         buttonTitle = string.Format("{0} Move", gear.name),
-                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}", "\n", colourEffectNeutral, gear.name, colourEnd),
+                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourEffectNeutral, gear.name, colourEnd,
+                                        "\n", colourGearLevel, (ConnectionType)gear.data, colourEnd),
                                         buttonTooltipMain = moveMain,
-                                        buttonTooltipDetail = moveDetail,
+                                        buttonTooltipDetail = builderDetail.ToString(),
                                         //use a Lambda to pass arguments to the action
                                         action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, moveGearDetails); }
                                     };
@@ -523,7 +531,7 @@ public class NodeManager : MonoBehaviour
                 if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
                 moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.instance.colourScript.GetValueColour(secLevel), connSecType, colourEnd);*/
                 //security conseqences (no gear)
-
+                string moveDetail = "UNKNOWN";
                 if (secLevel < 4)
                 {
                     
