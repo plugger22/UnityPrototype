@@ -15,6 +15,7 @@ public class Gear : ScriptableObject
     public GearLevel rarity;        // 1 -> common, 2 -> rare, 3 -> unique (one off)
     public GearType type;
     public MetaLevel metaLevel;       //eg. city / state / country
+    public int data;               //multipurpose datapoint that depends on gear category
 
     public Sprite sprite;
       

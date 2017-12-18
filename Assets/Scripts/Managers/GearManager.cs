@@ -291,7 +291,7 @@ public class GearManager : MonoBehaviour
                                 //gear successfully acquired
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
-                                    colourEffect, colourEnd));
+                                    colourDefault, colourEnd));
 
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;
