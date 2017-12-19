@@ -17,7 +17,9 @@ public class GearManager : MonoBehaviour
     [Range(25, 75)] public int chanceOfCompromise = 50;
 
 
-    private string colourEffect;
+    private string colourEffectGood;
+    private string colourEffectNeutral;
+    private string colourEffectBad;
     private string colourSide;
     private string colourGear;
     private string colourDefault;
@@ -97,7 +99,9 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourEffectGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourEffectNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourEffectBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -129,7 +133,7 @@ public class GearManager : MonoBehaviour
             genericDetails.nodeID = details.NodeID;
             genericDetails.actorSlotID = details.ActorSlotID;
             //picker text
-            genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+            genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffectNeutral, colourEnd, colourNormal, colourEnd);
             genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
                 colourNormal, colourEnd);
             genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
@@ -229,9 +233,21 @@ public class GearManager : MonoBehaviour
                         optionDetails.sprite = gear.sprite;
                         //tooltip -> TO DO
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                        tooltipDetails.textHeader = string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd);
+                        StringBuilder builderHeader = new StringBuilder();
+                        builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
+                        string colourGearEffect = colourEffectNeutral;
+                        if(gear.data == 3) { colourGearEffect = colourEffectGood; }
+                        else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
+                        //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
+                        switch(gear.type)
+                        {
+                            case GearType.Movement:
+                                builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                                break;
+                        }
+                        tooltipDetails.textHeader = builderHeader.ToString();
                         tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffect, gear.rarity, colourEnd, 
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity, colourEnd, 
                             "\n", colourSide, gear.type, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;

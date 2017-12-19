@@ -431,12 +431,10 @@ public class NodeManager : MonoBehaviour
         {
             string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.NodeName, colourEnd, "\n",
                 colourDefault, node.arc.name.ToUpper(), node.NodeID, colourEnd);
-            string moveMain = "Connection Security UNKNOWN";
-            
+            string moveMain = "UNKNOWN";
             int adjustInvisibility = 0;
             //Get Connection (between new node and Player's current location)
             Connection connection = node.GetConnection(nodePlayer);
-            
             if (connection != null)
             {
                 ConnectionType connSecType = connection.GetSecurity();
@@ -444,7 +442,6 @@ public class NodeManager : MonoBehaviour
                 if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
                 int turnsKnown = secLevel;
                 moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.instance.colourScript.GetValueColour(secLevel), connSecType, colourEnd);
-
                 //
                 // - - - Gear (Movement) only if connection has a security level
                 //
@@ -501,10 +498,10 @@ public class NodeManager : MonoBehaviour
                                     moveGearDetails.changeInvisibility = adjustInvisibility;
                                     moveGearDetails.gearID = gear.gearID;
                                     moveGearDetails.changeGear = -1;
-                                    //button target details
+                                    //button target details (red for High security to match red connection security colour on map)
                                     string colourGearLevel = colourEffectNeutral;
-                                    if (gear.data == 1) { colourGearLevel = colourEffectGood; }
-                                    else if (gear.data == 3) { colourGearLevel = colourEffectBad; }
+                                    if (gear.data == 3) { colourGearLevel = colourEffectGood; }
+                                    else if (gear.data == 1) { colourGearLevel = colourEffectBad; }
                                     EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                     {
                                         buttonTitle = string.Format("{0} Move", gear.name),
@@ -564,7 +561,7 @@ public class NodeManager : MonoBehaviour
                 EventButtonDetails eventDetails = new EventButtonDetails()
                 {
                     buttonTitle = "Move",
-                    buttonTooltipHeader = moveHeader,
+                    buttonTooltipHeader = string.Format("{0}Move (no gear){1}", colourEffectNeutral, colourEnd),
                     buttonTooltipMain = moveMain,
                     buttonTooltipDetail = moveDetail,
                     //use a Lambda to pass arguments to the action
@@ -580,7 +577,7 @@ public class NodeManager : MonoBehaviour
                 cancelDetails = new EventButtonDetails()
                 {
                     buttonTitle = "CANCEL",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                    buttonTooltipHeader = moveHeader,
                     buttonTooltipMain = "You'd like to think about it",
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
