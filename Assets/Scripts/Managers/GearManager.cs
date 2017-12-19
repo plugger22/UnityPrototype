@@ -231,7 +231,7 @@ public class GearManager : MonoBehaviour
                         optionDetails.optionID = gear.gearID;
                         optionDetails.text = gear.name.ToUpper();
                         optionDetails.sprite = gear.sprite;
-                        //tooltip -> TO DO
+                        //tooltip 
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
                         StringBuilder builderHeader = new StringBuilder();
                         builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
@@ -242,7 +242,7 @@ public class GearManager : MonoBehaviour
                         switch(gear.type)
                         {
                             case GearType.Movement:
-                                builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                                builderHeader.Append(string.Format("{0}{1}{2}{3} connections", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
                                 break;
                         }
                         tooltipDetails.textHeader = builderHeader.ToString();
@@ -310,7 +310,6 @@ public class GearManager : MonoBehaviour
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
                                     colourDefault, colourEnd));
-
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;
                                 List<Effect> listOfEffects = action.GetEffects();
@@ -325,6 +324,7 @@ public class GearManager : MonoBehaviour
                                             {
                                                 builderTop.AppendLine();
                                                 builderTop.Append(effectReturn.topText);
+                                                builderBottom.AppendLine();
                                                 builderBottom.AppendLine();
                                                 builderBottom.Append(effectReturn.bottomText);
                                             }
@@ -356,6 +356,67 @@ public class GearManager : MonoBehaviour
             else { Debug.LogError("Highlighted node invalid (default '-1' value)"); }
         }
         else { Debug.LogError("Invalid gearID (default '-1')"); }
+    }
+
+    /// <summary>
+    /// rolls dice against chance of gear being compromised. Depends on gear rarity. Returns true if so or if a problem (default true).
+    /// </summary>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public bool CheckIfGearCompromised(int gearID)
+    {
+        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+        if (gear != null)
+        {
+            int chance = 0;
+            //chance of compromise varies depending on gear rarity
+            switch (gear.rarity)
+            {
+                case GearLevel.Unique:
+                    //halved chance
+                    chance = chanceOfCompromise / 2;
+                    break;
+                case GearLevel.Rare:
+                case GearLevel.Common:
+                    chance = chanceOfCompromise;
+                    break;
+            }
+            if (Random.Range(0, 100) <= chance) { return true; }
+        }
+        else
+        {
+            //problem. Default compromised.
+            Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID));
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// returns chance of gear being compromised after each use (%). Depends on rarity. Returns '0' if a problem
+    /// </summary>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public int GetChanceOfCompromise(int gearID)
+    {
+        int chance = 0;
+        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+        if (gear != null)
+        {
+            //chance of compromise varies depending on gear rarity
+            switch(gear.rarity)
+            {
+                case GearLevel.Unique:
+                    //halved chance
+                    chance = chanceOfCompromise / 2;
+                    break;
+                case GearLevel.Rare:
+                case GearLevel.Common:
+                    chance = chanceOfCompromise;
+                    break;
+            }
+        }
+        return chance;
     }
 
     //new methods above here

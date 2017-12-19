@@ -21,6 +21,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of player
 
     string colourDefault;
+    string colourAlert;
     string colourHighlight;
     string colourResistance;
     string colourEffectBad;
@@ -133,6 +134,7 @@ public class NodeManager : MonoBehaviour
     public void SetColours()
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourEffectBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
@@ -489,8 +491,8 @@ public class NodeManager : MonoBehaviour
                                         }
                                     }
                                     //add gear chance of compromise
-                                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}% chance of being compromised{3}", "\n", colourEffectBad, 
-                                        GameManager.instance.gearScript.chanceOfCompromise, colourEnd));
+                                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}% chance of being compromised{3}", "\n", colourAlert, 
+                                        GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID), colourEnd));
 
                                     //Move details
                                     moveGearDetails.nodeID = nodeID;
@@ -505,7 +507,7 @@ public class NodeManager : MonoBehaviour
                                     EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                     {
                                         buttonTitle = string.Format("{0} Move", gear.name),
-                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourEffectNeutral, gear.name, colourEnd,
+                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7} connections", "\n", colourEffectNeutral, gear.name, colourEnd,
                                         "\n", colourGearLevel, (ConnectionType)gear.data, colourEnd),
                                         buttonTooltipMain = moveMain,
                                         buttonTooltipDetail = builderDetail.ToString(),
@@ -652,6 +654,21 @@ public class NodeManager : MonoBehaviour
                 {
                     builder.AppendLine();
                     builder.Append(string.Format("{0}Player not spotted{1}", colourEffectGood, colourEnd));
+                }
+                //gear used?
+                if (moveDetails.gearID > -1)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
+                    if (gear != null)
+                    {
+                        if (GameManager.instance.gearScript.CheckIfGearCompromised(gear.gearID) == true)
+                        {
+                            builder.AppendLine();
+                            builder.AppendLine();
+                            builder.Append(string.Format("{0}{1} has been compromised!{2}", colourEffectBad, gear.name, colourEnd));
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
                 }
                 details.textBottom = builder.ToString();
                 details.sprite = GameManager.instance.outcomeScript.errorSprite;

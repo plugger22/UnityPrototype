@@ -125,6 +125,8 @@ public class PlayerManager : MonoBehaviour
                 builder.Append(string.Format(" rarity \"{0}\"", gear.rarity));
                 builder.AppendLine();
                 builder.Append(string.Format(" gearType \"{0}\"", gear.type));
+                builder.AppendLine();
+                builder.Append(string.Format(" data {0}", gear.data));
             }
         }
         return builder.ToString();
@@ -179,6 +181,13 @@ public class PlayerManager : MonoBehaviour
         builder.Append(string.Format(" Renown {0}{1}", renown, "\n"));
         builder.Append(string.Format(" NumOfRecruits {0}{1}{2}", numOfRecruits, "\n", "\n"));
         builder.Append(string.Format(" Resistance Cause  {0} of {1}", rebelCauseCurrent, rebelCauseMax));
+        builder.Append(string.Format(" {0}{2}Gear{3}", "\n", "\n", "\n"));
+        for (int i = 0; i < listOfGear.Count; i++)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+            if (gear != null)
+            { builder.Append(string.Format(" {0}, ID {1}", gear.name, gear.gearID)); }
+        }
         return builder.ToString();
     }
 

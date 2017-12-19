@@ -64,11 +64,14 @@ namespace modalAPI
         public int connectionID;           
         public int changeInvisibility;      //adjustment to player invisibility
         public int ai_Delay;                //number of turns before AI is notified that player was spotted, default -1 (Constructor)
-        public int gearID;
+        public int gearID;                  //default -1 if none (Constructor)
         public int changeGear;              //adjustment to gear variable
 
         public ModalMoveDetails()
-        { ai_Delay = -1; }
+        {
+            ai_Delay = -1;
+            gearID = -1;
+        }
     }
 
     //
