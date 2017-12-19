@@ -83,7 +83,7 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes node actor actions (Resistance Node actions & Authority team actions)
+    /// Processes node actor actions (Resistance Node actions)
     /// </summary>
     /// <param name="details"></param>
     public void ProcessNodeAction(ModalActionDetails details)
@@ -135,7 +135,7 @@ public class ActionManager : MonoBehaviour
                                         builderTop.AppendLine();
                                         builderTop.Append(effectReturn.topText);
                                     }
-                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
+                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                     builderBottom.Append(effectReturn.bottomText);
                                     //exit effect loop on error
                                     if (effectReturn.errorFlag == true) { break; }
