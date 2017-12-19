@@ -222,7 +222,7 @@ public class DebugGUI : MonoBehaviour
                         {
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisActors = GameManager.instance.playerScript.DisplayGear();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysisActors, customBackground);
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 400), analysisActors, customBackground);
                         }
                         break;
                     //actor Pools

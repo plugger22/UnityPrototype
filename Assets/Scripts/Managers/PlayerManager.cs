@@ -101,36 +101,6 @@ public class PlayerManager : MonoBehaviour
     public int GetNumOfGear()
     { return listOfGear.Count; }
 
-    /// <summary>
-    /// DEBUG method to show players gear in lieu of a working UI element
-    /// </summary>
-    /// <returns></returns>
-    public string DisplayGear()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.Append(" Player's Gear");
-        builder.AppendLine();
-        foreach(int gearID in listOfGear)
-        {
-            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-            if (gear != null)
-            {
-                builder.AppendLine();
-                builder.Append(string.Format(" {0}", gear.name.ToUpper()));
-                builder.AppendLine();
-                builder.Append(string.Format(" Metalevel \"{0}\"", gear.metaLevel));
-                builder.AppendLine();
-                builder.Append(string.Format(" gearID {0}", gear.gearID));
-                builder.AppendLine();
-                builder.Append(string.Format(" rarity \"{0}\"", gear.rarity));
-                builder.AppendLine();
-                builder.Append(string.Format(" gearType \"{0}\"", gear.type));
-                builder.AppendLine();
-                builder.Append(string.Format(" data {0}", gear.data));
-            }
-        }
-        return builder.ToString();
-    }
 
     public List<int> GetListOfGear()
     { return listOfGear; }
@@ -165,6 +135,36 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// remove gear from player's inventory
+    /// </summary>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public bool RemoveGear(int gearID)
+    {
+        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+        if (gear != null)
+        {
+            //check gear not already in inventory
+            if (CheckGearPresent(gearID) == true)
+            {
+                listOfGear.Remove(gearID);
+                Debug.Log(string.Format("PlayerManager: Gear \"{0}\", gearID {1}, removed from inventory{2}", gear.name, gearID, "\n"));
+                return true;
+            }
+            else
+            {
+                Debug.LogError(string.Format("Gear \"{0}\", gearID {1} NOT removed from inventory", gear.name, gearID));
+                return false;
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
+            return false;
+        }
+    }
+
     //
     // - - - Other
     //
@@ -181,16 +181,51 @@ public class PlayerManager : MonoBehaviour
         builder.Append(string.Format(" Renown {0}{1}", renown, "\n"));
         builder.Append(string.Format(" NumOfRecruits {0}{1}{2}", numOfRecruits, "\n", "\n"));
         builder.Append(string.Format(" Resistance Cause  {0} of {1}", rebelCauseCurrent, rebelCauseMax));
-        builder.Append(string.Format(" {0}{2}Gear{3}", "\n", "\n", "\n"));
-        for (int i = 0; i < listOfGear.Count; i++)
+        builder.Append(string.Format(" {0}{1}Gear{2}", "\n", "\n", "\n"));
+        if (listOfGear.Count > 0)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
-            if (gear != null)
-            { builder.Append(string.Format(" {0}, ID {1}", gear.name, gear.gearID)); }
+            for (int i = 0; i < listOfGear.Count; i++)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                if (gear != null)
+                { builder.Append(string.Format(" {0}, ID {1}", gear.name, gear.gearID)); }
+            }
         }
+        else { builder.Append("No gear in inventory"); }
         return builder.ToString();
     }
 
+
+    /// <summary>
+    /// DEBUG method to show players gear in lieu of a working UI element
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayGear()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(" Player's Gear");
+        builder.AppendLine();
+        foreach (int gearID in listOfGear)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+            if (gear != null)
+            {
+                builder.AppendLine();
+                builder.Append(string.Format(" {0}", gear.name.ToUpper()));
+                builder.AppendLine();
+                builder.Append(string.Format(" Metalevel \"{0}\"", gear.metaLevel));
+                builder.AppendLine();
+                builder.Append(string.Format(" gearID {0}", gear.gearID));
+                builder.AppendLine();
+                builder.Append(string.Format(" rarity \"{0}\"", gear.rarity));
+                builder.AppendLine();
+                builder.Append(string.Format(" gearType \"{0}\"", gear.type));
+                builder.AppendLine();
+                builder.Append(string.Format(" data {0}", gear.data));
+            }
+        }
+        return builder.ToString();
+    }
 
     //place new methods above here
 }

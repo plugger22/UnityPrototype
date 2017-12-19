@@ -950,7 +950,11 @@ public class ActorManager : MonoBehaviour
                         builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
                         builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc, 
                             actorRecruited.arc.name,  colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
-
+                        //message
+                        string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(), 
+                            actorRecruited.actorID);
+                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, Side.Resistance);
+                        if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                         //Process any other effects, if acquisition was successfull, ignore otherwise
                         Action action = actorCurrent.arc.nodeAction;
                         List<Effect> listOfEffects = action.GetEffects();
@@ -968,6 +972,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             builderTop.AppendLine();
                                             builderTop.Append(effectReturn.topText);
+                                            builderBottom.AppendLine();
                                             builderBottom.AppendLine();
                                             builderBottom.Append(effectReturn.bottomText);
                                         }
@@ -1030,34 +1035,38 @@ public class ActorManager : MonoBehaviour
         {
             //find actor
                 Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
-                if (actorRecruited != null)
+            if (actorRecruited != null)
+            {
+                //add actor to reserve pool
+                if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
                 {
-                    //add actor to reserve pool
-                    if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
-                    {
-                        //change actor's status
-                        actorRecruited.status = ActorStatus.Reserve;
-                        //remove actor from appropriate pool list
-                        GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
-                        //sprite of recruited actor
-                        sprite = actorRecruited.arc.baseSprite;
-
-                        //actor successfully recruited
-                        builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
-                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
-                            actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
-                    }
-                    else
-                    {
-                        //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
-                        successFlag = false;
-                    }
+                    //change actor's status
+                    actorRecruited.status = ActorStatus.Reserve;
+                    //remove actor from appropriate pool list
+                    GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
+                    //sprite of recruited actor
+                    sprite = actorRecruited.arc.baseSprite;
+                    //message
+                    string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(),
+                        actorRecruited.actorID);
+                    Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, Side.Authority);
+                    if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                    //actor successfully recruited
+                    builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
+                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
+                        actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
                 }
                 else
                 {
-                    Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
+                    //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
                     successFlag = false;
                 }
+            }
+            else
+            {
+                Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
+                successFlag = false;
+            }
         }
         else
         { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }

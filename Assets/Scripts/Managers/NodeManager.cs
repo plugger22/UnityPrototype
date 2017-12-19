@@ -661,11 +661,25 @@ public class NodeManager : MonoBehaviour
                     Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
                     if (gear != null)
                     {
+                        //Gear Compromised
                         if (GameManager.instance.gearScript.CheckIfGearCompromised(gear.gearID) == true)
                         {
                             builder.AppendLine();
                             builder.AppendLine();
                             builder.Append(string.Format("{0}{1} has been compromised!{2}", colourEffectBad, gear.name, colourEnd));
+                            //remove gear from inventory
+                            GameManager.instance.playerScript.RemoveGear(gear.gearID);
+                            //message -> gear compromised
+                            string textMsg = string.Format("{0}, ID {1} has been comprised while moving", gear.name, gear.gearID);
+                            Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.NodeID, gear.gearID);
+                            if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
+                        }
+                        else
+                        {
+                            //message -> gear used but not compromised
+                            string textMsg = string.Format("{0}, ID {1} has been used while moving", gear.name, gear.gearID);
+                            Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.NodeID, gear.gearID);
+                            if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }

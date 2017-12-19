@@ -287,5 +287,116 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
+
+    /// <summary>
+    /// Gear has been used and compromised. Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public Message GearCompromised(string text, int nodeID, int gearID)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GEAR;
+            message.subType = MessageSubType.Gear_Comprised;
+            message.side = Side.Resistance;
+            message.isPublic = false;
+            message.data0 = nodeID;
+            message.data1 = gearID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Gear has been used (not compromised). Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public Message GearUsed(string text, int nodeID, int gearID)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GEAR;
+            message.subType = MessageSubType.Gear_Used;
+            message.side = Side.Resistance;
+            message.isPublic = false;
+            message.data0 = nodeID;
+            message.data1 = gearID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Gear obtained. Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public Message GearObtained(string text, int nodeID, int gearID)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GEAR;
+            message.subType = MessageSubType.Gear_Obtained;
+            message.side = Side.Resistance;
+            message.isPublic = false;
+            message.data0 = nodeID;
+            message.data1 = gearID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// actor has been recruited (can be used for both sides). Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="actorID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Message ActorRecruited(string text, int nodeID, int actorID, Side side)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (side == Side.Resistance)
+        { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Recruited;
+            message.side = side;
+            message.isPublic = false;
+            message.data0 = nodeID;
+            message.data1 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //new methods above here
 }
