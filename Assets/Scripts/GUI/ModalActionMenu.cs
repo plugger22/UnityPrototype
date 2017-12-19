@@ -32,6 +32,7 @@ public class ModalActionMenu : MonoBehaviour
     public TextMeshProUGUI button4Text;
     public TextMeshProUGUI button5Text;
     public TextMeshProUGUI button6Text;
+    
     [HideInInspector] public string tooltip1;
     [HideInInspector] public string tooltip2;
     [HideInInspector] public string tooltip3;

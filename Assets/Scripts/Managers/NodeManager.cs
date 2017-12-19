@@ -442,7 +442,6 @@ public class NodeManager : MonoBehaviour
                 ConnectionType connSecType = connection.GetSecurity();
                 int secLevel = (int)connSecType;
                 if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
-                int turnsKnown = secLevel;
                 moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.instance.colourScript.GetValueColour(secLevel), connSecType, colourEnd);
                 //
                 // - - - Gear (Movement) only if connection has a security level
@@ -485,9 +484,10 @@ public class NodeManager : MonoBehaviour
                                         else
                                         {
                                             //invisibility reduces, still above zero
+                                            moveGearDetails.ai_Delay = 4 - Mathf.Abs(gear.data - secLevel);
                                             builderDetail.Append(string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
-                                              turnsKnown, turnsKnown != 1 ? "s" : "", colourEnd));
-                                            moveGearDetails.ai_Delay = gear.data - secLevel;
+                                              moveGearDetails.ai_Delay, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd));
+                                            
                                         }
                                     }
                                     //add gear chance of compromise
@@ -507,7 +507,7 @@ public class NodeManager : MonoBehaviour
                                     EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                     {
                                         buttonTitle = string.Format("{0} Move", gear.name),
-                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7} connections", "\n", colourEffectNeutral, gear.name, colourEnd,
+                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourEffectNeutral, gear.name, colourEnd,
                                         "\n", colourGearLevel, (ConnectionType)gear.data, colourEnd),
                                         buttonTooltipMain = moveMain,
                                         buttonTooltipDetail = builderDetail.ToString(),
@@ -546,9 +546,10 @@ public class NodeManager : MonoBehaviour
                     else
                     {
                         //invisibility reduces, still above zero
+                        moveDetails.ai_Delay = secLevel;
                         moveDetail = string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
-                          turnsKnown, turnsKnown != 1 ? "s" : "", colourEnd);
-                        moveDetails.ai_Delay = turnsKnown;
+                          moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                        
                     }
                 }
                 else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourEffectGood, colourEnd); }
@@ -643,7 +644,7 @@ public class NodeManager : MonoBehaviour
                     Connection connection = GameManager.instance.dataScript.GetConnection(moveDetails.connectionID);
                     if (connection != null)
                     {
-                        string textAI = string.Format("Player spotted moving to \"{0}\", {1}, nodeID {2}",
+                        string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
                             node.NodeName, node.arc.name.ToUpper(), moveDetails.nodeID);
                         Message messageAI = GameManager.instance.messageScript.AISpotMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
                         if (messageAI != null) { GameManager.instance.dataScript.AddMessageNew(messageAI); }

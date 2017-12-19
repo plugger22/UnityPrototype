@@ -242,7 +242,7 @@ public class GearManager : MonoBehaviour
                         switch(gear.type)
                         {
                             case GearType.Movement:
-                                builderHeader.Append(string.Format("{0}{1}{2}{3} connections", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                                builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
                                 break;
                         }
                         tooltipDetails.textHeader = builderHeader.ToString();
