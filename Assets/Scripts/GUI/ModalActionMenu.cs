@@ -15,7 +15,7 @@ using gameAPI;
 public class ModalActionMenu : MonoBehaviour
 {
     public GameObject modalActionObject;
-    public GameObject modalMenu;
+    public GameObject modalMenuObject;
     public Image modalPanel;
     public Image background;
     public Image divider;
@@ -26,12 +26,12 @@ public class ModalActionMenu : MonoBehaviour
     public Button button4;
     public Button button5;
     public Button button6;
-    public TextMeshProUGUI button1Text;
-    public TextMeshProUGUI button2Text;
-    public TextMeshProUGUI button3Text;
-    public TextMeshProUGUI button4Text;
-    public TextMeshProUGUI button5Text;
-    public TextMeshProUGUI button6Text;
+    public Text button1Text;
+    public Text button2Text;
+    public Text button3Text;
+    public Text button4Text;
+    public Text button5Text;
+    public Text button6Text;
     
     [HideInInspector] public string tooltip1;
     [HideInInspector] public string tooltip2;
@@ -56,8 +56,8 @@ public class ModalActionMenu : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        canvasGroup = modalMenu.GetComponent<CanvasGroup>();
-        rectTransform = modalMenu.GetComponent<RectTransform>();
+        canvasGroup = modalMenuObject.GetComponent<CanvasGroup>();
+        rectTransform = modalMenuObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
         //register listener
@@ -106,6 +106,7 @@ public class ModalActionMenu : MonoBehaviour
     public void SetActionMenu(ModalPanelDetails details)
     {
         modalActionObject.SetActive(true);
+        modalMenuObject.SetActive(true);
         //set all states to off
         button1.gameObject.SetActive(false);
         button2.gameObject.SetActive(false);
@@ -122,7 +123,7 @@ public class ModalActionMenu : MonoBehaviour
         //There can be a max of 6 buttons (1 x target, 4 x actor actions, 1 x Cancel)
         int counter = 0;
         Button tempButton;
-        TextMeshProUGUI title;
+        Text title;
         foreach(EventButtonDetails buttonDetails in details.listOfButtonDetails)
         {
             tempButton = null;
@@ -201,7 +202,7 @@ public class ModalActionMenu : MonoBehaviour
         else
         { screenPos.x += offset; }
         //set new position
-        modalMenu.transform.position = screenPos;
+        modalMenuObject.transform.position = screenPos;
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ModalActionMenu;
         Debug.Log("UI: Open -> ModalActionMenu" + "\n");

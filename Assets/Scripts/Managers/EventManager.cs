@@ -53,7 +53,16 @@ public enum EventType
     GenericNeutraliseTeam,
     GenericGearChoice,
     GenericRecruitActorResistance,
-    GenericRecruitActorAuthority
+    GenericRecruitActorAuthority,
+    //dice UI
+    OpenDiceUI,
+    CloseDiceUI,
+    DiceIgnore,
+    DiceAuto,
+    DiceRoll,
+    DiceConfirm,
+    DiceRenownYes,
+    DiceRenownNo
 };
 
 //EventManager to send events to listeners

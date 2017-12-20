@@ -13,6 +13,7 @@ using System.Text;
 public class ModalTeamPicker : MonoBehaviour
 {
     public GameObject modalTeamObject;
+    public GameObject modalPanelObject;
     public Image modalPanel;
 
     public TextMeshProUGUI topText;
@@ -183,6 +184,7 @@ public class ModalTeamPicker : MonoBehaviour
         string textTooltip;
         GameManager.instance.Blocked(true);
         modalTeamObject.SetActive(true);
+        modalPanelObject.SetActive(true);
         //confirm button should be switched off at the start
         buttonConfirm.gameObject.SetActive(false);
         canvasGroup.alpha = 100;

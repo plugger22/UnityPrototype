@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
     [HideInInspector] public ModalTeamPicker teamPickerScript;        //Modal Team Picker window
     [HideInInspector] public ModalGenericPicker genericPickerScript;  //Modal Generic Picker window
+    [HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
 
     public float showSplashTimeout = 2.0f;
@@ -116,6 +117,7 @@ public class GameManager : MonoBehaviour
         outcomeScript = ModalOutcome.Instance();
         teamPickerScript = ModalTeamPicker.Instance();
         genericPickerScript = ModalGenericPicker.Instance();
+        diceScript = ModalDiceUI.Instance();
         alertScript = AlertUI.Instance();
         //make sure raycasts are active, eg. node tooltips
         isBlocked = false;

@@ -14,6 +14,7 @@ public class ModalGenericPicker : MonoBehaviour
 {
 
     public GameObject modalGenericObject;
+    public GameObject modalPanelObject;
     public Image modalPanel;
 
     public TextMeshProUGUI topText;
@@ -139,6 +140,8 @@ public class ModalGenericPicker : MonoBehaviour
         bool errorFlag = false;
         //set modal status
         GameManager.instance.Blocked(true);
+        //activate main panel
+        modalPanelObject.SetActive(true);
         //activate dialogue window
         modalGenericObject.SetActive(true);
         //confirm button should be switched off at the start
