@@ -61,7 +61,7 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-            if (GameManager.instance.IsBlocked() == false)
+            if (GameManager.instance.CheckIsBlocked() == false)
             {
                 //highlight current node
                 GameManager.instance.nodeScript.ToggleNodeHighlight(NodeID);
@@ -91,7 +91,7 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseExit()
     {
-        if (GameManager.instance.IsBlocked() == false)
+        if (GameManager.instance.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
             StopCoroutine("ShowTooltip");
@@ -104,7 +104,7 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseOver()
     {
-        if (GameManager.instance.IsBlocked() == false)
+        if (GameManager.instance.CheckIsBlocked() == false)
         {
             //Right click node -> Show either move options (node highlights) or Move Menu
             if (Input.GetMouseButtonDown(1) == true)

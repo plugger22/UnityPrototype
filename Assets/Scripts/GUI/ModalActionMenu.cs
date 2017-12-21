@@ -176,7 +176,7 @@ public class ModalActionMenu : MonoBehaviour
         }
 
         //block raycasts to gameobjects
-        GameManager.instance.Blocked(true);
+        GameManager.instance.SetIsBlocked(true);
 
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(details.nodePos);
@@ -215,7 +215,7 @@ public class ModalActionMenu : MonoBehaviour
     public void CloseActionMenu()
     {
         modalActionObject.SetActive(false);
-        GameManager.instance.Blocked(false);
+        GameManager.instance.SetIsBlocked(false);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
         //set game state

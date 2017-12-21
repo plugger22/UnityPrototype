@@ -675,66 +675,16 @@ public class NodeManager : MonoBehaviour
                         diceDetails.renownCost = renownCost;
                         diceDetails.topText = string.Format("{0}, ID {1} used{2}{3}{4}{5}% Chance of being compromised and lost", gear.name, gear.gearID, "\n",
                              colourEffectNeutral, diceDetails.chance, colourEnd);
+                        //as gear involved data will be needed to be passed through from this method to ProcessMoveOutcome via ProcessDiveMove
+                        PassThroughDiceData passThroughData = new PassThroughDiceData();
+                        passThroughData.nodeID = node.NodeID;
+                        passThroughData.gearID = gear.gearID;
+                        passThroughData.renownCost = renownCost;
+                        passThroughData.text = builder.ToString();
+                        passThroughData.destination = destination;
+                        diceDetails.passData = passThroughData;
                         //roll dice
                         EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails);
-                        //DiceReturnData returnData = GameManager.instance.diceScript.InitiateDiceRoller(diceDetails);
-                        if (returnData != null)
-                        {
-                            switch (returnData.outcome)
-                            {
-                                case DiceOutcome.Ignore:
-                                    //bypasses roller, accepts result, no renown intervention
-                                    if (returnData.isSuccess == true)
-                                    {
-                                        GearUsed(gear, node);
-                                    }
-                                    else
-                                    {
-                                        //bad result stands -> gear compromised
-                                        builder.Append(GearUsedAndCompromised(gear, node));
-                                    }
-                                    break;
-                                case DiceOutcome.Auto:
-                                    //bypass roller, auto spends renown to avert a bad result
-                                    if (returnData.isSuccess == true)
-                                    {
-                                        GearUsed(gear, node);
-                                    }
-                                    else
-                                    { 
-                                        //bad result  -> gear compromised but renown auto spent to negate
-                                        builder.Append(RenownUsed(gear, node, renownCost));
-                                        GearUsed(gear, node);
-                                    }
-                                    break;
-                                case DiceOutcome.Roll:
-                                    //rolls dice, if bad result has option to spend renown to negate
-                                    if (returnData.isSuccess == true)
-                                    {
-                                        GearUsed(gear, node);
-                                    }
-                                    //Fail result
-                                    else
-                                    {
-                                        if (returnData.isRenown == true)
-                                        {
-                                            //player spent renown to negate a bad result
-                                            GearUsed(gear, node);
-                                            builder.Append(RenownUsed(gear, node, renownCost));
-                                        }
-                                        else
-                                        {
-                                            //bad result stands -> gear compromised
-                                            builder.Append(GearUsedAndCompromised(gear, node));
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    Debug.LogError(string.Format("Invalid returnData.outcome \"{0}\"", returnData.outcome));
-                                    break;
-                            }
-                        }
-                        else { Debug.LogError("Invalid DiceReturnData (Null)"); }
                     }
                     else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
                 }
@@ -743,16 +693,6 @@ public class NodeManager : MonoBehaviour
                     //No gear involved, move straight to outcome
                     ProcessMoveOutcome(node, builder.ToString(), destination);
                 }
-
-                /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                outcomeDetails.textTop = "Player has moved";
-                outcomeDetails.textBottom = builder.ToString();
-                outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-                //message
-                string text = string.Format("Player has moved to {0}", destination);
-                Message message = GameManager.instance.messageScript.PlayerMove(text, moveDetails.nodeID);
-                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }*/
             }
             else
             { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }
@@ -767,10 +707,73 @@ public class NodeManager : MonoBehaviour
     /// <param name="data"></param>
     private void ProcessDiceMove(DiceReturnData data)
     {
+        //no need to check for nulls for node and gear as already checked in ProcessPlayerMove (calling method)
+        Node node = GameManager.instance.dataScript.GetNode(data.passData.nodeID);
+        Gear gear = GameManager.instance.dataScript.GetGear(data.passData.gearID);
+        StringBuilder builder = new StringBuilder();
+        builder.Append(data.passData.text);
         //process gear and renown outcome
+        if (data != null)
+        {
+            switch (data.outcome)
+            {
+                case DiceOutcome.Ignore:
+                    //bypasses roller, accepts result, no renown intervention
+                    if (data.isSuccess == true)
+                    {
+                        GearUsed(gear, node);
+                    }
+                    else
+                    {
+                        //bad result stands -> gear compromised
+                        builder.Append(GearUsedAndCompromised(gear, node));
+                    }
+                    break;
+                case DiceOutcome.Auto:
+                    //bypass roller, auto spends renown to avert a bad result
+                    if (data.isSuccess == true)
+                    {
+                        GearUsed(gear, node);
+                    }
+                    else
+                    {
+                        //bad result  -> gear compromised but renown auto spent to negate
+                        builder.Append(RenownUsed(gear, node, data.passData.renownCost));
+                        GearUsed(gear, node);
+                    }
+                    break;
+                case DiceOutcome.Roll:
+                    //rolls dice, if bad result has option to spend renown to negate
+                    if (data.isSuccess == true)
+                    {
+                        GearUsed(gear, node);
+                    }
+                    //Fail result
+                    else
+                    {
+                        if (data.isRenown == true)
+                        {
+                            //player spent renown to negate a bad result
+                            GearUsed(gear, node);
+                            builder.Append(RenownUsed(gear, node, data.passData.renownCost));
+                        }
+                        else
+                        {
+                            //bad result stands -> gear compromised
+                            builder.Append(GearUsedAndCompromised(gear, node));
+                        }
+                    }
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid returnData.outcome \"{0}\"", data.outcome));
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid DiceReturnData (Null)"); }
 
         //all done, go to outcome
-        ProcessMoveOutcome(node, textBottom, destination);
+        ProcessMoveOutcome(node, builder.ToString(), data.passData.destination);
+        
     }
 
     /// <summary>

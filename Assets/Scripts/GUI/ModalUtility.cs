@@ -82,7 +82,20 @@ namespace modalAPI
         public int chance;
         public int renownCost;
         public string topText;
+        public PassThroughDiceData passData;                    //ignore if no gear ivvolved
         
+    }
+
+    /// <summary>
+    /// used to pass through data when gear is involved in a move
+    /// </summary>
+    public class PassThroughDiceData
+    {
+        public int nodeID;             
+        public int gearID;
+        public int renownCost;
+        public string text;
+        public string destination;
     }
     
     /// <summary>
@@ -90,10 +103,11 @@ namespace modalAPI
     /// </summary>
     public class DiceReturnData
     {
-        public bool isSuccess;          //was result <= chance of Success
-        public bool isRenown;           //did player spend renown?
-        public int result;              //dice result (1d100)
-        public DiceOutcome outcome;     //option chosen by Player at start
+        public bool isSuccess;                  //was result <= chance of Success
+        public bool isRenown;                   //did player spend renown?
+        public int result;                      //dice result (1d100)
+        public DiceOutcome outcome;             //option chosen by Player at start
+        public PassThroughDiceData passData;    //ignore if no gear involved
     }
 
     //

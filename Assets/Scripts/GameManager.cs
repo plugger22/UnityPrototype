@@ -198,13 +198,13 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void Blocked(bool isBlocked)
+    public void SetIsBlocked(bool isBlocked)
     {
         this.isBlocked = isBlocked;
         Debug.Log(string.Format("GM: Blocked -> {0}{1}", isBlocked, "\n"));
     }
 
-    public bool IsBlocked()
+    public bool CheckIsBlocked()
     { return isBlocked; }
 
     /// <summary>

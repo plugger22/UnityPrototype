@@ -26,7 +26,10 @@ public class ModalDiceUI : MonoBehaviour
     private int result;
     private int chanceOfSuccess;
     private DiceOutcome outcome;
+    private DiceReturnData returnData;
+    private PassThroughDiceData passData;           //only used if gear involved, igoore otherwise
     private static ModalDiceUI modalDice;
+    
 
     private string colourDataGood;
     private string colourDataNeutral;
@@ -40,6 +43,7 @@ public class ModalDiceUI : MonoBehaviour
     private void Start()
     {
         //register listeners
+        EventManager.instance.AddListener(EventType.OpenDiceUI, OnEvent);
         EventManager.instance.AddListener(EventType.CloseDiceUI, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
@@ -121,7 +125,7 @@ public class ModalDiceUI : MonoBehaviour
     /// <returns></returns>
     private void InitiateDiceRoller(ModalDiceDetails details)
     {
-        DiceReturnData data = new DiceReturnData();
+        returnData = new DiceReturnData();
         //set defaults
         result = -1;
         outcome = DiceOutcome.Roll;
@@ -129,6 +133,7 @@ public class ModalDiceUI : MonoBehaviour
         isRenown = false;
         isDisplayResult = true;
         textMiddle.text = "";
+        passData = details.passData;
         //proceed
         if (details != null)
         {
@@ -152,6 +157,7 @@ public class ModalDiceUI : MonoBehaviour
         modalPanelObject.SetActive(true);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ModalDice;
+        GameManager.instance.SetIsBlocked(true);
         Debug.Log("UI: Open -> ModalDiceUI" + "\n");
     }
 
@@ -161,9 +167,10 @@ public class ModalDiceUI : MonoBehaviour
     private void CloseDiceUI()
     {
         modalDiceObject.SetActive(false);
-        GameManager.instance.Blocked(false);
+        GameManager.instance.SetIsBlocked(false);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
+        GameManager.instance.SetIsBlocked(false);
         Debug.Log("UI: Close -> ModalDiceUI" + "\n");
     }
 
@@ -213,6 +220,7 @@ public class ModalDiceUI : MonoBehaviour
         isDisplayResult = false;
         DiceRoll();
         CloseDiceUI();
+        ReturnDiceData();
     }
 
     /// <summary>
@@ -224,8 +232,21 @@ public class ModalDiceUI : MonoBehaviour
         isDisplayResult = false;
         DiceRoll();
         CloseDiceUI();
+        ReturnDiceData();
     }
 
+    /// <summary>
+    /// fires event that carries all dice roller & pass through data back to the relevant calling class
+    /// </summary>
+    private void ReturnDiceData()
+    {
+        returnData.result = result;
+        returnData.outcome = outcome;
+        returnData.isSuccess = isSuccess;
+        returnData.isRenown = isRenown;
+        returnData.passData = passData;
+        EventManager.instance.PostNotification(EventType.DiceReturn, this, returnData);
+    }
 
     //place methods above here
 }

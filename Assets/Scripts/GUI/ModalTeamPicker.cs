@@ -182,7 +182,7 @@ public class ModalTeamPicker : MonoBehaviour
         CanvasGroup teamCanvasGroup;
         TeamInteraction teamInteract;
         string textTooltip;
-        GameManager.instance.Blocked(true);
+        GameManager.instance.SetIsBlocked(true);
         modalTeamObject.SetActive(true);
         modalPanelObject.SetActive(true);
         //confirm button should be switched off at the start
@@ -384,7 +384,7 @@ public class ModalTeamPicker : MonoBehaviour
     private void CloseTeamPicker()
     {
         modalTeamObject.SetActive(false);
-        GameManager.instance.Blocked(false);
+        GameManager.instance.SetIsBlocked(false);
         //deselect all teams to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
         SetConfirmButton(false);
@@ -434,7 +434,7 @@ public class ModalTeamPicker : MonoBehaviour
     private void ProcessTeamChoice()
     {
         modalTeamObject.SetActive(false);
-        GameManager.instance.Blocked(false);
+        GameManager.instance.SetIsBlocked(false);
         //deselect all teams to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
         //set game state

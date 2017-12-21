@@ -101,7 +101,7 @@ public class ModalOutcome : MonoBehaviour
     public void SetModalOutcome(Side side, string textTop, string textBottom, Sprite sprite = null)
     {
         //set modal true
-        GameManager.instance.Blocked(true);
+        GameManager.instance.SetIsBlocked(true);
         //open panel at start, the modal window is already active on the panel
         modalOutcomeObject.SetActive(true);
         modalOutcomeWindow.SetActive(true);
@@ -187,7 +187,7 @@ public class ModalOutcome : MonoBehaviour
         Debug.Log("UI: Close -> ModalOutcome window" + "\n");
         modalOutcomeObject.SetActive(false);
         //set modal false
-        GameManager.instance.Blocked(false);
+        GameManager.instance.SetIsBlocked(false);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
     }
