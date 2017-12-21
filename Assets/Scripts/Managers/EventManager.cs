@@ -62,7 +62,8 @@ public enum EventType
     DiceRoll,
     DiceConfirm,
     DiceRenownYes,
-    DiceRenownNo
+    DiceRenownNo,
+    DiceReturn
 };
 
 //EventManager to send events to listeners

@@ -74,6 +74,28 @@ namespace modalAPI
         }
     }
 
+    /// <summary>
+    /// data fed to ModalDiceUI
+    /// </summary>
+    public class ModalDiceDetails
+    {
+        public int chance;
+        public int renownCost;
+        public string topText;
+        
+    }
+    
+    /// <summary>
+    /// used to return data to the originating class that called the dice roller
+    /// </summary>
+    public class DiceReturnData
+    {
+        public bool isSuccess;          //was result <= chance of Success
+        public bool isRenown;           //did player spend renown?
+        public int result;              //dice result (1d100)
+        public DiceOutcome outcome;     //option chosen by Player at start
+    }
+
     //
     // - - - Modal Generic Picker - - -
     //

@@ -363,16 +363,17 @@ public class GearManager : MonoBehaviour
     }
 
     /// <summary>
-    /// rolls dice against chance of gear being compromised. Depends on gear rarity. Returns true if so or if a problem (default true).
+    /// returns chance of gear being compromised. Depends on gear rarity. Returns '0' is a problem.
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public bool CheckIfGearCompromised(int gearID)
+    public int GetGearChanceOfCompromise(int gearID)
     {
+        int chance = 0;
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
         if (gear != null)
         {
-            int chance = 0;
+            
             //chance of compromise varies depending on gear rarity
             switch (gear.rarity)
             {
@@ -385,15 +386,13 @@ public class GearManager : MonoBehaviour
                     chance = chanceOfCompromise;
                     break;
             }
-            if (Random.Range(0, 100) <= chance) { return true; }
         }
         else
         {
             //problem. Default compromised.
             Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID));
-            return true;
         }
-        return false;
+        return chance;
     }
 
     /// <summary>

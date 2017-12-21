@@ -15,6 +15,8 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int numOfRecruits;
     [HideInInspector] public int invisibility;
 
+    [Range(1,3)] public int renownCostGear = 1;
+
     private List<int> listOfGear = new List<int>();                 //gearID's of all gear items in inventory
 
 

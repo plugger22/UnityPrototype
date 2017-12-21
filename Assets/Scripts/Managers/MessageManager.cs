@@ -370,6 +370,33 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// Player renown expended. 'dataID' refers to GearID if gear compromised.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="dataID"></param>
+    /// <returns></returns>
+    public Message RenownUsedPlayer(string text, int nodeID, int dataID)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(dataID >= 0, string.Format("Invalid dataID {0}", dataID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Renown;
+            message.side = Side.Resistance;
+            message.isPublic = false;
+            message.data0 = nodeID;
+            message.data1 = dataID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// actor has been recruited (can be used for both sides). Returns null if text invalid
     /// </summary>
     /// <param name="text"></param>

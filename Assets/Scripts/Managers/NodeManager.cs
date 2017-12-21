@@ -67,6 +67,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
+        EventManager.instance.AddListener(EventType.DiceReturn, OnEvent);
     }
 
 
@@ -121,6 +122,10 @@ public class NodeManager : MonoBehaviour
             case EventType.MoveAction:
                 ModalMoveDetails details = Param as ModalMoveDetails;
                 ProcessPlayerMove(details);
+                break;
+            case EventType.DiceReturn:
+                DiceReturnData data = Param as DiceReturnData;
+                ProcessDiceMove(data);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -622,13 +627,12 @@ public class NodeManager : MonoBehaviour
                 nodePlayer = moveDetails.nodeID;
                 //update move list
                 node.SetMoveNodes();
-                //outcome dialogue
-                ModalOutcomeDetails details = new ModalOutcomeDetails();
-                details.textTop = "Player has moved";
                 string destination = string.Format("\"{0}\", {1}, ID {2}", node.NodeName, node.arc.name.ToUpper(), node.NodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
-                //change to invisibility?
+                //
+                // - - - Invisibility - - -
+                //
                 if (moveDetails.changeInvisibility != 0)
                 {
                     //update player invisibility
@@ -656,48 +660,182 @@ public class NodeManager : MonoBehaviour
                     builder.AppendLine();
                     builder.Append(string.Format("{0}Player not spotted{1}", colourEffectGood, colourEnd));
                 }
-                //gear used?
+                //
+                // - - - Gear - - -
+                //
                 if (moveDetails.gearID > -1)
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
+                    int renownCost = GameManager.instance.playerScript.renownCostGear;
                     if (gear != null)
                     {
-                        //Gear Compromised
-                        if (GameManager.instance.gearScript.CheckIfGearCompromised(gear.gearID) == true)
+                        //chance of Gear being Compromised
+                        ModalDiceDetails diceDetails = new ModalDiceDetails();
+                        diceDetails.chance = GameManager.instance.gearScript.GetGearChanceOfCompromise(gear.gearID);
+                        diceDetails.renownCost = renownCost;
+                        diceDetails.topText = string.Format("{0}, ID {1} used{2}{3}{4}{5}% Chance of being compromised and lost", gear.name, gear.gearID, "\n",
+                             colourEffectNeutral, diceDetails.chance, colourEnd);
+                        //roll dice
+                        EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails);
+                        //DiceReturnData returnData = GameManager.instance.diceScript.InitiateDiceRoller(diceDetails);
+                        if (returnData != null)
                         {
-                            builder.AppendLine();
-                            builder.AppendLine();
-                            builder.Append(string.Format("{0}{1} has been compromised!{2}", colourEffectBad, gear.name, colourEnd));
-                            //remove gear from inventory
-                            GameManager.instance.playerScript.RemoveGear(gear.gearID);
-                            //message -> gear compromised
-                            string textMsg = string.Format("{0}, ID {1} has been comprised while moving", gear.name, gear.gearID);
-                            Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.NodeID, gear.gearID);
-                            if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
+                            switch (returnData.outcome)
+                            {
+                                case DiceOutcome.Ignore:
+                                    //bypasses roller, accepts result, no renown intervention
+                                    if (returnData.isSuccess == true)
+                                    {
+                                        GearUsed(gear, node);
+                                    }
+                                    else
+                                    {
+                                        //bad result stands -> gear compromised
+                                        builder.Append(GearUsedAndCompromised(gear, node));
+                                    }
+                                    break;
+                                case DiceOutcome.Auto:
+                                    //bypass roller, auto spends renown to avert a bad result
+                                    if (returnData.isSuccess == true)
+                                    {
+                                        GearUsed(gear, node);
+                                    }
+                                    else
+                                    { 
+                                        //bad result  -> gear compromised but renown auto spent to negate
+                                        builder.Append(RenownUsed(gear, node, renownCost));
+                                        GearUsed(gear, node);
+                                    }
+                                    break;
+                                case DiceOutcome.Roll:
+                                    //rolls dice, if bad result has option to spend renown to negate
+                                    if (returnData.isSuccess == true)
+                                    {
+                                        GearUsed(gear, node);
+                                    }
+                                    //Fail result
+                                    else
+                                    {
+                                        if (returnData.isRenown == true)
+                                        {
+                                            //player spent renown to negate a bad result
+                                            GearUsed(gear, node);
+                                            builder.Append(RenownUsed(gear, node, renownCost));
+                                        }
+                                        else
+                                        {
+                                            //bad result stands -> gear compromised
+                                            builder.Append(GearUsedAndCompromised(gear, node));
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid returnData.outcome \"{0}\"", returnData.outcome));
+                                    break;
+                            }
                         }
-                        else
-                        {
-                            //message -> gear used but not compromised
-                            string textMsg = string.Format("{0}, ID {1} has been used while moving", gear.name, gear.gearID);
-                            Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.NodeID, gear.gearID);
-                            if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
-                        }
+                        else { Debug.LogError("Invalid DiceReturnData (Null)"); }
                     }
                     else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
                 }
-                details.textBottom = builder.ToString();
-                details.sprite = GameManager.instance.outcomeScript.errorSprite;
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                else
+                {
+                    //No gear involved, move straight to outcome
+                    ProcessMoveOutcome(node, builder.ToString(), destination);
+                }
+
+                /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                outcomeDetails.textTop = "Player has moved";
+                outcomeDetails.textBottom = builder.ToString();
+                outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
                 //message
                 string text = string.Format("Player has moved to {0}", destination);
                 Message message = GameManager.instance.messageScript.PlayerMove(text, moveDetails.nodeID);
-                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }*/
             }
             else
             { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }
         }
         else
         { Debug.LogError("Invalid ModalMoveDetails (Null)"); }
+    }
+
+    /// <summary>
+    /// return event from dice roller (Move -> gear compromised or not)
+    /// </summary>
+    /// <param name="data"></param>
+    private void ProcessDiceMove(DiceReturnData data)
+    {
+        //process gear and renown outcome
+
+        //all done, go to outcome
+        ProcessMoveOutcome(node, textBottom, destination);
+    }
+
+    /// <summary>
+    /// ProcessPlayerMove -> ProcessMoveOutcome. Node checked for Null in calling procedure
+    /// </summary>
+    private void ProcessMoveOutcome(Node node, string textBottom, string destination)
+    {                
+        // Outcome
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.textTop = "Player has moved";
+        outcomeDetails.textBottom = textBottom;
+        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        //message
+        string text = string.Format("Player has moved to {0}", destination);
+        Message message = GameManager.instance.messageScript.PlayerMove(text, node.NodeID);
+        if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+    }
+
+
+    /// <summary>
+    /// submethod to handle gear comprised for ProcessPlayerMove (node and Gear not tested for null as already checked in calling method)
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <returns></returns>
+    private string GearUsedAndCompromised(Gear gear, Node node)
+    {
+        //remove gear from inventory
+        GameManager.instance.playerScript.RemoveGear(gear.gearID);
+        //message -> gear compromised
+        string textMsg = string.Format("{0}, ID {1} has been comprised while moving", gear.name, gear.gearID);
+        Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.NodeID, gear.gearID);
+        if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
+        //return text string for builder
+        return string.Format("{0}{1}{2}{3} has been compromised!{4}", "\n", "\n", colourEffectBad, gear.name, colourEnd);
+    }
+
+    /// <summary>
+    /// submethod to handle gear being used but NOT compromised (node and Gear are checked for null by the calling method)
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <param name="node"></param>
+    private void GearUsed(Gear gear, Node node)
+    {
+        //message
+        string textMsg = string.Format("{0}, ID {1} has been used while moving", gear.name, gear.gearID);
+        Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.NodeID, gear.gearID);
+        if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
+    }
+
+    /// <summary>
+    /// subMethod to handle admin for Player renown expenditure
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    private string RenownUsed(Gear gear, Node node, int amount)
+    {
+        //update player renown
+        GameManager.instance.playerScript.renown -= amount;
+        //message
+        string textMsg = string.Format("{0}, ID {1} has been compromised. Negated by {2} Renown.", gear.name, gear.gearID, amount);
+        Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.NodeID, gear.gearID);
+        if (messageRenown != null) { GameManager.instance.dataScript.AddMessageNew(messageRenown); }
+        //return text string for builder
+        return string.Format("{0}{1}{2}Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
     }
 
     //place new methods above here

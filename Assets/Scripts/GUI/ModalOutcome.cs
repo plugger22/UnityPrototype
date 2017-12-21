@@ -180,7 +180,7 @@ public class ModalOutcome : MonoBehaviour
     { return modalOutcomeObject.activeSelf; }
 
     /// <summary>
-    /// close tool tip
+    /// close window
     /// </summary>
     public void CloseModalOutcome()
     {

@@ -9,7 +9,7 @@ namespace gameAPI
     // - - - Game Manager - - -
     //
     public enum Side { Authority, Resistance, Count }
-    public enum GameState { Normal, ModalOutcome, ModalActionMenu, ModalPicker }
+    public enum GameState { Normal, ModalOutcome, ModalActionMenu, ModalPicker, ModalDice }
     public enum MetaLevel { None, City, State, Nation }
     public enum AuthorityActor { None, Superintendent, Minister, Secretary}              //different names for authority actors depending on MetaLevel
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count}    //DataManager arrayOfNodes index
@@ -55,6 +55,11 @@ namespace gameAPI
     public enum GearType { None, Infiltration, Kinetic, Hacking, Stealth, Invisibility, Movement}
 
     //
+    // - - - Dice - - -
+    //
+    public enum DiceOutcome { None, Ignore, Auto, Roll}
+
+    //
     // - - - Messages - - -
     //
     public enum MessageCategory { None, Current, Pending, Archive}
@@ -63,6 +68,7 @@ namespace gameAPI
         None,
         //Player
         Plyr_Move,
+        Plyr_Renown,
         //Team
         Team_Deploy,
         Team_Withdraw,
