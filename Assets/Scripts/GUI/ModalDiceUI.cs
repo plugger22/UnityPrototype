@@ -13,6 +13,9 @@ public class ModalDiceUI : MonoBehaviour
 {
     public GameObject modalDiceObject;
     public GameObject modalPanelObject;
+    public GameObject buttonSet_1;
+    public GameObject buttonSet_2;
+    public GameObject buttonSet_3;
     public TextMeshProUGUI textTop;
     public TextMeshProUGUI textMiddle;
     public Button buttonLeft;
@@ -50,6 +53,9 @@ public class ModalDiceUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.DiceIgnore, OnEvent);
         EventManager.instance.AddListener(EventType.DiceAuto, OnEvent);
         EventManager.instance.AddListener(EventType.DiceRoll, OnEvent);
+        EventManager.instance.AddListener(EventType.DiceConfirm, OnEvent);
+        EventManager.instance.AddListener(EventType.DiceRenownYes, OnEvent);
+        EventManager.instance.AddListener(EventType.DiceRenownNo, OnEvent);
     }
 
     /// <summary>
@@ -100,6 +106,15 @@ public class ModalDiceUI : MonoBehaviour
                 break;
             case EventType.DiceAuto:
                 DiceAuto() ;
+                break;
+            case EventType.DiceConfirm:
+                DiceConfirm();
+                break;
+            case EventType.DiceRenownYes:
+                DiceRenownYes();
+                break;
+            case EventType.DiceRenownNo:
+                DiceRenownNo();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -155,6 +170,10 @@ public class ModalDiceUI : MonoBehaviour
     {
         modalDiceObject.SetActive(true);
         modalPanelObject.SetActive(true);
+        //show first set of buttons and hide the rest
+        buttonSet_1.SetActive(true);
+        buttonSet_2.SetActive(false);
+        buttonSet_3.SetActive(false);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ModalDice;
         GameManager.instance.SetIsBlocked(true);
@@ -194,8 +213,11 @@ public class ModalDiceUI : MonoBehaviour
         }
     }
 
-
-    private int DiceRoll()
+    /// <summary>
+    /// Base roll mechanic
+    /// </summary>
+    /// <returns></returns>
+    private void ProcessRoll()
     {
         result = Random.Range(0, 100);
         if (result <= chanceOfSuccess) { isSuccess = true; }
@@ -208,31 +230,6 @@ public class ModalDiceUI : MonoBehaviour
             if (isSuccess == false) { colourResult = colourDataBad; textResult = "Fail"; }
             textMiddle.text = string.Format("{0}{1} {2}{3}", colourResult, textResult, result, colourEnd);
         }
-        return result;
-    }
-
-    /// <summary>
-    /// Ignore button pressed -> bypass the whole dice roller, result will be what it will be, no opportunity to tweak result with renown
-    /// </summary>
-    private void DiceIgnore()
-    {
-        outcome = DiceOutcome.Ignore;
-        isDisplayResult = false;
-        DiceRoll();
-        CloseDiceUI();
-        ReturnDiceData();
-    }
-
-    /// <summary>
-    /// Auto resolve -> bypass dice roller, a bad result will be automatically tweaked if there is enough renown to pay the bill
-    /// </summary>
-    private void DiceAuto()
-    {
-        outcome = DiceOutcome.Auto;
-        isDisplayResult = false;
-        DiceRoll();
-        CloseDiceUI();
-        ReturnDiceData();
     }
 
     /// <summary>
@@ -248,5 +245,86 @@ public class ModalDiceUI : MonoBehaviour
         EventManager.instance.PostNotification(EventType.DiceReturn, this, returnData);
     }
 
+    //
+    // - - - Event Methods - - -
+    //
+
+    /// <summary>
+    /// triggered by 'Roll' button being pressed in buttonSet_1
+    /// </summary>
+    private void DiceRoll()
+    {
+        outcome = DiceOutcome.Roll;
+        ProcessRoll();
+        if (isSuccess == true)
+        {
+            //successful roll, press confirm and exit
+            buttonSet_1.SetActive(false);
+            buttonSet_2.SetActive(true);
+            //update text
+
+        }
+        else
+        {
+            //failed roll, go to renown button options
+            buttonSet_1.SetActive(false);
+            buttonSet_3.SetActive(true);
+        }
+    }
+
+
+    /// <summary>
+    /// Ignore button pressed -> bypass the whole dice roller, result will be what it will be, no opportunity to tweak result with renown in buttonSet_1
+    /// </summary>
+    private void DiceIgnore()
+    {
+        outcome = DiceOutcome.Ignore;
+        isDisplayResult = false;
+        ProcessRoll();
+        CloseDiceUI();
+        ReturnDiceData();
+    }
+
+    /// <summary>
+    /// Auto resolve -> bypass dice roller, a bad result will be automatically tweaked if there is enough renown to pay the bill in buttonSet_1
+    /// </summary>
+    private void DiceAuto()
+    {
+        outcome = DiceOutcome.Auto;
+        isDisplayResult = false;
+        ProcessRoll();
+        CloseDiceUI();
+        ReturnDiceData();
+    }
+
+    /// <summary>
+    /// fires event when 'Confirm' button pressed (success roll, all done) in buttonSet_12
+    /// </summary>
+    private void DiceConfirm()
+    {
+        CloseDiceUI();
+        ReturnDiceData();
+    }
+
+    /// <summary>
+    /// fires event when 'Use Renown' button pressed (spend renown to alleviate bad outcome) in buttonSet_3
+    /// </summary>
+    private void DiceRenownYes()
+    {
+        isRenown = true;
+        CloseDiceUI();
+        ReturnDiceData();
+    }
+
+    /// <summary>
+    /// Fires event when 'Accept Fail' button is pressed (accept a bad outcome and decline to spend renown) in buttonSet_3
+    /// </summary>
+    private void DiceRenownNo()
+    {
+        isRenown = false;
+        CloseDiceUI();
+        ReturnDiceData();
+    }
+    
     //place methods above here
 }
