@@ -630,6 +630,10 @@ public class NodeManager : MonoBehaviour
                 string destination = string.Format("\"{0}\", {1}, ID {2}", node.NodeName, node.arc.name.ToUpper(), node.NodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
+                //message
+                string text = string.Format("Player has moved to {0}", destination);
+                Message message = GameManager.instance.messageScript.PlayerMove(text, node.NodeID);
+                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                 //
                 // - - - Invisibility - - -
                 //
@@ -681,7 +685,6 @@ public class NodeManager : MonoBehaviour
                         passThroughData.gearID = gear.gearID;
                         passThroughData.renownCost = renownCost;
                         passThroughData.text = builder.ToString();
-                        passThroughData.destination = destination;
                         diceDetails.passData = passThroughData;
                         //roll dice
                         EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails);
@@ -690,8 +693,9 @@ public class NodeManager : MonoBehaviour
                 }
                 else
                 {
-                    //No gear involved, move straight to outcome
-                    ProcessMoveOutcome(node, builder.ToString(), destination);
+                    //No gear involved, move straight to outcome, otherwise skip outcome if connection has no security as unnecessary
+                    if (moveDetails.changeInvisibility != 0)
+                    { ProcessMoveOutcome(node, builder.ToString()); }
                 }
             }
             else
@@ -772,14 +776,14 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid DiceReturnData (Null)"); }
 
         //all done, go to outcome
-        ProcessMoveOutcome(node, builder.ToString(), data.passData.destination);
+        ProcessMoveOutcome(node, builder.ToString());
         
     }
 
     /// <summary>
     /// ProcessPlayerMove -> ProcessMoveOutcome. Node checked for Null in calling procedure
     /// </summary>
-    private void ProcessMoveOutcome(Node node, string textBottom, string destination)
+    private void ProcessMoveOutcome(Node node, string textBottom)
     {                
         // Outcome
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
@@ -787,10 +791,6 @@ public class NodeManager : MonoBehaviour
         outcomeDetails.textBottom = textBottom;
         outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-        //message
-        string text = string.Format("Player has moved to {0}", destination);
-        Message message = GameManager.instance.messageScript.PlayerMove(text, node.NodeID);
-        if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
     }
 
 
@@ -834,11 +834,11 @@ public class NodeManager : MonoBehaviour
         //update player renown
         GameManager.instance.playerScript.renown -= amount;
         //message
-        string textMsg = string.Format("{0}, ID {1} has been compromised. Negated by {2} Renown.", gear.name, gear.gearID, amount);
+        string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
         Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.NodeID, gear.gearID);
         if (messageRenown != null) { GameManager.instance.dataScript.AddMessageNew(messageRenown); }
         //return text string for builder
-        return string.Format("{0}{1}{2}Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
+        return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
     }
 
     //place new methods above here

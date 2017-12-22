@@ -95,7 +95,6 @@ namespace modalAPI
         public int gearID;
         public int renownCost;
         public string text;
-        public string destination;
     }
     
     /// <summary>
