@@ -81,7 +81,7 @@ namespace modalAPI
     {
         public int chance;
         public int renownCost;
-        public bool isRenown;                                   //true if player renown > 0
+        public bool isEnoughRenown;                             //true if player renown > 0
         public string topText;
         public PassThroughDiceData passData;                    //ignore if no gear ivvolved
         

@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using System.Text;
 
 /// <summary>
 /// handles all game option matters
 /// </summary>
 public class OptionManager : MonoBehaviour
-{   
+{
+    //game options
+    public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
+
     //Backing fields (use underscore)
     private Side _playerSide;
     private ColourScheme _colourOption;
@@ -48,6 +52,19 @@ public class OptionManager : MonoBehaviour
     {
         EventManager.instance.RemoveEvent(EventType.ChangeSide);
         EventManager.instance.RemoveEvent(EventType.ChangeColour);
+    }
+
+    /// <summary>
+    /// Debug method
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayOptions()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" Current Option Settings{0}{1}", "\n", "\n"));
+        builder.Append(string.Format(" Side -> {0}{1}{2}", _playerSide, "\n", "\n"));
+        builder.Append(string.Format(" Auto Gear Resolution -> {0}{1}{2}", autoGearResolution, "\n", "\n"));
+        return builder.ToString();
     }
 
 

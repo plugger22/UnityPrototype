@@ -528,17 +528,11 @@ public class NodeManager : MonoBehaviour
                 //
                 // - - - Move Button (No gear used)
                 //
-
                 ModalMoveDetails moveDetails = new ModalMoveDetails();
-                /*ConnectionType connSecType = connection.GetSecurity();
-                int secLevel = (int)connSecType; 
-                if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
-                moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.instance.colourScript.GetValueColour(secLevel), connSecType, colourEnd);*/
                 //security conseqences (no gear)
                 string moveDetail = "UNKNOWN";
                 if (secLevel < 4)
                 {
-                    
                     //player loses one level of invisibility each time they traverse a security rated connection
                     adjustInvisibility = -1;
                     if (GameManager.instance.playerScript.invisibility <= 1)
@@ -554,7 +548,6 @@ public class NodeManager : MonoBehaviour
                         moveDetails.ai_Delay = secLevel;
                         moveDetail = string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
                           moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
-                        
                     }
                 }
                 else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourEffectGood, colourEnd); }
@@ -679,8 +672,8 @@ public class NodeManager : MonoBehaviour
                         diceDetails.renownCost = renownCost;
                         diceDetails.topText = string.Format("{0}, ID {1} used{2}{3}{4}{5}% Chance of being compromised and lost", gear.name, gear.gearID, "\n",
                              colourEffectNeutral, diceDetails.chance, colourEnd);
-                        if (GameManager.instance.playerScript.renown > 0) { diceDetails.isRenown = true; }
-                        else { diceDetails.isRenown = false; }
+                        if (GameManager.instance.playerScript.renown >= renownCost) { diceDetails.isEnoughRenown = true; }
+                        else { diceDetails.isEnoughRenown = false; }
                         //as gear involved data will be needed to be passed through from this method to ProcessMoveOutcome via ProcessDiveMove
                         PassThroughDiceData passThroughData = new PassThroughDiceData();
                         passThroughData.nodeID = node.NodeID;
@@ -688,8 +681,12 @@ public class NodeManager : MonoBehaviour
                         passThroughData.renownCost = renownCost;
                         passThroughData.text = builder.ToString();
                         diceDetails.passData = passThroughData;
+                        //go straight to an outcome dialogue if not enough renown and option set to ignore dice roller
+                        if (diceDetails.isEnoughRenown == false && GameManager.instance.optionScript.autoGearResolution == true)
+                        { ProcessAutoDiceMove(diceDetails); }
                         //roll dice
-                        EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails);
+                        else
+                        { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails); }
                     }
                     else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
                 }
@@ -780,6 +777,39 @@ public class NodeManager : MonoBehaviour
         //all done, go to outcome
         ProcessMoveOutcome(node, builder.ToString());
         
+    }
+
+    /// <summary>
+    /// ProcessPlayerMove -> used when gear involved but not enough renown to mitigate a bad result (optionAutoGear = true)
+    /// </summary>
+    /// <param name="details"></param>
+    private void ProcessAutoDiceMove(ModalDiceDetails details)
+    {
+        string gearResult = "";
+        //Roll
+        if (Random.Range(0, 100) > details.chance)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(details.passData.gearID);
+            if (gear != null)
+            {
+                Node node = GameManager.instance.dataScript.GetNode(details.passData.nodeID);
+                if (node != null)
+                {
+                    //remove gear and return string for outcome dialogue
+                    gearResult = GearUsedAndCompromised(gear, node);
+                }
+                else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", details.passData.nodeID)); }
+            }
+            else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", details.passData.gearID)); }
+        }
+        // Outcome
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.textTop = "Player has moved";
+        if (gearResult.Length > 0)
+        { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
+        else { outcomeDetails.textBottom = details.passData.text; }
+        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
     /// <summary>

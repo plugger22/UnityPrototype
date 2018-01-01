@@ -24,7 +24,8 @@ public class ModalDiceUI : MonoBehaviour
 
     private Image background;
     private bool isSuccess;
-    private bool isRenown;                          //true if player spent renown to avert a bad result, false otherwise
+    private bool isRenownSpent;                     //true if player spent renown to avert a bad result, false otherwise
+    private bool isEnoughRenown;                    //true if Player renown > 0
     private bool isDisplayResult;                   //if true display result of die roll
     private int result;
     private int chanceOfSuccess;
@@ -99,7 +100,7 @@ public class ModalDiceUI : MonoBehaviour
                 SetColours();
                 break;
             case EventType.DiceRoll:
-                DiceRoll((bool)Param);
+                DiceRoll();
                 break;
             case EventType.DiceIgnore:
                 DiceIgnore();
@@ -145,10 +146,11 @@ public class ModalDiceUI : MonoBehaviour
         result = -1;
         outcome = DiceOutcome.Roll;
         isSuccess = false;
-        isRenown = false;
+        isRenownSpent = false;
         isDisplayResult = true;
         textMiddle.text = "";
         passData = details.passData;
+        isEnoughRenown = details.isEnoughRenown;
         //proceed
         if (details != null)
         {
@@ -240,7 +242,7 @@ public class ModalDiceUI : MonoBehaviour
         returnData.result = result;
         returnData.outcome = outcome;
         returnData.isSuccess = isSuccess;
-        returnData.isRenown = isRenown;
+        returnData.isRenown = isRenownSpent;
         returnData.passData = passData;
         EventManager.instance.PostNotification(EventType.DiceReturn, this, returnData);
     }
@@ -252,7 +254,7 @@ public class ModalDiceUI : MonoBehaviour
     /// <summary>
     /// triggered by 'Roll' button being pressed in buttonSet_1
     /// </summary>
-    private void DiceRoll(bool isRenown)
+    private void DiceRoll()
     {
         outcome = DiceOutcome.Roll;
         ProcessRoll();
@@ -269,7 +271,7 @@ public class ModalDiceUI : MonoBehaviour
             //failed roll, go to renown button options
             buttonSet_1.SetActive(false);
             //renown button options provided player has > 0 renown
-            if (isRenown == true)
+            if (isEnoughRenown == true)
             {
                 buttonSet_2.SetActive(false);
                 buttonSet_3.SetActive(true);
@@ -322,7 +324,7 @@ public class ModalDiceUI : MonoBehaviour
     /// </summary>
     private void DiceRenownYes()
     {
-        isRenown = true;
+        isRenownSpent = true;
         CloseDiceUI();
         ReturnDiceData();
     }
@@ -332,7 +334,7 @@ public class ModalDiceUI : MonoBehaviour
     /// </summary>
     private void DiceRenownNo()
     {
-        isRenown = false;
+        isRenownSpent = false;
         CloseDiceUI();
         ReturnDiceData();
     }

@@ -183,14 +183,14 @@ public class PlayerManager : MonoBehaviour
         builder.Append(string.Format(" Renown {0}{1}", renown, "\n"));
         builder.Append(string.Format(" NumOfRecruits {0}{1}{2}", numOfRecruits, "\n", "\n"));
         builder.Append(string.Format(" Resistance Cause  {0} of {1}", rebelCauseCurrent, rebelCauseMax));
-        builder.Append(string.Format(" {0}{1}Gear{2}", "\n", "\n", "\n"));
+        builder.Append(string.Format("{0}{1} Gear{2}", "\n", "\n", "\n"));
         if (listOfGear.Count > 0)
         {
             for (int i = 0; i < listOfGear.Count; i++)
             {
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
-                { builder.Append(string.Format(" {0}, ID {1}", gear.name, gear.gearID)); }
+                { builder.Append(string.Format(" {0}, ID {1}{2}", gear.name, gear.gearID, "\n"));}
             }
         }
         else { builder.Append("No gear in inventory"); }
@@ -212,6 +212,7 @@ public class PlayerManager : MonoBehaviour
             Gear gear = GameManager.instance.dataScript.GetGear(gearID);
             if (gear != null)
             {
+                builder.AppendLine();
                 builder.AppendLine();
                 builder.Append(string.Format(" {0}", gear.name.ToUpper()));
                 builder.AppendLine();

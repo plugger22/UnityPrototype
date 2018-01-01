@@ -18,6 +18,7 @@ public class DebugGUI : MonoBehaviour
     public int offset_x;        //space between left edge of box and button
     public int offset_y;        //space between buttons
     public int box_x;
+    public int box_option;      //x coord for the options box
     public int box_y;
     public int box_width;
     public int box_height;
@@ -25,9 +26,14 @@ public class DebugGUI : MonoBehaviour
 
     private int button_width;
 
+    private string optionAutoGear;
+
     private void Awake()
     {
         button_width = box_width - (2 * offset_x);
+        box_option = box_x * 2 + box_width;
+        //option strings
+        optionAutoGear = "Auto Gear ON";
     }
 
     // Update is called once per frame
@@ -47,9 +53,16 @@ public class DebugGUI : MonoBehaviour
             // - - - Left Hand side of Screen - - -
             //
 
-            //background box
+            
             customBackground.alignment = TextAnchor.UpperCenter;
+            //background box (Data)
             GUI.Box(new Rect(box_x, box_y, box_width, box_height), string.Format("Debug Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
+            //background box (Options)
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
+
+            //
+            // - - - Data (first box)
+            //
 
             //first button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Authority Recruit"))
@@ -170,6 +183,35 @@ public class DebugGUI : MonoBehaviour
             }
 
             //
+            // - - - Options (second box)
+            //
+
+            //first button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Show Options"))
+            {
+                Debug.Log("Button -> Show Options");
+                if (debugDisplay != 12)
+                { debugDisplay = 12; }
+                else { debugDisplay = 0; }
+            }
+
+            //second button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), optionAutoGear))
+            {
+                Debug.Log("Button -> Toggle OptionAutoGear");
+                if (GameManager.instance.optionScript.autoGearResolution == true)
+                {
+                    GameManager.instance.optionScript.autoGearResolution = false;
+                    optionAutoGear = "Auto Gear ON";
+                }
+                else
+                {
+                    GameManager.instance.optionScript.autoGearResolution = true;
+                    optionAutoGear = "Auto Gear OFF";
+                }
+            }
+
+            //
             // - - - Analysis at Right Hand side of Screen - - -
             //
             if (debugDisplay > 0)
@@ -271,6 +313,14 @@ public class DebugGUI : MonoBehaviour
                             customBackground.alignment = TextAnchor.UpperLeft;
                             string analysisPools = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
                             GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysisPools, customBackground);
+                        }
+                        break;
+                    //Show Options
+                    case 12:
+                        {
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            string analysisPools = GameManager.instance.optionScript.DisplayOptions();
+                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
                         }
                         break;
 
