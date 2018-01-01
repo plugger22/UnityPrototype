@@ -679,6 +679,8 @@ public class NodeManager : MonoBehaviour
                         diceDetails.renownCost = renownCost;
                         diceDetails.topText = string.Format("{0}, ID {1} used{2}{3}{4}{5}% Chance of being compromised and lost", gear.name, gear.gearID, "\n",
                              colourEffectNeutral, diceDetails.chance, colourEnd);
+                        if (GameManager.instance.playerScript.renown > 0) { diceDetails.isRenown = true; }
+                        else { diceDetails.isRenown = false; }
                         //as gear involved data will be needed to be passed through from this method to ProcessMoveOutcome via ProcessDiveMove
                         PassThroughDiceData passThroughData = new PassThroughDiceData();
                         passThroughData.nodeID = node.NodeID;

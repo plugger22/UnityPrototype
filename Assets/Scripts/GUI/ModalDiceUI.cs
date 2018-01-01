@@ -99,13 +99,13 @@ public class ModalDiceUI : MonoBehaviour
                 SetColours();
                 break;
             case EventType.DiceRoll:
-                DiceRoll();
+                DiceRoll((bool)Param);
                 break;
             case EventType.DiceIgnore:
                 DiceIgnore();
                 break;
             case EventType.DiceAuto:
-                DiceAuto() ;
+                DiceAuto();
                 break;
             case EventType.DiceConfirm:
                 DiceConfirm();
@@ -252,7 +252,7 @@ public class ModalDiceUI : MonoBehaviour
     /// <summary>
     /// triggered by 'Roll' button being pressed in buttonSet_1
     /// </summary>
-    private void DiceRoll()
+    private void DiceRoll(bool isRenown)
     {
         outcome = DiceOutcome.Roll;
         ProcessRoll();
@@ -268,7 +268,18 @@ public class ModalDiceUI : MonoBehaviour
         {
             //failed roll, go to renown button options
             buttonSet_1.SetActive(false);
-            buttonSet_3.SetActive(true);
+            //renown button options provided player has > 0 renown
+            if (isRenown == true)
+            {
+                buttonSet_2.SetActive(false);
+                buttonSet_3.SetActive(true);
+            }
+            //no renown available, go straight to confirm
+            else
+            {
+                buttonSet_2.SetActive(true);
+                buttonSet_3.SetActive(false);
+            }
         }
     }
 
