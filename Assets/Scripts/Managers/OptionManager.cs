@@ -10,7 +10,7 @@ using System.Text;
 public class OptionManager : MonoBehaviour
 {
     //game options
-    public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
+    [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
 
     //Backing fields (use underscore)
     private Side _playerSide;

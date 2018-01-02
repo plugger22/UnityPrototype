@@ -504,7 +504,6 @@ public class NodeManager : MonoBehaviour
                                     moveGearDetails.connectionID = connection.connID;
                                     moveGearDetails.changeInvisibility = adjustInvisibility;
                                     moveGearDetails.gearID = gear.gearID;
-                                    moveGearDetails.changeGear = -1;
                                     //button target details (red for High security to match red connection security colour on map)
                                     string colourGearLevel = colourEffectNeutral;
                                     if (gear.data == 3) { colourGearLevel = colourEffectGood; }
@@ -557,7 +556,6 @@ public class NodeManager : MonoBehaviour
                 moveDetails.connectionID = connection.connID;
                 moveDetails.changeInvisibility = adjustInvisibility;
                 moveDetails.gearID = -1;
-                moveDetails.changeGear = 0;
                 //button target details
                 EventButtonDetails eventDetails = new EventButtonDetails()
                 {
@@ -670,8 +668,8 @@ public class NodeManager : MonoBehaviour
                         ModalDiceDetails diceDetails = new ModalDiceDetails();
                         diceDetails.chance = GameManager.instance.gearScript.GetGearChanceOfCompromise(gear.gearID);
                         diceDetails.renownCost = renownCost;
-                        diceDetails.topText = string.Format("{0}, ID {1} used{2}{3}{4}{5}% Chance of being compromised and lost", gear.name, gear.gearID, "\n",
-                             colourEffectNeutral, diceDetails.chance, colourEnd);
+                        diceDetails.topText = string.Format("{0}{1}{2} used to move{3}{4}{5}% Chance{6} of it being compromised and lost", colourEffectNeutral,
+                            gear.name, colourEnd, "\n", colourEffectBad, diceDetails.chance, colourEnd);
                         if (GameManager.instance.playerScript.renown >= renownCost) { diceDetails.isEnoughRenown = true; }
                         else { diceDetails.isEnoughRenown = false; }
                         //as gear involved data will be needed to be passed through from this method to ProcessMoveOutcome via ProcessDiveMove

@@ -18,9 +18,12 @@ public class ModalDiceUI : MonoBehaviour
     public GameObject buttonSet_3;
     public TextMeshProUGUI textTop;
     public TextMeshProUGUI textMiddle;
-    public Button buttonLeft;
-    public Button buttonMiddle;
-    public Button buttonRight;
+    public Button set1_buttonLeft;
+    public Button set1_buttonMiddle;
+    public Button set1_buttonRight;
+    public Button set2_buttonMiddle;
+    public Button set3_buttonLeft;
+    public Button set3_buttonRight;
 
     private Image background;
     private bool isSuccess;
@@ -33,13 +36,22 @@ public class ModalDiceUI : MonoBehaviour
     private DiceReturnData returnData;
     private PassThroughDiceData passData;           //only used if gear involved, igoore otherwise
     private static ModalDiceUI modalDice;
-    
 
+    private static GenericTooltipUI generic_1_left;
+    private static GenericTooltipUI generic_1_middle;
+    private static GenericTooltipUI generic_1_right;
+    private static GenericTooltipUI generic_2_middle;
+    private static GenericTooltipUI generic_3_left;
+    private static GenericTooltipUI generic_3_right;
+
+    private string colourResistance;
     private string colourDataGood;
     private string colourDataNeutral;
     private string colourDataBad;
+    private string colourNormal;
     private string colourEnd;
-        
+
+
 
     /// <summary>
     /// initialisation
@@ -94,7 +106,7 @@ public class ModalDiceUI : MonoBehaviour
                 CloseDiceUI();
                 break;
             case EventType.ChangeSide:
-                InitialiseDiceUI((Side)Param);
+                ChangeSides((Side)Param);
                 break;
             case EventType.ChangeColour:
                 SetColours();
@@ -128,10 +140,77 @@ public class ModalDiceUI : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourDataGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourDataNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourDataBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
+    /// <summary>
+    /// Initialise
+    /// </summary>
+    /// <param name="side"></param>
+    public void Initialise()
+    {
+        //button tooltips
+        generic_1_left = set1_buttonLeft.GetComponent<GenericTooltipUI>();
+        generic_1_middle = set1_buttonMiddle.GetComponent<GenericTooltipUI>();
+        generic_1_right = set1_buttonRight.GetComponent<GenericTooltipUI>();
+        generic_2_middle = set2_buttonMiddle.GetComponent<GenericTooltipUI>();
+        generic_3_left = set3_buttonLeft.GetComponent<GenericTooltipUI>();
+        generic_3_right = set3_buttonRight.GetComponent<GenericTooltipUI>();
+        //initilaise button tooltips -> Set 1, Left
+        if (generic_1_left != null)
+        {
+            generic_1_left.ToolTipHeader = string.Format("{0}IGNORE{1}", colourResistance, colourEnd);
+            generic_1_left.ToolTipMain = "It's not important. Let's speed this up";
+            generic_1_left.ToolTipEffect = string.Format("{0}If the roll fails there is{1}{2} NO opportunity to use Renown{3}{4} to turn it into a success{5}",
+                colourNormal, colourEnd, colourDataBad, colourEnd, colourNormal, colourEnd);
+        }
+        else { Debug.LogError("Invalid generic_1_left button IGNORE (Null)"); }
+        //set 1 -> Middle
+        if (generic_1_middle != null)
+        {
+            generic_1_middle.ToolTipHeader = string.Format("{0}AUTO{1}", colourResistance, colourEnd);
+            generic_1_middle.ToolTipMain = "Switch to Auto Pilot";
+            generic_1_middle.ToolTipEffect = string.Format("{0}If the roll fails, {1}{2}Renown is used AUTOMATICALLY{3}{4} to turn it into a success{5}",
+                colourNormal, colourEnd, colourDataNeutral, colourEnd, colourNormal, colourEnd);
+        }
+        else { Debug.LogError("Invalid generic_1_middle button AUTO (Null)"); }
+        //set 1 -> Right
+        if (generic_1_right != null)
+        {
+            generic_1_right.ToolTipHeader = string.Format("{0}ROLL{1}", colourResistance, colourEnd);
+            generic_1_right.ToolTipMain = "Luck be a Lady tonight";
+            generic_1_right.ToolTipEffect = string.Format("{0}If the roll fails {1}{2}you can CHOOSE to use Renown{3}{4} to turn it into a success{5}",
+                colourNormal, colourEnd, colourDataGood, colourEnd, colourNormal, colourEnd);
+        }
+        else { Debug.LogError("Invalid generic_1_right button ROLL (Null)"); }
+        //set 2 -> Middle
+        if (generic_2_middle != null)
+        {
+            generic_2_middle.ToolTipHeader = string.Format("{0}CONFIRM{1}", colourResistance, colourEnd);
+            generic_2_middle.ToolTipMain = "You cannot undo what's already been done";
+        }
+        else { Debug.LogError("Invalid generic_2_middle button CONFIRM (Null)"); }
+        //set 3 -> Left
+        if (generic_3_left != null)
+        {
+            generic_3_left.ToolTipHeader = string.Format("{0}USE RENOWN{1}", colourResistance, colourEnd);
+            generic_3_left.ToolTipMain = "Pull strings. Shake it up. Make things happen.";
+            generic_3_left.ToolTipEffect = string.Format("{0}Spend Renown to turn the roll into a Success{1}", colourDataNeutral, colourEnd);
+        }
+        else { Debug.LogError("Invalid generic_3_left button USE RENOWN (Null)"); }
+        //set 3 -> Right
+        if (generic_3_right != null)
+        {
+            generic_3_right.ToolTipHeader = string.Format("{0}ACCEPT FAILURE{1}", colourResistance, colourEnd);
+            generic_3_right.ToolTipMain = "It doesn't always go to plan. Adapt. Move on.";
+            generic_3_right.ToolTipEffect = string.Format("{0}Your gear will be compromised{1}", colourDataBad, colourEnd);
+        }
+        else { Debug.LogError("Invalid generic_3_right button ACCEPT FAILURE (Null)"); }
     }
 
     /// <summary>
@@ -148,6 +227,7 @@ public class ModalDiceUI : MonoBehaviour
         isSuccess = false;
         isRenownSpent = false;
         isDisplayResult = true;
+        if (details.topText.Length > 0) { textTop.text = details.topText; }
         textMiddle.text = "";
         passData = details.passData;
         isEnoughRenown = details.isEnoughRenown;
@@ -195,11 +275,13 @@ public class ModalDiceUI : MonoBehaviour
         Debug.Log("UI: Close -> ModalDiceUI" + "\n");
     }
 
+
+
     /// <summary>
-    /// set up sprites on modalDiceUI window for the appropriate side
+    /// Set up sprites on ModalDiceUI window for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    private void InitialiseDiceUI(Side side)
+    private void ChangeSides(Side side)
     {
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = modalPanelObject.GetComponent<Image>();

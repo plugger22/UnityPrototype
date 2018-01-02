@@ -161,6 +161,7 @@ public class GameManager : MonoBehaviour
         turnScript.Initialise();
         gearScript.Initialise();
         teamPickerScript.Initialise();
+        diceScript.Initialise();
         messageScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
