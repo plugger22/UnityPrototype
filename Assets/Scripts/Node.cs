@@ -171,6 +171,7 @@ public class Node : MonoBehaviour
             }
             //fade in
             float alphaCurrent;
+
             while (GameManager.instance.tooltipNodeScript.GetOpacity()< 1.0)
             {
                 alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
@@ -373,7 +374,6 @@ public class Node : MonoBehaviour
     {
         for(int i = 0; i < listOfTeams.Count; i++)
         {
-            
             if (listOfTeams[i].TeamID == teamID)
             {
                 listOfTeams.RemoveAt(i);

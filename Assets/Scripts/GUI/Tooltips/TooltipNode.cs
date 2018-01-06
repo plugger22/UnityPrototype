@@ -198,29 +198,7 @@ public class TooltipNode : MonoBehaviour
             {
                 data = arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-
                 builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(data), data, colourEnd));
-
-                /*switch (data)
-                {
-                    case 3:
-                        //good -> green
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourGood, data, colourEnd)));
-                        break;
-                    case 2:
-                        //average -> yellow
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourNeutral, data, colourEnd)));
-                        break;
-                    case 1:
-                    case 0:
-                        //bad -> red (Security runs in reverse so that level 1 security is the highest)
-                        builder.Append(string.Format(string.Format("{0}{1}{2}", colourBad, data, colourEnd)));
-                        break;
-                    default:
-                        builder.Append(data);
-                        break;
-                }*/
-
                 //idiot check to handle case of being too many stats
                 checkCounter++;
                 if (checkCounter >= 3) { break; }
