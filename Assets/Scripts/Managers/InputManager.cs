@@ -41,6 +41,7 @@ public class InputManager : MonoBehaviour
             case GameState.Normal:
                 if (Input.GetButtonDown("NewTurn") == true)
                 {
+                    //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up
                     EventManager.instance.PostNotification(EventType.EndTurn, this);
                     EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
                     EventManager.instance.PostNotification(EventType.StartTurnLate, this);

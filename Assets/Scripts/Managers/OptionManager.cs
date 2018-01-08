@@ -16,6 +16,8 @@ public class OptionManager : MonoBehaviour
     private Side _playerSide;
     private ColourScheme _colourOption;
 
+    
+
     //ColourManager.cs ColourScheme enum (eg. 0 -> normal, 1 -> colourblind)
     public ColourScheme ColourOption                             
     {
@@ -43,6 +45,8 @@ public class OptionManager : MonoBehaviour
             Debug.Log("OptionManager -> Player Side now " + _playerSide + "\n");
         }
     }
+
+
 
 
     /// <summary>

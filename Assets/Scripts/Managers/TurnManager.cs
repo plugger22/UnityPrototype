@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using gameAPI;
 
 /// <summary>
 /// handles all turn to turn related matters
@@ -8,8 +9,13 @@ using UnityEngine;
 /// </summary>
 public class TurnManager : MonoBehaviour
 {
+    [Range(1, 4)] public int actionsResistance = 2;
+    [Range(1, 4)] public int actionsAuthority = 2;
+
     [SerializeField, HideInInspector]
     private int _turn;
+    private int _actionsCurrent;                                                //cumulative actions taken by the player for the current turn
+    private int _actionsLimit;                                                  //set to the actions cap for the player's current side
 
     public int Turn
     {
@@ -21,15 +27,18 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-
-
-
+    /// <summary>
+    /// Initialisation
+    /// </summary>
     public void Initialise()
     {
+        UpdateActionsLimit(GameManager.instance.optionScript.PlayerSide);
         //event Listeners
         EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
+        EventManager.instance.AddListener(EventType.UseAction, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
 
 
@@ -52,6 +61,12 @@ public class TurnManager : MonoBehaviour
                 break;
             case EventType.StartTurnLate:
                 StartTurnLate();
+                break;
+            case EventType.UseAction:
+                UseAction();
+                break;
+            case EventType.ChangeSide:
+                ChangeSide((Side)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -83,6 +98,47 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public void EndTurn()
     {
+        _actionsCurrent = 0;
         Debug.Log("TurnManager: - - - EndTurn - - - " + "\n");
+    }
+
+
+    public void ChangeSide(Side side)
+    {
+        UpdateActionsLimit(side);
+    }
+
+    /// <summary>
+    /// sub-method to set up action limit based on player's current side
+    /// </summary>
+    /// <param name="side"></param>
+    private void UpdateActionsLimit(Side side)
+    {
+        _actionsCurrent = 0;
+        switch (side)
+        {
+            case Side.Authority: _actionsLimit = actionsAuthority; break;
+            case Side.Resistance: _actionsLimit = actionsResistance; break;
+            default: Debug.LogError(string.Format("Invalid side {0}", side)); break;
+        }
+    }
+
+    /// <summary>
+    /// call this method (via event) everytime an action is expended by the Player. Triggers new turn if action limit reached, error if exceeded
+    /// </summary>
+    private void UseAction()
+    {
+        _actionsCurrent++;
+        Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}", _actionsCurrent, _actionsLimit));
+        //exceed action limit?
+        if (_actionsCurrent > _actionsLimit)
+        { Debug.LogError("_actionsLimit exceeded by _actionsCurrent"); }
+        else if (_actionsCurrent == _actionsLimit)
+        {
+            //end of turn
+            EventManager.instance.PostNotification(EventType.EndTurn, this);
+            EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
+            EventManager.instance.PostNotification(EventType.StartTurnLate, this);
+        }
     }
 }

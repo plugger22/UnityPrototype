@@ -693,6 +693,7 @@ public class NodeManager : MonoBehaviour
                     //No gear involved, move straight to outcome, otherwise skip outcome if connection has no security as unnecessary
                     if (moveDetails.changeInvisibility != 0)
                     { ProcessMoveOutcome(node, builder.ToString()); }
+                    else { EventManager.instance.PostNotification(EventType.UseAction, this); }
                 }
             }
             else
@@ -814,13 +815,15 @@ public class NodeManager : MonoBehaviour
     /// ProcessPlayerMove -> ProcessMoveOutcome. Node checked for Null in calling procedure
     /// </summary>
     private void ProcessMoveOutcome(Node node, string textBottom)
-    {                
+    {
         // Outcome
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         outcomeDetails.textTop = "Player has moved";
         outcomeDetails.textBottom = textBottom;
         outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);        
+        //action used
+        EventManager.instance.PostNotification(EventType.UseAction, this);
     }
 
 

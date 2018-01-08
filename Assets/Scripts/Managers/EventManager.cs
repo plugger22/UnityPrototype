@@ -10,6 +10,7 @@ public enum EventType
     //Options
     ChangeColour,
     ChangeSide,
+    UseAction,
     ExitGame,
     //UI
     CloseActionMenu,
