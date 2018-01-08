@@ -13,7 +13,8 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
 {
 
     [Tooltip("Select the  event that is triggered when the button is clicked (REQUIRED)")]
-    public EventType eventType = EventType.None;
+    private EventType eventType = EventType.None;
+
     /*[Tooltip("Does the  button event return <int> data when clicked? (Optional)")]
     public bool isReturn = false;*/
 

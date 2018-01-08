@@ -52,6 +52,39 @@ public class ModalDiceUI : MonoBehaviour
     private string colourEnd;
 
 
+    private void Awake()
+    {
+        //ignore button event
+        ButtonInteraction buttonInteraction = set1_buttonLeft.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.DiceIgnore); }
+        else { Debug.LogError("Invalid buttonInteraction Ignore (Null)"); }
+        //auto button event
+        buttonInteraction = set1_buttonMiddle.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.DiceAuto); }
+        else { Debug.LogError("Invalid buttonInteraction Auto (Null)"); }
+        //roll button event
+        buttonInteraction = set1_buttonRight.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.DiceRoll); }
+        else { Debug.LogError("Invalid buttonInteraction Roll (Null)"); }
+        //confirm button event
+        buttonInteraction = set2_buttonMiddle.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.DiceConfirm); }
+        else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
+        //Use Renown button event
+        buttonInteraction = set3_buttonLeft.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.DiceRenownYes); }
+        else { Debug.LogError("Invalid buttonInteraction Use Renown (Null)"); }
+        //accept failure button event
+        buttonInteraction = set3_buttonRight.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.DiceRenownNo); }
+        else { Debug.LogError("Invalid buttonInteraction Accept Failure (Null)"); }
+    }
 
     /// <summary>
     /// initialisation

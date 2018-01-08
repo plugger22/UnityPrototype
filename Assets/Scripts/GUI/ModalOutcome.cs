@@ -41,6 +41,10 @@ public class ModalOutcome : MonoBehaviour
         canvasGroup = modalOutcomeObject.GetComponent<CanvasGroup>();
         rectTransform = modalOutcomeObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
+        ButtonInteraction buttonInteract = confirmButton.GetComponent<ButtonInteraction>();
+        if (buttonInteract != null)
+        { buttonInteract.SetEvent(EventType.CloseOutcomeWindow); }
+        else { Debug.LogError("Invalid buttonInteract (Null)"); }
         //register a listener
         EventManager.instance.AddListener(EventType.OpenOutcomeWindow, OnEvent);
         EventManager.instance.AddListener(EventType.CloseOutcomeWindow, OnEvent);

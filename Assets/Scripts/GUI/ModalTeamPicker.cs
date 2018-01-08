@@ -46,9 +46,19 @@ public class ModalTeamPicker : MonoBehaviour
     private string colourActor;
     private string colourEnd;
 
-    private void Start()
+    private void Awake()
     {
         canvasGroup = modalPanel.GetComponent<CanvasGroup>();
+        //confirm button event
+        ButtonInteraction buttonInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.ConfirmTeamChoice); }
+        else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
+        //cancel button event
+        buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.CloseTeamPicker); }
+        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
     }
 
 

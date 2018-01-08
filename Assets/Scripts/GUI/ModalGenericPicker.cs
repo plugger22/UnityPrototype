@@ -65,7 +65,16 @@ public class ModalGenericPicker : MonoBehaviour
 
     private void Awake()
     {
+        //confirm button event
         buttonInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.ConfirmGenericChoice); }
+        else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
+        //cancel button event
+        buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.CloseGenericPicker); }
+        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
     }
 
     private void Start()
