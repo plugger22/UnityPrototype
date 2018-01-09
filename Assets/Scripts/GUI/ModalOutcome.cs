@@ -33,6 +33,8 @@ public class ModalOutcome : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
 
+    private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
+
     /// <summary>
     /// initialisation
     /// </summary>
@@ -80,7 +82,8 @@ public class ModalOutcome : MonoBehaviour
         {
             case EventType.OpenOutcomeWindow:
                 ModalOutcomeDetails details = Param as ModalOutcomeDetails;
-                SetModalOutcome(details.side, details.textTop, details.textBottom, details.sprite);
+                //SetModalOutcome(details.side, details.textTop, details.textBottom, details.sprite);
+                SetModalOutcome(details);
                 break;
             case EventType.CloseOutcomeWindow:
                 CloseModalOutcome();
@@ -102,15 +105,18 @@ public class ModalOutcome : MonoBehaviour
 
    
 
-    public void SetModalOutcome(Side side, string textTop, string textBottom, Sprite sprite = null)
+    //public void SetModalOutcome(Side side, string textTop, string textBottom, Sprite sprite = null)
+    public void SetModalOutcome(ModalOutcomeDetails details)
     {
         //set modal true
         GameManager.instance.SetIsBlocked(true);
         //open panel at start, the modal window is already active on the panel
         modalOutcomeObject.SetActive(true);
         modalOutcomeWindow.SetActive(true);
+        //register action status
+        isAction = details.isAction;
         //set confirm button image and sprite states
-        switch (side)
+        switch (details.side)
         {
             case Side.Authority:
                 //set button sprites
@@ -131,7 +137,7 @@ public class ModalOutcome : MonoBehaviour
                 confirmButton.spriteState = spriteStateRebel;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", side));
+                Debug.LogError(string.Format("Invalid side \"{0}\"", details.side));
                 break;
         }
         //set transition
@@ -141,10 +147,10 @@ public class ModalOutcome : MonoBehaviour
         //SetOpacity(0f);
 
         //set up modalOutcome elements
-        outcomeText.text = textTop;
-        effectText.text = textBottom;
-        if (sprite != null)
-        { outcomeImage.sprite = sprite; }
+        outcomeText.text = details.textTop;
+        effectText.text = details.textBottom;
+        if (details.sprite != null)
+        { outcomeImage.sprite = details.sprite; }
 
         //get dimensions of dynamic tooltip
         float width = rectTransform.rect.width;
@@ -194,6 +200,9 @@ public class ModalOutcome : MonoBehaviour
         GameManager.instance.SetIsBlocked(false);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
+        //end of turn check
+        if (isAction == true)
+        { EventManager.instance.PostNotification(EventType.UseAction, this); }
     }
 
 

@@ -141,4 +141,8 @@ public class TurnManager : MonoBehaviour
             EventManager.instance.PostNotification(EventType.StartTurnLate, this);
         }
     }
+
+
+    public int GetActionsCurrent()
+    { return _actionsCurrent; }
 }

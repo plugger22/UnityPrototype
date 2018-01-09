@@ -12,6 +12,7 @@ public class EffectReturn
     public string topText { get; set; }
     public string bottomText { get; set; }
     public bool errorFlag { get; set; }
+    public bool isAction;
 }
 
 
@@ -403,6 +404,8 @@ public class EffectManager : MonoBehaviour
         effectReturn.errorFlag = false;
         effectReturn.topText = "";
         effectReturn.bottomText = "";
+        effectReturn.isAction = false;
+        
         //valid effect?
         if (effect != null)
         {
@@ -441,6 +444,7 @@ public class EffectManager : MonoBehaviour
                                 effectReturn.errorFlag = true;
                                 break;
                         }
+                        effectReturn.isAction = true;
                     }
                     else
                     {
@@ -478,6 +482,7 @@ public class EffectManager : MonoBehaviour
                                 effectReturn.errorFlag = true;
                                 break;
                         }
+                        effectReturn.isAction = true;
                     }
                     else
                     {
@@ -515,6 +520,7 @@ public class EffectManager : MonoBehaviour
                                 effectReturn.errorFlag = true;
                                 break;
                         }
+                        effectReturn.isAction = true;
                     }
                     else
                     {
@@ -555,24 +561,25 @@ public class EffectManager : MonoBehaviour
                             effectReturn.errorFlag = true;
                             break;
                     }
+                    effectReturn.isAction = true;
                     break;
                 case EffectOutcome.Recruit:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
                 case EffectOutcome.AddTracer:
-
+                    //TO DO
                     break;
                 case EffectOutcome.GetGear:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
                 case EffectOutcome.GetTargetInfo:
-
+                    //TO DO
                     break;
                 case EffectOutcome.NeutraliseTeam:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
                 case EffectOutcome.SpreadInstability:
-
+                    //TO DO
                     break;
                 case EffectOutcome.Renown:
                     if (node != null)
@@ -638,6 +645,7 @@ public class EffectManager : MonoBehaviour
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
+                    //action
                     break;
                 case EffectOutcome.ControlTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Control");

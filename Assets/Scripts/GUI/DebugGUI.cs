@@ -58,7 +58,8 @@ public class DebugGUI : MonoBehaviour
             //background box (Data)
             GUI.Box(new Rect(box_x, box_y, box_width, box_height), string.Format("Debug Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Action {1}", "\n", 
+                GameManager.instance.turnScript.GetActionsCurrent()), customBackground);
 
             //
             // - - - Data (first box)

@@ -89,6 +89,7 @@ public class ActionManager : MonoBehaviour
     public void ProcessNodeAction(ModalActionDetails details)
     {
         bool errorFlag = false;
+        bool isAction = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
@@ -139,6 +140,8 @@ public class ActionManager : MonoBehaviour
                                     builderBottom.Append(effectReturn.bottomText);
                                     //exit effect loop on error
                                     if (effectReturn.errorFlag == true) { break; }
+                                    //valid action? -> only has to be true once for an action to be valid
+                                    if (effectReturn.isAction == true) { isAction = true; }
                                 }
                                 else
                                 {
@@ -190,9 +193,13 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
             outcomeDetails.sprite = errorSprite;
-        }
+        }        
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false && isAction == true)
+        { outcomeDetails.isAction = true; }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+
     }
 
     /// <summary>

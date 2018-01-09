@@ -53,6 +53,10 @@ namespace modalAPI
         public string textTop;
         public string textBottom;
         public Sprite sprite;
+        public bool isAction;               //true if an action has been used
+
+        public ModalOutcomeDetails()
+        { isAction = false; }
     }
 
     /// <summary>
