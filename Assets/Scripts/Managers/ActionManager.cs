@@ -24,7 +24,6 @@ public class ActionManager : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
-        
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
     }
@@ -51,9 +50,6 @@ public class ActionManager : MonoBehaviour
             case EventType.TargetAction:
                 ProcessNodeTarget((int)Param);
                 break;
-            /*case EventType.RecallAction:
-                ProcessTeamRecall((int)Param);
-                break;*/
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -225,6 +221,8 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = "Target Acquition Failed";
             outcomeDetails.sprite = errorSprite;
         }
+        if (errorFlag == false)
+        { outcomeDetails.isAction = true; }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }

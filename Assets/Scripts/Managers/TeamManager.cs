@@ -130,7 +130,7 @@ public class TeamManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Start turn Early activity -> Event driven
+    /// Start turn Early activity -> Event driven. Team Management (inTransit, OnMap timers)
     /// </summary>
     private void StartTurnEarly()
     {
@@ -755,6 +755,7 @@ public void InitialiseTeams()
     /// <param name="teamID"></param>
     public void ProcessRecallTeam(GenericReturnData data)
     {
+        bool successFlag = true;
         if (data.optionID > -1)
         {
             //get currently selected node
@@ -790,6 +791,7 @@ public void InitialiseTeams()
                             //Problem occurred, team not removed
                             textTop = "Problem occured, team NOT removed";
                             textBottom = "Who did this? Speak up and step forward immediately!";
+                            successFlag = false;
                         }
                         //OUTCOME Window
                         ModalOutcomeDetails details = new ModalOutcomeDetails();
@@ -797,6 +799,8 @@ public void InitialiseTeams()
                         details.textBottom = textBottom;
                         details.sprite = sprite;
                         details.side = Side.Authority;
+                        if (successFlag == true)
+                        { details.isAction = true; }
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
@@ -815,6 +819,7 @@ public void InitialiseTeams()
     /// <param name="teamID"></param>
     public void ProcessNeutraliseTeam(GenericReturnData data)
     {
+        bool successFlag = true;
         if (data.optionID > -1)
         {
             //get currently selected node
@@ -873,6 +878,7 @@ public void InitialiseTeams()
                                 //Problem occurred, team not removed
                                 builderTop.Append("Problem occured, team NOT removed");
                                 builderBottom.Append("Who did this? Speak up and step forward immediately!");
+                                successFlag = false;
                             }
                             //OUTCOME Window
                             ModalOutcomeDetails details = new ModalOutcomeDetails();
@@ -880,6 +886,8 @@ public void InitialiseTeams()
                             details.textBottom = builderBottom.ToString();
                             details.sprite = sprite;
                             details.side = Side.Resistance;
+                            if (successFlag == true)
+                            { details.isAction = true; }
                             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }

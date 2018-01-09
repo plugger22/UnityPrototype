@@ -285,6 +285,7 @@ public class GearManager : MonoBehaviour
     /// <param name="returnDetails"></param>
     public void ProcessGearChoice(GenericReturnData data)
     {
+        bool successFlag = true;
         if (data.optionID > -1)
         {
             //get currently selected node
@@ -339,9 +340,10 @@ public class GearManager : MonoBehaviour
                             }
                             else
                             {
-                                //Problem occurred, team not removed
+                                //Problem occurred, gear not acquired
                                 builderTop.Append("Problem occured, gear NOT obtained");
                                 builderBottom.Append("Who did this? B*stard!");
+                                successFlag = false;
                             }
                             //OUTCOME Window
                             ModalOutcomeDetails details = new ModalOutcomeDetails();
@@ -349,6 +351,8 @@ public class GearManager : MonoBehaviour
                             details.textBottom = builderBottom.ToString();
                             details.sprite = sprite;
                             details.side = Side.Resistance;
+                            if (successFlag == true)
+                            { details.isAction = true; }
                             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }

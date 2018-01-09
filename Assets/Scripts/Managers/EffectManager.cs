@@ -646,6 +646,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
                     //action
+                    effectReturn.isAction = true;
                     break;
                 case EffectOutcome.ControlTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Control");
@@ -654,6 +655,7 @@ public class EffectManager : MonoBehaviour
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
+                    effectReturn.isAction = true;
                     break;
                 case EffectOutcome.DamageTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Damage");
@@ -662,6 +664,7 @@ public class EffectManager : MonoBehaviour
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
+                    effectReturn.isAction = true;
                     break;
                 case EffectOutcome.ErasureTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
@@ -670,6 +673,7 @@ public class EffectManager : MonoBehaviour
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
+                    effectReturn.isAction = true;
                     break;
                 case EffectOutcome.MediaTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Media");
@@ -678,6 +682,7 @@ public class EffectManager : MonoBehaviour
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
+                    effectReturn.isAction = true;
                     break;
                 case EffectOutcome.ProbeTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Probe");
@@ -686,6 +691,7 @@ public class EffectManager : MonoBehaviour
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
+                    effectReturn.isAction = true;
                     break;
                 case EffectOutcome.SpiderTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Spider");
@@ -694,6 +700,7 @@ public class EffectManager : MonoBehaviour
                     //return texts
                     effectReturn.topText = SetTopText(teamID);
                     effectReturn.bottomText = SetBottomText(actor);
+                    effectReturn.isAction = true;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.effectOutcome));

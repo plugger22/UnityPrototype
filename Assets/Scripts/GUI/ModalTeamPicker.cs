@@ -485,6 +485,9 @@ public class ModalTeamPicker : MonoBehaviour
             details.textBottom = "As soon as you've identified who is at fault heads will roll";
             details.sprite = errorSprite;
         }
+        //action expended if successful
+        if (successFlag == true)
+        { details.isAction = true; }
         //fire up Outcome dialogue
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }

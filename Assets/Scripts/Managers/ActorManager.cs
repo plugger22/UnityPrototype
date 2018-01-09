@@ -1017,6 +1017,8 @@ public class ActorManager : MonoBehaviour
         details.textBottom = builderBottom.ToString();
         details.sprite = sprite;
         details.side = side;
+        if (successFlag == true)
+        { details.isAction = true; }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
 
@@ -1084,6 +1086,8 @@ public class ActorManager : MonoBehaviour
         details.textBottom = builderBottom.ToString();
         details.sprite = sprite;
         details.side = side;
+        if (successFlag == true)
+        { details.isAction = true; }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
 

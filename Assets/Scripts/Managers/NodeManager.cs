@@ -821,9 +821,8 @@ public class NodeManager : MonoBehaviour
         outcomeDetails.textTop = "Player has moved";
         outcomeDetails.textBottom = textBottom;
         outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+        outcomeDetails.isAction = true;
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);        
-        //action used
-        EventManager.instance.PostNotification(EventType.UseAction, this);
     }
 
 
