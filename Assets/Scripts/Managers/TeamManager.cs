@@ -164,10 +164,15 @@ public class TeamManager : MonoBehaviour
                     //check timer 
                     if (team.Timer < 0)
                     {
+
                         //Timer expired, team automatically recalled to InTransit pool
                         Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
                         if (node != null)
                         {
+                            //Permanent Team effect activated for node
+                            if (team.Arc.isTemporaryEffect == false)
+                            { ProcessTeamEffect(team, node); }
+
                             Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
                             MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node);
                             if (actor != null)
@@ -899,6 +904,37 @@ public void InitialiseTeams()
             else { Debug.LogError("Highlighted node invalid (default '-1' value)"); }
         }
         else { Debug.LogError("Invalid TeamID (default '-1')"); }
+    }
+
+    /// <summary>
+    /// Implements PERMANENT team effects on nodes at completion of teams OnMap Timer.
+    /// Node and Team are assumed to be checked for Null by the parent method
+    /// </summary>
+    /// <param name="team"></param>
+    /// <param name="node"></param>
+    private void ProcessTeamEffect(Team team, Node node)
+    {
+        switch(team.Arc.name)
+        {
+            case "Control":
+
+                break;
+            case "Civil":
+
+                break;
+            case "Media":
+
+                break;
+            case "Damage":
+
+                break;
+            case "Spider":
+
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid team Arc name \"{0}\"", team.Arc.name));
+                break;
+        }
     }
 
     //place new method above here
