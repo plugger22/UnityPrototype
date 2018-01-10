@@ -170,8 +170,7 @@ public class TeamManager : MonoBehaviour
                         if (node != null)
                         {
                             //Permanent Team effect activated for node
-                            if (team.Arc.isTemporaryEffect == false)
-                            { ProcessTeamEffect(team, node); }
+                            ProcessTeamEffect(team, node);
 
                             Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
                             MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node);
@@ -914,21 +913,24 @@ public void InitialiseTeams()
     /// <param name="node"></param>
     private void ProcessTeamEffect(Team team, Node node)
     {
-        switch(team.Arc.name)
+        switch(team.Arc.type)
         {
-            case "Control":
+            case TeamType.Control:
 
                 break;
-            case "Civil":
+            case TeamType.Civil:
 
                 break;
-            case "Media":
+            case TeamType.Media:
 
                 break;
-            case "Damage":
+            case TeamType.Probe:
 
                 break;
-            case "Spider":
+            case TeamType.Spider:
+
+                break;
+            case TeamType.Erasure:
 
                 break;
             default:
