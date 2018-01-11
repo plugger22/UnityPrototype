@@ -257,6 +257,34 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// Team carries out it's permanent effect when auto withdrawn from node
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="teamID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Message TeamEffect(string text, int nodeID, int teamID)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.TEAM;
+            message.subType = MessageSubType.Team_Effect;
+            message.side = Side.Authority;
+            message.isPublic = true;
+            message.data0 = nodeID;
+            message.data1 = teamID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Team in neutralised by the Resitance. Returns null if text invalid
     /// </summary>
     /// <param name="text"></param>

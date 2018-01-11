@@ -74,6 +74,7 @@ namespace gameAPI
         Team_Withdraw,
         Team_AutoRecall,
         Team_Neutralise,
+        Team_Effect,
         //AI
         AI_SpotMove,
         //Gear

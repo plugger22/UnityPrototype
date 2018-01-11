@@ -13,6 +13,9 @@ public class TeamArc : ScriptableObject
     public string description;
     public TeamType type;
     public Sprite sprite;
+
+    public List<Effect> listOfEffects;
     //[Tooltip("True only if the team's effect applies while it is present at the node, eg. a TEMPORARY effect")]
     //public bool isTemporaryEffect;                  //true for any team arc whose effect only applies while team present at the node
+
 }

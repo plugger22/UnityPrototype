@@ -169,13 +169,14 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
                         if (node != null)
                         {
-                            //Permanent Team effect activated for node
-                            ProcessTeamEffect(team, node);
+
 
                             Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
                             MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node);
                             if (actor != null)
-                            {
+                            {                            
+                                //Permanent Team effect activated for node
+                                ProcessTeamEffect(team, node, actor);
                                 //message
                                 string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.NodeName, node.NodeID);
                                 Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.NodeID, team.TeamID, actor.actorID);
@@ -911,18 +912,24 @@ public void InitialiseTeams()
     /// </summary>
     /// <param name="team"></param>
     /// <param name="node"></param>
-    private void ProcessTeamEffect(Team team, Node node)
+    private void ProcessTeamEffect(Team team, Node node, Actor actor)
     {
+        List<Effect> listOfEffects = team.Arc.listOfEffects;
         switch(team.Arc.type)
         {
             case TeamType.Control:
-
-                break;
             case TeamType.Civil:
-
-                break;
             case TeamType.Media:
-
+                if (listOfEffects != null)
+                {
+                    foreach(Effect effect in listOfEffects)
+                    {
+                        GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                        string text = string.Format("{0} {1} effect: {2} at \"{3}\"", team.Arc.name, team.Name, effect.description, node.NodeName);
+                        Message message = GameManager.instance.messageScript.TeamEffect(text, node.NodeID, team.TeamID);
+                        if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                    }
+                }
                 break;
             case TeamType.Probe:
 
