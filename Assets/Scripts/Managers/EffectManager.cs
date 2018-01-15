@@ -213,11 +213,8 @@ public class EffectManager : MonoBehaviour
                                             }
                                             break;
                                         case EffectCriteria.NumTracers:
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.NumOfTracers, criteria.criteriaCompare);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "Tracers already present");
-                                            }
+                                            if (node.isTracer == true)
+                                            { BuildString(result, "Tracer already present"); }
                                             break;
                                         case EffectCriteria.TargetInfo:
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.targetID, criteria.criteriaCompare);
@@ -252,9 +249,8 @@ public class EffectManager : MonoBehaviour
                                                         { tempCommonGear.Remove(gearID); }
                                                     }
                                                 }
-                                                if (tempCommonGear.Count > 0)
-                                                { compareTip = null; }
-                                                else { BuildString(result, "No Gear available"); }
+                                                if (tempCommonGear.Count == 0)
+                                                { BuildString(result, "No Gear available"); }
                                             }
                                             else { BuildString(result, "No Gear available"); }
                                             break;
@@ -586,7 +582,7 @@ public class EffectManager : MonoBehaviour
                     {
                         if (actor != null)
                         {
-                            if (node.NodeID == GameManager.instance.nodeScript.nodePlayer)
+                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                             {
                                 //Player effect
                                 switch (effect.effectResult)
@@ -740,7 +736,7 @@ public class EffectManager : MonoBehaviour
                 return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}", 
                     colourOutcome3, team.Arc.name.ToUpper(), colourEnd, 
                     colourNormal, team.Name, operation, colourEnd,  
-                    colourOutcome2, node.arc.name.ToUpper(), colourEnd, colourNormal, node.NodeName, colourEnd);
+                    colourOutcome2, node.Arc.name.ToUpper(), colourEnd, colourNormal, node.Name, colourEnd);
             }
             else
             {

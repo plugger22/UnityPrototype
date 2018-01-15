@@ -390,7 +390,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.isLive == true)
                         {
                             //active node for actor or player at node
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true ||
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true ||
                                 nodeID == playerID)
                             {
                                 //get node action
@@ -559,11 +559,11 @@ public class ActorManager : MonoBehaviour
                             buttonTooltipMain = "The following teams can be withdrawn early",
                             buttonTooltipDetail = builder.ToString(),
                             //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.RecallTeamAction, this, node.NodeID); }
+                            action = () => { EventManager.instance.PostNotification(EventType.RecallTeamAction, this, node.nodeID); }
                         };
                         tempList.Add(recallDetails);
                     }
-                    else { Debug.LogError(string.Format("Invalid listOfTeams (Null) for Node {0} \"{1}\", ID {2}", node.arc.name, node.NodeName, node.NodeID)); }
+                    else { Debug.LogError(string.Format("Invalid listOfTeams (Null) for Node {0} \"{1}\", ID {2}", node.Arc.name, node.Name, node.nodeID)); }
                 }
 
                 //get a list pre-emptively as it's computationally expensive to do so on demand
@@ -585,7 +585,7 @@ public class ActorManager : MonoBehaviour
                             teamID = actor.arc.preferredTeam.TeamArcID;
                             tempAction = null;
                             //active node for actor
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true)
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true)
                             {
                                 //get ANY TEAM node action
                                 actionID = GameManager.instance.dataScript.GetActionID("Any Team");
@@ -800,7 +800,7 @@ public class ActorManager : MonoBehaviour
             //selection methodology varies for each side -> need to populate 'listOfPoolActors'
             if (details.side == Side.Resistance)
             {
-                if (node.NodeID == GameManager.instance.nodeScript.nodePlayer)
+                if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
                     //player at node, select from 3 x level 1 options, different from current OnMap actor types
                     listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(1, details.side));

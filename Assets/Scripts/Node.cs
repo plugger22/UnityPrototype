@@ -9,18 +9,21 @@ public class Node : MonoBehaviour
 {
     //NOTE -> LevelManager.arrayOfActiveNodes stores access data, eg. which nodes are active for which actor?
 
-    public int NodeID { get; set; }                     //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
-    public Material _Material { get; private set; }     //material renderer uses to draw node
-    public string NodeName { get; set; }                //name of node, eg. "Downtown Bronx"
-    public NodeArc arc;                                 //archetype type
+    [HideInInspector] public int nodeID;                    //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     
-    public int Stability { get; set; }                  //range 0 to 3
-    public int Support { get; set; }                    //range 0 to 3
-    public int Security { get; set; }                   //range 0 to 3
 
-    public int NumOfTracers { get; set; }
+    [HideInInspector] public string Name;                //name of node, eg. "Downtown Bronx"
+    [HideInInspector] public NodeArc Arc;                                 //archetype type
+
+    [HideInInspector] public int Stability;                  //range 0 to 3
+    [HideInInspector] public int Support;                    //range 0 to 3
+    [HideInInspector] public int Security;                   //range 0 to 3
+
+    [HideInInspector] public bool isTracer;                    //has resistance tracer?
+    [HideInInspector] public bool isSpider;                    //has authority spider?
     [HideInInspector] public int targetID;                   //unique ID, 0+, -1 indicates no target
 
+    public Material _Material { get; private set; }     //material renderer uses to draw node
 
     private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
     private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
@@ -37,7 +40,7 @@ public class Node : MonoBehaviour
     /// <param name="archetype"></param>
     public void Initialise(NodeArc archetype)
     {
-        arc = archetype;
+        Arc = archetype;
     }
 	
 	private void Awake ()
@@ -54,8 +57,6 @@ public class Node : MonoBehaviour
 
 
 
-    
-
     /// <summary>
     /// Mouse click
     /// </summary>
@@ -64,7 +65,7 @@ public class Node : MonoBehaviour
             if (GameManager.instance.CheckIsBlocked() == false)
             {
                 //highlight current node
-                GameManager.instance.nodeScript.ToggleNodeHighlight(NodeID);
+                GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
                 //exit any tooltip
                 if (onMouseFlag == true)
                 {
@@ -75,11 +76,11 @@ public class Node : MonoBehaviour
                 //Action Menu
                 ModalPanelDetails details = new ModalPanelDetails()
                 {
-                    nodeID = NodeID,
-                    nodeName = this.NodeName,
-                    nodeDetails = string.Format("{0} ID {1}", arc.name, NodeID),
+                    nodeID = nodeID,
+                    nodeName = this.Name,
+                    nodeDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
                     nodePos = transform.position,
-                    listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(NodeID)
+                    listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(nodeID)
                 };
                 //activate menu
                 GameManager.instance.actionMenuScript.SetActionMenu(details);
@@ -117,8 +118,8 @@ public class Node : MonoBehaviour
                     GameManager.instance.tooltipNodeScript.CloseTooltip();
                 }
                 //Create a Move Menu at the node
-                if (GameManager.instance.dataScript.CheckValidMoveNode(NodeID) == true)
-                { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, NodeID); }
+                if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
+                { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID); }
                 //highlight all possible move options
                 else
                 { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move); }
@@ -159,8 +160,8 @@ public class Node : MonoBehaviour
                 { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
                 //Transform transform = GetComponent<Transform>();
                 GameManager.instance.tooltipNodeScript.SetTooltip(
-                    NodeName,
-                    string.Format("{0} ID {1}", arc.name, NodeID),
+                    Name,
+                    string.Format("{0} ID {1}", Arc.name, nodeID),
                     activeList,
                     new int[] { Stability, Support, Security },
                     teamList,
@@ -239,7 +240,7 @@ public class Node : MonoBehaviour
     {
         List<int> listOfNodeID = new List<int>();
         foreach (Node node in listOfMoves)
-        { listOfNodeID.Add(node.NodeID); }
+        { listOfNodeID.Add(node.nodeID); }
         if (listOfNodeID.Count > 0)
         { GameManager.instance.dataScript.UpdateMoveNodes(listOfNodeID); }
         else { Debug.LogError("listOfMoves has no records, listOfNodeID has no records -> MoveNodes not updated"); }
@@ -279,11 +280,11 @@ public class Node : MonoBehaviour
             {
                 node1 = connTemp.GetNode1();
                 node2 = connTemp.GetNode2();
-                if (NodeID == node1)
+                if (this.nodeID == node1)
                 {
                     if (nodeID == node2) { connection = connTemp; }
                 }
-                else if (NodeID == node2)
+                else if (this.nodeID == node2)
                 {
                     if (nodeID == node1) { connection = connTemp; }
                 }
@@ -305,7 +306,7 @@ public class Node : MonoBehaviour
         Side side = GameManager.instance.optionScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {
-            if (GameManager.instance.levelScript.CheckNodeActive(NodeID, side, i) == true)
+            if (GameManager.instance.levelScript.CheckNodeActive(nodeID, side, i) == true)
             {
                 tempList.Add(GameManager.instance.dataScript.GetCurrentActorType(i, side));
             }
@@ -345,7 +346,7 @@ public class Node : MonoBehaviour
                         {
                             //already a similar team present -> no go
                             Debug.LogWarning(string.Format("{0} Team NOT added to node {1}, ID {2} as already a similar team present{3}", 
-                                team.Arc.name, NodeName, NodeID, "\n"));
+                                team.Arc.name, Name, nodeID, "\n"));
                             return false;
                         }
                     }
@@ -353,16 +354,16 @@ public class Node : MonoBehaviour
                 //Add team
                 listOfTeams.Add(team);
                 //initialise Team data
-                team.NodeID = NodeID;
+                team.NodeID = nodeID;
                 team.ActorSlotID = actorID;
                 team.Pool = TeamPool.OnMap;
                 team.Timer = GameManager.instance.teamScript.deployTime;
-                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, NodeName, NodeID, "\n"));
+                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, Name, nodeID, "\n"));
                 return true;
             }
-            else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", NodeName, NodeID, "\n")); }
+            else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", Name, nodeID, "\n")); }
         }
-        else { Debug.LogError(string.Format("Invalid team (null) for Node {0}, ID {1}{2}", NodeName, NodeID, "\n")); }
+        else { Debug.LogError(string.Format("Invalid team (null) for Node {0}, ID {1}{2}", Name, nodeID, "\n")); }
         return false;
     }
 
@@ -377,7 +378,7 @@ public class Node : MonoBehaviour
             if (listOfTeams[i].TeamID == teamID)
             {
                 listOfTeams.RemoveAt(i);
-                Debug.Log(string.Format("TeamID {0} removed from Node ID {1}", teamID, NodeID));
+                Debug.Log(string.Format("TeamID {0} removed from Node ID {1}", teamID, nodeID));
                 return true;
             }
         }

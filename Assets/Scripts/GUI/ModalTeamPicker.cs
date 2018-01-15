@@ -208,7 +208,7 @@ public class ModalTeamPicker : MonoBehaviour
             teamActorSlotID = details.ActorSlotID;
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, Side.Authority);
             int numTeams = node.CheckNumOfTeams();
-            builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.arc.name.ToUpper(), node.NodeName, numTeams, 
+            builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name.ToUpper(), node.Name, numTeams, 
                 numTeams != 1 ? "s" : "", colourEnd));
             //teams at node
             if (numTeams > 0)

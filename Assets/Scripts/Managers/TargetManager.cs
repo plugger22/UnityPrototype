@@ -149,7 +149,7 @@ public class TargetManager : MonoBehaviour
                         node.targetID = target.TargetID;
                         counter++;
                         Debug.Log(string.Format("TargetManager: Node ID {0}, type \"{1}\", assigned Target ID {2}, \"{3}\"{4}",
-                            node.NodeID, node.arc.name, target.TargetID, target.name, "\n"));
+                            node.nodeID, node.Arc.name, target.TargetID, target.name, "\n"));
                         //reset target status
                         Target dictTarget = GameManager.instance.dataScript.GetTarget(target.TargetID);
                         dictTarget.TargetStatus = status;
@@ -171,7 +171,7 @@ public class TargetManager : MonoBehaviour
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsLive, totalLive);
                                 GameManager.instance.dataScript.AddLiveTarget(target);
                                 //assign nodeID to target
-                                target.NodeID = node.NodeID;
+                                target.NodeID = node.nodeID;
                                 break;
                             default:
                                 Debug.LogError(string.Format("Invalid status \"{0}\"{1}", status, "\n"));
@@ -331,7 +331,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.ActorAndGear:
                             //player or Active Actor?
-                            if (GameManager.instance.nodeScript.nodePlayer == node.NodeID)
+                            if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
                             {
                                 //Player at node -> active actor not applicable
                                 if (target.actorArc != null)
@@ -361,7 +361,7 @@ public class TargetManager : MonoBehaviour
                                     if (slotID > -1)
                                     {
                                         //check if node is active for actor
-                                        if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, slotID) == true)
+                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, slotID) == true)
                                         {
                                             //actor present and available
                                             tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
@@ -464,7 +464,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.ActorAndGear:
                             //player or Active Actor?
-                            if (GameManager.instance.nodeScript.nodePlayer == node.NodeID)
+                            if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
                             {
                                 //player has special gear?
                                 if (target.gearType != GearType.None)
@@ -487,7 +487,7 @@ public class TargetManager : MonoBehaviour
                                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID);
                                     if (slotID > -1)
                                     {
-                                        if (GameManager.instance.levelScript.CheckNodeActive(node.NodeID, GameManager.instance.optionScript.PlayerSide, slotID) == true)
+                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, slotID) == true)
                                         {
                                             //actor present and available
                                             tally += actorEffect;

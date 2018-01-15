@@ -436,8 +436,8 @@ public class NodeManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.NodeName, colourEnd, "\n",
-                colourDefault, node.arc.name.ToUpper(), node.NodeID, colourEnd);
+            string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.Name, colourEnd, "\n",
+                colourDefault, node.Arc.name.ToUpper(), node.nodeID, colourEnd);
             string moveMain = "UNKNOWN";
             int adjustInvisibility = 0;
             //Get Connection (between new node and Player's current location)
@@ -593,8 +593,8 @@ public class NodeManager : MonoBehaviour
         ModalPanelDetails details = new ModalPanelDetails()
         {
             nodeID = nodeID,
-            nodeName = node.NodeName,
-            nodeDetails = string.Format("{0} ID {1}", node.arc.name, node.NodeID),
+            nodeName = node.Name,
+            nodeDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
             nodePos = node.transform.position,
             listOfButtonDetails = tempList
         };
@@ -618,12 +618,12 @@ public class NodeManager : MonoBehaviour
                 nodePlayer = moveDetails.nodeID;
                 //update move list
                 node.SetMoveNodes();
-                string destination = string.Format("\"{0}\", {1}, ID {2}", node.NodeName, node.arc.name.ToUpper(), node.NodeID);
+                string destination = string.Format("\"{0}\", {1}, ID {2}", node.Name, node.Arc.name.ToUpper(), node.nodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
                 //message
                 string text = string.Format("Player has moved to {0}", destination);
-                Message message = GameManager.instance.messageScript.PlayerMove(text, node.NodeID);
+                Message message = GameManager.instance.messageScript.PlayerMove(text, node.nodeID);
                 if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                 //
                 // - - - Invisibility - - -
@@ -644,7 +644,7 @@ public class NodeManager : MonoBehaviour
                     if (connection != null)
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
-                            node.NodeName, node.arc.name.ToUpper(), moveDetails.nodeID);
+                            node.Name, node.Arc.name.ToUpper(), moveDetails.nodeID);
                         Message messageAI = GameManager.instance.messageScript.AISpotMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
                         if (messageAI != null) { GameManager.instance.dataScript.AddMessageNew(messageAI); }
                     }
@@ -674,7 +674,7 @@ public class NodeManager : MonoBehaviour
                         else { diceDetails.isEnoughRenown = false; }
                         //as gear involved data will be needed to be passed through from this method to ProcessMoveOutcome via ProcessDiveMove
                         PassThroughDiceData passThroughData = new PassThroughDiceData();
-                        passThroughData.nodeID = node.NodeID;
+                        passThroughData.nodeID = node.nodeID;
                         passThroughData.gearID = gear.gearID;
                         passThroughData.renownCost = renownCost;
                         passThroughData.text = builder.ToString();
@@ -837,7 +837,7 @@ public class NodeManager : MonoBehaviour
         GameManager.instance.playerScript.RemoveGear(gear.gearID);
         //message -> gear compromised
         string textMsg = string.Format("{0}, ID {1} has been comprised while moving", gear.name, gear.gearID);
-        Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.NodeID, gear.gearID);
+        Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.nodeID, gear.gearID);
         if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
         //return text string for builder
         return string.Format("{0}{1}{2}{3} has been compromised!{4}", "\n", "\n", colourEffectBad, gear.name, colourEnd);
@@ -852,7 +852,7 @@ public class NodeManager : MonoBehaviour
     {
         //message
         string textMsg = string.Format("{0}, ID {1} has been used while moving", gear.name, gear.gearID);
-        Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.NodeID, gear.gearID);
+        Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
         if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
     }
 
@@ -867,7 +867,7 @@ public class NodeManager : MonoBehaviour
         GameManager.instance.playerScript.renown -= amount;
         //message
         string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
-        Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.NodeID, gear.gearID);
+        Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
         if (messageRenown != null) { GameManager.instance.dataScript.AddMessageNew(messageRenown); }
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);

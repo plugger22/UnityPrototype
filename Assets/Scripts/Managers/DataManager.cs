@@ -394,7 +394,7 @@ public class DataManager : MonoBehaviour
         foreach(var nodeObj in dictOfNodeObjects)
         {
             Node node = nodeObj.Value.GetComponent<Node>();
-            listOfNodesByType[node.arc.NodeArcID].Add(node);
+            listOfNodesByType[node.Arc.NodeArcID].Add(node);
         }
         //
         // - - - Nodes - - -
@@ -407,11 +407,11 @@ public class DataManager : MonoBehaviour
             {
                 //add to dictionary
                 try
-                { dictOfNodes.Add(node.NodeID, node); counter++; }
+                { dictOfNodes.Add(node.nodeID, node); counter++; }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Node (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.NodeID, node.name)); }
+                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.Name)); }
             }
             Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
         }

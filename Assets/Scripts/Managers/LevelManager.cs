@@ -126,13 +126,13 @@ public class LevelManager : MonoBehaviour
                 instance.transform.SetParent(nodeHolder);
                 //assign nodeID
                 nodeTemp = instance.GetComponent<Node>();
-                nodeTemp.NodeID = GameManager.instance.nodeScript.nodeCounter++;
+                nodeTemp.nodeID = GameManager.instance.nodeScript.nodeCounter++;
                 //add to node list & add to coord list for lookups
                 listOfNodeObjects.Add(instance);
                 listOfNodes.Add(nodeTemp);
                 listOfCoordinates.Add(randomPos);
                 //add to dictionary of Nodes
-                GameManager.instance.dataScript.AddNodeObject(nodeTemp.NodeID, instance);
+                GameManager.instance.dataScript.AddNodeObject(nodeTemp.nodeID, instance);
             }
         }
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
@@ -651,13 +651,13 @@ public class LevelManager : MonoBehaviour
             Node node = obj.GetComponent<Node>();
             int numNodes = node.GetNumOfNeighbours();
             //node name
-            node.NodeName = "Placeholder";
+            node.Name = "Placeholder";
             //get random node Arc from appropriate list
-            node.arc = GameManager.instance.dataScript.GetRandomNodeArc(numNodes);
+            node.Arc = GameManager.instance.dataScript.GetRandomNodeArc(numNodes);
             //provide base level stats 
-            node.Stability = node.arc.Stability;
-            node.Support = node.arc.Support;
-            node.Security = node.arc.Security;
+            node.Stability = node.Arc.Stability;
+            node.Support = node.Arc.Support;
+            node.Security = node.Arc.Security;
             //keep within range of 0 to 3
             node.Stability = node.Stability > 3 ? 3 : node.Stability;
             node.Stability = node.Stability < 0 ? 0 : node.Stability;
@@ -668,10 +668,10 @@ public class LevelManager : MonoBehaviour
             //target -> none
             node.targetID = -1;
             //keep a tally of how many of each type have been generated
-            index = node.arc.NodeArcID;
+            index = node.Arc.NodeArcID;
             if (index < numRecords)
             { arrayOfNodeTypeTotals[index]++; }
-            else { Debug.LogError(string.Format("Number of NodeArcs exceeded by nodeArcID {0} for Node {1}", index, node.arc.name)); }
+            else { Debug.LogError(string.Format("Number of NodeArcs exceeded by nodeArcID {0} for Node {1}", index, node.Arc.name)); }
         }
         //Display stats
         string name;
@@ -760,7 +760,7 @@ public class LevelManager : MonoBehaviour
                     {
                         Node node = listOfNodeObjects[nodeIndex].GetComponent<Node>();
                         //node active?
-                        if (Random.Range(0, 100) < arrayOfArcs[node.arc.NodeArcID])
+                        if (Random.Range(0, 100) < arrayOfArcs[node.Arc.NodeArcID])
                         {
                             counter++;
                             arrayOfActiveNodes[nodeIndex, (int)side, actorIndex] = true;
@@ -786,7 +786,7 @@ public class LevelManager : MonoBehaviour
                                 if (arrayOfActiveNodes[nodeIndex, (int)side, actorIndex] == false)
                                 {
                                     //chance of node being active (increase the odds of this happening)
-                                    if ((Random.Range(0, 100) - modifier) < arrayOfArcs[node.arc.NodeArcID])
+                                    if ((Random.Range(0, 100) - modifier) < arrayOfArcs[node.Arc.NodeArcID])
                                     {
                                         counter++;
                                         arrayOfActiveNodes[nodeIndex, (int)side, actorIndex] = true;

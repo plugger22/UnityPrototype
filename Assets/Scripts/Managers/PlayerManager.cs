@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
         if (node != null)
         {
-            nodeID = node.NodeID;
+            nodeID = node.nodeID;
             //initialise move list
             node.SetMoveNodes();
         }
@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         rebelCauseMax = 10;
         rebelCauseCurrent = 0;
         //message
-        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.NodeName, node.arc.name.ToUpper(), node.NodeID);
+        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.Name, node.Arc.name.ToUpper(), node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
         if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
     }
