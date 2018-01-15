@@ -96,6 +96,7 @@ public class NodeManager : MonoBehaviour
                         RedrawNodes();
                         break;
                     case NodeUI.ShowTargets:
+                    case NodeUI.ShowSpiders:
                     case NodeUI.Move:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
@@ -255,6 +256,30 @@ public class NodeManager : MonoBehaviour
                 else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", nodePlayer)); }
                 break;
 
+            //show all nodes containng a spider
+            case NodeUI.ShowSpiders:
+                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfNodes != null)
+                {
+                    int count = 0;
+                    foreach(var node in dictOfNodes)
+                    {
+                        if (node.Value.isSpider == true)
+                        {
+                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                            node.Value.SetMaterial(nodeMaterial);
+                            count++;
+                        }
+                    }
+                    if (count > 0)
+                    {
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, count, colourEnd,
+                            colourHighlight, "Spider", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
+                    }
+                }
+                else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+                break;
+
             //show specific NodeArcTypes
             case NodeUI.NodeArc0: data = 0; nodeTypeFlag = true; break;
             case NodeUI.NodeArc1: data = 1; nodeTypeFlag = true; break;
@@ -286,10 +311,10 @@ public class NodeManager : MonoBehaviour
                         {
                             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
                             node.SetMaterial(nodeMaterial);
-                            displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, nodeList.Count, colourEnd, 
-                                colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
                         }
                     }
+                    displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, nodeList.Count, colourEnd, 
+                    colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
                 }
                 else
                 {
