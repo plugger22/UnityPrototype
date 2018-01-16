@@ -106,11 +106,11 @@ namespace gameAPI
         NodeStability, NodeSecurity, NodeSupport,
         Recruit, NeutraliseTeam, AddTracer, GetGear, GetTargetInfo, SpreadInstability,
         RebelCause,
+        Invisibility,
         //both
         Renown,
         //authority
-        AnyTeam,
-        CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam
+        AnyTeam, CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam
     }
 
     //

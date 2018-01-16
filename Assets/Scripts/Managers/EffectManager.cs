@@ -601,6 +601,61 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.SpreadInstability:
                     //TO DO
                     break;
+                case EffectOutcome.Invisibility:
+                    //raise/lower invisibility of actor or Player
+                    if (node != null)
+                    {
+                        if (actor != null)
+                        {
+                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            {
+                                //Player effect
+                                switch (effect.effectResult)
+                                {
+                                    case Result.Add:
+                                        if (GameManager.instance.playerScript.invisibility < 3)
+                                        { GameManager.instance.playerScript.invisibility++; }
+                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome1, effect.description,
+                                            GameManager.instance.playerScript.invisibility, colourEnd);
+                                        break;
+                                    case Result.Subtract:
+                                        if (GameManager.instance.playerScript.invisibility > 0)
+                                        { GameManager.instance.playerScript.invisibility--; }
+                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome2, effect.description, 
+                                            actor.datapoint2, colourEnd);
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                //Actor effect
+                                switch (effect.effectResult)
+                                {
+                                    case Result.Add:
+                                        if (actor.datapoint2 < 3)
+                                        { actor.datapoint2++; }
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.actorName, effect.description, colourEnd);
+                                        break;
+                                    case Result.Subtract:
+                                        if (actor.datapoint2 > 0)
+                                        { actor.datapoint2--; }
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                            effectReturn.errorFlag = true;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        effectReturn.errorFlag = true;
+                    }
+                    break;
                 case EffectOutcome.Renown:
                     if (node != null)
                     {
@@ -613,12 +668,14 @@ public class EffectManager : MonoBehaviour
                                 {
                                     case Result.Add:
                                         GameManager.instance.playerScript.renown++;
-                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome1, effect.description, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome1, effect.description, 
+                                            GameManager.instance.playerScript.renown, colourEnd);
                                         break;
                                     case Result.Subtract:
                                         if (GameManager.instance.playerScript.renown >= effect.effectValue)
                                         { GameManager.instance.playerScript.renown -= effect.effectValue; }
-                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome2, effect.description, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome2, effect.description,
+                                            GameManager.instance.playerScript.renown, colourEnd);
                                         break;
                                 }
                             }

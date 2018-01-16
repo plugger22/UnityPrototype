@@ -368,6 +368,19 @@ public class Node : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Remove spider from node
+    /// </summary>
+    public void RemoveSpider()
+    {
+        if (isSpider == true)
+        {
+            isSpider = false;
+            isSpiderKnown = false;
+            Debug.Log(string.Format("Spider Removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n"));
+        }
+    }
+
     //
     // - - - Teams - - -
     //
