@@ -411,7 +411,7 @@ public class DataManager : MonoBehaviour
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Node (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.Name)); }
+                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.nodeName)); }
             }
             Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
         }

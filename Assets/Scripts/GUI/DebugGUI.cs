@@ -183,6 +183,17 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //fourteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Remove Tracer"))
+            {
+                Debug.Log(string.Format("Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n"));
+                if (GameManager.instance.optionScript.PlayerSide == Side.Resistance)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    if (node != null) { node.RemoveTracer(); } else { Debug.LogError("Invalid current Player node (Null)"); }
+                }
+            }
+
             //
             // - - - Options (second box)
             //
@@ -217,114 +228,92 @@ public class DebugGUI : MonoBehaviour
             //
             if (debugDisplay > 0)
             {
+                string analysis;
                 switch (debugDisplay)
                 {
                     //general analysis of nodes and actors
                     case 1:
                         //graph data, far right
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        string analysisNodes = GameManager.instance.levelScript.GetGraphAnalysis();
-                        GUI.Box(new Rect(Screen.width - 115, 10, 110, 200), analysisNodes, customBackground);
+                        analysis = GameManager.instance.levelScript.GetGraphAnalysis();
+                        GUI.Box(new Rect(Screen.width - 115, 10, 110, 200), analysis, customBackground);
 
                         //Actor data, middle right
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysisNodes = GameManager.instance.levelScript.GetActorAnalysis(GameManager.instance.optionScript.PlayerSide);
-                        GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysisNodes, customBackground);
+                        analysis = GameManager.instance.levelScript.GetActorAnalysis(GameManager.instance.optionScript.PlayerSide);
+                        GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysis, customBackground);
 
                         // Node Type data, near centre right
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysisNodes = GameManager.instance.levelScript.GetNodeAnalysis();
-                        GUI.Box(new Rect(Screen.width - 485, 10, 150, 200), analysisNodes, customBackground);
+                        analysis = GameManager.instance.levelScript.GetNodeAnalysis();
+                        GUI.Box(new Rect(Screen.width - 485, 10, 150, 200), analysis, customBackground);
                         break;
                     //team pool analysis
                     case 2:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.teamScript.GetTeamAnalysis();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.teamScript.GetTeamAnalysis();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                         break;
                     //teams
                     case 3:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisTeams = GameManager.instance.teamScript.GetIndividualTeams();
-                            GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysisTeams, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.teamScript.GetIndividualTeams();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);
                         break;
                     //actor Teams
                     case 4:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisActors = GameManager.instance.teamScript.GetTeamActorAnalysis();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysisActors, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.teamScript.GetTeamActorAnalysis();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);
                         break;
                     //player's gear
                     case 5:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisActors = GameManager.instance.playerScript.DisplayGear();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 400), analysisActors, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.playerScript.DisplayGear();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 400), analysis, customBackground);
                         break;
                     //actor Pools
                     case 6:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.actorScript.DisplayPools();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 900), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.actorScript.DisplayPools();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 900), analysis, customBackground);
                         break;
                     //Reserve Lists
                     case 7:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.dataScript.DisplayReserveLists();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplayReserveLists();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                         break;
                     //Player stats
                     case 8:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.playerScript.DisplayPlayerStats();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.playerScript.DisplayPlayerStats();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                         break;
                     //Pending Messages
                     case 9:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Pending);
-                            GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Pending);
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;
                     //Archive Messages
                     case 10:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Archive);
-                            GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Archive);
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;
                     //Current Messages
                     case 11:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
-                            GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysis, customBackground);
                         break;
                     //Show Options
                     case 12:
-                        {
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            string analysisPools = GameManager.instance.optionScript.DisplayOptions();
-                            GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysisPools, customBackground);
-                        }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.optionScript.DisplayOptions();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                         break;
-
                 }
             }
             

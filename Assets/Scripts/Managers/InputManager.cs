@@ -50,7 +50,16 @@ public class InputManager : MonoBehaviour
                 if (Input.GetButtonDown("ShowTargets") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets);
-                    //EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowSpiders);
+                    return;
+                }
+                if (Input.GetButtonDown("ShowSpiders") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowSpiders);
+                    return;
+                }
+                if (Input.GetButtonDown("ShowTracers") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTracers);
                     return;
                 }
                 //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9

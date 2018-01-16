@@ -563,7 +563,7 @@ public class ActorManager : MonoBehaviour
                         };
                         tempList.Add(recallDetails);
                     }
-                    else { Debug.LogError(string.Format("Invalid listOfTeams (Null) for Node {0} \"{1}\", ID {2}", node.Arc.name, node.Name, node.nodeID)); }
+                    else { Debug.LogError(string.Format("Invalid listOfTeams (Null) for Node {0} \"{1}\", ID {2}", node.Arc.name, node.nodeName, node.nodeID)); }
                 }
 
                 //get a list pre-emptively as it's computationally expensive to do so on demand

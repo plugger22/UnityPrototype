@@ -95,9 +95,10 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.Redraw:
                         RedrawNodes();
                         break;
+                    case NodeUI.Move:
                     case NodeUI.ShowTargets:
                     case NodeUI.ShowSpiders:
-                    case NodeUI.Move:
+                    case NodeUI.ShowTracers:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -228,7 +229,7 @@ public class NodeManager : MonoBehaviour
                 Node nodeRef = GameManager.instance.dataScript.GetNode(nodePlayer);
                 if (nodeRef != null)
                 {
-                    List<Node> nodeList = nodeRef.GetMoveNodes();
+                    List<Node> nodeList = nodeRef.GetNeighbouringNodes();
                     if (nodeList != null)
                     {
                         NodeArc nodeArc = GameManager.instance.dataScript.GetNodeArc(data);
@@ -258,17 +259,34 @@ public class NodeManager : MonoBehaviour
 
             //show all nodes containng a spider
             case NodeUI.ShowSpiders:
-                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
-                if (dictOfNodes != null)
+                Dictionary<int, Node> dictOfSpiderNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfSpiderNodes != null)
                 {
                     int count = 0;
-                    foreach(var node in dictOfNodes)
+                    foreach(var node in dictOfSpiderNodes)
                     {
                         if (node.Value.isSpider == true)
                         {
                             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
-                            node.Value.SetMaterial(nodeMaterial);
-                            count++;
+                            //visibility depends on side
+                            switch (GameManager.instance.optionScript.PlayerSide)
+                            {
+                                case Side.Authority:
+                                    node.Value.SetMaterial(nodeMaterial);
+                                    count++;
+                                    break;
+                                case Side.Resistance:
+                                    //resistance -> show only if known, eg. within tracer coverage
+                                    if (node.Value.isSpiderKnown == true)
+                                    {
+                                        node.Value.SetMaterial(nodeMaterial);
+                                        count++;
+                                    }
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.optionScript.PlayerSide));
+                                    break;
+                            }
                         }
                     }
                     if (count > 0)
@@ -276,8 +294,37 @@ public class NodeManager : MonoBehaviour
                         displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, count, colourEnd,
                             colourHighlight, "Spider", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
                     }
+                    else
+                    { displayText = string.Format("{0}There are no Spider nodes{1}", colourError, colourEnd); }
                 }
-                else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+                else { Debug.LogError("Invalid dictOfSpiderNodes (Null)"); }
+                break;
+            //show all nodes with a tracer or within one node radius of a tracer
+            case NodeUI.ShowTracers:
+                Dictionary<int, Node> dictOfTracerNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfTracerNodes != null)
+                {
+                    int count = 0;
+                    foreach (var node in dictOfTracerNodes)
+                    {
+                        if (node.Value.isTracerActive == true)
+                        {
+                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                            node.Value.SetMaterial(nodeMaterial);
+                            //count number of tracers, not active tracer nodes
+                            if (node.Value.isTracer == true)
+                            { count++; }
+                        }
+                    }
+                    if (count > 0)
+                    {
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, count, colourEnd,
+                            colourHighlight, "Tracer", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
+                    }
+                    else
+                    { displayText = string.Format("{0}There are no Tracer nodes{1}", colourError, colourEnd); }
+                }
+                else { Debug.LogError("Invalid dictOfTracerNodes (Null)"); }
                 break;
 
             //show specific NodeArcTypes
@@ -461,7 +508,7 @@ public class NodeManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.Name, colourEnd, "\n",
+            string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.nodeName, colourEnd, "\n",
                 colourDefault, node.Arc.name.ToUpper(), node.nodeID, colourEnd);
             string moveMain = "UNKNOWN";
             int adjustInvisibility = 0;
@@ -618,7 +665,7 @@ public class NodeManager : MonoBehaviour
         ModalPanelDetails details = new ModalPanelDetails()
         {
             nodeID = nodeID,
-            nodeName = node.Name,
+            nodeName = node.nodeName,
             nodeDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
             nodePos = node.transform.position,
             listOfButtonDetails = tempList
@@ -643,7 +690,7 @@ public class NodeManager : MonoBehaviour
                 nodePlayer = moveDetails.nodeID;
                 //update move list
                 node.SetMoveNodes();
-                string destination = string.Format("\"{0}\", {1}, ID {2}", node.Name, node.Arc.name.ToUpper(), node.nodeID);
+                string destination = string.Format("\"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name.ToUpper(), node.nodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
                 //message
@@ -669,7 +716,7 @@ public class NodeManager : MonoBehaviour
                     if (connection != null)
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
-                            node.Name, node.Arc.name.ToUpper(), moveDetails.nodeID);
+                            node.nodeName, node.Arc.name.ToUpper(), moveDetails.nodeID);
                         Message messageAI = GameManager.instance.messageScript.AISpotMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
                         if (messageAI != null) { GameManager.instance.dataScript.AddMessageNew(messageAI); }
                     }

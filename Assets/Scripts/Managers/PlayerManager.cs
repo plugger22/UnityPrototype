@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         rebelCauseMax = 10;
         rebelCauseCurrent = 0;
         //message
-        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.Name, node.Arc.name.ToUpper(), node.nodeID);
+        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name.ToUpper(), node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
         if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
     }

@@ -563,7 +563,31 @@ public class EffectManager : MonoBehaviour
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
                 case EffectOutcome.AddTracer:
-                    //TO DO
+                    if (node != null)
+                    {
+                        node.isTracer = true;
+                        node.isTracerActive = true;
+                        //neighbouring nodes made active
+                        List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+                        if (listOfNeighbours != null)
+                        {
+                            foreach (Node nodeNeighbour in listOfNeighbours)
+                            {
+                                nodeNeighbour.isTracerActive = true;
+                                if (nodeNeighbour.isSpider == true)
+                                { nodeNeighbour.isSpiderKnown = true; }
+                            }
+                        }
+                        else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
+                        //dialogue
+                        effectReturn.topText = string.Format("{0}A Tracer has been successfully inserted{1}", colourDefault, colourEnd);
+                        effectReturn.bottomText = string.Format("{0}All Spiders within a one node radius are revealed{1}", colourOutcome3, colourEnd);
+                    }
+                    else
+                    {
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        effectReturn.errorFlag = true;
+                    }
                     break;
                 case EffectOutcome.GetGear:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
@@ -736,7 +760,7 @@ public class EffectManager : MonoBehaviour
                 return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}", 
                     colourOutcome3, team.Arc.name.ToUpper(), colourEnd, 
                     colourNormal, team.Name, operation, colourEnd,  
-                    colourOutcome2, node.Arc.name.ToUpper(), colourEnd, colourNormal, node.Name, colourEnd);
+                    colourOutcome2, node.Arc.name.ToUpper(), colourEnd, colourNormal, node.nodeName, colourEnd);
             }
             else
             {

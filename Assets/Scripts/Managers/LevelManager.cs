@@ -231,8 +231,8 @@ public class LevelManager : MonoBehaviour
         nodeStart = listOfNodeObjects[indexStart].GetComponent<Node>();
         nodeEnd = listOfNodeObjects[indexEnd].GetComponent<Node>();
         //check if a connection is not already present
-        if (nodeStart.CheckNeighbours(posEnd) == true) { return true; }
-        if (nodeEnd.CheckNeighbours(posStart) == true) { return true; }
+        if (nodeStart.CheckNeighbourPosition(posEnd) == true) { return true; }
+        if (nodeEnd.CheckNeighbourPosition(posStart) == true) { return true; }
         return false;
     }
     #endregion
@@ -299,11 +299,11 @@ public class LevelManager : MonoBehaviour
             //add to neighbours list
             nodeStart = listOfNodeObjects[node1].GetComponent<Node>();
             nodeEnd = listOfNodeObjects[node2].GetComponent<Node>();
-            nodeStart.AddNeighbour(pos2);
-            nodeStart.AddMoveNeighbour(nodeEnd);
+            nodeStart.AddNeighbourPosition(pos2);
+            nodeStart.AddNeighbourNode(nodeEnd);
             nodeStart.AddConnection(connectionTemp);
-            nodeEnd.AddNeighbour(pos1);
-            nodeEnd.AddMoveNeighbour(nodeStart);
+            nodeEnd.AddNeighbourPosition(pos1);
+            nodeEnd.AddNeighbourNode(nodeStart);
             nodeEnd.AddConnection(connectionTemp);
         }
         else { Debug.LogError(string.Format("Invalid Connection, ID {0} -> Not added to collections", connectionTemp.connID)); }
@@ -651,7 +651,7 @@ public class LevelManager : MonoBehaviour
             Node node = obj.GetComponent<Node>();
             int numNodes = node.GetNumOfNeighbours();
             //node name
-            node.Name = "Placeholder";
+            node.nodeName = "Placeholder";
             //get random node Arc from appropriate list
             node.Arc = GameManager.instance.dataScript.GetRandomNodeArc(numNodes);
             //provide base level stats 

@@ -12,7 +12,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public int nodeID;                    //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     
 
-    [HideInInspector] public string Name;                //name of node, eg. "Downtown Bronx"
+    [HideInInspector] public string nodeName;                //name of node, eg. "Downtown Bronx"
     [HideInInspector] public NodeArc Arc;                                 //archetype type
 
     [HideInInspector] public int Stability;                  //range 0 to 3
@@ -20,13 +20,16 @@ public class Node : MonoBehaviour
     [HideInInspector] public int Security;                   //range 0 to 3
 
     [HideInInspector] public bool isTracer;                    //has resistance tracer?
+    [HideInInspector] public bool isTracerActive;              //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;                    //has authority spider?
+    [HideInInspector] public bool isSpiderKnown;               //does Resistance know of spider?
     [HideInInspector] public int targetID;                   //unique ID, 0+, -1 indicates no target
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
 
-    private List<Vector3> listOfNeighbours;             //list of neighbouring nodes that this node is connected to
-    private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
+    private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
+    private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
+    //private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
     private List<Connection> listOfConnections;                //list of neighbouring connections
     private List<Team> listOfTeams;                     //Authority teams present at the node
 
@@ -45,8 +48,9 @@ public class Node : MonoBehaviour
 	
 	private void Awake ()
     {
-        listOfNeighbours = new List<Vector3>();
-        listOfMoves = new List<Node>();
+        listOfNeighbourPositions = new List<Vector3>();
+        listOfNeighbourNodes = new List<Node>();
+        //listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
         listOfConnections = new List<Connection>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
@@ -77,7 +81,7 @@ public class Node : MonoBehaviour
                 ModalPanelDetails details = new ModalPanelDetails()
                 {
                     nodeID = nodeID,
-                    nodeName = this.Name,
+                    nodeName = this.nodeName,
                     nodeDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
                     nodePos = transform.position,
                     listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(nodeID)
@@ -160,7 +164,7 @@ public class Node : MonoBehaviour
                 { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
                 //Transform transform = GetComponent<Transform>();
                 GameManager.instance.tooltipNodeScript.SetTooltip(
-                    Name,
+                    nodeName,
                     string.Format("{0} ID {1}", Arc.name, nodeID),
                     activeList,
                     new int[] { Stability, Support, Security },
@@ -184,27 +188,33 @@ public class Node : MonoBehaviour
     }
 
     //
-    // - - - Methods
+    // - - - Neighbours
     //
+
+    public int GetNumOfNeighbours()
+    { return listOfNeighbourPositions.Count; }
 
     /// <summary>
     /// add neighbouring vector3 to list
     /// </summary>
     /// <param name="pos"></param>
-    public void AddNeighbour(Vector3 pos)
+    public void AddNeighbourPosition(Vector3 pos)
     {
-        listOfNeighbours.Add(pos);
+        if (pos != null)
+        { listOfNeighbourPositions.Add(pos); }
         //Debug.Log("Neighbour added: " + pos);
+        else { Debug.LogError("Invalid pos (Null)"); }
     }
+
 
     /// <summary>
     /// add neighbouring node to list of possible move locations
     /// </summary>
     /// <param name="node"></param>
-    public void AddMoveNeighbour(Node node)
+    public void AddNeighbourNode(Node node)
     {
         Debug.Assert(node != null, "Invalid Node (Null)");
-        listOfMoves.Add(node);
+        listOfNeighbourNodes.Add(node);
     }
 
     /// <summary>
@@ -212,13 +222,13 @@ public class Node : MonoBehaviour
     /// </summary>
     /// <param name="newPos"></param>
     /// <returns></returns>
-    public bool CheckNeighbours(Vector3 newPos)
+    public bool CheckNeighbourPosition(Vector3 newPos)
     {
-        if (listOfNeighbours.Count == 0)
+        if (listOfNeighbourPositions.Count == 0)
         { return false; }
         else
         {
-            if (listOfNeighbours.Exists(pos => pos == newPos))
+            if (listOfNeighbourPositions.Exists(pos => pos == newPos))
             { return true; }
             //default condition -> no match found
             return false;
@@ -226,12 +236,15 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
-    /// get list of neighbours
+    /// Get list of Neighbouring Nodes
     /// </summary>
     /// <returns></returns>
-    public List<Vector3> GetNeighbours()
-    { return listOfNeighbours; }
+    public List<Node> GetNeighbouringNodes()
+    { return listOfNeighbourNodes; }
 
+    //
+    // --- Other ---
+    //
 
     /// <summary>
     /// Everytime player moves to a new node you have to call this to update master list of NodeID's that contain all valid move locations for the player's next move
@@ -239,19 +252,12 @@ public class Node : MonoBehaviour
     public void SetMoveNodes()
     {
         List<int> listOfNodeID = new List<int>();
-        foreach (Node node in listOfMoves)
+        foreach (Node node in listOfNeighbourNodes)
         { listOfNodeID.Add(node.nodeID); }
         if (listOfNodeID.Count > 0)
         { GameManager.instance.dataScript.UpdateMoveNodes(listOfNodeID); }
-        else { Debug.LogError("listOfMoves has no records, listOfNodeID has no records -> MoveNodes not updated"); }
+        else { Debug.LogError("listOfNeighbourNodes has no records, listOfNodeID has no records -> MoveNodes not updated"); }
     }
-
-    /// <summary>
-    /// get list of all valid Move nodes (neighbouring nodes)
-    /// </summary>
-    /// <returns></returns>
-    public List<Node> GetMoveNodes()
-    { return listOfMoves; }
 
     /// <summary>
     /// Add a connection to the list of neighbouring connections
@@ -317,11 +323,54 @@ public class Node : MonoBehaviour
     public void SetMaterial(Material newMaterial)
     { _Material = newMaterial; }
 
-    public int GetNumOfNeighbours()
-    { return listOfNeighbours.Count; }
 
     public Material GetMaterial()
     { return _Material; }
+
+    /// <summary>
+    /// remove Tracer from node and tidy up bool fields
+    /// </summary>
+    public void RemoveTracer()
+    {
+        bool isNeighbourTracer, isAdjacentNeighbourTracer;
+        if (isTracer == true)
+        {
+            isTracer = false;
+            isNeighbourTracer = false;
+            Debug.Log(string.Format("Tracer removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n"));
+            //check neighbours
+            foreach(Node node in listOfNeighbourNodes)
+            {
+                if (node.isTracer)
+                { isNeighbourTracer = true; }
+                else
+                {
+                    //check neighbours of the neighbour for a tracer to see if it is still active
+                    List<Node> listOfAdjacentNeighbours = node.GetNeighbouringNodes();
+                    if (listOfAdjacentNeighbours != null)
+                    {
+                        isAdjacentNeighbourTracer = false;
+                        foreach(Node nodeNeighbour in listOfAdjacentNeighbours)
+                        {
+                            if (nodeNeighbour.isTracer == true)
+                            { isAdjacentNeighbourTracer = true; }
+                        }
+                        //current adjacent node is still active if a neighbour has a tracer
+                        if (isAdjacentNeighbourTracer == false)
+                        { node.isTracerActive = false; }
+                    }
+                    else { Debug.LogError("Invalid listOfAdjacentNeighbours (Null)"); }
+                }
+            }
+            //current node is still active if a neighbour has a tracer
+            if (isNeighbourTracer == false)
+            { isTracerActive = false; }
+        }
+    }
+
+    //
+    // - - - Teams - - -
+    //
 
     /// <summary>
     /// add an authority team to the node. Returns true if placement successful.
@@ -346,7 +395,7 @@ public class Node : MonoBehaviour
                         {
                             //already a similar team present -> no go
                             Debug.LogWarning(string.Format("{0} Team NOT added to node {1}, ID {2} as already a similar team present{3}", 
-                                team.Arc.name, Name, nodeID, "\n"));
+                                team.Arc.name, nodeName, nodeID, "\n"));
                             return false;
                         }
                     }
@@ -358,12 +407,12 @@ public class Node : MonoBehaviour
                 team.ActorSlotID = actorID;
                 team.Pool = TeamPool.OnMap;
                 team.Timer = GameManager.instance.teamScript.deployTime;
-                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, Name, nodeID, "\n"));
+                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, nodeName, nodeID, "\n"));
                 return true;
             }
-            else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", Name, nodeID, "\n")); }
+            else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", nodeName, nodeID, "\n")); }
         }
-        else { Debug.LogError(string.Format("Invalid team (null) for Node {0}, ID {1}{2}", Name, nodeID, "\n")); }
+        else { Debug.LogError(string.Format("Invalid team (null) for Node {0}, ID {1}{2}", nodeName, nodeID, "\n")); }
         return false;
     }
 

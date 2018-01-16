@@ -178,7 +178,7 @@ public class TeamManager : MonoBehaviour
                                 //Permanent Team effect activated for node
                                 ProcessTeamEffect(team, node, actor);
                                 //message
-                                string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.Name, node.nodeID);
+                                string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.nodeName, node.nodeID);
                                 Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.nodeID, team.TeamID, actor.actorID);
                                 if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                             }
@@ -786,7 +786,7 @@ public void InitialiseTeams()
                         {
                             //message
                             string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, 
-                                node.Name, node.nodeID);
+                                node.nodeName, node.nodeID);
                             Message message = GameManager.instance.messageScript.TeamWithdraw(text, data.nodeID, team.TeamID, actorID);
                             if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                             Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
@@ -847,7 +847,7 @@ public void InitialiseTeams()
                             {
                                 //message (notification to Authority Side)
                                 string text = string.Format("{0} {1}, ID {2}, neutralised at {3}, ID {4}", team.Arc.name, team.Name, team.TeamID,
-                                    node.Name, node.nodeID);
+                                    node.nodeName, node.nodeID);
                                 Message message = GameManager.instance.messageScript.TeamNeutralise(text, data.nodeID, team.TeamID, actor.actorID);
                                 if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                                 Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
@@ -925,7 +925,7 @@ public void InitialiseTeams()
                     foreach(Effect effect in listOfEffects)
                     {
                         GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
-                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.Name, node.nodeID);
+                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
                         Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
                         if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                     }
@@ -939,7 +939,12 @@ public void InitialiseTeams()
                 {
                     //add spider
                     node.isSpider = true;
-                    string text = string.Format("{0} {1} effect: Spider inserted at \"{2}\", ID {3}", team.Arc.name, team.Name, node.Name, node.nodeID);
+                    //check if within tracer coverage
+                    if(node.isTracerActive == true)
+                    { node.isSpiderKnown = true; }
+                    else { node.isSpiderKnown = false; }
+                    //admin
+                    string text = string.Format("{0} {1} effect: Spider inserted at \"{2}\", ID {3}", team.Arc.name, team.Name, node.nodeName, node.nodeID);
                     Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
                     if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
                 }
