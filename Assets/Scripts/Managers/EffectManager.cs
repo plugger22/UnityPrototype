@@ -615,14 +615,42 @@ public class EffectManager : MonoBehaviour
                                     case Result.Add:
                                         if (GameManager.instance.playerScript.invisibility < 3)
                                         { GameManager.instance.playerScript.invisibility++; }
-                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome1, effect.description,
-                                            GameManager.instance.playerScript.invisibility, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome1, effect.description, colourEnd);
                                         break;
                                     case Result.Subtract:
-                                        if (GameManager.instance.playerScript.invisibility > 0)
-                                        { GameManager.instance.playerScript.invisibility--; }
-                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome2, effect.description, 
-                                            actor.datapoint2, colourEnd);
+                                        //does player have any invisibility type gear?
+                                        int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GearType.Invisibility);
+                                        if (gearID > -1)
+                                        {
+                                            //gear present -> No drop in Invisibility
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                            if (gear != null)
+                                            {
+                                                int chance = GameManager.instance.gearScript.GetChanceOfCompromise(gearID);
+                                                if (Random.Range(0, 100) <= chance)
+                                                {
+                                                    //gear compromised
+                                                    effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (Compromised!){2}", colourOutcome2, gear.name,
+                                                        colourEnd);
+                                                    //remove gear
+                                                    GameManager.instance.playerScript.RemoveGear(gearID);
+                                                }
+                                                else
+                                                {
+                                                    //gear O.K
+                                                    effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourOutcome1, gear.name,
+                                                        colourEnd);
+                                                }
+                                            }
+                                            else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+                                        }
+                                        else
+                                        {
+                                            //no gear present
+                                            if (GameManager.instance.playerScript.invisibility > 0)
+                                            { GameManager.instance.playerScript.invisibility--; }
+                                            effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome2, effect.description, colourEnd);
+                                        }
                                         break;
                                 }
                             }

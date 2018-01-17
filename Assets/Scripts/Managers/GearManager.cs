@@ -371,7 +371,7 @@ public class GearManager : MonoBehaviour
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public int GetGearChanceOfCompromise(int gearID)
+    public int GetChanceOfCompromise(int gearID)
     {
         int chance = 0;
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
@@ -399,32 +399,6 @@ public class GearManager : MonoBehaviour
         return chance;
     }
 
-    /// <summary>
-    /// returns chance of gear being compromised after each use (%). Depends on rarity. Returns '0' if a problem
-    /// </summary>
-    /// <param name="gearID"></param>
-    /// <returns></returns>
-    public int GetChanceOfCompromise(int gearID)
-    {
-        int chance = 0;
-        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-        if (gear != null)
-        {
-            //chance of compromise varies depending on gear rarity
-            switch(gear.rarity)
-            {
-                case GearLevel.Unique:
-                    //halved chance
-                    chance = chanceOfCompromise / 2;
-                    break;
-                case GearLevel.Rare:
-                case GearLevel.Common:
-                    chance = chanceOfCompromise;
-                    break;
-            }
-        }
-        return chance;
-    }
 
     //new methods above here
 }

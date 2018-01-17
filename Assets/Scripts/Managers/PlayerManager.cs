@@ -168,7 +168,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     //
-    // - - - Other
+    // - - - Debug
     //
 
     /// <summary>
@@ -193,7 +193,7 @@ public class PlayerManager : MonoBehaviour
                 { builder.Append(string.Format(" {0}, ID {1}{2}", gear.name, gear.gearID, "\n"));}
             }
         }
-        else { builder.Append("No gear in inventory"); }
+        else { builder.Append(" No gear in inventory"); }
         return builder.ToString();
     }
 

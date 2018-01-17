@@ -738,7 +738,7 @@ public class NodeManager : MonoBehaviour
                     {
                         //chance of Gear being Compromised
                         ModalDiceDetails diceDetails = new ModalDiceDetails();
-                        diceDetails.chance = GameManager.instance.gearScript.GetGearChanceOfCompromise(gear.gearID);
+                        diceDetails.chance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                         diceDetails.renownCost = renownCost;
                         diceDetails.topText = string.Format("{0}{1}{2} used to move{3}{4}{5}% Chance{6} of it being compromised and lost", colourEffectNeutral,
                             gear.name, colourEnd, "\n", colourEffectBad, diceDetails.chance, colourEnd);
