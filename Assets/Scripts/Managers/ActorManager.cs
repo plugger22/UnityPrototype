@@ -25,11 +25,13 @@ public class ActorManager : MonoBehaviour
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
     //colour palette for Generic tool tip
-    private string colourBlue;
-    private string colourRed;
+    private string colourResistance;
+    private string colourAuthority;
     private string colourCancel;
     private string colourInvalid;
-    private string colourEffect;
+    private string colourGoodEffect;
+    private string colourNeutralEffect;
+    private string colourBadEffect;
     private string colourDefault;
     private string colourNormal;
     private string colourRecruit;
@@ -111,11 +113,13 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourRed = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourGoodEffect = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutralEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBadEffect = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
@@ -324,8 +328,8 @@ public class ActorManager : MonoBehaviour
         Side side = GameManager.instance.optionScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if ( side == Side.Authority)
-        { sideColour = colourRed; }
-        else { sideColour = colourBlue; }
+        { sideColour = colourAuthority; }
+        else { sideColour = colourResistance; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
         //string builder for info button (handles all no go cases
         StringBuilder infoBuilder = new StringBuilder();
@@ -356,18 +360,33 @@ public class ActorManager : MonoBehaviour
                     Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
                     if (target != null)
                     {
-                        string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault, target.description, colourEnd);
-                        //button target details
-                        EventButtonDetails targetDetails = new EventButtonDetails()
+                        bool targetProceed = false;
+                        //can tackle target if Player at node or target specified actor is present in line-up
+                        if (nodeID == playerID) { targetProceed = true; }
+                        else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc) == true) { targetProceed = true; }
+                        //target live and dancing
+                        if (targetProceed == true)
                         {
-                            buttonTitle = "Target",
-                            buttonTooltipHeader = targetHeader,
-                            buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
-                            buttonTooltipDetail = GameManager.instance.targetScript.GetTargetGoodEffects(node.targetID),
-                            //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
-                        };
-                        tempList.Add(targetDetails);
+                            string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault, target.description, colourEnd);
+                            //button target details
+                            EventButtonDetails targetDetails = new EventButtonDetails()
+                            {
+                                buttonTitle = "Target",
+                                buttonTooltipHeader = targetHeader,
+                                buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
+                                buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetID),
+                                //use a Lambda to pass arguments to the action
+                                action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
+                            };
+                            tempList.Add(targetDetails);
+                        }
+                        else
+                        {
+                            //invalid target (Player not present, specified actor Arc not in line up)
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            infoBuilder.Append(string.Format("{0}Target invalid{1}{2}{3}(No Player, No {4}){5}",
+                                colourInvalid, "\n", colourEnd, colourBadEffect, target.actorArc.name, colourEnd));
+                        }
                     }
                     else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.targetID, "\n")); }
                 }
@@ -403,29 +422,47 @@ public class ActorManager : MonoBehaviour
                                     listOfEffects = tempAction.listOfEffects;
                                     if (listOfEffects.Count > 0)
                                     {
+                                        string colourEffect = colourNeutralEffect;
                                         for (int i = 0; i < listOfEffects.Count; i++)
                                         {
                                             Effect effect = listOfEffects[i];
+                                            //colour code effects according to type
+                                            switch(effect.effectType)
+                                            {
+                                                case EffectType.Good:
+                                                    colourEffect = colourGoodEffect;
+                                                    break;
+                                                case EffectType.Neutral:
+                                                case EffectType.None:
+                                                    colourEffect = colourNeutralEffect;
+                                                    break;
+                                                case EffectType.Bad:
+                                                    colourEffect = colourBadEffect;
+                                                    break;
+                                            }
                                             //check effect criteria is valid
                                             effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.effectOutcome != EffectOutcome.Renown)
+                                                if (effect.effectOutcome != EffectOutcome.Renown && effect.effectOutcome != EffectOutcome.Invisibility)
                                                 { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
                                                 else
                                                 {
-                                                    //handle renown situation - players or actors?
+                                                    //handle renown & invisibility situatiosn - players or actors?
                                                     if (nodeID == playerID)
                                                     {
-                                                        //actualRenownEffect = playerRenownEffect;
-                                                        builder.Append(string.Format("{0}Player {1}{2}", colourBlue, effect.description, colourEnd));
+                                                        //player affected (good for renown, bad for invisibility)
+                                                        if (effect.effectOutcome == EffectOutcome.Renown)
+                                                        { builder.Append(string.Format("{0}Player {1}{2}", colourGoodEffect, effect.description, colourEnd)); }
+                                                        else
+                                                        { builder.Append(string.Format("{0}Player {1}{2}", colourBadEffect, effect.description, colourEnd)); }
                                                     }
                                                     else
                                                     {
-                                                        //actualRenownEffect = actorRenownEffect;
-                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd));
+                                                        //actor affected
+                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourBadEffect, actor.arc.name, effect.description, colourEnd));
                                                     }
                                                 }
                                             }
@@ -435,7 +472,7 @@ public class ActorManager : MonoBehaviour
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
                                                     colourInvalid, actor.arc.name, "\n", colourEnd,
-                                                    colourRed, effectCriteria, colourEnd));
+                                                    colourAuthority, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
                                         }
@@ -549,7 +586,7 @@ public class ActorManager : MonoBehaviour
                         foreach(Team team in listOfTeams)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(string.Format("{0}{1} {2}{3}", colourEffect, team.Arc.name.ToUpper(), team.Name, colourEnd));
+                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutralEffect, team.Arc.name.ToUpper(), team.Name, colourEnd));
                         }
                         //button details
                         EventButtonDetails recallDetails = new EventButtonDetails()
@@ -622,20 +659,20 @@ public class ActorManager : MonoBehaviour
                                             if (builder.Length > 0) { builder.AppendLine(); }
                                             if (effect.effectOutcome != EffectOutcome.Renown)
                                             {
-                                                builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd));
+                                                builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, effect.description, colourEnd));
                                                 //if an ANY TEAM action then display available teams
                                                 if (isAnyTeam == true)
                                                 {
                                                     foreach (string teamName in tempTeamList)
                                                     {
                                                         builder.AppendLine();
-                                                        builder.Append(string.Format("{0}{1}{2}", colourEffect, teamName, colourEnd));
+                                                        builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, teamName, colourEnd));
                                                     }
                                                 }
                                             }
                                             //actor automatically accumulates renown for their faction
                                             else
-                                            { builder.Append(string.Format("{0}{1} {2}{3}", colourRed, actor.arc.name, effect.description, colourEnd)); }
+                                            { builder.Append(string.Format("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.description, colourEnd)); }
 
                                         }
                                         else
@@ -644,7 +681,7 @@ public class ActorManager : MonoBehaviour
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                             infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
                                                 colourInvalid, actor.arc.name, "\n", colourEnd,
-                                                colourRed, effectCriteria, colourEnd));
+                                                colourAuthority, effectCriteria, colourEnd));
                                             proceedFlag = false;
                                         }
                                     }
@@ -786,7 +823,7 @@ public class ActorManager : MonoBehaviour
             else { genericDetails.nodeID = -1; }
             genericDetails.actorSlotID = details.ActorSlotID;
             //picker text
-            genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+            genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourNeutralEffect, colourEnd, colourNormal, colourEnd);
             genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
                 colourNormal, colourEnd);
             genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";

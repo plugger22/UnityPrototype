@@ -45,6 +45,7 @@ public class TargetManager : MonoBehaviour
     private string colourDataNeutral;
     private string colourDataBad;
     private string colourRebel;
+    private string colourTarget;
     private string colourEnd;
 
     /// <summary>
@@ -107,6 +108,7 @@ public class TargetManager : MonoBehaviour
         colourDataNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourDataBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourTarget = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -218,7 +220,7 @@ public class TargetManager : MonoBehaviour
                 if (target.TargetStatus == Status.Live)
                 {
                     //put tooltip together
-                    tempList.Add(string.Format("{0}{1}{2}", colourNormal, target.name, colourEnd));
+                    tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
                     tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
                     //good effects
                     Effect effect = null;
@@ -247,11 +249,11 @@ public class TargetManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns formatted string of all target Good effects. Returns null if none.
+    /// returns formatted string of all good and bad target effects. Returns null if none.
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public string GetTargetGoodEffects(int targetID)
+    public string GetTargetEffects(int targetID)
     {
         List<string> tempList = new List<string>();
         //find target
@@ -260,21 +262,38 @@ public class TargetManager : MonoBehaviour
         {
             //good effects
             Effect effect = null;
+            tempList.Add(string.Format("{0}Target Success Effects{1}", colourTarget, colourEnd));
             if (target.listOfGoodEffects.Count > 0)
             {
                 //add header
-                tempList.Add(string.Format("{0}Effects{1}", colourGood, colourEnd));
                 for (int i = 0; i < target.listOfGoodEffects.Count; i++)
                 {
                     effect = target.listOfGoodEffects[i];
                     if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourNormal, effect.description, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
+                    else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
                 }
             }
             else
             {
-                Debug.LogError(string.Format("Invalid Target Effects (count 0) for ID {0}{1}", targetID, "\n"));
+                Debug.LogError(string.Format("Invalid Good Target Effects (count 0) for ID {0}{1}", targetID, "\n"));
+                tempList.Add("Target Effects Unknown");
+            }
+            //bad effects
+            if (target.listOfBadEffects.Count > 0)
+            {
+                //add header
+                for (int i = 0; i < target.listOfBadEffects.Count; i++)
+                {
+                    effect = target.listOfBadEffects[i];
+                    if (effect != null)
+                    { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.description, colourEnd)); }
+                    else { Debug.LogError(string.Format("Invalid Bad effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                }
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid Bad Target Effects (count 0) for ID {0}{1}", targetID, "\n"));
                 tempList.Add("Target Effects Unknown");
             }
         }
@@ -315,6 +334,7 @@ public class TargetManager : MonoBehaviour
                 //
                 // - - - Factors affecting Resolution - - -
                 //
+                tempList.Add(string.Format("{0}Target Success Chance{1}", colourTarget, colourEnd));
                 //Loop listOfFactors to ensure consistency of calculations across methods
                 foreach (TargetFactors factor in listOfFactors)
                 {

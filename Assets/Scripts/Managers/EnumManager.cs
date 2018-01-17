@@ -90,6 +90,7 @@ namespace gameAPI
     //
     // - - - Effects - - -
     //
+    public enum EffectType { None, Good, Neutral, Bad}
     public enum EffectCriteria {
         None,
         //resistance

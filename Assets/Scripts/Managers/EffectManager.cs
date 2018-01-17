@@ -641,6 +641,17 @@ public class EffectManager : MonoBehaviour
                                                     effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourOutcome1, gear.name,
                                                         colourEnd);
                                                 }
+                                                //special invisibility gear effects
+                                                switch(gear.data)
+                                                {
+                                                    case 1:
+                                                        //negates invisibility and increases it by +1 at the same time
+                                                        if (GameManager.instance.playerScript.invisibility < 3)
+                                                        { GameManager.instance.playerScript.invisibility++; }
+                                                        effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText, 
+                                                            "\n", "\n", colourOutcome1, gear.name, colourEnd);
+                                                    break;
+                                                }
                                             }
                                             else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
                                         }
@@ -684,6 +695,7 @@ public class EffectManager : MonoBehaviour
                         effectReturn.errorFlag = true;
                     }
                     break;
+                //Note: Renown can be in increments of > 1
                 case EffectOutcome.Renown:
                     if (node != null)
                     {
@@ -691,21 +703,23 @@ public class EffectManager : MonoBehaviour
                         {
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                             {
+                                int playerRenown = GameManager.instance.playerScript.renown;
                                 //Player effect
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
-                                        GameManager.instance.playerScript.renown++;
+                                        playerRenown += effect.effectValue;
                                         effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome1, effect.description, 
-                                            GameManager.instance.playerScript.renown, colourEnd);
+                                            playerRenown, colourEnd);
                                         break;
                                     case Result.Subtract:
-                                        if (GameManager.instance.playerScript.renown >= effect.effectValue)
-                                        { GameManager.instance.playerScript.renown -= effect.effectValue; }
+                                        playerRenown -= effect.effectValue;
+                                        playerRenown = Mathf.Max(0, playerRenown);
                                         effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome2, effect.description,
-                                            GameManager.instance.playerScript.renown, colourEnd);
+                                            playerRenown, colourEnd);
                                         break;
                                 }
+                                GameManager.instance.playerScript.renown = playerRenown;
                             }
                             else
                             {
@@ -713,12 +727,12 @@ public class EffectManager : MonoBehaviour
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
-                                        actor.renown++;
+                                        actor.renown += effect.effectValue;
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
                                         break;
                                     case Result.Subtract:
-                                        if (actor.renown >= effect.effectValue)
-                                        { actor.renown -= effect.effectValue; }
+                                        actor.renown -= effect.effectValue;
+                                        actor.renown = Mathf.Max(0, actor.renown);
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.actorName, effect.description, colourEnd);
                                         break;
                                 }

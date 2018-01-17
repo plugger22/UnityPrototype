@@ -1476,6 +1476,20 @@ public class DataManager : MonoBehaviour
         return slotID;
     }
 
+    /// <summary>
+    /// returns true if specified actor Arc is present in line up and active, false otherwise
+    /// </summary>
+    /// <param name="arc"></param>
+    /// <returns></returns>
+    public bool CheckActorArcPresent(ActorArc arc)
+    {
+        foreach(Actor actor in arrayOfActors)
+        {
+            if (actor.arc == arc && actor.isLive == true) { return true; }
+        }
+        return false;
+    }
+
 
     /// <summary>
     /// debug method to show contents of both sides reserve lists
