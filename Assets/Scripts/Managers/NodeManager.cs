@@ -888,13 +888,28 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void ProcessMoveOutcome(Node node, string textBottom)
     {
-        // Outcome
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.textTop = "Player has moved";
-        outcomeDetails.textBottom = textBottom;
-        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-        outcomeDetails.isAction = true;
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);        
+        //Erasure team picks up player immediately if invisibility 0
+        if (GameManager.instance.playerScript.invisibility == 0)
+        {
+            if (node.CheckTeamPresent(TeamType.Erasure) == true)
+            {
+                outcomeDetails.textTop = "Player has been Captured";
+                outcomeDetails.textBottom = string.Format("An Erasure team has spotted and captured the Player at \"{0}\", {1}", node.nodeName, node.Arc.name);
+                outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+                outcomeDetails.isAction = false;
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            }
+        }
+        //Normal Move  Outcome
+        else
+        {
+            outcomeDetails.textTop = "Player has moved";
+            outcomeDetails.textBottom = textBottom;
+            outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+            outcomeDetails.isAction = true;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
     }
 
 

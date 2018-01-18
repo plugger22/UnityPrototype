@@ -477,6 +477,24 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
+    /// returns true if a team type is present at the node
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public bool CheckTeamPresent(TeamType type)
+    {
+        if (listOfTeams.Count > 0 && type != TeamType.None)
+        {
+            foreach (Team team in listOfTeams)
+            {
+                if (team.Arc.type == type)
+                { return true; }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// returns empty list if none
     /// </summary>
     /// <returns></returns>
