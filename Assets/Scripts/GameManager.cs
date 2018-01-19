@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
     [HideInInspector] public TeamManager teamScript;                  //Team Manager
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
+    [HideInInspector] public AIManager aiScript;                      //AI Manager
     [HideInInspector] public MessageManager messageScript;            //Message Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
@@ -106,6 +107,7 @@ public class GameManager : MonoBehaviour
         sideScript = GetComponent<SideManager>();
         turnScript = GetComponent<TurnManager>();
         inputScript = GetComponent<InputManager>();
+        aiScript = GetComponent<AIManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipActorScript = TooltipActor.Instance();

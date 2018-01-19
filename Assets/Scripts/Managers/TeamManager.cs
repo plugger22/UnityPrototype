@@ -107,10 +107,12 @@ public class TeamManager : MonoBehaviour
     }
 
     /// <summary>
-    /// End turn activity -> Event driven
+    /// End turn activity -> Event driven, decrement all timers in OnMap pool
     /// </summary>
     private void EndTurn()
     {
+        //set turnSide 
+        GameManager.instance.turnScript.turnSide = Side.Authority;
         //decrement all timers in OnMap pool
         List<int> teamPool = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
         if (teamPool != null)
@@ -129,12 +131,15 @@ public class TeamManager : MonoBehaviour
         else { Debug.LogError("Invalid teamPool (Null) -> no team timers decremented"); }
     }
 
+
     /// <summary>
     /// Start turn Early activity -> Event driven. Team Management (inTransit, OnMap timers)
     /// </summary>
     private void StartTurnEarly()
     {
         List<int> teamPool = new List<int>();
+        //set turnSide 
+        GameManager.instance.turnScript.turnSide = Side.Authority;
         //check InTransit pool -> move any teams here to the Reserve pool -> Note: do this BEFORE checking OnMap pool below
         teamPool.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit));
         if (teamPool != null)

@@ -45,6 +45,7 @@ public class InputManager : MonoBehaviour
                     EventManager.instance.PostNotification(EventType.EndTurn, this);
                     EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
                     EventManager.instance.PostNotification(EventType.StartTurnLate, this);
+                    EventManager.instance.PostNotification(EventType.StartTurnFinal, this);
                     return;
                 }
                 if (Input.GetButtonDown("ShowTargets") == true)

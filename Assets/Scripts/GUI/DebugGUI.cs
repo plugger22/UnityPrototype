@@ -19,6 +19,7 @@ public class DebugGUI : MonoBehaviour
     public int offset_y;        //space between buttons
     public int box_x;
     public int box_option;      //x coord for the options box
+    public int box_action;      //x coord for the actions box
     public int box_y;
     public int box_width;
     public int box_height;
@@ -32,6 +33,7 @@ public class DebugGUI : MonoBehaviour
     {
         button_width = box_width - (2 * offset_x);
         box_option = box_x * 2 + box_width;
+        box_action = box_x * 3 + box_width * 2;
         //option strings
         optionAutoGear = "Auto Gear ON";
     }
@@ -60,6 +62,8 @@ public class DebugGUI : MonoBehaviour
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Action {1}", "\n", 
                 GameManager.instance.turnScript.GetActionsCurrent()), customBackground);
+            //background box (Actions)
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height), "Action Menu", customBackground);
 
             //
             // - - - Data (first box)

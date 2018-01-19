@@ -46,6 +46,7 @@ public class TurnManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
+        EventManager.instance.AddListener(EventType.StartTurnFinal, OnEvent);
         EventManager.instance.AddListener(EventType.UseAction, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
@@ -71,6 +72,9 @@ public class TurnManager : MonoBehaviour
             case EventType.StartTurnLate:
                 StartTurnLate();
                 break;
+            case EventType.StartTurnFinal:
+                StartTurnFinal();
+                break;
             case EventType.UseAction:
                 UseAction();
                 break;
@@ -86,7 +90,7 @@ public class TurnManager : MonoBehaviour
     /// <summary>
     /// all pre-start matters are handled here
     /// </summary>
-    public void StartTurnEarly()
+    private void StartTurnEarly()
     {
         Debug.Log("TurnManager: - - - StartTurnEarly - - - " + "\n");
         //increment turn counter
@@ -96,16 +100,42 @@ public class TurnManager : MonoBehaviour
     /// <summary>
     /// all general post-start matters are handled here
     /// </summary>
-    public void StartTurnLate()
+    private void StartTurnLate()
     {
         Debug.Log("TurnManager: - - - StartTurnLate - - - " + "\n");
+    }
+
+    /// <summary>
+    /// Special event for admin control
+    /// </summary>
+    private void StartTurnFinal()
+    {
+        switch (GameManager.instance.sideScript.PlayerSide)
+        {
+            case Side.Resistance:
+                turnSide = Side.Resistance;
+                break;
+            case Side.Authority:
+                turnSide = Side.Authority;
+                break;
+            case Side.None:
+                //AI controls both sides
+                turnSide = Side.Resistance;
+                GameManager.instance.aiScript.ProcessAISideResistance();
+                turnSide = Side.Authority;
+                GameManager.instance.aiScript.ProcessAISideAuthority();
+
+                //TO DO -> end of turn in some manner here
+
+                break;
+        }
     }
 
     /// <summary>
     /// all general end of turn matters are handled here
     /// </summary>
     /// <returns></returns>
-    public void EndTurn()
+    private void EndTurn()
     {
         _actionsCurrent = 0;
         Debug.Log("TurnManager: - - - EndTurn - - - " + "\n");
@@ -148,6 +178,7 @@ public class TurnManager : MonoBehaviour
             EventManager.instance.PostNotification(EventType.EndTurn, this);
             EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
             EventManager.instance.PostNotification(EventType.StartTurnLate, this);
+            EventManager.instance.PostNotification(EventType.StartTurnFinal, this);
         }
     }
 
