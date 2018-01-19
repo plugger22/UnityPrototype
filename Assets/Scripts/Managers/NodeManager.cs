@@ -406,7 +406,7 @@ public class NodeManager : MonoBehaviour
         string minionTitle;
         //work out minion's appropriate title
         if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
-        { minionTitle = string.Format("{0} of ", (AuthorityActor)GameManager.instance.GetMetaLevel()); }
+        { minionTitle = string.Format("{0} of ", (AuthorityActor)GameManager.instance.turnScript.metaLevel); }
         else { minionTitle = "Rebel "; }
         if (actor != null)
         {
@@ -931,9 +931,12 @@ public class NodeManager : MonoBehaviour
                         //message
                         Message message = GameManager.instance.messageScript.AICapture(text, node.nodeID, team.TeamID);
                         GameManager.instance.dataScript.AddMessage(message);
+                        //set player node to not show
+                        nodePlayer = -1;
+                        //change player state
+                        GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
                         //player captured outcome window
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                        
                         outcomeDetails.textTop = text; 
                         outcomeDetails.textBottom = string.Format("{0}Player has been Captured{1}", colourEffectBad, colourEnd);
                         outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;

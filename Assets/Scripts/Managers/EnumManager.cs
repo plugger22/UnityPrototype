@@ -8,13 +8,12 @@ namespace gameAPI
     //
     // - - - Game Manager - - -
     //
-    public enum Side { Authority, Resistance, Count }
+    public enum Side { Authority, Resistance, Count }                                   //Sides available in game
     public enum GameState { Normal, ModalOutcome, ModalActionMenu, ModalPicker, ModalDice }
     public enum ResistanceState { Normal, Captured }                                    //player as Resistance
     public enum AuthorityState { Normal }                                               //player as Authority
     public enum MetaLevel { None, City, State, Nation }
     public enum AuthorityActor { None, Superintendent, Minister, Secretary}              //different names for authority actors depending on MetaLevel
-    public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count}    //DataManager arrayOfNodes index
     
     //
     // - - - Level Manager
@@ -23,7 +22,8 @@ namespace gameAPI
 
     //
     // - - - Node Manager - - 
-    //
+    // 
+    public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count}    //DataManager arrayOfNodes index
     public enum NodeType { Normal, Highlight, Active, Player, Count }
     public enum NodeUI {                                                            //parameter for NodeDisplay event
         None,
@@ -41,7 +41,7 @@ namespace gameAPI
     // - - - Actors - - -
     //
     public enum TraitType { Good, Neutral, Bad}
-    public enum ActorStatus { Active, Inactive, Reserve, Pool}
+    public enum ActorStatus { Active, Inactive, Reserve, Pool,Captured}
 
     //
     // - - - Action Manager - - -

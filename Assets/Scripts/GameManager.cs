@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
                                                                     
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
-    private MetaLevel metaLevel = MetaLevel.None;
+    
     private bool allowQuitting = false;
     private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -86,8 +86,6 @@ public class GameManager : MonoBehaviour
         { seed = (int)DateTime.Now.Ticks & 0x0000FFFF; }
         Debug.Log("Seed: " + seed);
         Random.InitState(seed);
-        //MetaLevel
-        metaLevel = MetaLevel.City;
         //Get component references
         levelScript = GetComponent<LevelManager>();
         dataScript = GetComponent<DataManager>();
@@ -240,7 +238,6 @@ public class GameManager : MonoBehaviour
         EventManager.instance.RemoveEvent(EventType.ExitGame);
     }
 
-    public int GetMetaLevel()
-    { return (int)metaLevel; }
+
     //place methods above here
 }

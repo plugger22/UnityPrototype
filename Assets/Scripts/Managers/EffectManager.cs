@@ -887,7 +887,7 @@ public class EffectManager : MonoBehaviour
             if (actor.CheckNumOfTeams() == actor.datapoint2)
             { colourNumbers = colourBad; }
             return string.Format("{0}, {1} of {2}{3}{4} has now deployed {5}{6}{7} of {8}{9}{10} teams",
-                actor.actorName, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourActor, actor.arc.name, colourEnd,
+                actor.actorName, (AuthorityActor)GameManager.instance.turnScript.metaLevel, colourActor, actor.arc.name, colourEnd,
                 colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd);
         }
         else

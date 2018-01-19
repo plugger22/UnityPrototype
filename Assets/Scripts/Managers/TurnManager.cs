@@ -12,6 +12,10 @@ public class TurnManager : MonoBehaviour
     [Range(1, 4)] public int actionsResistance = 2;
     [Range(1, 4)] public int actionsAuthority = 2;
 
+    [HideInInspector] public MetaLevel metaLevel;
+    [HideInInspector] public ResistanceState resistanceState;
+    [HideInInspector] public AuthorityState authorityState;
+
     [SerializeField, HideInInspector]
     private int _turn;
     private int _actionsCurrent;                                                //cumulative actions taken by the player for the current turn
@@ -33,6 +37,10 @@ public class TurnManager : MonoBehaviour
     public void Initialise()
     {
         UpdateActionsLimit(GameManager.instance.optionScript.PlayerSide);
+        //states
+        metaLevel = MetaLevel.City;
+        resistanceState = ResistanceState.Normal;
+        authorityState = AuthorityState.Normal;
         //event Listeners
         EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
@@ -129,7 +137,7 @@ public class TurnManager : MonoBehaviour
     private void UseAction()
     {
         _actionsCurrent++;
-        Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}", _actionsCurrent, _actionsLimit));
+        Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}{2}", _actionsCurrent, _actionsLimit, "\n"));
         //exceed action limit?
         if (_actionsCurrent > _actionsLimit)
         { Debug.LogError("_actionsLimit exceeded by _actionsCurrent"); }

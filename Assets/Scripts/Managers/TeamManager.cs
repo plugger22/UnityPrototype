@@ -621,7 +621,7 @@ public void InitialiseTeams()
                             deployedTeams = actor.CheckNumOfTeams();
                             if (deployedTeams < actor.datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
                             tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}", 
-                                colourNormal, (AuthorityActor)GameManager.instance.GetMetaLevel(), colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal, 
+                                colourNormal, (AuthorityActor)GameManager.instance.turnScript.metaLevel, colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal, 
                                 colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd, 
                                 dataColour, actor.datapoint2, colourEnd, colourNormal, colourEnd);
                         }

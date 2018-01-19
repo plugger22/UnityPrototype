@@ -77,7 +77,9 @@ public class Node : MonoBehaviour
                     StopCoroutine("ShowTooltip");
                     GameManager.instance.tooltipNodeScript.CloseTooltip();
                 }
-                //Action Menu
+            //Action Menu (provided resistance player not captured, etc.)
+            if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+            {
                 ModalPanelDetails details = new ModalPanelDetails()
                 {
                     nodeID = nodeID,
@@ -88,6 +90,7 @@ public class Node : MonoBehaviour
                 };
                 //activate menu
                 GameManager.instance.actionMenuScript.SetActionMenu(details);
+            }
             }
     }
 

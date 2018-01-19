@@ -38,7 +38,7 @@ public class GearManager : MonoBehaviour
         Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
         if (dictOfGear != null)
         {
-            int gameLevel = GameManager.instance.GetMetaLevel();
+            int gameLevel = (int)GameManager.instance.turnScript.metaLevel;
             //set up an array of Lists, with index corresponding to GearLevel enum, eg. Common / Rare / Unique
             List<int>[] arrayOfGearLists = new List<int>[(int)GearLevel.Count];
             for (int i = 0; i < arrayOfGearLists.Length; i++)
