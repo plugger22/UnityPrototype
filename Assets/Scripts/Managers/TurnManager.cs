@@ -15,6 +15,7 @@ public class TurnManager : MonoBehaviour
     [HideInInspector] public MetaLevel metaLevel;
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthorityState authorityState;
+    [HideInInspector] public Side turnSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
 
     [SerializeField, HideInInspector]
     private int _turn;

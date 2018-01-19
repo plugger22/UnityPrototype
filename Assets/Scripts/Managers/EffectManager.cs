@@ -311,7 +311,6 @@ public class EffectManager : MonoBehaviour
                                             errorFlag = true;
                                             break;
                                     }
-
                                 }
                                 else
                                 {
@@ -658,9 +657,22 @@ public class EffectManager : MonoBehaviour
                                         else
                                         {
                                             //no gear present
-                                            if (GameManager.instance.playerScript.invisibility > 0)
-                                            { GameManager.instance.playerScript.invisibility--; }
-                                            effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome2, effect.description, colourEnd);
+                                            int invisibility = GameManager.instance.playerScript.invisibility;
+                                            //double effect if spider is present
+                                            if (node.isSpider == true)
+                                            {
+                                                invisibility -= 2;
+                                                effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourOutcome2, colourEnd);
+                                            }
+                                            else
+                                            {
+                                                invisibility -= 1;
+                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome2, effect.description, colourEnd);
+                                            }
+                                            //mincap zero
+                                            invisibility = Mathf.Max(0, invisibility);
+                                            GameManager.instance.playerScript.invisibility = invisibility;
+                                            
                                         }
                                         break;
                                 }
@@ -703,7 +715,7 @@ public class EffectManager : MonoBehaviour
                         {
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                             {
-                                int playerRenown = GameManager.instance.playerScript.renown;
+                                int playerRenown = GameManager.instance.playerScript.Renown;
                                 //Player effect
                                 switch (effect.effectResult)
                                 {
@@ -719,7 +731,7 @@ public class EffectManager : MonoBehaviour
                                             playerRenown, colourEnd);
                                         break;
                                 }
-                                GameManager.instance.playerScript.renown = playerRenown;
+                                GameManager.instance.playerScript.Renown = playerRenown;
                             }
                             else
                             {

@@ -62,23 +62,29 @@ public class Node : MonoBehaviour
 
 
     /// <summary>
-    /// Mouse click
+    /// Left Mouse click
     /// </summary>
     private void OnMouseDown()
     {
-            if (GameManager.instance.CheckIsBlocked() == false)
+        bool proceedFlag = true;
+        if (GameManager.instance.CheckIsBlocked() == false)
+        {
+            //highlight current node
+            GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
+            //exit any tooltip
+            if (onMouseFlag == true)
             {
-                //highlight current node
-                GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
-                //exit any tooltip
-                if (onMouseFlag == true)
-                {
-                    onMouseFlag = false;
-                    StopCoroutine("ShowTooltip");
-                    GameManager.instance.tooltipNodeScript.CloseTooltip();
-                }
-            //Action Menu (provided resistance player not captured, etc.)
-            if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+                onMouseFlag = false;
+                StopCoroutine("ShowTooltip");
+                GameManager.instance.tooltipNodeScript.CloseTooltip();
+            }
+            //Action Menu -> not valid if Resistance Plyr and Captured, etc.
+            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+            {
+                if (GameManager.instance.turnScript.resistanceState != ResistanceState.Normal)
+                { proceedFlag = false; }
+            }
+            if (proceedFlag == true)
             {
                 ModalPanelDetails details = new ModalPanelDetails()
                 {
@@ -91,7 +97,7 @@ public class Node : MonoBehaviour
                 //activate menu
                 GameManager.instance.actionMenuScript.SetActionMenu(details);
             }
-            }
+        }
     }
 
     /// <summary>
@@ -108,7 +114,7 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
-    /// Mouse Over tool tip
+    /// Mouse Over tool tip & Right Click
     /// </summary>
     private void OnMouseOver()
     {
@@ -124,15 +130,18 @@ public class Node : MonoBehaviour
                     StopCoroutine("ShowTooltip");
                     GameManager.instance.tooltipNodeScript.CloseTooltip();
                 }
-                //move action invalid if player is captured, etc.
-                if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+                //move action invalid if resistance player is captured, etc.
+                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
                 {
-                    //Create a Move Menu at the node
-                    if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
-                    { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID); }
-                    //highlight all possible move options
-                    else
-                    { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move); }
+                    if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+                    {
+                        //Create a Move Menu at the node
+                        if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
+                        { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID); }
+                        //highlight all possible move options
+                        else
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move); }
+                    }
                 }
             }
             //Tool tip

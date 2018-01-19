@@ -11,13 +11,43 @@ public class PlayerManager : MonoBehaviour
 {
     [HideInInspector] public int rebelCauseMax;                         //level of Rebel Support. Max out to Win the level. Max level is a big part of difficulty.
     [HideInInspector] public int rebelCauseCurrent;                    //current level of Rebel Support
-    [HideInInspector] public int renown;
     [HideInInspector] public int numOfRecruits;
     [HideInInspector] public int invisibility;
+    
+    //private backing fields, need to track separately to handle AI playing both sides
+    private int _renownResistance;
+    private int _renownAuthority;
+
+    public int Renown
+    {
+        get
+        {
+            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { return _renownResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { return _renownAuthority; }
+            else
+            {
+                //AI control of both side
+                if (GameManager.instance.turnScript.turnSide == Side.Resistance) { return _renownResistance; }
+                else {return _renownAuthority; }
+            }
+        }
+        set
+        {
+            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { _renownResistance = value; }
+            else if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { _renownAuthority = value; }
+            else
+            {
+                //AI control of both side
+                if (GameManager.instance.turnScript.turnSide == Side.Resistance) { _renownResistance = value; }
+                else { _renownAuthority = value; }
+            }
+        }
+    }
+
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this
 
-    [Range(1,3)] public int renownCostGear = 1;
+        [Range(1,3)] public int renownCostGear = 1;
 
     private List<int> listOfGear = new List<int>();                 //gearID's of all gear items in inventory
 
@@ -40,7 +70,7 @@ public class PlayerManager : MonoBehaviour
         //set player node
         GameManager.instance.nodeScript.nodePlayer = nodeID;
         //set stats
-        renown = 0;
+        Renown = 0;
         invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
         rebelCauseMax = 10;
@@ -181,9 +211,10 @@ public class PlayerManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
-        builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n"));
-        builder.Append(string.Format(" Renown {0}{1}", renown, "\n"));
-        builder.Append(string.Format(" NumOfRecruits {0}{1}{2}", numOfRecruits, "\n", "\n"));
+        if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+        { builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n")); }
+        builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
+        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}{3}", numOfRecruits, GameManager.instance.dataScript.GetNumOfActorsInReserve(), "\n", "\n"));
         builder.Append(string.Format(" Resistance Cause  {0} of {1}", rebelCauseCurrent, rebelCauseMax));
         builder.Append(string.Format("{0}{1} Gear{2}", "\n", "\n", "\n"));
         if (listOfGear.Count > 0)

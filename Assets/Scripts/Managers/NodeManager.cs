@@ -743,7 +743,7 @@ public class NodeManager : MonoBehaviour
                         diceDetails.renownCost = renownCost;
                         diceDetails.topText = string.Format("{0}{1}{2} used to move{3}{4}{5}% Chance{6} of it being compromised and lost", colourEffectNeutral,
                             gear.name, colourEnd, "\n", colourEffectBad, diceDetails.chance, colourEnd);
-                        if (GameManager.instance.playerScript.renown >= renownCost) { diceDetails.isEnoughRenown = true; }
+                        if (GameManager.instance.playerScript.Renown >= renownCost) { diceDetails.isEnoughRenown = true; }
                         else { diceDetails.isEnoughRenown = false; }
                         //as gear involved data will be needed to be passed through from this method to ProcessMoveOutcome via ProcessDiveMove
                         PassThroughDiceData passThroughData = new PassThroughDiceData();
@@ -997,7 +997,7 @@ public class NodeManager : MonoBehaviour
     private string RenownUsed(Gear gear, Node node, int amount)
     {
         //update player renown
-        GameManager.instance.playerScript.renown -= amount;
+        GameManager.instance.playerScript.Renown -= amount;
         //message
         string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
         Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
