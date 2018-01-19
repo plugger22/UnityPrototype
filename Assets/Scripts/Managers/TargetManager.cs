@@ -381,7 +381,7 @@ public class TargetManager : MonoBehaviour
                                     if (slotID > -1)
                                     {
                                         //check if node is active for actor
-                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, slotID) == true)
+                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, slotID) == true)
                                         {
                                             //actor present and available
                                             tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
@@ -507,7 +507,7 @@ public class TargetManager : MonoBehaviour
                                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID);
                                     if (slotID > -1)
                                     {
-                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, slotID) == true)
+                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, slotID) == true)
                                         {
                                             //actor present and available
                                             tally += actorEffect;

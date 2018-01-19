@@ -68,7 +68,7 @@ public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             //do once
             while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
             {
-                Side side = GameManager.instance.optionScript.PlayerSide;
+                Side side = GameManager.instance.sideScript.PlayerSide;
                 GameManager.instance.tooltipActorScript.SetTooltip(
                     GameManager.instance.dataScript.GetCurrentActor(slotID, side),
                     GameManager.instance.dataScript.GetQualities(side),

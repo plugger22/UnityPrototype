@@ -491,7 +491,7 @@ public class LevelManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("Actor Analysis" + "\n\n");
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.optionScript.PlayerSide);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
         //loop actors
         foreach (Actor actor in arrayOfActors)
         {

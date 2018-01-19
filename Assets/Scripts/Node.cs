@@ -124,12 +124,16 @@ public class Node : MonoBehaviour
                     StopCoroutine("ShowTooltip");
                     GameManager.instance.tooltipNodeScript.CloseTooltip();
                 }
-                //Create a Move Menu at the node
-                if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
-                { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID); }
-                //highlight all possible move options
-                else
-                { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move); }
+                //move action invalid if player is captured, etc.
+                if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+                {
+                    //Create a Move Menu at the node
+                    if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
+                    { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID); }
+                    //highlight all possible move options
+                    else
+                    { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move); }
+                }
             }
             //Tool tip
             else
@@ -312,7 +316,7 @@ public class Node : MonoBehaviour
     {
         List<string> tempList = new List<string>();
         int limit = GameManager.instance.actorScript.numOfOnMapActors;
-        Side side = GameManager.instance.optionScript.PlayerSide;
+        Side side = GameManager.instance.sideScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {
             if (GameManager.instance.levelScript.CheckNodeActive(nodeID, side, i) == true)

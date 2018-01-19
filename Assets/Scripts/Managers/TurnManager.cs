@@ -36,7 +36,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        UpdateActionsLimit(GameManager.instance.optionScript.PlayerSide);
+        UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
         metaLevel = MetaLevel.City;
         resistanceState = ResistanceState.Normal;

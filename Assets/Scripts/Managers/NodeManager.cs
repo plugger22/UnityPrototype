@@ -19,6 +19,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of player
+    [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
     string colourDefault;
     string colourAlert;
@@ -269,7 +270,7 @@ public class NodeManager : MonoBehaviour
                         {
                             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
                             //visibility depends on side
-                            switch (GameManager.instance.optionScript.PlayerSide)
+                            switch (GameManager.instance.sideScript.PlayerSide)
                             {
                                 case Side.Authority:
                                     node.Value.SetMaterial(nodeMaterial);
@@ -284,7 +285,7 @@ public class NodeManager : MonoBehaviour
                                     }
                                     break;
                                 default:
-                                    Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.optionScript.PlayerSide));
+                                    Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
                                     break;
                             }
                         }
@@ -401,11 +402,11 @@ public class NodeManager : MonoBehaviour
             nodeTemp.SetMaterial(nodeMaterial);
         }
         //Get Actor
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.optionScript.PlayerSide);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
         string displayText;
         string minionTitle;
         //work out minion's appropriate title
-        if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
+        if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
         { minionTitle = string.Format("{0} of ", (AuthorityActor)GameManager.instance.turnScript.metaLevel); }
         else { minionTitle = "Rebel "; }
         if (actor != null)
@@ -926,15 +927,20 @@ public class NodeManager : MonoBehaviour
                     if (team != null)
                     {
                         //PLAYER CAPTURED
-                        string text = string.Format("{0} {1} has spotted and captured the Player at \"{2}\", {3}", team.Arc.name.ToUpper(), team.Name,
-                              node.nodeName, node.Arc.name);
+                        string text = string.Format("Player has been captured by an Erasure Team at \"{0}\", {1}", node.nodeName, node.Arc.name);
                         //message
                         Message message = GameManager.instance.messageScript.AICapture(text, node.nodeID, team.TeamID);
                         GameManager.instance.dataScript.AddMessage(message);
-                        //set player node to not show
+                        //update node trackers
                         nodePlayer = -1;
+                        nodeCaptured = node.nodeID;
                         //change player state
                         GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
+                        //add renown to authority actor who owns the team
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
+                        if (actor != null)
+                        { actor.renown++; }
+                        else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", team.ActorSlotID)); }
                         //player captured outcome window
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                         outcomeDetails.textTop = text; 

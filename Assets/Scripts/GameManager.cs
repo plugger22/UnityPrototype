@@ -126,8 +126,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //set side
-        optionScript.PlayerSide = Side.Resistance;
         //setup game
         InitialiseGame();
         //colour scheme
@@ -141,7 +139,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseGame()
     {
-        //sideScript.Initialise();
+        sideScript.Initialise();
         actorScript.PreInitialiseActors();
         dataScript.InitialiseEarly();
         actorScript.Initialise();

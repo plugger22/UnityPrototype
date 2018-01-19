@@ -69,7 +69,7 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        switch (GameManager.instance.optionScript.PlayerSide)
+        switch (GameManager.instance.sideScript.PlayerSide)
         {
             case Side.Resistance:
                 colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
@@ -164,7 +164,7 @@ public class EffectManager : MonoBehaviour
                 {
                     foreach (Criteria criteria in effect.listOfCriteria)
                     {
-                        switch (GameManager.instance.optionScript.PlayerSide)
+                        switch (GameManager.instance.sideScript.PlayerSide)
                         {
                             case Side.Resistance:
                                 //check effect is the correct side
@@ -320,7 +320,7 @@ public class EffectManager : MonoBehaviour
                                 }
                                 break;
                             default:
-                                Debug.LogError(string.Format("Invalid Side \"{0}\" -> effect criteria check cancelled", GameManager.instance.optionScript.PlayerSide));
+                                Debug.LogError(string.Format("Invalid Side \"{0}\" -> effect criteria check cancelled", GameManager.instance.sideScript.PlayerSide));
                                 errorFlag = true;
                                 break;
                         }

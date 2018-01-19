@@ -464,7 +464,7 @@ public class DataManager : MonoBehaviour
     /// sets up list of active nodes for each actor slot
     /// </summary>
     public void UpdateActorNodes()
-    { listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.optionScript.PlayerSide);}
+    { listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.sideScript.PlayerSide);}
 
     //
     // - - - NodeArcs - - -
@@ -1338,13 +1338,13 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int GetNumOfActorsInReserve()
     {
-        if (GameManager.instance.optionScript.PlayerSide == Side.Authority)
+        if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
         { return authorityActorReserve.Count; }
-        else if (GameManager.instance.optionScript.PlayerSide == Side.Resistance)
+        else if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
         { return resistanceActorReserve.Count; }
         else
         {
-            Debug.LogWarning(string.Format("Invalid Side \"{0}\"", GameManager.instance.optionScript.PlayerSide));
+            Debug.LogWarning(string.Format("Invalid Side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
             return 0;
         }
     }

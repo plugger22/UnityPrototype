@@ -13,7 +13,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
 
     //Backing fields (use underscore)
-    private Side _playerSide;
+    
     private ColourScheme _colourOption;
 
     
@@ -31,20 +31,7 @@ public class OptionManager : MonoBehaviour
         }
     }  
 
-    //what side is the player
-    public Side PlayerSide                                       
-    {
-        get { return _playerSide; }
-        set
-        {
-            _playerSide = value;
-            //POst notification - Player side has been changed, update colours as well
-            EventManager.instance.PostNotification(EventType.ChangeSide, this, _playerSide);
-            EventManager.instance.PostNotification(EventType.ChangeColour, this);
-            //GameManager.instance.sideScript.SwapSides(_playerSide);
-            Debug.Log("OptionManager -> Player Side now " + _playerSide + "\n");
-        }
-    }
+
 
 
 
@@ -66,7 +53,7 @@ public class OptionManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Current Option Settings{0}{1}", "\n", "\n"));
-        builder.Append(string.Format(" Side -> {0}{1}{2}", _playerSide, "\n", "\n"));
+        builder.Append(string.Format(" Side -> {0}{1}{2}", GameManager.instance.sideScript.PlayerSide, "\n", "\n"));
         builder.Append(string.Format(" Auto Gear Resolution -> {0}{1}{2}", autoGearResolution, "\n", "\n"));
         return builder.ToString();
     }

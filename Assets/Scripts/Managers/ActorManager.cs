@@ -325,7 +325,7 @@ public class ActorManager : MonoBehaviour
         bool proceedFlag;
         int actionID;
         Actor[] arrayOfActors;
-        Side side = GameManager.instance.optionScript.PlayerSide;
+        Side side = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if ( side == Side.Authority)
         { sideColour = colourAuthority; }
@@ -409,7 +409,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.isLive == true)
                         {
                             //active node for actor or player at node
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true ||
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.slotID) == true ||
                                 nodeID == playerID)
                             {
                                 //get node action
@@ -622,7 +622,7 @@ public class ActorManager : MonoBehaviour
                             teamID = actor.arc.preferredTeam.TeamArcID;
                             tempAction = null;
                             //active node for actor
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.optionScript.PlayerSide, actor.slotID) == true)
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.slotID) == true)
                             {
                                 //get ANY TEAM node action
                                 actionID = GameManager.instance.dataScript.GetActionID("Any Team");
@@ -778,7 +778,7 @@ public class ActorManager : MonoBehaviour
     {
         Debug.Assert(level > 0 && level <= 3, string.Format("Invalid level {0}", level));
         ModalActionDetails details = new ModalActionDetails();
-        Side side = GameManager.instance.optionScript.PlayerSide;
+        Side side = GameManager.instance.sideScript.PlayerSide;
         //ignore node and actorSlotID
         details.side = side;
         details.Level = level;
@@ -963,7 +963,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
-        Side side = GameManager.instance.optionScript.PlayerSide;
+        Side side = GameManager.instance.sideScript.PlayerSide;
         if (data.optionID > -1)
         {
             //find actor
@@ -1069,7 +1069,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
-        Side side = GameManager.instance.optionScript.PlayerSide;
+        Side side = GameManager.instance.sideScript.PlayerSide;
         if (data.optionID > -1)
         {
             //find actor

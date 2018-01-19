@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using gameAPI;
 
 
 /// <summary>
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class SideManager : MonoBehaviour
 {
+
     //node tooltip
     public Sprite toolTip_backgroundAuthority;
     public Sprite toolTip_backgroundRebel;
@@ -24,10 +26,27 @@ public class SideManager : MonoBehaviour
     public Sprite button_highlight_Rebel;
     public Sprite button_Click;
 
+    private Side _playerSide;
+
+    //what side is the player
+    public Side PlayerSide
+    {
+        get { return _playerSide; }
+        set
+        {
+            _playerSide = value;
+            //Post notification - Player side has been changed, update colours as well
+            EventManager.instance.PostNotification(EventType.ChangeSide, this, _playerSide);
+            EventManager.instance.PostNotification(EventType.ChangeColour, this);
+            //GameManager.instance.sideScript.SwapSides(_playerSide);
+            Debug.Log("OptionManager -> Player Side now " + _playerSide + "\n");
+        }
+    }
+
     public void Initialise()
     {
-        //event Listener
-        //EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        //set side
+        PlayerSide = Side.Resistance;        
     }
 
 
