@@ -163,10 +163,40 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
+    /// <summary>
+    /// AI notification of Player (use default actorID 999) or actor being captured at a node
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="teamID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Message AICapture(string text, int nodeID, int teamID, int actorID = 999)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid destinationNodeID {0}", nodeID));
+        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Capture;
+            message.side = Side.Authority;
+            message.isPublic = true;
+            message.data0 = nodeID;
+            message.data1 = teamID;
+            message.data2 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Teams - - -
     //
-    
+
     /// <summary>
     /// Authority deploys a team to a node. Returns null if text invalid.
     /// </summary>

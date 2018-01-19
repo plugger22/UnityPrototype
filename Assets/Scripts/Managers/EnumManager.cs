@@ -79,6 +79,7 @@ namespace gameAPI
         Team_Effect,
         //AI
         AI_SpotMove,
+        AI_Capture,
         //Gear
         Gear_Comprised,
         Gear_Used,

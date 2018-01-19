@@ -1659,7 +1659,7 @@ public class DataManager : MonoBehaviour
     /// add a New message. Auto sorted to Pending dict (isPublic = true) or Archive dict (isPublic = false)
     /// </summary>
     /// <param name="message"></param>
-    public void AddMessageNew(Message message)
+    public void AddMessage(Message message)
     {
         if (message != null)
         {

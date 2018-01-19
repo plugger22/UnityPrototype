@@ -459,39 +459,21 @@ public class Node : MonoBehaviour
 
 
     /// <summary>
-    /// returns true if a team of that type is present at the node
+    /// returns teamID if a team of that type is present at the node, -1 otherwise
     /// </summary>
     /// <param name="teamArcID"></param>
     /// <returns></returns>
-    public bool CheckTeamPresent(int teamArcID)
+    public int CheckTeamPresent(int teamArcID)
     {
         if (listOfTeams.Count > 0 && teamArcID > -1)
         {
             foreach (Team team in listOfTeams)
             {
                 if (team.Arc.TeamArcID == teamArcID)
-                { return true; }
+                { return team.TeamID; }
             }
         }
-        return false;
-    }
-
-    /// <summary>
-    /// returns true if a team type is present at the node
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public bool CheckTeamPresent(TeamType type)
-    {
-        if (listOfTeams.Count > 0 && type != TeamType.None)
-        {
-            foreach (Team team in listOfTeams)
-            {
-                if (team.Arc.type == type)
-                { return true; }
-            }
-        }
-        return false;
+        return -1;
     }
 
     /// <summary>

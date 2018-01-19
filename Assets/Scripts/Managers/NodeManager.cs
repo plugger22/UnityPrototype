@@ -696,7 +696,7 @@ public class NodeManager : MonoBehaviour
                 //message
                 string text = string.Format("Player has moved to {0}", destination);
                 Message message = GameManager.instance.messageScript.PlayerMove(text, node.nodeID);
-                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                 //
                 // - - - Invisibility - - -
                 //
@@ -718,7 +718,7 @@ public class NodeManager : MonoBehaviour
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
                             node.nodeName, node.Arc.name.ToUpper(), moveDetails.nodeID);
                         Message messageAI = GameManager.instance.messageScript.AISpotMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
-                        if (messageAI != null) { GameManager.instance.dataScript.AddMessageNew(messageAI); }
+                        if (messageAI != null) { GameManager.instance.dataScript.AddMessage(messageAI); }
                     }
                     else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }
                 }
@@ -890,16 +890,9 @@ public class NodeManager : MonoBehaviour
     {
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //Erasure team picks up player immediately if invisibility 0
-        if (GameManager.instance.playerScript.invisibility == 0)
+        if (CheckPlayerCaptured(node) == true)
         {
-            if (node.CheckTeamPresent(TeamType.Erasure) == true)
-            {
-                outcomeDetails.textTop = "Player has been Captured";
-                outcomeDetails.textBottom = string.Format("An Erasure team has spotted and captured the Player at \"{0}\", {1}", node.nodeName, node.Arc.name);
-                outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-                outcomeDetails.isAction = false;
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-            }
+
         }
         //Normal Move  Outcome
         else
@@ -910,6 +903,50 @@ public class NodeManager : MonoBehaviour
             outcomeDetails.isAction = true;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
+    }
+
+    /// <summary>
+    /// Checks if player captured by an erasure team at the node. 
+    /// Node checked for null in parent method
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private bool CheckPlayerCaptured(Node node)
+    {
+        //Erasure team picks up player immediately if invisibility 0
+        if (GameManager.instance.playerScript.invisibility == 0)
+        {
+            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+            if (teamArcID > -1)
+            {
+                int teamID = node.CheckTeamPresent(teamArcID);
+                if (teamID > -1)
+                {
+                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                    if (team != null)
+                    {
+                        //PLAYER CAPTURED
+                        string text = string.Format("{0} {1} has spotted and captured the Player at \"{2}\", {3}", team.Arc.name.ToUpper(), team.Name,
+                              node.nodeName, node.Arc.name);
+                        //message
+                        Message message = GameManager.instance.messageScript.AICapture(text, node.nodeID, team.TeamID);
+                        GameManager.instance.dataScript.AddMessage(message);
+                        //player captured outcome window
+                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                        
+                        outcomeDetails.textTop = text; 
+                        outcomeDetails.textBottom = string.Format("{0}Player has been Captured{1}", colourEffectBad, colourEnd);
+                        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+                        outcomeDetails.isAction = false;
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+                        return true;
+                    }
+                    else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID));  }
+                }
+            }
+            else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
+        }
+        return false;
     }
 
 
@@ -925,7 +962,7 @@ public class NodeManager : MonoBehaviour
         //message -> gear compromised
         string textMsg = string.Format("{0}, ID {1} has been comprised while moving", gear.name, gear.gearID);
         Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.nodeID, gear.gearID);
-        if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
+        if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
         //return text string for builder
         return string.Format("{0}{1}{2}{3} has been compromised!{4}", "\n", "\n", colourEffectBad, gear.name, colourEnd);
     }
@@ -940,7 +977,7 @@ public class NodeManager : MonoBehaviour
         //message
         string textMsg = string.Format("{0}, ID {1} has been used while moving", gear.name, gear.gearID);
         Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
-        if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
+        if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
     }
 
     /// <summary>
@@ -955,7 +992,7 @@ public class NodeManager : MonoBehaviour
         //message
         string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
         Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
-        if (messageRenown != null) { GameManager.instance.dataScript.AddMessageNew(messageRenown); }
+        if (messageRenown != null) { GameManager.instance.dataScript.AddMessage(messageRenown); }
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
     }

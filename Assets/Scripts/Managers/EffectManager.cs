@@ -292,7 +292,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case EffectCriteria.TeamIdentical:
                                             //there can only be one team of a type at a node
-                                            if (node.CheckTeamPresent(teamArcID) == true)
+                                            if (node.CheckTeamPresent(teamArcID) > -1)
                                             { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
                                             break;
                                         case EffectCriteria.TeamPreferred:

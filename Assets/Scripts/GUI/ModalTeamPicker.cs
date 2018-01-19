@@ -275,7 +275,7 @@ public class ModalTeamPicker : MonoBehaviour
                     //if a team of that type is available (teamID > -1) check if a duplicate team already exists at node
                     else
                     {
-                        if (node.CheckTeamPresent(arcIndex) == true)
+                        if (node.CheckTeamPresent(arcIndex) > -1)
                         {
                             //change teamID to -1 (invalid team as you can't insert a team of a type already present at the node)
                             teamID = -1;

@@ -314,7 +314,7 @@ public class GearManager : MonoBehaviour
                                 //message
                                 string textMsg = string.Format("{0}, ID {1}, ({2}) has been acquired", gear.name, gear.gearID, gear.type, node.nodeID);
                                 Message messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
-                                if (messageGear != null) { GameManager.instance.dataScript.AddMessageNew(messageGear); }
+                                if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;
                                 List<Effect> listOfEffects = action.GetEffects();

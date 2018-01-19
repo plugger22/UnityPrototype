@@ -991,7 +991,7 @@ public class ActorManager : MonoBehaviour
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(), 
                             actorRecruited.actorID);
                         Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, Side.Resistance);
-                        if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                         //Process any other effects, if acquisition was successfull, ignore otherwise
                         Action action = actorCurrent.arc.nodeAction;
                         List<Effect> listOfEffects = action.GetEffects();
@@ -1089,7 +1089,7 @@ public class ActorManager : MonoBehaviour
                     string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(),
                         actorRecruited.actorID);
                     Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, Side.Authority);
-                    if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                    if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                     //actor successfully recruited
                     builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
                     builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,

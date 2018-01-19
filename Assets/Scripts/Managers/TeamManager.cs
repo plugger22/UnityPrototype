@@ -180,7 +180,7 @@ public class TeamManager : MonoBehaviour
                                 //message
                                 string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, node.nodeName, node.nodeID);
                                 Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.nodeID, team.TeamID, actor.actorID);
-                                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                             }
                             else { Debug.LogError(string.Format("Invalid actor (null) for actorSlotID {0}", team.ActorSlotID)); }
                         }
@@ -346,7 +346,7 @@ public void InitialiseTeams()
                                                 Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                                                 //message
                                                 Message message = GameManager.instance.messageScript.TeamDeploy(text, node.nodeID, team.TeamID, actor.actorID);
-                                                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                                             }
                                             else
                                             {
@@ -788,7 +788,7 @@ public void InitialiseTeams()
                             string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.Arc.name, team.Name, team.TeamID, 
                                 node.nodeName, node.nodeID);
                             Message message = GameManager.instance.messageScript.TeamWithdraw(text, data.nodeID, team.TeamID, actorID);
-                            if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                            if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                             Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                         }
                         else
@@ -849,7 +849,7 @@ public void InitialiseTeams()
                                 string text = string.Format("{0} {1}, ID {2}, neutralised at {3}, ID {4}", team.Arc.name, team.Name, team.TeamID,
                                     node.nodeName, node.nodeID);
                                 Message message = GameManager.instance.messageScript.TeamNeutralise(text, data.nodeID, team.TeamID, actor.actorID);
-                                if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                                 Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                                 //team successfully removed
                                 builderTop.Append(string.Format("{0}Operatives have succeeded!{1}", colourNormal, colourEnd));
@@ -927,7 +927,7 @@ public void InitialiseTeams()
                         GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                         string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
                         Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
-                        if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                     }
                 }
                 break;
@@ -946,7 +946,7 @@ public void InitialiseTeams()
                     //admin
                     string text = string.Format("{0} {1} effect: Spider inserted at \"{2}\", ID {3}", team.Arc.name, team.Name, node.nodeName, node.nodeID);
                     Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
-                    if (message != null) { GameManager.instance.dataScript.AddMessageNew(message); }
+                    if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                 }
                 break;
             case TeamType.Erasure:
