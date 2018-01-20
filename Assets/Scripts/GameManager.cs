@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TeamManager teamScript;                  //Team Manager
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
     [HideInInspector] public AIManager aiScript;                      //AI Manager
+    [HideInInspector] public ResistanceManager rebelScript;      //Resistance Manager
+    [HideInInspector] public AuthorityManager authorityScript;        //Authority Manager
     [HideInInspector] public MessageManager messageScript;            //Message Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
@@ -110,6 +112,8 @@ public class GameManager : MonoBehaviour
         turnScript = GetComponent<TurnManager>();
         inputScript = GetComponent<InputManager>();
         aiScript = GetComponent<AIManager>();
+        rebelScript = GetComponent<ResistanceManager>();
+        authorityScript = GetComponent<AuthorityManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipActorScript = TooltipActor.Instance();
@@ -151,7 +155,7 @@ public class GameManager : MonoBehaviour
         //immediately after levelScript
         dataScript.InitialiseLate();
         guiScript.Initialise();
-        inputScript.GameState = GameState.Normal;
+        inputScript.Initialise();
         actionScript.Initialise();
         effectScript.Initialise();
         targetScript.Initialise();
@@ -163,6 +167,8 @@ public class GameManager : MonoBehaviour
         teamPickerScript.Initialise();
         diceScript.Initialise();
         messageScript.Initialise();
+        rebelScript.Initialise();
+        authorityScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
     }

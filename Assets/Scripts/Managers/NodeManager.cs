@@ -902,6 +902,7 @@ public class NodeManager : MonoBehaviour
             outcomeDetails.textBottom = textBottom;
             outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
             outcomeDetails.isAction = true;
+            outcomeDetails.side = Side.Resistance;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }
@@ -927,7 +928,7 @@ public class NodeManager : MonoBehaviour
                     if (team != null)
                     {
                         //PLAYER CAPTURED
-                        string text = string.Format("Player has been captured by an Erasure Team at \"{0}\", {1}", node.nodeName, node.Arc.name);
+                        string text = string.Format("Player Captured at \"{0}\", {1}", node.nodeName, node.Arc.name.ToUpper());
                         //message
                         Message message = GameManager.instance.messageScript.AICapture(text, node.nodeID, team.TeamID);
                         GameManager.instance.dataScript.AddMessage(message);
@@ -947,6 +948,7 @@ public class NodeManager : MonoBehaviour
                         outcomeDetails.textBottom = string.Format("{0}Player has been Captured{1}", colourEffectBad, colourEnd);
                         outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
                         outcomeDetails.isAction = false;
+                        outcomeDetails.side = Side.Resistance;
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
                         return true;
                     }

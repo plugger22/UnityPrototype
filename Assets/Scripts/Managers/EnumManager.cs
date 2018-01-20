@@ -80,6 +80,7 @@ namespace gameAPI
         //AI
         AI_SpotMove,
         AI_Capture,
+        AI_Release,
         //Gear
         Gear_Comprised,
         Gear_Used,

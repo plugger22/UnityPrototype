@@ -9,10 +9,9 @@ using System.Text;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    [HideInInspector] public int rebelCauseMax;                         //level of Rebel Support. Max out to Win the level. Max level is a big part of difficulty.
-    [HideInInspector] public int rebelCauseCurrent;                    //current level of Rebel Support
     [HideInInspector] public int numOfRecruits;
     [HideInInspector] public int invisibility;
+    [HideInInspector] public int actorID = 999;
     
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
@@ -73,8 +72,7 @@ public class PlayerManager : MonoBehaviour
         Renown = 0;
         invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
-        rebelCauseMax = 10;
-        rebelCauseCurrent = 0;
+
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name.ToUpper(), node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
@@ -214,8 +212,10 @@ public class PlayerManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
         { builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
+        builder.Append(string.Format(" State {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
         builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}{3}", numOfRecruits, GameManager.instance.dataScript.GetNumOfActorsInReserve(), "\n", "\n"));
-        builder.Append(string.Format(" Resistance Cause  {0} of {1}", rebelCauseCurrent, rebelCauseMax));
+        builder.Append(string.Format(" Resistance Cause  {0} of {1}", GameManager.instance.rebelScript.rebelCauseCurrent, 
+            GameManager.instance.rebelScript.rebelCauseMax));
         builder.Append(string.Format("{0}{1} Gear{2}", "\n", "\n", "\n"));
         if (listOfGear.Count > 0)
         {
@@ -262,6 +262,33 @@ public class PlayerManager : MonoBehaviour
         }
         return builder.ToString();
     }
+
+    
+    /// <summary>
+    /// DEBUG method to release player from captitivity
+    /// </summary>
+    public void ReleasePlayer()
+    {
+        //update nodes
+        int nodeID = GameManager.instance.nodeScript.nodeCaptured;
+        GameManager.instance.nodeScript.nodePlayer = nodeID;
+        GameManager.instance.nodeScript.nodeCaptured = -1;
+        //reset state
+        GameManager.instance.turnScript.resistanceState = ResistanceState.Normal;
+        //update map
+        GameManager.instance.nodeScript.NodeRedraw = true;
+        //message
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            string text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name.ToUpper());
+            Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, 999);
+            GameManager.instance.dataScript.AddMessage(message);
+        }
+        else { Debug.LogError(string.Format("Invalid node (Null) for nodeId {0}", nodeID)); }
+    }
+
+
 
     //place new methods above here
 }

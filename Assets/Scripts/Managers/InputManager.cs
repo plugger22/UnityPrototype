@@ -11,6 +11,11 @@ public class InputManager : MonoBehaviour
 
     private GameState _gameState;
 
+    public void Initialise()
+    {
+        GameState = GameState.Normal;
+    }
+
     //needs to be updated whenever changed
     public GameState GameState
     {

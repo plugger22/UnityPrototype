@@ -1663,6 +1663,9 @@ public class DataManager : MonoBehaviour
     {
         if (message != null)
         {
+            //Generate a Debug Message for the log
+            Debug.Log(string.Format("Message: {0}{1}", message.text, "\n"));
+            //auto sort
             switch (message.isPublic)
             {
                 case true:
