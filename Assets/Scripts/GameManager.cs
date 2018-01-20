@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
+    [HideInInspector] public HelpManager helpScript;                  //Help Manager
     [HideInInspector] public TurnManager turnScript;                  //Turn Manager
     [HideInInspector] public InputManager inputScript;                //Input Manager
     [HideInInspector] public EffectManager effectScript;              //Effect Manager
@@ -105,6 +106,7 @@ public class GameManager : MonoBehaviour
         colourScript = GetComponent<ColourManager>();
         tooltipScript = GetComponent<TooltipManager>();
         sideScript = GetComponent<SideManager>();
+        helpScript = GetComponent<HelpManager>();
         turnScript = GetComponent<TurnManager>();
         inputScript = GetComponent<InputManager>();
         aiScript = GetComponent<AIManager>();

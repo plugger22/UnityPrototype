@@ -70,11 +70,12 @@ public class DebugGUI : MonoBehaviour
             //
 
             //first button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Authority Recruit"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Help"))
             {
-                Debug.Log("Button -> Authority Recruit Actor");
-                if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
-                { GameManager.instance.actorScript.RecruitActor(2); }
+                Debug.Log("Button -> Toggle Help");
+                if (debugDisplay != 13)
+                { debugDisplay = 13; }
+                else { debugDisplay = 0; }
             }
 
             //second button
@@ -106,17 +107,17 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Change Side"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Actor Pools"))
             {
-                Debug.Log("Button -> Swap sides");
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
-                { GameManager.instance.sideScript.PlayerSide = Side.Authority; }
-                else { GameManager.instance.sideScript.PlayerSide = Side.Resistance; }
+                Debug.Log("Button -> Toggle Actor Pools");
+                if (debugDisplay != 6)
+                { debugDisplay = 6; }
+                else { debugDisplay = 0; }
             }
 
 
             //sixth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Analysis"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Actor Analysis"))
             {
                 Debug.Log("Button -> Toggle Node/Actors Analysis");
                 if (debugDisplay != 1)
@@ -152,12 +153,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Actor Pools"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
             {
-                Debug.Log("Button -> Toggle Actor Pools");
-                if (debugDisplay != 6)
-                { debugDisplay = 6; }
-                else { debugDisplay = 0; }
+
             }
 
             //eleventh button
@@ -187,16 +185,6 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //fourteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Remove Tracer"))
-            {
-                Debug.Log(string.Format("Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n"));
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
-                {
-                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                    if (node != null) { node.RemoveTracer(); } else { Debug.LogError("Invalid current Player node (Null)"); }
-                }
-            }
 
             //
             // - - - Options (second box)
@@ -224,6 +212,38 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.optionScript.autoGearResolution = true;
                     optionAutoGear = "Auto Gear OFF";
+                }
+            }
+
+            //
+            // - - - Actions (third box)
+            //
+
+            //first button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Swap Sides"))
+            {
+                Debug.Log("Button -> Swap sides");
+                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                { GameManager.instance.sideScript.PlayerSide = Side.Authority; }
+                else { GameManager.instance.sideScript.PlayerSide = Side.Resistance; }
+            }
+
+            //second button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Recruit Authority"))
+            {
+                Debug.Log("Button -> Authority Recruit Actor");
+                if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+                { GameManager.instance.actorScript.RecruitActor(2); }
+            }
+
+            //third button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Remove Tracer"))
+            {
+                Debug.Log(string.Format("Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n"));
+                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    if (node != null) { node.RemoveTracer(); } else { Debug.LogError("Invalid current Player node (Null)"); }
                 }
             }
 
@@ -316,6 +336,12 @@ public class DebugGUI : MonoBehaviour
                     case 12:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.optionScript.DisplayOptions();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
+                        break;
+                    //Help
+                    case 13:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.helpScript.DisplayHelp();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                         break;
                 }
