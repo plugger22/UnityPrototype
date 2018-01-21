@@ -86,6 +86,9 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
+        bool isCaptured = false;
+        Node nodeCaptured = null;
+        Actor actorCaptured = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
@@ -119,13 +122,13 @@ public class ActionManager : MonoBehaviour
                             //
                             // - - - Process effects
                             //
+                            
                             foreach (Effect effect in listOfEffects)
                             {
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                                 if (effectReturn != null)
                                 {
                                     outcomeDetails.sprite = actor.arc.actionSprite;
-
                                     //update stringBuilder texts
                                     if (effectReturn.topText.Length > 0)
                                     {
@@ -138,6 +141,13 @@ public class ActionManager : MonoBehaviour
                                     if (effectReturn.errorFlag == true) { break; }
                                     //valid action? -> only has to be true once for an action to be valid
                                     if (effectReturn.isAction == true) { isAction = true; }
+                                    //actor has been captured?
+                                    if (effectReturn.isCaptured == true)
+                                    {
+                                        isCaptured = true;
+                                        actorCaptured = actor;
+                                        nodeCaptured = node;
+                                    }
                                 }
                                 else
                                 {
@@ -195,6 +205,10 @@ public class ActionManager : MonoBehaviour
         { outcomeDetails.isAction = true; }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+
+        //has actor been captured?
+        if (isCaptured == true)
+        { GameManager.instance.rebelScript.CaptureActor(nodeCaptured, GameManager.instance.dataScript.GetTeam(1), actorCaptured); }
 
     }
 

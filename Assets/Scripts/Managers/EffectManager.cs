@@ -13,6 +13,7 @@ public class EffectReturn
     public string bottomText { get; set; }
     public bool errorFlag { get; set; }
     public bool isAction;
+    public bool isCaptured;                 //used if actor is captured by an erasure team while carrying out an actor action at a node with invisibility 0
 }
 
 
@@ -158,7 +159,6 @@ public class EffectManager : MonoBehaviour
                         errorFlag = true;
                     }
                 }
-
                 //O.K to proceed?
                 if (errorFlag == false)
                 {
@@ -400,7 +400,6 @@ public class EffectManager : MonoBehaviour
         effectReturn.topText = "";
         effectReturn.bottomText = "";
         effectReturn.isAction = false;
-        
         //valid effect?
         if (effect != null)
         {
@@ -672,7 +671,6 @@ public class EffectManager : MonoBehaviour
                                             //mincap zero
                                             invisibility = Mathf.Max(0, invisibility);
                                             GameManager.instance.playerScript.invisibility = invisibility;
-                                            
                                         }
                                         break;
                                 }
@@ -692,6 +690,26 @@ public class EffectManager : MonoBehaviour
                                         { actor.datapoint2--; }
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
                                         break;
+                                }
+                                //check for an erasure team detecting actor (must have invisibility '0')
+                                if (actor.datapoint2 == 0)
+                                {
+                                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                                    if (teamArcID > -1)
+                                    {
+                                        teamID = node.CheckTeamPresent(teamArcID);
+                                        if (teamID > -1)
+                                        {
+                                            Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                                            if (team != null)
+                                            {
+                                                //Actor Captured
+                                                effectReturn.isCaptured = true;
+                                            }   
+                                            else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                                        }
+                                    }
+                                    else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
                                 }
                             }
                         }
