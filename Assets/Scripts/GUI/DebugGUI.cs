@@ -252,7 +252,7 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("Button -> Release Player");
                 if (GameManager.instance.turnScript.resistanceState == ResistanceState.Captured)
-                { GameManager.instance.playerScript.ReleasePlayer(); }
+                { GameManager.instance.rebelScript.ReleasePlayer(); }
             }
 
             //

@@ -927,29 +927,8 @@ public class NodeManager : MonoBehaviour
                     Team team = GameManager.instance.dataScript.GetTeam(teamID);
                     if (team != null)
                     {
-                        //PLAYER CAPTURED
-                        string text = string.Format("Player Captured at \"{0}\", {1}", node.nodeName, node.Arc.name.ToUpper());
-                        //message
-                        Message message = GameManager.instance.messageScript.AICapture(text, node.nodeID, team.TeamID);
-                        GameManager.instance.dataScript.AddMessage(message);
-                        //update node trackers
-                        nodePlayer = -1;
-                        nodeCaptured = node.nodeID;
-                        //change player state
-                        GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
-                        //add renown to authority actor who owns the team
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
-                        if (actor != null)
-                        { actor.renown++; }
-                        else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", team.ActorSlotID)); }
-                        //player captured outcome window
-                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                        outcomeDetails.textTop = text; 
-                        outcomeDetails.textBottom = string.Format("{0}Player has been Captured{1}", colourEffectBad, colourEnd);
-                        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-                        outcomeDetails.isAction = false;
-                        outcomeDetails.side = Side.Resistance;
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+                        //Player Captured
+                        GameManager.instance.rebelScript.CapturePlayer(node, team);
                         return true;
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID));  }
