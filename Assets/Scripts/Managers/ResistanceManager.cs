@@ -131,6 +131,8 @@ public class ResistanceManager : MonoBehaviour
         }
         //invisibility set to zero (most likely already is)
         GameManager.instance.playerScript.invisibility = 0;
+        //update map
+        GameManager.instance.nodeScript.NodeRedraw = true;
         //player captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         outcomeDetails.textTop = text;
@@ -170,6 +172,8 @@ public class ResistanceManager : MonoBehaviour
             cause, colourEnd, "\n", "\n"));
         //invisibility set to zero (most likely already is)
         details.actor.datapoint2 = 0;
+        //update map
+        GameManager.instance.nodeScript.NodeRedraw = true;
         //actor captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         outcomeDetails.textTop = text;

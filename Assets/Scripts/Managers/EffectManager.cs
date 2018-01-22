@@ -576,6 +576,7 @@ public class EffectManager : MonoBehaviour
                                 if (nodeNeighbour.isSpider == true)
                                 { nodeNeighbour.isSpiderKnown = true; }
                             }
+                            effectReturn.isAction = true;
                         }
                         else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
                         //dialogue
@@ -656,18 +657,20 @@ public class EffectManager : MonoBehaviour
                                         }
                                         else
                                         {
-                                            //no gear present
+                                            //No gear present
                                             int invisibility = GameManager.instance.playerScript.invisibility;
                                             //double effect if spider is present
                                             if (node.isSpider == true)
                                             {
                                                 invisibility -= 2;
-                                                effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourOutcome2, colourEnd);
+                                                effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider) (Now {1}){2}", colourOutcome2, 
+                                                    invisibility, colourEnd);
                                             }
                                             else
                                             {
                                                 invisibility -= 1;
-                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome2, effect.description, colourEnd);
+                                                effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description, 
+                                                    invisibility, colourEnd);
                                             }
                                             //mincap zero
                                             invisibility = Mathf.Max(0, invisibility);

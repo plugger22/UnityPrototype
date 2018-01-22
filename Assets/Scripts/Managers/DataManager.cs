@@ -1481,12 +1481,23 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="arc"></param>
     /// <returns></returns>
-    public bool CheckActorArcPresent(ActorArc arc)
+    public bool CheckActorArcPresent(ActorArc arc, Side side)
     {
-        foreach(Actor actor in arrayOfActors)
+        if (arc != null)
         {
-            if (actor.arc == arc && actor.isLive == true) { return true; }
+            /*foreach (Actor actor in arrayOfActors)
+            {
+                if (actor.arc == arc && actor.isLive == true) { return true; }
+            }*/
+            int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
+            for (int i = 0; i < numOfActors - 1; i++)
+            {
+                Actor actor = arrayOfActors[(int)side, i];
+                if (actor.arc == arc && actor.isLive == true) { return true; }
+            }
+            return false;
         }
+        Debug.LogError("Invalid arc (Null)");
         return false;
     }
 
@@ -1505,7 +1516,7 @@ public class DataManager : MonoBehaviour
         {
             Actor actor = GetActor(authorityActorReserve[i]);
             if (actor != null)
-            { builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}",actor.actorID, actor.arc.name.ToLower(), actor.level, 
+            { builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}",actor.actorID, actor.arc.name, actor.level, 
                 actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n")); }
             else { builder.Append(string.Format("Error for actorID {0}", authorityActorReserve[i])); }
         }
@@ -1516,7 +1527,7 @@ public class DataManager : MonoBehaviour
             Actor actor = GetActor(resistanceActorReserve[i]);
             if (actor != null)
             {
-                builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name.ToLower(), actor.level,
+                builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name, actor.level,
                   actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n"));
             }
             else { builder.Append(string.Format("Error for actorID {0}", resistanceActorReserve[i])); }

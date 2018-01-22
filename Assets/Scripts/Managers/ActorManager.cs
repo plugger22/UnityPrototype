@@ -363,7 +363,7 @@ public class ActorManager : MonoBehaviour
                         bool targetProceed = false;
                         //can tackle target if Player at node or target specified actor is present in line-up
                         if (nodeID == playerID) { targetProceed = true; }
-                        else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc) == true) { targetProceed = true; }
+                        else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, Side.Resistance) == true) { targetProceed = true; }
                         //target live and dancing
                         if (targetProceed == true)
                         {
@@ -960,6 +960,11 @@ public class ActorManager : MonoBehaviour
     private void ProcessRecruitChoiceResistance(GenericReturnData data)
     {
         bool successFlag = true;
+        //captured details to pass through
+        bool isCaptured = false;
+        Node nodeCaptured = null;
+        Actor actorCaptured = null;
+        Team teamCaptured = null;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
@@ -1012,6 +1017,16 @@ public class ActorManager : MonoBehaviour
                                             builderBottom.AppendLine();
                                             builderBottom.AppendLine();
                                             builderBottom.Append(effectReturn.bottomText);
+                                            //exit effect loop on error
+                                            if (effectReturn.errorFlag == true) { break; }
+                                            //actor has been captured?
+                                            if (effectReturn.isCaptured == true)
+                                            {
+                                                isCaptured = true;
+                                                actorCaptured = actorCurrent;
+                                                nodeCaptured = node;
+                                                teamCaptured = effectReturn.team;
+                                            }
                                         }
                                         else { Debug.LogError("Invalid effectReturn (Null)"); }
                                     }
@@ -1049,14 +1064,38 @@ public class ActorManager : MonoBehaviour
         //
         // - - - Outcome - - - 
         //
-        ModalOutcomeDetails details = new ModalOutcomeDetails();
-        details.textTop = builderTop.ToString();
-        details.textBottom = builderBottom.ToString();
-        details.sprite = sprite;
-        details.side = side;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.textTop = builderTop.ToString();
+        outcomeDetails.textBottom = builderBottom.ToString();
+        outcomeDetails.sprite = sprite;
+        outcomeDetails.side = side;
+        //action expended automatically for recruit actor
         if (successFlag == true)
-        { details.isAction = true; }
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        { outcomeDetails.isAction = true; }
+        //has actor been captured?
+        if (isCaptured == true)
+        {
+            AIDetails aiDetails = new AIDetails();
+            aiDetails.node = nodeCaptured;
+            aiDetails.team = teamCaptured;
+            aiDetails.effects = outcomeDetails.textBottom;
+            if (nodeCaptured.nodeID == GameManager.instance.nodeScript.nodePlayer)
+            {
+                //player captured
+                EventManager.instance.PostNotification(EventType.CapturePlayer, this, aiDetails);
+            }
+            else
+            {
+                //actor captured
+                aiDetails.actor = actorCaptured;
+                EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
+            }
+        }
+        else
+        {
+            //generate a create modal window event
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
     }
 
     /// <summary>
@@ -1073,7 +1112,7 @@ public class ActorManager : MonoBehaviour
         if (data.optionID > -1)
         {
             //find actor
-                Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
+            Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
             if (actorRecruited != null)
             {
                 //add actor to reserve pool
