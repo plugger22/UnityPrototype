@@ -86,9 +86,11 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
+        //captured details to pass through
         bool isCaptured = false;
         Node nodeCaptured = null;
         Actor actorCaptured = null;
+        Team teamCaptured = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
@@ -147,6 +149,7 @@ public class ActionManager : MonoBehaviour
                                         isCaptured = true;
                                         actorCaptured = actor;
                                         nodeCaptured = node;
+                                        teamCaptured = effectReturn.team;
                                     }
                                 }
                                 else
@@ -206,13 +209,21 @@ public class ActionManager : MonoBehaviour
         //has actor been captured?
         if (isCaptured == true)
         {
-            //GameManager.instance.rebelScript.CaptureActor(nodeCaptured, GameManager.instance.dataScript.GetTeam(1), actorCaptured);
             AIDetails aiDetails = new AIDetails();
             aiDetails.node = nodeCaptured;
-            aiDetails.team = GameManager.instance.dataScript.GetTeam(1);
-            aiDetails.actor = actorCaptured;
+            aiDetails.team = teamCaptured;
             aiDetails.effects = outcomeDetails.textBottom;
-            EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
+            if (nodeCaptured.nodeID == GameManager.instance.nodeScript.nodePlayer)
+            {
+                //player captured
+                EventManager.instance.PostNotification(EventType.CapturePlayer, this, aiDetails);
+            }
+            else
+            {
+                //actor captured
+                aiDetails.actor = actorCaptured;
+                EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
+            }
         }
         else
         {

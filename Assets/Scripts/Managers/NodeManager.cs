@@ -928,7 +928,10 @@ public class NodeManager : MonoBehaviour
                     if (team != null)
                     {
                         //Player Captured
-                        GameManager.instance.rebelScript.CapturePlayer(node, team);
+                        AIDetails details = new AIDetails();
+                        details.node = node;
+                        details.team = team;
+                        EventManager.instance.PostNotification(EventType.CapturePlayer, this, details);
                         return true;
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID));  }

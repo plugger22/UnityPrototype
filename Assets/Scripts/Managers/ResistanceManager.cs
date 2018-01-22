@@ -35,6 +35,7 @@ public class ResistanceManager : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.CaptureActor, OnEvent);
+        EventManager.instance.AddListener(EventType.CapturePlayer, OnEvent);
     }
 
     /// <summary>
@@ -51,9 +52,13 @@ public class ResistanceManager : MonoBehaviour
             case EventType.ChangeColour:
                 SetColours();
                 break;
+            case EventType.CapturePlayer:
+                AIDetails detailsPlayer = Param as AIDetails;
+                CapturePlayer(detailsPlayer);
+                break;
             case EventType.CaptureActor:
-                AIDetails details = Param as AIDetails;
-                CaptureActor(details);
+                AIDetails detailsActor = Param as AIDetails;
+                CaptureActor(detailsActor);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -80,26 +85,29 @@ public class ResistanceManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <param name="team"></param>
-    public void CapturePlayer(Node node, Team team)
+    public void CapturePlayer(AIDetails details)
     {
         //PLAYER CAPTURED
-        string text = string.Format("Player Captured at \"{0}\", {1}", node.nodeName, node.Arc.name.ToUpper());
+        string text = string.Format("Player Captured at \"{0}\", {1}", details.node.nodeName, details.node.Arc.name.ToUpper());
         //effects builder
         StringBuilder builder = new StringBuilder();
+        //any carry over text?
+        if (string.IsNullOrEmpty(details.effects) == false)
+        { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
         builder.Append(string.Format("{0}Player has been Captured{1}{2}{3}", colourBad, colourEnd, "\n", "\n"));
         //message
-        Message message = GameManager.instance.messageScript.AICapture(text, node.nodeID, team.TeamID);
+        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.TeamID);
         GameManager.instance.dataScript.AddMessage(message);
         //update node trackers
         GameManager.instance.nodeScript.nodePlayer = -1;
-        GameManager.instance.nodeScript.nodeCaptured = node.nodeID;
+        GameManager.instance.nodeScript.nodeCaptured = details.node.nodeID;
         //change player state
         GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
         //add renown to authority actor who owns the team
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.ActorSlotID, Side.Authority);
         if (actor != null)
         { actor.renown++; }
-        else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", team.ActorSlotID)); }
+        else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.ActorSlotID)); }
         //lower resistance Cause
         int cause = resistanceCause;
         cause -= playerCaptured;

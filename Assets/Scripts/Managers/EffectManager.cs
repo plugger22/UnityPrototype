@@ -14,6 +14,7 @@ public class EffectReturn
     public bool errorFlag { get; set; }
     public bool isAction;
     public bool isCaptured;                 //used if actor is captured by an erasure team while carrying out an actor action at a node with invisibility 0
+    public Team team;                       //used if actor captured, for example. Ignore otherwise
 }
 
 
@@ -671,6 +672,28 @@ public class EffectManager : MonoBehaviour
                                             //mincap zero
                                             invisibility = Mathf.Max(0, invisibility);
                                             GameManager.instance.playerScript.invisibility = invisibility;
+                                            //check for an erasure team detecting actor (must have invisibility '0')
+                                            if (invisibility == 0)
+                                            {
+                                                teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                                                if (teamArcID > -1)
+                                                {
+                                                    teamID = node.CheckTeamPresent(teamArcID);
+                                                    if (teamID > -1)
+                                                    {
+                                                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                                                        if (team != null)
+                                                        {
+                                                            //Player Captured
+                                                            effectReturn.isCaptured = true;
+                                                            effectReturn.team = team;
+                                                        }
+                                                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                                                    }
+                                                }
+                                                else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
+                                            }
+
                                         }
                                         break;
                                 }
@@ -686,9 +709,21 @@ public class EffectManager : MonoBehaviour
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.actorName, effect.description, colourEnd);
                                         break;
                                     case Result.Subtract:
-                                        if (actor.datapoint2 > 0)
-                                        { actor.datapoint2--; }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
+                                        int invisibility = actor.datapoint2;
+                                        //double effect if spider is present
+                                        if (node.isSpider == true)
+                                        {
+                                            invisibility -= 2;
+                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourOutcome2, actor.actorName, colourEnd);
+                                        }
+                                        else
+                                        {
+                                            invisibility -= 1;
+                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
+                                        }
+                                        //mincap zero
+                                        invisibility = Mathf.Max(0, invisibility);
+                                        actor.datapoint2 = invisibility;
                                         break;
                                 }
                                 //check for an erasure team detecting actor (must have invisibility '0')
@@ -705,6 +740,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 //Actor Captured
                                                 effectReturn.isCaptured = true;
+                                                effectReturn.team = team;
                                             }   
                                             else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                         }

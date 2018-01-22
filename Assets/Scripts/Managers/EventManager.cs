@@ -67,6 +67,7 @@ public enum EventType
     DiceRenownNo,
     DiceReturn,
     //AI
+    CapturePlayer,
     CaptureActor
 };
 
