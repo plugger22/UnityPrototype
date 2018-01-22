@@ -108,6 +108,7 @@ public class ModalOutcome : MonoBehaviour
     //public void SetModalOutcome(Side side, string textTop, string textBottom, Sprite sprite = null)
     public void SetModalOutcome(ModalOutcomeDetails details)
     {
+        Debug.Log(string.Format("Outcome: {0}{1}", details.textTop, "\n"));
         //set modal true
         GameManager.instance.SetIsBlocked(true);
         //open panel at start, the modal window is already active on the panel

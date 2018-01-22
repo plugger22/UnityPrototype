@@ -34,6 +34,7 @@ public class ResistanceManager : MonoBehaviour
         resistanceCause = 0;
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.CaptureActor, OnEvent);
     }
 
     /// <summary>
@@ -49,6 +50,10 @@ public class ResistanceManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.CaptureActor:
+                AIDetails details = Param as AIDetails;
+                CaptureActor(details);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -135,16 +140,18 @@ public class ResistanceManager : MonoBehaviour
     /// <param name="node"></param>
     /// <param name="team"></param>
     /// <param name="actor"></param>
-    public void CaptureActor(Node node, Team team, Actor actor)
-    {
-        //ACTOR CAPTURED
-        string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", actor.actorName, node.nodeName, node.Arc.name.ToUpper());
+    public void CaptureActor(AIDetails details)
+    {        
         //effects builder
         StringBuilder builder = new StringBuilder();
-        builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, actor.arc.name.ToUpper(), colourEnd, "\n", "\n"));
-        actor.status = ActorStatus.Captured;
+        //any carry over text?
+        if (string.IsNullOrEmpty(details.effects) == false)
+        { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
+        string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", details.actor.actorName, details.node.nodeName, details.node.Arc.name.ToUpper());
+        builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name.ToUpper(), colourEnd, "\n", "\n"));
+        details.actor.status = ActorStatus.Captured;
         //message
-        Message message = GameManager.instance.messageScript.AICapture(text, node.nodeID, team.TeamID, actor.actorID);
+        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.TeamID, details.actor.actorID);
         GameManager.instance.dataScript.AddMessage(message);
         //lower resistance Cause
         int cause = resistanceCause;
@@ -154,7 +161,7 @@ public class ResistanceManager : MonoBehaviour
         builder.Append(string.Format("{0}Resistance Cause -{1} (Now {2}){3}{4}{5}", colourBad, playerCaptured,
             cause, colourEnd, "\n", "\n"));
         //invisibility set to zero (most likely already is)
-        actor.datapoint2 = 0;
+        details.actor.datapoint2 = 0;
         //actor captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         outcomeDetails.textTop = text;

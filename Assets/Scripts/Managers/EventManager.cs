@@ -65,7 +65,9 @@ public enum EventType
     DiceConfirm,
     DiceRenownYes,
     DiceRenownNo,
-    DiceReturn
+    DiceReturn,
+    //AI
+    CaptureActor
 };
 
 //EventManager to send events to listeners
@@ -148,7 +150,6 @@ public class EventManager : MonoBehaviour
                 Debug.Log(string.Format("EventManager: PostNotification -> type: {0}{1}", eventType, "\n"));
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);
-                //Debug.Log(string.Format("PostNotification -> eventType: {0} sender: {1}{2}", eventType, Sender.name, "\n"));
             }
         }
     }

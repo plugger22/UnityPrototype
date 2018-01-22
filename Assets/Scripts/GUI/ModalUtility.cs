@@ -162,5 +162,20 @@ namespace modalAPI
         public int nodeID;
         public int actorSlotID;                    
     }
+
+    //
+    // - - - AI return
+    //
+
+    /// <summary>
+    /// General Purpose data container to send to AI functions, eg. CaptureActor
+    /// </summary>
+    public class AIDetails
+    {
+        public Node node;
+        public Team team;
+        public Actor actor;
+        public string effects;                  //carry over effects for a combined outcome window, eg insert tracer and then get captured
+    }
 }
 

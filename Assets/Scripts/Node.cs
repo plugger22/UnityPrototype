@@ -456,7 +456,7 @@ public class Node : MonoBehaviour
             if (listOfTeams[i].TeamID == teamID)
             {
                 listOfTeams.RemoveAt(i);
-                Debug.Log(string.Format("TeamID {0} removed from Node ID {1}", teamID, nodeID));
+                Debug.Log(string.Format("TeamID {0} removed from Node ID {1}{2}", teamID, nodeID, "\n"));
                 return true;
             }
         }

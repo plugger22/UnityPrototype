@@ -170,7 +170,7 @@ public class NodeManager : MonoBehaviour
         {
             ResetNodes();
             nodeHighlight = highlightID;
-            Debug.Log("Highlighted node " + highlightID);
+            Debug.Log(string.Format("Highlighted nodeID {0}{1}", highlightID, "\n"));
         }
         else
         {

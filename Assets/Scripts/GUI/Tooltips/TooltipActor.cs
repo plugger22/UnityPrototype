@@ -172,7 +172,7 @@ public class TooltipActor : MonoBehaviour
             actorStats.text = builder.ToString();
         }
 
-        Debug.Log("ScreenPos " + screenPos.x + " : " + screenPos.y + "  W: " + width + " H: " + height + "ScreenHeight: " + Screen.height + "\n");
+        //Debug.Log("ScreenPos " + screenPos.x + " : " + screenPos.y + "  W: " + width + " H: " + height + " ScreenHeight: " + Screen.height + "\n");
 
         /*//calculate offset - height (default above)
         //screenPos.y += height / 2 + offset * 3;*/

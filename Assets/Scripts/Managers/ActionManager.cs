@@ -203,12 +203,22 @@ public class ActionManager : MonoBehaviour
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
         { outcomeDetails.isAction = true; }
-        //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-
         //has actor been captured?
         if (isCaptured == true)
-        { GameManager.instance.rebelScript.CaptureActor(nodeCaptured, GameManager.instance.dataScript.GetTeam(1), actorCaptured); }
+        {
+            //GameManager.instance.rebelScript.CaptureActor(nodeCaptured, GameManager.instance.dataScript.GetTeam(1), actorCaptured);
+            AIDetails aiDetails = new AIDetails();
+            aiDetails.node = nodeCaptured;
+            aiDetails.team = GameManager.instance.dataScript.GetTeam(1);
+            aiDetails.actor = actorCaptured;
+            aiDetails.effects = outcomeDetails.textBottom;
+            EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
+        }
+        else
+        {
+            //generate a create modal window event
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
 
     }
 
