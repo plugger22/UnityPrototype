@@ -159,7 +159,6 @@ public class ResistanceManager : MonoBehaviour
         { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
         string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", details.actor.actorName, details.node.nodeName, details.node.Arc.name.ToUpper());
         builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name.ToUpper(), colourEnd, "\n", "\n"));
-        details.actor.status = ActorStatus.Captured;
         //message
         Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.TeamID, details.actor.actorID);
         GameManager.instance.dataScript.AddMessage(message);
@@ -174,6 +173,11 @@ public class ResistanceManager : MonoBehaviour
         details.actor.datapoint2 = 0;
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
+        //reduce actor alpha to show inactive (sprite and text)
+        GameManager.instance.guiScript.UpdateActorAlpha(details.actor.slotID, 0.45f);
+        //admin
+        GameManager.instance.actorScript.numOfActiveActors--;
+        details.actor.status = ActorStatus.Captured;
         //actor captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         outcomeDetails.textTop = text;

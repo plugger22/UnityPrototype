@@ -11,7 +11,7 @@ using TMPro;
 public class GUIManager : MonoBehaviour
 {
 
-
+    //Actor display at bottom
     private GameObject Actor0;
     private GameObject Actor1;
     private GameObject Actor2;
@@ -26,6 +26,11 @@ public class GUIManager : MonoBehaviour
     private TextMeshProUGUI type1;
     private TextMeshProUGUI type2;
     private TextMeshProUGUI type3;
+
+    private CanvasGroup canvas0;
+    private CanvasGroup canvas1;
+    private CanvasGroup canvas2;
+    private CanvasGroup canvas3;
 
     List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();
     List<Image> listOfActorPortraits = new List<Image>();
@@ -60,6 +65,11 @@ public class GUIManager : MonoBehaviour
         type1 = Actor1.GetComponentInChildren<TextMeshProUGUI>();
         type2 = Actor2.GetComponentInChildren<TextMeshProUGUI>();
         type3 = Actor3.GetComponentInChildren<TextMeshProUGUI>();
+        //Canvas Group references
+        canvas0 = Actor0.GetComponent<CanvasGroup>();
+        canvas1 = Actor1.GetComponent<CanvasGroup>();
+        canvas2 = Actor2.GetComponent<CanvasGroup>();
+        canvas3 = Actor3.GetComponent<CanvasGroup>();
         //populate lists
         listOfActorTypes.Add(type0);
         listOfActorTypes.Add(type1);
@@ -96,10 +106,14 @@ public class GUIManager : MonoBehaviour
         }
     }
 
+    //
+    // - - - Actors - - -
+    //
+
     /// <summary>
     /// places actor data (type and sprite) into GUI elements via lists
     /// </summary>
-    public void UpdateActorGUI()
+    private void UpdateActorGUI()
     {
         int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
@@ -117,5 +131,34 @@ public class GUIManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfActors (Null)"); }
     }
+
+    /// <summary>
+    /// changes the alpha of an actor sprite and text
+    /// </summary>
+    /// <param name="actorSlotID"></param>
+    /// <param name="alpha"></param>
+    public void UpdateActorAlpha(int actorSlotID, float alpha)
+    {
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID");
+        switch(actorSlotID)
+        {
+            case 0:
+                canvas0.alpha = alpha;
+                break;
+            case 1:
+                canvas1.alpha = alpha;
+                break;
+            case 2:
+                canvas2.alpha = alpha;
+                break;
+            case 3:
+                canvas3.alpha = alpha;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid actorSlotID {0}", actorSlotID));
+                break;
+        }
+    }
+
 
 }

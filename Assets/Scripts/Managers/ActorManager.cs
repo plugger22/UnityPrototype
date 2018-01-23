@@ -14,7 +14,7 @@ using UnityEngine.Events;
 public class ActorManager : MonoBehaviour
 {
 
-    [HideInInspector] public int numOfActiveActors;    //NOTE -> Not hooked up yet (need to show blank actors for any that aren't currently in use)
+    [HideInInspector] public int numOfActiveActors;    //Actors who are OnMap and active, eg. not asleep or captured
     
     [Range(1, 4)] public int numOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
                                                         //is the total for one side (duplicated by the other side)
@@ -43,8 +43,7 @@ public class ActorManager : MonoBehaviour
     {
         //number of actors, default 4
         numOfOnMapActors = numOfOnMapActors == 4 ? numOfOnMapActors : 4;
-        numOfActiveActors = numOfActiveActors < 1 ? 1 : numOfActiveActors;
-        numOfActiveActors = numOfActiveActors > numOfOnMapActors ? numOfOnMapActors : numOfActiveActors;
+        numOfActiveActors = numOfOnMapActors;
     }
 
 
@@ -293,14 +292,17 @@ public class ActorManager : MonoBehaviour
                 //OnMap actor
                 if (slotID > -1)
                 {
-                    actor.isLive = true;
+                    /*actor.isLive = true;*/
+
                     //add to data collections
                     GameManager.instance.dataScript.AddCurrentActor(side, actor, slotID);
                     GameManager.instance.dataScript.AddActorToDict(actor);
                 }
-                //Reserve pool actor or perhaps and actor for a generic pick list
+                
+                /*//Reserve pool actor or perhaps an actor for a generic pick list
                 else
-                { actor.isLive = false; }
+                { actor.isLive = false; }*/
+
                 //return actor
                 return actor;
             }
@@ -313,7 +315,7 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). 
-    /// Max 4 Actor + 1 Target actions with an additional 'Cancel' buttnn added last automatically
+    /// Max 4 Actor + 1 Target actions with an additional 'Cancel' buttnn added last automatically -> total six buttons (hardwired into GUI design)
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
@@ -399,14 +401,11 @@ public class ActorManager : MonoBehaviour
                 {
                     proceedFlag = true;
                     details = null;
-
-                    //actualRenownEffect = null;
-
                     //correct side?
                     if (actor.actorSide == side)
                     {
                         //actor active?
-                        if (actor.isLive == true)
+                        if (actor.status == ActorStatus.Active)
                         {
                             //active node for actor or player at node
                             if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.slotID) == true ||
@@ -616,7 +615,7 @@ public class ActorManager : MonoBehaviour
                     if (actor.actorSide == side)
                     {
                         //actor active?
-                        if (actor.isLive == true)
+                        if (actor.status == ActorStatus.Active)
                         {
                             //assign preferred team as default (doesn't matter if actor has ANY Team action)
                             teamID = actor.arc.preferredTeam.TeamArcID;

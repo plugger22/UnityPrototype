@@ -320,7 +320,7 @@ public void InitialiseTeams()
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
-                            if (actor.isLive == true)
+                            if (actor.status == ActorStatus.Active)
                             {
                                 if (node != null)
                                 {
@@ -405,7 +405,7 @@ public void InitialiseTeams()
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
-                            if (actor.isLive == true)
+                            if (actor.status == ActorStatus.Active)
                             {
                                 if (node != null)
                                 {

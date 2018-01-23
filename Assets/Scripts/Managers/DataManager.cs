@@ -1470,7 +1470,7 @@ public class DataManager : MonoBehaviour
         int slotID = -1;
         foreach (Actor actor in arrayOfActors)
         {
-            if (actor.arc.ActorArcID == actorArcID && actor.isLive == true)
+            if (actor.arc.ActorArcID == actorArcID && actor.status == ActorStatus.Active)
             { return actor.slotID; }
         }
         return slotID;
@@ -1485,15 +1485,11 @@ public class DataManager : MonoBehaviour
     {
         if (arc != null)
         {
-            /*foreach (Actor actor in arrayOfActors)
-            {
-                if (actor.arc == arc && actor.isLive == true) { return true; }
-            }*/
             int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
             for (int i = 0; i < numOfActors - 1; i++)
             {
                 Actor actor = arrayOfActors[(int)side, i];
-                if (actor.arc == arc && actor.isLive == true) { return true; }
+                if (actor.arc == arc && actor.status == ActorStatus.Active) { return true; }
             }
             return false;
         }
