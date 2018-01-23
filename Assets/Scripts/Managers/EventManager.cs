@@ -68,7 +68,9 @@ public enum EventType
     DiceReturn,
     //AI
     CapturePlayer,
-    CaptureActor
+    CaptureActor,
+    ReleasePlayer,
+    ReleaseActor
 };
 
 //EventManager to send events to listeners

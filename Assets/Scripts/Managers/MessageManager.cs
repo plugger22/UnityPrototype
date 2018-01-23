@@ -210,7 +210,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Capture;
-            message.side = Side.Authority;
+            message.side = Side.Resistance;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = actorID;

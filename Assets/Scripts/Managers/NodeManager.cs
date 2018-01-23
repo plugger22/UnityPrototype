@@ -891,10 +891,8 @@ public class NodeManager : MonoBehaviour
     {
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //Erasure team picks up player immediately if invisibility 0
-        if (CheckPlayerCaptured(node) == true)
-        {
-
-        }
+        if (GameManager.instance.rebelScript.CheckPlayerCaptured() == true)
+        { }
         //Normal Move  Outcome
         else
         {
@@ -907,40 +905,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Checks if player captured by an erasure team at the node. 
-    /// Node checked for null in parent method
-    /// </summary>
-    /// <param name="node"></param>
-    /// <returns></returns>
-    private bool CheckPlayerCaptured(Node node)
-    {
-        //Erasure team picks up player immediately if invisibility 0
-        if (GameManager.instance.playerScript.invisibility == 0)
-        {
-            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
-            if (teamArcID > -1)
-            {
-                int teamID = node.CheckTeamPresent(teamArcID);
-                if (teamID > -1)
-                {
-                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                    if (team != null)
-                    {
-                        //Player Captured
-                        AIDetails details = new AIDetails();
-                        details.node = node;
-                        details.team = team;
-                        EventManager.instance.PostNotification(EventType.CapturePlayer, this, details);
-                        return true;
-                    }
-                    else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID));  }
-                }
-            }
-            else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
-        }
-        return false;
-    }
+
 
 
     /// <summary>

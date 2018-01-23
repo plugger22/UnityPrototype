@@ -333,7 +333,7 @@ public class ActorManager : MonoBehaviour
         { sideColour = colourAuthority; }
         else { sideColour = colourResistance; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
-        //string builder for info button (handles all no go cases
+        //string builder for cancel button (handles all no go cases
         StringBuilder infoBuilder = new StringBuilder();
         //player's current node
         int playerID = GameManager.instance.nodeScript.nodePlayer;
@@ -541,16 +541,27 @@ public class ActorManager : MonoBehaviour
                             }
                             else
                             {
-                                //actor not live at node
+                                //actor has no connections at node
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                 infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name));
                             }
                         }
                         else
                         {
-                            //actor gone silent
+                            //actor isn't Active
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailable", actor.arc.name));
+                            switch(actor.status)
+                            {
+                                case ActorStatus.Inactive:
+                                    infoBuilder.Append(string.Format("{0} is lying low and unavailable", actor.arc.name));
+                                    break;
+                                case ActorStatus.Captured:
+                                    infoBuilder.Append(string.Format("{0} has been captured", actor.arc.name));
+                                    break;
+                                default:
+                                    infoBuilder.Append(string.Format("{0} is unavailable", actor.arc.name));
+                                    break;
+                            }
                         }
 
                         //add to list

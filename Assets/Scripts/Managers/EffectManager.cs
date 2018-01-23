@@ -609,7 +609,9 @@ public class EffectManager : MonoBehaviour
                         {
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                             {
-                                //Player effect
+                                //
+                                // - - - Player Invisibility effect - - -
+                                //
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
@@ -703,13 +705,16 @@ public class EffectManager : MonoBehaviour
                             }
                             else
                             {
-                                //Actor effect
+                                //
+                                // - - - Actor Invisibility effect - - -
+                                //
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
                                         if (actor.datapoint2 < 3)
                                         { actor.datapoint2++; }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.actorName, effect.description, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description, 
+                                            actor.datapoint2, colourEnd);
                                         break;
                                     case Result.Subtract:
                                         int invisibility = actor.datapoint2;
@@ -717,12 +722,14 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourOutcome2, actor.actorName, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider) (Now {2}){3}", colourOutcome2, actor.actorName, 
+                                                invisibility, colourEnd);
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description, 
+                                                invisibility, colourEnd);
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
@@ -778,13 +785,13 @@ public class EffectManager : MonoBehaviour
                                 {
                                     case Result.Add:
                                         playerRenown += effect.effectValue;
-                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome1, effect.description, 
+                                        effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome1, effect.description, 
                                             playerRenown, colourEnd);
                                         break;
                                     case Result.Subtract:
                                         playerRenown -= effect.effectValue;
                                         playerRenown = Mathf.Max(0, playerRenown);
-                                        effectReturn.bottomText = string.Format("{0}Player {1} (now {2}){3}", colourOutcome2, effect.description,
+                                        effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description,
                                             playerRenown, colourEnd);
                                         break;
                                 }
@@ -797,12 +804,14 @@ public class EffectManager : MonoBehaviour
                                 {
                                     case Result.Add:
                                         actor.renown += effect.effectValue;
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome2, actor.actorName, effect.description, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description, 
+                                            actor.renown, colourEnd);
                                         break;
                                     case Result.Subtract:
                                         actor.renown -= effect.effectValue;
                                         actor.renown = Mathf.Max(0, actor.renown);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourOutcome1, actor.actorName, effect.description, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description, 
+                                            actor.renown, colourEnd);
                                         break;
                                 }
                             }
@@ -828,7 +837,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.CivilTeam:
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("Civil");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    //move team
+                    //insert team
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopText(teamID);

@@ -255,6 +255,28 @@ public class DebugGUI : MonoBehaviour
                 { GameManager.instance.rebelScript.ReleasePlayer(); }
             }
 
+            //fifth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Release Actor"))
+            {
+                //will release a captured actor each time pressed, nothing happens if no captured actors are present
+                Debug.Log("Button -> Release Actor");
+                int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
+                if (GameManager.instance.actorScript.numOfActiveActors < numOfActors)
+                {
+                    for(int i = 0; i < numOfActors; i++)
+                    {
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, Side.Resistance);
+                        if (actor.status == ActorStatus.Captured)
+                        {
+                            AIDetails details = new AIDetails();
+                            details.actor = actor;
+                            GameManager.instance.rebelScript.ReleaseActor(details);
+                            break;
+                        }
+                    }
+                }
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //

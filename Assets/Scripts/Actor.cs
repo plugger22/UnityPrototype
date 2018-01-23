@@ -18,6 +18,7 @@ namespace gameAPI
         [HideInInspector] public int actorID;
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
         [HideInInspector] public int renown;                   //starts at '0' and goes up (no limit)
+        [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public string actorName;
         //[HideInInspector] public bool isLive;                   //actor can 'go silent' and be unavailable on occasion
         [HideInInspector] public ActorArc arc;
@@ -30,7 +31,9 @@ namespace gameAPI
         private List<int> listOfTeams = new List<int>();    //teamID of all teams that the actor has currently deployed OnMap
 
         public Actor()
-        { }
+        {
+            nodeCaptured = -1;
+        }
 
 
         /// <summary>

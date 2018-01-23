@@ -79,7 +79,7 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes node actor actions (Resistance Node actions)
+    /// Processes node actor actions (Resistance & Authority Node actions)
     /// </summary>
     /// <param name="details"></param>
     public void ProcessNodeAction(ModalActionDetails details)
@@ -124,7 +124,6 @@ public class ActionManager : MonoBehaviour
                             //
                             // - - - Process effects
                             //
-                            
                             foreach (Effect effect in listOfEffects)
                             {
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);

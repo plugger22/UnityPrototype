@@ -36,6 +36,9 @@ public class ResistanceManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.CaptureActor, OnEvent);
         EventManager.instance.AddListener(EventType.CapturePlayer, OnEvent);
+        EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent);
+        EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent);
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
     }
 
     /// <summary>
@@ -60,6 +63,16 @@ public class ResistanceManager : MonoBehaviour
                 AIDetails detailsActor = Param as AIDetails;
                 CaptureActor(detailsActor);
                 break;
+            case EventType.ReleasePlayer:
+                ReleasePlayer();
+                break;
+            case EventType.ReleaseActor:
+                AIDetails detailsRelease = Param as AIDetails;
+                ReleaseActor(detailsRelease);
+                break;
+            case EventType.StartTurnEarly:
+                CheckPlayerCaptured();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -78,6 +91,9 @@ public class ResistanceManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
+    //
+    // - - - Capture and Release
+    //
 
     /// <summary>
     /// Player captured.
@@ -178,6 +194,7 @@ public class ResistanceManager : MonoBehaviour
         //admin
         GameManager.instance.actorScript.numOfActiveActors--;
         details.actor.status = ActorStatus.Captured;
+        details.actor.nodeCaptured = details.node.nodeID;
         //actor captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         outcomeDetails.textTop = text;
@@ -193,8 +210,6 @@ public class ResistanceManager : MonoBehaviour
     /// </summary>
     public void ReleasePlayer()
     {
-        string colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        string colourEnd = GameManager.instance.colourScript.GetEndTag();
         StringBuilder builder = new StringBuilder();
         //update nodes
         int nodeID = GameManager.instance.nodeScript.nodeCaptured;
@@ -234,7 +249,100 @@ public class ResistanceManager : MonoBehaviour
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeId {0}", nodeID)); }
     }
 
+    /// <summary>
+    /// Release actor from captitivty, only Actor is needed from AIDetails
+    /// </summary>
+    /// <param name="actorID"></param>
+    public void ReleaseActor(AIDetails details)
+    {
+        if (details.actor != null)
+        {
+            if (details.actor.status == ActorStatus.Captured)
+            {
+                StringBuilder builder = new StringBuilder();
+                //node (needed only for record keeping / messaging purposes
+                int nodeID = details.actor.nodeCaptured;
+                details.actor.nodeCaptured = -1;
+                //reset actor state
+                details.actor.status = ActorStatus.Active;
+                //increase resistance Cause
+                int cause = resistanceCause;
+                cause += actorReleased;
+                cause = Mathf.Min(cause, resistanceCauseMax);
+                resistanceCause = cause;
+                builder.Append(string.Format("{0}Resistance Cause +{1} (Now {2}){3}{4}{5}", colourGood, actorReleased,
+                    cause, colourEnd, "\n", "\n"));
+                //invisibility
+                int invisibilityNew = releaseInvisibility;
+                details.actor.datapoint2 = invisibilityNew;
+                builder.Append(string.Format("{0}{1} Invisibility +{2} (Now {3}){4}", colourGood, details.actor.actorName, invisibilityNew, invisibilityNew, colourEnd));
+                //update actor alpha
+                GameManager.instance.guiScript.UpdateActorAlpha(details.actor.slotID, 1.0f);
+                /*GameManager.instance.nodeScript.NodeRedraw = true;*/
+                //admin
+                GameManager.instance.actorScript.numOfActiveActors++;
+                //message
+                string text = string.Format("{0} released from captivity", details.actor.actorName);
+                Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, details.actor.actorID);
+                GameManager.instance.dataScript.AddMessage(message);
+                //player released outcome window
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                outcomeDetails.textTop = text;
+                outcomeDetails.textBottom = builder.ToString();
+                outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+                outcomeDetails.isAction = false;
+                outcomeDetails.side = Side.Resistance;
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            }
+            else { Debug.LogWarning(string.Format("{0}, {1} can't be released as not presently captured", details.actor.arc.name, details.actor.actorName)); }
+        }
+        else { Debug.LogError("Invalid details.actor (Null)"); }
+    }
 
+
+    /// <summary>
+    /// Checks if player captured by an erasure team at the node. 
+    /// Node checked for null in parent method
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public bool CheckPlayerCaptured()
+    {
+        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        if (node != null)
+        {
+            if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+            {
+                //Erasure team picks up player immediately if invisibility 0
+                if (GameManager.instance.playerScript.invisibility == 0)
+                {
+                    int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                    if (teamArcID > -1)
+                    {
+                        int teamID = node.CheckTeamPresent(teamArcID);
+                        if (teamID > -1)
+                        {
+                            Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                            if (team != null)
+                            {
+                                //Player Captured
+                                AIDetails details = new AIDetails();
+                                details.node = node;
+                                details.team = team;
+                                CapturePlayer(details);
+                                return true;
+                            }
+                            else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                        }
+                    }
+                    else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
+                }
+                return false;
+            }
+            else { Debug.LogError("Invalid player node (Null)"); return false; }
+        }
+        else { Debug.LogWarning("Resistance state NOT Normal, can't check for playerCaptured"); return false; }
+    }
 
 
     //new methods above here
