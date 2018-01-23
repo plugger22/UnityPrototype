@@ -919,7 +919,9 @@ public void InitialiseTeams()
     /// <param name="node"></param>
     private void ProcessTeamEffect(Team team, Node node, Actor actor)
     {
+        bool isError = false;
         List<Effect> listOfEffects = team.Arc.listOfEffects;
+        EffectReturn effectReturn = new EffectReturn();
         switch(team.Arc.type)
         {
             case TeamType.Control:
@@ -929,7 +931,8 @@ public void InitialiseTeams()
                 {
                     foreach(Effect effect in listOfEffects)
                     {
-                        GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                        isError = effectReturn.errorFlag;
                         string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
                         Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
                         if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
@@ -949,18 +952,24 @@ public void InitialiseTeams()
                     { node.isSpiderKnown = true; }
                     else { node.isSpiderKnown = false; }
                     //admin
-                    string text = string.Format("{0} {1} effect: Spider inserted at \"{2}\", ID {3}", team.Arc.name, team.Name, node.nodeName, node.nodeID);
+                    string text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.Arc.name, team.Name, node.nodeName, node.nodeID);
                     Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
                     if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                 }
                 break;
             case TeamType.Erasure:
 
+                //TO DO -> deletes any known connections ?
+
                 break;
             default:
                 Debug.LogError(string.Format("Invalid team Arc name \"{0}\"", team.Arc.name));
+                isError = true;
                 break;
         }
+        //assign renown to originating actor if all O.K
+        if (isError == false)
+        { actor.renown++; }
     }
 
     //place new method above here

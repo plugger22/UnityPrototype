@@ -17,6 +17,9 @@ public class ActionManager : MonoBehaviour
     //colour palette for Modal Outcome
     private string colourNormal;
     private string colourError;
+    private string colourGood;
+    private string colourNeutral;
+    private string colourBad;
     private string colourEnd;
 
     public void Initialise()
@@ -74,6 +77,9 @@ public class ActionManager : MonoBehaviour
     {
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.error);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -239,26 +245,122 @@ public class ActionManager : MonoBehaviour
     public void ProcessNodeTarget(int nodeID)
     {
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        //default data 
-        outcomeDetails.side = Side.Resistance;
-        outcomeDetails.textTop = "Target is in our sights!";
-        outcomeDetails.textBottom = "Fire when ready";
-        outcomeDetails.sprite = targetSprite;
-
-        //Process target - - -  TO DOs
-
-        if (errorFlag == true)
+        int teamArcID, teamID, targetID;
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
         {
-            //fault, pass default data to window
-            outcomeDetails.textTop = "There is a fault in the system. Target not responding";
-            outcomeDetails.textBottom = "Target Acquition Failed";
-            outcomeDetails.sprite = errorSprite;
+            targetID = node.targetID;
+            Target target = GameManager.instance.dataScript.GetTarget(targetID);
+            if (target != null)
+            {
+                //
+                // - - - Invisibility - - - TO DO
+                //
+
+                //
+                // - - - Actor/Player captured beforehand (target is safe if captured) -> if so exit - - -
+                //
+                if (nodeID == GameManager.instance.nodeScript.nodePlayer)
+                {
+                    //Player 
+                    if (GameManager.instance.playerScript.invisibility == 0)
+                    {
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                        if (teamArcID > -1)
+                        {
+                            teamID = node.CheckTeamPresent(teamArcID);
+                            if (teamID > -1)
+                            {
+                                Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                                if (team != null)
+                                {
+                                    //Player Captured
+                                    AIDetails aiDetails = new AIDetails();
+                                    aiDetails.node = node;
+                                    aiDetails.team = team;
+                                    aiDetails.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.name, colourEnd);
+                                    EventManager.instance.PostNotification(EventType.CapturePlayer, this, aiDetails);
+                                    return;
+                                }
+                                else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); errorFlag = true; }
+                            }
+                        }
+                        else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); errorFlag = true; }
+                    }
+                }
+                else
+                {
+                    //Actor -> check correct actor arc for target is present in line up
+                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID);
+                    if (slotID > -1)
+                    {
+                        //get actor
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
+                        if (actor != null)
+                        {
+                            //actor invisibility is zero
+                            if (actor.datapoint2 == 0)
+                            {
+                                teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                                if (teamArcID > -1)
+                                {
+                                    teamID = node.CheckTeamPresent(teamArcID);
+                                    if (teamID > -1)
+                                    {
+                                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                                        if (team != null)
+                                        {
+                                            //Actor Captured
+                                            AIDetails aiDetails = new AIDetails();
+                                            aiDetails.node = node;
+                                            aiDetails.team = team;
+                                            aiDetails.actor = actor;
+                                            aiDetails.effects = string.Format("{0} Attempt on Target {1} misfired{2}", colourNeutral, target.description, colourEnd);
+                                            EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
+                                            return;
+                                        }
+                                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); errorFlag = true; }
+                                    }
+                                }
+                                else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); errorFlag = true; }
+                            }
+                        }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) for slotID {0}", slotID)); errorFlag = true; }
+                    }
+                }
+
+                //
+                // - - - Process target - - -  TO DO
+                //
+
+
+                //
+                // - - - Outcome - - -
+                //
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                if (errorFlag == false)
+                {
+                    //action
+                    outcomeDetails.isAction = true;
+                    //outcome
+                    outcomeDetails.side = Side.Resistance;
+                    outcomeDetails.textTop = "Target is in our sights!";
+                    outcomeDetails.textBottom = "Fire when ready";
+                    outcomeDetails.sprite = targetSprite;
+                }
+                else
+                {
+                    //fault, pass default data to window
+                    outcomeDetails.textTop = "There is a fault in the system. Target not responding";
+                    outcomeDetails.textBottom = "Target Acquition Failed";
+                    outcomeDetails.sprite = errorSprite;
+                }
+                //generate a create modal window event
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            }
+            else { Debug.LogError(string.Format("Invalid target (Null) for node.targetID {0}", node.targetID)); }
         }
-        if (errorFlag == false)
-        { outcomeDetails.isAction = true; }
-        //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
     }
 
     /// <summary>
