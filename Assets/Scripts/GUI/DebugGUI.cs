@@ -252,7 +252,7 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("Button -> Release Player");
                 if (GameManager.instance.turnScript.resistanceState == ResistanceState.Captured)
-                { GameManager.instance.rebelScript.ReleasePlayer(); }
+                { GameManager.instance.captureScript.ReleasePlayer(); }
             }
 
             //fifth button
@@ -270,7 +270,7 @@ public class DebugGUI : MonoBehaviour
                         {
                             AIDetails details = new AIDetails();
                             details.actor = actor;
-                            GameManager.instance.rebelScript.ReleaseActor(details);
+                            GameManager.instance.captureScript.ReleaseActor(details);
                             break;
                         }
                     }

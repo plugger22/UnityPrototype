@@ -821,7 +821,38 @@ public class ActorManager : MonoBehaviour
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = null;
         if (details.side == Side.Resistance)
-        { node = GameManager.instance.dataScript.GetNode(details.NodeID); }
+        {
+            node = GameManager.instance.dataScript.GetNode(details.NodeID);
+            if (node != null)
+            {
+                //check for player/actor being captured
+                int actorID = 999;
+                if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, Side.Resistance);
+                    if (actor != null)
+                    { actorID = actor.actorID; }
+                    else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.ActorSlotID)); errorFlag = true; }
+                }
+                //check capture provided no errors
+                if (errorFlag == false)
+                {
+                    AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                    if (aiDetails != null)
+                    {
+                        //capture happened, abort recruitment
+                        aiDetails.effects = string.Format("{0}The Recruiting mission was a wipe{1}", colourNeutralEffect, colourEnd);
+                        EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
+                        return;
+                    }
+                }
+                else
+                {
+                    //reset flag to the default state prior to recruitments
+                    errorFlag = false;
+                }
+            }
+        }
         if (details.side == Side.Authority || node != null)
         {
             if (details.side == Side.Resistance) { genericDetails.returnEvent = EventType.GenericRecruitActorResistance; }
@@ -970,11 +1001,6 @@ public class ActorManager : MonoBehaviour
     private void ProcessRecruitChoiceResistance(GenericReturnData data)
     {
         bool successFlag = true;
-        //captured details to pass through
-        bool isCaptured = false;
-        Node nodeCaptured = null;
-        Actor actorCaptured = null;
-        Team teamCaptured = null;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
@@ -1000,10 +1026,10 @@ public class ActorManager : MonoBehaviour
 
                         //actor successfully recruited
                         builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
-                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc, 
-                            actorRecruited.arc.name,  colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
+                            actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
                         //message
-                        string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(), 
+                        string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(),
                             actorRecruited.actorID);
                         Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, Side.Resistance);
                         if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
@@ -1029,14 +1055,6 @@ public class ActorManager : MonoBehaviour
                                             builderBottom.Append(effectReturn.bottomText);
                                             //exit effect loop on error
                                             if (effectReturn.errorFlag == true) { break; }
-                                            //actor has been captured?
-                                            if (effectReturn.isCaptured == true)
-                                            {
-                                                isCaptured = true;
-                                                actorCaptured = actorCurrent;
-                                                nodeCaptured = node;
-                                                teamCaptured = effectReturn.team;
-                                            }
                                         }
                                         else { Debug.LogError("Invalid effectReturn (Null)"); }
                                     }
@@ -1082,30 +1100,8 @@ public class ActorManager : MonoBehaviour
         //action expended automatically for recruit actor
         if (successFlag == true)
         { outcomeDetails.isAction = true; }
-        //has actor been captured?
-        if (isCaptured == true)
-        {
-            AIDetails aiDetails = new AIDetails();
-            aiDetails.node = nodeCaptured;
-            aiDetails.team = teamCaptured;
-            aiDetails.effects = outcomeDetails.textBottom;
-            if (nodeCaptured.nodeID == GameManager.instance.nodeScript.nodePlayer)
-            {
-                //player captured
-                EventManager.instance.PostNotification(EventType.CapturePlayer, this, aiDetails);
-            }
-            else
-            {
-                //actor captured
-                aiDetails.actor = actorCaptured;
-                EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
-            }
-        }
-        else
-        {
-            //generate a create modal window event
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
     /// <summary>

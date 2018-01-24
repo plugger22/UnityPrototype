@@ -118,7 +118,7 @@ public class ActionManager : MonoBehaviour
                         {
                             int actorID = actor.actorID;
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { actorID = 999; }
-                            aiDetails = GameManager.instance.rebelScript.CheckCaptured(node.nodeID, actorID);
+                            aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
                         }
                         if (aiDetails != null)
                         {
@@ -242,7 +242,7 @@ public class ActionManager : MonoBehaviour
                 AIDetails details = new AIDetails();
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
-                { details = GameManager.instance.rebelScript.CheckCaptured(nodeID, 999); }
+                { details = GameManager.instance.captureScript.CheckCaptured(nodeID, 999); }
                 //Actor
                 else
                 {
@@ -253,7 +253,7 @@ public class ActionManager : MonoBehaviour
                         //get actor
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
                         if (actor != null)
-                        { details = GameManager.instance.rebelScript.CheckCaptured(nodeID, actor.actorID); }
+                        { details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID); }
                         else
                         { Debug.LogError(string.Format("Invalid actor (Null) for slotID {0}", slotID)); errorFlag = true; }
                     }

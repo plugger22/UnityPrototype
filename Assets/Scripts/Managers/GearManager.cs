@@ -128,6 +128,33 @@ public class GearManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
         {
+            //check for player/actor being captured
+            int actorID = 999;
+            if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
+            {
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, Side.Resistance);
+                if (actor != null)
+                { actorID = actor.actorID; }
+                else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.ActorSlotID)); errorFlag = true; }
+            }
+            //check capture provided no errors
+            if (errorFlag == false)
+            {
+                AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                if (aiDetails != null)
+                {
+                    //capture happened, abort recruitment
+                    aiDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
+                    EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
+                    return;
+                }
+            }
+            else
+            {
+                //reset flag to the default state prior to recruitments
+                errorFlag = false;
+            }
+            //Obtain Gear
             genericDetails.returnEvent = EventType.GenericGearChoice;
             genericDetails.side = Side.Resistance;
             genericDetails.nodeID = details.NodeID;

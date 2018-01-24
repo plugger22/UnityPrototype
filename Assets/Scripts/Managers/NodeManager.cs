@@ -891,7 +891,7 @@ public class NodeManager : MonoBehaviour
     {
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //Erasure team picks up player immediately if invisibility 0
-        AIDetails aiDetails = GameManager.instance.rebelScript.CheckCaptured(node.nodeID, 999);
+        AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, 999);
         if (aiDetails != null)
         {
             //Player captured!

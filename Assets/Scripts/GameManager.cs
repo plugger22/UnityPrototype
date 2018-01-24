@@ -40,8 +40,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
     [HideInInspector] public TeamManager teamScript;                  //Team Manager
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
+    [HideInInspector] public CaptureManager captureScript;            //Capture Manager
     [HideInInspector] public AIManager aiScript;                      //AI Manager
-    [HideInInspector] public ResistanceManager rebelScript;      //Resistance Manager
+    [HideInInspector] public ResistanceManager rebelScript;           //Resistance Manager
     [HideInInspector] public AuthorityManager authorityScript;        //Authority Manager
     [HideInInspector] public MessageManager messageScript;            //Message Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
@@ -111,6 +112,7 @@ public class GameManager : MonoBehaviour
         helpScript = GetComponent<HelpManager>();
         turnScript = GetComponent<TurnManager>();
         inputScript = GetComponent<InputManager>();
+        captureScript = GetComponent<CaptureManager>();
         aiScript = GetComponent<AIManager>();
         rebelScript = GetComponent<ResistanceManager>();
         authorityScript = GetComponent<AuthorityManager>();
