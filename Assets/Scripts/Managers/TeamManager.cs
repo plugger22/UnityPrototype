@@ -41,7 +41,7 @@ public class TeamManager : MonoBehaviour
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
         EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent);
         EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent);
         EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent);
@@ -63,8 +63,8 @@ public class TeamManager : MonoBehaviour
             case EventType.EndTurn:
                 EndTurn();
                 break;
-            case EventType.StartTurnEarly:
-                StartTurnEarly();
+            case EventType.StartTurnLate:
+                StartTurnLate();
                 break;
             case EventType.ChangeColour:
                 SetColours();
@@ -133,9 +133,9 @@ public class TeamManager : MonoBehaviour
 
 
     /// <summary>
-    /// Start turn Early activity -> Event driven. Team Management (inTransit, OnMap timers)
+    /// Start turn Late activity -> Event driven. Team Management (inTransit, OnMap timers)
     /// </summary>
-    private void StartTurnEarly()
+    private void StartTurnLate()
     {
         List<int> teamPool = new List<int>();
         //set turnSide 

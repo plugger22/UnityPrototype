@@ -34,8 +34,7 @@ public class ResistanceManager : MonoBehaviour
         resistanceCause = 0;
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.CaptureActor, OnEvent);
-        EventManager.instance.AddListener(EventType.CapturePlayer, OnEvent);
+        EventManager.instance.AddListener(EventType.Capture, OnEvent);
         EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent);
         EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
@@ -55,13 +54,9 @@ public class ResistanceManager : MonoBehaviour
             case EventType.ChangeColour:
                 SetColours();
                 break;
-            case EventType.CapturePlayer:
-                AIDetails detailsPlayer = Param as AIDetails;
-                CapturePlayer(detailsPlayer);
-                break;
-            case EventType.CaptureActor:
-                AIDetails detailsActor = Param as AIDetails;
-                CaptureActor(detailsActor);
+            case EventType.Capture:
+                AIDetails details = Param as AIDetails;
+                CaptureSomebody(details);
                 break;
             case EventType.ReleasePlayer:
                 ReleasePlayer();
@@ -71,7 +66,7 @@ public class ResistanceManager : MonoBehaviour
                 ReleaseActor(detailsRelease);
                 break;
             case EventType.StartTurnEarly:
-                CheckPlayerCaptured();
+                CheckStartTurnCapture();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -95,13 +90,26 @@ public class ResistanceManager : MonoBehaviour
     // - - - Capture and Release
     //
 
+    public void CaptureSomebody(AIDetails details)
+    {
+        if (details != null)
+        {
+            if (details.actor == null)
+            { CapturePlayer(details); }
+            else
+            { CaptureActor(details); }
+        }
+        else { Debug.LogError("Invalid AIDetails (Null)"); }
+    }
+
+
     /// <summary>
     /// Player captured.
     /// Note: Node and Team already checked for null by parent method
     /// </summary>
     /// <param name="node"></param>
     /// <param name="team"></param>
-    public void CapturePlayer(AIDetails details)
+    private void CapturePlayer(AIDetails details)
     {
         //PLAYER CAPTURED
         string text = string.Format("Player Captured at \"{0}\", {1}", details.node.nodeName, details.node.Arc.name.ToUpper());
@@ -166,7 +174,7 @@ public class ResistanceManager : MonoBehaviour
     /// <param name="node"></param>
     /// <param name="team"></param>
     /// <param name="actor"></param>
-    public void CaptureActor(AIDetails details)
+    private void CaptureActor(AIDetails details)
     {        
         //effects builder
         StringBuilder builder = new StringBuilder();
@@ -301,49 +309,105 @@ public class ResistanceManager : MonoBehaviour
 
 
     /// <summary>
-    /// Checks if player captured by an erasure team at the node. 
-    /// Node checked for null in parent method
+    /// Checks if Resistance player/actor captured by an Erasure team at the node (must have invisibility '0'). Returns null if not.
+    /// ActorID is default '999' for player
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public bool CheckPlayerCaptured()
+    public AIDetails CheckCaptured(int nodeID, int actorID = 999)
     {
-        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        AIDetails details = null;
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
+            //correct state
             if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
             {
-                //Erasure team picks up player immediately if invisibility 0
-                if (GameManager.instance.playerScript.invisibility == 0)
+                //Player
+                if (actorID == 999)
                 {
-                    int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
-                    if (teamArcID > -1)
+                    //check player at node
+                    if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                     {
-                        int teamID = node.CheckTeamPresent(teamArcID);
-                        if (teamID > -1)
+                        //Erasure team picks up player/actor immediately if invisibility 0
+                        if (GameManager.instance.playerScript.invisibility == 0)
                         {
-                            Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                            if (team != null)
+                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                            if (teamArcID > -1)
                             {
-                                //Player Captured
-                                AIDetails details = new AIDetails();
-                                details.node = node;
-                                details.team = team;
-                                CapturePlayer(details);
-                                return true;
+                                int teamID = node.CheckTeamPresent(teamArcID);
+                                if (teamID > -1)
+                                {
+                                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                                    if (team != null)
+                                    {
+                                        //Player Captured
+                                        details = new AIDetails();
+                                        details.node = node;
+                                        details.team = team;
+                                        details.actor = null;
+                                    }
+                                    else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                                }
                             }
-                            else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                            else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
                         }
                     }
-                    else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
+                    else { Debug.LogError(string.Format("Player not at the nodeID {0}", nodeID)); }
                 }
-                return false;
+                else
+                {
+                    //Actor
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    {
+                        //Erasure team picks up player/actor immediately if invisibility 0
+                        if (actor.datapoint2 == 0)
+                        {
+                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                            if (teamArcID > -1)
+                            {
+                                int teamID = node.CheckTeamPresent(teamArcID);
+                                if (teamID > -1)
+                                {
+                                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                                    if (team != null)
+                                    {
+                                        //Actor Captured
+                                        details = new AIDetails();
+                                        details.node = node;
+                                        details.team = team;
+                                        details.actor = actor;
+                                    }
+                                    else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                                }
+                            }
+                            else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", actorID)); }
+                }
             }
-            else { Debug.LogError("Invalid player node (Null)"); return false; }
+            else { Debug.LogWarning("Resistance state NOT Normal, can't check for Capture"); }
         }
-        else { Debug.LogWarning("Resistance state NOT Normal, can't check for playerCaptured"); return false; }
+        else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
+        //return AIDetails
+        return details;
     }
 
+    /// <summary>
+    /// Checks player at start of turn (early) to see if invisibility is zero and Erasure team present
+    /// </summary>
+    private void CheckStartTurnCapture()
+    {
+        AIDetails details = CheckCaptured(GameManager.instance.nodeScript.nodePlayer);
+        if (details != null)
+        {
+            //Player captured
+            details.effects = string.Format("{0}They kicked in the door before you could get out of bed{1}", colourNeutral, colourEnd);
+            CapturePlayer(details);
+        }
+    }
 
     //new methods above here
 }

@@ -12,9 +12,7 @@ public class EffectReturn
     public string topText { get; set; }
     public string bottomText { get; set; }
     public bool errorFlag { get; set; }
-    public bool isAction;
-    public bool isCaptured;                 //used if actor is captured by an erasure team while carrying out an actor action at a node with invisibility 0
-    public Team team;                       //used if actor captured, for example. Ignore otherwise
+    public bool isAction;                       //true if effect is considered an action
 }
 
 
@@ -677,28 +675,6 @@ public class EffectManager : MonoBehaviour
                                             //mincap zero
                                             invisibility = Mathf.Max(0, invisibility);
                                             GameManager.instance.playerScript.invisibility = invisibility;
-                                            //check for an erasure team detecting actor (must have invisibility '0')
-                                            if (invisibility == 0)
-                                            {
-                                                teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
-                                                if (teamArcID > -1)
-                                                {
-                                                    teamID = node.CheckTeamPresent(teamArcID);
-                                                    if (teamID > -1)
-                                                    {
-                                                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                                                        if (team != null)
-                                                        {
-                                                            //Player Captured
-                                                            effectReturn.isCaptured = true;
-                                                            effectReturn.team = team;
-                                                        }
-                                                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
-                                                    }
-                                                }
-                                                else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
-                                            }
-
                                         }
                                         break;
                                 }
@@ -735,27 +711,6 @@ public class EffectManager : MonoBehaviour
                                         invisibility = Mathf.Max(0, invisibility);
                                         actor.datapoint2 = invisibility;
                                         break;
-                                }
-                                //check for an erasure team detecting actor (must have invisibility '0')
-                                if (actor.datapoint2 == 0)
-                                {
-                                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
-                                    if (teamArcID > -1)
-                                    {
-                                        teamID = node.CheckTeamPresent(teamArcID);
-                                        if (teamID > -1)
-                                        {
-                                            Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                                            if (team != null)
-                                            {
-                                                //Actor Captured
-                                                effectReturn.isCaptured = true;
-                                                effectReturn.team = team;
-                                            }   
-                                            else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
-                                        }
-                                    }
-                                    else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
                                 }
                             }
                         }

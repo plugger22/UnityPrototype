@@ -92,11 +92,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
-        //captured details to pass through
-        bool isCaptured = false;
-        Node nodeCaptured = null;
-        Actor actorCaptured = null;
-        Team teamCaptured = null;
+        AIDetails aiDetails = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
@@ -117,6 +113,21 @@ public class ActionManager : MonoBehaviour
                     Node node = nodeObject.GetComponent<Node>();
                     if (node != null)
                     {
+                        //check for Resistance player/actor getting captured prior to carrying out action
+                        if (details.side == Side.Resistance)
+                        {
+                            int actorID = actor.actorID;
+                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { actorID = 999; }
+                            aiDetails = GameManager.instance.rebelScript.CheckCaptured(node.nodeID, actorID);
+                        }
+                        if (aiDetails != null)
+                        {
+                            //Captured. Mission a wipe.
+                            aiDetails.effects = string.Format("{0}Mission at \"{1}\" aborted{2}", colourNeutral, node.nodeName, colourEnd);
+                            EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
+                            return;
+                        }
+
                         //Get Action & Effects
                         Action action = actor.arc.nodeAction;
                         List<Effect> listOfEffects = action.GetEffects();
@@ -148,14 +159,6 @@ public class ActionManager : MonoBehaviour
                                     if (effectReturn.errorFlag == true) { break; }
                                     //valid action? -> only has to be true once for an action to be valid
                                     if (effectReturn.isAction == true) { isAction = true; }
-                                    //actor has been captured?
-                                    if (effectReturn.isCaptured == true)
-                                    {
-                                        isCaptured = true;
-                                        actorCaptured = actor;
-                                        nodeCaptured = node;
-                                        teamCaptured = effectReturn.team;
-                                    }
                                 }
                                 else
                                 {
@@ -167,7 +170,6 @@ public class ActionManager : MonoBehaviour
                                     break;
                                 }
                             }
-
                             //texts
                             outcomeDetails.textTop = builderTop.ToString();
                             outcomeDetails.textBottom = builderBottom.ToString();
@@ -202,40 +204,17 @@ public class ActionManager : MonoBehaviour
             Debug.LogError("Invalid ModalActionDetails (null) as argument");
         }
         if (errorFlag == true)
-        { 
+        {
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
             outcomeDetails.sprite = errorSprite;
-        }        
+        }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
         { outcomeDetails.isAction = true; }
-        //has actor been captured?
-        if (isCaptured == true)
-        {
-            AIDetails aiDetails = new AIDetails();
-            aiDetails.node = nodeCaptured;
-            aiDetails.team = teamCaptured;
-            aiDetails.effects = outcomeDetails.textBottom;
-            if (nodeCaptured.nodeID == GameManager.instance.nodeScript.nodePlayer)
-            {
-                //player captured
-                EventManager.instance.PostNotification(EventType.CapturePlayer, this, aiDetails);
-            }
-            else
-            {
-                //actor captured
-                aiDetails.actor = actorCaptured;
-                EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
-            }
-        }
-        else
-        {
-            //generate a create modal window event
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-        }
-
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
     /// <summary>
@@ -245,7 +224,7 @@ public class ActionManager : MonoBehaviour
     public void ProcessNodeTarget(int nodeID)
     {
         bool errorFlag = false;
-        int teamArcID, teamID, targetID;
+        int targetID;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
@@ -260,105 +239,69 @@ public class ActionManager : MonoBehaviour
                 //
                 // - - - Actor/Player captured beforehand (target is safe if captured) -> if so exit - - -
                 //
+                AIDetails details = new AIDetails();
+                //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
-                {
-                    //Player 
-                    if (GameManager.instance.playerScript.invisibility == 0)
-                    {
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
-                        if (teamArcID > -1)
-                        {
-                            teamID = node.CheckTeamPresent(teamArcID);
-                            if (teamID > -1)
-                            {
-                                Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                                if (team != null)
-                                {
-                                    //Player Captured
-                                    AIDetails aiDetails = new AIDetails();
-                                    aiDetails.node = node;
-                                    aiDetails.team = team;
-                                    aiDetails.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.name, colourEnd);
-                                    EventManager.instance.PostNotification(EventType.CapturePlayer, this, aiDetails);
-                                    return;
-                                }
-                                else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); errorFlag = true; }
-                            }
-                        }
-                        else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); errorFlag = true; }
-                    }
-                }
+                { details = GameManager.instance.rebelScript.CheckCaptured(nodeID, 999); }
+                //Actor
                 else
                 {
-                    //Actor -> check correct actor arc for target is present in line up
+                    //check correct actor arc for target is present in line up
                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID);
                     if (slotID > -1)
                     {
                         //get actor
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
                         if (actor != null)
-                        {
-                            //actor invisibility is zero
-                            if (actor.datapoint2 == 0)
-                            {
-                                teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
-                                if (teamArcID > -1)
-                                {
-                                    teamID = node.CheckTeamPresent(teamArcID);
-                                    if (teamID > -1)
-                                    {
-                                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                                        if (team != null)
-                                        {
-                                            //Actor Captured
-                                            AIDetails aiDetails = new AIDetails();
-                                            aiDetails.node = node;
-                                            aiDetails.team = team;
-                                            aiDetails.actor = actor;
-                                            aiDetails.effects = string.Format("{0} Attempt on Target {1} misfired{2}", colourNeutral, target.description, colourEnd);
-                                            EventManager.instance.PostNotification(EventType.CaptureActor, this, aiDetails);
-                                            return;
-                                        }
-                                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); errorFlag = true; }
-                                    }
-                                }
-                                else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); errorFlag = true; }
-                            }
-                        }
-                        else { Debug.LogError(string.Format("Invalid actor (Null) for slotID {0}", slotID)); errorFlag = true; }
+                        { details = GameManager.instance.rebelScript.CheckCaptured(nodeID, actor.actorID); }
+                        else
+                        { Debug.LogError(string.Format("Invalid actor (Null) for slotID {0}", slotID)); errorFlag = true; }
                     }
+                    else
+                    { Debug.LogError(string.Format("Invalid slotID (-1) for target.actorArc.ActorArcID {0}", target.actorArc.ActorArcID)); }
                 }
-
-                //
-                // - - - Process target - - -  TO DO
-                //
-
-
-                //
-                // - - - Outcome - - -
-                //
-                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                if (errorFlag == false)
+                //Player/Actor captured
+                if (details != null)
                 {
-                    //action
-                    outcomeDetails.isAction = true;
-                    //outcome
-                    outcomeDetails.side = Side.Resistance;
-                    outcomeDetails.textTop = "Target is in our sights!";
-                    outcomeDetails.textBottom = "Fire when ready";
-                    outcomeDetails.sprite = targetSprite;
+                    //Target aborted, deal with Capture
+                    details.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.name, colourEnd);
+                    EventManager.instance.PostNotification(EventType.Capture, this, details);
                 }
+                //NOT captured, proceed with target
                 else
                 {
-                    //fault, pass default data to window
-                    outcomeDetails.textTop = "There is a fault in the system. Target not responding";
-                    outcomeDetails.textBottom = "Target Acquition Failed";
-                    outcomeDetails.sprite = errorSprite;
+
+                    //
+                    // - - - Process target - - -  TO DO
+                    //
+
+
+                    //
+                    // - - - Outcome - - -
+                    //
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                    if (errorFlag == false)
+                    {
+                        //action
+                        outcomeDetails.isAction = true;
+                        //outcome
+                        outcomeDetails.side = Side.Resistance;
+                        outcomeDetails.textTop = "Target is in our sights!";
+                        outcomeDetails.textBottom = "Fire when ready";
+                        outcomeDetails.sprite = targetSprite;
+                    }
+                    else
+                    {
+                        //fault, pass default data to window
+                        outcomeDetails.textTop = "There is a fault in the system. Target not responding";
+                        outcomeDetails.textBottom = "Target Acquition Failed";
+                        outcomeDetails.sprite = errorSprite;
+                    }
+                    //generate a create modal window event
+                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
                 }
-                //generate a create modal window event
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
             }
-            else { Debug.LogError(string.Format("Invalid target (Null) for node.targetID {0}", node.targetID)); }
+            else { Debug.LogError(string.Format("Invalid Target (Null) for node.targetID {0}", nodeID)); }
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
     }
