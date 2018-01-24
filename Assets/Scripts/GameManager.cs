@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
         teamPickerScript.Initialise();
         diceScript.Initialise();
         messageScript.Initialise();
+        captureScript.Initialise();
         rebelScript.Initialise();
         authorityScript.Initialise();
         //do a final redraw before game start

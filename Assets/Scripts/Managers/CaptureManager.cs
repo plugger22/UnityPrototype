@@ -157,12 +157,14 @@ public class CaptureManager : MonoBehaviour
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //player captured outcome window
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.textTop = text;
-        outcomeDetails.textBottom = builder.ToString();
-        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-        outcomeDetails.isAction = false;
-        outcomeDetails.side = Side.Resistance;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+        {
+            textTop = text,
+            textBottom = builder.ToString(),
+            sprite = GameManager.instance.outcomeScript.errorSprite,
+            isAction = false,
+            side = Side.Resistance
+        };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
@@ -203,12 +205,14 @@ public class CaptureManager : MonoBehaviour
         details.actor.status = ActorStatus.Captured;
         details.actor.nodeCaptured = details.node.nodeID;
         //actor captured outcome window
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.textTop = text;
-        outcomeDetails.textBottom = builder.ToString();
-        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-        outcomeDetails.isAction = false;
-        outcomeDetails.side = Side.Resistance;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+        {
+            textTop = text,
+            textBottom = builder.ToString(),
+            sprite = GameManager.instance.outcomeScript.errorSprite,
+            isAction = false,
+            side = Side.Resistance
+        };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
@@ -245,12 +249,14 @@ public class CaptureManager : MonoBehaviour
             Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, 999);
             GameManager.instance.dataScript.AddMessage(message);
             //player released outcome window
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.textTop = text;
-            outcomeDetails.textBottom = builder.ToString();
-            outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-            outcomeDetails.isAction = false;
-            outcomeDetails.side = Side.Resistance;
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            {
+                textTop = text,
+                textBottom = builder.ToString(),
+                sprite = GameManager.instance.outcomeScript.errorSprite,
+                isAction = false,
+                side = Side.Resistance
+            };
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeId {0}", nodeID)); }
@@ -293,12 +299,14 @@ public class CaptureManager : MonoBehaviour
                 Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, details.actor.actorID);
                 GameManager.instance.dataScript.AddMessage(message);
                 //player released outcome window
-                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                outcomeDetails.textTop = text;
-                outcomeDetails.textBottom = builder.ToString();
-                outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-                outcomeDetails.isAction = false;
-                outcomeDetails.side = Side.Resistance;
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                {
+                    textTop = text,
+                    textBottom = builder.ToString(),
+                    sprite = GameManager.instance.outcomeScript.errorSprite,
+                    isAction = false,
+                    side = Side.Resistance
+                };
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
             }
             else { Debug.LogWarning(string.Format("{0}, {1} can't be released as not presently captured", details.actor.arc.name, details.actor.actorName)); }
@@ -341,10 +349,12 @@ public class CaptureManager : MonoBehaviour
                                     if (team != null)
                                     {
                                         //Player Captured
-                                        details = new AIDetails();
-                                        details.node = node;
-                                        details.team = team;
-                                        details.actor = null;
+                                        details = new AIDetails
+                                        {
+                                            node = node,
+                                            team = team,
+                                            actor = null
+                                        };
                                     }
                                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                 }
@@ -373,10 +383,12 @@ public class CaptureManager : MonoBehaviour
                                     if (team != null)
                                     {
                                         //Actor Captured
-                                        details = new AIDetails();
-                                        details.node = node;
-                                        details.team = team;
-                                        details.actor = actor;
+                                        details = new AIDetails
+                                        {
+                                            node = node,
+                                            team = team,
+                                            actor = actor
+                                        };
                                     }
                                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                 }
