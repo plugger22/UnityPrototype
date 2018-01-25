@@ -1465,11 +1465,13 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    public int CheckActorPresent(int actorArcID)
+    public int CheckActorPresent(int actorArcID, Side side)
     {
         int slotID = -1;
-        foreach (Actor actor in arrayOfActors)
+        int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
+        for (int i = 0; i < numOfActors - 1; i++)
         {
+            Actor actor = arrayOfActors[(int)side, i];
             if (actor.arc.ActorArcID == actorArcID && actor.status == ActorStatus.Active)
             { return actor.slotID; }
         }

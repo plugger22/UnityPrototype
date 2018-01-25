@@ -224,8 +224,11 @@ public class ActionManager : MonoBehaviour
     public void ProcessNodeTarget(int nodeID)
     {
         bool errorFlag = false;
+        bool isAction = false;
         int targetID;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        AIDetails details = new AIDetails();
+        Actor actor = null;
         if (node != null)
         {
             targetID = node.targetID;
@@ -233,13 +236,9 @@ public class ActionManager : MonoBehaviour
             if (target != null)
             {
                 //
-                // - - - Invisibility - - - TO DO
-                //
-
-                //
                 // - - - Actor/Player captured beforehand (target is safe if captured) -> if so exit - - -
                 //
-                AIDetails details = new AIDetails();
+                
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                 { details = GameManager.instance.captureScript.CheckCaptured(nodeID, 999); }
@@ -247,11 +246,11 @@ public class ActionManager : MonoBehaviour
                 else
                 {
                     //check correct actor arc for target is present in line up
-                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID);
+                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, Side.Resistance);
                     if (slotID > -1)
                     {
                         //get actor
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
+                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
                         if (actor != null)
                         { details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID); }
                         else
@@ -260,34 +259,94 @@ public class ActionManager : MonoBehaviour
                     else
                     { Debug.LogError(string.Format("Invalid slotID (-1) for target.actorArc.ActorArcID {0}", target.actorArc.ActorArcID)); }
                 }
-                //Player/Actor captured
-                if (details != null)
+                //Player/Actor captured (provided no errors, otherwise bypass)
+                if (errorFlag == false)
                 {
-                    //Target aborted, deal with Capture
-                    details.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.name, colourEnd);
-                    EventManager.instance.PostNotification(EventType.Capture, this, details);
+                    if (details != null)
+                    {
+                        //Target aborted, deal with Capture
+                        details.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.name, colourEnd);
+                        EventManager.instance.PostNotification(EventType.Capture, this, details);
+                        return;
+                    }
                 }
-                //NOT captured, proceed with target
                 else
                 {
+                    //reset flag
+                    errorFlag = false;
+                }
+                //NOT captured, proceed with target
 
-                    //
-                    // - - - Process target - - -  TO DO
-                    //
 
+                //
+                // - - - Process target - - -  TO DO
+                //
+
+                //
+                // - - - Effects - - - (only apply if target attempted successfully)
+                //
+                List<Effect> listOfEffects = new List<Effect>();
+                //return class
+                EffectReturn effectReturn = new EffectReturn();
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                //two builders for top and bottom texts
+                StringBuilder builderTop = new StringBuilder();
+                StringBuilder builderBottom = new StringBuilder();
+                //combine good and bad effects into one list for processing
+                listOfEffects.AddRange(target.listOfGoodEffects);
+                listOfEffects.AddRange(target.listOfBadEffects);
+                
+                //any effects to process?
+                if (listOfEffects.Count > 0)
+                {
+                    //get player/actor
+                    
+                    if (actor != null)
+                    {
+                        foreach (Effect effect in listOfEffects)
+                        {
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                            if (effectReturn != null)
+                            {
+                                outcomeDetails.sprite = actor.arc.actionSprite;
+                                //update stringBuilder texts
+                                if (effectReturn.topText.Length > 0)
+                                {
+                                    builderTop.AppendLine();
+                                    builderTop.Append(effectReturn.topText);
+                                }
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(effectReturn.bottomText);
+                                //exit effect loop on error
+                                if (effectReturn.errorFlag == true) { break; }
+                                //valid action? -> only has to be true once for an action to be valid
+                                if (effectReturn.isAction == true) { isAction = true; }
+                            }
+                            else
+                            {
+                                builderTop.AppendLine();
+                                builderTop.Append("Error");
+                                builderBottom.AppendLine();
+                                builderBottom.Append("Error");
+                                effectReturn.errorFlag = true;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    { Debug.LogError("Invalid actor (Null)"); errorFlag = true; }
 
                     //
                     // - - - Outcome - - -
-                    //
-                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                    //                        
+                    //action (if valid) expended -> must be BEFORE outcome window event
+                    outcomeDetails.isAction = isAction;
                     if (errorFlag == false)
                     {
-                        //action
-                        outcomeDetails.isAction = true;
                         //outcome
                         outcomeDetails.side = Side.Resistance;
-                        outcomeDetails.textTop = "Target is in our sights!";
-                        outcomeDetails.textBottom = "Fire when ready";
+                        outcomeDetails.textTop = builderTop.ToString();
+                        outcomeDetails.textBottom = builderBottom.ToString();
                         outcomeDetails.sprite = targetSprite;
                     }
                     else
