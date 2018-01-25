@@ -225,12 +225,18 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
+        bool isSuccessful = false;
         int targetID;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         AIDetails details = new AIDetails();
         Actor actor = null;
         if (node != null)
         {
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            //two builders for top and bottom texts
+            StringBuilder builderTop = new StringBuilder();
+            StringBuilder builderBottom = new StringBuilder();
+            //target
             targetID = node.targetID;
             Target target = GameManager.instance.dataScript.GetTarget(targetID);
             if (target != null)
@@ -281,34 +287,36 @@ public class ActionManager : MonoBehaviour
                 //
                 // - - - Process target - - -  TO DO
                 //
+                isSuccessful = true;
 
                 //
                 // - - - Effects - - - (only apply if target attempted successfully)
                 //
-                List<Effect> listOfEffects = new List<Effect>();
-                //return class
-                EffectReturn effectReturn = new EffectReturn();
-                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                //two builders for top and bottom texts
-                StringBuilder builderTop = new StringBuilder();
-                StringBuilder builderBottom = new StringBuilder();
-                //combine good and bad effects into one list for processing
-                listOfEffects.AddRange(target.listOfGoodEffects);
-                listOfEffects.AddRange(target.listOfBadEffects);
-                
-                //any effects to process?
-                if (listOfEffects.Count > 0)
+                if (isSuccessful == true)
                 {
-                    //get player/actor
+                    List<Effect> listOfEffects = new List<Effect>();
+                    //return class
+                    EffectReturn effectReturn = new EffectReturn();
                     
-                    if (actor != null)
+
+                    //combine good and bad effects into one list for processing
+                    listOfEffects.AddRange(target.listOfGoodEffects);
+                    listOfEffects.AddRange(target.listOfBadEffects);
+
+                    //any effects to process?
+                    if (listOfEffects.Count > 0)
                     {
+                        //get player/actor -> if null then Player, if not null then Actor
+
+                        /*if (actor != null)
+                        {*/
                         foreach (Effect effect in listOfEffects)
                         {
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                             if (effectReturn != null)
                             {
-                                outcomeDetails.sprite = actor.arc.actionSprite;
+                                /*outcomeDetails.sprite = actor.arc.actionSprite;*/
+                                outcomeDetails.sprite = targetSprite;
                                 //update stringBuilder texts
                                 if (effectReturn.topText.Length > 0)
                                 {
@@ -332,37 +340,45 @@ public class ActionManager : MonoBehaviour
                                 break;
                             }
                         }
-                    }
-                    else
-                    { Debug.LogError("Invalid actor (Null)"); errorFlag = true; }
+                        /* }
+                         else
+                         { Debug.LogError("Invalid actor (Null)"); errorFlag = true; }*/
 
-                    //
-                    // - - - Outcome - - -
-                    //                        
-                    //action (if valid) expended -> must be BEFORE outcome window event
-                    outcomeDetails.isAction = isAction;
-                    if (errorFlag == false)
-                    {
-                        //outcome
-                        outcomeDetails.side = Side.Resistance;
-                        outcomeDetails.textTop = builderTop.ToString();
-                        outcomeDetails.textBottom = builderBottom.ToString();
-                        outcomeDetails.sprite = targetSprite;
+
                     }
-                    else
-                    {
-                        //fault, pass default data to window
-                        outcomeDetails.textTop = "There is a fault in the system. Target not responding";
-                        outcomeDetails.textBottom = "Target Acquition Failed";
-                        outcomeDetails.sprite = errorSprite;
-                    }
-                    //generate a create modal window event
-                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
                 }
+                else
+                {
+                    //target attempt Unsuccessful
+
+                }
+                //
+                // - - - Outcome - - -
+                //                        
+                //action (if valid) expended -> must be BEFORE outcome window event
+                outcomeDetails.isAction = isAction;
+                if (errorFlag == false)
+                {
+                    //outcome
+                    outcomeDetails.side = Side.Resistance;
+                    outcomeDetails.textTop = builderTop.ToString();
+                    outcomeDetails.textBottom = builderBottom.ToString();
+                    outcomeDetails.sprite = targetSprite;
+                }
+                else
+                {
+                    //fault, pass default data to window
+                    outcomeDetails.textTop = "There is a fault in the system. Target not responding";
+                    outcomeDetails.textBottom = "Target Acquition Failed";
+                    outcomeDetails.sprite = errorSprite;
+                }
+                //generate a create modal window event
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
             }
             else { Debug.LogError(string.Format("Invalid Target (Null) for node.targetID {0}", nodeID)); }
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
+
     }
 
     /// <summary>

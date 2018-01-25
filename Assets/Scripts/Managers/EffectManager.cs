@@ -385,12 +385,12 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes effects and returns results in a class
+    /// Processes effects and returns results in a class. If Resistance and Player effects then go with default actor = null, otherwise supply an actor
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public EffectReturn ProcessEffect(Effect effect, Node node, Actor actor)
+    public EffectReturn ProcessEffect(Effect effect, Node node, Actor actor = null)
     {
         int teamID, teamArcID;
         EffectReturn effectReturn = new EffectReturn();
@@ -603,93 +603,94 @@ public class EffectManager : MonoBehaviour
                     //raise/lower invisibility of actor or Player
                     if (node != null)
                     {
-                        if (actor != null)
+
+                        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                         {
-                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            //
+                            // - - - Player Invisibility effect - - -
+                            //
+                            switch (effect.effectResult)
                             {
-                                //
-                                // - - - Player Invisibility effect - - -
-                                //
-                                switch (effect.effectResult)
-                                {
-                                    case Result.Add:
-                                        if (GameManager.instance.playerScript.invisibility < 3)
-                                        { GameManager.instance.playerScript.invisibility++; }
-                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome1, effect.description, colourEnd);
-                                        break;
-                                    case Result.Subtract:
-                                        //does player have any invisibility type gear?
-                                        int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GearType.Invisibility);
-                                        if (gearID > -1)
+                                case Result.Add:
+                                    if (GameManager.instance.playerScript.invisibility < 3)
+                                    { GameManager.instance.playerScript.invisibility++; }
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome1, effect.description, colourEnd);
+                                    break;
+                                case Result.Subtract:
+                                    //does player have any invisibility type gear?
+                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GearType.Invisibility);
+                                    if (gearID > -1)
+                                    {
+                                        //gear present -> No drop in Invisibility
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        if (gear != null)
                                         {
-                                            //gear present -> No drop in Invisibility
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-                                            if (gear != null)
+                                            int chance = GameManager.instance.gearScript.GetChanceOfCompromise(gearID);
+                                            if (Random.Range(0, 100) <= chance)
                                             {
-                                                int chance = GameManager.instance.gearScript.GetChanceOfCompromise(gearID);
-                                                if (Random.Range(0, 100) <= chance)
-                                                {
-                                                    //gear compromised
-                                                    effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (Compromised!){2}", colourOutcome2, gear.name,
-                                                        colourEnd);
-                                                    //remove gear
-                                                    GameManager.instance.playerScript.RemoveGear(gearID);
-                                                }
-                                                else
-                                                {
-                                                    //gear O.K
-                                                    effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourOutcome1, gear.name,
-                                                        colourEnd);
-                                                }
-                                                //special invisibility gear effects
-                                                switch(gear.data)
-                                                {
-                                                    case 1:
-                                                        //negates invisibility and increases it by +1 at the same time
-                                                        if (GameManager.instance.playerScript.invisibility < 3)
-                                                        { GameManager.instance.playerScript.invisibility++; }
-                                                        effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText, 
-                                                            "\n", "\n", colourOutcome1, gear.name, colourEnd);
-                                                    break;
-                                                }
-                                            }
-                                            else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
-                                        }
-                                        else
-                                        {
-                                            //No gear present
-                                            int invisibility = GameManager.instance.playerScript.invisibility;
-                                            //double effect if spider is present
-                                            if (node.isSpider == true)
-                                            {
-                                                invisibility -= 2;
-                                                effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider) (Now {1}){2}", colourOutcome2, 
-                                                    invisibility, colourEnd);
+                                                //gear compromised
+                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (Compromised!){2}", colourOutcome2, gear.name,
+                                                    colourEnd);
+                                                //remove gear
+                                                GameManager.instance.playerScript.RemoveGear(gearID);
                                             }
                                             else
                                             {
-                                                invisibility -= 1;
-                                                effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description, 
-                                                    invisibility, colourEnd);
+                                                //gear O.K
+                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourOutcome1, gear.name,
+                                                    colourEnd);
                                             }
-                                            //mincap zero
-                                            invisibility = Mathf.Max(0, invisibility);
-                                            GameManager.instance.playerScript.invisibility = invisibility;
+                                            //special invisibility gear effects
+                                            switch (gear.data)
+                                            {
+                                                case 1:
+                                                    //negates invisibility and increases it by +1 at the same time
+                                                    if (GameManager.instance.playerScript.invisibility < 3)
+                                                    { GameManager.instance.playerScript.invisibility++; }
+                                                    effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText,
+                                                        "\n", "\n", colourOutcome1, gear.name, colourEnd);
+                                                    break;
+                                            }
                                         }
-                                        break;
-                                }
+                                        else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+                                    }
+                                    else
+                                    {
+                                        //No gear present
+                                        int invisibility = GameManager.instance.playerScript.invisibility;
+                                        //double effect if spider is present
+                                        if (node.isSpider == true)
+                                        {
+                                            invisibility -= 2;
+                                            effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider) (Now {1}){2}", colourOutcome2,
+                                                invisibility, colourEnd);
+                                        }
+                                        else
+                                        {
+                                            invisibility -= 1;
+                                            effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description,
+                                                invisibility, colourEnd);
+                                        }
+                                        //mincap zero
+                                        invisibility = Mathf.Max(0, invisibility);
+                                        GameManager.instance.playerScript.invisibility = invisibility;
+                                    }
+                                    break;
                             }
-                            else
+                        }
+                        else
+                        {
+                            //
+                            // - - - Actor Invisibility effect - - -
+                            //
+                            if (actor != null)
                             {
-                                //
-                                // - - - Actor Invisibility effect - - -
-                                //
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
                                         if (actor.datapoint2 < 3)
                                         { actor.datapoint2++; }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description, 
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description,
                                             actor.datapoint2, colourEnd);
                                         break;
                                     case Result.Subtract:
@@ -698,13 +699,13 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider) (Now {2}){3}", colourOutcome2, actor.actorName, 
+                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider) (Now {2}){3}", colourOutcome2, actor.actorName,
                                                 invisibility, colourEnd);
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description, 
+                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description,
                                                 invisibility, colourEnd);
                                         }
                                         //mincap zero
@@ -713,11 +714,12 @@ public class EffectManager : MonoBehaviour
                                         break;
                                 }
                             }
-                        }
-                        else
-                        {
-                            Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
-                            effectReturn.errorFlag = true;
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                                effectReturn.errorFlag = true;
+                            }
+
                         }
                     }
                     else
@@ -730,51 +732,53 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.Renown:
                     if (node != null)
                     {
-                        if (actor != null)
+
+                        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                         {
-                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            int playerRenown = GameManager.instance.playerScript.Renown;
+                            //Player effect
+                            switch (effect.effectResult)
                             {
-                                int playerRenown = GameManager.instance.playerScript.Renown;
-                                //Player effect
-                                switch (effect.effectResult)
-                                {
-                                    case Result.Add:
-                                        playerRenown += effect.effectValue;
-                                        effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome1, effect.description, 
-                                            playerRenown, colourEnd);
-                                        break;
-                                    case Result.Subtract:
-                                        playerRenown -= effect.effectValue;
-                                        playerRenown = Mathf.Max(0, playerRenown);
-                                        effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description,
-                                            playerRenown, colourEnd);
-                                        break;
-                                }
-                                GameManager.instance.playerScript.Renown = playerRenown;
+                                case Result.Add:
+                                    playerRenown += effect.effectValue;
+                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome1, effect.description,
+                                        playerRenown, colourEnd);
+                                    break;
+                                case Result.Subtract:
+                                    playerRenown -= effect.effectValue;
+                                    playerRenown = Mathf.Max(0, playerRenown);
+                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description,
+                                        playerRenown, colourEnd);
+                                    break;
                             }
-                            else
+                            GameManager.instance.playerScript.Renown = playerRenown;
+                        }
+                        else
+                        {
+                            //Actor effect
+                            if (actor != null)
                             {
-                                //Actor effect
                                 switch (effect.effectResult)
                                 {
                                     case Result.Add:
                                         actor.renown += effect.effectValue;
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description, 
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description,
                                             actor.renown, colourEnd);
                                         break;
                                     case Result.Subtract:
                                         actor.renown -= effect.effectValue;
                                         actor.renown = Mathf.Max(0, actor.renown);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description, 
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description,
                                             actor.renown, colourEnd);
                                         break;
                                 }
                             }
-                        }
-                        else
-                        {
-                            Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
-                            effectReturn.errorFlag = true;
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                                effectReturn.errorFlag = true;
+                            }
+
                         }
                     }
                     else
