@@ -1469,7 +1469,7 @@ public class DataManager : MonoBehaviour
     {
         int slotID = -1;
         int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
-        for (int i = 0; i < numOfActors - 1; i++)
+        for (int i = 0; i < numOfActors; i++)
         {
             Actor actor = arrayOfActors[(int)side, i];
             if (actor.arc.ActorArcID == actorArcID && actor.status == ActorStatus.Active)
@@ -1488,7 +1488,7 @@ public class DataManager : MonoBehaviour
         if (arc != null)
         {
             int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
-            for (int i = 0; i < numOfActors - 1; i++)
+            for (int i = 0; i < numOfActors; i++)
             {
                 Actor actor = arrayOfActors[(int)side, i];
                 if (actor.arc == arc && actor.status == ActorStatus.Active) { return true; }

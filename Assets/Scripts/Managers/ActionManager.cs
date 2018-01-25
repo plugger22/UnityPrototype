@@ -288,6 +288,7 @@ public class ActionManager : MonoBehaviour
                 // - - - Process target - - -  TO DO
                 //
                 isSuccessful = true;
+                
 
                 //
                 // - - - Effects - - - (only apply if target attempted successfully)
@@ -297,7 +298,9 @@ public class ActionManager : MonoBehaviour
                     List<Effect> listOfEffects = new List<Effect>();
                     //return class
                     EffectReturn effectReturn = new EffectReturn();
-                    
+
+                    //target success
+                    builderTop.Append(string.Format("Target {0} successfully attempted", target.name));
 
                     //combine good and bad effects into one list for processing
                     listOfEffects.AddRange(target.listOfGoodEffects);
@@ -315,15 +318,13 @@ public class ActionManager : MonoBehaviour
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                             if (effectReturn != null)
                             {
-                                /*outcomeDetails.sprite = actor.arc.actionSprite;*/
                                 outcomeDetails.sprite = targetSprite;
-                                //update stringBuilder texts
-                                if (effectReturn.topText.Length > 0)
+                                //update stringBuilder texts (Bottom only)
+                                if (builderBottom.Length > 0)
                                 {
-                                    builderTop.AppendLine();
-                                    builderTop.Append(effectReturn.topText);
+                                    builderBottom.AppendLine();
+                                    builderBottom.AppendLine();
                                 }
-                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                 builderBottom.Append(effectReturn.bottomText);
                                 //exit effect loop on error
                                 if (effectReturn.errorFlag == true) { break; }
@@ -350,7 +351,7 @@ public class ActionManager : MonoBehaviour
                 else
                 {
                     //target attempt Unsuccessful
-
+                    builderTop.Append(string.Format("Failed attempt at Target {0}", target.name));
                 }
                 //
                 // - - - Outcome - - -
