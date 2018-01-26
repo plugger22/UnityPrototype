@@ -962,6 +962,11 @@ public void InitialiseTeams()
                 //TO DO -> deletes any known connections ?
 
                 break;
+            case TeamType.Damage:
+
+                //TO DO -> contains completed Targets
+
+                break;
             default:
                 Debug.LogError(string.Format("Invalid team Arc name \"{0}\"", team.Arc.name));
                 isError = true;

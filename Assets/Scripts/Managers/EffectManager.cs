@@ -402,7 +402,7 @@ public class EffectManager : MonoBehaviour
         //valid effect?
         if (effect != null)
         {
-            switch (effect.effectOutcome)
+            switch (effect.outcome)
             {
                 //
                 // - - - Resistance effects
@@ -410,30 +410,30 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.NodeSecurity:
                     if (node != null)
                     {
-                        switch (effect.effectResult)
+                        switch (effect.result)
                         {
                             case Result.Add:
-                                node.Security += effect.effectValue;
+                                node.Security += effect.value;
                                 node.Security = Mathf.Min(3, node.Security);
                                 effectReturn.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
-                                effectReturn.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.effectValue, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
                             case Result.Subtract:
-                                node.Security -= effect.effectValue;
+                                node.Security -= effect.value;
                                 node.Security = Mathf.Max(0, node.Security);
                                 effectReturn.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
-                                effectReturn.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.effectValue, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
                             case Result.EqualTo:
                                 //keep within allowable parameters
-                                effect.effectValue = Mathf.Min(3, effect.effectValue);
-                                effect.effectValue = Mathf.Max(0, effect.effectValue);
-                                node.Security = effect.effectValue;
+                                effect.value = Mathf.Min(3, effect.value);
+                                effect.value = Mathf.Max(0, effect.value);
+                                node.Security = effect.value;
                                 effectReturn.topText = string.Format("{0}The security system has been reset{1}", colourDefault, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}Node Security now {1}{2}", colourOutcome3, node.Security, colourEnd);
                                 break;
                             default:
-                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
+                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
                                 effectReturn.errorFlag = true;
                                 break;
                         }
@@ -441,37 +441,37 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
                         effectReturn.errorFlag = true;
                     }
                     break;
                 case EffectOutcome.NodeStability:
                     if (node != null)
                     {
-                        switch (effect.effectResult)
+                        switch (effect.result)
                         {
                             case Result.Add:
-                                node.Stability += effect.effectValue;
+                                node.Stability += effect.value;
                                 node.Stability = Mathf.Min(3, node.Stability);
                                 effectReturn.topText = string.Format("{0}Law Enforcement teams have stabilised the situation{1}", colourDefault, colourEnd);
-                                effectReturn.bottomText = string.Format("{0}Node Stability +{1}{2}", colourOutcome2, effect.effectValue, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Node Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
                             case Result.Subtract:
-                                node.Stability -= effect.effectValue;
+                                node.Stability -= effect.value;
                                 node.Stability = Mathf.Max(0, node.Stability);
                                 effectReturn.topText = string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourDefault, colourEnd);
-                                effectReturn.bottomText = string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.effectValue, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
                             case Result.EqualTo:
                                 //keep within allowable parameters
-                                effect.effectValue = Mathf.Min(3, effect.effectValue);
-                                effect.effectValue = Mathf.Max(0, effect.effectValue);
-                                node.Stability = effect.effectValue;
+                                effect.value = Mathf.Min(3, effect.value);
+                                effect.value = Mathf.Max(0, effect.value);
+                                node.Stability = effect.value;
                                 effectReturn.topText = string.Format("{0}Civil obedience has been reset to a new level{1}", colourDefault, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}Node Stability now {1}{2}", colourOutcome3, node.Stability, colourEnd);
                                 break;
                             default:
-                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
+                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
                                 effectReturn.errorFlag = true;
                                 break;
                         }
@@ -479,37 +479,37 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
                         effectReturn.errorFlag = true;
                     }
                     break;
                 case EffectOutcome.NodeSupport:
                     if (node != null)
                     {
-                        switch (effect.effectResult)
+                        switch (effect.result)
                         {
                             case Result.Add:
-                                node.Support += effect.effectValue;
+                                node.Support += effect.value;
                                 node.Support = Mathf.Min(3, node.Support);
                                 effectReturn.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd);
-                                effectReturn.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.effectValue, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
                             case Result.Subtract:
-                                node.Support -= effect.effectValue;
+                                node.Support -= effect.value;
                                 node.Support = Mathf.Max(0, node.Support);
                                 effectReturn.topText = string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd);
-                                effectReturn.bottomText = string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.effectValue, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
                             case Result.EqualTo:
                                 //keep within allowable parameters
-                                effect.effectValue = Mathf.Min(3, effect.effectValue);
-                                effect.effectValue = Mathf.Max(0, effect.effectValue);
-                                node.Support = effect.effectValue;
+                                effect.value = Mathf.Min(3, effect.value);
+                                effect.value = Mathf.Max(0, effect.value);
+                                node.Support = effect.value;
                                 effectReturn.topText = string.Format("{0}Rebel sentiment has been reset to a new level{1}", colourDefault, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}Node Support now {1}{2}", colourOutcome3, node.Support, colourEnd);
                                 break;
                             default:
-                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
+                                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
                                 effectReturn.errorFlag = true;
                                 break;
                         }
@@ -517,40 +517,40 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
                         effectReturn.errorFlag = true;
                     }
                     break;
                 case EffectOutcome.RebelCause:
                     int rebelCause = GameManager.instance.rebelScript.resistanceCause;
                     int maxCause = GameManager.instance.rebelScript.resistanceCauseMax;
-                    switch (effect.effectResult)
+                    switch (effect.result)
                     {
                         case Result.Add:
-                            rebelCause += effect.effectValue;
+                            rebelCause += effect.value;
                             rebelCause = Mathf.Min(maxCause, rebelCause);
                             GameManager.instance.rebelScript.resistanceCause = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause gains traction{1}", colourDefault, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Rebel Cause +{1}{2}", colourOutcome1, effect.effectValue, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Rebel Cause +{1}{2}", colourOutcome1, effect.value, colourEnd);
                             break;
                         case Result.Subtract:
-                            rebelCause -= effect.effectValue;
+                            rebelCause -= effect.value;
                             rebelCause = Mathf.Max(0, rebelCause);
                             GameManager.instance.rebelScript.resistanceCause = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause is losing ground{1}", colourDefault, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Rebel Cause -{1}{2}", colourOutcome2, effect.effectValue, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Rebel Cause -{1}{2}", colourOutcome2, effect.value, colourEnd);
                             break;
                         case Result.EqualTo:
                             //keep within allowable parameters
-                            effect.effectValue = Mathf.Min(maxCause, effect.effectValue);
-                            effect.effectValue = Mathf.Max(0, effect.effectValue);
-                            rebelCause = effect.effectValue;
+                            effect.value = Mathf.Min(maxCause, effect.value);
+                            effect.value = Mathf.Max(0, effect.value);
+                            rebelCause = effect.value;
                             GameManager.instance.rebelScript.resistanceCause = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause adjusts to a new level{1}", colourDefault, colourEnd);
                             effectReturn.bottomText = string.Format("{0}Rebel Cause now {1}{2}", colourOutcome3, rebelCause, colourEnd);
                             break;
                         default:
-                            Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.effectResult));
+                            Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
                             effectReturn.errorFlag = true;
                             break;
                     }
@@ -559,7 +559,7 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.Recruit:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
-                case EffectOutcome.AddTracer:
+                case EffectOutcome.Tracer:
                     if (node != null)
                     {
                         node.isTracer = true;
@@ -583,18 +583,27 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
                         effectReturn.errorFlag = true;
                     }
                     break;
-                case EffectOutcome.GetGear:
+                case EffectOutcome.Gear:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
-                case EffectOutcome.GetTargetInfo:
+                case EffectOutcome.TargetInfo:
                     //TO DO
                     break;
                 case EffectOutcome.NeutraliseTeam:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
+                    break;
+                case EffectOutcome.RevealSpiders:
+                    //TO DO
+                    break;
+                case EffectOutcome.RevealTeams:
+                    //TO DO
+                    break;
+                case EffectOutcome.ConnectionSecurity:
+                    //handled elsewhere
                     break;
                 case EffectOutcome.SpreadInstability:
                     //TO DO
@@ -609,7 +618,7 @@ public class EffectManager : MonoBehaviour
                             //
                             // - - - Player Invisibility effect - - -
                             //
-                            switch (effect.effectResult)
+                            switch (effect.result)
                             {
                                 case Result.Add:
                                     if (GameManager.instance.playerScript.invisibility < 3)
@@ -685,7 +694,7 @@ public class EffectManager : MonoBehaviour
                             //
                             if (actor != null)
                             {
-                                switch (effect.effectResult)
+                                switch (effect.result)
                                 {
                                     case Result.Add:
                                         if (actor.datapoint2 < 3)
@@ -716,7 +725,7 @@ public class EffectManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome));
                                 effectReturn.errorFlag = true;
                             }
 
@@ -724,7 +733,7 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
                         effectReturn.errorFlag = true;
                     }
                     break;
@@ -737,15 +746,15 @@ public class EffectManager : MonoBehaviour
                         {
                             int playerRenown = GameManager.instance.playerScript.Renown;
                             //Player effect
-                            switch (effect.effectResult)
+                            switch (effect.result)
                             {
                                 case Result.Add:
-                                    playerRenown += effect.effectValue;
+                                    playerRenown += effect.value;
                                     effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome1, effect.description,
                                         playerRenown, colourEnd);
                                     break;
                                 case Result.Subtract:
-                                    playerRenown -= effect.effectValue;
+                                    playerRenown -= effect.value;
                                     playerRenown = Mathf.Max(0, playerRenown);
                                     effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description,
                                         playerRenown, colourEnd);
@@ -758,15 +767,15 @@ public class EffectManager : MonoBehaviour
                             //Actor effect
                             if (actor != null)
                             {
-                                switch (effect.effectResult)
+                                switch (effect.result)
                                 {
                                     case Result.Add:
-                                        actor.renown += effect.effectValue;
+                                        actor.renown += effect.value;
                                         effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description,
                                             actor.renown, colourEnd);
                                         break;
                                     case Result.Subtract:
-                                        actor.renown -= effect.effectValue;
+                                        actor.renown -= effect.value;
                                         actor.renown = Mathf.Max(0, actor.renown);
                                         effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description,
                                             actor.renown, colourEnd);
@@ -775,7 +784,7 @@ public class EffectManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome));
                                 effectReturn.errorFlag = true;
                             }
 
@@ -783,7 +792,7 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.effectOutcome));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
                         effectReturn.errorFlag = true;
                     }
                     break;
@@ -859,7 +868,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.effectOutcome));
+                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome));
                     effectReturn.errorFlag = true;
                     break;
             }

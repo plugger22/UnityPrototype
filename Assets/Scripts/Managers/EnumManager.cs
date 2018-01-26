@@ -95,9 +95,13 @@ namespace gameAPI
     }
 
     //
-    // - - - Effects - - -
+    // - - - Effects - - -       
     //
+
+    //* * * WARNING: changing / deleting entries can mess up the Effect SO's * * * 
+
     public enum EffectType { None, Good, Neutral, Bad}
+    public enum EffectCategory { Normal, AuthorityTeam, Target }
     public enum EffectApply {
         None,
         //Node
@@ -123,13 +127,15 @@ namespace gameAPI
         None,
         //resistance
         NodeStability, NodeSecurity, NodeSupport,
-        Recruit, NeutraliseTeam, AddTracer, GetGear, GetTargetInfo, SpreadInstability,
+        Recruit, NeutraliseTeam, Tracer, Gear, TargetInfo, SpreadInstability,
         RebelCause,
         Invisibility,
         //both
         Renown,
         //authority
-        AnyTeam, CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam
+        AnyTeam, CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam,
+        //assorted
+        RevealSpiders, RevealTeams, ConnectionSecurity
     }
 
     //

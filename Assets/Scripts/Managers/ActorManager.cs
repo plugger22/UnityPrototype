@@ -426,7 +426,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             Effect effect = listOfEffects[i];
                                             //colour code effects according to type
-                                            switch(effect.effectType)
+                                            switch(effect.type)
                                             {
                                                 case EffectType.Good:
                                                     colourEffect = colourGoodEffect;
@@ -445,7 +445,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.effectOutcome != EffectOutcome.Renown && effect.effectOutcome != EffectOutcome.Invisibility)
+                                                if (effect.outcome != EffectOutcome.Renown && effect.outcome != EffectOutcome.Invisibility)
                                                 { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
                                                 else
                                                 {
@@ -453,7 +453,7 @@ public class ActorManager : MonoBehaviour
                                                     if (nodeID == playerID)
                                                     {
                                                         //player affected (good for renown, bad for invisibility)
-                                                        if (effect.effectOutcome == EffectOutcome.Renown)
+                                                        if (effect.outcome == EffectOutcome.Renown)
                                                         { builder.Append(string.Format("{0}Player {1}{2}", colourGoodEffect, effect.description, colourEnd)); }
                                                         else
                                                         { builder.Append(string.Format("{0}Player {1}{2}", colourBadEffect, effect.description, colourEnd)); }
@@ -667,7 +667,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             //Effect criteria O.K -> tool tip text
                                             if (builder.Length > 0) { builder.AppendLine(); }
-                                            if (effect.effectOutcome != EffectOutcome.Renown)
+                                            if (effect.outcome != EffectOutcome.Renown)
                                             {
                                                 builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, effect.description, colourEnd));
                                                 //if an ANY TEAM action then display available teams
