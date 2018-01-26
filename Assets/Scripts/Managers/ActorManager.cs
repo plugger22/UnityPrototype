@@ -373,7 +373,7 @@ public class ActorManager : MonoBehaviour
                             //button target details
                             EventButtonDetails targetDetails = new EventButtonDetails()
                             {
-                                buttonTitle = "Target",
+                                buttonTitle = "Attempt Target",
                                 buttonTooltipHeader = targetHeader,
                                 buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
                                 buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetID),
