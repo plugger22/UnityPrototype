@@ -227,6 +227,8 @@ public class ActionManager : MonoBehaviour
         bool isAction = false;
         bool isSuccessful = false;
         int targetID;
+        int actorID = 999;
+        string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         AIDetails details = new AIDetails();
         Actor actor = null;
@@ -247,7 +249,7 @@ public class ActionManager : MonoBehaviour
                 
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
-                { details = GameManager.instance.captureScript.CheckCaptured(nodeID, 999); }
+                { details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID); }
                 //Actor
                 else
                 {
@@ -258,7 +260,10 @@ public class ActionManager : MonoBehaviour
                         //get actor
                         actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
                         if (actor != null)
-                        { details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID); }
+                        {
+                            details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID);
+                            actorID = actor.actorID;
+                        }
                         else
                         { Debug.LogError(string.Format("Invalid actor (Null) for slotID {0}", slotID)); errorFlag = true; }
                     }
@@ -289,6 +294,7 @@ public class ActionManager : MonoBehaviour
                 //
                 int tally = GameManager.instance.targetScript.GetTargetTally(target.TargetID);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
+                Debug.Log(string.Format(" Target: {0} - - - {1}", target.name, "\n"));
                 int roll = Random.Range(0, 100);
                 if (roll <= chance)
                 {
@@ -296,8 +302,11 @@ public class ActionManager : MonoBehaviour
                     isSuccessful = true;
                     //target admin
                     target.TargetStatus = Status.Completed;
-                    GameManager.instance.dataScript.RemoveTargetFromList(target, Status.Active);
-                    GameManager.instance.dataScript.AddCompletedTarget(target);
+                    GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
+                    GameManager.instance.dataScript.AddTargetToPool(target, Status.Completed);
+                    text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
+                    Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.TargetID);
+                    GameManager.instance.dataScript.AddMessage(message);
                 }
                 Debug.Log(string.Format("Target Resolution: chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n"));
 
@@ -361,8 +370,11 @@ public class ActionManager : MonoBehaviour
                 }
                 else
                 {
-                    //target attempt Unsuccessful
+                    //target attempt UNSUCCESSFUL
                     builderTop.Append(string.Format("Failed attempt at Target {0}", target.name));
+                    text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
+                    Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.TargetID);
+                    GameManager.instance.dataScript.AddMessage(message);
                 }
                 //
                 // - - - Outcome - - -

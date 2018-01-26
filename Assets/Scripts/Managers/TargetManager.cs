@@ -165,12 +165,12 @@ public class TargetManager : MonoBehaviour
                             case Status.Active:
                                 totalActive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsActive) + 1;
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsActive, totalActive);
-                                GameManager.instance.dataScript.AddActiveTarget(target);
+                                GameManager.instance.dataScript.AddTargetToPool(target, Status.Active);
                                 break;
                             case Status.Live:
                                 totalLive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsLive) + 1;
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsLive, totalLive);
-                                GameManager.instance.dataScript.AddLiveTarget(target);
+                                GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
                                 //assign nodeID to target
                                 target.NodeID = node.nodeID;
                                 break;

@@ -65,7 +65,7 @@ namespace gameAPI
     // - - - Messages - - -
     //
     public enum MessageCategory { None, Current, Pending, Archive}
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR}
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET}
     public enum MessageSubType {
         None,
         //Player
@@ -87,7 +87,10 @@ namespace gameAPI
         Gear_Obtained,
         //Actor
         Actor_Recruited,
-        Actor_Action
+        Actor_Action,
+        //Target
+        Target_Attempt,
+        Target_Contained
 
     }
 

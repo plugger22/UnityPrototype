@@ -45,10 +45,10 @@ public class DataManager : MonoBehaviour
     private List<Trait> listOfAllTraits = new List<Trait>();
 
     //for fast access
-    private List<Target> listOfPossibleTargets = new List<Target>();                        //level 1 target and node of the correct type available
-    private List<Target> listOfActiveTargets = new List<Target>();
-    private List<Target> listOfLiveTargets = new List<Target>();
-    private List<Target> listOfCompletedTargets = new List<Target>();                       //successfully attempted targets, Status -> Completed
+    private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
+    private List<Target> activeTargetPool = new List<Target>();
+    private List<Target> liveTargetPool = new List<Target>();
+    private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
     private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor in the level
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
@@ -427,7 +427,7 @@ public class DataManager : MonoBehaviour
             {
                 //add to list of Possible targets
                 if (CheckNodeInfo(target.Value.nodeArc.NodeArcID, NodeInfo.Number) > 0)
-                { listOfPossibleTargets.Add(target.Value); }
+                { possibleTargetsPool.Add(target.Value); }
                 else
                 {
                     Debug.Log(string.Format("DataManager: {0} has been ignored as there are no required node types present (\"{1}\"){2}",
@@ -869,46 +869,60 @@ public class DataManager : MonoBehaviour
     }
 
     public List<Target> CheckPossibleTargets()
-    { return listOfPossibleTargets; }
+    { return possibleTargetsPool; }
 
     public int CheckNumOfPossibleTargets()
-    { return listOfPossibleTargets.Count; }
+    { return possibleTargetsPool.Count; }
 
     public Dictionary<int, Target> GetDictOfTargets()
     { return dictOfTargets; }
 
 
     public List<Target> GetLiveTargets()
-    { return listOfLiveTargets; }
+    { return liveTargetPool; }
 
 
-    public void AddActiveTarget(Target target)
+    /// <summary>
+    /// Adds target to List (possible is dormant, active, live, completed). Returns true if target added, false otherwise
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public bool AddTargetToPool(Target target, Status status)
     {
+        bool isSuccess = false;
         if (target != null)
-        { listOfActiveTargets.Add(target); }
-        else { Debug.LogError("Invalid Active Target parameter (Null)"); }
+        {
+            switch (status)
+            {
+                case Status.Dormant:
+                    possibleTargetsPool.Add(target);
+                    break;
+                case Status.Active:
+                    activeTargetPool.Add(target);
+                    break;
+                case Status.Live:
+                    liveTargetPool.Add(target);
+                    break;
+                case Status.Completed:
+                    completedTargetPool.Add(target);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid target status {0}", status));
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid List target parameter (Null)"); }
+        return isSuccess;
     }
 
-    public void AddLiveTarget(Target target)
-    {
-        if (target != null)
-        { listOfLiveTargets.Add(target); }
-        else { Debug.LogError("Invalid Live Target parameter (Null)"); }
-    }
-
-    public void AddCompletedTarget(Target target)
-    {
-        if (target != null)
-        { listOfCompletedTargets.Add(target); }
-        else { Debug.LogError("Invalid Completed Target parameter (Null)"); }
-    }
 
     /// <summary>
     /// Removes target from List (possible is dormant, active, live, completed). Returns true if target found and removed, false otherwise
     /// </summary>
     /// <param name="target"></param>
     /// <param name="status"></param>
-    public bool RemoveTargetFromList(Target target, Status status)
+    public bool RemoveTargetFromPool(Target target, Status status)
     {
         bool isSuccess = false;
         if (target != null)
@@ -917,16 +931,16 @@ public class DataManager : MonoBehaviour
             switch (status)
             {
                 case Status.Dormant:
-                    listOfTargets = listOfPossibleTargets;
+                    listOfTargets = possibleTargetsPool;
                     break;
                 case Status.Active:
-                    listOfTargets = listOfActiveTargets;
+                    listOfTargets = activeTargetPool;
                     break;
                 case Status.Live:
-                    listOfTargets = listOfLiveTargets;
+                    listOfTargets = liveTargetPool;
                     break;
                 case Status.Completed:
-                    listOfTargets = listOfCompletedTargets;
+                    listOfTargets = completedTargetPool;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid target status {0}", status));
