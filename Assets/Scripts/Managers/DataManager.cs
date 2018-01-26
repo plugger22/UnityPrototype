@@ -46,9 +46,11 @@ public class DataManager : MonoBehaviour
 
     //for fast access
     private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
-    private List<Target> activeTargetPool = new List<Target>();
-    private List<Target> liveTargetPool = new List<Target>();
+    private List<Target> activeTargetPool = new List<Target>();                         //targets onMap but not yet visible to resistance player
+    private List<Target> liveTargetPool = new List<Target>();                           //targets OnMap and visible to resistance player
     private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
+    private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
+
     private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor in the level
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
@@ -907,6 +909,9 @@ public class DataManager : MonoBehaviour
                 case Status.Completed:
                     completedTargetPool.Add(target);
                     break;
+                case Status.Contained:
+                    containedTargetPool.Add(target);
+                    break;
                 default:
                     Debug.LogError(string.Format("Invalid target status {0}", status));
                     break;
@@ -941,6 +946,9 @@ public class DataManager : MonoBehaviour
                     break;
                 case Status.Completed:
                     listOfTargets = completedTargetPool;
+                    break;
+                case Status.Contained:
+                    listOfTargets = containedTargetPool;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid target status {0}", status));

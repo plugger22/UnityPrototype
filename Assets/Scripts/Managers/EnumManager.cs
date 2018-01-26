@@ -34,7 +34,7 @@ namespace gameAPI
     //
     // - - - Decisions and Targets - - -
     //
-    public enum Status {Dormant, Active, Live, Completed }
+    public enum Status {Dormant, Active, Live, Completed, Contained }
     public enum Activation { Low, Medium, High}                                     //chance of becoming 'Live' once 'Active'
 
     //
@@ -98,6 +98,17 @@ namespace gameAPI
     // - - - Effects - - -
     //
     public enum EffectType { None, Good, Neutral, Bad}
+    public enum EffectApply {
+        None,
+        //Node
+        NodeCurrent,
+        NodeNeighbours,
+        NodeSameArc,
+        NodeAll,
+        //Connections
+        ConnectionNeighbours,
+        ConnectionAll
+    }
     public enum EffectCriteria {
         None,
         //resistance
