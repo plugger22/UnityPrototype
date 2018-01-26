@@ -287,8 +287,19 @@ public class ActionManager : MonoBehaviour
                 //
                 // - - - Process target - - -  TO DO
                 //
-                isSuccessful = true;
-                
+                int tally = GameManager.instance.targetScript.GetTargetTally(target.TargetID);
+                int chance = GameManager.instance.targetScript.GetTargetChance(tally);
+                int roll = Random.Range(0, 100);
+                if (roll <= chance)
+                {
+                    //Success
+                    isSuccessful = true;
+                    //target admin
+                    target.TargetStatus = Status.Completed;
+                    GameManager.instance.dataScript.RemoveTargetFromList(target, Status.Active);
+                    GameManager.instance.dataScript.AddCompletedTarget(target);
+                }
+                Debug.Log(string.Format("Target Resolution: chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n"));
 
                 //
                 // - - - Effects - - - (only apply if target attempted successfully)

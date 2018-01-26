@@ -19,6 +19,9 @@ public class TargetManager : MonoBehaviour
     [Range(20, 50)]
     [Tooltip("The % of the total Nodes on the level that can have a Live target at any one time")]
     public int maxPercentTargets = 25;
+    [Range(0, 100)]
+    [Tooltip("The base chance of a target attempt being successful with no other factors in play")]
+    public int baseTargetChance = 50;
     [Range(1, 3)]
     [Tooltip("How much effect having the right Gear for a target will have on the chance of success")]
     public int gearEffect = 2;
@@ -61,9 +64,6 @@ public class TargetManager : MonoBehaviour
         ActiveTargets = Mathf.Max(0, ActiveTargets);
         //Set initialise targets on map
         SetRandomTargets(StartTargets, Status.Live);
-
-        //SetRandomTargets(ActiveTargets, Status.Active);
-
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach(var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
@@ -155,7 +155,6 @@ public class TargetManager : MonoBehaviour
                         //reset target status
                         Target dictTarget = GameManager.instance.dataScript.GetTarget(target.TargetID);
                         dictTarget.TargetStatus = status;
-                        //target.TargetStatus = status;
                         //Remove from listOfPossibleTargets
                         listOfPossibleTargets.RemoveAt(index);
                         //Update node Array info stats
@@ -426,7 +425,7 @@ public class TargetManager : MonoBehaviour
                 int tally = GetTargetTally(targetID);
                 int chance = GetTargetChance(tally);
                 //add tally and chance to string
-                tempList.Add(string.Format("{0}Total {1}{2}{3}", colourRebel, tally > 0 ? "+" : "", tally, colourEnd));
+                tempList.Add(string.Format("{0}Total {1}{2} (base {3} out of 10) {4}", colourRebel, tally > 0 ? "+" : "", tally, baseTargetChance/10, colourEnd));
                 tempList.Add(string.Format("{0}{1}SUCCESS {2}%{3}{4}", colourDefault, "<mark=#FFFFFF4D>", chance, "</mark>", colourEnd));
             }
             else
@@ -545,16 +544,14 @@ public class TargetManager : MonoBehaviour
 
     /// <summary>
     /// returns % chance (whole numbers) of target resolution being a success
-    /// Formula -> (5 + tally) * 10
+    /// Formula -> baseTargetChance + tally * 10
     /// </summary>
     /// <param name="tally"></param>
     /// <returns></returns>
     public int GetTargetChance(int tally)
     {
-        int chance = 5 + tally;
-        chance = Math.Min(10, chance);
-        chance = Math.Max(0, chance);
-        chance *= 10;
+        int chance = baseTargetChance + (tally * 10);
+        chance = Mathf.Clamp(chance, 0, 100);
         return chance;
     }
 

@@ -45,9 +45,10 @@ public class DataManager : MonoBehaviour
     private List<Trait> listOfAllTraits = new List<Trait>();
 
     //for fast access
-    private List<Target> listOfPossibleTargets = new List<Target>();                        //nodes that don't currently have any target
+    private List<Target> listOfPossibleTargets = new List<Target>();                        //level 1 target and node of the correct type available
     private List<Target> listOfActiveTargets = new List<Target>();
     private List<Target> listOfLiveTargets = new List<Target>();
+    private List<Target> listOfCompletedTargets = new List<Target>();                       //successfully attempted targets, Status -> Completed
     private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor in the level
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
@@ -893,6 +894,59 @@ public class DataManager : MonoBehaviour
         if (target != null)
         { listOfLiveTargets.Add(target); }
         else { Debug.LogError("Invalid Live Target parameter (Null)"); }
+    }
+
+    public void AddCompletedTarget(Target target)
+    {
+        if (target != null)
+        { listOfCompletedTargets.Add(target); }
+        else { Debug.LogError("Invalid Completed Target parameter (Null)"); }
+    }
+
+    /// <summary>
+    /// Removes target from List (possible is dormant, active, live, completed). Returns true if target found and removed, false otherwise
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="status"></param>
+    public bool RemoveTargetFromList(Target target, Status status)
+    {
+        bool isSuccess = false;
+        if (target != null)
+        {
+            List<Target> listOfTargets = new List<Target>();
+            switch (status)
+            {
+                case Status.Dormant:
+                    listOfTargets = listOfPossibleTargets;
+                    break;
+                case Status.Active:
+                    listOfTargets = listOfActiveTargets;
+                    break;
+                case Status.Live:
+                    listOfTargets = listOfLiveTargets;
+                    break;
+                case Status.Completed:
+                    listOfTargets = listOfCompletedTargets;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid target status {0}", status));
+                    break;
+            }
+            //remove from list (by reference)
+            for (int i = 0; i < listOfTargets.Count; i++)
+            {
+                Target targetList = listOfTargets[i];
+                if (targetList.TargetID == target.TargetID)
+                {
+                    listOfTargets.RemoveAt(i);
+                    isSuccess = true;
+                    Debug.Log(string.Format("DataManager: Target \"{0}\", ID {1}, successfully removed from {2} List{3}", target.name, target.TargetID, status, "\n"));
+                    break;
+                }
+            }
+        }
+        else { Debug.LogError("Invalid List target parameter (Null)"); }
+        return isSuccess;
     }
 
 
