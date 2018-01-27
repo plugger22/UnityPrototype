@@ -22,7 +22,7 @@ public class Effect : ScriptableObject
     public EffectOutcome outcome;                         //standard effect
     public Result result;                                 //leave as 'None' if there is no specific stat adjustment
     public EffectType type;                               //used so that ActorManager.cs -> GetActorActions can colour the effects correctly for the tooltips
-    
+    public EffectDuration duration;                       //once off effect or ongoing?
 
     public int value;                                     //leave as '0' if there is no specific stat adjustment
     [Tooltip("True only for cases where a ModalGenericPicker is needed rather than a straight ProcessEffect. False by default")]

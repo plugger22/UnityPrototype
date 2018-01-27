@@ -499,8 +499,28 @@ public class Node : MonoBehaviour
     public List<Team> GetTeams()
     { return listOfTeams; }
 
+    /// <summary>
+    /// changes fields and handles ongoing effects. Main method of changing node fields.
+    /// </summary>
+    /// <param name="process"></param>
+    public void ProcessNodeEffect(EffectProcess process)
+    {
+        if (process != null)
+        {
+            switch(process.outcome)
+            {
+                case EffectOutcome.NodeSecurity:
+                    Security += process.value;
+                    Mathf.Clamp(Security, 0, 3);
+                    break;
 
-
+                default:
+                    Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid effectProcess (Null)"); }
+    }
 
     //place methods above here
 }

@@ -47,7 +47,7 @@ namespace gameAPI
     // - - - Action Manager - - -
     //
     public enum Comparison { None, LessThan, GreaterThan, EqualTo }
-    public enum Result { None, Add, Subtract, EqualTo }
+    public enum Result { None, Add, Subtract }
     public enum ActionType { None, Node, NeutraliseTeam, Gear, Recruit}
 
     //
@@ -101,6 +101,7 @@ namespace gameAPI
     //* * * WARNING: changing / deleting entries can mess up the Effect SO's * * * 
 
     public enum EffectType { None, Good, Neutral, Bad}
+    public enum EffectDuration { OnceOff, Ongoing}
     public enum EffectCategory { Normal, AuthorityTeam, Target }
     public enum EffectApply {
         None,
