@@ -47,22 +47,19 @@ public class Node : MonoBehaviour
     public int Security
     {
         get { return Mathf.Clamp(_security + GetNodeAdjustment(EffectOutcome.Security), 0, 3); }
-        set
-        { _security = value; }
+        set { _security = value; Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
         get { return Mathf.Clamp(_stability + GetNodeAdjustment(EffectOutcome.Stability), 0, 3); }
-        set
-        { _stability = value; }
+        set { _stability = value; Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
         get { return Mathf.Clamp(_support + GetNodeAdjustment(EffectOutcome.Support), 0, 3); }
-        set
-        { _support = value; }
+        set { _support = value; Mathf.Clamp(_support, 0, 3); }
     }
 
     /// <summary>
@@ -567,9 +564,13 @@ public class Node : MonoBehaviour
                 {
                     case EffectOutcome.Security:
                         Security += process.value;
-                        Mathf.Clamp(Security, 0, 3);
                         break;
-
+                    case EffectOutcome.Stability:
+                        Stability += process.value;
+                        break;
+                    case EffectOutcome.Support:
+                        Support += process.value;
+                        break;
                     default:
                         Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));
                         break;

@@ -453,9 +453,11 @@ public class EffectManager : MonoBehaviour
                 // - - - Resistance effects
                 //
                 case EffectOutcome.Security:
+                case EffectOutcome.Stability:
+                case EffectOutcome.Support:
                     if (node != null)
                     {
-                        EffectDataResolve resolve = ResolveNodeSecurity(effect, node);
+                        EffectDataResolve resolve = ResolveNodeData(effect, node);
                         if (resolve.isError == true)
                         { effectReturn.errorFlag = true; }
                         else
@@ -472,7 +474,7 @@ public class EffectManager : MonoBehaviour
                         effectReturn.errorFlag = true;
                     }
                     break;
-                case EffectOutcome.Stability:
+                /*case EffectOutcome.Stability:
                     if (node != null)
                     {
                         switch (effect.result)
@@ -489,14 +491,6 @@ public class EffectManager : MonoBehaviour
                                 effectReturn.topText = string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourDefault, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            /*case Result.EqualTo:
-                                //keep within allowable parameters
-                                effect.value = Mathf.Min(3, effect.value);
-                                effect.value = Mathf.Max(0, effect.value);
-                                node.Stability = effect.value;
-                                effectReturn.topText = string.Format("{0}Civil obedience has been reset to a new level{1}", colourDefault, colourEnd);
-                                effectReturn.bottomText = string.Format("{0}Node Stability now {1}{2}", colourOutcome3, node.Stability, colourEnd);
-                                break;*/
                             default:
                                 Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
                                 effectReturn.errorFlag = true;
@@ -539,7 +533,7 @@ public class EffectManager : MonoBehaviour
                         Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
                         effectReturn.errorFlag = true;
                     }
-                    break;
+                    break;*/
                 case EffectOutcome.RebelCause:
                     int rebelCause = GameManager.instance.rebelScript.resistanceCause;
                     int maxCause = GameManager.instance.rebelScript.resistanceCauseMax;
@@ -953,7 +947,7 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Sub method to process Node Security
     /// Note: Effect and Node checked for null in calling method
     /// </summary>
@@ -1076,6 +1070,266 @@ public class EffectManager : MonoBehaviour
                         value = -1 * effect.value;
                         effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                         effectResolve.bottomText = string.Format("{0}All {1} nodes Security -{2}{3}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect for current node
+                node.ProcessNodeEffect(effectProcess);
+                //Process Node effect for all neighbouring nodes
+                Dictionary<int, Node> dictOfSameNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfSameNodes != null)
+                {
+                    foreach (var nodeTemp in dictOfSameNodes)
+                    {
+                        //same node Arc type and not the current node?
+                        if (nodeTemp.Value.Arc.NodeArcID == node.Arc.NodeArcID && nodeTemp.Value.nodeID != node.nodeID)
+                        { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                    }
+                }
+                else { Debug.LogError("Invalid dictOfSameNodes (Null)"); }
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid effect.apply \"{0}\"", effect.apply));
+                break;
+        }
+        //return data to calling method (ProcessEffect)
+        return effectResolve;
+    }*/
+
+    /// <summary>
+    /// Sub method to process Node Stability/Security/Support
+    /// Note: Effect and Node checked for null in calling method
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveNodeData(Effect effect, Node node)
+    {
+        int value = 0;
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //data package to send to node for field processing
+        EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcome };
+        //Extent of effect
+        switch (effect.apply)
+        {
+            //Current Node only
+            case EffectApply.NodeCurrent:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the situation{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect
+                node.ProcessNodeEffect(effectProcess);
+                break;
+            //Neighbouring Nodes
+            case EffectApply.NodeNeighbours:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}Neighbouring security systems have been swept and strengthened{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised neighbouring nodes{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in neighbouring nodes{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node and Neighbours Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}Neighbouring security systems have been successfully hacked{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the neighbouring nodes{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity in neighbouring nodes{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node and Neighbour Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect for current node
+                node.ProcessNodeEffect(effectProcess);
+                //Process Node effect for all neighbouring nodes
+                List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+                if (listOfNeighbours != null)
+                {
+                    foreach (Node nodeTemp in listOfNeighbours)
+                    { nodeTemp.ProcessNodeEffect(effectProcess); }
+                }
+                else { Debug.LogError(string.Format("Invalid listOfNeighbours (Null) for nodeID {0}, \"{1}\"", node.nodeID, node.nodeName)); }
+                break;
+            //All Nodes
+            case EffectApply.NodeAll:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}All security systems have been swept and strengthened{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the city wide situation{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Nodes Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels throughout the city{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}All security systems have been successfully hacked{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the city{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Nodes Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout the city{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Nodes Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect for current node
+                node.ProcessNodeEffect(effectProcess);
+                //Process Node effect for all neighbouring nodes
+                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfAllNodes != null)
+                {
+                    foreach (var nodeTemp in dictOfAllNodes)
+                    { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                }
+                else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
+                break;
+            case EffectApply.NodeSameArc:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been swept and strengthened{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All {1} nodes Security +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the {1} situation{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}{1}Node Stability +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.Security:
+                                effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All {1} nodes Security -{2}{3}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Stability:
+                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}{1} Nodes Stability -{1}{2}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.Support:
+                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}{1} Nodes Support -{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                break;
+                        }
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
