@@ -309,11 +309,6 @@ public class TargetManager : MonoBehaviour
                     else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
                 }
             }
-            else
-            {
-                Debug.LogError(string.Format("Invalid Good Target Effects (count 0) for ID {0}{1}", targetID, "\n"));
-                tempList.Add("Target Effects Unknown");
-            }
             //bad effects
             if (target.listOfBadEffects.Count > 0)
             {
@@ -326,10 +321,17 @@ public class TargetManager : MonoBehaviour
                     else { Debug.LogError(string.Format("Invalid Bad effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
                 }
             }
-            else
+            //Ongoing effects
+            if (target.listOfOngoingEffects.Count > 0)
             {
-                Debug.LogError(string.Format("Invalid Bad Target Effects (count 0) for ID {0}{1}", targetID, "\n"));
-                tempList.Add("Target Effects Unknown");
+                //add header
+                for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
+                {
+                    effect = target.listOfOngoingEffects[i];
+                    if (effect != null)
+                    { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, effect.description, colourEnd)); }
+                    else { Debug.LogError(string.Format("Invalid Ongoing effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                }
             }
         }
         else
@@ -415,17 +417,8 @@ public class TargetManager : MonoBehaviour
                                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, Side.Resistance);
                                     if (slotID > -1)
                                     {
-                                        //check if node is active for actor
-                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, slotID) == true)
-                                        {
-                                            //actor present and available
-                                            tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
-                                        }
-                                        else
-                                        {
-                                            //actor not active for this node
-                                            tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.actorArc.name, colourEnd));
-                                        }
+                                        //actor present and available
+                                        tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
                                     }
                                     else
                                     {
@@ -536,17 +529,14 @@ public class TargetManager : MonoBehaviour
                             }
                             else
                             {
-                                //player not at node ->  check if node active for the correct actor
+                                //player NOT at node ->  check if node active for the correct actor
                                 if (target.actorArc != null)
                                 {
                                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, Side.Resistance);
                                     if (slotID > -1)
                                     {
-                                        if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, slotID) == true)
-                                        {
-                                            //actor present and available
-                                            tally += actorEffect;
-                                        }
+                                        //actor present and available
+                                        tally += actorEffect;
                                     }
                                 }
                             }
