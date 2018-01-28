@@ -4,10 +4,15 @@ using UnityEngine;
 using gameAPI;
 using System.Text;
 
+//
+// - - - Effect Data Packages - - -
+//
+
 /// <summary>
 /// used to return results of effects to calling method
+/// ActionManager.cs -> <EffectDataReturn> ProcessNode... -> ProcessEffect -> EffectDataReturn
 /// </summary>
-public class EffectReturn
+public class EffectDataReturn
 {
     public string topText { get; set; }
     public string bottomText { get; set; }
@@ -17,31 +22,33 @@ public class EffectReturn
 }
 
 /// <summary>
-/// used for returning text data from effect resolution sub methods
+/// used for returning text data from effect resolution sub methods. 
+/// ProcessEffect -> <EffectDataResolve> subMethod -> EffectDataResolve returned to ProcessEffect
 /// </summary>
-public class EffectResolve
+public class EffectDataResolve
 {
     public string topText;
     public string bottomText;
     public bool isError;
+    public int ongoingID;                       //only needed if there is an ongoing effect (any value > 0, if '0' ignore)
 }
 
 /// <summary>
 /// sends a package of data to the node for processing of one off or ongoing effects on a node field
+/// ProcessEffect -> subMethod -> EffectDataProcess -> Node.cs -> ProcessNodeEffect(EffectDataProcess)
 /// </summary>
-public class EffectProcess
+public class EffectDataProcess
 {
     public EffectOutcome outcome;
-    public EffectDuration duration;
-    public EffectOngoing effectOngoing = null;                        //only used if an ongoing effect, ignore otherwise 
-    public int value;                                                 //how much the field changes, eg. +1, -1, etc.
-                                                  //tooltip description for the temporary effect
+    public EffectDataOngoing effectOngoing = null;                      //only used if an ongoing effect, ignore otherwise 
+    public int value;                                                   //how much the field changes, eg. +1, -1, etc.
+    public string text;                                                 //tooltip description for the temporary effect
 }
 
 /// <summary>
 /// used to pass data back to Node for an ongoing effect
 /// </summary>
-public class EffectOngoing
+public class EffectDataOngoing
 {
     public int ongoingID;                                             //links back to a central registry to enable cancelling of ongoing effect at a later point
     public string text;
@@ -50,6 +57,9 @@ public class EffectOngoing
 }
 
 
+//
+// - - - Effect Class - - -
+//
 
 /// <summary>
 /// handles Effect related matters (Actions and Targets)
@@ -425,10 +435,10 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public EffectReturn ProcessEffect(Effect effect, Node node, Actor actor = null)
+    public EffectDataReturn ProcessEffect(Effect effect, Node node, Actor actor = null)
     {
         int teamID, teamArcID;
-        EffectReturn effectReturn = new EffectReturn();
+        EffectDataReturn effectReturn = new EffectDataReturn();
         //set default values
         effectReturn.errorFlag = false;
         effectReturn.topText = "";
@@ -442,58 +452,18 @@ public class EffectManager : MonoBehaviour
                 //
                 // - - - Resistance effects
                 //
-                case EffectOutcome.NodeSecurity:
+                case EffectOutcome.Security:
                     if (node != null)
                     {
-                        switch (effect.apply)
+                        EffectDataResolve resolve = ResolveNodeSecurity(effect, node);
+                        if (resolve.isError == true)
+                        { effectReturn.errorFlag = true; }
+                        else
                         {
-                            case EffectApply.NodeCurrent:
-                                //normal effect -> Current node
-
-                                /*switch (effect.result)
-                                {
-                                    case Result.Add:
-                                        node.Security += effect.value;
-                                        node.Security = Mathf.Min(3, node.Security);
-                                        effectReturn.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
-                                        effectReturn.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                        break;
-                                    case Result.Subtract:
-                                        node.Security -= effect.value;
-                                        node.Security = Mathf.Max(0, node.Security);
-                                        effectReturn.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
-                                        effectReturn.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                        break;
-                                    case Result.EqualTo:
-                                        //keep within allowable parameters
-                                        effect.value = Mathf.Min(3, effect.value);
-                                        effect.value = Mathf.Max(0, effect.value);
-                                        node.Security = effect.value;
-                                        effectReturn.topText = string.Format("{0}The security system has been reset{1}", colourDefault, colourEnd);
-                                        effectReturn.bottomText = string.Format("{0}Node Security now {1}{2}", colourOutcome3, node.Security, colourEnd);
-                                        break;
-                                    default:
-                                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
-                                        effectReturn.errorFlag = true;
-                                        break;
-                                }*/
-
-                                EffectResolve resolve = ResolveNodeSecurity(effect, node);
-                                if (resolve.isError == true)
-                                { effectReturn.errorFlag = true; }
-                                else
-                                {
-                                    effectReturn.topText = resolve.topText;
-                                    effectReturn.bottomText = resolve.bottomText;
-                                    effectReturn.isAction = true;
-                                }
-                                break;
-                            case EffectApply.NodeNeighbours:
-                                //Target effect -> applies to all Neighbours
-                                break;
-                            case EffectApply.NodeAll:
-                                //Target effect -> applies to ALL Nodes OnMap
-                                break;
+                            effectReturn.topText = resolve.topText;
+                            effectReturn.bottomText = resolve.bottomText;
+                            effectReturn.ongoingID = resolve.ongoingID;
+                            effectReturn.isAction = true;
                         }
                     }
                     else
@@ -502,7 +472,7 @@ public class EffectManager : MonoBehaviour
                         effectReturn.errorFlag = true;
                     }
                     break;
-                case EffectOutcome.NodeStability:
+                case EffectOutcome.Stability:
                     if (node != null)
                     {
                         switch (effect.result)
@@ -540,7 +510,7 @@ public class EffectManager : MonoBehaviour
                         effectReturn.errorFlag = true;
                     }
                     break;
-                case EffectOutcome.NodeSupport:
+                case EffectOutcome.Support:
                     if (node != null)
                     {
                         switch (effect.result)
@@ -990,58 +960,141 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    private EffectResolve ResolveNodeSecurity(Effect effect, Node node)
+    private EffectDataResolve ResolveNodeSecurity(Effect effect, Node node)
     {
         int value = 0;
-        //need the Resolve to return text strings and the Process to deal with the data
-        EffectResolve effectResolve = new EffectResolve();
-        EffectProcess effectProcess = new EffectProcess()
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //data package to send to node for field processing
+        EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcome };
+        //Extent of effect
+        switch (effect.apply)
         {
-            outcome = effect.outcome,
-            duration = effect.duration,
-        };
-
-        switch (effect.result)
-        {
-            case Result.Add:
-                value = effect.value;
-                effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
-                effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+            //Current Node only
+            case EffectApply.NodeCurrent:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect
+                node.ProcessNodeEffect(effectProcess);
                 break;
-            case Result.Subtract:
-                value = -1 * effect.value;
-                effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
-                effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+            //Neighbouring Nodes
+            case EffectApply.NodeNeighbours:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        effectResolve.topText = string.Format("{0}Neighbouring security systems have been swept and strengthened{1}", colourDefault, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        effectResolve.topText = string.Format("{0}Neighbouring security system have been successfully hacked{1}", colourDefault, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect for current node
+                node.ProcessNodeEffect(effectProcess);
+                //Process Node effect for all neighbouring nodes
+                List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+                if (listOfNeighbours != null)
+                {
+                    foreach (Node nodeTemp in listOfNeighbours)
+                    { nodeTemp.ProcessNodeEffect(effectProcess); }
+                }
+                else { Debug.LogError(string.Format("Invalid listOfNeighbours (Null) for nodeID {0}, \"{1}\"", node.nodeID, node.nodeName)); }
+                break;
+            //All Nodes
+            case EffectApply.NodeAll:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        effectResolve.topText = string.Format("{0}All security systems have been swept and strengthened{1}", colourDefault, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}All Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        effectResolve.topText = string.Format("{0}All security system have been successfully hacked{1}", colourDefault, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}All Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect for current node
+                node.ProcessNodeEffect(effectProcess);
+                //Process Node effect for all neighbouring nodes
+                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfNodes != null)
+                {
+                    foreach (var nodeTemp in dictOfNodes)
+                    { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                }
+                else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+                break;
+            case EffectApply.NodeSameArc:
                 break;
             default:
-                Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
-                effectResolve.isError = true;
+                Debug.LogError(string.Format("Invalid effect.apply \"{0}\"", effect.apply));
                 break;
         }
-        //Mathf.Clamp(node.Security, 0, 3);
-        effectProcess.value = value;
-        //Ongoing effect
-        if (effect.duration == EffectDuration.Ongoing)
-        {
-            EffectOngoing effectOngoing = CreateOngoingEffect();
-            effectOngoing.outcome = effect.outcome;
-            effectOngoing.value = value;
-            effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourOutcome3, effect.outcome, value, value > 0 ? "+" : "", effect.category, colourEnd);
-            //add to effectProcess
-            effectProcess.effectOngoing = effectOngoing;
-        }
-        //Process Node effect
-        node.ProcessNodeEffect(effectProcess);
+        //return data to calling method (ProcessEffect)
         return effectResolve;
+    }
+
+    /// <summary>
+    /// subMethod to handle Ongoing effects
+    /// </summary>
+    private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, int value)
+    {
+        EffectDataOngoing effectOngoing = CreateOngoingEffect();
+        effectOngoing.outcome = effect.outcome;
+        effectOngoing.value = value;
+        effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourOutcome3, effect.outcome, value, value > 0 ? "+" : "", effect.category, colourEnd);
+        //add to effectProcess
+        effectProcess.effectOngoing = effectOngoing;
+        effectResolve.ongoingID = effectOngoing.ongoingID;
     }
 
     /// <summary>
     /// Creates an ongoing effect, assigns a unique ID
     /// </summary>
     /// <returns></returns>
-    private EffectOngoing CreateOngoingEffect()
+    private EffectDataOngoing CreateOngoingEffect()
     {
-        EffectOngoing effectOngoing = new EffectOngoing();
+        EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.ongoingID = ongoingEffectIDCounter++;
 
         return effectOngoing;

@@ -101,7 +101,7 @@ namespace gameAPI
     //* * * WARNING: changing / deleting entries can mess up the Effect SO's * * * 
 
     public enum EffectType { None, Good, Neutral, Bad}
-    public enum EffectDuration { OnceOff, Ongoing}
+    public enum EffectDuration { Single, Ongoing}
     public enum EffectCategory { Normal, AuthorityTeam, Target }
     public enum EffectApply {
         None,
@@ -127,7 +127,7 @@ namespace gameAPI
     public enum EffectOutcome {
         None,
         //resistance
-        NodeStability, NodeSecurity, NodeSupport,
+        Stability, Security, Support,
         Recruit, NeutraliseTeam, Tracer, Gear, TargetInfo, SpreadInstability,
         RebelCause,
         Invisibility,

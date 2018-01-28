@@ -870,7 +870,7 @@ public void InitialiseTeams()
                                     {
                                         if (effect.ignoreEffect == false)
                                         {
-                                            EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                                             if (effectReturn != null)
                                             {
                                                 builderTop.AppendLine();
@@ -921,7 +921,7 @@ public void InitialiseTeams()
     {
         bool isError = false;
         List<Effect> listOfEffects = team.Arc.listOfEffects;
-        EffectReturn effectReturn = new EffectReturn();
+        EffectDataReturn effectReturn = new EffectDataReturn();
         switch(team.Arc.type)
         {
             case TeamType.Control:

@@ -1045,7 +1045,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     if (effect.ignoreEffect == false)
                                     {
-                                        EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actorCurrent);
+                                        EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actorCurrent);
                                         if (effectReturn != null)
                                         {
                                             builderTop.AppendLine();

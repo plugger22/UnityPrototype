@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using modalAPI;
 using gameAPI;
-
+using System;
 
 public class Node : MonoBehaviour
 {
@@ -15,9 +15,14 @@ public class Node : MonoBehaviour
     [HideInInspector] public string nodeName;                //name of node, eg. "Downtown Bronx"
     [HideInInspector] public NodeArc Arc;                                 //archetype type
 
-    [HideInInspector] public int Stability;                  //range 0 to 3
+    //private backing fields
+    private int _stability;
+    private int _support;
+    private int _security;
+
+    /*[HideInInspector] public int Stability;                  //range 0 to 3
     [HideInInspector] public int Support;                    //range 0 to 3
-    [HideInInspector] public int Security;                   //range 0 to 3
+    /[HideInInspector] public int Security;                   //range 0 to 3*/
 
     [HideInInspector] public bool isTracer;                    //has resistance tracer?
     [HideInInspector] public bool isTracerActive;              //within a tracer coverage (inclusive) of neighbouring nodes
@@ -32,10 +37,33 @@ public class Node : MonoBehaviour
     //private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
     private List<Connection> listOfConnections;                //list of neighbouring connections
     private List<Team> listOfTeams;                     //Authority teams present at the node
+    private Dictionary<int, EffectDataOngoing> dictOfAdjustments;    //dict of temporary effects impacting on the node
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     private float fadeInTime;                           //tooltip
+
+    //Properties for backing fields
+    public int Security
+    {
+        get { return Mathf.Clamp(_security + GetNodeAdjustment(EffectOutcome.Security), 0, 3); }
+        set
+        { _security = value; }
+    }
+
+    public int Stability
+    {
+        get { return Mathf.Clamp(_stability + GetNodeAdjustment(EffectOutcome.Stability), 0, 3); }
+        set
+        { _stability = value; }
+    }
+
+    public int Support
+    {
+        get { return Mathf.Clamp(_support + GetNodeAdjustment(EffectOutcome.Support), 0, 3); }
+        set
+        { _support = value; }
+    }
 
     /// <summary>
     /// Initialise SO's for Nodes
@@ -53,10 +81,10 @@ public class Node : MonoBehaviour
         //listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
         listOfConnections = new List<Connection>();
+        dictOfAdjustments = new Dictionary<int, EffectDataOngoing>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
-        //TargetID = -1;
 	}
 
 
@@ -500,26 +528,75 @@ public class Node : MonoBehaviour
     { return listOfTeams; }
 
     /// <summary>
+    /// Add temporary effect to the dictionary
+    /// </summary>
+    /// <param name="ongoing"></param>
+    /// <returns></returns>
+    public bool AddOngoingEffectToDict(EffectDataOngoing ongoing)
+    {
+        bool successFlag = true;
+        //add to dictionary
+        try
+        { dictOfAdjustments.Add(ongoing.ongoingID, ongoing); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid ongoing effect (Null)"); successFlag = false; }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid ongoing Effect (duplicate) ongoingID \"{0}\" for \"{1}\"", ongoing.ongoingID, ongoing.text)); successFlag = false; }
+        return successFlag;
+    }
+
+    /// <summary>
     /// changes fields and handles ongoing effects. Main method of changing node fields.
+    /// Note: Ongoing effect doesn't affect field, just updates dictOfAdjustments ready for the following turns
     /// </summary>
     /// <param name="process"></param>
-    public void ProcessNodeEffect(EffectProcess process)
+    public void ProcessNodeEffect(EffectDataProcess process)
     {
         if (process != null)
         {
-            switch(process.outcome)
+            //Ongoing effect
+            if (process.effectOngoing != null)
             {
-                case EffectOutcome.NodeSecurity:
-                    Security += process.value;
-                    Mathf.Clamp(Security, 0, 3);
-                    break;
+                //create an entry in the dictOfAdjustments
+                AddOngoingEffectToDict(process.effectOngoing);
+            }
+            else
+            {
+                //immediate effect
+                switch (process.outcome)
+                {
+                    case EffectOutcome.Security:
+                        Security += process.value;
+                        Mathf.Clamp(Security, 0, 3);
+                        break;
 
-                default:
-                    Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));
-                    break;
+                    default:
+                        Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));
+                        break;
+                }
             }
         }
         else { Debug.LogError("Invalid effectProcess (Null)"); }
+    }
+
+    /// <summary>
+    /// Returns tally of adjustments for the specified field, '0' if none
+    /// </summary>
+    /// <param name="outcome"></param>
+    /// <returns></returns>
+    private int GetNodeAdjustment(EffectOutcome outcome)
+    {
+        Debug.Assert(outcome == EffectOutcome.Security || outcome == EffectOutcome.Stability || outcome == EffectOutcome.Support, string.Format("Invalid outcome \"{0}\"", outcome));
+        int value = 0;
+        if (dictOfAdjustments.Count > 0)
+        {
+            foreach(var adjust in dictOfAdjustments)
+            {
+                if (adjust.Value.outcome == outcome)
+                { value += adjust.Value.value; }
+            }
+        }
+        return value;
     }
 
     //place methods above here

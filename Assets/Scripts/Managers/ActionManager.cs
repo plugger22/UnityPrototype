@@ -134,7 +134,7 @@ public class ActionManager : MonoBehaviour
                         if (listOfEffects.Count > 0)
                         {
                             //return class
-                            EffectReturn effectReturn = new EffectReturn();
+                            EffectDataReturn effectReturn = new EffectDataReturn();
                             //two builders for top and bottom texts
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
@@ -317,7 +317,7 @@ public class ActionManager : MonoBehaviour
                 {
                     List<Effect> listOfEffects = new List<Effect>();
                     //return class
-                    EffectReturn effectReturn = new EffectReturn();
+                    EffectDataReturn effectReturn = new EffectDataReturn();
 
                     //target success
                     builderTop.Append(string.Format("Target {0} successfully attempted", target.name));

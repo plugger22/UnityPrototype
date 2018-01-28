@@ -351,7 +351,7 @@ public class GearManager : MonoBehaviour
                                     {
                                         if (effect.ignoreEffect == false)
                                         {
-                                            EffectReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
                                             if (effectReturn != null)
                                             {
                                                 builderTop.AppendLine();
