@@ -83,6 +83,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
 
                 List<string> activeList = node.GetNodeActors();
+                List<string> effectsList = node.GetOngoingEffects();
                 List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.targetID);
                 List<string> teamList = new List<string>();
                 List<Team> listOfTeams = node.GetTeams();
@@ -96,15 +97,19 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 position.x += 100;
                 position.y -= 100;
                 position = Camera.main.ScreenToWorldPoint(position);
-                GameManager.instance.tooltipNodeScript.SetTooltip(
-                    node.nodeName,
-                    string.Format("{0} ID {1}", node.Arc.name, NodeID),
-                    activeList,
-                    new int[] { node.Stability, node.Support, node.Security },
-                    teamList,
-                    targetList,
-                    position
-                    );
+                
+                NodeTooltipData dataTooltip = new NodeTooltipData()
+                {
+                    nodeName = node.nodeName,
+                    type = string.Format("{0} ID {1}", node.Arc.name, NodeID),
+                    arrayOfStats = new int[] { node.Stability, node.Support, node.Security },
+                    listOfActive = activeList,
+                    listOfEffects = effectsList,
+                    listOfTeams = teamList,
+                    listOfTargets = targetList,
+                    tooltipPos = position
+                    };
+                GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
                 yield return null;
             }
             //fade in

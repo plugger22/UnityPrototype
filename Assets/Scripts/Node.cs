@@ -194,6 +194,7 @@ public class Node : MonoBehaviour
             while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
             {
                 List<string> activeList = GetNodeActors();
+                List<string> effectsList = GetOngoingEffects();
                 List<string> teamList = new List<string>();
                 if (listOfTeams.Count > 0)
                 {
@@ -204,15 +205,18 @@ public class Node : MonoBehaviour
                 if (targetID > -1)
                 { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
                 //Transform transform = GetComponent<Transform>();
-                GameManager.instance.tooltipNodeScript.SetTooltip(
-                    nodeName,
-                    string.Format("{0} ID {1}", Arc.name, nodeID),
-                    activeList,
-                    new int[] { Stability, Support, Security },
-                    teamList,
-                    targetList,
-                    transform.position
-                    );
+                NodeTooltipData dataTooltip = new NodeTooltipData()
+                {
+                    nodeName = nodeName,
+                    type = string.Format("{0} ID {1}", Arc.name, nodeID),
+                    arrayOfStats = new int[] { Stability, Support, Security },
+                    listOfActive = activeList,
+                    listOfEffects = effectsList,
+                    listOfTeams = teamList,
+                    listOfTargets = targetList,
+                    tooltipPos = transform.position
+                    };
+                GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
                 yield return null;
             }
             //fade in
@@ -358,6 +362,18 @@ public class Node : MonoBehaviour
                 tempList.Add(GameManager.instance.dataScript.GetCurrentActorType(i, side));
             }
         }
+        return tempList;
+    }
+
+    /// <summary>
+    /// returns a list of ongoing effects currently impacting the node, returns empty list if none
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetOngoingEffects()
+    {
+        List<string> tempList = new List<string>();
+        foreach(var effect in dictOfAdjustments)
+        { tempList.Add(effect.Value.text); }
         return tempList;
     }
 
@@ -523,6 +539,7 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<Team> GetTeams()
     { return listOfTeams; }
+
 
     /// <summary>
     /// Add temporary effect to the dictionary

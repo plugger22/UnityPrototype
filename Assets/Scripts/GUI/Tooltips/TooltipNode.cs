@@ -8,6 +8,21 @@ using UnityEngine.UI;
 using gameAPI;
 
 /// <summary>
+/// used to pass data package to node Tooltip
+/// </summary>
+public class NodeTooltipData
+{
+    public string nodeName;
+    public string type;
+    public int[] arrayOfStats;
+    public List<string> listOfActive;
+    public List<string> listOfEffects;
+    public List<string> listOfTeams;
+    public List<string> listOfTargets;
+    public Vector3 tooltipPos;
+}
+
+/// <summary>
 /// Node based tooltip
 /// </summary>
 public class TooltipNode : MonoBehaviour
@@ -17,6 +32,7 @@ public class TooltipNode : MonoBehaviour
     public TextMeshProUGUI nodeActive;
     public TextMeshProUGUI nodeStatsFixed;
     public TextMeshProUGUI nodeStatsVar;
+    public TextMeshProUGUI ongoingEffects;
     public TextMeshProUGUI nodeTeams;
     public TextMeshProUGUI nodeTarget;
 
@@ -114,7 +130,8 @@ public class TooltipNode : MonoBehaviour
     /// <param name="listOfTeams">List of Authority teams present at node</param>
     /// <param name="listOfTarget">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> Use a transform position (world units), not an Input.MousePosition (screen units)</param>
-    public void SetTooltip(string name, string type, List<string> listOfActive, int[] arrayOfStats, List<string> listOfTeams, List<string> listOfTarget, Vector3 pos)
+    //public void SetTooltip(string name, string type, List<string> listOfActive, int[] arrayOfStats, List<string> listOfTeams, List<string> listOfTarget, Vector3 pos)
+    public void SetTooltip(NodeTooltipData data)
     {
         //open panel at start
         tooltipNodeObject.SetActive(true);
@@ -134,11 +151,11 @@ public class TooltipNode : MonoBehaviour
         nodeTarget.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
         //set up tooltipNode object
-        nodeName.text = string.Format("{0}{1}{2}", colourDefault, name, colourEnd);
-        nodeType.text = string.Format("{0}{1}{2}", colourDefault, type, colourEnd);
+        nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd);
+        nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);
 
         //list of Actors for whom the is node is Active
-        if (listOfActive.Count > 0)
+        if (data.listOfActive.Count > 0)
         {
             //set tooltip elements to show
             nodeActive.gameObject.SetActive(true);
@@ -147,18 +164,29 @@ public class TooltipNode : MonoBehaviour
             StringBuilder builder = new StringBuilder();
             builder.Append(colourActive);
             //foreach(string active in listOfActive)
-            for(int i = 0; i < listOfActive.Count; i++)
+            for(int i = 0; i < data.listOfActive.Count; i++)
             {
                 if (i > 0) { builder.AppendLine(); }
-                builder.Append(string.Format("{0}{1}{2}", colourNeutral, listOfActive[i], colourEnd));
+                builder.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd));
             }
             nodeActive.text = builder.ToString();
         }
+        //Ongoing effects currently impacting the node
+        if (data.listOfEffects.Count > 0)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < data.listOfEffects.Count; i++)
+            {
+                if (i > 0) { builder.AppendLine(); }
+                builder.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfEffects[i], colourEnd));
+            }
+            ongoingEffects.text = builder.ToString();
+        }
         //Teams
-        if (listOfTeams.Count > 0)
+        if (data.listOfTeams.Count > 0)
         {
             StringBuilder teamBuilder = new StringBuilder();
-            foreach (String teamText in listOfTeams)
+            foreach (String teamText in data.listOfTeams)
             {
                 if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
                 teamBuilder.Append(string.Format("{0}{1}{2}", colourTeam, teamText, colourEnd));
@@ -168,19 +196,15 @@ public class TooltipNode : MonoBehaviour
         else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "No Teams present", colourEnd); }
         
         //Target
-        if (listOfTarget.Count > 0)
+        if (data.listOfTargets.Count > 0)
         {
-            //set tooltip elements to show
-            //nodeTarget.gameObject.SetActive(true);
-            //dividerBottom.gameObject.SetActive(true);
-            //build string
             StringBuilder builder = new StringBuilder();
             builder.Append(colourDefault);
             //foreach (string target in listOfTarget)
-            for(int i = 0; i < listOfTarget.Count; i++)
+            for(int i = 0; i < data.listOfTargets.Count; i++)
             {
                 if (i > 0) { builder.AppendLine(); }
-                builder.Append(listOfTarget[i]);
+                builder.Append(data.listOfTargets[i]);
             }
             builder.Append(colourEnd);
             nodeTarget.text = builder.ToString();
@@ -190,15 +214,15 @@ public class TooltipNode : MonoBehaviour
 
         //set up stats -> only takes the first three Stability - Support - Security
         int checkCounter = 0;
-        int data;
-        if (arrayOfStats.Length > 0)
+        int statData;
+        if (data.arrayOfStats.Length > 0)
         {
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < arrayOfStats.Length; i++)
+            for (int i = 0; i < data.arrayOfStats.Length; i++)
             {
-                data = arrayOfStats[i];
+                statData = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-                builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(data), data, colourEnd));
+                builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(statData), statData, colourEnd));
                 //idiot check to handle case of being too many stats
                 checkCounter++;
                 if (checkCounter >= 3) { break; }
@@ -208,7 +232,7 @@ public class TooltipNode : MonoBehaviour
         }
 
         //convert coordinates
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
         //get dimensions of dynamic tooltip
         float width = rectTransform.rect.width;
         float height = rectTransform.rect.height;
@@ -229,7 +253,7 @@ public class TooltipNode : MonoBehaviour
         { screenPos.x += width / 2 - screenPos.x; }
         //set new position
         tooltipNodeObject.transform.position = screenPos;
-        Debug.Log("UI: Open -> TooltipNode ID" + name + "\n");
+        Debug.Log("UI: Open -> TooltipNode ID" + data.nodeName + "\n");
     }
 
     /// <summary>
