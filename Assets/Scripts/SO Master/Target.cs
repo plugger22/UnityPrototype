@@ -24,10 +24,11 @@ public class Target : ScriptableObject
     public int Timer { get; set; }                      //countdown timer, default '-1' for ignore
     public ActorArc actorArc;                       //actor arc with special bonus for target resolution (max. 1)
     public GearType gearType;
+    [HideInInspector] public List<int> listOfOngoingID;         //unique ID's list used to link to ongoing effects, default '0', only valid if > -1
 
     //effects
     public List<Effect> listOfGoodEffects;        //all effects (SO's) that happen as a result of target successfully being resolved
     public List<Effect> listOfBadEffects;         //all effects (SO's) that happen as a result of target successfully being resolved
-    public List<Effect> listOfSuccessEffects;     //all effects (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained.
+    public List<Effect> listOfOngoingEffects;     //all effects (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained.
 
 }

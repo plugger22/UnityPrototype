@@ -18,7 +18,7 @@ public class EffectDataReturn
     public string bottomText { get; set; }
     public bool errorFlag { get; set; }
     public bool isAction;                       //true if effect is considered an action
-    public int ongoingID;                       //only needed if there is an ongoing effect (any value > 0, if '0' ignore)
+    public int ongoingID;                       //only needed if there is an ongoing effect (any value > -1, if '-1' ignore)
 }
 
 /// <summary>
@@ -30,7 +30,7 @@ public class EffectDataResolve
     public string topText;
     public string bottomText;
     public bool isError;
-    public int ongoingID;                       //only needed if there is an ongoing effect (any value > 0, if '0' ignore)
+    public int ongoingID;                       //only needed if there is an ongoing effect (any value > -1, if '-1' ignore)
 }
 
 /// <summary>
@@ -50,7 +50,7 @@ public class EffectDataProcess
 /// </summary>
 public class EffectDataOngoing
 {
-    public int ongoingID;                                             //links back to a central registry to enable cancelling of ongoing effect at a later point
+    public int ongoingID = -1;                                             //links back to a central registry to enable cancelling of ongoing effect at a later point
     public string text;
     public int value;                                                 //how much the field changes, eg. +1, -1, etc.
     public EffectOutcome outcome;
@@ -1007,7 +1007,7 @@ public class EffectManager : MonoBehaviour
                         break;
                     case Result.Subtract:
                         value = -1 * effect.value;
-                        effectResolve.topText = string.Format("{0}Neighbouring security system have been successfully hacked{1}", colourDefault, colourEnd);
+                        effectResolve.topText = string.Format("{0}Neighbouring security systems have been successfully hacked{1}", colourDefault, colourEnd);
                         effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                         break;
                     default:
@@ -1041,7 +1041,7 @@ public class EffectManager : MonoBehaviour
                         break;
                     case Result.Subtract:
                         value = -1 * effect.value;
-                        effectResolve.topText = string.Format("{0}All security system have been successfully hacked{1}", colourDefault, colourEnd);
+                        effectResolve.topText = string.Format("{0}All security systems have been successfully hacked{1}", colourDefault, colourEnd);
                         effectResolve.bottomText = string.Format("{0}All Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                         break;
                     default:
@@ -1056,15 +1056,50 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
-                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
-                if (dictOfNodes != null)
+                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfAllNodes != null)
                 {
-                    foreach (var nodeTemp in dictOfNodes)
+                    foreach (var nodeTemp in dictOfAllNodes)
                     { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
                 }
-                else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+                else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
                 break;
             case EffectApply.NodeSameArc:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been swept and strengthened{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                        effectResolve.bottomText = string.Format("{0}All {1} nodes Security +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                        effectResolve.bottomText = string.Format("{0}All {1} nodes Security -{2}{3}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                //Process Node effect for current node
+                node.ProcessNodeEffect(effectProcess);
+                //Process Node effect for all neighbouring nodes
+                Dictionary<int, Node> dictOfSameNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfSameNodes != null)
+                {
+                    foreach (var nodeTemp in dictOfSameNodes)
+                    {
+                        //same node Arc type and not the current node?
+                        if (nodeTemp.Value.Arc.NodeArcID == node.Arc.NodeArcID && nodeTemp.Value.nodeID != node.nodeID)
+                        { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                    }
+                }
+                else { Debug.LogError("Invalid dictOfSameNodes (Null)"); }
                 break;
             default:
                 Debug.LogError(string.Format("Invalid effect.apply \"{0}\"", effect.apply));
@@ -1095,8 +1130,8 @@ public class EffectManager : MonoBehaviour
     private EffectDataOngoing CreateOngoingEffect()
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
+        //unique ID is 0+
         effectOngoing.ongoingID = ongoingEffectIDCounter++;
-
         return effectOngoing;
     }
 

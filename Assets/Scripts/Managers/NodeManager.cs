@@ -204,8 +204,10 @@ public class NodeManager : MonoBehaviour
         {
             //show all nodes with Targets
             case NodeUI.ShowTargets:
-                //change material for selected nodes
-                List<Target> tempList = GameManager.instance.dataScript.GetLiveTargets();
+                //change material for selected nodes (Live and Completed targets)
+                List<Target> tempList = new List<Target>();
+                tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
+                tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Completed));
                 GameObject nodeObject = null;
                 if (tempList.Count > 0)
                 {

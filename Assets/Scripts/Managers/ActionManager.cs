@@ -288,7 +288,6 @@ public class ActionManager : MonoBehaviour
                 }
                 //NOT captured, proceed with target
 
-
                 //
                 // - - - Process target - - -  TO DO
                 //
@@ -303,7 +302,16 @@ public class ActionManager : MonoBehaviour
                     //target admin
                     target.TargetStatus = Status.Completed;
                     GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
-                    GameManager.instance.dataScript.AddTargetToPool(target, Status.Completed);
+                    //if ongoing effects then target moved to completed pool
+                    if (target.listOfOngoingEffects.Count > 0)
+                    { GameManager.instance.dataScript.AddTargetToPool(target, Status.Completed); }
+                    //no ongoing effects -> target contained and done with. 
+                    else
+                    {
+                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Contained);
+                        //Node cleared out ready for next target
+                        node.targetID = -1;
+                    }
                     text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.TargetID);
                     GameManager.instance.dataScript.AddMessage(message);
@@ -322,17 +330,15 @@ public class ActionManager : MonoBehaviour
                     //target success
                     builderTop.Append(string.Format("Target {0} successfully attempted", target.name));
 
-                    //combine good and bad effects into one list for processing
+                    //combine all effects into one list for processing
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
-
+                    listOfEffects.AddRange(target.listOfOngoingEffects);
+                    //unique ID's for linking target with temporary, ongoing, effects
+                    List<int> listOfUniqueID = new List<int>();
                     //any effects to process?
                     if (listOfEffects.Count > 0)
                     {
-                        //get player/actor -> if null then Player, if not null then Actor
-
-                        /*if (actor != null)
-                        {*/
                         foreach (Effect effect in listOfEffects)
                         {
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
@@ -346,6 +352,8 @@ public class ActionManager : MonoBehaviour
                                     builderBottom.AppendLine();
                                 }
                                 builderBottom.Append(effectReturn.bottomText);
+                                //unique ID
+                                if (effectReturn.ongoingID > 0) { listOfUniqueID.Add(effectReturn.ongoingID); }
                                 //exit effect loop on error
                                 if (effectReturn.errorFlag == true) { break; }
                                 //valid action? -> only has to be true once for an action to be valid
@@ -361,11 +369,12 @@ public class ActionManager : MonoBehaviour
                                 break;
                             }
                         }
-                        /* }
-                         else
-                         { Debug.LogError("Invalid actor (Null)"); errorFlag = true; }*/
-
-
+                        if (effectReturn.errorFlag == false)
+                        {
+                            //pass unique ID's to target
+                            if (listOfUniqueID.Count > 0)
+                            { target.listOfOngoingID.AddRange(listOfUniqueID); }
+                        }
                     }
                 }
                 else

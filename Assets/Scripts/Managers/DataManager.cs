@@ -870,8 +870,7 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-    public List<Target> CheckPossibleTargets()
-    { return possibleTargetsPool; }
+
 
     public int CheckNumOfPossibleTargets()
     { return possibleTargetsPool.Count; }
@@ -879,9 +878,38 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Target> GetDictOfTargets()
     { return dictOfTargets; }
 
+    /// <summary>
+    /// get the specified target pool, Null if not found
+    /// </summary>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public List<Target> GetTargetPool(Status status)
+    {
+        List<Target> tempList = null;
+        switch (status)
+        {
+            case Status.Active:
+                tempList = activeTargetPool;
+                break;
+            case Status.Live:
+                tempList = liveTargetPool;
+                break;
+            case Status.Completed:
+                tempList = completedTargetPool;
+                break;
+            case Status.Contained:
+                tempList = containedTargetPool;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid status \"{0}\"", status));
+                break;
+        }
+        return tempList;
+    }
 
-    public List<Target> GetLiveTargets()
-    { return liveTargetPool; }
+    public List<Target> GetPossibleTargets()
+    { return possibleTargetsPool; }
+
 
 
     /// <summary>
