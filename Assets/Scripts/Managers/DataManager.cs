@@ -232,15 +232,16 @@ public class DataManager : MonoBehaviour
             //assign a zero based unique ID number
             Target target = targetObject as Target;
             //set data
-            target.TargetID = counter++;
-            target.TargetStatus = Status.Dormant;
-            target.Timer = -1;
-            target.InfoLevel = 1;
-            target.IsKnownByAI = false;
-            target.NodeID = -1;
+            target.targetID = counter++;
+            target.targetStatus = Status.Dormant;
+            target.timer = -1;
+            target.infoLevel = 1;
+            target.isKnownByAI = false;
+            target.nodeID = -1;
+            target.ongoingID = -1;
             //add to dictionary
             try
-            { dictOfTargets.Add(target.TargetID, target); }
+            { dictOfTargets.Add(target.targetID, target); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Target (Null)"); counter--; }
             catch (ArgumentException)
@@ -987,11 +988,11 @@ public class DataManager : MonoBehaviour
             for (int i = 0; i < listOfTargets.Count; i++)
             {
                 Target targetList = listOfTargets[i];
-                if (targetList.TargetID == target.TargetID)
+                if (targetList.targetID == target.targetID)
                 {
                     listOfTargets.RemoveAt(i);
                     isSuccess = true;
-                    Debug.Log(string.Format("DataManager: Target \"{0}\", ID {1}, successfully removed from {2} List{3}", target.name, target.TargetID, status, "\n"));
+                    Debug.Log(string.Format("DataManager: Target \"{0}\", ID {1}, successfully removed from {2} List{3}", target.name, target.targetID, status, "\n"));
                     break;
                 }
             }
@@ -2056,7 +2057,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" OngoingID Register{0}", "\n"));
         foreach(var ongoing in dictOfOngoingID)
-        { builder.Append(string.Format("{0} {1} ID, \"{2}\"", "\n", ongoing.Key, ongoing.Value)); }
+        { builder.Append(string.Format("{0} {1} ID: {2}", "\n", ongoing.Key, ongoing.Value)); }
         return builder.ToString();
     }
 

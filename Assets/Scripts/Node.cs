@@ -28,7 +28,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracerActive;              //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;                    //has authority spider?
     [HideInInspector] public bool isSpiderKnown;               //does Resistance know of spider?
-    [HideInInspector] public int targetID;                   //unique ID, 0+, -1 indicates no target
+    [HideInInspector] public int targetID;                     //unique ID, 0+, -1 indicates no target
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
 
@@ -380,21 +380,6 @@ public class Node : MonoBehaviour
         return tempList;
     }
 
-    /// <summary>
-    /// checks listOfAdjustments for any matching ongoingID and deletes them
-    /// </summary>
-    /// <param name="uniqueID"></param>
-    public void RemoveOngoingEffect(int uniqueID)
-    {
-        if (listOfAdjustments.Count > 0)
-        {
-            //reverse loop, deleting as you go
-            for (int i = listOfAdjustments.Count - 1; i >= 0; i--)
-            {
-
-            }
-        }
-    }
 
     public void SetMaterial(Material newMaterial)
     { _Material = newMaterial; }
@@ -570,6 +555,27 @@ public class Node : MonoBehaviour
         if (ongoing != null)
         { listOfAdjustments.Add(ongoing); }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
+    }
+
+    /// <summary>
+    /// checks listOfAdjustments for any matching ongoingID and deletes them
+    /// </summary>
+    /// <param name="uniqueID"></param>
+    public void RemoveOngoingEffect(int uniqueID)
+    {
+        if (listOfAdjustments.Count > 0)
+        {
+            //reverse loop, deleting as you go
+            for (int i = listOfAdjustments.Count - 1; i >= 0; i--)
+            {
+                EffectDataOngoing ongoing = listOfAdjustments[i];
+                if (ongoing.ongoingID == uniqueID)
+                {
+                    Debug.Log(string.Format("Node Effect: {0}, ID [1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
+                    listOfAdjustments.RemoveAt(i);
+                }
+            }
+        }
     }
 
     /// <summary>

@@ -213,7 +213,7 @@ public class NodeManager : MonoBehaviour
                 {
                     foreach (Target target in tempList)
                     {
-                        nodeObject = GameManager.instance.dataScript.GetNodeObject(target.NodeID);
+                        nodeObject = GameManager.instance.dataScript.GetNodeObject(target.nodeID);
                         if (nodeObject != null)
                         {
                             Node nodeTemp = nodeObject.GetComponent<Node>();

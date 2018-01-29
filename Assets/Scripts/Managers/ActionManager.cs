@@ -293,7 +293,7 @@ public class ActionManager : MonoBehaviour
                 //
                 // - - - Process target - - -  TO DO
                 //
-                int tally = GameManager.instance.targetScript.GetTargetTally(target.TargetID);
+                int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.Log(string.Format(" Target: {0} - - - {1}", target.name, "\n"));
                 int roll = Random.Range(0, 100);
@@ -302,7 +302,7 @@ public class ActionManager : MonoBehaviour
                     //Success
                     isSuccessful = true;
                     //target admin
-                    target.TargetStatus = Status.Completed;
+                    target.targetStatus = Status.Completed;
                     GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
                     //if ongoing effects then target moved to completed pool
                     if (target.listOfOngoingEffects.Count > 0)
@@ -310,12 +310,13 @@ public class ActionManager : MonoBehaviour
                     //no ongoing effects -> target contained and done with. 
                     else
                     {
+                        target.targetStatus = Status.Contained;
                         GameManager.instance.dataScript.AddTargetToPool(target, Status.Contained);
                         //Node cleared out ready for next target
                         node.targetID = -1;
                     }
                     text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
-                    Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.TargetID);
+                    Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
                 }
                 Debug.Log(string.Format("Target Resolution: chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n"));
@@ -346,8 +347,8 @@ public class ActionManager : MonoBehaviour
                         //add to target so it can link to effects
                         target.ongoingID = dataInput.ongoingID;
                         //add to register
-                        string registerDetails = string.Format("Target ID {0}, \"{1}\", at {2}, ID {3}", target.TargetID, target.name, node.Arc.name.ToUpper(), 
-                            node.nodeID);
+                        string registerDetails = string.Format("Target \"{0}\", ID {1}, at {2}, ID {3}, t{4}",  target.name, target.targetID, node.Arc.name.ToUpper(), 
+                            node.nodeID, GameManager.instance.turnScript.Turn);
                         GameManager.instance.dataScript.AddOngoingIDToDict(target.ongoingID, registerDetails);
                     }
                     //any effects to process?
@@ -388,7 +389,7 @@ public class ActionManager : MonoBehaviour
                     //target attempt UNSUCCESSFUL
                     builderTop.Append(string.Format("Failed attempt at Target {0}", target.name));
                     text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
-                    Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.TargetID);
+                    Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
                 }
                 //

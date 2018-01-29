@@ -937,7 +937,7 @@ public void InitialiseTeams()
                         isError = effectReturn.errorFlag;
                         string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
                         Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
-                        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                        GameManager.instance.dataScript.AddMessage(message);
                     }
                 }
                 break;
@@ -953,10 +953,10 @@ public void InitialiseTeams()
                     if(node.isTracerActive == true)
                     { node.isSpiderKnown = true; }
                     else { node.isSpiderKnown = false; }
-                    //admin
+                    //message
                     string text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.Arc.name, team.Name, node.nodeName, node.nodeID);
                     Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
-                    if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                    GameManager.instance.dataScript.AddMessage(message);
                 }
                 break;
             case TeamType.Erasure:
@@ -965,10 +965,24 @@ public void InitialiseTeams()
 
                 break;
             case TeamType.Damage:
-
-                //TO DO -> contains completed Targets
-
-
+                //at node with a completed, but uncontained, target?
+                if (node.targetID > -1)
+                {
+                    Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
+                    if (target != null)
+                    {
+                        if (target.targetStatus == Status.Completed && target.ongoingID > -1)
+                        {
+                            //contain target and shut down all ongoing node effects
+                            GameManager.instance.targetScript.ContainTarget(target);
+                            //message
+                            string text = string.Format("");
+                            Message message = GameManager.instance.messageScript.TargetContained(text, node.nodeID, team.TeamID, target.targetID);
+                            GameManager.instance.dataScript.AddMessage(message);
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Target (Null) for targetID {0}", node.targetID)); }
+                }
                 break;
             default:
                 Debug.LogError(string.Format("Invalid team Arc name \"{0}\"", team.Arc.name));

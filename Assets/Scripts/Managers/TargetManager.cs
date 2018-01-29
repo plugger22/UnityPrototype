@@ -148,13 +148,13 @@ public class TargetManager : MonoBehaviour
                     {
                         Node node = tempNodes[Random.Range(0, tempNodes.Count)];
                         //assign targetID to node
-                        node.targetID = target.TargetID;
+                        node.targetID = target.targetID;
                         counter++;
                         Debug.Log(string.Format("TargetManager: Node ID {0}, type \"{1}\", assigned Target ID {2}, \"{3}\"{4}",
-                            node.nodeID, node.Arc.name, target.TargetID, target.name, "\n"));
+                            node.nodeID, node.Arc.name, target.targetID, target.name, "\n"));
                         //reset target status
-                        Target dictTarget = GameManager.instance.dataScript.GetTarget(target.TargetID);
-                        dictTarget.TargetStatus = status;
+                        Target dictTarget = GameManager.instance.dataScript.GetTarget(target.targetID);
+                        dictTarget.targetStatus = status;
                         //Remove from listOfPossibleTargets
                         listOfPossibleTargets.RemoveAt(index);
                         //Update node Array info stats
@@ -172,7 +172,7 @@ public class TargetManager : MonoBehaviour
                                 GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsLive, totalLive);
                                 GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
                                 //assign nodeID to target
-                                target.NodeID = node.nodeID;
+                                target.nodeID = node.nodeID;
                                 break;
                             default:
                                 Debug.LogError(string.Format("Invalid status \"{0}\"{1}", status, "\n"));
@@ -216,7 +216,7 @@ public class TargetManager : MonoBehaviour
             if (target != null)
             {
                 //target LIVE
-                if (target.TargetStatus == Status.Live)
+                if (target.targetStatus == Status.Live)
                 {
                     //put tooltip together
                     tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
@@ -228,7 +228,7 @@ public class TargetManager : MonoBehaviour
                         effect = target.listOfGoodEffects[i];
                         if (effect != null)
                         { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
-                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                     }
                     //bad effects
                     for (int i = 0; i < target.listOfBadEffects.Count; i++)
@@ -236,7 +236,7 @@ public class TargetManager : MonoBehaviour
                         effect = target.listOfBadEffects[i];
                         if (effect != null)
                         { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.description, colourEnd)); }
-                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                     }
                     //ongoing effects
                     for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
@@ -244,7 +244,7 @@ public class TargetManager : MonoBehaviour
                         effect = target.listOfOngoingEffects[i];
                         if (effect != null)
                         { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
-                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                     }
 
                     //info level data colour graded
@@ -253,12 +253,12 @@ public class TargetManager : MonoBehaviour
                     else if (target.InfoLevel == 1) { infoColour = colourDataBad; }*/
 
                     tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, 
-                        GameManager.instance.colourScript.GetValueColour(target.InfoLevel), target.InfoLevel, colourEnd));
+                        GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
                     tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gearType, colourEnd));
                     tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
                 }
                 //target COMPLETED
-                else if (target.TargetStatus == Status.Completed)
+                else if (target.targetStatus == Status.Completed)
                 {
                     //put tooltip together
                     tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.name, colourEnd));
@@ -272,7 +272,7 @@ public class TargetManager : MonoBehaviour
                             effect = target.listOfOngoingEffects[i];
                             if (effect != null)
                             { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
-                            else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                            else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                         }
                     }
                 }
@@ -306,7 +306,7 @@ public class TargetManager : MonoBehaviour
                     effect = target.listOfGoodEffects[i];
                     if (effect != null)
                     { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                    else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
             }
             //bad effects
@@ -318,7 +318,7 @@ public class TargetManager : MonoBehaviour
                     effect = target.listOfBadEffects[i];
                     if (effect != null)
                     { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.description, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid Bad effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                    else { Debug.LogError(string.Format("Invalid Bad effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
             }
             //Ongoing effects
@@ -330,7 +330,7 @@ public class TargetManager : MonoBehaviour
                     effect = target.listOfOngoingEffects[i];
                     if (effect != null)
                     { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, effect.description, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid Ongoing effect (null) for \"{0}\", ID {1}{2}", target.name, target.TargetID, "\n")); }
+                    else { Debug.LogError(string.Format("Invalid Ongoing effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
             }
         }
@@ -365,7 +365,7 @@ public class TargetManager : MonoBehaviour
         if (target != null)
         {
             //get node
-            Node node = GameManager.instance.dataScript.GetNode(target.NodeID);
+            Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
             if (node != null)
             {
                 //
@@ -379,7 +379,7 @@ public class TargetManager : MonoBehaviour
                     {
                         case TargetFactors.TargetInfo:
                             //good -> info
-                            tempList.Add(string.Format("{0}Info {1}{2}{3}", colourGood, target.InfoLevel > 0 ? "+" : "", target.InfoLevel, colourEnd));
+                            tempList.Add(string.Format("{0}Info {1}{2}{3}", colourGood, target.infoLevel > 0 ? "+" : "", target.infoLevel, colourEnd));
                             break;
                         case TargetFactors.NodeSupport:
                             //good -> support
@@ -459,7 +459,7 @@ public class TargetManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}",target.NodeID, "\n"));
+                Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}",target.nodeID, "\n"));
                 tempList.Add(string.Format("{0}{1}{2}", colourBad, "Target Data inaccessible", colourEnd));
             }
         }
@@ -493,7 +493,7 @@ public class TargetManager : MonoBehaviour
         if (target != null)
         {
             //get node
-            Node node = GameManager.instance.dataScript.GetNode(target.NodeID);
+            Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
             if (node != null)
             {
             //Loop listOfFactors to ensure consistency of calculations across methods
@@ -503,7 +503,7 @@ public class TargetManager : MonoBehaviour
                     {
                         case TargetFactors.TargetInfo:
                             //good -> info
-                            tally += target.InfoLevel;
+                            tally += target.infoLevel;
                             break;
                         case TargetFactors.NodeSupport:
                             //good -> support
@@ -561,7 +561,7 @@ public class TargetManager : MonoBehaviour
                 }
             }
             else
-            { Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}", target.NodeID, "\n")); }
+            { Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}", target.nodeID, "\n")); }
         }
         else
         { Debug.LogError(string.Format("Invalid Target (null), ID \"{0}\"{1}", targetID, "\n")); }
@@ -579,6 +579,34 @@ public class TargetManager : MonoBehaviour
         int chance = baseTargetChance + (tally * 10);
         chance = Mathf.Clamp(chance, 0, 100);
         return chance;
+    }
+
+
+    /// <summary>
+    /// Contains a completed target as a result of Damage team intervention. Handles all related matters.
+    /// Note: target is checked for Null by the calling method
+    /// </summary>
+    /// <param name="target"></param>
+    public void ContainTarget(Target target)
+    {
+        Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+        if (node != null)
+        {
+            //loop nodes
+            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+            if (dictOfNodes != null)
+            {
+                int ongoingID = target.ongoingID;
+                foreach(var nodeTemp in dictOfNodes)
+                { node.RemoveOngoingEffect(ongoingID); }
+            }
+            else { Debug.LogError("Invalid dictOfNodes (Null) -> Nodes not checked for relevant ongoing effects"); }
+            //admin
+            target.targetStatus = Status.Contained;
+            GameManager.instance.dataScript.AddTargetToPool(target, Status.Contained);
+            node.targetID = -1;
+        }
+        else { Debug.LogError(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
     }
 
 

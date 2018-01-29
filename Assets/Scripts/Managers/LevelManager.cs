@@ -659,12 +659,15 @@ public class LevelManager : MonoBehaviour
             node.Support = node.Arc.Support;
             node.Security = node.Arc.Security;
             //keep within range of 0 to 3
-            node.Stability = node.Stability > 3 ? 3 : node.Stability;
+            /*node.Stability = node.Stability > 3 ? 3 : node.Stability;
             node.Stability = node.Stability < 0 ? 0 : node.Stability;
             node.Support = node.Support > 3 ? 3 : node.Support;
             node.Support = node.Support < 0 ? 0 : node.Support;
             node.Security = node.Security > 3 ? 3 : node.Security;
-            node.Security = node.Security < 0 ? 0 : node.Security;
+            node.Security = node.Security < 0 ? 0 : node.Security;*/
+            Mathf.Clamp(node.Stability, 0, 3);
+            Mathf.Clamp(node.Security, 0, 3);
+            Mathf.Clamp(node.Support, 0, 3);
             //target -> none
             node.targetID = -1;
             //keep a tally of how many of each type have been generated
