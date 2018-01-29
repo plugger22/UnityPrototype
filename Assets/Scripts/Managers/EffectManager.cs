@@ -9,6 +9,30 @@ using System.Text;
 //
 
 /// <summary>
+/// used to pass data into ProcessEffect
+/// </summary>
+public class EffectDataInput
+{
+    public Side side;                                                    //used to determine colouring of good/bad effects
+    public int ongoingID = -1;                                           //used only if there are going to be ongoing effects, ignore otherwise
+    public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
+
+    public EffectDataInput()
+    { side = GameManager.instance.sideScript.PlayerSide; }
+}
+
+/// <summary>
+/// used to pass data back to Node for an ongoing effect
+/// </summary>
+public class EffectDataOngoing
+{
+    public int ongoingID = -1;                                             //links back to a central registry to enable cancelling of ongoing effect at a later point
+    public string text;
+    public int value;                                                 //how much the field changes, eg. +1, -1, etc.
+    public EffectOutcome outcome;
+}
+
+/// <summary>
 /// used to return results of effects to calling method
 /// ActionManager.cs -> <EffectDataReturn> ProcessNode... -> ProcessEffect -> EffectDataReturn
 /// </summary>
@@ -30,7 +54,6 @@ public class EffectDataResolve
     public string topText;
     public string bottomText;
     public bool isError;
-    public int ongoingID;                       //only needed if there is an ongoing effect (any value > -1, if '-1' ignore)
 }
 
 /// <summary>
@@ -45,26 +68,6 @@ public class EffectDataProcess
     public string text;                                                 //tooltip description for the temporary effect
 }
 
-/// <summary>
-/// used to pass data back to Node for an ongoing effect
-/// </summary>
-public class EffectDataOngoing
-{
-    public int ongoingID = -1;                                             //links back to a central registry to enable cancelling of ongoing effect at a later point
-    public string text;
-    public int value;                                                 //how much the field changes, eg. +1, -1, etc.
-    public EffectOutcome outcome;
-}
-
-/// <summary>
-/// used to pass data into ProcessEffect
-/// </summary>
-public class EffectDataInput
-{
-    public Side side;                                                    //used to determine colouring of good/bad effects
-    public int ongoingID = -1;                                           //used only if there are going to be ongoing effects, ignore otherwise
-    public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
-}
 
 
 //
@@ -440,12 +443,14 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes effects and returns results in a class. If Resistance and Player effects then go with default actor = null, otherwise supply an actor
+    /// Processes effects and returns results in a class. 
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="node"></param>
+    /// <param name="dataInput">data package from calling method</param>
+    /// <param name="actor">if Resistance and Player effects then go with default actor = null, otherwise supply an actor</param>
     /// <returns></returns>
-    public EffectDataReturn ProcessEffect(Effect effect, Node node, Actor actor = null)
+    public EffectDataReturn ProcessEffect(Effect effect, Node node, EffectDataInput dataInput, Actor actor = null)
     {
         int teamID, teamArcID;
         EffectDataReturn effectReturn = new EffectDataReturn();
@@ -467,14 +472,13 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.Support:
                     if (node != null)
                     {
-                        EffectDataResolve resolve = ResolveNodeData(effect, node);
+                        EffectDataResolve resolve = ResolveNodeData(effect, node, dataInput);
                         if (resolve.isError == true)
                         { effectReturn.errorFlag = true; }
                         else
                         {
                             effectReturn.topText = resolve.topText;
                             effectReturn.bottomText = resolve.bottomText;
-                            effectReturn.ongoingID = resolve.ongoingID;
                             effectReturn.isAction = true;
                         }
                     }
@@ -904,7 +908,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    private EffectDataResolve ResolveNodeData(Effect effect, Node node)
+    private EffectDataResolve ResolveNodeData(Effect effect, Node node, EffectDataInput effectInput)
     {
         int value = 0;
         //data package to return to the calling methods
@@ -962,7 +966,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration == EffectDuration.Ongoing)
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect
                 node.ProcessNodeEffect(effectProcess);
                 break;
@@ -1014,7 +1018,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration == EffectDuration.Ongoing)
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
@@ -1074,7 +1078,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration == EffectDuration.Ongoing)
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
@@ -1133,7 +1137,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration == EffectDuration.Ongoing)
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
@@ -1160,18 +1164,18 @@ public class EffectManager : MonoBehaviour
     /// <summary>
     /// subMethod to handle Ongoing effects
     /// </summary>
-    private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, int value)
+    private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, int value)
     {
-        EffectDataOngoing effectOngoing = CreateOngoingEffect();
+        EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;
+        effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
-        effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourGood, effect.outcome, value, value > 0 ? "+" : "", effect.category, colourEnd);
+        effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourGood, effect.outcome, value, value > 0 ? "+" : "", effectInput.ongoingText, colourEnd);
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
-        effectResolve.ongoingID = effectOngoing.ongoingID;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Creates an ongoing effect, assigns a unique ID
     /// </summary>
     /// <returns></returns>
@@ -1181,14 +1185,14 @@ public class EffectManager : MonoBehaviour
         //unique ID is 0+
         effectOngoing.ongoingID = ongoingEffectIDCounter++;
         return effectOngoing;
-    }
+    }*/
 
-    /*/// <summary>
+    /// <summary>
     /// gets a unique ID for ongoing effects. All
     /// </summary>
     /// <returns></returns>
     public int GetOngoingEffectID()
-    { return ongoingEffectIDCounter++; }*/
+    { return ongoingEffectIDCounter++; }
 
     //place methods above here
 }

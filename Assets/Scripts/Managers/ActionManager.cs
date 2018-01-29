@@ -138,12 +138,14 @@ public class ActionManager : MonoBehaviour
                             //two builders for top and bottom texts
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
+                            //pass through data package
+                            EffectDataInput dataInput = new EffectDataInput();
                             //
                             // - - - Process effects
                             //
                             foreach (Effect effect in listOfEffects)
                             {
-                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                 if (effectReturn != null)
                                 {
                                     outcomeDetails.sprite = actor.arc.actionSprite;
@@ -334,14 +336,22 @@ public class ActionManager : MonoBehaviour
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
                     listOfEffects.AddRange(target.listOfOngoingEffects);
-                    //unique ID's for linking target with temporary, ongoing, effects
-                    List<int> listOfUniqueID = new List<int>();
+                    //pass through data package
+                    EffectDataInput dataInput = new EffectDataInput();
+                    //handle any Ongoing effects of target completed
+                    if (target.listOfOngoingEffects.Count > 0)
+                    {
+                        dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
+                        dataInput.ongoingText = "Target";
+                        //add to target so it can link to effects
+                        target.ongoingID = dataInput.ongoingID;
+                    }
                     //any effects to process?
                     if (listOfEffects.Count > 0)
                     {
                         foreach (Effect effect in listOfEffects)
                         {
-                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                             if (effectReturn != null)
                             {
                                 outcomeDetails.sprite = targetSprite;
@@ -352,8 +362,6 @@ public class ActionManager : MonoBehaviour
                                     builderBottom.AppendLine();
                                 }
                                 builderBottom.Append(effectReturn.bottomText);
-                                //unique ID
-                                if (effectReturn.ongoingID > 0) { listOfUniqueID.Add(effectReturn.ongoingID); }
                                 //exit effect loop on error
                                 if (effectReturn.errorFlag == true) { break; }
                                 //valid action? -> only has to be true once for an action to be valid
@@ -368,12 +376,6 @@ public class ActionManager : MonoBehaviour
                                 effectReturn.errorFlag = true;
                                 break;
                             }
-                        }
-                        if (effectReturn.errorFlag == false)
-                        {
-                            //pass unique ID's to target
-                            if (listOfUniqueID.Count > 0)
-                            { target.listOfOngoingID.AddRange(listOfUniqueID); }
                         }
                     }
                 }

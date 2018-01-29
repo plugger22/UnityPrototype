@@ -866,11 +866,12 @@ public void InitialiseTeams()
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)
                                 {
+                                    EffectDataInput dataInput = new EffectDataInput();
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
                                         {
-                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                             if (effectReturn != null)
                                             {
                                                 builderTop.AppendLine();
@@ -929,9 +930,10 @@ public void InitialiseTeams()
             case TeamType.Media:
                 if (listOfEffects != null)
                 {
+                    EffectDataInput dataInput = new EffectDataInput();
                     foreach(Effect effect in listOfEffects)
                     {
-                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         isError = effectReturn.errorFlag;
                         string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
                         Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);

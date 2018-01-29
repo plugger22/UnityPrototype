@@ -25,7 +25,7 @@ public class Target : ScriptableObject
     public ActorArc actorArc;                       //actor arc with special bonus for target resolution (max. 1)
     public GearType gearType;
 
-    [HideInInspector] public List<int> listOfOngoingID;         //unique ID's list used to link to ongoing effects, default '0', only valid if > -1
+    [HideInInspector] public int ongoingID;         //unique ID used to link to ongoing effects, default '0', only valid if > -1
 
     //effects
     public List<Effect> listOfGoodEffects;        //all effects (SO's) that happen as a result of target successfully being resolved

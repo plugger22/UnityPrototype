@@ -37,7 +37,7 @@ public class Node : MonoBehaviour
     //private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
     private List<Connection> listOfConnections;                //list of neighbouring connections
     private List<Team> listOfTeams;                     //Authority teams present at the node
-    private Dictionary<int, EffectDataOngoing> dictOfAdjustments;    //dict of temporary effects impacting on the node
+    private List <EffectDataOngoing> listOfAdjustments;    //list of temporary (ongoing) effects impacting on the node
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
@@ -78,7 +78,7 @@ public class Node : MonoBehaviour
         //listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
         listOfConnections = new List<Connection>();
-        dictOfAdjustments = new Dictionary<int, EffectDataOngoing>();
+        listOfAdjustments = new List<EffectDataOngoing>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
@@ -372,12 +372,28 @@ public class Node : MonoBehaviour
     public List<string> GetOngoingEffects()
     {
         List<string> tempList = new List<string>();
-        if (dictOfAdjustments.Count > 0)
+        if (listOfAdjustments.Count > 0)
         {
-            foreach (var effect in dictOfAdjustments)
-            { tempList.Add(effect.Value.text); }
+            foreach (var ongoingEffect in listOfAdjustments)
+            { tempList.Add(ongoingEffect.text); }
         }
         return tempList;
+    }
+
+    /// <summary>
+    /// checks listOfAdjustments for any matching ongoingID and deletes them
+    /// </summary>
+    /// <param name="uniqueID"></param>
+    public void RemoveOngoingEffect(int uniqueID)
+    {
+        if (listOfAdjustments.Count > 0)
+        {
+            //reverse loop, deleting as you go
+            for (int i = listOfAdjustments.Count - 1; i >= 0; i--)
+            {
+
+            }
+        }
     }
 
     public void SetMaterial(Material newMaterial)
@@ -545,21 +561,15 @@ public class Node : MonoBehaviour
 
 
     /// <summary>
-    /// Add temporary effect to the dictionary
+    /// Add temporary effect to the listOfAdjustments
     /// </summary>
     /// <param name="ongoing"></param>
     /// <returns></returns>
-    public bool AddOngoingEffectToDict(EffectDataOngoing ongoing)
+    public void AddOngoingEffect(EffectDataOngoing ongoing)
     {
-        bool successFlag = true;
-        //add to dictionary
-        try
-        { dictOfAdjustments.Add(ongoing.ongoingID, ongoing); }
-        catch (ArgumentNullException)
-        { Debug.LogError("Invalid ongoing effect (Null)"); successFlag = false; }
-        catch (ArgumentException)
-        { Debug.LogError(string.Format("Invalid ongoing Effect (duplicate) ongoingID \"{0}\" for \"{1}\"", ongoing.ongoingID, ongoing.text)); successFlag = false; }
-        return successFlag;
+        if (ongoing != null)
+        { listOfAdjustments.Add(ongoing); }
+        else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
 
     /// <summary>
@@ -575,7 +585,7 @@ public class Node : MonoBehaviour
             if (process.effectOngoing != null)
             {
                 //create an entry in the dictOfAdjustments
-                AddOngoingEffectToDict(process.effectOngoing);
+                AddOngoingEffect(process.effectOngoing);
             }
             else
             {
@@ -609,12 +619,12 @@ public class Node : MonoBehaviour
     {
         Debug.Assert(outcome == EffectOutcome.Security || outcome == EffectOutcome.Stability || outcome == EffectOutcome.Support, string.Format("Invalid outcome \"{0}\"", outcome));
         int value = 0;
-        if (dictOfAdjustments.Count > 0)
+        if (listOfAdjustments.Count > 0)
         {
-            foreach(var adjust in dictOfAdjustments)
+            foreach(var adjust in listOfAdjustments)
             {
-                if (adjust.Value.outcome == outcome)
-                { value += adjust.Value.value; }
+                if (adjust.outcome == outcome)
+                { value += adjust.value; }
             }
         }
         return value;

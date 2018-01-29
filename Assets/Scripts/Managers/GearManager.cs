@@ -347,11 +347,12 @@ public class GearManager : MonoBehaviour
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)
                                 {
+                                    EffectDataInput dataInput = new EffectDataInput();
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
                                         {
-                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actor);
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                             if (effectReturn != null)
                                             {
                                                 builderTop.AppendLine();

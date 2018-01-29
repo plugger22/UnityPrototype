@@ -1038,6 +1038,7 @@ public class ActorManager : MonoBehaviour
                         List<Effect> listOfEffects = action.GetEffects();
                         if (listOfEffects.Count > 0)
                         {
+                            EffectDataInput dataInput = new EffectDataInput();
                             Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                             if (node != null)
                             {
@@ -1045,7 +1046,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     if (effect.ignoreEffect == false)
                                     {
-                                        EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, actorCurrent);
+                                        EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actorCurrent);
                                         if (effectReturn != null)
                                         {
                                             builderTop.AppendLine();
