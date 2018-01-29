@@ -529,7 +529,7 @@ public class TargetManager : MonoBehaviour
                             }
                             else
                             {
-                                //player NOT at node ->  check if node active for the correct actor
+                                //player NOT at node ->  check if actor is present in OnMap line-up
                                 if (target.actorArc != null)
                                 {
                                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, Side.Resistance);

@@ -372,8 +372,11 @@ public class Node : MonoBehaviour
     public List<string> GetOngoingEffects()
     {
         List<string> tempList = new List<string>();
-        foreach(var effect in dictOfAdjustments)
-        { tempList.Add(effect.Value.text); }
+        if (dictOfAdjustments.Count > 0)
+        {
+            foreach (var effect in dictOfAdjustments)
+            { tempList.Add(effect.Value.text); }
+        }
         return tempList;
     }
 

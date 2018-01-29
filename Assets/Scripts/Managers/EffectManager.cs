@@ -1155,7 +1155,7 @@ public class EffectManager : MonoBehaviour
         EffectDataOngoing effectOngoing = CreateOngoingEffect();
         effectOngoing.outcome = effect.outcome;
         effectOngoing.value = value;
-        effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourOutcome3, effect.outcome, value, value > 0 ? "+" : "", effect.category, colourEnd);
+        effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourGood, effect.outcome, value, value > 0 ? "+" : "", effect.category, colourEnd);
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
         effectResolve.ongoingID = effectOngoing.ongoingID;

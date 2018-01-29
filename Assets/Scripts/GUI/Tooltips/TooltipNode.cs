@@ -39,6 +39,7 @@ public class TooltipNode : MonoBehaviour
     public Image dividerTop;                   //Side specific sprites for tooltips
     public Image dividerUpperMiddle;
     public Image dividerLowerMiddle;
+    public Image dividerStats;
     public Image dividerBottom;
 
     public GameObject tooltipNodeObject;
@@ -142,11 +143,13 @@ public class TooltipNode : MonoBehaviour
         nodeType.gameObject.SetActive(true);
         nodeStatsVar.gameObject.SetActive(true);
         nodeStatsFixed.gameObject.SetActive(true);
+        ongoingEffects.gameObject.SetActive(false);
         dividerTop.gameObject.SetActive(true);
         //show only if node active for at least one actor
         nodeActive.gameObject.SetActive(false);
         dividerUpperMiddle.gameObject.SetActive(false);
         dividerLowerMiddle.gameObject.SetActive(true);
+        dividerStats.gameObject.SetActive(false);
         //show only if node has a target
         nodeTarget.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
@@ -174,14 +177,19 @@ public class TooltipNode : MonoBehaviour
         //Ongoing effects currently impacting the node
         if (data.listOfEffects.Count > 0)
         {
-            StringBuilder builder = new StringBuilder();
+            ongoingEffects.gameObject.SetActive(true);
+            dividerStats.gameObject.SetActive(true);
+            StringBuilder effectBuilder = new StringBuilder();
+            effectBuilder.Append(string.Format("{0}Ongoing Effects{1}", colourNeutral, colourEnd));
+            effectBuilder.AppendLine();
             for (int i = 0; i < data.listOfEffects.Count; i++)
             {
-                if (i > 0) { builder.AppendLine(); }
-                builder.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfEffects[i], colourEnd));
+                if (i > 0) { effectBuilder.AppendLine(); }
+                effectBuilder.Append(data.listOfEffects[i]);
             }
-            ongoingEffects.text = builder.ToString();
+            ongoingEffects.text = effectBuilder.ToString();
         }
+        else { ongoingEffects.text = ""; }
         //Teams
         if (data.listOfTeams.Count > 0)
         {
@@ -307,6 +315,7 @@ public class TooltipNode : MonoBehaviour
             case Side.Authority:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
@@ -314,6 +323,7 @@ public class TooltipNode : MonoBehaviour
             case Side.Resistance:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
