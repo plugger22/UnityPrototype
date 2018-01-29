@@ -86,6 +86,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfArchiveMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
+    private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
 
     /// <summary>
     /// default constructor
@@ -2030,6 +2031,33 @@ public class DataManager : MonoBehaviour
         builderOverall.Append(builderResistance.ToString());
         builderOverall.Append(builderAuthority.ToString());
         return builderOverall.ToString();
+    }
+
+    /// <summary>
+    /// Add an ongoingID to the register (dict). No programming necessity for this other than tracking and debugging
+    /// </summary>
+    /// <param name="ongoingID"></param>
+    /// <param name="details"></param>
+    public void AddOngoingIDToDict(int ongoingID, string details)
+    {
+        //add to dictionary
+        try
+        { dictOfOngoingID.Add(ongoingID, details); }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoingID, details)); }
+    }
+
+    /// <summary>
+    /// Debug method to display register
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayOngoingRegister()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" OngoingID Register{0}", "\n"));
+        foreach(var ongoing in dictOfOngoingID)
+        { builder.Append(string.Format("{0} {1} ID, \"{2}\"", "\n", ongoing.Key, ongoing.Value)); }
+        return builder.ToString();
     }
 
     //new methods above here

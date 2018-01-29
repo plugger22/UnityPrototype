@@ -345,6 +345,10 @@ public class ActionManager : MonoBehaviour
                         dataInput.ongoingText = "Target";
                         //add to target so it can link to effects
                         target.ongoingID = dataInput.ongoingID;
+                        //add to register
+                        string registerDetails = string.Format("Target ID {0}, \"{1}\", at {2}, ID {3}", target.TargetID, target.name, node.Arc.name.ToUpper(), 
+                            node.nodeID);
+                        GameManager.instance.dataScript.AddOngoingIDToDict(target.ongoingID, registerDetails);
                     }
                     //any effects to process?
                     if (listOfEffects.Count > 0)

@@ -153,9 +153,12 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Ongoing Register"))
             {
-
+                Debug.Log("Button -> Toggle OngoingID Register");
+                if (debugDisplay != 14)
+                { debugDisplay = 14; }
+                else { debugDisplay = 0; }
             }
 
             //eleventh button
@@ -373,6 +376,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.helpScript.DisplayHelp();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 350), analysis, customBackground);
+                        break;
+                    //Ongoing Register
+                    case 14:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplayOngoingRegister();
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysis, customBackground);
                         break;
                 }
             }
