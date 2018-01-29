@@ -56,6 +56,16 @@ public class EffectDataOngoing
     public EffectOutcome outcome;
 }
 
+/// <summary>
+/// used to pass data into ProcessEffect
+/// </summary>
+public class EffectDataInput
+{
+    public Side side;                                                    //used to determine colouring of good/bad effects
+    public int ongoingID = -1;                                           //used only if there are going to be ongoing effects, ignore otherwise
+    public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
+}
+
 
 //
 // - - - Effect Class - - -
@@ -1172,6 +1182,13 @@ public class EffectManager : MonoBehaviour
         effectOngoing.ongoingID = ongoingEffectIDCounter++;
         return effectOngoing;
     }
+
+    /*/// <summary>
+    /// gets a unique ID for ongoing effects. All
+    /// </summary>
+    /// <returns></returns>
+    public int GetOngoingEffectID()
+    { return ongoingEffectIDCounter++; }*/
 
     //place methods above here
 }
