@@ -180,7 +180,7 @@ public class TooltipNode : MonoBehaviour
             ongoingEffects.gameObject.SetActive(true);
             dividerStats.gameObject.SetActive(true);
             StringBuilder effectBuilder = new StringBuilder();
-            effectBuilder.Append(string.Format("{0}Ongoing Effects{1}", colourNeutral, colourEnd));
+            effectBuilder.Append(string.Format("{0}Ongoing Effects{1}", colourDefault, colourEnd));
             effectBuilder.AppendLine();
             for (int i = 0; i < data.listOfEffects.Count; i++)
             {

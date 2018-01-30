@@ -571,7 +571,7 @@ public class Node : MonoBehaviour
                 EffectDataOngoing ongoing = listOfAdjustments[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
-                    Debug.Log(string.Format("Node Effect: {0}, ID [1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
+                    Debug.Log(string.Format("Node Effect: {0}, ID {1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
                     listOfAdjustments.RemoveAt(i);
                 }
             }

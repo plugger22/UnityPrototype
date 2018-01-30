@@ -976,7 +976,7 @@ public void InitialiseTeams()
                             //contain target and shut down all ongoing node effects
                             GameManager.instance.targetScript.ContainTarget(target);
                             //message
-                            string text = string.Format("");
+                            string text = string.Format("Target \"{0}\" Contained by {1} {2}", target.name, team.Arc.name, team.Name);
                             Message message = GameManager.instance.messageScript.TargetContained(text, node.nodeID, team.TeamID, target.targetID);
                             GameManager.instance.dataScript.AddMessage(message);
                         }

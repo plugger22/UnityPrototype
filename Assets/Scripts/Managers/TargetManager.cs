@@ -265,7 +265,7 @@ public class TargetManager : MonoBehaviour
                     //ongoing effects
                     if (target.listOfOngoingEffects.Count > 0)
                     {
-                        tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDataNeutral, colourEnd));
+                        tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDefault, colourEnd));
                         Effect effect = null;
                         for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
                         {
@@ -598,7 +598,7 @@ public class TargetManager : MonoBehaviour
             {
                 int ongoingID = target.ongoingID;
                 foreach(var nodeTemp in dictOfNodes)
-                { node.RemoveOngoingEffect(ongoingID); }
+                { nodeTemp.Value.RemoveOngoingEffect(ongoingID); }
             }
             else { Debug.LogError("Invalid dictOfNodes (Null) -> Nodes not checked for relevant ongoing effects"); }
             //admin
