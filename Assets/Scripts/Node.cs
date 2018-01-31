@@ -28,6 +28,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracerActive;              //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;                    //has authority spider?
     [HideInInspector] public bool isSpiderKnown;               //does Resistance know of spider?
+    [HideInInspector] public bool isActor;                     //true if any ActorStatus.Active actor has a connection at the node
     [HideInInspector] public int targetID;                     //unique ID, 0+, -1 indicates no target
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
@@ -209,6 +210,8 @@ public class Node : MonoBehaviour
                 {
                     nodeName = nodeName,
                     type = string.Format("{0} ID {1}", Arc.name, nodeID),
+                    isTracerActive = isTracerActive,
+                    isActor = isActor,
                     arrayOfStats = new int[] { Stability, Support, Security },
                     listOfActive = activeList,
                     listOfEffects = effectsList,

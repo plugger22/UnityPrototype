@@ -16,7 +16,7 @@ public class DataManager : MonoBehaviour
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
-    private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side
+    private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.Both->4 x Null)
     private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
@@ -51,7 +51,7 @@ public class DataManager : MonoBehaviour
     private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
     private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
 
-    private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor in the level
+    private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor (current side)
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.

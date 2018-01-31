@@ -11,6 +11,7 @@ public class OptionManager : MonoBehaviour
 {
     //game options
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
+    [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
 
     //Backing fields (use underscore)
     
@@ -54,7 +55,8 @@ public class OptionManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Current Option Settings{0}{1}", "\n", "\n"));
         builder.Append(string.Format(" Side -> {0}{1}{2}", GameManager.instance.sideScript.PlayerSide, "\n", "\n"));
-        builder.Append(string.Format(" Auto Gear Resolution -> {0}{1}{2}", autoGearResolution, "\n", "\n"));
+        builder.Append(string.Format(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n"));
+        builder.Append(string.Format(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n"));
         return builder.ToString();
     }
 

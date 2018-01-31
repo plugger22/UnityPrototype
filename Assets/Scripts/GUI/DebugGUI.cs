@@ -28,6 +28,7 @@ public class DebugGUI : MonoBehaviour
     private int button_width;
 
     private string optionAutoGear;
+    private string optionFogOfWar;
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class DebugGUI : MonoBehaviour
         box_action = box_x * 3 + box_width * 2;
         //option strings
         optionAutoGear = "Auto Gear ON";
+        optionFogOfWar = "Fog Of War ON";
     }
 
     // Update is called once per frame
@@ -218,6 +220,22 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+            //third button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), optionFogOfWar))
+            {
+                Debug.Log("Button -> Toggle Fog Of War");
+                if (GameManager.instance.optionScript.fogOfWar == true)
+                {
+                    GameManager.instance.optionScript.fogOfWar = false;
+                    optionFogOfWar = "Fog Of War ON";
+                }
+                else
+                {
+                    GameManager.instance.optionScript.fogOfWar = true;
+                    optionFogOfWar = "Fog Of War OFF";
+                }
+            }
+
             //
             // - - - Actions (third box)
             //
@@ -369,7 +387,7 @@ public class DebugGUI : MonoBehaviour
                     case 12:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.optionScript.DisplayOptions();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 300), analysis, customBackground);
                         break;
                     //Help
                     case 13:

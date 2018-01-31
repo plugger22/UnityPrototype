@@ -63,6 +63,7 @@ public class NodeManager : MonoBehaviour
 
     public void Initialise()
     {
+        SetNodeActorFlags();
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
@@ -960,6 +961,48 @@ public class NodeManager : MonoBehaviour
         if (messageRenown != null) { GameManager.instance.dataScript.AddMessage(messageRenown); }
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
+    }
+
+    /// <summary>
+    /// Sets the node.isActor flag (true if any actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
+    /// </summary>
+    public void SetNodeActorFlags()
+    {
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            //set all to false
+            foreach (var node in dictOfNodes)
+            { node.Value.isActor = false; }
+            //loop Resistance actors
+            for (int slotID = 0; slotID < GameManager.instance.actorScript.numOfOnMapActors; slotID++)
+            {
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
+                if (actor != null)
+                {
+                    //only consider actor if Active
+                    if (actor.status == ActorStatus.Active)
+                    {
+                        List<GameObject> listOfNodes = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
+                        if (listOfNodes != null)
+                        {
+                            //loop nodes where actor has a connection
+                            for (int i = 0; i < listOfNodes.Count; i++)
+                            {
+                                //set flag to true
+                                Node node = listOfNodes[i].GetComponent<Node>();
+                                if (node != null)
+                                { node.isActor = true; }
+                            }
+                        }
+                        else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
+                    }
+                    else { Debug.LogError(string.Format("Invalid listOfNodes (Null) for slotID {0}", slotID)); }
+                }
+                else { Debug.LogError(string.Format("Invalid Actor (null) for slotID {0}", slotID)); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
 
     //place new methods above here

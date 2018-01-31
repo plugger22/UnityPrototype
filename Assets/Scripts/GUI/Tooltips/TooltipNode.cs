@@ -14,6 +14,8 @@ public class NodeTooltipData
 {
     public string nodeName;
     public string type;
+    public bool isActor;
+    public bool isTracerActive;
     public int[] arrayOfStats;
     public List<string> listOfActive;
     public List<string> listOfEffects;
@@ -134,6 +136,7 @@ public class TooltipNode : MonoBehaviour
     //public void SetTooltip(string name, string type, List<string> listOfActive, int[] arrayOfStats, List<string> listOfTeams, List<string> listOfTarget, Vector3 pos)
     public void SetTooltip(NodeTooltipData data)
     {
+        bool proceedFlag;
         //open panel at start
         tooltipNodeObject.SetActive(true);
         //set opacity to zero (invisible)
@@ -190,18 +193,29 @@ public class TooltipNode : MonoBehaviour
             ongoingEffects.text = effectBuilder.ToString();
         }
         else { ongoingEffects.text = ""; }
-        //Teams
-        if (data.listOfTeams.Count > 0)
+        //Teams -> show only if node within tracer coverage or actor has a connection there (if FOW option 'true')
+        proceedFlag = false;
+        if (GameManager.instance.optionScript.fogOfWar == true)
         {
-            StringBuilder teamBuilder = new StringBuilder();
-            foreach (String teamText in data.listOfTeams)
-            {
-                if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
-                teamBuilder.Append(string.Format("{0}{1}{2}", colourTeam, teamText, colourEnd));
-            }
-            nodeTeams.text = teamBuilder.ToString();
+            if (data.isTracerActive == true || data.isActor == true)
+            { proceedFlag = true; }
         }
-        else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "No Teams present", colourEnd); }
+        else { proceedFlag = true; }
+        if (proceedFlag == true)
+        {
+            if (data.listOfTeams.Count > 0)
+            {
+                StringBuilder teamBuilder = new StringBuilder();
+                foreach (String teamText in data.listOfTeams)
+                {
+                    if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
+                    teamBuilder.Append(string.Format("{0}{1}{2}", colourTeam, teamText, colourEnd));
+                }
+                nodeTeams.text = teamBuilder.ToString();
+            }
+            else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "No Teams present", colourEnd); }
+        }
+        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}requires Tracer or Actor{4}", colourBad, colourEnd, "\n", colourDefault, colourEnd); }
         
         //Target
         if (data.listOfTargets.Count > 0)

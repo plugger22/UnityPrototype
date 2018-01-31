@@ -20,7 +20,6 @@ namespace gameAPI
         [HideInInspector] public int renown;                   //starts at '0' and goes up (no limit)
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public string actorName;
-        //[HideInInspector] public bool isLive;                   //actor can 'go silent' and be unavailable on occasion
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;
         [HideInInspector] public ActorStatus status;
