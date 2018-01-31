@@ -117,12 +117,16 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="numOfTargets"></param>
     /// <param name="status"></param>
-    public void SetRandomTargets(int numOfTargets, Status status = Status.Active)
+    public void SetRandomTargets(int numOfTargetsInput, Status status = Status.Active)
     {
-        Debug.Assert(numOfTargets > 0 && numOfTargets <= GameManager.instance.dataScript.CheckNumOfPossibleTargets(), "Invalid numOfTargets parameter");
-        int index, nodeArcID, totalOfType, totalOfTypewithTargets, totalActive, totalLive, totalTargets, endlessCounter;
+        int index, nodeArcID, totalOfType, totalOfTypewithTargets, totalActive, totalLive, totalTargets, endlessCounter, numOfTargets;
         int counter = 0;
         bool successFlag;
+        //if not enough viable targets drop number down to what's doable
+        int numPossibleTargets = GameManager.instance.dataScript.CheckNumOfPossibleTargets();
+        if (numOfTargetsInput > numPossibleTargets) { numOfTargets = numPossibleTargets; }
+        else { numOfTargets = numOfTargetsInput; }
+        //loop and populate
         List<Target> listOfPossibleTargets = GameManager.instance.dataScript.GetPossibleTargets();
         for(int i = 0; i < numOfTargets; i++)
         {
