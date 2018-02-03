@@ -825,6 +825,9 @@ public class EffectManager : MonoBehaviour
                     effectReturn.bottomText = SetBottomText(actor);
                     effectReturn.isAction = true;
                     break;
+                case EffectOutcome.RevealTracers:
+                    //To Do
+                    break;
                 default:
                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome));
                     effectReturn.errorFlag = true;

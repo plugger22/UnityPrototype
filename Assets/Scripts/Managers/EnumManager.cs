@@ -136,7 +136,7 @@ namespace gameAPI
         //authority
         AnyTeam, CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam,
         //assorted
-        RevealSpiders, RevealTeams, ConnectionSecurity
+        RevealSpiders, RevealTeams, RevealTracers, ConnectionSecurity
     }
 
     //
