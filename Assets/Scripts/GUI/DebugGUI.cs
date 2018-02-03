@@ -287,7 +287,7 @@ public class DebugGUI : MonoBehaviour
                     for(int i = 0; i < numOfActors; i++)
                     {
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, Side.Resistance);
-                        if (actor.status == ActorStatus.Captured)
+                        if (actor.Status == ActorStatus.Captured)
                         {
                             AIDetails details = new AIDetails();
                             details.actor = actor;

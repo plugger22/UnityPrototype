@@ -115,6 +115,7 @@ public class NodeManager : MonoBehaviour
                         { GameManager.instance.alertScript.CloseAlertUI(true); }
                         else { ShowNodes(nodeUI); }
                         break;
+
                     default:
                         Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", Param.ToString(), "\n"));
                         break;
@@ -981,7 +982,7 @@ public class NodeManager : MonoBehaviour
                 if (actor != null)
                 {
                     //only consider actor if Active
-                    if (actor.status == ActorStatus.Active)
+                    if (actor.Status == ActorStatus.Active)
                     {
                         List<GameObject> listOfNodes = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
                         if (listOfNodes != null)
@@ -993,11 +994,12 @@ public class NodeManager : MonoBehaviour
                                 Node node = listOfNodes[i].GetComponent<Node>();
                                 if (node != null)
                                 { node.isActor = true; }
+                                else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
                             }
+
                         }
-                        else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
+                        else { Debug.LogError(string.Format("Invalid listOfNodes (Null) for slotID {0}", slotID)); }
                     }
-                    else { Debug.LogError(string.Format("Invalid listOfNodes (Null) for slotID {0}", slotID)); }
                 }
                 else { Debug.LogError(string.Format("Invalid Actor (null) for slotID {0}", slotID)); }
             }

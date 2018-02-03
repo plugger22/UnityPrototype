@@ -202,7 +202,7 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.guiScript.UpdateActorAlpha(details.actor.slotID, 0.45f);
         //admin
         GameManager.instance.actorScript.numOfActiveActors--;
-        details.actor.status = ActorStatus.Captured;
+        details.actor.Status = ActorStatus.Captured;
         details.actor.nodeCaptured = details.node.nodeID;
         //actor captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -270,14 +270,14 @@ public class CaptureManager : MonoBehaviour
     {
         if (details.actor != null)
         {
-            if (details.actor.status == ActorStatus.Captured)
+            if (details.actor.Status == ActorStatus.Captured)
             {
                 StringBuilder builder = new StringBuilder();
                 //node (needed only for record keeping / messaging purposes
                 int nodeID = details.actor.nodeCaptured;
                 details.actor.nodeCaptured = -1;
                 //reset actor state
-                details.actor.status = ActorStatus.Active;
+                details.actor.Status = ActorStatus.Active;
                 //increase resistance Cause
                 int cause = GameManager.instance.rebelScript.resistanceCause;
                 cause += actorReleased;

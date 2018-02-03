@@ -262,7 +262,7 @@ public class ActorManager : MonoBehaviour
                 actor.arc = arc;
                 actor.actorName = arc.actorName;
                 actor.trait = GameManager.instance.dataScript.GetRandomTrait();
-                actor.status = status;
+                actor.Status = status;
                 //level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }
@@ -405,7 +405,7 @@ public class ActorManager : MonoBehaviour
                     if (actor.actorSide == side)
                     {
                         //actor active?
-                        if (actor.status == ActorStatus.Active)
+                        if (actor.Status == ActorStatus.Active)
                         {
                             //active node for actor or player at node
                             if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.slotID) == true ||
@@ -550,7 +550,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //actor isn't Active
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            switch(actor.status)
+                            switch(actor.Status)
                             {
                                 case ActorStatus.Inactive:
                                     infoBuilder.Append(string.Format("{0} is lying low and unavailable", actor.arc.name));
@@ -626,7 +626,7 @@ public class ActorManager : MonoBehaviour
                     if (actor.actorSide == side)
                     {
                         //actor active?
-                        if (actor.status == ActorStatus.Active)
+                        if (actor.Status == ActorStatus.Active)
                         {
                             //assign preferred team as default (doesn't matter if actor has ANY Team action)
                             teamID = actor.arc.preferredTeam.TeamArcID;
@@ -1018,7 +1018,7 @@ public class ActorManager : MonoBehaviour
                     if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
                     {
                         //change actor's status
-                        actorRecruited.status = ActorStatus.Reserve;
+                        actorRecruited.Status = ActorStatus.Reserve;
                         //remove actor from appropriate pool list
                         GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
                         //sprite of recruited actor
@@ -1126,7 +1126,7 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
                 {
                     //change actor's status
-                    actorRecruited.status = ActorStatus.Reserve;
+                    actorRecruited.Status = ActorStatus.Reserve;
                     //remove actor from appropriate pool list
                     GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
                     //sprite of recruited actor

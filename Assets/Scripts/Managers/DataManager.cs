@@ -1578,7 +1578,7 @@ public class DataManager : MonoBehaviour
         for (int i = 0; i < numOfActors; i++)
         {
             Actor actor = arrayOfActors[(int)side, i];
-            if (actor.arc.ActorArcID == actorArcID && actor.status == ActorStatus.Active)
+            if (actor.arc.ActorArcID == actorArcID && actor.Status == ActorStatus.Active)
             { return actor.slotID; }
         }
         return slotID;
@@ -1597,7 +1597,7 @@ public class DataManager : MonoBehaviour
             for (int i = 0; i < numOfActors; i++)
             {
                 Actor actor = arrayOfActors[(int)side, i];
-                if (actor.arc == arc && actor.status == ActorStatus.Active) { return true; }
+                if (actor.arc == arc && actor.Status == ActorStatus.Active) { return true; }
             }
             return false;
         }
