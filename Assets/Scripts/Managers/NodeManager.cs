@@ -221,10 +221,10 @@ public class NodeManager : MonoBehaviour
                             Node nodeTemp = nodeObject.GetComponent<Node>();
                             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
                             nodeTemp.SetMaterial(nodeMaterial);
-                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} node{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
-                                colourDefault,  tempList.Count != 1 ? "s" : "", colourEnd);
                         }
                     }
+                    displayText = string.Format("{0}{1}{2}{3} Target{4}{5} node{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
+                        colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
                 }
                 else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
                 break;
@@ -246,10 +246,10 @@ public class NodeManager : MonoBehaviour
                                 {
                                     Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
                                     node.SetMaterial(nodeMaterial);
-                                    displayText = string.Format("{0}{1}{2} {3}valid Move Node{4}{5}", colourDefault, nodeList.Count, colourEnd,
-                                        colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
                                 }
                             }
+                            displayText = string.Format("{0}{1}{2} {3}valid Move Node{4}{5}", colourDefault, nodeList.Count, colourEnd,
+                                colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
                         }
                         else
                         {

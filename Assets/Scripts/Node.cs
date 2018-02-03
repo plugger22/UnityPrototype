@@ -9,29 +9,19 @@ public class Node : MonoBehaviour
 {
     //NOTE -> LevelManager.arrayOfActiveNodes stores access data, eg. which nodes are active for which actor?
 
-    [HideInInspector] public int nodeID;                    //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
+    [HideInInspector] public int nodeID;                       //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     
-
-    [HideInInspector] public string nodeName;                //name of node, eg. "Downtown Bronx"
-    [HideInInspector] public NodeArc Arc;                                 //archetype type
-
-    //private backing fields
-    private int _stability;
-    private int _support;
-    private int _security;
-
-    /*[HideInInspector] public int Stability;                  //range 0 to 3
-    [HideInInspector] public int Support;                    //range 0 to 3
-    /[HideInInspector] public int Security;                   //range 0 to 3*/
+    [HideInInspector] public string nodeName;                  //name of node, eg. "Downtown Bronx"
+    [HideInInspector] public NodeArc Arc;                      //archetype type
 
     [HideInInspector] public bool isTracer;                    //has resistance tracer?
     [HideInInspector] public bool isTracerActive;              //within a tracer coverage (inclusive) of neighbouring nodes
-    [HideInInspector] public bool isTracerKnown;               //true if Authority knows of tracer coverage for this node
+    //[HideInInspector] public bool isTracerKnown;               //true if Authority knows of tracer coverage for this node
     [HideInInspector] public bool isSpider;                    //has authority spider?
-    [HideInInspector] public bool isSpiderKnown;               //does Resistance know of spider?
+    //[HideInInspector] public bool isSpiderKnown;               //does Resistance know of spider?
     [HideInInspector] public bool isActor;                     //true if any ActorStatus.Active actor has a connection at the node
-    [HideInInspector] public bool isActorKnown;                //true if Authority knows of Actor connection
-    [HideInInspector] public bool isTeamKnown;                 //true if Resistance knows of teams (additional means other than tracer coverage or connections)
+    //[HideInInspector] public bool isActorKnown;                //true if Authority knows of Actor connection
+    //[HideInInspector] public bool isTeamKnown;                 //true if Resistance knows of teams (additional means other than tracer coverage or connections)
     [HideInInspector] public int targetID;                     //unique ID, 0+, -1 indicates no target
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
@@ -46,6 +36,15 @@ public class Node : MonoBehaviour
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     private float fadeInTime;                           //tooltip
+
+    //private backing fields
+    private int _stability;
+    private int _support;
+    private int _security;
+    private bool _isTracerKnown;
+    private bool _isSpiderKnown;
+    private bool _isActorKnown;
+    private bool _isTeamKnown;
 
     //Properties for backing fields
     public int Security
@@ -64,6 +63,58 @@ public class Node : MonoBehaviour
     {
         get { return Mathf.Clamp(_support + GetNodeAdjustment(EffectOutcome.Support), 0, 3); }
         set { _support = value; Mathf.Clamp(_support, 0, 3); }
+    }
+
+    public bool isTracerKnown
+    {
+        get
+        {
+            //any Ongoing effect overides current setting
+            int value = GetNodeAdjustment(EffectOutcome.RevealTracers);
+            if (value < 0) { return false; }
+            else if (value > 0) { return true; }
+            else { return _isTracerKnown; }
+        }
+        set { _isTracerKnown = value; }
+    }
+
+    public bool isSpiderKnown
+    {
+        get
+        {
+            //any Ongoing effect overides current setting
+            int value = GetNodeAdjustment(EffectOutcome.RevealSpiders);
+            if (value < 0) { return false; }
+            else if (value > 0) { return true; }
+            else { return _isSpiderKnown; }
+        }
+        set { _isSpiderKnown = value; }
+    }
+
+    public bool isActorKnown
+    {
+        get
+        {
+            //any Ongoing effect overides current setting
+            int value = GetNodeAdjustment(EffectOutcome.RevealActors);
+            if (value < 0) { return false; }
+            else if (value > 0) { return true; }
+            else { return _isActorKnown; }
+        }
+        set { _isActorKnown = value; }
+    }
+
+    public bool isTeamKnown
+    {
+        get
+        {
+            //any Ongoing effect overides current setting
+            int value = GetNodeAdjustment(EffectOutcome.RevealTeams);
+            if (value < 0) { return false; }
+            else if (value > 0) { return true; }
+            else { return _isTeamKnown; }
+        }
+        set { _isTeamKnown = value; }
     }
 
     /// <summary>
@@ -613,6 +664,22 @@ public class Node : MonoBehaviour
                         break;
                     case EffectOutcome.Support:
                         Support += process.value;
+                        break;
+                    case EffectOutcome.RevealTracers:
+                        if (process.value <= 0) { isTracerKnown = false; }
+                        else { isTracerKnown = true; }
+                        break;
+                    case EffectOutcome.RevealSpiders:
+                        if (process.value <= 0) { isSpiderKnown = false; }
+                        else { isSpiderKnown = true; }
+                        break;
+                    case EffectOutcome.RevealTeams:
+                        if (process.value <= 0) { isTeamKnown = false; }
+                        else { isTeamKnown = true; }
+                        break;
+                    case EffectOutcome.RevealActors:
+                        if (process.value <= 0) { isActorKnown = false; }
+                        else { isActorKnown = true; }
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));

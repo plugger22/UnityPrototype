@@ -941,16 +941,20 @@ public class EffectManager : MonoBehaviour
                                 effectResolve.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
                             case EffectOutcome.RevealTracers:
-
+                                effectResolve.topText = string.Format("{0}The security system has been scanned for intruders{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
                                 break;
                             case EffectOutcome.RevealSpiders:
-
+                                effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the security system{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
                                 break;
                             case EffectOutcome.RevealActors:
-
+                                effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Resistance connections revealed{1}", colourOutcome2, colourEnd);
                                 break;
                             case EffectOutcome.RevealTeams:
-
+                                effectResolve.topText = string.Format("{0}The local grapevine is alive and well{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Enemy teams are revealed{1}", colourOutcome2, colourEnd);
                                 break;
                         }
                         break;
@@ -1003,6 +1007,22 @@ public class EffectManager : MonoBehaviour
                             case EffectOutcome.Support:
                                 effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in neighbouring nodes{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node and Neighbours Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.RevealTracers:
+                                effectResolve.topText = string.Format("{0}The neighbouring security systems have been scanned for intruders{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
+                                break;
+                            case EffectOutcome.RevealSpiders:
+                                effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the neighbouring security systems{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Neighbouring Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
+                                break;
+                            case EffectOutcome.RevealActors:
+                                effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Neighbouring Resistance connections revealed{1}", colourOutcome2, colourEnd);
+                                break;
+                            case EffectOutcome.RevealTeams:
+                                effectResolve.topText = string.Format("{0}The local neighbourhood grapevine is alive and well{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Neighbouring Enemy teams are revealed{1}", colourOutcome2, colourEnd);
                                 break;
                         }
                         break;
@@ -1063,6 +1083,22 @@ public class EffectManager : MonoBehaviour
                             case EffectOutcome.Support:
                                 effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels throughout the city{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.RevealTracers:
+                                effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
+                                break;
+                            case EffectOutcome.RevealSpiders:
+                                effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
+                                break;
+                            case EffectOutcome.RevealActors:
+                                effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Resistance connections revealed{1}", colourOutcome2, colourEnd);
+                                break;
+                            case EffectOutcome.RevealTeams:
+                                effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}All Enemy teams are revealed{1}", colourOutcome2, colourEnd);
                                 break;
                         }
                         break;
@@ -1188,18 +1224,6 @@ public class EffectManager : MonoBehaviour
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
     }
-
-    /*/// <summary>
-    /// Creates an ongoing effect, assigns a unique ID
-    /// </summary>
-    /// <returns></returns>
-    private EffectDataOngoing CreateOngoingEffect()
-    {
-        EffectDataOngoing effectOngoing = new EffectDataOngoing();
-        //unique ID is 0+
-        effectOngoing.ongoingID = ongoingEffectIDCounter++;
-        return effectOngoing;
-    }*/
 
     /// <summary>
     /// gets a unique ID for ongoing effects. All
