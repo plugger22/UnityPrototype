@@ -26,9 +26,12 @@ public class Node : MonoBehaviour
 
     [HideInInspector] public bool isTracer;                    //has resistance tracer?
     [HideInInspector] public bool isTracerActive;              //within a tracer coverage (inclusive) of neighbouring nodes
+    [HideInInspector] public bool isTracerKnown;               //true if Authority knows of tracer coverage for this node
     [HideInInspector] public bool isSpider;                    //has authority spider?
     [HideInInspector] public bool isSpiderKnown;               //does Resistance know of spider?
     [HideInInspector] public bool isActor;                     //true if any ActorStatus.Active actor has a connection at the node
+    [HideInInspector] public bool isActorKnown;                //true if Authority knows of Actor connection
+    [HideInInspector] public bool isTeamKnown;                 //true if Resistance knows of teams (additional means other than tracer coverage or connections)
     [HideInInspector] public int targetID;                     //unique ID, 0+, -1 indicates no target
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
@@ -212,6 +215,7 @@ public class Node : MonoBehaviour
                     type = string.Format("{0} ID {1}", Arc.name, nodeID),
                     isTracerActive = isTracerActive,
                     isActor = isActor,
+                    isTeamKnown = isTeamKnown,
                     arrayOfStats = new int[] { Stability, Support, Security },
                     listOfActive = activeList,
                     listOfEffects = effectsList,
@@ -626,7 +630,6 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     private int GetNodeAdjustment(EffectOutcome outcome)
     {
-        Debug.Assert(outcome == EffectOutcome.Security || outcome == EffectOutcome.Stability || outcome == EffectOutcome.Support, string.Format("Invalid outcome \"{0}\"", outcome));
         int value = 0;
         if (listOfAdjustments.Count > 0)
         {

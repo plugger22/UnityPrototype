@@ -465,8 +465,12 @@ public class EffectManager : MonoBehaviour
             switch (effect.outcome)
             {
                 //
-                // - - - Resistance effects
+                // - - - Node Data effects (both sides)
                 //
+                case EffectOutcome.RevealSpiders:
+                case EffectOutcome.RevealTracers:
+                case EffectOutcome.RevealTeams:
+                case EffectOutcome.RevealActors:
                 case EffectOutcome.Security:
                 case EffectOutcome.Stability:
                 case EffectOutcome.Support:
@@ -488,6 +492,9 @@ public class EffectManager : MonoBehaviour
                         effectReturn.errorFlag = true;
                     }
                     break;
+                //
+                // - - - Resistance effects
+                //
                 case EffectOutcome.RebelCause:
                     int rebelCause = GameManager.instance.rebelScript.resistanceCause;
                     int maxCause = GameManager.instance.rebelScript.resistanceCauseMax;
@@ -553,12 +560,6 @@ public class EffectManager : MonoBehaviour
                     break;
                 case EffectOutcome.NeutraliseTeam:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
-                    break;
-                case EffectOutcome.RevealSpiders:
-                    //TO DO
-                    break;
-                case EffectOutcome.RevealTeams:
-                    //TO DO
                     break;
                 case EffectOutcome.ConnectionSecurity:
                     //handled elsewhere
@@ -825,9 +826,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.bottomText = SetBottomText(actor);
                     effectReturn.isAction = true;
                     break;
-                case EffectOutcome.RevealTracers:
-                    //To Do
-                    break;
+
                 default:
                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome));
                     effectReturn.errorFlag = true;
@@ -940,6 +939,18 @@ public class EffectManager : MonoBehaviour
                             case EffectOutcome.Support:
                                 effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                            case EffectOutcome.RevealTracers:
+
+                                break;
+                            case EffectOutcome.RevealSpiders:
+
+                                break;
+                            case EffectOutcome.RevealActors:
+
+                                break;
+                            case EffectOutcome.RevealTeams:
+
                                 break;
                         }
                         break;

@@ -16,6 +16,7 @@ public class NodeTooltipData
     public string type;
     public bool isActor;
     public bool isTracerActive;
+    public bool isTeamKnown;
     public int[] arrayOfStats;
     public List<string> listOfActive;
     public List<string> listOfEffects;
@@ -197,7 +198,7 @@ public class TooltipNode : MonoBehaviour
         proceedFlag = false;
         if (GameManager.instance.optionScript.fogOfWar == true)
         {
-            if (data.isTracerActive == true || data.isActor == true)
+            if (data.isTracerActive == true || data.isActor == true || data.isTeamKnown == true)
             { proceedFlag = true; }
         }
         else { proceedFlag = true; }
