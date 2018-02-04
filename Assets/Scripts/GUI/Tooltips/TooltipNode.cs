@@ -6,25 +6,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using gameAPI;
+using packageAPI;
 
-/// <summary>
-/// used to pass data package to node Tooltip
-/// </summary>
-public class NodeTooltipData
-{
-    public string nodeName;
-    public string type;
-    public bool isActor;
-    public bool isActorKnown;
-    public bool isTracerActive;
-    public bool isTeamKnown;
-    public int[] arrayOfStats;
-    public List<string> listOfActive;
-    public List<string> listOfEffects;
-    public List<string> listOfTeams;
-    public List<string> listOfTargets;
-    public Vector3 tooltipPos;
-}
 
 /// <summary>
 /// Node based tooltip

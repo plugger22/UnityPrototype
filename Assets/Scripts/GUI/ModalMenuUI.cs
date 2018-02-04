@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// allows Node tooltip to show with mouseover of Modal Action Menu header (node details)

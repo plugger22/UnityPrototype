@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text;
 using modalAPI;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// handles all gear related matters (Only the Resistance has gear)
