@@ -266,6 +266,7 @@ public class Node : MonoBehaviour
                     type = string.Format("{0} ID {1}", Arc.name, nodeID),
                     isTracerActive = isTracerActive,
                     isActor = isActor,
+                    isActorKnown = isActorKnown,
                     isTeamKnown = isTeamKnown,
                     arrayOfStats = new int[] { Stability, Support, Security },
                     listOfActive = activeList,

@@ -15,6 +15,7 @@ public class NodeTooltipData
     public string nodeName;
     public string type;
     public bool isActor;
+    public bool isActorKnown;
     public bool isTracerActive;
     public bool isTeamKnown;
     public int[] arrayOfStats;
@@ -161,24 +162,66 @@ public class TooltipNode : MonoBehaviour
         nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd);
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);
 
-        //list of Actors for whom the is node is Active
+        //
+        // - - - Actor Connections - - -
+        //
+        //set tooltip elements to show
+        nodeActive.gameObject.SetActive(true);
+        dividerUpperMiddle.gameObject.SetActive(true);
+        //build string
+        StringBuilder builderActor = new StringBuilder();
+        builderActor.Append(colourActive);
+        //ascertain whether actors shown or not
+        proceedFlag = false;
+        if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { proceedFlag = true; }
+        else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+        {
+            if (GameManager.instance.optionScript.fogOfWar == true)
+            {
+                if (data.isActorKnown == true)
+                { proceedFlag = true; }
+            }
+            else { proceedFlag = true; }
+        }
+        //connections are present
         if (data.listOfActive.Count > 0)
         {
-            //set tooltip elements to show
-            nodeActive.gameObject.SetActive(true);
-            dividerUpperMiddle.gameObject.SetActive(true);
-            //build string
-            StringBuilder builder = new StringBuilder();
-            builder.Append(colourActive);
-            //foreach(string active in listOfActive)
-            for(int i = 0; i < data.listOfActive.Count; i++)
+            //FOW off or Resistance side
+            if (proceedFlag == true)
             {
-                if (i > 0) { builder.AppendLine(); }
-                builder.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd));
+                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                {
+                    for (int i = 0; i < data.listOfActive.Count; i++)
+                    {
+                        if (i > 0) { builderActor.AppendLine(); }
+                        builderActor.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd));
+                    }
+                }
+                else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+                { builderActor.Append(string.Format("{0}Resistance Connections present{1}", colourNeutral, colourEnd)); }
             }
-            nodeActive.text = builder.ToString();
+            //FOW On and Authority player has no knowledge of actor connections at node
+            else
+            { builderActor.Append(string.Format("{0}Resistance Connections unknown{1}", colourBad, colourEnd)); }
         }
-        //Ongoing effects currently impacting the node
+        else
+        {
+            //no actor connections present at node -> FOW off or Resistance side
+            if (proceedFlag == true)
+            {
+                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                { builderActor.Append(string.Format("{0}<size=90%>No Actors have Connections</size>{1}", colourDefault, colourEnd)); }
+                else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+                { builderActor.Append(string.Format("{0}<size=90%>No Resistance Connections present</size>{1}", colourDefault, colourEnd)); }
+            }
+            //FOW On and Authority player has no knowledge of actor connections at node
+            else
+            { builderActor.Append(string.Format("{0}Resistance Connections unknown{1}", colourBad, colourEnd)); }
+        }
+        nodeActive.text = builderActor.ToString();
+        //
+        // - - - Ongoing effects - - - 
+        //
         if (data.listOfEffects.Count > 0)
         {
             ongoingEffects.gameObject.SetActive(true);
@@ -194,14 +237,21 @@ public class TooltipNode : MonoBehaviour
             ongoingEffects.text = effectBuilder.ToString();
         }
         else { ongoingEffects.text = ""; }
-        //Teams -> show only if node within tracer coverage or actor has a connection there (if FOW option 'true')
+        //
+        // - - - Teams  - - -
+        //
         proceedFlag = false;
-        if (GameManager.instance.optionScript.fogOfWar == true)
+        if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { proceedFlag = true; }
+        else if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
         {
-            if (data.isTracerActive == true || data.isActor == true || data.isTeamKnown == true)
-            { proceedFlag = true; }
+            if (GameManager.instance.optionScript.fogOfWar == true)
+            {
+                if (data.isTracerActive == true || data.isActor == true || data.isTeamKnown == true)
+                { proceedFlag = true; }
+            }
+            else { proceedFlag = true; }
         }
-        else { proceedFlag = true; }
+        //show teams show only (Resistance) if node within tracer coverage or actor has a connection there or isTeamKnown true (if FOW option 'true')
         if (proceedFlag == true)
         {
             if (data.listOfTeams.Count > 0)
@@ -214,17 +264,18 @@ public class TooltipNode : MonoBehaviour
                 }
                 nodeTeams.text = teamBuilder.ToString();
             }
-            else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "No Teams present", colourEnd); }
+            else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>No Teams present</size>", colourEnd); }
         }
-        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=85%>requires Tracer or Actor</size>{4}", colourBad, colourEnd, "\n", colourDefault, colourEnd); }
-        
-        //Target
+        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=90%>requires Tracer or Actor</size>{4}", colourBad, colourEnd, "\n", colourDefault, colourEnd); }
+        //
+        // - - Target - - -
+        //
         if (data.listOfTargets.Count > 0)
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(colourDefault);
             //foreach (string target in listOfTarget)
-            for(int i = 0; i < data.listOfTargets.Count; i++)
+            for (int i = 0; i < data.listOfTargets.Count; i++)
             {
                 if (i > 0) { builder.AppendLine(); }
                 builder.Append(data.listOfTargets[i]);
@@ -233,7 +284,7 @@ public class TooltipNode : MonoBehaviour
             nodeTarget.text = builder.ToString();
         }
         else
-        { nodeTarget.text = string.Format("{0}{1}{2}", colourDefault, "No Target available", colourEnd); }
+        { nodeTarget.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
 
         //set up stats -> only takes the first three Stability - Support - Security
         int checkCounter = 0;

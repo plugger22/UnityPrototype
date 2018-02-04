@@ -198,6 +198,7 @@ public class NodeManager : MonoBehaviour
         int data = -1;
         bool successFlag = true;
         bool nodeTypeFlag = false;
+        bool proceedFlag = false;
         string displayText = null;
         //set all nodes to default colour first
         ResetNodes();
@@ -267,9 +268,7 @@ public class NodeManager : MonoBehaviour
                 Dictionary<int, Node> dictOfSpiderNodes = GameManager.instance.dataScript.GetAllNodes();
                 if (dictOfSpiderNodes != null)
                 {
-
                     int count = 0;
-                    bool proceedFlag = false;
                     //determine level of visibility
                     switch (GameManager.instance.sideScript.PlayerSide)
                     {
@@ -285,8 +284,6 @@ public class NodeManager : MonoBehaviour
                             Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
                             break;
                     }
-
-
                     foreach (var node in dictOfSpiderNodes)
                     {
                         if (node.Value.isSpider == true)
@@ -319,21 +316,53 @@ public class NodeManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid dictOfSpiderNodes (Null)"); }
                 break;
+
             //show all nodes with a tracer or within one node radius of a tracer
             case NodeUI.ShowTracers:
                 Dictionary<int, Node> dictOfTracerNodes = GameManager.instance.dataScript.GetAllNodes();
                 if (dictOfTracerNodes != null)
                 {
                     int count = 0;
+                    //determine level of visibility
+                    switch (GameManager.instance.sideScript.PlayerSide)
+                    {
+                        case Side.Resistance:
+                            proceedFlag = true;
+                            break;
+                        case Side.Authority:
+                            //resistance -> if not FOW then auto show
+                            if (GameManager.instance.optionScript.fogOfWar == false)
+                            { proceedFlag = true; }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
+                            break;
+                    }
                     foreach (var node in dictOfTracerNodes)
                     {
                         if (node.Value.isTracerActive == true)
                         {
                             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
-                            node.Value.SetMaterial(nodeMaterial);
+                            /*node.Value.SetMaterial(nodeMaterial);
                             //count number of tracers, not active tracer nodes
                             if (node.Value.isTracer == true)
-                            { count++; }
+                            { count++; }*/
+
+                            //show all
+                            if (proceedFlag == true)
+                            {
+                                node.Value.SetMaterial(nodeMaterial);
+                                count++;
+                            }
+                            //conditional -> only show if tracer is known
+                            else
+                            {
+                                if (node.Value.isTracerKnown == true)
+                                {
+                                    node.Value.SetMaterial(nodeMaterial);
+                                    count++;
+                                }
+                            }
                         }
                     }
                     if (count > 0)
