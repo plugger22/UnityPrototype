@@ -267,30 +267,45 @@ public class NodeManager : MonoBehaviour
                 Dictionary<int, Node> dictOfSpiderNodes = GameManager.instance.dataScript.GetAllNodes();
                 if (dictOfSpiderNodes != null)
                 {
+
                     int count = 0;
-                    foreach(var node in dictOfSpiderNodes)
+                    bool proceedFlag = false;
+                    //determine level of visibility
+                    switch (GameManager.instance.sideScript.PlayerSide)
+                    {
+                        case Side.Authority:
+                            proceedFlag = true;
+                            break;
+                        case Side.Resistance:
+                            //resistance -> if not FOW then auto show
+                            if (GameManager.instance.optionScript.fogOfWar == false)
+                            { proceedFlag = true; }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
+                            break;
+                    }
+
+
+                    foreach (var node in dictOfSpiderNodes)
                     {
                         if (node.Value.isSpider == true)
                         {
                             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
-                            //visibility depends on side
-                            switch (GameManager.instance.sideScript.PlayerSide)
+                            //show all
+                            if (proceedFlag == true)
                             {
-                                case Side.Authority:
+                                node.Value.SetMaterial(nodeMaterial);
+                                count++;
+                            }
+                            //conditional -> only show if spider is known
+                            else
+                            {
+                                if (node.Value.isSpiderKnown == true)
+                                {
                                     node.Value.SetMaterial(nodeMaterial);
                                     count++;
-                                    break;
-                                case Side.Resistance:
-                                    //resistance -> show only if known, eg. within tracer coverage
-                                    if (node.Value.isSpiderKnown == true)
-                                    {
-                                        node.Value.SetMaterial(nodeMaterial);
-                                        count++;
-                                    }
-                                    break;
-                                default:
-                                    Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
-                                    break;
+                                }
                             }
                         }
                     }

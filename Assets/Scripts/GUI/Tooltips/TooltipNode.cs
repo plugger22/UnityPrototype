@@ -216,7 +216,7 @@ public class TooltipNode : MonoBehaviour
             }
             else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "No Teams present", colourEnd); }
         }
-        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}requires Tracer or Actor{4}", colourBad, colourEnd, "\n", colourDefault, colourEnd); }
+        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=85%>requires Tracer or Actor</size>{4}", colourBad, colourEnd, "\n", colourDefault, colourEnd); }
         
         //Target
         if (data.listOfTargets.Count > 0)
