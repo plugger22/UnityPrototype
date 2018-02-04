@@ -228,10 +228,9 @@ public class TooltipNode : MonoBehaviour
             dividerStats.gameObject.SetActive(true);
             StringBuilder effectBuilder = new StringBuilder();
             effectBuilder.Append(string.Format("{0}Ongoing Effects{1}", colourDefault, colourEnd));
-            effectBuilder.AppendLine();
             for (int i = 0; i < data.listOfEffects.Count; i++)
             {
-                if (i > 0) { effectBuilder.AppendLine(); }
+                effectBuilder.AppendLine();
                 effectBuilder.Append(data.listOfEffects[i]);
             }
             ongoingEffects.text = effectBuilder.ToString();
@@ -285,8 +284,9 @@ public class TooltipNode : MonoBehaviour
         }
         else
         { nodeTarget.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
-
-        //set up stats -> only takes the first three Stability - Support - Security
+        //
+        // - - - Stats - - - (Security / Stability / Support)
+        //
         int checkCounter = 0;
         int statData;
         if (data.arrayOfStats.Length > 0)

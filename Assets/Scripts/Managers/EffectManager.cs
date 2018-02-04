@@ -1131,12 +1131,16 @@ public class EffectManager : MonoBehaviour
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
-                //Process Node effect for all neighbouring nodes
+                //Process Node effect for all nodes
                 Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetAllNodes();
                 if (dictOfAllNodes != null)
                 {
                     foreach (var nodeTemp in dictOfAllNodes)
-                    { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                    {
+                        //exclude current node
+                        if (nodeTemp.Value.nodeID != node.nodeID)
+                        { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                    }
                 }
                 else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
                 break;
@@ -1220,7 +1224,25 @@ public class EffectManager : MonoBehaviour
         effectOngoing.outcome = effect.outcome;
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
-        effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourGood, effect.outcome, value, value > 0 ? "+" : "", effectInput.ongoingText, colourEnd);
+        //descriptor
+        switch (effect.outcome)
+        {
+            case EffectOutcome.Security:
+            case EffectOutcome.Stability:
+            case EffectOutcome.Support:
+                effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourGood, effect.outcome, value, value > 0 ? "+" : "", effectInput.ongoingText, colourEnd);
+                break;
+            case EffectOutcome.RevealTracers:
+            case EffectOutcome.RevealSpiders:
+            case EffectOutcome.RevealTeams:
+            case EffectOutcome.RevealActors:
+                effectOngoing.text = string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd);
+                break;
+            default:
+                effectOngoing.text = string.Format("{0}{1} ({2}){3}", colourGood, effect.outcome, effectInput.ongoingText, colourEnd);
+                break;
+        }
+        
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
     }
