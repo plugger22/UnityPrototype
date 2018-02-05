@@ -2,18 +2,93 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using packageAPI;
 
 public class Connection : MonoBehaviour {
 
-    private ConnectionType securityLevel;
+    //private ConnectionType securityLevel;
 
-    private int v1;                                 //vertice nodeID's for either end of the connection
+    private int v1;                                         //vertice nodeID's for either end of the connection
     private int v2;
 
-    public int connID;                              //unique connectionID 
+    private int _securityLevel;                             //private backing field (int vs. enum)
+
+    private List<EffectDataOngoing> listOfOngoingEffects;   //list of temporary (ongoing) effects impacting on the node
+
+    public int connID;                                      //unique connectionID 
 
     public int VerticeOne { get { return v1; } }
     public int VerticeTwo { get { return v2; } }
+
+    //Security property -> a bit tricky but needed to handle the difference between the enum (None/High/Med/Low) and the int backing field.
+    public ConnectionType SecurityLevel
+    {
+        get
+        {
+            //ongoing effects are +ve to Raise the security level and -ve to lower it, per point
+            int tempValue = GetOngoingEffect();
+            if (_securityLevel == 0)
+            {
+                //raise level
+                if (tempValue > 0)
+                {
+                    Mathf.Clamp(tempValue, 1, 3);
+                    tempValue = 4 - tempValue;
+                }
+                //lower but can't go any lower than None
+                else { tempValue = _securityLevel; }
+            }
+            else
+            {
+                //security level any value other than 'none'
+                if (tempValue > 0)
+                {
+                    //raise security level
+                    tempValue = _securityLevel - tempValue;
+                    Mathf.Clamp(tempValue, 1, 3);
+                }
+                else if (tempValue < 0)
+                {
+                    //lower security level
+                    tempValue = _securityLevel + tempValue;
+                    if (tempValue > 3) { tempValue = 0; }
+                }
+                else
+                {
+                    //no change
+                    tempValue = _securityLevel;
+                }
+            }
+            return (ConnectionType)tempValue;
+        }
+        set
+        {
+            switch (value)
+            {
+                case ConnectionType.HIGH:
+                    _securityLevel = 1;
+                    break;
+                case ConnectionType.MEDIUM:
+                    _securityLevel = 2;
+                    break;
+                case ConnectionType.LOW:
+                    _securityLevel = 3;
+                    break;
+                case ConnectionType.None:
+                    _securityLevel = 0;
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// initialise
+    /// </summary>
+    public void Awake()
+    {
+        listOfOngoingEffects = new List<EffectDataOngoing>();
+    }
+
 
     public void InitialiseConnection(int v1, int v2)
     {
@@ -28,11 +103,10 @@ public class Connection : MonoBehaviour {
     /// <param name="secLvl"></param>
     public void ChangeSecurityLevel(ConnectionType secLvl)
     {
-        if (secLvl != securityLevel)
+        if (secLvl != SecurityLevel)
         {
-            securityLevel = secLvl;
+            SecurityLevel = secLvl;
             Renderer renderer = GetComponent<Renderer>();
-            //don't need a component reference for GameManager as it's a static Object available to all
             renderer.material = GameManager.instance.connScript.GetConnectionMaterial(secLvl);
         }
     }
@@ -43,6 +117,74 @@ public class Connection : MonoBehaviour {
     public int GetNode2()
     { return v2; }
 
-    public ConnectionType GetSecurity()
-    { return securityLevel; }
+    //
+    // - - - Ongoing Effects - - -
+    //
+
+    /// <summary>
+    /// Returns tally of ongoing effects for the SecurityLevel, '0' if none, every +1 is increase a level of security, every -1 is decrease
+    /// </summary>
+    /// <param name="outcome"></param>
+    /// <returns></returns>
+    private int GetOngoingEffect()
+    {
+        int value = 0;
+        if (listOfOngoingEffects.Count > 0)
+        {
+            foreach (var adjust in listOfOngoingEffects)
+            { value += adjust.value; }
+        }
+        return value;
+    }
+
+
+    /// <summary>
+    /// Add temporary effect to the listOfOngoingEffects
+    /// </summary>
+    /// <param name="ongoing"></param>
+    /// <returns></returns>
+    public void AddOngoingEffect(EffectDataOngoing ongoing)
+    {
+        if (ongoing != null)
+        {
+            //check to see if an identical ongoingID not already present
+            if (listOfOngoingEffects.Count == 0)
+            { listOfOngoingEffects.Add(ongoing); }
+            else
+            {
+                bool isDuplicate = false;
+                //check list for dupes
+                for(int i = 0; i < listOfOngoingEffects.Count; i++)
+                {
+                    if (listOfOngoingEffects[i].ongoingID == ongoing.ongoingID)
+                    { isDuplicate = true; break; }
+                }
+                if (isDuplicate == false)
+                { listOfOngoingEffects.Add(ongoing); }
+            }
+        }
+        else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
+    }
+
+    /// <summary>
+    /// checks listOfOngoingEffects for any matching ongoingID and deletes them
+    /// </summary>
+    /// <param name="uniqueID"></param>
+    public void RemoveOngoingEffect(int uniqueID)
+    {
+        if (listOfOngoingEffects.Count > 0)
+        {
+            //reverse loop, deleting as you go
+            for (int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
+            {
+                EffectDataOngoing ongoing = listOfOngoingEffects[i];
+                if (ongoing.ongoingID == uniqueID)
+                {
+                    Debug.Log(string.Format("Connection, ID {0}, Ongoing Effect ID {1}, \"{2}\", REMOVED{3}", connID,  ongoing.ongoingID, ongoing.text,"\n"));
+                    listOfOngoingEffects.RemoveAt(i);
+                }
+            }
+        }
+    }
+
 }

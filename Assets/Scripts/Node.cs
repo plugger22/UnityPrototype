@@ -9,29 +9,24 @@ public class Node : MonoBehaviour
 {
     //NOTE -> LevelManager.arrayOfActiveNodes stores access data, eg. which nodes are active for which actor?
 
-    [HideInInspector] public int nodeID;                       //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
+    [HideInInspector] public int nodeID;                //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     
-    [HideInInspector] public string nodeName;                  //name of node, eg. "Downtown Bronx"
-    [HideInInspector] public NodeArc Arc;                      //archetype type
+    [HideInInspector] public string nodeName;           //name of node, eg. "Downtown Bronx"
+    [HideInInspector] public NodeArc Arc;               //archetype type
 
-    [HideInInspector] public bool isTracer;                    //has resistance tracer?
-    [HideInInspector] public bool isTracerActive;              //within a tracer coverage (inclusive) of neighbouring nodes
-    //[HideInInspector] public bool isTracerKnown;               //true if Authority knows of tracer coverage for this node
-    [HideInInspector] public bool isSpider;                    //has authority spider?
-    //[HideInInspector] public bool isSpiderKnown;               //does Resistance know of spider?
-    [HideInInspector] public bool isActor;                     //true if any ActorStatus.Active actor has a connection at the node
-    //[HideInInspector] public bool isActorKnown;                //true if Authority knows of Actor connection
-    //[HideInInspector] public bool isTeamKnown;                 //true if Resistance knows of teams (additional means other than tracer coverage or connections)
-    [HideInInspector] public int targetID;                     //unique ID, 0+, -1 indicates no target
+    [HideInInspector] public bool isTracer;             //has resistance tracer?
+    [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
+    [HideInInspector] public bool isSpider;             //has authority spider?
+    [HideInInspector] public bool isActor;              //true if any ActorStatus.Active actor has a connection at the node
+    [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
 
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
     private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
-    //private List<Node> listOfMoves;                     //list of neighouring nodes but stored as nodes for move calcs
-    private List<Connection> listOfConnections;                //list of neighbouring connections
+    private List<Connection> listOfConnections;         //list of neighbouring connections
     private List<Team> listOfTeams;                     //Authority teams present at the node
-    private List <EffectDataOngoing> listOfAdjustments;    //list of temporary (ongoing) effects impacting on the node
+    private List <EffectDataOngoing> listOfOngoingEffects; //list of temporary (ongoing) effects impacting on the node
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
@@ -41,27 +36,27 @@ public class Node : MonoBehaviour
     private int _stability;
     private int _support;
     private int _security;
-    private bool _isTracerKnown;
-    private bool _isSpiderKnown;
-    private bool _isActorKnown;
-    private bool _isTeamKnown;
+    private bool _isTracerKnown;                        //true if Authority knows of tracer coverage for this node
+    private bool _isSpiderKnown;                        //does Resistance know of spider?
+    private bool _isActorKnown;                         //true if Authority knows of Actor connection
+    private bool _isTeamKnown;                          //true if Resistance knows of teams (additional means other than tracer coverage or connections)
 
     //Properties for backing fields
     public int Security
     {
-        get { return Mathf.Clamp(_security + GetNodeAdjustment(EffectOutcome.Security), 0, 3); }
+        get { return Mathf.Clamp(_security + GetOngoingEffect(EffectOutcome.Security), 0, 3); }
         set { _security = value; Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
-        get { return Mathf.Clamp(_stability + GetNodeAdjustment(EffectOutcome.Stability), 0, 3); }
+        get { return Mathf.Clamp(_stability + GetOngoingEffect(EffectOutcome.Stability), 0, 3); }
         set { _stability = value; Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
-        get { return Mathf.Clamp(_support + GetNodeAdjustment(EffectOutcome.Support), 0, 3); }
+        get { return Mathf.Clamp(_support + GetOngoingEffect(EffectOutcome.Support), 0, 3); }
         set { _support = value; Mathf.Clamp(_support, 0, 3); }
     }
 
@@ -70,7 +65,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetNodeAdjustment(EffectOutcome.RevealTracers);
+            int value = GetOngoingEffect(EffectOutcome.RevealTracers);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTracerKnown; }
@@ -83,7 +78,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetNodeAdjustment(EffectOutcome.RevealSpiders);
+            int value = GetOngoingEffect(EffectOutcome.RevealSpiders);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isSpiderKnown; }
@@ -96,7 +91,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetNodeAdjustment(EffectOutcome.RevealActors);
+            int value = GetOngoingEffect(EffectOutcome.RevealActors);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isActorKnown; }
@@ -109,7 +104,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetNodeAdjustment(EffectOutcome.RevealTeams);
+            int value = GetOngoingEffect(EffectOutcome.RevealTeams);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTeamKnown; }
@@ -133,7 +128,7 @@ public class Node : MonoBehaviour
         //listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
         listOfConnections = new List<Connection>();
-        listOfAdjustments = new List<EffectDataOngoing>();
+        listOfOngoingEffects = new List<EffectDataOngoing>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
@@ -431,9 +426,9 @@ public class Node : MonoBehaviour
     public List<string> GetOngoingEffects()
     {
         List<string> tempList = new List<string>();
-        if (listOfAdjustments.Count > 0)
+        if (listOfOngoingEffects.Count > 0)
         {
-            foreach (var ongoingEffect in listOfAdjustments)
+            foreach (var ongoingEffect in listOfOngoingEffects)
             { tempList.Add(ongoingEffect.text); }
         }
         return tempList;
@@ -612,7 +607,7 @@ public class Node : MonoBehaviour
     public void AddOngoingEffect(EffectDataOngoing ongoing)
     {
         if (ongoing != null)
-        { listOfAdjustments.Add(ongoing); }
+        { listOfOngoingEffects.Add(ongoing); }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
 
@@ -622,16 +617,16 @@ public class Node : MonoBehaviour
     /// <param name="uniqueID"></param>
     public void RemoveOngoingEffect(int uniqueID)
     {
-        if (listOfAdjustments.Count > 0)
+        if (listOfOngoingEffects.Count > 0)
         {
             //reverse loop, deleting as you go
-            for (int i = listOfAdjustments.Count - 1; i >= 0; i--)
+            for (int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
             {
-                EffectDataOngoing ongoing = listOfAdjustments[i];
+                EffectDataOngoing ongoing = listOfOngoingEffects[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
                     Debug.Log(string.Format("Node Effect: {0}, ID {1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
-                    listOfAdjustments.RemoveAt(i);
+                    listOfOngoingEffects.RemoveAt(i);
                 }
             }
         }
@@ -692,16 +687,16 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns tally of adjustments for the specified field, '0' if none
+    /// Returns tally of ongoing effects for the specified field, '0' if none
     /// </summary>
     /// <param name="outcome"></param>
     /// <returns></returns>
-    private int GetNodeAdjustment(EffectOutcome outcome)
+    private int GetOngoingEffect(EffectOutcome outcome)
     {
         int value = 0;
-        if (listOfAdjustments.Count > 0)
+        if (listOfOngoingEffects.Count > 0)
         {
-            foreach(var adjust in listOfAdjustments)
+            foreach(var adjust in listOfOngoingEffects)
             {
                 if (adjust.outcome == outcome)
                 { value += adjust.value; }

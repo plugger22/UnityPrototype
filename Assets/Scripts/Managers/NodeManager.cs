@@ -565,7 +565,7 @@ public class NodeManager : MonoBehaviour
             Connection connection = node.GetConnection(nodePlayer);
             if (connection != null)
             {
-                ConnectionType connSecType = connection.GetSecurity();
+                ConnectionType connSecType = connection.SecurityLevel;
                 int secLevel = (int)connSecType;
                 if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
                 moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.instance.colourScript.GetValueColour(secLevel), connSecType, colourEnd);

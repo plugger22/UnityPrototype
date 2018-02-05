@@ -425,6 +425,31 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 //
+                // - - - Other - - -
+                //
+                case EffectOutcome.Recruit:
+                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
+                    break;
+                case EffectOutcome.ConnectionSecurity:
+                    if (node != null)
+                    {
+                        EffectDataResolve resolve = ResolveConnectionData(effect, node, dataInput);
+                        if (resolve.isError == true)
+                        { effectReturn.errorFlag = true; }
+                        else
+                        {
+                            effectReturn.topText = resolve.topText;
+                            effectReturn.bottomText = resolve.bottomText;
+                            effectReturn.isAction = true;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome));
+                        effectReturn.errorFlag = true;
+                    }
+                    break;
+                //
                 // - - - Resistance effects
                 //
                 case EffectOutcome.RebelCause:
@@ -453,9 +478,7 @@ public class EffectManager : MonoBehaviour
                     }
                     effectReturn.isAction = true;
                     break;
-                case EffectOutcome.Recruit:
-                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
-                    break;
+
                 case EffectOutcome.Tracer:
                     if (node != null)
                     {
@@ -492,9 +515,6 @@ public class EffectManager : MonoBehaviour
                     break;
                 case EffectOutcome.NeutraliseTeam:
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
-                    break;
-                case EffectOutcome.ConnectionSecurity:
-                    //handled elsewhere
                     break;
                 case EffectOutcome.SpreadInstability:
                     //TO DO
@@ -1148,9 +1168,70 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod to handle Ongoing effects
+    /// Sub method to process Node Stability/Security/Support
+    /// Note: effect and node checked for Null by calling method
     /// </summary>
-    private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, int value)
+    /// <param name="effect"></param>
+    /// <param name="node"></param>
+    /// <param name="effectInput"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveConnectionData(Effect effect, Node node, EffectDataInput effectInput)
+    {
+        int value = 0;
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //data package to send to node for field processing
+        EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcome };
+
+        //Extent of effect
+        switch (effect.apply)
+        {
+            //Current Node only
+            case EffectApply.ConnectionCurrent:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
+
+                //Process Node effect
+                node.ProcessNodeEffect(effectProcess);
+                break;
+        }
+        //return data to calling method (ProcessEffect)
+        return effectResolve;
+    }
+
+        /// <summary>
+        /// subMethod to handle Ongoing effects
+        /// </summary>
+        private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;

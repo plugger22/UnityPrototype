@@ -298,6 +298,34 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+            //sixth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Connections None"))
+            {
+                Debug.Log("Button -> Change Connections");
+                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.None);
+            }
+
+            //sixth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Connections LOW"))
+            {
+                Debug.Log("Button -> Change Connections");
+                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.LOW);
+            }
+
+            //sixth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Connections MED"))
+            {
+                Debug.Log("Button -> Change Connections");
+                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.MEDIUM);
+            }
+
+            //sixth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Connections HIGH"))
+            {
+                Debug.Log("Button -> Change Connections");
+                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.HIGH);
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //

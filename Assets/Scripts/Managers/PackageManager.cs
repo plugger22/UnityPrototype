@@ -56,7 +56,7 @@ namespace packageAPI
     /// </summary>
     public class EffectDataOngoing
     {
-        public int ongoingID = -1;                                             //links back to a central registry to enable cancelling of ongoing effect at a later point
+        public int ongoingID = -1;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
         public string text;
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public EffectOutcome outcome;

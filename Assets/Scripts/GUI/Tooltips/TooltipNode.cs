@@ -146,7 +146,7 @@ public class TooltipNode : MonoBehaviour
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);
 
         //
-        // - - - Actor Connections - - -
+        // - - - Actor Contacts - - -
         //
         //set tooltip elements to show
         nodeActive.gameObject.SetActive(true);
@@ -166,7 +166,7 @@ public class TooltipNode : MonoBehaviour
             }
             else { proceedFlag = true; }
         }
-        //connections are present
+        //contacts are present
         if (data.listOfActive.Count > 0)
         {
             //FOW off or Resistance side
@@ -181,25 +181,25 @@ public class TooltipNode : MonoBehaviour
                     }
                 }
                 else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
-                { builderActor.Append(string.Format("{0}Resistance Connections present{1}", colourNeutral, colourEnd)); }
+                { builderActor.Append(string.Format("{0}Resistance Contacts present{1}", colourNeutral, colourEnd)); }
             }
-            //FOW On and Authority player has no knowledge of actor connections at node
+            //FOW On and Authority player has no knowledge of actor contacts at node
             else
-            { builderActor.Append(string.Format("{0}Resistance Connections unknown{1}", colourBad, colourEnd)); }
+            { builderActor.Append(string.Format("{0}Resistance Contacts unknown{1}", colourBad, colourEnd)); }
         }
         else
         {
-            //no actor connections present at node -> FOW off or Resistance side
+            //no actor contacts present at node -> FOW off or Resistance side
             if (proceedFlag == true)
             {
                 if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
-                { builderActor.Append(string.Format("{0}<size=90%>No Actors have Connections</size>{1}", colourDefault, colourEnd)); }
+                { builderActor.Append(string.Format("{0}<size=90%>No Actors have Contacts</size>{1}", colourDefault, colourEnd)); }
                 else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
-                { builderActor.Append(string.Format("{0}<size=90%>No Resistance Connections present</size>{1}", colourDefault, colourEnd)); }
+                { builderActor.Append(string.Format("{0}<size=90%>No Resistance Contacts present</size>{1}", colourDefault, colourEnd)); }
             }
-            //FOW On and Authority player has no knowledge of actor connections at node
+            //FOW On and Authority player has no knowledge of actor contacts at node
             else
-            { builderActor.Append(string.Format("{0}Resistance Connections unknown{1}", colourBad, colourEnd)); }
+            { builderActor.Append(string.Format("{0}Resistance Contacts unknown{1}", colourBad, colourEnd)); }
         }
         nodeActive.text = builderActor.ToString();
         //
@@ -233,7 +233,7 @@ public class TooltipNode : MonoBehaviour
             }
             else { proceedFlag = true; }
         }
-        //show teams show only (Resistance) if node within tracer coverage or actor has a connection there or isTeamKnown true (if FOW option 'true')
+        //show teams show only (Resistance) if node within tracer coverage or actor has a contact there or isTeamKnown true (if FOW option 'true')
         if (proceedFlag == true)
         {
             if (data.listOfTeams.Count > 0)

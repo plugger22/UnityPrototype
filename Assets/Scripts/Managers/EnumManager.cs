@@ -111,7 +111,9 @@ namespace gameAPI
         NodeSameArc,
         NodeAll,
         //Connections
+        ConnectionCurrent,
         ConnectionNeighbours,
+        ConnectionSameArc,
         ConnectionAll
     }
     public enum EffectCriteria {
