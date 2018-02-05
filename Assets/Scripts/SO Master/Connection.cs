@@ -45,12 +45,12 @@ public class Connection : MonoBehaviour {
                 {
                     //raise security level
                     tempValue = _securityLevel - tempValue;
-                    Mathf.Clamp(tempValue, 1, 3);
+                    if (tempValue <= 0) { tempValue = 1; }
                 }
                 else if (tempValue < 0)
                 {
-                    //lower security level
-                    tempValue = _securityLevel + tempValue;
+                    //lower security level (double minus as tempValue is also negative)
+                    tempValue = _securityLevel - tempValue;
                     if (tempValue > 3) { tempValue = 0; }
                 }
                 else
@@ -125,7 +125,7 @@ public class Connection : MonoBehaviour {
             if (adjust > 0)
             {
                 //increase security level (can't go any further below where it already is)
-                currentLevel -= adjust;
+                currentLevel = 4 - adjust;
                 switch (currentLevel)
                 {
                     case 3:
@@ -168,8 +168,8 @@ public class Connection : MonoBehaviour {
             }
             else if (adjust < 0)
             {
-                //lower security level
-                currentLevel += adjust;
+                //lower security level (double minus as adjust is also negative)
+                currentLevel -= adjust;
                 switch (currentLevel)
                 {
                     case 3:
@@ -198,7 +198,7 @@ public class Connection : MonoBehaviour {
     /// sub method to change connections material (colour)
     /// </summary>
     /// <param name="secLvl"></param>
-    private void SetConnectionMaterial(ConnectionType secLvl)
+    public void SetConnectionMaterial(ConnectionType secLvl)
     {
             Renderer renderer = GetComponent<Renderer>();
             renderer.material = GameManager.instance.connScript.GetConnectionMaterial(secLvl);
@@ -232,12 +232,13 @@ public class Connection : MonoBehaviour {
 
 
     /// <summary>
-    /// Add temporary effect to the listOfOngoingEffects
+    /// Add temporary effect to the listOfOngoingEffects. Returns true if successful (eg. not a duplicate)
     /// </summary>
     /// <param name="ongoing"></param>
     /// <returns></returns>
-    public void AddOngoingEffect(EffectDataOngoing ongoing)
+    public bool AddOngoingEffect(EffectDataOngoing ongoing)
     {
+        bool isNotDuplicate = true;
         if (ongoing != null)
         {
             //check to see if an identical ongoingID not already present
@@ -245,18 +246,18 @@ public class Connection : MonoBehaviour {
             { listOfOngoingEffects.Add(ongoing); }
             else
             {
-                bool isDuplicate = false;
                 //check list for dupes
                 for(int i = 0; i < listOfOngoingEffects.Count; i++)
                 {
                     if (listOfOngoingEffects[i].ongoingID == ongoing.ongoingID)
-                    { isDuplicate = true; break; }
+                    { isNotDuplicate = false; break; }
                 }
-                if (isDuplicate == false)
+                if (isNotDuplicate == true)
                 { listOfOngoingEffects.Add(ongoing); }
             }
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
+        return isNotDuplicate;
     }
 
     /// <summary>

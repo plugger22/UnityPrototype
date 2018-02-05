@@ -694,17 +694,23 @@ public class Node : MonoBehaviour
     {
         if (process != null)
         {
-            //Ongoing effect -> Node
-            if (process.effectOngoing != null)
-            {
-                //create an entry in the listOfOngoingEffects
-                AddOngoingEffect(process.effectOngoing);
-            }
+            bool isOngoingAndOK = false;
+            bool isAtLeastOneOngoing = false;
             //loop all the connections leading from the node
             foreach (Connection connection in listOfConnections)
             {
                 if (process.effectOngoing != null)
-                { connection.AddOngoingEffect(process.effectOngoing); }
+                {
+                    //process Ongoing effect provided not a duplicate ongoingID
+                    isOngoingAndOK = connection.AddOngoingEffect(process.effectOngoing);
+                    if (isOngoingAndOK == true)
+                    {
+                        //update material to reflect any change
+                        connection.SetConnectionMaterial(connection.SecurityLevel);
+                        //set flag to true (only has to be true once for the node to get an ongoing effect)
+                        isAtLeastOneOngoing = true;
+                    }
+                }
                 else
                 {
                     //single effect
@@ -719,6 +725,12 @@ public class Node : MonoBehaviour
                             break;
                     }
                 }
+            }
+            //need an Ongoing entry for Node (everything apart from text is ignored by node)
+            if (isAtLeastOneOngoing == true)
+            {                         
+                //create an entry in the nodes listOfOngoingEffects
+                AddOngoingEffect(process.effectOngoing);
             }
         }
         else

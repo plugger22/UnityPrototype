@@ -1227,14 +1227,16 @@ public class EffectManager : MonoBehaviour
         return effectResolve;
     }
 
-        /// <summary>
-        /// subMethod to handle Ongoing effects
-        /// </summary>
-        private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, int value)
+    /// <summary>
+    /// subMethod to handle Ongoing effects
+    /// </summary>
+    private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;
         effectOngoing.ongoingID = effectInput.ongoingID;
+        //DEBUG -> assign an ongoingID if not already there (testing only, remove when done)
+        //if (effectOngoing.ongoingID == -1) { effectOngoing.ongoingID = GetOngoingEffectID(); }
         effectOngoing.value = value;
         //descriptor
         switch (effect.outcome)
