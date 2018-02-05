@@ -61,7 +61,8 @@ public class Connection : MonoBehaviour {
             }
             return (ConnectionType)tempValue;
         }
-        set
+        //NOTE: Internal use only -> use AdjustSecurityLevel() to change Security Level as these will swap material if needed
+        private set
         {
             switch (value)
             {
@@ -98,7 +99,7 @@ public class Connection : MonoBehaviour {
 
 
     /// <summary>
-    /// adjust security level and change connection to the appropriate color
+    /// adjust security level to a specified value and change connection to the appropriate color
     /// </summary>
     /// <param name="secLvl"></param>
     public void ChangeSecurityLevel(ConnectionType secLvl)
@@ -106,9 +107,101 @@ public class Connection : MonoBehaviour {
         if (secLvl != SecurityLevel)
         {
             SecurityLevel = secLvl;
+            SetConnectionMaterial(secLvl);
+        }
+    }
+
+    /// <summary>
+    /// adjust Security level up (+ve) or down (-ve) and change connection to the appropriate colour
+    /// </summary>
+    /// <param name="adjust"></param>
+    public void ChangeSecurityLevel(int adjust)
+    {
+        ConnectionType originalLevel = SecurityLevel;
+        int currentLevel = (int)SecurityLevel;
+        //current SecurityLevel 'None'
+        if (currentLevel == 0)
+        {
+            if (adjust > 0)
+            {
+                //increase security level (can't go any further below where it already is)
+                currentLevel -= adjust;
+                switch (currentLevel)
+                {
+                    case 3:
+                        SecurityLevel = ConnectionType.LOW;
+                        break;
+                    case 2:
+                        SecurityLevel = ConnectionType.MEDIUM;
+                        break;
+                    case 1:
+                    case 0:
+                    default:
+                        //overshot -> max security level ceiling
+                        SecurityLevel = ConnectionType.HIGH;
+                        break;
+                }
+            }
+        }
+        //current SecurityLevel at a value higher than 'None'
+        else
+        {
+            if (adjust > 0)
+            {
+                //raise security level
+                currentLevel -= adjust;
+                switch (currentLevel)
+                {
+                    case 3:
+                        SecurityLevel = ConnectionType.LOW;
+                        break;
+                    case 2:
+                        SecurityLevel = ConnectionType.MEDIUM;
+                        break;
+                    case 1:
+                    case 0:
+                    default:
+                        //overshot -> max security level ceiling
+                        SecurityLevel = ConnectionType.HIGH;
+                        break;
+                }
+            }
+            else if (adjust < 0)
+            {
+                //lower security level
+                currentLevel += adjust;
+                switch (currentLevel)
+                {
+                    case 3:
+                        SecurityLevel = ConnectionType.LOW;
+                        break;
+                    case 2:
+                        SecurityLevel = ConnectionType.MEDIUM;
+                        break;
+                    case 1:
+                        SecurityLevel = ConnectionType.HIGH;
+                        break;
+                    case 0:
+                    default:
+                        //undershot -> min security level floor
+                        SecurityLevel = ConnectionType.None;
+                        break;
+                }
+            }
+        }
+        //change material if different
+        if (originalLevel != SecurityLevel)
+        { SetConnectionMaterial(SecurityLevel); }
+    }
+
+    /// <summary>
+    /// sub method to change connections material (colour)
+    /// </summary>
+    /// <param name="secLvl"></param>
+    private void SetConnectionMaterial(ConnectionType secLvl)
+    {
             Renderer renderer = GetComponent<Renderer>();
             renderer.material = GameManager.instance.connScript.GetConnectionMaterial(secLvl);
-        }
     }
 
     public int GetNode1()

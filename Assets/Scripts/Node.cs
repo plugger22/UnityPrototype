@@ -644,7 +644,7 @@ public class Node : MonoBehaviour
             //Ongoing effect
             if (process.effectOngoing != null)
             {
-                //create an entry in the dictOfAdjustments
+                //create an entry in listOfOngoingEffects
                 AddOngoingEffect(process.effectOngoing);
             }
             else
@@ -684,6 +684,45 @@ public class Node : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid effectProcess (Null)"); }
+    }
+
+    /// <summary>
+    /// changes connection security level for all connections leading from the node
+    /// </summary>
+    /// <param name="process"></param>
+    public void ProcessConnectionEffect(EffectDataProcess process)
+    {
+        if (process != null)
+        {
+            //Ongoing effect -> Node
+            if (process.effectOngoing != null)
+            {
+                //create an entry in the listOfOngoingEffects
+                AddOngoingEffect(process.effectOngoing);
+            }
+            //loop all the connections leading from the node
+            foreach (Connection connection in listOfConnections)
+            {
+                if (process.effectOngoing != null)
+                { connection.AddOngoingEffect(process.effectOngoing); }
+                else
+                {
+                    //single effect
+                    switch (process.outcome)
+                    {
+                        case EffectOutcome.ConnectionSecurity:
+                            //changes security level and updates material
+                            connection.ChangeSecurityLevel(process.value);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));
+                            break;
+                    }
+                }
+            }
+        }
+        else
+        { Debug.LogError("Invalid effectProcess (Null)"); }
     }
 
     /// <summary>

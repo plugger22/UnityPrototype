@@ -1195,8 +1195,8 @@ public class EffectManager : MonoBehaviour
                         switch (effect.outcome)
                         {
                             case EffectOutcome.ConnectionSecurity:
-                                effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                effectResolve.topText = string.Format("{0}Immediate Connections have raised their security{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
                         }
                         break;
@@ -1205,8 +1205,8 @@ public class EffectManager : MonoBehaviour
                         switch (effect.outcome)
                         {
                             case EffectOutcome.ConnectionSecurity:
-                                effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                effectResolve.topText = string.Format("{0}Immediate Connections have lowered their security{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
                         }
                         break;
@@ -1219,9 +1219,8 @@ public class EffectManager : MonoBehaviour
                 //Ongoing effect
                 if (effect.duration == EffectDuration.Ongoing)
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
-
-                //Process Node effect
-                node.ProcessNodeEffect(effectProcess);
+                //Process Connection effect
+                node.ProcessConnectionEffect(effectProcess);
                 break;
         }
         //return data to calling method (ProcessEffect)
@@ -1249,13 +1248,13 @@ public class EffectManager : MonoBehaviour
             case EffectOutcome.RevealSpiders:
             case EffectOutcome.RevealTeams:
             case EffectOutcome.RevealActors:
+            case EffectOutcome.ConnectionSecurity:
                 effectOngoing.text = string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd);
                 break;
             default:
                 effectOngoing.text = string.Format("{0}{1} ({2}){3}", colourGood, effect.outcome, effectInput.ongoingText, colourEnd);
                 break;
         }
-        
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
     }

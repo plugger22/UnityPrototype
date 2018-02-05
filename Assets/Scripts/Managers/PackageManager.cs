@@ -52,17 +52,6 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// used to pass data back to Node for an ongoing effect
-    /// </summary>
-    public class EffectDataOngoing
-    {
-        public int ongoingID = -1;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
-        public string text;
-        public int value;                                                 //how much the field changes, eg. +1, -1, etc.
-        public EffectOutcome outcome;
-    }
-
-    /// <summary>
     /// used to return results of effects to calling method
     /// ActionManager.cs -> <EffectDataReturn> ProcessNode... -> ProcessEffect -> EffectDataReturn
     /// </summary>
@@ -96,6 +85,17 @@ namespace packageAPI
         public EffectDataOngoing effectOngoing = null;                      //only used if an ongoing effect, ignore otherwise 
         public int value;                                                   //how much the field changes, eg. +1, -1, etc.
         public string text;                                                 //tooltip description for the temporary effect
+    }
+
+    /// <summary>
+    /// used to pass data back to Node for an ongoing effect
+    /// </summary>
+    public class EffectDataOngoing
+    {
+        public int ongoingID = -1;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
+        public string text;
+        public int value;                                                 //how much the field changes, eg. +1, -1, etc.
+        public EffectOutcome outcome;
     }
 
 }
