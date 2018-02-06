@@ -1257,8 +1257,8 @@ public class EffectManager : MonoBehaviour
                 if (effect.duration == EffectDuration.Ongoing)
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
-                    //DEBUG -> remove when finished with testing
-                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();
+                    /*//DEBUG -> remove when finished with testing
+                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();*/
                 }
                 //Process Connection effect
                 List<Node> listOfNeighbours = node.GetNeighbouringNodes();
@@ -1308,8 +1308,9 @@ public class EffectManager : MonoBehaviour
                 if (effect.duration == EffectDuration.Ongoing)
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
-                    //DEBUG -> remove when finished with testing
+                    /*//DEBUG -> remove when finished with testing
                     effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();
+                    GameManager.instance.dataScript.AddOngoingIDToDict(effectProcess.effectOngoing.ongoingID, "Connection Security");*/
                 }
                 //Process Connection effect
                 Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetAllNodes();
@@ -1362,8 +1363,8 @@ public class EffectManager : MonoBehaviour
                 if (effect.duration == EffectDuration.Ongoing)
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
-                    //DEBUG -> remove when finished with testing
-                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();
+                    /*//DEBUG -> remove when finished with testing
+                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();*/
                 }
                 //Process Connection effect
                 Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();

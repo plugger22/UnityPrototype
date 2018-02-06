@@ -1051,5 +1051,24 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
 
+    /// <summary>
+    /// loops all nodes and removes any ongoing effects that match the specified ID
+    /// </summary>
+    /// <param name="ongoingID"></param>
+    public void RemoveOngoingEffect(int ongoingID)
+    {
+        if (ongoingID > -1)
+        {
+            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+            if (dictOfNodes != null)
+            {
+                foreach(var node in dictOfNodes)
+                { node.Value.RemoveOngoingEffect(ongoingID); }
+            }
+            else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        }
+        else { Debug.LogError(string.Format("Invalid ongoingID {0} (must be zero or above)", ongoingID)); }
+    }
+
     //place new methods above here
 }

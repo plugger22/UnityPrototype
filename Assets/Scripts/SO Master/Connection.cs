@@ -276,6 +276,7 @@ public class Connection : MonoBehaviour {
     {
         if (listOfOngoingEffects.Count > 0)
         {
+            bool isRemoved = false;
             //reverse loop, deleting as you go
             for (int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
             {
@@ -284,8 +285,12 @@ public class Connection : MonoBehaviour {
                 {
                     Debug.Log(string.Format("Connection, ID {0}, Ongoing Effect ID {1}, \"{2}\", REMOVED{3}", connID,  ongoing.ongoingID, ongoing.text,"\n"));
                     listOfOngoingEffects.RemoveAt(i);
+                    isRemoved = true;
                 }
             }
+            //reset colour to take into account the new security level
+            if (isRemoved == true)
+            { SetConnectionMaterial(SecurityLevel); }
         }
     }
 

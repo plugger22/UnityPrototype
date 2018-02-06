@@ -35,4 +35,21 @@ public class ConnectionManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfConnections (Null)"); }
     }
 
+    /// <summary>
+    /// Checks all connections and removes any ongoing effects of the specified ID and, if so, updates the material (colour) of the connections
+    /// </summary>
+    /// <param name="ongoingID"></param>
+    public void RemoveOngoingEffect(int ongoingID)
+    {
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        if (dictOfConnections != null)
+        {
+            foreach (var connection in dictOfConnections)
+            { connection.Value.RemoveOngoingEffect(ongoingID); }
+        }
+        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+    }
+
+
+
 }

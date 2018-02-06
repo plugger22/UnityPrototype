@@ -299,10 +299,11 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sixth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Connections None"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Remove Ongoing"))
             {
-                Debug.Log("Button -> Change Connections");
-                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.None);
+                //removes connection Security ongoing effects (first entry in register dict)
+                Debug.Log("Button -> Remove Ongoing");
+                GameManager.instance.dataScript.RemoveOngoingEffects();
             }
 
             //sixth button

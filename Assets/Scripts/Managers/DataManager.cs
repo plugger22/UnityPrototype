@@ -2064,6 +2064,21 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Debug method to remove all connection security effects for all entries in the register
+    /// </summary>
+    public void RemoveOngoingEffects()
+    {
+        if (dictOfOngoingID.Count > 0)
+        {
+            foreach(var register in dictOfOngoingID)
+            {
+                GameManager.instance.connScript.RemoveOngoingEffect(register.Key);
+                GameManager.instance.nodeScript.RemoveOngoingEffect(register.Key);
+            }
+        }
+    }
+
     //new methods above here
 }
 
