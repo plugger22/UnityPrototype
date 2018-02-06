@@ -1096,6 +1096,7 @@ public class EffectManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
                 break;
+            //Nodes of the Same Arc type
             case EffectApply.NodeSameArc:
                 switch (effect.result)
                 {
@@ -1147,10 +1148,10 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
-                Dictionary<int, Node> dictOfSameNodes = GameManager.instance.dataScript.GetAllNodes();
-                if (dictOfSameNodes != null)
+                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfNodes != null)
                 {
-                    foreach (var nodeTemp in dictOfSameNodes)
+                    foreach (var nodeTemp in dictOfNodes)
                     {
                         //same node Arc type and not the current node?
                         if (nodeTemp.Value.Arc.NodeArcID == node.Arc.NodeArcID && nodeTemp.Value.nodeID != node.nodeID)
@@ -1196,7 +1197,7 @@ public class EffectManager : MonoBehaviour
                         {
                             case EffectOutcome.ConnectionSecurity:
                                 effectResolve.topText = string.Format("{0}Immediate Connections have raised their security{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
                                 break;
                         }
                         break;
@@ -1219,8 +1220,161 @@ public class EffectManager : MonoBehaviour
                 //Ongoing effect
                 if (effect.duration == EffectDuration.Ongoing)
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
-                //Process Connection effect
+                //Process Connection effect for current node
                 node.ProcessConnectionEffect(effectProcess);
+                break;
+            //Neighbouring Nodes
+            case EffectApply.ConnectionNeighbours:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}Neighbouring Connections have raised their security{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}Neighbouring Connections have lowered their security{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                {
+                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
+                    //DEBUG -> remove when finished with testing
+                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();
+                }
+                //Process Connection effect
+                List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+                if (listOfNeighbours != null)
+                {
+                    //clear all connection flags first to prevent double dipping
+                    GameManager.instance.connScript.SetAllFlagsToFalse();
+                    //process current node
+                    node.ProcessConnectionEffect(effectProcess);
+                    //process all neighbouring nodes
+                    foreach (Node nodeTemp in listOfNeighbours)
+                    { nodeTemp.ProcessConnectionEffect(effectProcess); }
+                }
+                else { Debug.LogError("Invalid listOfNeighours (Null)"); }
+                break;
+            //Same Node Arc
+            case EffectApply.ConnectionSameArc:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}{1} Connections have raised their security{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}{1} Connections have lowered their security{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                {
+                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
+                    //DEBUG -> remove when finished with testing
+                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();
+                }
+                //Process Connection effect
+                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfAllNodes != null)
+                {
+                    //clear all connection flags first to prevent double dipping
+                    GameManager.instance.connScript.SetAllFlagsToFalse();
+                    //current node
+                    node.ProcessConnectionEffect(effectProcess);
+                    foreach (var nodeTemp in dictOfAllNodes)
+                    {
+                        //same node Arc type and not the current node?
+                        if (nodeTemp.Value.Arc.NodeArcID == node.Arc.NodeArcID && nodeTemp.Value.nodeID != node.nodeID)
+                        { nodeTemp.Value.ProcessConnectionEffect(effectProcess); }
+                    }
+                }
+                else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
+                break;
+            //All Nodes
+            case EffectApply.ConnectionAll:
+                switch (effect.result)
+                {
+                    case Result.Add:
+                        value = effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}All Connections have raised their security{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    case Result.Subtract:
+                        value = -1 * effect.value;
+                        switch (effect.outcome)
+                        {
+                            case EffectOutcome.ConnectionSecurity:
+                                effectResolve.topText = string.Format("{0}All Connections have lowered their security{1}", colourDefault, colourEnd);
+                                effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                break;
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        effectResolve.isError = true;
+                        break;
+                }
+                effectProcess.value = value;
+                //Ongoing effect
+                if (effect.duration == EffectDuration.Ongoing)
+                {
+                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
+                    //DEBUG -> remove when finished with testing
+                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();
+                }
+                //Process Connection effect
+                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfNodes != null)
+                {                
+                    //clear all connection flags first to prevent double dipping
+                    GameManager.instance.connScript.SetAllFlagsToFalse();
+                    foreach (var nodeTemp in dictOfNodes)
+                    { nodeTemp.Value.ProcessConnectionEffect(effectProcess); }
+                }
+                else { Debug.LogError("Invalid dictOfNodes (Null)"); }
                 break;
         }
         //return data to calling method (ProcessEffect)
@@ -1235,8 +1389,6 @@ public class EffectManager : MonoBehaviour
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;
         effectOngoing.ongoingID = effectInput.ongoingID;
-        //DEBUG -> assign an ongoingID if not already there (testing only, remove when done)
-        //if (effectOngoing.ongoingID == -1) { effectOngoing.ongoingID = GetOngoingEffectID(); }
         effectOngoing.value = value;
         //descriptor
         switch (effect.outcome)

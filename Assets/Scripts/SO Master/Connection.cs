@@ -16,6 +16,7 @@ public class Connection : MonoBehaviour {
     private List<EffectDataOngoing> listOfOngoingEffects;   //list of temporary (ongoing) effects impacting on the node
 
     public int connID;                                      //unique connectionID 
+    public bool isDone;                                     //flag used to prevent connection being changed more than once for an effect
 
     public int VerticeOne { get { return v1; } }
     public int VerticeTwo { get { return v2; } }
@@ -117,81 +118,87 @@ public class Connection : MonoBehaviour {
     /// <param name="adjust"></param>
     public void ChangeSecurityLevel(int adjust)
     {
-        ConnectionType originalLevel = SecurityLevel;
-        int currentLevel = (int)SecurityLevel;
-        //current SecurityLevel 'None'
-        if (currentLevel == 0)
+        //ignore if connection has already been changed for the current effect
+        if (isDone == false)
         {
-            if (adjust > 0)
+            //set flag to prevent being changed twice
+            isDone = true;
+            ConnectionType originalLevel = SecurityLevel;
+            int currentLevel = (int)SecurityLevel;
+            //current SecurityLevel 'None'
+            if (currentLevel == 0)
             {
-                //increase security level (can't go any further below where it already is)
-                currentLevel = 4 - adjust;
-                switch (currentLevel)
+                if (adjust > 0)
                 {
-                    case 3:
-                        SecurityLevel = ConnectionType.LOW;
-                        break;
-                    case 2:
-                        SecurityLevel = ConnectionType.MEDIUM;
-                        break;
-                    case 1:
-                    case 0:
-                    default:
-                        //overshot -> max security level ceiling
-                        SecurityLevel = ConnectionType.HIGH;
-                        break;
+                    //increase security level (can't go any further below where it already is)
+                    currentLevel = 4 - adjust;
+                    switch (currentLevel)
+                    {
+                        case 3:
+                            SecurityLevel = ConnectionType.LOW;
+                            break;
+                        case 2:
+                            SecurityLevel = ConnectionType.MEDIUM;
+                            break;
+                        case 1:
+                        case 0:
+                        default:
+                            //overshot -> max security level ceiling
+                            SecurityLevel = ConnectionType.HIGH;
+                            break;
+                    }
                 }
             }
+            //current SecurityLevel at a value higher than 'None'
+            else
+            {
+                if (adjust > 0)
+                {
+                    //raise security level
+                    currentLevel -= adjust;
+                    switch (currentLevel)
+                    {
+                        case 3:
+                            SecurityLevel = ConnectionType.LOW;
+                            break;
+                        case 2:
+                            SecurityLevel = ConnectionType.MEDIUM;
+                            break;
+                        case 1:
+                        case 0:
+                        default:
+                            //overshot -> max security level ceiling
+                            SecurityLevel = ConnectionType.HIGH;
+                            break;
+                    }
+                }
+                else if (adjust < 0)
+                {
+                    //lower security level (double minus as adjust is also negative)
+                    currentLevel -= adjust;
+                    switch (currentLevel)
+                    {
+                        case 3:
+                            SecurityLevel = ConnectionType.LOW;
+                            break;
+                        case 2:
+                            SecurityLevel = ConnectionType.MEDIUM;
+                            break;
+                        case 1:
+                            SecurityLevel = ConnectionType.HIGH;
+                            break;
+                        case 0:
+                        default:
+                            //undershot -> min security level floor
+                            SecurityLevel = ConnectionType.None;
+                            break;
+                    }
+                }
+            }
+            //change material if different
+            if (originalLevel != SecurityLevel)
+            { SetConnectionMaterial(SecurityLevel); }
         }
-        //current SecurityLevel at a value higher than 'None'
-        else
-        {
-            if (adjust > 0)
-            {
-                //raise security level
-                currentLevel -= adjust;
-                switch (currentLevel)
-                {
-                    case 3:
-                        SecurityLevel = ConnectionType.LOW;
-                        break;
-                    case 2:
-                        SecurityLevel = ConnectionType.MEDIUM;
-                        break;
-                    case 1:
-                    case 0:
-                    default:
-                        //overshot -> max security level ceiling
-                        SecurityLevel = ConnectionType.HIGH;
-                        break;
-                }
-            }
-            else if (adjust < 0)
-            {
-                //lower security level (double minus as adjust is also negative)
-                currentLevel -= adjust;
-                switch (currentLevel)
-                {
-                    case 3:
-                        SecurityLevel = ConnectionType.LOW;
-                        break;
-                    case 2:
-                        SecurityLevel = ConnectionType.MEDIUM;
-                        break;
-                    case 1:
-                        SecurityLevel = ConnectionType.HIGH;
-                        break;
-                    case 0:
-                    default:
-                        //undershot -> min security level floor
-                        SecurityLevel = ConnectionType.None;
-                        break;
-                }
-            }
-        }
-        //change material if different
-        if (originalLevel != SecurityLevel)
-        { SetConnectionMaterial(SecurityLevel); }
     }
 
     /// <summary>
@@ -209,6 +216,7 @@ public class Connection : MonoBehaviour {
 
     public int GetNode2()
     { return v2; }
+
 
     //
     // - - - Ongoing Effects - - -

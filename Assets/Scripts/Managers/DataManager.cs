@@ -853,6 +853,9 @@ public class DataManager : MonoBehaviour
         { return connection; }
         return null;
     }
+
+    public Dictionary<int, Connection> GetAllConnections()
+    { return dictOfConnections; }
     
 
     //

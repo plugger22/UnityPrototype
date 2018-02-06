@@ -21,4 +21,18 @@ public class ConnectionManager : MonoBehaviour
     public Material GetConnectionMaterial(ConnectionType securityLevel)
     { return arrayOfConnectionTypes[(int)securityLevel]; }
 
+    /// <summary>
+    /// sets all connection.isDone flags to false to prevent double dipping of certain effects.
+    /// </summary>
+    public void SetAllFlagsToFalse()
+    {
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        if (dictOfConnections != null)
+        {
+            foreach(var connection in dictOfConnections)
+            { connection.Value.isDone = false; }
+        }
+        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+    }
+
 }
