@@ -427,18 +427,20 @@ public class ActorManager : MonoBehaviour
                                         {
                                             Effect effect = listOfEffects[i];
                                             //colour code effects according to type
-                                            switch(effect.type)
+                                            if (effect.type != null)
                                             {
-                                                case EffectType.Good:
-                                                    colourEffect = colourGoodEffect;
-                                                    break;
-                                                case EffectType.Neutral:
-                                                case EffectType.None:
-                                                    colourEffect = colourNeutralEffect;
-                                                    break;
-                                                case EffectType.Bad:
-                                                    colourEffect = colourBadEffect;
-                                                    break;
+                                                switch (effect.type.name)
+                                                {
+                                                    case "Good":
+                                                        colourEffect = colourGoodEffect;
+                                                        break;
+                                                    case "Neutral":
+                                                        colourEffect = colourNeutralEffect;
+                                                        break;
+                                                    case "Bad":
+                                                        colourEffect = colourBadEffect;
+                                                        break;
+                                                }
                                             }
                                             //check effect criteria is valid
                                             effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);

@@ -21,8 +21,9 @@ public class Effect : ScriptableObject
     public EffectApply apply;                             //to whom does the effect apply? Only for Target effects, ignore for the rest
     public EffectOutcome outcome;                         //standard effect
     public Result result;                                 //leave as 'None' if there is no specific stat adjustment
-    public EffectType type;                               //used so that ActorManager.cs -> GetActorActions can colour the effects correctly for the tooltips
+    //public EffectTypeEnum typeEnum;                               //used so that ActorManager.cs -> GetActorActions can colour the effects correctly for the tooltips
     //public EffectDurationEnum durationEnum;                       //once off effect or ongoing?
+    public EffectType type;
     public EffectDuration duration;
 
     public int value;                                     //leave as '0' if there is no specific stat adjustment

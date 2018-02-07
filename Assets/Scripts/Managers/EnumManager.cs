@@ -100,7 +100,7 @@ namespace gameAPI
 
     //* * * WARNING: changing / deleting entries can mess up the Effect SO's * * * 
 
-    public enum EffectType { None, Good, Neutral, Bad}
+    public enum EffectTypeEnum { None, Good, Neutral, Bad}
     public enum EffectDurationEnum { Single, Ongoing}
     public enum EffectCategory { Normal, AuthorityTeam, Target }
     public enum EffectApply {
