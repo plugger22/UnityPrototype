@@ -44,19 +44,19 @@ public class Node : MonoBehaviour
     //Properties for backing fields
     public int Security
     {
-        get { return Mathf.Clamp(_security + GetOngoingEffect(EffectOutcome.Security), 0, 3); }
+        get { return Mathf.Clamp(_security + GetOngoingEffect(EffectOutcomeEnum.Security), 0, 3); }
         set { _security = value; Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
-        get { return Mathf.Clamp(_stability + GetOngoingEffect(EffectOutcome.Stability), 0, 3); }
+        get { return Mathf.Clamp(_stability + GetOngoingEffect(EffectOutcomeEnum.Stability), 0, 3); }
         set { _stability = value; Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
-        get { return Mathf.Clamp(_support + GetOngoingEffect(EffectOutcome.Support), 0, 3); }
+        get { return Mathf.Clamp(_support + GetOngoingEffect(EffectOutcomeEnum.Support), 0, 3); }
         set { _support = value; Mathf.Clamp(_support, 0, 3); }
     }
 
@@ -65,7 +65,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcome.RevealTracers);
+            int value = GetOngoingEffect(EffectOutcomeEnum.RevealTracers);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTracerKnown; }
@@ -78,7 +78,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcome.RevealSpiders);
+            int value = GetOngoingEffect(EffectOutcomeEnum.RevealSpiders);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isSpiderKnown; }
@@ -91,7 +91,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcome.RevealActors);
+            int value = GetOngoingEffect(EffectOutcomeEnum.RevealActors);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isActorKnown; }
@@ -104,7 +104,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcome.RevealTeams);
+            int value = GetOngoingEffect(EffectOutcomeEnum.RevealTeams);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTeamKnown; }
@@ -652,28 +652,28 @@ public class Node : MonoBehaviour
                 //immediate effect
                 switch (process.outcome)
                 {
-                    case EffectOutcome.Security:
+                    case EffectOutcomeEnum.Security:
                         Security += process.value;
                         break;
-                    case EffectOutcome.Stability:
+                    case EffectOutcomeEnum.Stability:
                         Stability += process.value;
                         break;
-                    case EffectOutcome.Support:
+                    case EffectOutcomeEnum.Support:
                         Support += process.value;
                         break;
-                    case EffectOutcome.RevealTracers:
+                    case EffectOutcomeEnum.RevealTracers:
                         if (process.value <= 0) { isTracerKnown = false; }
                         else { isTracerKnown = true; }
                         break;
-                    case EffectOutcome.RevealSpiders:
+                    case EffectOutcomeEnum.RevealSpiders:
                         if (process.value <= 0) { isSpiderKnown = false; }
                         else { isSpiderKnown = true; }
                         break;
-                    case EffectOutcome.RevealTeams:
+                    case EffectOutcomeEnum.RevealTeams:
                         if (process.value <= 0) { isTeamKnown = false; }
                         else { isTeamKnown = true; }
                         break;
-                    case EffectOutcome.RevealActors:
+                    case EffectOutcomeEnum.RevealActors:
                         if (process.value <= 0) { isActorKnown = false; }
                         else { isActorKnown = true; }
                         break;
@@ -716,7 +716,7 @@ public class Node : MonoBehaviour
                     //single effect
                     switch (process.outcome)
                     {
-                        case EffectOutcome.ConnectionSecurity:
+                        case EffectOutcomeEnum.ConnectionSecurity:
                             //changes security level and updates material
                             connection.ChangeSecurityLevel(process.value);
                             break;
@@ -742,7 +742,7 @@ public class Node : MonoBehaviour
     /// </summary>
     /// <param name="outcome"></param>
     /// <returns></returns>
-    private int GetOngoingEffect(EffectOutcome outcome)
+    private int GetOngoingEffect(EffectOutcomeEnum outcome)
     {
         int value = 0;
         if (listOfOngoingEffects.Count > 0)

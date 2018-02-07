@@ -81,7 +81,7 @@ namespace packageAPI
     /// </summary>
     public class EffectDataProcess
     {
-        public EffectOutcome outcome;
+        public EffectOutcomeEnum outcome;
         public EffectDataOngoing effectOngoing = null;                      //only used if an ongoing effect, ignore otherwise 
         public int value;                                                   //how much the field changes, eg. +1, -1, etc.
         public string text;                                                 //tooltip description for the temporary effect
@@ -95,7 +95,7 @@ namespace packageAPI
         public int ongoingID = -1;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
         public string text;
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
-        public EffectOutcome outcome;
+        public EffectOutcomeEnum outcome;
     }
 
 }

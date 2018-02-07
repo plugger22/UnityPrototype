@@ -126,7 +126,7 @@ namespace gameAPI
         //authority
         ActorAbility, TeamIdentical, TeamPreferred, TeamAny
     }     
-    public enum EffectOutcome {
+    public enum EffectOutcomeEnum {
         None,
         //resistance
         Stability, Security, Support,
