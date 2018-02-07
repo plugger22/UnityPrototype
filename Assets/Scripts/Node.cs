@@ -91,7 +91,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcomeEnum.RevealActors);
+            int value = GetOngoingEffect(RevealContacts);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isActorKnown; }
@@ -650,35 +650,35 @@ public class Node : MonoBehaviour
             else
             {
                 //immediate effect
-                switch (process.outcome)
+                switch (process.outcome.name)
                 {
-                    case EffectOutcomeEnum.Security:
+                    case "NodeSecurity":
                         Security += process.value;
                         break;
-                    case EffectOutcomeEnum.Stability:
+                    case "NodeStability":
                         Stability += process.value;
                         break;
-                    case EffectOutcomeEnum.Support:
+                    case "NodeSupport":
                         Support += process.value;
                         break;
-                    case EffectOutcomeEnum.RevealTracers:
+                    case "RevealTracers":
                         if (process.value <= 0) { isTracerKnown = false; }
                         else { isTracerKnown = true; }
                         break;
-                    case EffectOutcomeEnum.RevealSpiders:
+                    case "RevealSpiders":
                         if (process.value <= 0) { isSpiderKnown = false; }
                         else { isSpiderKnown = true; }
                         break;
-                    case EffectOutcomeEnum.RevealTeams:
+                    case "RevealTeams":
                         if (process.value <= 0) { isTeamKnown = false; }
                         else { isTeamKnown = true; }
                         break;
-                    case EffectOutcomeEnum.RevealActors:
+                    case "RevealContacts":
                         if (process.value <= 0) { isActorKnown = false; }
                         else { isActorKnown = true; }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));
+                        Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome.name));
                         break;
                 }
             }
@@ -714,14 +714,14 @@ public class Node : MonoBehaviour
                 else
                 {
                     //single effect
-                    switch (process.outcome)
+                    switch (process.outcome.name)
                     {
-                        case EffectOutcomeEnum.ConnectionSecurity:
+                        case "ConnectionSecurity":
                             //changes security level and updates material
                             connection.ChangeSecurityLevel(process.value);
                             break;
                         default:
-                            Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome));
+                            Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome.name));
                             break;
                     }
                 }
@@ -742,7 +742,7 @@ public class Node : MonoBehaviour
     /// </summary>
     /// <param name="outcome"></param>
     /// <returns></returns>
-    private int GetOngoingEffect(EffectOutcomeEnum outcome)
+    private int GetOngoingEffect(EffectOutcome outcome)
     {
         int value = 0;
         if (listOfOngoingEffects.Count > 0)

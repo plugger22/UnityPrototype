@@ -420,7 +420,7 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcomeEnum));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                         effectReturn.errorFlag = true;
                     }
                     break;
@@ -445,7 +445,7 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcomeEnum));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                         effectReturn.errorFlag = true;
                     }
                     break;
@@ -503,7 +503,7 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcomeEnum));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                         effectReturn.errorFlag = true;
                     }
                     break;
@@ -636,7 +636,7 @@ public class EffectManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcomeEnum));
+                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                                 effectReturn.errorFlag = true;
                             }
 
@@ -644,7 +644,7 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcomeEnum));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                         effectReturn.errorFlag = true;
                     }
                     break;
@@ -695,7 +695,7 @@ public class EffectManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcomeEnum));
+                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                                 effectReturn.errorFlag = true;
                             }
 
@@ -703,7 +703,7 @@ public class EffectManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcomeEnum));
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                         effectReturn.errorFlag = true;
                     }
                     break;
@@ -780,7 +780,7 @@ public class EffectManager : MonoBehaviour
                     break;
 
                 default:
-                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcomeEnum));
+                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
                     effectReturn.errorFlag = true;
                     break;
             }
@@ -868,7 +868,7 @@ public class EffectManager : MonoBehaviour
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         //data package to send to node for field processing
-        EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcomeEnum };
+        EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcome };
         //Extent of effect
         switch (effect.apply)
         {
@@ -878,33 +878,33 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the situation{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealTracers:
+                            case "RevealTracers":
                                 effectResolve.topText = string.Format("{0}The security system has been scanned for intruders{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealSpiders:
+                            case "RevealSpiders":
                                 effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the security system{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealActors:
+                            case "RevealContacts":
                                 effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Resistance connections revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealTeams:
+                            case "RevealTeams":
                                 effectResolve.topText = string.Format("{0}The local grapevine is alive and well{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Enemy teams are revealed{1}", colourOutcome2, colourEnd);
                                 break;
@@ -912,17 +912,17 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
@@ -946,33 +946,33 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}Neighbouring security systems have been swept and strengthened{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised neighbouring nodes{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in neighbouring nodes{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node and Neighbours Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealTracers:
+                            case "RevealTracers":
                                 effectResolve.topText = string.Format("{0}The neighbouring security systems have been scanned for intruders{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealSpiders:
+                            case "RevealSpiders":
                                 effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the neighbouring security systems{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Neighbouring Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealActors:
+                            case "RevealContacts":
                                 effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Neighbouring Resistance connections revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealTeams:
+                            case "RevealTeams":
                                 effectResolve.topText = string.Format("{0}The local neighbourhood grapevine is alive and well{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Neighbouring Enemy teams are revealed{1}", colourOutcome2, colourEnd);
                                 break;
@@ -980,17 +980,17 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}Neighbouring security systems have been successfully hacked{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the neighbouring nodes{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}The Rebels are losing popularity in neighbouring nodes{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Node and Neighbour Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
@@ -1022,33 +1022,33 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}All security systems have been swept and strengthened{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the city wide situation{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels throughout the city{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealTracers:
+                            case "RevealTracers":
                                 effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealSpiders:
+                            case "RevealSpiders":
                                 effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealActors:
+                            case "RevealContacts":
                                 effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Resistance connections revealed{1}", colourOutcome2, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.RevealTeams:
+                            case "RevealTeams":
                                 effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Enemy teams are revealed{1}", colourOutcome2, colourEnd);
                                 break;
@@ -1056,17 +1056,17 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}All security systems have been successfully hacked{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the city{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout the city{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
                                 break;
@@ -1102,17 +1102,17 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been swept and strengthened{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All {1} nodes Security +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the {1} situation{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}{1}Node Stability +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
@@ -1120,17 +1120,17 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.Security:
+                            case "NodeSecurity":
                                 effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}All {1} nodes Security -{2}{3}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Stability:
+                            case "NodeStability":
                                 effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}{1} Nodes Stability -{1}{2}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
                                 break;
-                            case EffectOutcomeEnum.Support:
+                            case "NodeSupport":
                                 effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}{1} Nodes Support -{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
                                 break;
@@ -1182,7 +1182,7 @@ public class EffectManager : MonoBehaviour
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         //data package to send to node for field processing
-        EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcomeEnum };
+        EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcome };
 
         //Extent of effect
         switch (effect.apply)
@@ -1193,9 +1193,9 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}Immediate Connections have raised their security{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
                                 break;
@@ -1203,9 +1203,9 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}Immediate Connections have lowered their security{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
@@ -1229,9 +1229,9 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}Neighbouring Connections have raised their security{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
                                 break;
@@ -1239,9 +1239,9 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}Neighbouring Connections have lowered their security{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
@@ -1280,9 +1280,9 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}{1} Connections have raised their security{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
                                 break;
@@ -1290,9 +1290,9 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}{1} Connections have lowered their security{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
@@ -1335,9 +1335,9 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         value = effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}All Connections have raised their security{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourOutcome3, effect.value, colourEnd);
                                 break;
@@ -1345,9 +1345,9 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Subtract":
                         value = -1 * effect.value;
-                        switch (effect.outcomeEnum)
+                        switch (effect.outcome.name)
                         {
-                            case EffectOutcomeEnum.ConnectionSecurity:
+                            case "ConnectionSecurity":
                                 effectResolve.topText = string.Format("{0}All Connections have lowered their security{1}", colourDefault, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
                                 break;
@@ -1388,26 +1388,27 @@ public class EffectManager : MonoBehaviour
     private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
-        effectOngoing.outcome = effect.outcomeEnum;
+        effectOngoing.outcome = effect.outcome;
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
         //descriptor
-        switch (effect.outcomeEnum)
+        switch (effect.outcome.name)
         {
-            case EffectOutcomeEnum.Security:
-            case EffectOutcomeEnum.Stability:
-            case EffectOutcomeEnum.Support:
-                effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourGood, effect.outcomeEnum, value, value > 0 ? "+" : "", effectInput.ongoingText, colourEnd);
+            case "NodeSecurity":
+            case "NodeStability":
+            case "NodeSupport":
+                effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourGood, effect.outcome.name, value, value > 0 ? "+" : "", effectInput.ongoingText, 
+                    colourEnd);
                 break;
-            case EffectOutcomeEnum.RevealTracers:
-            case EffectOutcomeEnum.RevealSpiders:
-            case EffectOutcomeEnum.RevealTeams:
-            case EffectOutcomeEnum.RevealActors:
-            case EffectOutcomeEnum.ConnectionSecurity:
+            case "RevealTracers":
+            case "RevealSpiders":
+            case "RevealTeams":
+            case "RevealContacts":
+            case "ConnectionSecurity":
                 effectOngoing.text = string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd);
                 break;
             default:
-                effectOngoing.text = string.Format("{0}{1} ({2}){3}", colourGood, effect.outcomeEnum, effectInput.ongoingText, colourEnd);
+                effectOngoing.text = string.Format("{0}{1} ({2}){3}", colourGood, effect.outcome.name, effectInput.ongoingText, colourEnd);
                 break;
         }
         //add to effectProcess
