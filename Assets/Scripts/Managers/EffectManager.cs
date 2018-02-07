@@ -935,7 +935,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect
                 node.ProcessNodeEffect(effectProcess);
@@ -1003,7 +1003,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
@@ -1079,7 +1079,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
@@ -1143,7 +1143,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
@@ -1218,7 +1218,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
                 //Process Connection effect for current node
                 node.ProcessConnectionEffect(effectProcess);
@@ -1254,7 +1254,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
                     /*//DEBUG -> remove when finished with testing
@@ -1305,7 +1305,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
                     /*//DEBUG -> remove when finished with testing
@@ -1360,7 +1360,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration == EffectDuration.Ongoing)
+                if (effect.duration.name.Equals("Ongoing"))
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
                     /*//DEBUG -> remove when finished with testing

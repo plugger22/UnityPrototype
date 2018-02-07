@@ -924,7 +924,75 @@ public void InitialiseTeams()
         bool isError = false;
         List<Effect> listOfEffects = team.Arc.listOfEffects;
         EffectDataReturn effectReturn = new EffectDataReturn();
-        switch(team.Arc.type)
+        switch(team.Arc.name)
+        {
+            case "Control":
+            case "Civil":
+            case "Media":
+                if (listOfEffects != null)
+                {
+                    EffectDataInput dataInput = new EffectDataInput();
+                    foreach(Effect effect in listOfEffects)
+                    {
+                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                        isError = effectReturn.errorFlag;
+                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
+                        Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
+                        GameManager.instance.dataScript.AddMessage(message);
+                    }
+                }
+                break;
+            case "Probe":
+
+                //TO DO
+
+                break;
+            case "Spider":
+                if (node.isSpider == false)
+                {
+                    //add spider
+                    node.isSpider = true;
+                    //check if within tracer coverage
+                    if(node.isTracerActive == true)
+                    { node.isSpiderKnown = true; }
+                    else { node.isSpiderKnown = false; }
+                    //message
+                    string text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.Arc.name, team.Name, node.nodeName, node.nodeID);
+                    Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                break;
+            case "Erasure":
+
+                //TO DO -> deletes any known connections ?
+
+                break;
+            case "Damage":
+                //at node with a completed, but uncontained, target?
+                if (node.targetID > -1)
+                {
+                    Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
+                    if (target != null)
+                    {
+                        if (target.targetStatus == Status.Completed && target.ongoingID > -1)
+                        {
+                            //contain target and shut down all ongoing node effects
+                            GameManager.instance.targetScript.ContainTarget(target);
+                            //message
+                            string text = string.Format("Target \"{0}\" Contained by {1} {2}", target.name, team.Arc.name, team.Name);
+                            Message message = GameManager.instance.messageScript.TargetContained(text, node.nodeID, team.TeamID, target.targetID);
+                            GameManager.instance.dataScript.AddMessage(message);
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Target (Null) for targetID {0}", node.targetID)); }
+                }
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid team Arc name \"{0}\"", team.Arc.name));
+                isError = true;
+                break;
+        }
+        /*switch (team.Arc.type)
         {
             case TeamType.Control:
             case TeamType.Civil:
@@ -932,7 +1000,7 @@ public void InitialiseTeams()
                 if (listOfEffects != null)
                 {
                     EffectDataInput dataInput = new EffectDataInput();
-                    foreach(Effect effect in listOfEffects)
+                    foreach (Effect effect in listOfEffects)
                     {
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         isError = effectReturn.errorFlag;
@@ -951,7 +1019,7 @@ public void InitialiseTeams()
                     //add spider
                     node.isSpider = true;
                     //check if within tracer coverage
-                    if(node.isTracerActive == true)
+                    if (node.isTracerActive == true)
                     { node.isSpiderKnown = true; }
                     else { node.isSpiderKnown = false; }
                     //message
@@ -989,7 +1057,7 @@ public void InitialiseTeams()
                 Debug.LogError(string.Format("Invalid team Arc name \"{0}\"", team.Arc.name));
                 isError = true;
                 break;
-        }
+        }*/
         //assign renown to originating actor if all O.K
         if (isError == false)
         { actor.renown++; }

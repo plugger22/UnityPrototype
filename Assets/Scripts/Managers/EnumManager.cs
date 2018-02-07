@@ -101,7 +101,7 @@ namespace gameAPI
     //* * * WARNING: changing / deleting entries can mess up the Effect SO's * * * 
 
     public enum EffectType { None, Good, Neutral, Bad}
-    public enum EffectDuration { Single, Ongoing}
+    public enum EffectDurationEnum { Single, Ongoing}
     public enum EffectCategory { Normal, AuthorityTeam, Target }
     public enum EffectApply {
         None,
@@ -145,7 +145,7 @@ namespace gameAPI
     //
     // - - - Teams - - -
     //
-    public enum TeamType { None, Civil, Damage, Probe, Media, Control, Erasure, Spider}
+    //public enum TeamType { None, Civil, Damage, Probe, Media, Control, Erasure, Spider} -> not needed
     public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count}           //DataManager arrayOfTeams  index
     public enum TeamPool { Reserve, OnMap, InTransit, Count}                  //Different pools that teams move between
     public enum NATO {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
