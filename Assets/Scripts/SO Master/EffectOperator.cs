@@ -8,5 +8,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Effect / EffectOperator")]
 public class EffectOperator : ScriptableObject
 {
-
+    public string descriptor;
 }

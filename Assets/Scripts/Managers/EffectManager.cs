@@ -455,16 +455,16 @@ public class EffectManager : MonoBehaviour
                 case EffectOutcome.RebelCause:
                     int rebelCause = GameManager.instance.rebelScript.resistanceCause;
                     int maxCause = GameManager.instance.rebelScript.resistanceCauseMax;
-                    switch (effect.result)
+                    switch (effect.operand.name)
                     {
-                        case Result.Add:
+                        case "Add":
                             rebelCause += effect.value;
                             rebelCause = Mathf.Min(maxCause, rebelCause);
                             GameManager.instance.rebelScript.resistanceCause = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause gains traction{1}", colourDefault, colourEnd);
                             effectReturn.bottomText = string.Format("{0}Rebel Cause +{1}{2}", colourOutcome1, effect.value, colourEnd);
                             break;
-                        case Result.Subtract:
+                        case "Subtract":
                             rebelCause -= effect.value;
                             rebelCause = Mathf.Max(0, rebelCause);
                             GameManager.instance.rebelScript.resistanceCause = rebelCause;
@@ -472,7 +472,7 @@ public class EffectManager : MonoBehaviour
                             effectReturn.bottomText = string.Format("{0}Rebel Cause -{1}{2}", colourOutcome2, effect.value, colourEnd);
                             break;
                         default:
-                            Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                             effectReturn.errorFlag = true;
                             break;
                     }
@@ -529,14 +529,14 @@ public class EffectManager : MonoBehaviour
                             //
                             // - - - Player Invisibility effect - - -
                             //
-                            switch (effect.result)
+                            switch (effect.operand.name)
                             {
-                                case Result.Add:
+                                case "Add":
                                     if (GameManager.instance.playerScript.invisibility < 3)
                                     { GameManager.instance.playerScript.invisibility++; }
                                     effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourOutcome1, effect.description, colourEnd);
                                     break;
-                                case Result.Subtract:
+                                case "Subtract":
                                     //does player have any invisibility type gear?
                                     int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GearType.Invisibility);
                                     if (gearID > -1)
@@ -605,15 +605,15 @@ public class EffectManager : MonoBehaviour
                             //
                             if (actor != null)
                             {
-                                switch (effect.result)
+                                switch (effect.operand.name)
                                 {
-                                    case Result.Add:
+                                    case "Add":
                                         if (actor.datapoint2 < 3)
                                         { actor.datapoint2++; }
                                         effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description,
                                             actor.datapoint2, colourEnd);
                                         break;
-                                    case Result.Subtract:
+                                    case "Subtract":
                                         int invisibility = actor.datapoint2;
                                         //double effect if spider is present
                                         if (node.isSpider == true)
@@ -657,14 +657,14 @@ public class EffectManager : MonoBehaviour
                         {
                             int playerRenown = GameManager.instance.playerScript.Renown;
                             //Player effect
-                            switch (effect.result)
+                            switch (effect.operand.name)
                             {
-                                case Result.Add:
+                                case "Add":
                                     playerRenown += effect.value;
                                     effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome1, effect.description,
                                         playerRenown, colourEnd);
                                     break;
-                                case Result.Subtract:
+                                case "Subtract":
                                     playerRenown -= effect.value;
                                     playerRenown = Mathf.Max(0, playerRenown);
                                     effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourOutcome2, effect.description,
@@ -678,14 +678,14 @@ public class EffectManager : MonoBehaviour
                             //Actor effect
                             if (actor != null)
                             {
-                                switch (effect.result)
+                                switch (effect.operand.name)
                                 {
-                                    case Result.Add:
+                                    case "Add":
                                         actor.renown += effect.value;
                                         effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome2, actor.actorName, effect.description,
                                             actor.renown, colourEnd);
                                         break;
-                                    case Result.Subtract:
+                                    case "Subtract":
                                         actor.renown -= effect.value;
                                         actor.renown = Mathf.Max(0, actor.renown);
                                         effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourOutcome1, actor.actorName, effect.description,
@@ -874,9 +874,9 @@ public class EffectManager : MonoBehaviour
         {
             //Current Node only
             case EffectApply.NodeCurrent:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -910,7 +910,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -929,7 +929,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }
@@ -942,9 +942,9 @@ public class EffectManager : MonoBehaviour
                 break;
             //Neighbouring Nodes
             case EffectApply.NodeNeighbours:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -978,7 +978,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -997,7 +997,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }
@@ -1018,9 +1018,9 @@ public class EffectManager : MonoBehaviour
                 break;
             //All Nodes
             case EffectApply.NodeAll:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -1054,7 +1054,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -1073,7 +1073,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }
@@ -1098,9 +1098,9 @@ public class EffectManager : MonoBehaviour
                 break;
             //Nodes of the Same Arc type
             case EffectApply.NodeSameArc:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -1118,7 +1118,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -1137,7 +1137,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }
@@ -1189,9 +1189,9 @@ public class EffectManager : MonoBehaviour
         {
             //Current Node only
             case EffectApply.ConnectionCurrent:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -1201,7 +1201,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -1212,7 +1212,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }
@@ -1225,9 +1225,9 @@ public class EffectManager : MonoBehaviour
                 break;
             //Neighbouring Nodes
             case EffectApply.ConnectionNeighbours:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -1237,7 +1237,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -1248,7 +1248,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }
@@ -1276,9 +1276,9 @@ public class EffectManager : MonoBehaviour
                 break;
             //Same Node Arc
             case EffectApply.ConnectionSameArc:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -1288,7 +1288,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -1299,7 +1299,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }
@@ -1331,9 +1331,9 @@ public class EffectManager : MonoBehaviour
                 break;
             //All Nodes
             case EffectApply.ConnectionAll:
-                switch (effect.result)
+                switch (effect.operand.name)
                 {
-                    case Result.Add:
+                    case "Add":
                         value = effect.value;
                         switch (effect.outcome)
                         {
@@ -1343,7 +1343,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                         }
                         break;
-                    case Result.Subtract:
+                    case "Subtract":
                         value = -1 * effect.value;
                         switch (effect.outcome)
                         {
@@ -1354,7 +1354,7 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid effectResult \"{0}\"", effect.result));
+                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                         effectResolve.isError = true;
                         break;
                 }

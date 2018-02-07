@@ -47,7 +47,7 @@ namespace gameAPI
     // - - - Action Manager - - -
     //
     public enum Comparison { None, LessThan, GreaterThan, EqualTo }
-    public enum Result { None, Add, Subtract }
+    //public enum Result { None, Add, Subtract }
     public enum ActionType { None, Node, NeutraliseTeam, Gear, Recruit}
 
     //
