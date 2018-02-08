@@ -126,7 +126,7 @@ namespace gameAPI
         //authority
         ActorAbility, TeamIdentical, TeamPreferred, TeamAny
     }     
-    public enum EffectOutcomeEnum {
+    /*public enum EffectOutcomeEnum {
         None,
         //resistance
         Stability, Security, Support,
@@ -140,7 +140,7 @@ namespace gameAPI
         //assorted
         RevealSpiders, RevealTeams, RevealTracers, RevealActors,
         ConnectionSecurity
-    }
+    }*/
 
     //
     // - - - Teams - - -

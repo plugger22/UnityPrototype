@@ -19,7 +19,7 @@ public class Effect : ScriptableObject
     //result of effect
     public EffectCategory category;                       //which group does it belong to? For Data Validation purposes
     public EffectApply apply;                             //to whom does the effect apply? Only for Target effects, ignore for the rest
-    public EffectOutcomeEnum outcomeEnum;                         //standard effect
+    //public EffectOutcomeEnum outcomeEnum;                         //standard effect
     //public Result result;                                 //leave as 'None' if there is no specific stat adjustment
     //public EffectTypeEnum typeEnum;                               //used so that ActorManager.cs -> GetActorActions can colour the effects correctly for the tooltips
     //public EffectDurationEnum durationEnum;                       //once off effect or ongoing?

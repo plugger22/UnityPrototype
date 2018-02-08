@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using gameAPI;
 using modalAPI;
 using System.Text;
@@ -20,6 +21,15 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of player
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
+
+    //used for quick reference by node fields
+    [HideInInspector] public EffectOutcome outcomeNodeSecurity;
+    [HideInInspector] public EffectOutcome outcomeNodeStability;
+    [HideInInspector] public EffectOutcome outcomeNodeSupport;
+    [HideInInspector] public EffectOutcome outcomeRevealSpiders;
+    [HideInInspector] public EffectOutcome outcomeRevealTracers;
+    [HideInInspector] public EffectOutcome outcomeRevealContacts;
+    [HideInInspector] public EffectOutcome outcomeRevealTeams;
 
     string colourDefault;
     string colourAlert;
@@ -58,12 +68,63 @@ public class NodeManager : MonoBehaviour
         //bounds checking
         nodePrimaryChance = nodePrimaryChance > 0 ? nodePrimaryChance : 10;
         nodeActiveMinimum = nodeActiveMinimum > 2 ? nodeActiveMinimum : 3;
-
     }
 
     public void Initialise()
     {
         SetNodeActorFlags();
+        //find specific SO's and assign to outcome fields
+        /*var outcomeGUID = AssetDatabase.FindAssets("t:EffectOutcome NodeSecurity");
+        if (outcomeGUID.Length > 0)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(outcomeGUID[0]);
+            outcomeNodeSecurity = (EffectOutcome)AssetDatabase.LoadAssetAtPath(path, typeof(EffectOutcome));
+        }
+        else { Debug.LogError("EffectOutcome NodeSecurity not found"); }*/
+        string path;
+        var outcomeGUID = AssetDatabase.FindAssets("t:EffectOutcome");
+        foreach(var guid in outcomeGUID)
+        {
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            EffectOutcome outcomeObject = (EffectOutcome)AssetDatabase.LoadAssetAtPath(path, typeof(EffectOutcome));
+            if (outcomeObject != null)
+            {
+                //pick out and assign the ones required for node fast acess, ignore the rest
+                switch (outcomeObject.name)
+                {
+                    case "NodeSecurity":
+                        outcomeNodeSecurity = outcomeObject;
+                        break;
+                    case "NodeStability":
+                        outcomeNodeStability = outcomeObject;
+                        break;
+                    case "NodeSupport":
+                        outcomeNodeSupport = outcomeObject;
+                        break;
+                    case "RevealSpiders":
+                        outcomeRevealSpiders = outcomeObject;
+                        break;
+                    case "RevealTracers":
+                        outcomeRevealTracers = outcomeObject;
+                        break;
+                    case "RevealContacts":
+                        outcomeRevealContacts = outcomeObject;
+                        break;
+                    case "RevealTeams":
+                        outcomeRevealTeams = outcomeObject;
+                        break;
+                }
+            }
+        }
+        //check all found and assigned
+        if (outcomeNodeSecurity == null) { Debug.LogError("Invalid outcomeNodeSecurity (Null)"); }
+        if (outcomeNodeStability == null) { Debug.LogError("Invalid outcomeNodeStability (Null)"); }
+        if (outcomeNodeSupport == null) { Debug.LogError("Invalid outcomeNodeSupport (Null)"); }
+        if (outcomeRevealSpiders == null) { Debug.LogError("Invalid outcomeRevealSpiders (Null)"); }
+        if (outcomeRevealTracers == null) { Debug.LogError("Invalid outcomeRevealTracers (Null)"); }
+        if (outcomeRevealContacts == null) { Debug.LogError("Invalid outcomeRevealContacts (Null)"); }
+        if (outcomeRevealTeams == null) { Debug.LogError("Invalid outcomeRevealTeams (Null)"); }
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
@@ -1018,7 +1079,7 @@ public class NodeManager : MonoBehaviour
         {
             //set all to false
             foreach (var node in dictOfNodes)
-            { node.Value.isActor = false; }
+            { node.Value.isContact = false; }
             //loop Resistance actors
             for (int slotID = 0; slotID < GameManager.instance.actorScript.numOfOnMapActors; slotID++)
             {
@@ -1037,7 +1098,7 @@ public class NodeManager : MonoBehaviour
                                 //set flag to true
                                 Node node = listOfNodes[i].GetComponent<Node>();
                                 if (node != null)
-                                { node.isActor = true; }
+                                { node.isContact = true; }
                                 else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
                             }
 

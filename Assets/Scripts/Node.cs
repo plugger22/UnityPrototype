@@ -17,7 +17,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracer;             //has resistance tracer?
     [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;             //has authority spider?
-    [HideInInspector] public bool isActor;              //true if any ActorStatus.Active actor has a connection at the node
+    [HideInInspector] public bool isContact;              //true if any ActorStatus.Active actor has a connection at the node
     [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
@@ -38,25 +38,25 @@ public class Node : MonoBehaviour
     private int _security;
     private bool _isTracerKnown;                        //true if Authority knows of tracer coverage for this node
     private bool _isSpiderKnown;                        //does Resistance know of spider?
-    private bool _isActorKnown;                         //true if Authority knows of Actor connection
+    private bool _isContactKnown;                         //true if Authority knows of Actor contacts
     private bool _isTeamKnown;                          //true if Resistance knows of teams (additional means other than tracer coverage or connections)
 
     //Properties for backing fields
     public int Security
     {
-        get { return Mathf.Clamp(_security + GetOngoingEffect(EffectOutcomeEnum.Security), 0, 3); }
+        get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSecurity), 0, 3); }
         set { _security = value; Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
-        get { return Mathf.Clamp(_stability + GetOngoingEffect(EffectOutcomeEnum.Stability), 0, 3); }
+        get { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeStability), 0, 3); }
         set { _stability = value; Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
-        get { return Mathf.Clamp(_support + GetOngoingEffect(EffectOutcomeEnum.Support), 0, 3); }
+        get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSupport), 0, 3); }
         set { _support = value; Mathf.Clamp(_support, 0, 3); }
     }
 
@@ -65,7 +65,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcomeEnum.RevealTracers);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealTracers);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTracerKnown; }
@@ -78,7 +78,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcomeEnum.RevealSpiders);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealSpiders);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isSpiderKnown; }
@@ -91,12 +91,12 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(RevealContacts);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealContacts);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
-            else { return _isActorKnown; }
+            else { return _isContactKnown; }
         }
-        set { _isActorKnown = value; }
+        set { _isContactKnown = value; }
     }
 
     public bool isTeamKnown
@@ -104,7 +104,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(EffectOutcomeEnum.RevealTeams);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealTeams);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTeamKnown; }
@@ -260,7 +260,7 @@ public class Node : MonoBehaviour
                     nodeName = nodeName,
                     type = string.Format("{0} ID {1}", Arc.name, nodeID),
                     isTracerActive = isTracerActive,
-                    isActor = isActor,
+                    isActor = isContact,
                     isActorKnown = isActorKnown,
                     isTeamKnown = isTeamKnown,
                     arrayOfStats = new int[] { Stability, Support, Security },
