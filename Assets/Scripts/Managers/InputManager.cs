@@ -68,6 +68,11 @@ public class InputManager : MonoBehaviour
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTracers);
                     return;
                 }
+                if (Input.GetButtonDown("ShowTeams") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTeams);
+                    return;
+                }
                 //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9
                 if (Input.GetButtonDown("NodeArc0") == true)
                 {

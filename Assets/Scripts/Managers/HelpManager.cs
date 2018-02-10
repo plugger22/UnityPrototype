@@ -19,6 +19,7 @@ public class HelpManager : MonoBehaviour
         builder.Append(string.Format(" Targets -> T{0}", "\n"));
         builder.Append(string.Format(" Spiders -> S{0}", "\n"));
         builder.Append(string.Format(" Tracers -> C{0}{1}", "\n", "\n"));
+        builder.Append(string.Format(" Teams -> M{0}{1}", "\n", "\n"));
         builder.Append(string.Format(" Actions -> Left Click{0}", "\n"));
         builder.Append(string.Format(" Move -> Right Click{0}{1}", "\n", "\n"));
         builder.Append(string.Format(" Corporate Nodes -> F1{0}", "\n"));

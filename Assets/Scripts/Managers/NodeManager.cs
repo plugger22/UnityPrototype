@@ -155,6 +155,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.ShowTargets:
                     case NodeUI.ShowSpiders:
                     case NodeUI.ShowTracers:
+                    case NodeUI.ShowTeams:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -428,6 +429,64 @@ public class NodeManager : MonoBehaviour
                     { displayText = string.Format("{0}There are no Tracer nodes{1}", colourError, colourEnd); }
                 }
                 else { Debug.LogError("Invalid dictOfTracerNodes (Null)"); }
+                break;
+
+            //show all nodes containng a Team
+            case NodeUI.ShowTeams:
+                List<int> listOfTeams = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
+                if (listOfTeams != null)
+                {
+                    int count = 0;
+                    //determine level of visibility
+                    switch (GameManager.instance.sideScript.PlayerSide)
+                    {
+                        case Side.Authority:
+                            proceedFlag = true;
+                            break;
+                        case Side.Resistance:
+                            //resistance -> if not FOW then auto show
+                            if (GameManager.instance.optionScript.fogOfWar == false)
+                            { proceedFlag = true; }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
+                            break;
+                    }
+                    Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                    if (dictOfNodes != null)
+                    {
+                        foreach (var node in dictOfNodes)
+                        {
+                            if (node.Value.CheckNumOfTeams() > 0)
+                            {
+                                Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                //show all
+                                if (proceedFlag == true)
+                                {
+                                    node.Value.SetMaterial(nodeMaterial);
+                                    count++;
+                                }
+                                //conditional -> only show if team is known, actor has contacts or node within tracer coverage
+                                else
+                                {
+                                    if (node.Value.isTeamKnown || node.Value.isTracerActive || node.Value.isActorKnown)
+                                    {
+                                        node.Value.SetMaterial(nodeMaterial);
+                                        count++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+                    if (count > 0)
+                    {
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, count, colourEnd,
+                            colourHighlight, "Team", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
+                    }
+                    else
+                    { displayText = string.Format("{0}There are no Teams present{1}", colourError, colourEnd); }
+                }
                 break;
 
             //show specific NodeArcTypes

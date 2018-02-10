@@ -28,8 +28,9 @@ namespace gameAPI
     public enum NodeUI {                                                            //parameter for NodeDisplay event
         None,
         Reset, Redraw, Move,
-        ShowTargets, ShowSpiders, ShowTracers,
-        NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6, NodeArc7, NodeArc8, NodeArc9};             
+        ShowTargets, ShowSpiders, ShowTracers, ShowTeams,
+        NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6, NodeArc7, NodeArc8, NodeArc9
+        };             
 
     //
     // - - - Decisions and Targets - - -
