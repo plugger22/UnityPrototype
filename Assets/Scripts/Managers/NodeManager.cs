@@ -74,13 +74,6 @@ public class NodeManager : MonoBehaviour
     {
         SetNodeActorFlags();
         //find specific SO's and assign to outcome fields
-        /*var outcomeGUID = AssetDatabase.FindAssets("t:EffectOutcome NodeSecurity");
-        if (outcomeGUID.Length > 0)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(outcomeGUID[0]);
-            outcomeNodeSecurity = (EffectOutcome)AssetDatabase.LoadAssetAtPath(path, typeof(EffectOutcome));
-        }
-        else { Debug.LogError("EffectOutcome NodeSecurity not found"); }*/
         string path;
         var outcomeGUID = AssetDatabase.FindAssets("t:EffectOutcome");
         foreach(var guid in outcomeGUID)

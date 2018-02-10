@@ -870,10 +870,10 @@ public class EffectManager : MonoBehaviour
         //data package to send to node for field processing
         EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcome };
         //Extent of effect
-        switch (effect.apply)
+        switch (effect.apply.name)
         {
             //Current Node only
-            case EffectApply.NodeCurrent:
+            case "NodeCurrent":
                 switch (effect.operand.name)
                 {
                     case "Add":
@@ -941,7 +941,7 @@ public class EffectManager : MonoBehaviour
                 node.ProcessNodeEffect(effectProcess);
                 break;
             //Neighbouring Nodes
-            case EffectApply.NodeNeighbours:
+            case "NodeNeighbours":
                 switch (effect.operand.name)
                 {
                     case "Add":
@@ -1017,7 +1017,7 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogError(string.Format("Invalid listOfNeighbours (Null) for nodeID {0}, \"{1}\"", node.nodeID, node.nodeName)); }
                 break;
             //All Nodes
-            case EffectApply.NodeAll:
+            case "NodeAll":
                 switch (effect.operand.name)
                 {
                     case "Add":
@@ -1097,7 +1097,7 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
                 break;
             //Nodes of the Same Arc type
-            case EffectApply.NodeSameArc:
+            case "NodeSameArc":
                 switch (effect.operand.name)
                 {
                     case "Add":
@@ -1161,7 +1161,7 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogError("Invalid dictOfSameNodes (Null)"); }
                 break;
             default:
-                Debug.LogError(string.Format("Invalid effect.apply \"{0}\"", effect.apply));
+                Debug.LogError(string.Format("Invalid effect.apply \"{0}\"", effect.apply.name));
                 break;
         }
         //return data to calling method (ProcessEffect)
@@ -1185,10 +1185,10 @@ public class EffectManager : MonoBehaviour
         EffectDataProcess effectProcess = new EffectDataProcess() { outcome = effect.outcome };
 
         //Extent of effect
-        switch (effect.apply)
+        switch (effect.apply.name)
         {
             //Current Node only
-            case EffectApply.ConnectionCurrent:
+            case "ConnectionCurrent":
                 switch (effect.operand.name)
                 {
                     case "Add":
@@ -1224,7 +1224,7 @@ public class EffectManager : MonoBehaviour
                 node.ProcessConnectionEffect(effectProcess);
                 break;
             //Neighbouring Nodes
-            case EffectApply.ConnectionNeighbours:
+            case "ConnectionNeighbours":
                 switch (effect.operand.name)
                 {
                     case "Add":
@@ -1275,7 +1275,7 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogError("Invalid listOfNeighours (Null)"); }
                 break;
             //Same Node Arc
-            case EffectApply.ConnectionSameArc:
+            case "ConnectionSameArc":
                 switch (effect.operand.name)
                 {
                     case "Add":
@@ -1330,7 +1330,7 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
                 break;
             //All Nodes
-            case EffectApply.ConnectionAll:
+            case "ConnectionAll":
                 switch (effect.operand.name)
                 {
                     case "Add":

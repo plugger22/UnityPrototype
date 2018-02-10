@@ -103,7 +103,7 @@ namespace gameAPI
     public enum EffectTypeEnum { None, Good, Neutral, Bad}
     public enum EffectDurationEnum { Single, Ongoing}
     public enum EffectCategory { Normal, AuthorityTeam, Target }
-    public enum EffectApply {
+    /*public enum EffectApplyEnum {
         None,
         //Node
         NodeCurrent,
@@ -115,7 +115,7 @@ namespace gameAPI
         ConnectionNeighbours,
         ConnectionSameArc,
         ConnectionAll
-    }
+    }*/
     public enum EffectCriteria {
         None,
         //resistance
