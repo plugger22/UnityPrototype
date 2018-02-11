@@ -101,9 +101,9 @@ namespace gameAPI
 
     //* * * WARNING: changing / deleting entries can mess up the Effect SO's * * * 
 
-    public enum EffectTypeEnum { None, Good, Neutral, Bad}
-    public enum EffectDurationEnum { Single, Ongoing}
-    public enum EffectCategory { Normal, AuthorityTeam, Target }
+    //public enum EffectTypeEnum { None, Good, Neutral, Bad}
+    //public enum EffectDurationEnum { Single, Ongoing}
+    //public enum EffectCategory { Normal, AuthorityTeam, Target }
     /*public enum EffectApplyEnum {
         None,
         //Node
@@ -117,7 +117,7 @@ namespace gameAPI
         ConnectionSameArc,
         ConnectionAll
     }*/
-    public enum EffectCriteria {
+    /*public enum EffectCriteriaEnum {
         None,
         //resistance
         NodeStability, NodeSecurity, NodeSupport,
@@ -126,7 +126,7 @@ namespace gameAPI
         RebelCause,
         //authority
         ActorAbility, TeamIdentical, TeamPreferred, TeamAny
-    }     
+    }*/
     /*public enum EffectOutcomeEnum {
         None,
         //resistance

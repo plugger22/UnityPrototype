@@ -17,7 +17,7 @@ public class Effect : ScriptableObject
     public List<Criteria> listOfCriteria;                       //list of effect criteria that must be true for an effect to occur
 
     //result of effect
-    public EffectCategory category;                       //which group does it belong to? For Data Validation purposes
+    //public EffectCategory category;                       //which group does it belong to? For Data Validation purposes
     //public EffectApplyEnum applyEnum;                             //to whom does the effect apply? Only for Target effects, ignore for the rest
     //public EffectOutcomeEnum outcomeEnum;                         //standard effect
     //public Result result;                                 //leave as 'None' if there is no specific stat adjustment

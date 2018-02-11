@@ -162,30 +162,30 @@ public class EffectManager : MonoBehaviour
                                     //
                                     // - - - Resistance - - - 
                                     //
-                                    switch (criteria.criteriaEffect)
+                                    switch (criteria.effectCriteria.name)
                                     {
-                                        case EffectCriteria.NodeSecurity:
+                                        case "NodeSecurity":
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.Security, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Security " + compareTip);
                                             }
                                             break;
-                                        case EffectCriteria.NodeStability:
+                                        case "NodeStability":
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.Stability, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Stability " + compareTip);
                                             }
                                             break;
-                                        case EffectCriteria.NodeSupport:
+                                        case "NodeSupport":
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.Support, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Support " + compareTip);
                                             }
                                             break;
-                                        case EffectCriteria.NumRecruits:
+                                        case "NumRecruits":
                                             //criteria value overriden in this case
                                             criteria.criteriaValue = GameManager.instance.dataScript.GetNumOfActorsInReserve();
                                             compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, criteria.criteriaValue, criteria.criteriaCompare);
@@ -194,34 +194,34 @@ public class EffectManager : MonoBehaviour
                                                 BuildString(result, "maxxed Recruit allowance");
                                             }
                                             break;
-                                        case EffectCriteria.NumTeams:
+                                        case "NumTeams":
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.CheckNumOfTeams(), criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "no Teams present");
                                             }
                                             break;
-                                        case EffectCriteria.NumTracers:
+                                        case "NumTracers":
                                             if (node.isTracer == true)
                                             { BuildString(result, "Tracer already present"); }
                                             break;
-                                        case EffectCriteria.TargetInfo:
+                                        case "TargetInfo":
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.targetID, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             { BuildString(result, "Full Info already"); }
                                             break;
-                                        case EffectCriteria.TargetPresent:
+                                        case "TargetPresent":
                                             //check that a target is present at the node
                                             if (node.targetID < 0)
                                             { BuildString(result, "No Target present"); }
                                             break;
-                                        case EffectCriteria.NumGear:
+                                        case "NumGear":
                                             //Note: effect criteria value is ignored in this case
                                             compareTip = ComparisonCheck(GameManager.instance.gearScript.maxNumOfGear, GameManager.instance.playerScript.GetNumOfGear(), criteria.criteriaCompare);
                                             if (compareTip != null)
                                             { BuildString(result, "maxxed Gear Allowance"); }
                                             break;
-                                        case EffectCriteria.GearAvailability:
+                                        case "GearAvailability":
                                             //checks to see if at least 1 piece of unused common gear is available
                                             List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
                                             if (tempCommonGear.Count > 0)
@@ -243,7 +243,7 @@ public class EffectManager : MonoBehaviour
                                             }
                                             else { BuildString(result, "No Gear available"); }
                                             break;
-                                        case EffectCriteria.RebelCause:
+                                        case "RebelCause":
                                             compareTip = ComparisonCheck(criteria.criteriaValue, GameManager.instance.rebelScript.resistanceCause, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
@@ -252,7 +252,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         default:
                                             BuildString(result, "Error!");
-                                            Debug.LogError(string.Format("Invalid Resistance criteriaEffect \"{0}\"", criteria.criteriaEffect));
+                                            Debug.LogError(string.Format("Invalid Resistance criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                             errorFlag = true;
                                             break;
                                     }
@@ -266,37 +266,37 @@ public class EffectManager : MonoBehaviour
                                     //
                                     // - - - Authority - - -
                                     //
-                                    switch (criteria.criteriaEffect)
+                                    switch (criteria.effectCriteria.name)
                                     {
-                                        case EffectCriteria.NumTeams:
+                                        case "NumTeams":
                                             //there is a maximum limit to the number of teams that can be present at a node
                                             compareTip = ComparisonCheck(criteria.criteriaValue, node.CheckNumOfTeams(), criteria.criteriaCompare);
                                             if (compareTip != null)
                                             { BuildString(result, "Too many teams present"); }
                                             break;
-                                        case EffectCriteria.ActorAbility:
+                                        case "ActorAbility":
                                             //actor can only have a number of teams OnMap equal to their ability at any time
                                             if (actor.CheckNumOfTeams() >= actor.datapoint2)
                                             { BuildString(result, "Actor Ability exceeded"); }
                                             break;
-                                        case EffectCriteria.TeamIdentical:
+                                        case "TeamIdentical":
                                             //there can only be one team of a type at a node
                                             if (node.CheckTeamPresent(teamArcID) > -1)
                                             { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
                                             break;
-                                        case EffectCriteria.TeamPreferred:
+                                        case "TeamPreferred":
                                             //there must be a spare team in the reserve pool of the actors preferred typ
                                             if (GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve) < 1)
                                             { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
                                             break;
-                                        case EffectCriteria.TeamAny:
+                                        case "TeamAny":
                                             //there must be a spare team of any type in the reserve pool
                                             if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
                                             { BuildString(result, string.Format("No Teams available", teamArc.name)); }
                                             break;
                                         default:
                                             BuildString(result, "Error!");
-                                            Debug.LogWarning(string.Format("Invalid Authority effect.criteriaEffect \"{0}\"", criteria.criteriaEffect));
+                                            Debug.LogWarning(string.Format("Invalid Authority effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                             errorFlag = true;
                                             break;
                                     }

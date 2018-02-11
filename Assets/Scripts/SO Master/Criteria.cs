@@ -6,11 +6,12 @@ using gameAPI;
 /// <summary>
 /// Criteria that must be true for an Effect to occur
 /// </summary>
-[CreateAssetMenu(menuName = "Effect / EffectCriteria")]
+[CreateAssetMenu(menuName = "Effect / Criteria")]
 public class Criteria : ScriptableObject
 {
 
-    public EffectCriteria criteriaEffect;
+    //public EffectCriteriaEnum criteriaEffect;
     public Comparison criteriaCompare;
     public int criteriaValue;
+    public EffectCriteria effectCriteria;
 }
