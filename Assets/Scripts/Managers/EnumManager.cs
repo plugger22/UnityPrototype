@@ -8,7 +8,7 @@ namespace gameAPI
     //
     // - - - Game Manager - - -
     //
-    public enum Side { None, Authority, Resistance, Count }                                   //Sides available in game
+    public enum SideEnum { None, Authority, Resistance, Count }                                   //Sides available in game
     public enum GameState { Normal, ModalOutcome, ModalActionMenu, ModalPicker, ModalDice }
     public enum ResistanceState { Normal, Captured }                                    //player as Resistance
     public enum AuthorityState { Normal }                                               //player as Authority

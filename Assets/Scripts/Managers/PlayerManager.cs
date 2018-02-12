@@ -22,23 +22,23 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
-            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { return _renownResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { return _renownAuthority; }
+            if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance) { return _renownResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority) { return _renownAuthority; }
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.turnSide == Side.Resistance) { return _renownResistance; }
+                if (GameManager.instance.turnScript.turnSide == SideEnum.Resistance) { return _renownResistance; }
                 else {return _renownAuthority; }
             }
         }
         set
         {
-            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { _renownResistance = value; }
-            else if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { _renownAuthority = value; }
+            if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance) { _renownResistance = value; }
+            else if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority) { _renownAuthority = value; }
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.turnSide == Side.Resistance) { _renownResistance = value; }
+                if (GameManager.instance.turnScript.turnSide == SideEnum.Resistance) { _renownResistance = value; }
                 else { _renownAuthority = value; }
             }
         }
@@ -210,7 +210,7 @@ public class PlayerManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
-        if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+        if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
         { builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
         builder.Append(string.Format(" State {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));

@@ -86,7 +86,7 @@ public class TooltipNode : MonoBehaviour
                 SetColours();
                 break;
             case EventType.ChangeSide:
-                InitialiseTooltip((Side)Param);
+                InitialiseTooltip((SideEnum)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -156,8 +156,8 @@ public class TooltipNode : MonoBehaviour
         builderActor.Append(colourActive);
         //ascertain whether actors shown or not
         proceedFlag = false;
-        if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { proceedFlag = true; }
-        else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+        if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance) { proceedFlag = true; }
+        else if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority)
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
@@ -172,7 +172,7 @@ public class TooltipNode : MonoBehaviour
             //FOW off or Resistance side
             if (proceedFlag == true)
             {
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
                 {
                     for (int i = 0; i < data.listOfActive.Count; i++)
                     {
@@ -180,7 +180,7 @@ public class TooltipNode : MonoBehaviour
                         builderActor.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd));
                     }
                 }
-                else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+                else if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority)
                 { builderActor.Append(string.Format("{0}Resistance Contacts present{1}", colourNeutral, colourEnd)); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
@@ -192,9 +192,9 @@ public class TooltipNode : MonoBehaviour
             //no actor contacts present at node -> FOW off or Resistance side
             if (proceedFlag == true)
             {
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
                 { builderActor.Append(string.Format("{0}<size=90%>No Actors have Contacts</size>{1}", colourDefault, colourEnd)); }
-                else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+                else if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority)
                 { builderActor.Append(string.Format("{0}<size=90%>No Resistance Contacts present</size>{1}", colourDefault, colourEnd)); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
@@ -223,8 +223,8 @@ public class TooltipNode : MonoBehaviour
         // - - - Teams  - - -
         //
         proceedFlag = false;
-        if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { proceedFlag = true; }
-        else if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+        if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority) { proceedFlag = true; }
+        else if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
@@ -354,14 +354,14 @@ public class TooltipNode : MonoBehaviour
     /// set up sprites on node tooltip for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    public void InitialiseTooltip(Side side)
+    public void InitialiseTooltip(SideEnum side)
     {
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = tooltipNodeObject.GetComponent<Image>();
         //assign side specific sprites
         switch (side)
         {
-            case Side.Authority:
+            case SideEnum.Authority:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
@@ -369,7 +369,7 @@ public class TooltipNode : MonoBehaviour
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
-            case Side.Resistance:
+            case SideEnum.Resistance:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;

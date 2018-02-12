@@ -13,7 +13,7 @@ namespace gameAPI
         [HideInInspector] public int datapoint1;               //higher the better (1 to 3)
         [HideInInspector] public int datapoint2;               //higher the better (1 to 3)
 
-        [HideInInspector] public Side actorSide;
+        [HideInInspector] public SideEnum actorSide;
         [HideInInspector] public int slotID;                    //actor slot ID (eg, 0 to 3)
         [HideInInspector] public int actorID;
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special

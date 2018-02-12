@@ -57,8 +57,8 @@ public class LevelManager : MonoBehaviour
         AssignNodeArcs();
         AssignSecurityLevels();
         InitialiseArrayOfActiveNodes();
-        AssignActorsToNodes(Side.Authority);
-        AssignActorsToNodes(Side.Resistance);
+        AssignActorsToNodes(SideEnum.Authority);
+        AssignActorsToNodes(SideEnum.Resistance);
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw);
     }
 
@@ -487,7 +487,7 @@ public class LevelManager : MonoBehaviour
     /// returns a string made up of Actors data
     /// </summary>
     /// <returns></returns>
-    public string GetActorAnalysis(Side side)
+    public string GetActorAnalysis(SideEnum side)
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("Actor Analysis" + "\n\n");
@@ -498,11 +498,11 @@ public class LevelManager : MonoBehaviour
             builder.Append(string.Format("{0}, ID {1},  Renown: {2}{3}", actor.arc.actorName, actor.actorID, actor.renown, "\n"));
             switch (side)
             {
-                case Side.Authority:
+                case SideEnum.Authority:
                     builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
                         listOfActorNodesAuthority[actor.slotID].Count, "\n\n"));
                     break;
-                case Side.Resistance:
+                case SideEnum.Resistance:
                     builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
                         listOfActorNodesResistance[actor.slotID].Count, "\n\n"));
                     break;
@@ -697,14 +697,14 @@ public class LevelManager : MonoBehaviour
     private void InitialiseArrayOfActiveNodes()
     {
         //initialise arrayOfActiveNodes prior to use
-        arrayOfActiveNodes = new bool[listOfNodeObjects.Count, (int)Side.Count, GameManager.instance.actorScript.numOfOnMapActors];
+        arrayOfActiveNodes = new bool[listOfNodeObjects.Count, (int)SideEnum.Count, GameManager.instance.actorScript.numOfOnMapActors];
     }
 
     /// <summary>
     /// sets up nodes to be active, or not, for each of the selected actors
     /// </summary>
     /// <param name="arrayOfActors"></param>
-    private void AssignActorsToNodes(Side side)
+    private void AssignActorsToNodes(SideEnum side)
     {
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);           //the four, or less, available actors for the level
         int[] arrayOfArcs = new int[GameManager.instance.dataScript.CheckNumNodeArcs()];    //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
@@ -823,10 +823,10 @@ public class LevelManager : MonoBehaviour
                 {
                     switch (side)
                     {
-                        case Side.Authority:
+                        case SideEnum.Authority:
                             listOfActorNodesAuthority.Add(new List<GameObject>(arrayOfNodeLists[i]));
                             break;
-                        case Side.Resistance:
+                        case SideEnum.Resistance:
                             listOfActorNodesResistance.Add(new List<GameObject>(arrayOfNodeLists[i]));
                             break;
                         default:
@@ -894,7 +894,7 @@ public class LevelManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public bool CheckNodeActive(int nodeID, Side side, int slotID)
+    public bool CheckNodeActive(int nodeID, SideEnum side, int slotID)
     {
         Debug.Assert(nodeID > -1 && nodeID < numOfNodes, "Invalid nodeID input");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
@@ -912,15 +912,15 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public List<List<GameObject>> GetListOfActorNodes(Side side)
+    public List<List<GameObject>> GetListOfActorNodes(SideEnum side)
     {
         List<List<GameObject>> tempList = new List<List<GameObject>>();
         switch (side)
         {
-            case Side.Authority:
+            case SideEnum.Authority:
                 tempList = listOfActorNodesAuthority;
                 break;
-            case Side.Resistance:
+            case SideEnum.Resistance:
                 tempList = listOfActorNodesResistance;
                 break;
             default:

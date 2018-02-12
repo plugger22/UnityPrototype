@@ -16,7 +16,7 @@ public class ActorArc : ScriptableObject
     public string description;
     public string actorName;
 
-    public Side side;                              //to separate Resistance and authority actorArcs
+    public SideEnum side;                              //to separate Resistance and authority actorArcs
 
     //public EventType actionEvent;                       //used to trigger a relevant event when interacting with nodes
 

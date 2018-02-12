@@ -21,7 +21,7 @@ namespace gameAPI
 
         public bool isPublic;               //display if true
 
-        public Side side;
+        public SideEnum side;
         public MessageType type;            //main category
         public MessageSubType subType;      //sub type of main category
         

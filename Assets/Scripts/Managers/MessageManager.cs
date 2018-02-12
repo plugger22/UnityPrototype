@@ -120,7 +120,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Move;
-            message.side = Side.Resistance;
+            message.side = SideEnum.Resistance;
             message.isPublic = false;
             message.data0 = nodeID;
             return message;
@@ -158,7 +158,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_SpotMove;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = destinationNodeID;
@@ -188,7 +188,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Capture;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -216,7 +216,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Capture;
-            message.side = Side.Resistance;
+            message.side = SideEnum.Resistance;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = actorID;
@@ -248,7 +248,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Deploy;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -278,7 +278,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_AutoRecall;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = true;
             message.displayDelay = 0;
             message.data0 = nodeID;
@@ -308,7 +308,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Withdraw;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -337,7 +337,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Effect;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -366,7 +366,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Neutralise;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = true;
             message.displayDelay = 0;
             message.data0 = nodeID;
@@ -396,7 +396,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Comprised;
-            message.side = Side.Resistance;
+            message.side = SideEnum.Resistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
@@ -423,7 +423,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Used;
-            message.side = Side.Resistance;
+            message.side = SideEnum.Resistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
@@ -450,7 +450,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Obtained;
-            message.side = Side.Resistance;
+            message.side = SideEnum.Resistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
@@ -477,7 +477,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Renown;
-            message.side = Side.Resistance;
+            message.side = SideEnum.Resistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = dataID;
@@ -495,10 +495,10 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="actorID"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message ActorRecruited(string text, int nodeID, int actorID, Side side)
+    public Message ActorRecruited(string text, int nodeID, int actorID, SideEnum side)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
-        if (side == Side.Resistance)
+        if (side == SideEnum.Resistance)
         { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -539,7 +539,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Attempt;
-            message.side = Side.Resistance;
+            message.side = SideEnum.Resistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = actorID;
@@ -569,7 +569,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Contained;
-            message.side = Side.Authority;
+            message.side = SideEnum.Authority;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;

@@ -26,10 +26,10 @@ public class SideManager : MonoBehaviour
     public Sprite button_highlight_Rebel;
     public Sprite button_Click;
 
-    private Side _playerSide;
+    private SideEnum _playerSide;
 
     //what side is the player
-    public Side PlayerSide
+    public SideEnum PlayerSide
     {
         get { return _playerSide; }
         set
@@ -45,7 +45,7 @@ public class SideManager : MonoBehaviour
     public void Initialise()
     {
         //set side
-        PlayerSide = Side.Resistance;        
+        PlayerSide = SideEnum.Resistance;        
     }
 
 

@@ -115,7 +115,7 @@ public class ActionManager : MonoBehaviour
                     if (node != null)
                     {
                         //check for Resistance player/actor getting captured prior to carrying out action
-                        if (details.side == Side.Resistance)
+                        if (details.side == SideEnum.Resistance)
                         {
                             int actorID = actor.actorID;
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { actorID = 999; }
@@ -257,11 +257,11 @@ public class ActionManager : MonoBehaviour
                 else
                 {
                     //check correct actor arc for target is present in line up
-                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, Side.Resistance);
+                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, SideEnum.Resistance);
                     if (slotID > -1)
                     {
                         //get actor
-                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
+                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, SideEnum.Resistance);
                         if (actor != null)
                         {
                             details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID);
@@ -401,7 +401,7 @@ public class ActionManager : MonoBehaviour
                 if (errorFlag == false)
                 {
                     //outcome
-                    outcomeDetails.side = Side.Resistance;
+                    outcomeDetails.side = SideEnum.Resistance;
                     outcomeDetails.textTop = builderTop.ToString();
                     outcomeDetails.textBottom = builderBottom.ToString();
                     outcomeDetails.sprite = targetSprite;

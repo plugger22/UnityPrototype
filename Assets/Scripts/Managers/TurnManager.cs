@@ -15,7 +15,7 @@ public class TurnManager : MonoBehaviour
     [HideInInspector] public MetaLevel metaLevel;
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthorityState authorityState;
-    [HideInInspector] public Side turnSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
+    [HideInInspector] public SideEnum turnSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
 
     [SerializeField, HideInInspector]
     private int _turn;
@@ -79,7 +79,7 @@ public class TurnManager : MonoBehaviour
                 UseAction();
                 break;
             case EventType.ChangeSide:
-                ChangeSide((Side)Param);
+                ChangeSide((SideEnum)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -112,17 +112,17 @@ public class TurnManager : MonoBehaviour
     {
         switch (GameManager.instance.sideScript.PlayerSide)
         {
-            case Side.Resistance:
-                turnSide = Side.Resistance;
+            case SideEnum.Resistance:
+                turnSide = SideEnum.Resistance;
                 break;
-            case Side.Authority:
-                turnSide = Side.Authority;
+            case SideEnum.Authority:
+                turnSide = SideEnum.Authority;
                 break;
-            case Side.None:
+            case SideEnum.None:
                 //AI controls both sides
-                turnSide = Side.Resistance;
+                turnSide = SideEnum.Resistance;
                 GameManager.instance.aiScript.ProcessAISideResistance();
-                turnSide = Side.Authority;
+                turnSide = SideEnum.Authority;
                 GameManager.instance.aiScript.ProcessAISideAuthority();
 
                 //TO DO -> end of turn in some manner here
@@ -142,7 +142,7 @@ public class TurnManager : MonoBehaviour
     }
 
 
-    public void ChangeSide(Side side)
+    public void ChangeSide(SideEnum side)
     {
         UpdateActionsLimit(side);
     }
@@ -151,13 +151,13 @@ public class TurnManager : MonoBehaviour
     /// sub-method to set up action limit based on player's current side
     /// </summary>
     /// <param name="side"></param>
-    private void UpdateActionsLimit(Side side)
+    private void UpdateActionsLimit(SideEnum side)
     {
         _actionsCurrent = 0;
         switch (side)
         {
-            case Side.Authority: _actionsLimit = actionsAuthority; break;
-            case Side.Resistance: _actionsLimit = actionsResistance; break;
+            case SideEnum.Authority: _actionsLimit = actionsAuthority; break;
+            case SideEnum.Resistance: _actionsLimit = actionsResistance; break;
             default: Debug.LogError(string.Format("Invalid side {0}", side)); break;
         }
     }

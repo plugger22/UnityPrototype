@@ -43,7 +43,7 @@ namespace packageAPI
     /// </summary>
     public class EffectDataInput
     {
-        public Side side;                                                    //used to determine colouring of good/bad effects
+        public SideEnum side;                                                    //used to determine colouring of good/bad effects
         public int ongoingID = -1;                                           //used only if there are going to be ongoing effects, ignore otherwise
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
 

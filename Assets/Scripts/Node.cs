@@ -159,7 +159,7 @@ public class Node : MonoBehaviour
                 GameManager.instance.tooltipNodeScript.CloseTooltip();
             }
             //Action Menu -> not valid if Resistance Plyr and Captured, etc.
-            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+            if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
             {
                 if (GameManager.instance.turnScript.resistanceState != ResistanceState.Normal)
                 { proceedFlag = false; }
@@ -211,7 +211,7 @@ public class Node : MonoBehaviour
                     GameManager.instance.tooltipNodeScript.CloseTooltip();
                 }
                 //move action invalid if resistance player is captured, etc.
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
                 {
                     if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
                     {
@@ -413,7 +413,7 @@ public class Node : MonoBehaviour
     {
         List<string> tempList = new List<string>();
         int limit = GameManager.instance.actorScript.numOfOnMapActors;
-        Side side = GameManager.instance.sideScript.PlayerSide;
+        SideEnum side = GameManager.instance.sideScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {
             if (GameManager.instance.levelScript.CheckNodeActive(nodeID, side, i) == true)
