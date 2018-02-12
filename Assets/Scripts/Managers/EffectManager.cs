@@ -167,7 +167,7 @@ public class EffectManager : MonoBehaviour
                                     {
                                         case "NodeSecurityMin":
                                             val = GameManager.instance.nodeScript.minNodeValue;
-                                            compareTip = ComparisonCheck(val, node.Security, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Security " + compareTip);
@@ -175,7 +175,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case "NodeStabilityMin":
                                             val = GameManager.instance.nodeScript.minNodeValue;
-                                            compareTip = ComparisonCheck(val, node.Stability, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Stability " + compareTip);
@@ -183,7 +183,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case "NodeSupportMax":
                                             val = GameManager.instance.nodeScript.maxNodeValue;
-                                            compareTip = ComparisonCheck(val, node.Support, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Support " + compareTip);
@@ -192,7 +192,7 @@ public class EffectManager : MonoBehaviour
                                         case "NumRecruits":
                                             //criteria value overriden in this case
                                             val = GameManager.instance.dataScript.GetNumOfActorsInReserve();
-                                            compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.comparison);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "maxxed Recruit allowance");
@@ -200,7 +200,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case "NumTeamsMin":
                                             val = GameManager.instance.teamScript.minTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "no Teams present");
@@ -208,7 +208,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case "NumTeamsMax":
                                             val = GameManager.instance.teamScript.maxTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Max teams present");
@@ -220,7 +220,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case "TargetInfoMax":
                                             val = GameManager.instance.targetScript.maxTargetInfo;
-                                            compareTip = ComparisonCheck(val, node.targetID, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.targetID, criteria.comparison);
                                             if (compareTip != null)
                                             { BuildString(result, "Full Info already"); }
                                             break;
@@ -232,7 +232,7 @@ public class EffectManager : MonoBehaviour
                                         case "NumGearMax":
                                             //Note: effect criteria value is ignored in this case
                                             val = GameManager.instance.gearScript.maxNumOfGear;
-                                            compareTip = ComparisonCheck(val, GameManager.instance.playerScript.GetNumOfGear(), criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, GameManager.instance.playerScript.GetNumOfGear(), criteria.comparison);
                                             if (compareTip != null)
                                             { BuildString(result, "maxxed Gear Allowance"); }
                                             break;
@@ -260,7 +260,7 @@ public class EffectManager : MonoBehaviour
                                             break;
                                         case "RebelCauseMin":
                                             val = GameManager.instance.rebelScript.resistanceCauseMin;
-                                            compareTip = ComparisonCheck(val, GameManager.instance.rebelScript.resistanceCause, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, GameManager.instance.rebelScript.resistanceCause, criteria.comparison);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Rebel Cause  " + compareTip);
@@ -287,14 +287,14 @@ public class EffectManager : MonoBehaviour
                                         case "NumTeamsMin":
                                             //there is a minimum limit to the number of teams that can be present at a node
                                             val = GameManager.instance.teamScript.minTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
                                             if (compareTip != null)
                                             { BuildString(result, "No teams present"); }
                                             break;
                                         case "NumTeamsMax":
                                             //there is a maximum limit to the number of teams that can be present at a node
                                             val = GameManager.instance.teamScript.maxTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
                                             if (compareTip != null)
                                             { BuildString(result, "Max teams present"); }
                                             break;
@@ -372,26 +372,26 @@ public class EffectManager : MonoBehaviour
     /// <param name="actualValue"></param>
     /// <param name="comparison"></param>
     /// <returns></returns>
-    private string ComparisonCheck(int criteriaValue, int actualValue, Comparison comparison)
+    private string ComparisonCheck(int criteriaValue, int actualValue, EffectOperator comparison)
     {
         string result = null;
-        switch (comparison)
+        switch (comparison.name)
         {
-            case Comparison.LessThan:
+            case "LessThan":
                 if (actualValue >= criteriaValue)
                 { result = string.Format("< {0}, currently {1}", criteriaValue, actualValue); }
                 break;
-            case Comparison.GreaterThan:
+            case "GreaterThan":
                 if (actualValue <= criteriaValue)
                 { result = string.Format("> {0}, currently {1}", criteriaValue, actualValue); }
                 break;
-            case Comparison.EqualTo:
+            case "EqualTo":
                 if (criteriaValue != actualValue)
                 { result = string.Format("{0}, currently {1}", criteriaValue, actualValue); }
                 break;
             default:
                 result = "Error!";
-                Debug.LogError("Invalid Comparison enum");
+                Debug.LogError(string.Format("Invalid Comparison \"{0}\"", comparison.name));
                 break;
         }
         return result;

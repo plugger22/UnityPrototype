@@ -9,11 +9,6 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Effect / Criteria")]
 public class Criteria : ScriptableObject
 {
-
-    //public EffectCriteriaEnum criteriaEffect;
-    public Comparison criteriaCompare;
-    public int criteriaValue;
     public EffectCriteria effectCriteria;
-    public EffectOperator comparison;
-    public int value;
+    public EffectOperator comparison;                   //operand > / < / = to
 }
