@@ -189,8 +189,7 @@ public class EffectManager : MonoBehaviour
                                                 BuildString(result, "Support " + compareTip);
                                             }
                                             break;
-                                        case "NumRecruits":
-                                            //criteria value overriden in this case
+                                        case "NumRecruitsCurrent":
                                             val = GameManager.instance.dataScript.GetNumOfActorsInReserve();
                                             compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.comparison);
                                             if (compareTip != null)
