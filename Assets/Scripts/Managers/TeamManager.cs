@@ -14,6 +14,7 @@ public class TeamManager : MonoBehaviour
     [Range(1, 4)]
     [Tooltip("The maximum number of teams that may be present at a node at any one time")]
     public int maxTeamsAtNode = 3;
+    [HideInInspector] public int minTeamsAtNode = 0;
     [Range(1, 4)]
     [Tooltip("How long a team is deployed for before automatically being recalled")]
     public int deployTime = 3;

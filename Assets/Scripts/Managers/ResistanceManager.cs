@@ -11,7 +11,7 @@ using gameAPI;
 public class ResistanceManager : MonoBehaviour
 {
 
-
+    [HideInInspector] public int resistanceCauseMin = 0;
     [HideInInspector] public int resistanceCauseMax;                        //level of Rebel Support. Max out to Win the level. Max level is a big part of difficulty.
     [HideInInspector] public int resistanceCause;                           //current level of Rebel Support
 
