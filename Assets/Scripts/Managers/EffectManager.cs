@@ -165,21 +165,21 @@ public class EffectManager : MonoBehaviour
                                     switch (criteria.effectCriteria.name)
                                     {
                                         case "NodeSecurity":
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.Security, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(GameManager.instance.nodeScript.minNodeValue, node.Security, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Security " + compareTip);
                                             }
                                             break;
                                         case "NodeStability":
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.Stability, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(GameManager.instance.nodeScript.minNodeValue, node.Stability, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Stability " + compareTip);
                                             }
                                             break;
                                         case "NodeSupport":
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.Support, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(GameManager.instance.nodeScript.maxNodeValue, node.Support, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             {
                                                 BuildString(result, "Support " + compareTip);
@@ -206,7 +206,7 @@ public class EffectManager : MonoBehaviour
                                             { BuildString(result, "Tracer already present"); }
                                             break;
                                         case "TargetInfo":
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.targetID, criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(GameManager.instance.targetScript.maxTargetInfo, node.targetID, criteria.criteriaCompare);
                                             if (compareTip != null)
                                             { BuildString(result, "Full Info already"); }
                                             break;
@@ -270,7 +270,7 @@ public class EffectManager : MonoBehaviour
                                     {
                                         case "NumTeams":
                                             //there is a maximum limit to the number of teams that can be present at a node
-                                            compareTip = ComparisonCheck(criteria.criteriaValue, node.CheckNumOfTeams(), criteria.criteriaCompare);
+                                            compareTip = ComparisonCheck(GameManager.instance.teamScript.maxTeamsAtNode, node.CheckNumOfTeams(), criteria.criteriaCompare);
                                             if (compareTip != null)
                                             { BuildString(result, "Too many teams present"); }
                                             break;

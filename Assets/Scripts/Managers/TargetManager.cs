@@ -28,6 +28,9 @@ public class TargetManager : MonoBehaviour
     [Range(1, 3)]
     [Tooltip("How much effect having the right Actor for a target will have on the chance of success")]
     public int actorEffect = 2;
+    [Range(1, 3)]
+    [Tooltip("Maximum amount of target info that can be acquired on a specific target")]
+    public int maxTargetInfo = 3;
 
     public int StartTargets { get; private set; }
     public int ActiveTargets { get; private set; }

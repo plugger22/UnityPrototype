@@ -32,6 +32,9 @@ public class Node : MonoBehaviour
     private float mouseOverDelay;                       //tooltip
     private float fadeInTime;                           //tooltip
 
+    private int maxValue;                               //max and min node datapoint values (derive from NodeManager.cs)
+    private int minValue;
+
     //private backing fields
     private int _stability;
     private int _support;
@@ -44,19 +47,19 @@ public class Node : MonoBehaviour
     //Properties for backing fields
     public int Security
     {
-        get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSecurity), 0, 3); }
+        get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSecurity), minValue, maxValue); }
         set { _security = value; Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
-        get { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeStability), 0, 3); }
+        get { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeStability), minValue, maxValue); }
         set { _stability = value; Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
-        get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSupport), 0, 3); }
+        get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSupport), minValue, maxValue); }
         set { _support = value; Mathf.Clamp(_support, 0, 3); }
     }
 
@@ -132,6 +135,8 @@ public class Node : MonoBehaviour
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
+        maxValue = GameManager.instance.nodeScript.maxNodeValue;
+        minValue = GameManager.instance.nodeScript.minNodeValue;
 	}
 
 

@@ -16,6 +16,11 @@ public class NodeManager : MonoBehaviour
     public int nodeActiveMinimum;                                   //minimum number of active nodes on a map for any actor type, default 3
     public Material[] arrayOfNodeTypes;
 
+    [Tooltip("Maximum value of a node datapoint")]
+    public int maxNodeValue = 3;
+    [Tooltip("Minimum value of a node datapoint")]
+    public int minNodeValue = 0;
+
     [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1

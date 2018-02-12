@@ -14,4 +14,6 @@ public class Criteria : ScriptableObject
     public Comparison criteriaCompare;
     public int criteriaValue;
     public EffectCriteria effectCriteria;
+    public EffectOperator comparison;
+    public int value;
 }
