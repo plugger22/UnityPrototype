@@ -36,7 +36,7 @@ namespace modalAPI
     /// </summary>
     public class ModalActionDetails
     {
-        public SideEnum side;
+        public Side side;
         public int NodeID { get; set; }
         public int ActorSlotID { get; set; }
         public EventType EventType { get; set; }                       //event that is triggered when action button clicked
@@ -49,7 +49,7 @@ namespace modalAPI
     /// </summary>
     public class ModalOutcomeDetails
     {
-        public SideEnum side;
+        public Side side;
         public string textTop;
         public string textBottom;
         public Sprite sprite;
@@ -126,7 +126,7 @@ namespace modalAPI
         public string textTop;
         public string textMiddle;
         public string textBottom;
-        public SideEnum side;
+        public Side side;
         public int nodeID;
         public int actorSlotID;
         public GenericOptionDetails[] arrayOfOptions = new GenericOptionDetails[3];                 //only the first three are recognised

@@ -77,7 +77,7 @@ public class TooltipActor : MonoBehaviour
                 SetColours();
                 break;
             case EventType.ChangeSide:
-                InitialiseTooltip((SideEnum)Param);
+                InitialiseTooltip((Side)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -232,19 +232,19 @@ public class TooltipActor : MonoBehaviour
     /// set up sprites on actor tooltip for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    public void InitialiseTooltip(SideEnum side)
+    public void InitialiseTooltip(Side side)
     {
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = tooltipActorObject.GetComponent<Image>();
         //assign side specific sprites
         switch (side)
         {
-            case SideEnum.Authority:
+            case Side.Authority:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
-            case SideEnum.Resistance:
+            case Side.Resistance:
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;

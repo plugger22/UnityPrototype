@@ -332,10 +332,10 @@ public class NodeManager : MonoBehaviour
                     //determine level of visibility
                     switch (GameManager.instance.sideScript.PlayerSide)
                     {
-                        case SideEnum.Authority:
+                        case Side.Authority:
                             proceedFlag = true;
                             break;
-                        case SideEnum.Resistance:
+                        case Side.Resistance:
                             //resistance -> if not FOW then auto show
                             if (GameManager.instance.optionScript.fogOfWar == false)
                             { proceedFlag = true; }
@@ -386,10 +386,10 @@ public class NodeManager : MonoBehaviour
                     //determine level of visibility
                     switch (GameManager.instance.sideScript.PlayerSide)
                     {
-                        case SideEnum.Resistance:
+                        case Side.Resistance:
                             proceedFlag = true;
                             break;
-                        case SideEnum.Authority:
+                        case Side.Authority:
                             //resistance -> if not FOW then auto show
                             if (GameManager.instance.optionScript.fogOfWar == false)
                             { proceedFlag = true; }
@@ -445,10 +445,10 @@ public class NodeManager : MonoBehaviour
                     //determine level of visibility
                     switch (GameManager.instance.sideScript.PlayerSide)
                     {
-                        case SideEnum.Authority:
+                        case Side.Authority:
                             proceedFlag = true;
                             break;
-                        case SideEnum.Resistance:
+                        case Side.Resistance:
                             //resistance -> if not FOW then auto show
                             if (GameManager.instance.optionScript.fogOfWar == false)
                             { proceedFlag = true; }
@@ -572,7 +572,7 @@ public class NodeManager : MonoBehaviour
         string displayText;
         string minionTitle;
         //work out minion's appropriate title
-        if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority)
+        if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
         { minionTitle = string.Format("{0} of ", (AuthorityActor)GameManager.instance.turnScript.metaLevel); }
         else { minionTitle = "Rebel "; }
         if (actor != null)
@@ -1071,7 +1071,7 @@ public class NodeManager : MonoBehaviour
             outcomeDetails.textBottom = textBottom;
             outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
             outcomeDetails.isAction = true;
-            outcomeDetails.side = SideEnum.Resistance;
+            outcomeDetails.side = Side.Resistance;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }
@@ -1140,7 +1140,7 @@ public class NodeManager : MonoBehaviour
             //loop Resistance actors
             for (int slotID = 0; slotID < GameManager.instance.actorScript.numOfOnMapActors; slotID++)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, SideEnum.Resistance);
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, Side.Resistance);
                 if (actor != null)
                 {
                     //only consider actor if Active

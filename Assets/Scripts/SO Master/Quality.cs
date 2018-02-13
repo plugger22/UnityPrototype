@@ -10,5 +10,5 @@ using gameAPI;
 public class Quality: ScriptableObject
 {
     public string description;
-    public SideEnum side;
+    public Side side;
 }

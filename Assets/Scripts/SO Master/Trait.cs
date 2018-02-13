@@ -10,7 +10,7 @@ using gameAPI;
 public class Trait : ScriptableObject
 {
     public int TraitID { get; set; }                //unique #, zero based -> assigned automatically by DataManager.Initialise
-    public SideEnum side;                               //which side does the trait apply to
+    public Side side;                               //which side does the trait apply to
     public TraitType type;                          //good, neutral, bad
 
 }

@@ -164,7 +164,7 @@ public class ModalGenericPicker : MonoBehaviour
             //set up modal panel & buttons to be side appropriate
             switch(details.side)
             {
-                case SideEnum.Authority:
+                case Side.Authority:
                     modalPanel.sprite = GameManager.instance.sideScript.picker_background_Authority;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
@@ -176,7 +176,7 @@ public class ModalGenericPicker : MonoBehaviour
                     buttonCancel.spriteState = spriteStateAuthority;
                     buttonConfirm.spriteState = spriteStateAuthority;
                     break;
-                case SideEnum.Resistance:
+                case Side.Resistance:
                     modalPanel.sprite = GameManager.instance.sideScript.picker_background_Rebel;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;

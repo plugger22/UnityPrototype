@@ -12,7 +12,7 @@ public class Effect : ScriptableObject
     public int EffectID { get; set; }                           //dynamically set {Edit -> I don't think this is hooked up yet, need to check]
 
     public string description;                                  //tooltip, eg. "Stability +1"
-    public SideEnum side;                                           //which side does the effect apply to?
+    public Side side;                                           //which side does the effect apply to?
 
     public List<Criteria> listOfCriteria;                       //list of effect criteria that must be true for an effect to occur
 

@@ -503,7 +503,7 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 {
                                     //check if actor present in team
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, SideEnum.Resistance);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, Side.Resistance);
                                     if (slotID > -1)
                                     {
                                         //actor present and available
@@ -621,7 +621,7 @@ public class TargetManager : MonoBehaviour
                                 //player NOT at node ->  check if actor is present in OnMap line-up
                                 if (target.actorArc != null)
                                 {
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, SideEnum.Resistance);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, Side.Resistance);
                                     if (slotID > -1)
                                     {
                                         //actor present and available

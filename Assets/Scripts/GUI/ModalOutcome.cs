@@ -89,7 +89,7 @@ public class ModalOutcome : MonoBehaviour
                 CloseModalOutcome();
                 break;
             case EventType.ChangeSide:
-                InitialiseOutcome((SideEnum)Param);
+                InitialiseOutcome((Side)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -119,7 +119,7 @@ public class ModalOutcome : MonoBehaviour
         //set confirm button image and sprite states
         switch (details.side)
         {
-            case SideEnum.Authority:
+            case Side.Authority:
                 //set button sprites
                 confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
                 //set sprite transitions
@@ -128,7 +128,7 @@ public class ModalOutcome : MonoBehaviour
                 spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
                 confirmButton.spriteState = spriteStateAuthority;
                 break;
-            case SideEnum.Resistance:
+            case Side.Resistance:
                 //set button sprites
                 confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
                 //set sprite transitions
@@ -217,17 +217,17 @@ public class ModalOutcome : MonoBehaviour
     /// set up sprites on outcome window for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    private void InitialiseOutcome(SideEnum side)
+    private void InitialiseOutcome(Side side)
     {
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = modalOutcomeWindow.GetComponent<Image>();
         //assign side specific sprites
         switch (side)
         {
-            case SideEnum.Authority:
+            case Side.Authority:
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundAuthority;
                 break;
-            case SideEnum.Resistance:
+            case Side.Resistance:
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundRebel;
                 break;
         }

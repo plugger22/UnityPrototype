@@ -61,11 +61,11 @@ public class EffectManager : MonoBehaviour
     {
         switch (GameManager.instance.sideScript.PlayerSide)
         {
-            case SideEnum.Resistance:
+            case Side.Resistance:
                 colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
                 colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
                 break;
-            case SideEnum.Authority:
+            case Side.Authority:
                 colourOutcome1 = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
                 colourOutcome2 = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
                 break;
@@ -113,12 +113,12 @@ public class EffectManager : MonoBehaviour
                     errorFlag = true;
                 }
                 //authority specific data
-                if (effect.side == SideEnum.Authority)
+                if (effect.side == Side.Authority)
                 {
                     if (actorSlotID != -1)
                     {
                         //get actor
-                        actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, SideEnum.Authority);
+                        actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
                         if (actor != null)
                         {
                             if (teamArcID > -1)
@@ -156,9 +156,9 @@ public class EffectManager : MonoBehaviour
                     {
                         switch (GameManager.instance.sideScript.PlayerSide)
                         {
-                            case SideEnum.Resistance:
+                            case Side.Resistance:
                                 //check effect is the correct side
-                                if (effect.side == SideEnum.Resistance)
+                                if (effect.side == Side.Resistance)
                                 {
                                     //
                                     // - - - Resistance - - - 
@@ -274,9 +274,9 @@ public class EffectManager : MonoBehaviour
                                 }
                                 else { Debug.LogError("EffectManager: side NOT Resistance -> Criteria check cancelled"); }
                                 break;
-                            case SideEnum.Authority:
+                            case Side.Authority:
                                 //check effect is the correct side
-                                if (effect.side == SideEnum.Authority)
+                                if (effect.side == Side.Authority)
                                 {
                                     //
                                     // - - - Authority - - -

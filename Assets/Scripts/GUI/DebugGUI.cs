@@ -244,16 +244,16 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Swap Sides"))
             {
                 Debug.Log("Button -> Swap sides");
-                if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
-                { GameManager.instance.sideScript.PlayerSide = SideEnum.Authority; }
-                else { GameManager.instance.sideScript.PlayerSide = SideEnum.Resistance; }
+                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                { GameManager.instance.sideScript.PlayerSide = Side.Authority; }
+                else { GameManager.instance.sideScript.PlayerSide = Side.Resistance; }
             }
 
             //second button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Recruit Authority"))
             {
                 Debug.Log("Button -> Authority Recruit Actor");
-                if (GameManager.instance.sideScript.PlayerSide == SideEnum.Authority)
+                if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
                 { GameManager.instance.actorScript.RecruitActor(2); }
             }
 
@@ -261,7 +261,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Remove Tracer"))
             {
                 Debug.Log(string.Format("Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n"));
-                if (GameManager.instance.sideScript.PlayerSide == SideEnum.Resistance)
+                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
                 {
                     Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                     if (node != null) { node.RemoveTracer(); } else { Debug.LogError("Invalid current Player node (Null)"); }
@@ -286,7 +286,7 @@ public class DebugGUI : MonoBehaviour
                 {
                     for(int i = 0; i < numOfActors; i++)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, SideEnum.Resistance);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, Side.Resistance);
                         if (actor.Status == ActorStatus.Captured)
                         {
                             AIDetails details = new AIDetails();
