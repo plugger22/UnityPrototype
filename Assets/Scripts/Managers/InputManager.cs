@@ -47,10 +47,7 @@ public class InputManager : MonoBehaviour
                 if (Input.GetButtonDown("NewTurn") == true)
                 {
                     //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up
-                    EventManager.instance.PostNotification(EventType.EndTurn, this);
-                    EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
-                    EventManager.instance.PostNotification(EventType.StartTurnLate, this);
-                    EventManager.instance.PostNotification(EventType.StartTurnFinal, this);
+                    EventManager.instance.PostNotification(EventType.NewTurn, this);
                     return;
                 }
                 if (Input.GetButtonDown("ShowTargets") == true)

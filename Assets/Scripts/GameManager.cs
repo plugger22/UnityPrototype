@@ -2,13 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 using gameAPI;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+
 
 
 
@@ -58,15 +54,10 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
 
-    public float showSplashTimeout = 2.0f;
-
-                                                                    
+                                                                   
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
     
-    private bool allowQuitting = false;
-    private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
-                                                                    //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
     
 
     #endregion
@@ -127,8 +118,6 @@ public class GameManager : MonoBehaviour
         genericPickerScript = ModalGenericPicker.Instance();
         diceScript = ModalDiceUI.Instance();
         alertScript = AlertUI.Instance();
-        //make sure raycasts are active, eg. node tooltips
-        isBlocked = false;
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
     }
@@ -140,8 +129,6 @@ public class GameManager : MonoBehaviour
         InitialiseGame();
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
-        //register listener
-        EventManager.instance.AddListener(EventType.ExitGame, OnEvent);
     }
 
     /// <summary>
@@ -174,6 +161,8 @@ public class GameManager : MonoBehaviour
         authorityScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
+
+        //TO DO -> tap into game options chosen by player and start game as correct side or AI vs. AI
     }
 
 
@@ -187,7 +176,7 @@ public class GameManager : MonoBehaviour
         { inputScript.ProcessInput(); }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// event handler
     /// </summary>
     /// <param name="eventType"></param>
@@ -205,49 +194,13 @@ public class GameManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }
+    }*/
 
 
-    public void SetIsBlocked(bool isBlocked)
-    {
-        this.isBlocked = isBlocked;
-        Debug.Log(string.Format("GM: Blocked -> {0}{1}", isBlocked, "\n"));
-    }
 
-    public bool CheckIsBlocked()
-    { return isBlocked; }
 
-    /// <summary>
-    /// Quit 
-    /// </summary>
-    private void Quit()
-    {
-        //show thank you splash screen before quitting
-        if (SceneManager.GetActiveScene().name != "End_Game")
-        { StartCoroutine("DelayedQuit"); }
-        if (allowQuitting == false)
-        { Application.CancelQuit(); }
 
-    }
 
-    //display splash screen for a short while before quitting
-    private IEnumerator DelayedQuit()
-    {
-        SceneManager.LoadScene(1);
-        yield return new WaitForSeconds(showSplashTimeout);
-        allowQuitting = true;
-        //editor quit or application quit
-        #if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-        #else
-                Application.Quit();
-        #endif
-    }
-
-    public void OnDisable()
-    {
-        EventManager.instance.RemoveEvent(EventType.ExitGame);
-    }
 
 
     //place methods above here

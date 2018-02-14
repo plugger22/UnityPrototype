@@ -110,7 +110,7 @@ public class ModalOutcome : MonoBehaviour
     {
         Debug.Log(string.Format("Outcome: {0}{1}", details.textTop, "\n"));
         //set modal true
-        GameManager.instance.SetIsBlocked(true);
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //open panel at start, the modal window is already active on the panel
         modalOutcomeObject.SetActive(true);
         modalOutcomeWindow.SetActive(true);
@@ -198,7 +198,7 @@ public class ModalOutcome : MonoBehaviour
         Debug.Log("UI: Close -> ModalOutcome window" + "\n");
         modalOutcomeObject.SetActive(false);
         //set modal false
-        GameManager.instance.SetIsBlocked(false);
+        GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
         //end of turn check

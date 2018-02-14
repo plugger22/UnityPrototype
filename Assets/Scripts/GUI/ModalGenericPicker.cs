@@ -148,7 +148,7 @@ public class ModalGenericPicker : MonoBehaviour
     {
         bool errorFlag = false;
         //set modal status
-        GameManager.instance.SetIsBlocked(true);
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //activate main panel
         modalPanelObject.SetActive(true);
         //activate dialogue window
@@ -294,7 +294,7 @@ public class ModalGenericPicker : MonoBehaviour
     private void CloseGenericPicker()
     {
         modalGenericObject.SetActive(false);
-        GameManager.instance.SetIsBlocked(false);
+        GameManager.instance.guiScript.SetIsBlocked(false);
         //deselect all generic options to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this);
         SetConfirmButton(false);

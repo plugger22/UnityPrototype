@@ -35,6 +35,8 @@ public class GUIManager : MonoBehaviour
     List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();
     List<Image> listOfActorPortraits = new List<Image>();
 
+    private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+                                                                    //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
 
     /// <summary>
     /// Initialises GUI with all relevant data
@@ -81,6 +83,8 @@ public class GUIManager : MonoBehaviour
         listOfActorPortraits.Add(picture3);
         //assign actor text & sprites (type of Actor)
         UpdateActorGUI();
+        //make sure raycasts are active, eg. node tooltips
+        isBlocked = false;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
@@ -160,5 +164,17 @@ public class GUIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+    /// </summary>
+    /// <param name="isBlocked"></param>
+    public void SetIsBlocked(bool isBlocked)
+    {
+        this.isBlocked = isBlocked;
+        Debug.Log(string.Format("GM: Blocked -> {0}{1}", isBlocked, "\n"));
+    }
+
+    public bool CheckIsBlocked()
+    { return isBlocked; }
 
 }

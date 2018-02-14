@@ -34,8 +34,9 @@ public enum EventType
     //turn manager
     StartTurnEarly,
     StartTurnLate,
-    StartTurnFinal,
-    EndTurn,
+    EndTurnAI,
+    EndTurnFinal,
+    NewTurn,
     //team Picker
     OpenTeamPicker,
     CloseTeamPicker,

@@ -17,7 +17,7 @@ public class MessageManager : MonoBehaviour
     {
         //event Listeners
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
-        EventManager.instance.AddListener(EventType.EndTurn, OnEvent);
+        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
     }
 
 
@@ -35,7 +35,7 @@ public class MessageManager : MonoBehaviour
             case EventType.StartTurnEarly:
                 StartTurnEarly();
                 break;
-            case EventType.EndTurn:
+            case EventType.EndTurnFinal:
                 EndTurn();
                 break;
             default:
