@@ -490,54 +490,57 @@ public class ActorManager : MonoBehaviour
                                         actionDetails.NodeID = nodeID;
                                         actionDetails.ActorSlotID = actor.slotID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
-
-                                        switch (actor.arc.nodeAction.type)
+                                        if (actor.arc.nodeAction.special == null)
                                         {
-                                            case ActionType.Node:
-                                            case ActionType.None:
-                                                details = new EventButtonDetails()
-                                                {
-                                                    buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                    buttonTooltipMain = tempAction.tooltipText,
-                                                    buttonTooltipDetail = builder.ToString(),
-                                                    //use a Lambda to pass arguments to the action
-                                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
-                                                };
-                                                break;
-                                            case ActionType.NeutraliseTeam:
-                                                details = new EventButtonDetails()
-                                                {
-                                                    buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                    buttonTooltipMain = tempAction.tooltipText,
-                                                    buttonTooltipDetail = builder.ToString(),
-                                                    action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
-                                                };
-                                                break;
-                                            case ActionType.Gear:
-                                                details = new EventButtonDetails()
-                                                {
-                                                    buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                    buttonTooltipMain = tempAction.tooltipText,
-                                                    buttonTooltipDetail = builder.ToString(),
-                                                    action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
-                                                };
-                                                break;
-                                            case ActionType.Recruit:
-                                                details = new EventButtonDetails()
-                                                {
-                                                    buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                    buttonTooltipMain = tempAction.tooltipText,
-                                                    buttonTooltipDetail = builder.ToString(),
-                                                    action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails); }
-                                                };
-                                                break;
-                                            default:
-                                                Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.type \"{0}\"", actor.arc.nodeAction.type));
-                                                break;
+                                            details = new EventButtonDetails()
+                                            {
+                                                buttonTitle = tempAction.name,
+                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                buttonTooltipMain = tempAction.tooltipText,
+                                                buttonTooltipDetail = builder.ToString(),
+                                                //use a Lambda to pass arguments to the action
+                                                action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
+                                            };
+                                        }
+                                        //special case, Resistance node actions only
+                                        else
+                                        {
+                                            switch (actor.arc.nodeAction.special.name)
+                                            {
+                                                case "NeutraliseTeam":
+                                                    details = new EventButtonDetails()
+                                                    {
+                                                        buttonTitle = tempAction.name,
+                                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                        buttonTooltipMain = tempAction.tooltipText,
+                                                        buttonTooltipDetail = builder.ToString(),
+                                                        action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
+                                                    };
+                                                    break;
+                                                case "GetGear":
+                                                    details = new EventButtonDetails()
+                                                    {
+                                                        buttonTitle = tempAction.name,
+                                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                        buttonTooltipMain = tempAction.tooltipText,
+                                                        buttonTooltipDetail = builder.ToString(),
+                                                        action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
+                                                    };
+                                                    break;
+                                                case "GetRecruit":
+                                                    details = new EventButtonDetails()
+                                                    {
+                                                        buttonTitle = tempAction.name,
+                                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                        buttonTooltipMain = tempAction.tooltipText,
+                                                        buttonTooltipDetail = builder.ToString(),
+                                                        action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails); }
+                                                    };
+                                                    break;
+                                                default:
+                                                    Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.special \"{0}\"", actor.arc.nodeAction.special.name));
+                                                    break;
+                                            }
                                         }
                                     }
                                 }
