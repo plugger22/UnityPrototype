@@ -124,7 +124,7 @@ public class TargetManager : MonoBehaviour
     {
         int index, nodeArcID, totalOfType, totalOfTypewithTargets, totalActive, totalLive, totalTargets, endlessCounter, numOfTargets;
         int counter = 0;
-        bool successFlag;
+        bool doneFlag;
         //dictionary to hold list of already assigned nodeID's to prevent duplicate assignments
         Dictionary<int, List<int>> dictOfExisting = new Dictionary<int, List<int>>();
         //if not enough viable targets drop number down to what's doable
@@ -136,10 +136,10 @@ public class TargetManager : MonoBehaviour
         for(int i = 0; i < numOfTargets; i++)
         {
             //successflag breaks out of while loop if a suitable node is found
-            successFlag = false;
+            doneFlag = false;
             endlessCounter = 0;
             //keep chosing a node until you find a suitable one (max 5 goes)
-            while (successFlag == false)
+            while (doneFlag == false)
             {
                 //get a random target
                 index = Random.Range(0, listOfPossibleTargets.Count);
@@ -212,31 +212,43 @@ public class TargetManager : MonoBehaviour
                                         Debug.LogError(string.Format("Invalid status \"{0}\"{1}", status, "\n"));
                                         break;
                                 }
-                                successFlag = true;
+                                doneFlag = true;
                             }
                             else
-                            { Debug.LogWarning(string.Format("No available nodes left after pruning for nodeArcID {0}", nodeArcID)); successFlag = true; }
+                            {
+                                Debug.LogWarning(string.Format("No available nodes left after pruning for nodeArcID {0}{1}", nodeArcID, "\n"));
+                                doneFlag = true;
+                            }
                         }
                         else
                         {
                             endlessCounter++;
                             if (endlessCounter > 5)
                             {
-                                successFlag = true;
-                                Debug.LogWarning(string.Format("TargetManager: Breaking out of loop after 5 iterations, for type \"{0}\"", target.nodeArc.name));
+                                Debug.LogWarning(string.Format("TargetManager: Breaking out of loop after 5 iterations, for type \"{0}\"{1}", target.nodeArc.name, "\n"));
+                                doneFlag = true;
                             }
                             Debug.LogError(string.Format("No nodes available of type {0}. Unable to assign target{1}", target.nodeArc.name, "\n"));
                         }
                     }
-                    else { Debug.LogWarning(string.Format("TargetManager: Insufficient nodes of type \"{0}\" (zero or less)", target.nodeArc.name)); }
+                    else
+                    {
+                        Debug.LogWarning(string.Format("TargetManager: Insufficient nodes of type \"{0}\" (zero or less){1}", target.nodeArc.name, "\n"));
+                        doneFlag = true;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("TargetManager: There are no \"{0}\" nodes without targets remaining{1}", target.nodeArc.name,"\n"));
+                    doneFlag = true;
                 }
             }
         }
         //check tally
         if (counter == 0)
-        { Debug.LogError("No nodes were assigned Targets"); }
+        { Debug.LogError(string.Format("No nodes were assigned Targets{0}", "\n")); }
         else if (counter < StartTargets)
-        { Debug.LogWarning("TargetManager: Less than the required number of starting nodes assigned targets"); }
+        { Debug.LogWarning(string.Format("TargetManager: Less than the required number of starting nodes assigned targets{0}", "\n")); }
     }
 
 
