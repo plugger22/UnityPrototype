@@ -21,7 +21,7 @@ public class TurnManager : MonoBehaviour
     [HideInInspector] public MetaLevel metaLevel;
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthorityState authorityState;
-    [HideInInspector] public Side turnSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
+    [HideInInspector] public Side currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
 
     [SerializeField, HideInInspector]
     private int _turn;
@@ -50,12 +50,10 @@ public class TurnManager : MonoBehaviour
         metaLevel = MetaLevel.City;
         resistanceState = ResistanceState.Normal;
         authorityState = AuthorityState.Normal;
+        //current side
+        currentSide = GameManager.instance.sideScript.PlayerSide;
         //event Listeners
         EventManager.instance.AddListener(EventType.NewTurn, OnEvent);
-        /*EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnFinal, OnEvent);*/
         EventManager.instance.AddListener(EventType.UseAction, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
         EventManager.instance.AddListener(EventType.ExitGame, OnEvent);
@@ -79,18 +77,6 @@ public class TurnManager : MonoBehaviour
             case EventType.ExitGame:
                 Quit();
                 break;
-            /*case EventType.EndTurnFinal:
-                EndTurnFinal();
-                break;
-            case EventType.StartTurnEarly:
-                StartTurnEarly();
-                break;
-            case EventType.StartTurnLate:
-                StartTurnLate();
-                break;
-            case EventType.StartTurnFinal:
-                StartTurnFinal();
-                break;*/
             case EventType.UseAction:
                 UseAction();
                 break;
@@ -129,7 +115,6 @@ public class TurnManager : MonoBehaviour
             { finishedProcessing = true; }
         }
         while (finishedProcessing == false);
-        
     }
 
     /// <summary>
@@ -162,10 +147,10 @@ public class TurnManager : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide)
         {
             case Side.Resistance:
-                turnSide = Side.Resistance;
+                currentSide = Side.Resistance;
                 break;
             case Side.Authority:
-                turnSide = Side.Authority;
+                currentSide = Side.Authority;
                 break;
             case Side.None:
                 //It's an AI vs. AI game so you need to go straight to EndTurnAI as there will be no player interaction
@@ -186,19 +171,19 @@ public class TurnManager : MonoBehaviour
         {
             case Side.Resistance:
                 //process Authority AI
-                turnSide = Side.Authority;
+                currentSide = Side.Authority;
                 GameManager.instance.aiScript.ProcessAISideAuthority();
                 break;
             case Side.Authority:
                 //process Resistance AI
-                turnSide = Side.Resistance;
+                currentSide = Side.Resistance;
                 GameManager.instance.aiScript.ProcessAISideResistance();
                 break;
             case Side.None:
                 //Process both sides AI, resistance first
-                turnSide = Side.Resistance;
+                currentSide = Side.Resistance;
                 GameManager.instance.aiScript.ProcessAISideResistance();
-                turnSide = Side.Authority;
+                currentSide = Side.Authority;
                 GameManager.instance.aiScript.ProcessAISideAuthority();
                 break;
         }
@@ -248,7 +233,7 @@ public class TurnManager : MonoBehaviour
         else if (_actionsCurrent == _actionsLimit)
         {
             //end of turn
-            EventManager.instance.PostNotification(EventType.NewTurn, this);
+            ProcessNewTurn();
         }
     }
 

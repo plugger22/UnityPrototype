@@ -27,7 +27,7 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.turnSide == Side.Resistance) { return _renownResistance; }
+                if (GameManager.instance.turnScript.currentSide == Side.Resistance) { return _renownResistance; }
                 else {return _renownAuthority; }
             }
         }
@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.turnSide == Side.Resistance) { _renownResistance = value; }
+                if (GameManager.instance.turnScript.currentSide == Side.Resistance) { _renownResistance = value; }
                 else { _renownAuthority = value; }
             }
         }

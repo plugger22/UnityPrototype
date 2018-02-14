@@ -207,10 +207,10 @@ public class DataManager : MonoBehaviour
             UnityEngine.Object effectObject = AssetDatabase.LoadAssetAtPath(path, typeof(Effect));
             //assign a zero based Unique ID number
             Effect effect = effectObject as Effect;
-            effect.EffectID = counter++;
+            effect.effectID = counter++;
             //add to dictionary
             try
-            { dictOfEffects.Add(effect.EffectID, effect); }
+            { dictOfEffects.Add(effect.effectID, effect); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Effect (Null)"); counter--; }
             catch (ArgumentException)

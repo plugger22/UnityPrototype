@@ -114,7 +114,7 @@ public class TeamManager : MonoBehaviour
     private void EndTurn()
     {
         //set turnSide 
-        GameManager.instance.turnScript.turnSide = Side.Authority;
+        GameManager.instance.turnScript.currentSide = Side.Authority;
         //decrement all timers in OnMap pool
         List<int> teamPool = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
         if (teamPool != null)
@@ -141,7 +141,7 @@ public class TeamManager : MonoBehaviour
     {
         List<int> teamPool = new List<int>();
         //set turnSide 
-        GameManager.instance.turnScript.turnSide = Side.Authority;
+        GameManager.instance.turnScript.currentSide = Side.Authority;
         //check InTransit pool -> move any teams here to the Reserve pool -> Note: do this BEFORE checking OnMap pool below
         teamPool.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit));
         if (teamPool != null)

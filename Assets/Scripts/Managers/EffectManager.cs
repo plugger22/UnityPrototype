@@ -112,40 +112,25 @@ public class EffectManager : MonoBehaviour
                     Debug.LogError(string.Format("Invalid nodeID \"{0}\"", nodeID));
                     errorFlag = true;
                 }
-                //authority specific data
-                if (effect.side == Side.Authority)
+                //Get actor if required
+                if (actorSlotID != -1)
                 {
-                    if (actorSlotID != -1)
-                    {
-                        //get actor
-                        actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
-                        if (actor != null)
-                        {
-                            if (teamArcID > -1)
-                            {
-                                //get team
-                                teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
-                                if (teamArc == null)
-                                {
-                                    Debug.LogError(string.Format("Invalid TeamArc (null) for teamArcID \"{0}\" -> Criteria check cancelled", teamArcID));
-                                    errorFlag = true;
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogError(string.Format("Invalid teamArcID \"{0}\" -> Criteria check cancelled", teamArcID));
-                                errorFlag = true;
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogError(string.Format("Invalid Actor (null) for actorSlotID \"{0}\" -> Criteria check cancelled", actorSlotID));
-                            errorFlag = true;
-                        }
-                    }
-                    else
+                    //get actor
+                    actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
+                    if (actor == null)
                     {
                         Debug.LogError("Invalid actorSlotID -> Criteria Check cancelled");
+                        errorFlag = true;
+                    }
+                }
+                //Get TeamArc if required
+                if (teamArcID > -1)
+                {
+                    //get team
+                    teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
+                    if (teamArc == null)
+                    {
+                        Debug.LogError(string.Format("Invalid TeamArc (null) for teamArcID \"{0}\" -> Criteria check cancelled", teamArcID));
                         errorFlag = true;
                     }
                 }
@@ -154,184 +139,117 @@ public class EffectManager : MonoBehaviour
                 {
                     foreach (Criteria criteria in effect.listOfCriteria)
                     {
-                        switch (GameManager.instance.sideScript.PlayerSide)
+                        switch (criteria.effectCriteria.name)
                         {
-                            case Side.Resistance:
-                                //check effect is the correct side
-                                if (effect.side == Side.Resistance)
-                                {
-                                    //
-                                    // - - - Resistance - - - 
-                                    //
-                                    switch (criteria.effectCriteria.name)
-                                    {
-                                        case "NodeSecurityMin":
-                                            val = GameManager.instance.nodeScript.minNodeValue;
-                                            compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "Security " + compareTip);
-                                            }
-                                            break;
-                                        case "NodeStabilityMin":
-                                            val = GameManager.instance.nodeScript.minNodeValue;
-                                            compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "Stability " + compareTip);
-                                            }
-                                            break;
-                                        case "NodeSupportMax":
-                                            val = GameManager.instance.nodeScript.maxNodeValue;
-                                            compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "Support " + compareTip);
-                                            }
-                                            break;
-                                        case "NumRecruitsCurrent":
-                                            val = GameManager.instance.dataScript.GetNumOfActorsInReserve();
-                                            compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.comparison);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "maxxed Recruit allowance");
-                                            }
-                                            break;
-                                        case "NumTeamsMin":
-                                            val = GameManager.instance.teamScript.minTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "no Teams present");
-                                            }
-                                            break;
-                                        case "NumTeamsMax":
-                                            val = GameManager.instance.teamScript.maxTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "Max teams present");
-                                            }
-                                            break;
-                                        case "NumTracers":
-                                            if (node.isTracer == true)
-                                            { BuildString(result, "Tracer already present"); }
-                                            break;
-                                        case "TargetInfoMax":
-                                            val = GameManager.instance.targetScript.maxTargetInfo;
-                                            compareTip = ComparisonCheck(val, node.targetID, criteria.comparison);
-                                            if (compareTip != null)
-                                            { BuildString(result, "Full Info already"); }
-                                            break;
-                                        case "TargetPresent":
-                                            //check that a target is present at the node
-                                            if (node.targetID < 0)
-                                            { BuildString(result, "No Target present"); }
-                                            break;
-                                        case "NumGearMax":
-                                            //Note: effect criteria value is ignored in this case
-                                            val = GameManager.instance.gearScript.maxNumOfGear;
-                                            compareTip = ComparisonCheck(val, GameManager.instance.playerScript.GetNumOfGear(), criteria.comparison);
-                                            if (compareTip != null)
-                                            { BuildString(result, "maxxed Gear Allowance"); }
-                                            break;
-                                        case "GearAvailability":
-                                            //checks to see if at least 1 piece of unused common gear is available
-                                            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
-                                            if (tempCommonGear.Count > 0)
-                                            {
-                                                //remove from lists any gear that the player currently has
-                                                List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
-                                                int gearID;
-                                                if (tempPlayerGear.Count > 0)
-                                                {
-                                                    for (int i = 0; i < tempPlayerGear.Count; i++)
-                                                    {
-                                                        gearID = tempPlayerGear[i];
-                                                        if (tempCommonGear.Exists(id => id == gearID) == true)
-                                                        { tempCommonGear.Remove(gearID); }
-                                                    }
-                                                }
-                                                if (tempCommonGear.Count == 0)
-                                                { BuildString(result, "No Gear available"); }
-                                            }
-                                            else { BuildString(result, "No Gear available"); }
-                                            break;
-                                        case "RebelCauseMin":
-                                            val = GameManager.instance.rebelScript.resistanceCauseMin;
-                                            compareTip = ComparisonCheck(val, GameManager.instance.rebelScript.resistanceCause, criteria.comparison);
-                                            if (compareTip != null)
-                                            {
-                                                BuildString(result, "Rebel Cause  " + compareTip);
-                                            }
-                                            break;
-                                        default:
-                                            BuildString(result, "Error!");
-                                            Debug.LogError(string.Format("Invalid Resistance criteriaEffect \"{0}\"", criteria.effectCriteria.name));
-                                            errorFlag = true;
-                                            break;
-                                    }
-                                }
-                                else { Debug.LogError("EffectManager: side NOT Resistance -> Criteria check cancelled"); }
+                            case "NodeSecurityMin":
+                                val = GameManager.instance.nodeScript.minNodeValue;
+                                compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "Security " + compareTip); }
                                 break;
-                            case Side.Authority:
-                                //check effect is the correct side
-                                if (effect.side == Side.Authority)
+                            case "NodeStabilityMin":
+                                val = GameManager.instance.nodeScript.minNodeValue;
+                                compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "Stability " + compareTip); }
+                                break;
+                            case "NodeSupportMax":
+                                val = GameManager.instance.nodeScript.maxNodeValue;
+                                compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "Support " + compareTip); }
+                                break;
+                            case "NumRecruitsCurrent":
+                                val = GameManager.instance.dataScript.GetNumOfActorsInReserve();
+                                compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "maxxed Recruit allowance"); }
+                                break;
+                            case "NumTeamsMin":
+                                val = GameManager.instance.teamScript.minTeamsAtNode;
+                                compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "no Teams present"); }
+                                break;
+                            case "NumTeamsMax":
+                                val = GameManager.instance.teamScript.maxTeamsAtNode;
+                                compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "Max teams present"); }
+                                break;
+                            case "NumTracers":
+                                if (node.isTracer == true)
+                                { BuildString(result, "Tracer already present"); }
+                                break;
+                            case "TargetInfoMax":
+                                val = GameManager.instance.targetScript.maxTargetInfo;
+                                compareTip = ComparisonCheck(val, node.targetID, criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "Full Info already"); }
+                                break;
+                            case "TargetPresent":
+                                //check that a target is present at the node
+                                if (node.targetID < 0)
+                                { BuildString(result, "No Target present"); }
+                                break;
+                            case "NumGearMax":
+                                //Note: effect criteria value is ignored in this case
+                                val = GameManager.instance.gearScript.maxNumOfGear;
+                                compareTip = ComparisonCheck(val, GameManager.instance.playerScript.GetNumOfGear(), criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "maxxed Gear Allowance"); }
+                                break;
+                            case "GearAvailability":
+                                //checks to see if at least 1 piece of unused common gear is available
+                                List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
+                                if (tempCommonGear.Count > 0)
                                 {
-                                    //
-                                    // - - - Authority - - -
-                                    //
-                                    switch (criteria.effectCriteria.name)
+                                    //remove from lists any gear that the player currently has
+                                    List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
+                                    int gearID;
+                                    if (tempPlayerGear.Count > 0)
                                     {
-                                        case "NumTeamsMin":
-                                            //there is a minimum limit to the number of teams that can be present at a node
-                                            val = GameManager.instance.teamScript.minTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                            if (compareTip != null)
-                                            { BuildString(result, "No teams present"); }
-                                            break;
-                                        case "NumTeamsMax":
-                                            //there is a maximum limit to the number of teams that can be present at a node
-                                            val = GameManager.instance.teamScript.maxTeamsAtNode;
-                                            compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                            if (compareTip != null)
-                                            { BuildString(result, "Max teams present"); }
-                                            break;
-                                        case "TeamActorAbility":
-                                            //actor can only have a number of teams OnMap equal to their ability at any time
-                                            if (actor.CheckNumOfTeams() >= actor.datapoint2)
-                                            { BuildString(result, "Actor Ability exceeded"); }
-                                            break;
-                                        case "TeamIdentical":
-                                            //there can only be one team of a type at a node
-                                            if (node.CheckTeamPresent(teamArcID) > -1)
-                                            { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
-                                            break;
-                                        case "TeamPreferred":
-                                            //there must be a spare team in the reserve pool of the actors preferred typ
-                                            if (GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve) < 1)
-                                            { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
-                                            break;
-                                        case "TeamAny":
-                                            //there must be a spare team of any type in the reserve pool
-                                            if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
-                                            { BuildString(result, string.Format("No Teams available", teamArc.name)); }
-                                            break;
-                                        default:
-                                            BuildString(result, "Error!");
-                                            Debug.LogWarning(string.Format("Invalid Authority effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
-                                            errorFlag = true;
-                                            break;
+                                        for (int i = 0; i < tempPlayerGear.Count; i++)
+                                        {
+                                            gearID = tempPlayerGear[i];
+                                            if (tempCommonGear.Exists(id => id == gearID) == true)
+                                            { tempCommonGear.Remove(gearID); }
+                                        }
                                     }
+                                    if (tempCommonGear.Count == 0)
+                                    { BuildString(result, "No Gear available"); }
                                 }
-                                else
-                                {
-                                    Debug.LogError("EffectManager: side NOT Authority -> Criteria check cancelled");
-                                    errorFlag = true;
-                                }
+                                else { BuildString(result, "No Gear available"); }
+                                break;
+                            case "RebelCauseMin":
+                                val = GameManager.instance.rebelScript.resistanceCauseMin;
+                                compareTip = ComparisonCheck(val, GameManager.instance.rebelScript.resistanceCause, criteria.comparison);
+                                if (compareTip != null)
+                                { BuildString(result, "Rebel Cause  " + compareTip); }
+                                break;
+                            case "TeamActorAbility":
+                                //actor can only have a number of teams OnMap equal to their ability at any time
+                                if (actor.CheckNumOfTeams() >= actor.datapoint2)
+                                { BuildString(result, "Actor Ability exceeded"); }
+                                break;
+                            case "TeamIdentical":
+                                //there can only be one team of a type at a node
+                                if (node.CheckTeamPresent(teamArcID) > -1)
+                                { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
+                                break;
+                            case "TeamPreferred":
+                                //there must be a spare team in the reserve pool of the actors preferred typ
+                                if (GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve) < 1)
+                                { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
+                                break;
+                            case "TeamAny":
+                                //there must be a spare team of any type in the reserve pool
+                                if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
+                                { BuildString(result, string.Format("No Teams available", teamArc.name)); }
                                 break;
                             default:
-                                Debug.LogError(string.Format("Invalid Side \"{0}\" -> effect criteria check cancelled", GameManager.instance.sideScript.PlayerSide));
+                                BuildString(result, "Error!");
+                                Debug.LogWarning(string.Format("Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                 errorFlag = true;
                                 break;
                         }
@@ -343,7 +261,7 @@ public class EffectManager : MonoBehaviour
             }
         }
         else
-        { Debug.LogError("Invalid Effect (Null) -> effect criteria check cancelled");  }
+        { Debug.LogError("Invalid Effect (Null) -> effect criteria check cancelled"); }
         if (result.Length > 0)
         { return result.ToString(); }
         else { return null; }
@@ -897,64 +815,78 @@ public class EffectManager : MonoBehaviour
         {
             //Current Node only
             case "NodeCurrent":
-                switch (effect.operand.name)
+                if (effect.operand != null)
                 {
-                    case "Add":
-                        value = effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the situation{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "RevealTracers":
-                                effectResolve.topText = string.Format("{0}The security system has been scanned for intruders{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealSpiders":
-                                effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the security system{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealContacts":
-                                effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Resistance connections revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealTeams":
-                                effectResolve.topText = string.Format("{0}The local grapevine is alive and well{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Enemy teams are revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                        }
-                        break;
-                    case "Subtract":
-                        value = -1 * effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                        }
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                        effectResolve.isError = true;
-                        break;
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            value = effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}The security system has been swept and strengthened{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the situation{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                            }
+                            break;
+                        case "Subtract":
+                            value = -1 * effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}The security system has been successfully hacked{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                            }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    //null operand -> Reveal 'x' operation
+                    switch (effect.outcome.name)
+                    {
+                        case "RevealTracers":
+                            effectResolve.topText = string.Format("{0}The security system has been scanned for intruders{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealSpiders":
+                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the security system{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealContacts":
+                            effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Resistance connections revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealTeams":
+                            effectResolve.topText = string.Format("{0}The local grapevine is alive and well{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Enemy teams are revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
                 }
                 effectProcess.value = value;
                 //Ongoing effect
@@ -965,64 +897,78 @@ public class EffectManager : MonoBehaviour
                 break;
             //Neighbouring Nodes
             case "NodeNeighbours":
-                switch (effect.operand.name)
+                if (effect.operand != null)
                 {
-                    case "Add":
-                        value = effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}Neighbouring security systems have been swept and strengthened{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised neighbouring nodes{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in neighbouring nodes{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node and Neighbours Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "RevealTracers":
-                                effectResolve.topText = string.Format("{0}The neighbouring security systems have been scanned for intruders{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealSpiders":
-                                effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the neighbouring security systems{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Neighbouring Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealContacts":
-                                effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Neighbouring Resistance connections revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealTeams":
-                                effectResolve.topText = string.Format("{0}The local neighbourhood grapevine is alive and well{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Neighbouring Enemy teams are revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                        }
-                        break;
-                    case "Subtract":
-                        value = -1 * effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}Neighbouring security systems have been successfully hacked{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the neighbouring nodes{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity in neighbouring nodes{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}Node and Neighbour Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                        }
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                        effectResolve.isError = true;
-                        break;
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            value = effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}Neighbouring security systems have been swept and strengthened{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised neighbouring nodes{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in neighbouring nodes{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node and Neighbours Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                            }
+                            break;
+                        case "Subtract":
+                            value = -1 * effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}Neighbouring security systems have been successfully hacked{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Neighbouring Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the neighbouring nodes{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node and Neighbours Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity in neighbouring nodes{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node and Neighbour Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                            }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    //null operand -> Reveal 'x' operation
+                    switch (effect.outcome.name)
+                    {
+                        case "RevealTracers":
+                            effectResolve.topText = string.Format("{0}The neighbouring security systems have been scanned for intruders{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealSpiders":
+                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the neighbouring security systems{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Neighbouring Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealContacts":
+                            effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Neighbouring Resistance connections revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealTeams":
+                            effectResolve.topText = string.Format("{0}The local neighbourhood grapevine is alive and well{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Neighbouring Enemy teams are revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
                 }
                 effectProcess.value = value;
                 //Ongoing effect
@@ -1041,64 +987,94 @@ public class EffectManager : MonoBehaviour
                 break;
             //All Nodes
             case "NodeAll":
-                switch (effect.operand.name)
+                if (effect.operand != null)
                 {
-                    case "Add":
-                        value = effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}All security systems have been swept and strengthened{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the city wide situation{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Nodes Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels throughout the city{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "RevealTracers":
-                                effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealSpiders":
-                                effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealContacts":
-                                effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Resistance connections revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                            case "RevealTeams":
-                                effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Enemy teams are revealed{1}", colourOutcome2, colourEnd);
-                                break;
-                        }
-                        break;
-                    case "Subtract":
-                        value = -1 * effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}All security systems have been successfully hacked{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the city{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Nodes Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout the city{1}", colourDefault, colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Nodes Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
-                                break;
-                        }
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                        effectResolve.isError = true;
-                        break;
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            value = effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}All security systems have been swept and strengthened{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Nodes Security +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the city wide situation{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Nodes Stability +{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels throughout the city{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                                case "RevealTracers":
+                                    effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
+                                    break;
+                                case "RevealSpiders":
+                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
+                                    break;
+                                case "RevealContacts":
+                                    effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Resistance connections revealed{1}", colourOutcome2, colourEnd);
+                                    break;
+                                case "RevealTeams":
+                                    effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Enemy teams are revealed{1}", colourOutcome2, colourEnd);
+                                    break;
+                            }
+                            break;
+                        case "Subtract":
+                            value = -1 * effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}All security systems have been successfully hacked{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Nodes Security -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the city{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Nodes Stability -{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout the city{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Nodes Support -{1}{2}", colourOutcome2, effect.value, colourEnd);
+                                    break;
+                            }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    //null operand -> Reveal 'x' operation
+                    switch (effect.outcome.name)
+                    {
+                        case "RevealTracers":
+                            effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}All Resistance Tracers revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealSpiders":
+                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}All Spiders and Teams revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealContacts":
+                            effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}All Resistance connections revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        case "RevealTeams":
+                            effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}All Enemy teams are revealed{1}", colourOutcome2, colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
                 }
                 effectProcess.value = value;
                 //Ongoing effect
@@ -1121,48 +1097,78 @@ public class EffectManager : MonoBehaviour
                 break;
             //Nodes of the Same Arc type
             case "NodeSameArc":
-                switch (effect.operand.name)
+                if (effect.operand != null)
                 {
-                    case "Add":
-                        value = effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been swept and strengthened{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All {1} nodes Security +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the {1} situation{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                                effectResolve.bottomText = string.Format("{0}{1}Node Stability +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
-                                break;
-                        }
-                        break;
-                    case "Subtract":
-                        value = -1 * effect.value;
-                        switch (effect.outcome.name)
-                        {
-                            case "NodeSecurity":
-                                effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                                effectResolve.bottomText = string.Format("{0}All {1} nodes Security -{2}{3}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
-                                break;
-                            case "NodeStability":
-                                effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                                effectResolve.bottomText = string.Format("{0}{1} Nodes Stability -{1}{2}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
-                                break;
-                            case "NodeSupport":
-                                effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                                effectResolve.bottomText = string.Format("{0}{1} Nodes Support -{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
-                                break;
-                        }
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                        effectResolve.isError = true;
-                        break;
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            value = effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been swept and strengthened{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All {1} nodes Security +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the {1} situation{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1}Node Stability +{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourOutcome1, effect.value, colourEnd);
+                                    break;
+                            }
+                            break;
+                        case "Subtract":
+                            value = -1 * effect.value;
+                            switch (effect.outcome.name)
+                            {
+                                case "NodeSecurity":
+                                    effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}All {1} nodes Security -{2}{3}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                    break;
+                                case "NodeStability":
+                                    effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1} Nodes Stability -{1}{2}", colourOutcome1, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                    break;
+                                case "NodeSupport":
+                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1} Nodes Support -{2}{3}", colourOutcome2, node.Arc.name.ToUpper(), effect.value, colourEnd);
+                                    break;
+                            }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    //null operand -> Reveal 'x' operation
+                    switch (effect.outcome.name)
+                    {
+                        case "RevealTracers":
+                            effectResolve.topText = string.Format("{0}{1} security systems have been scanned for intruders{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                            effectResolve.bottomText = string.Format("{0}{1} Resistance Tracers revealed{2}", colourOutcome2, node.Arc.name.ToUpper(), colourEnd);
+                            break;
+                        case "RevealSpiders":
+                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into {1}security systems{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                            effectResolve.bottomText = string.Format("{0}{1} Spiders and Teams revealed{2}", colourOutcome2, node.Arc.name.ToUpper(), colourEnd);
+                            break;
+                        case "RevealContacts":
+                            effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                            effectResolve.bottomText = string.Format("{0}{1} Resistance connections revealed{2}", colourOutcome2, node.Arc.name.ToUpper(), colourEnd);
+                            break;
+                        case "RevealTeams":
+                            effectResolve.topText = string.Format("{0}The {1} grapevine is alive and well{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                            effectResolve.bottomText = string.Format("{0}{1} Enemy teams are revealed{2}", colourOutcome2, node.Arc.name.ToUpper(), colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                            effectResolve.isError = true;
+                            break;
+                    }
                 }
                 effectProcess.value = value;
                 //Ongoing effect
