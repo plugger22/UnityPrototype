@@ -249,7 +249,7 @@ public class Node : MonoBehaviour
             while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
             {
                 List<string> activeList = GetNodeActors();
-                List<string> effectsList = GetOngoingEffects();
+                List<EffectDataTooltip> effectsList = GetOngoingEffects();
                 List<string> teamList = new List<string>();
                 if (listOfTeams.Count > 0)
                 {
@@ -268,13 +268,14 @@ public class Node : MonoBehaviour
                     isActor = isContact,
                     isActorKnown = isActorKnown,
                     isTeamKnown = isTeamKnown,
-                    arrayOfStats = new int[] { Stability, Support, Security },
+                    arrayOfStats = GetStats(),
                     listOfActive = activeList,
                     listOfEffects = effectsList,
                     listOfTeams = teamList,
                     listOfTargets = targetList,
                     tooltipPos = transform.position
                     };
+                
                 GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
                 yield return null;
             }
@@ -428,13 +429,18 @@ public class Node : MonoBehaviour
     /// returns a list of ongoing effects currently impacting the node, returns empty list if none
     /// </summary>
     /// <returns></returns>
-    public List<string> GetOngoingEffects()
+    public List<EffectDataTooltip> GetOngoingEffects()
     {
-        List<string> tempList = new List<string>();
+        List<EffectDataTooltip> tempList = new List<EffectDataTooltip>();
         if (listOfOngoingEffects.Count > 0)
         {
             foreach (var ongoingEffect in listOfOngoingEffects)
-            { tempList.Add(ongoingEffect.text); }
+            {
+                EffectDataTooltip data = new EffectDataTooltip();
+                data.text = ongoingEffect.text;
+                data.type = ongoingEffect.type;
+                tempList.Add(data);
+            }
         }
         return tempList;
     }
@@ -759,6 +765,30 @@ public class Node : MonoBehaviour
             }
         }
         return value;
+    }
+
+    /// <summary>
+    /// //stats are reversed for Authority FOR DISPLAY ONLY (a stat of 0 for resistance is very bad but it shows as a stat of 3, very good, for the authority side)
+    /// </summary>
+    /// <returns></returns>
+    private int[] GetStats()
+    {
+        int[] arrayOfStats;
+        switch (GameManager.instance.sideScript.PlayerSide)
+        {
+            case Side.Resistance:
+                arrayOfStats = new int[] { Stability, Support, Security };
+                break;
+            case Side.Authority:
+                arrayOfStats = new int[] { 3 - Stability, 3 - Support, 3 - Security };
+                break;
+            default:
+                arrayOfStats = new int[] { Stability, Support, Security };
+                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
+                break;
+        }
+
+        return arrayOfStats;
     }
 
     //place methods above here

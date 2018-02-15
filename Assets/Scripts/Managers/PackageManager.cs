@@ -28,7 +28,7 @@ namespace packageAPI
         public bool isTeamKnown;
         public int[] arrayOfStats;
         public List<string> listOfActive;
-        public List<string> listOfEffects;
+        public List<EffectDataTooltip> listOfEffects;
         public List<string> listOfTeams;
         public List<string> listOfTargets;
         public Vector3 tooltipPos;
@@ -96,6 +96,17 @@ namespace packageAPI
         public string text;
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public EffectOutcome outcome;
+        public EffectType type;                                           //benefit, or otherwise, of effect from POV of Resistance
+    }
+
+
+    /// <summary>
+    /// used to pass data from Node to NodeTooltip.cs for display of Ongoing effects in the correct colour
+    /// </summary>
+    public class EffectDataTooltip
+    {
+        public string text;
+        public EffectType type;
     }
 
 }

@@ -99,9 +99,21 @@ public class TooltipNode : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        //output colours for good and bad depend on player side
+        switch (GameManager.instance.sideScript.PlayerSide)
+        {
+            case Side.Resistance:
+                colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+                colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+                break;
+            case Side.Authority:
+                colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+                colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+                break;
+        }
+        //colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        //colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
@@ -144,7 +156,6 @@ public class TooltipNode : MonoBehaviour
         //set up tooltipNode object
         nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd);
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);
-
         //
         // - - - Actor Contacts - - -
         //
@@ -207,14 +218,31 @@ public class TooltipNode : MonoBehaviour
         //
         if (data.listOfEffects.Count > 0)
         {
+            string effectText = "Unknown";
             ongoingEffects.gameObject.SetActive(true);
             dividerStats.gameObject.SetActive(true);
             StringBuilder effectBuilder = new StringBuilder();
             effectBuilder.Append(string.Format("{0}Ongoing Effects{1}", colourDefault, colourEnd));
             for (int i = 0; i < data.listOfEffects.Count; i++)
             {
+                switch(data.listOfEffects[i].type.name)
+                {
+                    case "Good":
+                        effectText = string.Format("{0}{1}{2}", colourGood, data.listOfEffects[i].text, colourEnd);
+                        break;
+                    case "Neutral":
+                        effectText = string.Format("{0}{1}{2}", colourNeutral, data.listOfEffects[i].text, colourEnd);
+                        break;
+                    case "Bad":
+                        effectText = string.Format("{0}{1}{2}", colourBad, data.listOfEffects[i].text, colourEnd);
+                        break;
+                    default:
+                        effectText = string.Format("{0}{1}{2}", colourDefault, data.listOfEffects[i].text, colourEnd);
+                        Debug.LogError(string.Format("Invalid ongoingEffect.type \"{0}\"", data.listOfEffects[i].type.name));
+                        break;
+                }
                 effectBuilder.AppendLine();
-                effectBuilder.Append(data.listOfEffects[i]);
+                effectBuilder.Append(effectText);
             }
             ongoingEffects.text = effectBuilder.ToString();
         }

@@ -675,7 +675,23 @@ public class ActorManager : MonoBehaviour
                                             if (builder.Length > 0) { builder.AppendLine(); }
                                             if (effect.outcome.name.Equals("Renown") == false)
                                             {
-                                                builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, effect.description, colourEnd));
+                                                //sort out colour, remember effect.type is from POV of resistance so good will be bad for authority
+                                                switch (effect.type.name)
+                                                {
+                                                    case "Good":
+                                                        builder.Append(string.Format("{0}{1}{2}", colourBadEffect, effect.description, colourEnd));
+                                                        break;
+                                                    case "Neutral":
+                                                        builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, effect.description, colourEnd));
+                                                        break;
+                                                    case "Bad":
+                                                        builder.Append(string.Format("{0}{1}{2}", colourGoodEffect, effect.description, colourEnd));
+                                                        break;
+                                                    default:
+                                                        builder.Append(string.Format("{0}{1}{2}", colourDefault, effect.description, colourEnd));
+                                                        Debug.LogError(string.Format("Invalid effect.type \"{0}\"", effect.type.name));
+                                                        break;
+                                                }
                                                 //if an ANY TEAM action then display available teams
                                                 if (isAnyTeam == true)
                                                 {

@@ -783,7 +783,7 @@ public void InitialiseTeams()
                     if (node != null)
                     {
                         //need to do prior to move team as data will be reset
-                        textTop = GameManager.instance.effectScript.SetTopText(team.TeamID, false);
+                        textTop = GameManager.instance.effectScript.SetTopTeamText(team.TeamID, false);
                         textBottom = "The team will spend one turn in Transit and be available thereafter";
                         int actorID = -1;
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);

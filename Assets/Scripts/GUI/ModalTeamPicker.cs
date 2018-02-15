@@ -463,10 +463,10 @@ public class ModalTeamPicker : MonoBehaviour
         bool successFlag = true;
         if (teamIDSelected > -1)
         {
-            details.textTop = GameManager.instance.effectScript.SetTopText(teamIDSelected);
+            details.textTop = GameManager.instance.effectScript.SetTopTeamText(teamIDSelected);
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, Side.Authority);
             if (actor != null)
-            { details.textBottom = GameManager.instance.effectScript.SetBottomText(actor); }
+            { details.textBottom = GameManager.instance.effectScript.SetBottomTeamText(actor); }
             else { successFlag = false; }
             Team team = GameManager.instance.dataScript.GetTeam(teamIDSelected);
             if (team != null)
