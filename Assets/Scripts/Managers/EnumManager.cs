@@ -96,54 +96,6 @@ namespace gameAPI
     }
 
     //
-    // - - - Effects - - -       
-    //
-
-    //* * * WARNING: changing / deleting entries can mess up the Effect SO's * * * 
-
-    //public enum EffectTypeEnum { None, Good, Neutral, Bad}
-    //public enum EffectDurationEnum { Single, Ongoing}
-    //public enum EffectCategory { Normal, AuthorityTeam, Target }
-    /*public enum EffectApplyEnum {
-        None,
-        //Node
-        NodeCurrent,
-        NodeNeighbours,
-        NodeSameArc,
-        NodeAll,
-        //Connections
-        ConnectionCurrent,
-        ConnectionNeighbours,
-        ConnectionSameArc,
-        ConnectionAll
-    }*/
-    /*public enum EffectCriteriaEnum {
-        None,
-        //resistance
-        NodeStability, NodeSecurity, NodeSupport,
-        NumRecruits, NumTeams, NumTracers, NumGear, GearAvailability,
-        TargetInfo, TargetPresent,
-        RebelCause,
-        //authority
-        ActorAbility, TeamIdentical, TeamPreferred, TeamAny
-    }*/
-    /*public enum EffectOutcomeEnum {
-        None,
-        //resistance
-        Stability, Security, Support,
-        Recruit, NeutraliseTeam, Tracer, Gear, TargetInfo, SpreadInstability,
-        RebelCause,
-        Invisibility,
-        //both
-        Renown,
-        //authority
-        AnyTeam, CivilTeam, DamageTeam, ProbeTeam, MediaTeam, ControlTeam, ErasureTeam, SpiderTeam,
-        //assorted
-        RevealSpiders, RevealTeams, RevealTracers, RevealActors,
-        ConnectionSecurity
-    }*/
-
-    //
     // - - - Teams - - -
     //
     //public enum TeamType { None, Civil, Damage, Probe, Media, Control, Erasure, Spider} -> not needed

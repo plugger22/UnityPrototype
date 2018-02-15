@@ -72,8 +72,8 @@ public class EffectManager : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        //colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        //colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -334,15 +334,33 @@ public class EffectManager : MonoBehaviour
         //valid effect?
         if (effect != null)
         {
+            //sort out colour based on type (which is effect benefit from POV of Resistance)
+            string colourEffect = colourDefault;
+            switch (effect.type.name)
+            {
+                case "Good":
+                    colourEffect = colourGood;
+                    break;
+                case "Neutral":
+                    colourEffect = colourNeutral;
+                    break;
+                case "Bad":
+                    colourEffect = colourBad;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid effect.type \"{0}\"", effect.type.name));
+                    break;
+            }
+            //what's affected?
             switch (effect.outcome.name)
             {
                 //
                 // - - - Node Data effects (both sides)
                 //
-                case "RevealSpiders":
-                case "RevealTracers":
-                case "RevealTeams":
-                case "RevealContacts":
+                case "StatusSpiders":
+                case "StatusTracers":
+                case "StatusTeams":
+                case "StatusContacts":
                 case "NodeSecurity":
                 case "NodeStability":
                 case "NodeSupport":
@@ -402,14 +420,14 @@ public class EffectManager : MonoBehaviour
                             rebelCause = Mathf.Min(maxCause, rebelCause);
                             GameManager.instance.rebelScript.resistanceCause = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause gains traction{1}", colourDefault, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Rebel Cause +{1}{2}", colourGood, effect.value, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Rebel Cause +{1}{2}", colourEffect, effect.value, colourEnd);
                             break;
                         case "Subtract":
                             rebelCause -= effect.value;
                             rebelCause = Mathf.Max(0, rebelCause);
                             GameManager.instance.rebelScript.resistanceCause = rebelCause;
                             effectReturn.topText = string.Format("{0}The Rebel Cause is losing ground{1}", colourDefault, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Rebel Cause -{1}{2}", colourBad, effect.value, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Rebel Cause -{1}{2}", colourEffect, effect.value, colourEnd);
                             break;
                         default:
                             Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
@@ -439,7 +457,7 @@ public class EffectManager : MonoBehaviour
                         else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
                         //dialogue
                         effectReturn.topText = string.Format("{0}A Tracer has been successfully inserted{1}", colourDefault, colourEnd);
-                        effectReturn.bottomText = string.Format("{0}All Spiders within a one node radius are revealed{1}", colourNeutral, colourEnd);
+                        effectReturn.bottomText = string.Format("{0}All Spiders within a one node radius are revealed{1}", colourEffect, colourEnd);
                     }
                     else
                     {
@@ -474,7 +492,7 @@ public class EffectManager : MonoBehaviour
                                 case "Add":
                                     if (GameManager.instance.playerScript.invisibility < 3)
                                     { GameManager.instance.playerScript.invisibility++; }
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGood, effect.description, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd);
                                     break;
                                 case "Subtract":
                                     //does player have any invisibility type gear?
@@ -489,7 +507,7 @@ public class EffectManager : MonoBehaviour
                                             if (Random.Range(0, 100) <= chance)
                                             {
                                                 //gear compromised
-                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (Compromised!){2}", colourBad, gear.name,
+                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (Compromised!){2}", colourEffect, gear.name,
                                                     colourEnd);
                                                 //remove gear
                                                 GameManager.instance.playerScript.RemoveGear(gearID);
@@ -497,7 +515,7 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //gear O.K
-                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourGood, gear.name,
+                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourEffect, gear.name,
                                                     colourEnd);
                                             }
                                             //special invisibility gear effects
@@ -508,7 +526,7 @@ public class EffectManager : MonoBehaviour
                                                     if (GameManager.instance.playerScript.invisibility < 3)
                                                     { GameManager.instance.playerScript.invisibility++; }
                                                     effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText,
-                                                        "\n", "\n", colourGood, gear.name, colourEnd);
+                                                        "\n", "\n", colourEffect, gear.name, colourEnd);
                                                     break;
                                             }
                                         }
@@ -522,13 +540,13 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider) (Now {1}){2}", colourBad,
+                                            effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider) (Now {1}){2}", colourEffect,
                                                 invisibility, colourEnd);
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourBad, effect.description,
+                                            effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourEffect, effect.description,
                                                 invisibility, colourEnd);
                                         }
                                         //mincap zero
@@ -550,7 +568,7 @@ public class EffectManager : MonoBehaviour
                                     case "Add":
                                         if (actor.datapoint2 < 3)
                                         { actor.datapoint2++; }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourGood, actor.arc.name, effect.description,
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.description,
                                             actor.datapoint2, colourEnd);
                                         break;
                                     case "Subtract":
@@ -559,13 +577,13 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider) (Now {2}){3}", colourBad, actor.arc.name,
+                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider) (Now {2}){3}", colourEffect, actor.arc.name,
                                                 invisibility, colourEnd);
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourBad, actor.arc.name, effect.description,
+                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.description,
                                                 invisibility, colourEnd);
                                         }
                                         //mincap zero
@@ -851,6 +869,26 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}Node Support +{1}{2}", colourEffect, effect.value, colourEnd);
                                     break;
+                                case "StatusTracers":
+                                    effectResolve.topText = string.Format("{0}The Node security system has been scanned for intruders{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Resistance Tracers revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                case "StatusSpiders":
+                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the Node security system{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Spiders and Teams revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                case "StatusContacts":
+                                    effectResolve.topText = string.Format("{0}Listening bots have been deployed to the Node{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Resistance connections revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                case "StatusTeams":
+                                    effectResolve.topText = string.Format("{0}The local Node grapevine is alive and well{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Node Enemy teams are revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
+                                    break;
                             }
                             break;
                         case "Subtract":
@@ -869,6 +907,10 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}Node Support -{1}{2}", colourEffect, effect.value, colourEnd);
                                     break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
+                                    break;
                             }
                             break;
                         default:
@@ -880,29 +922,7 @@ public class EffectManager : MonoBehaviour
                 else
                 {
                     //null operand -> Reveal 'x' operation
-                    switch (effect.outcome.name)
-                    {
-                        case "RevealTracers":
-                            effectResolve.topText = string.Format("{0}The security system has been scanned for intruders{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealSpiders":
-                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the security system{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Spiders and Teams revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealContacts":
-                            effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Resistance connections revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealTeams":
-                            effectResolve.topText = string.Format("{0}The local grapevine is alive and well{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Enemy teams are revealed{1}", colourEffect, colourEnd);
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
-                            effectResolve.isError = true;
-                            break;
-                    }
+                    Debug.LogWarning(string.Format("Invalid operand (Null) \"{0}\"", effect.outcome.name));
                 }
                 effectProcess.value = value;
                 //Ongoing effect
@@ -933,6 +953,26 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in neighbouring nodes{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}Node and Neighbours Support +{1}{2}", colourEffect, effect.value, colourEnd);
                                     break;
+                                case "StatusTracers":
+                                    effectResolve.topText = string.Format("{0}The neighbouring security systems have been scanned for intruders{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                case "StatusSpiders":
+                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the neighbouring security systems{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Neighbouring Spiders and Teams revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                case "StatusContacts":
+                                    effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Neighbouring Resistance connections revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                case "StatusTeams":
+                                    effectResolve.topText = string.Format("{0}The local neighbourhood grapevine is alive and well{1}", colourDefault, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Neighbouring Enemy teams are revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
+                                    break;
                             }
                             break;
                         case "Subtract":
@@ -951,6 +991,10 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity in neighbouring nodes{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}Node and Neighbour Support -{1}{2}", colourEffect, effect.value, colourEnd);
                                     break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
+                                    break;
                             }
                             break;
                         default:
@@ -962,29 +1006,7 @@ public class EffectManager : MonoBehaviour
                 else
                 {
                     //null operand -> Reveal 'x' operation
-                    switch (effect.outcome.name)
-                    {
-                        case "RevealTracers":
-                            effectResolve.topText = string.Format("{0}The neighbouring security systems have been scanned for intruders{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Resistance Tracers revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealSpiders":
-                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the neighbouring security systems{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Neighbouring Spiders and Teams revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealContacts":
-                            effectResolve.topText = string.Format("{0}Listening bots have been deployed{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Neighbouring Resistance connections revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealTeams":
-                            effectResolve.topText = string.Format("{0}The local neighbourhood grapevine is alive and well{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}Neighbouring Enemy teams are revealed{1}", colourEffect, colourEnd);
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
-                            effectResolve.isError = true;
-                            break;
-                    }
+                    Debug.LogWarning(string.Format("Invalid operand (Null) \"{0}\"", effect.outcome.name));
                 }
                 effectProcess.value = value;
                 //Ongoing effect
@@ -1023,21 +1045,25 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels throughout the city{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourEffect, effect.value, colourEnd);
                                     break;
-                                case "RevealTracers":
+                                case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}All Resistance Tracers revealed{1}", colourEffect, colourEnd);
                                     break;
-                                case "RevealSpiders":
+                                case "StatusSpiders":
                                     effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}All Spiders and Teams revealed{1}", colourEffect, colourEnd);
                                     break;
-                                case "RevealContacts":
+                                case "StatusContacts":
                                     effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}All Resistance connections revealed{1}", colourEffect, colourEnd);
                                     break;
-                                case "RevealTeams":
+                                case "StatusTeams":
                                     effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}All Enemy teams are revealed{1}", colourEffect, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
                                     break;
                             }
                             break;
@@ -1057,6 +1083,10 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout the city{1}", colourDefault, colourEnd);
                                     effectResolve.bottomText = string.Format("{0}All Nodes Support -{1}{2}", colourEffect, effect.value, colourEnd);
                                     break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
+                                    break;
                             }
                             break;
                         default:
@@ -1068,29 +1098,7 @@ public class EffectManager : MonoBehaviour
                 else
                 {
                     //null operand -> Reveal 'x' operation
-                    switch (effect.outcome.name)
-                    {
-                        case "RevealTracers":
-                            effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}All Resistance Tracers revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealSpiders":
-                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}All Spiders and Teams revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealContacts":
-                            effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}All Resistance connections revealed{1}", colourEffect, colourEnd);
-                            break;
-                        case "RevealTeams":
-                            effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
-                            effectResolve.bottomText = string.Format("{0}All Enemy teams are revealed{1}", colourEffect, colourEnd);
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
-                            effectResolve.isError = true;
-                            break;
-                    }
+                    Debug.LogWarning(string.Format("Invalid operand (Null) \"{0}\"", effect.outcome.name));
                 }
                 effectProcess.value = value;
                 //Ongoing effect
@@ -1133,6 +1141,26 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                     effectResolve.bottomText = string.Format("{0}All Nodes Support +{1}{2}", colourEffect, effect.value, colourEnd);
                                     break;
+                                case "StatusTracers":
+                                    effectResolve.topText = string.Format("{0}{1} security systems have been scanned for intruders{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1} Resistance Tracers revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                case "StatusSpiders":
+                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into {1}security systems{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1} Spiders and Teams revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                case "StatusContacts":
+                                    effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1} Resistance connections revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                case "StatusTeams":
+                                    effectResolve.topText = string.Format("{0}The {1} grapevine is alive and well{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1} Enemy teams are revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
+                                    break;
                             }
                             break;
                         case "Subtract":
@@ -1151,6 +1179,10 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                     effectResolve.bottomText = string.Format("{0}{1} Nodes Support -{2}{3}", colourEffect, node.Arc.name.ToUpper(), effect.value, colourEnd);
                                     break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                                    effectResolve.isError = true;
+                                    break;
                             }
                             break;
                         default:
@@ -1162,29 +1194,7 @@ public class EffectManager : MonoBehaviour
                 else
                 {
                     //null operand -> Reveal 'x' operation
-                    switch (effect.outcome.name)
-                    {
-                        case "RevealTracers":
-                            effectResolve.topText = string.Format("{0}{1} security systems have been scanned for intruders{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                            effectResolve.bottomText = string.Format("{0}{1} Resistance Tracers revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
-                            break;
-                        case "RevealSpiders":
-                            effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into {1}security systems{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                            effectResolve.bottomText = string.Format("{0}{1} Spiders and Teams revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
-                            break;
-                        case "RevealContacts":
-                            effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                            effectResolve.bottomText = string.Format("{0}{1} Resistance connections revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
-                            break;
-                        case "RevealTeams":
-                            effectResolve.topText = string.Format("{0}The {1} grapevine is alive and well{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
-                            effectResolve.bottomText = string.Format("{0}{1} Enemy teams are revealed{2}", colourEffect, node.Arc.name.ToUpper(), colourEnd);
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
-                            effectResolve.isError = true;
-                            break;
-                    }
+                    Debug.LogWarning(string.Format("Invalid operand (Null) \"{0}\"", effect.outcome.name));
                 }
                 effectProcess.value = value;
                 //Ongoing effect
@@ -1454,43 +1464,22 @@ public class EffectManager : MonoBehaviour
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
         effectOngoing.type = effect.type;
-        /*//sort out colour based on type (which is effect benefit from POV of Resistance)
-        string colourEffect = colourDefault;
-        switch (effect.type.name)
-        {
-            case "Good":
-                colourEffect = colourGood;
-                break;
-            case "Neutral":
-                colourEffect = colourNeutral;
-                break;
-            case "Bad":
-                colourEffect = colourBad;
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid effect.type \"{0}\"", effect.type.name));
-                break;
-        }*/
         //descriptor
         switch (effect.outcome.name)
         {
             case "NodeSecurity":
             case "NodeStability":
             case "NodeSupport":
-                /*effectOngoing.text = string.Format("{0}{1} {2}{3} ({4}){5}", colourEffect, effect.outcome.name, value, value > 0 ? "+" : "", effectInput.ongoingText, 
-                    colourEnd);*/
                 effectOngoing.text = string.Format("{0} {1}{2} ({3})", effect.outcome.name, value, value > 0 ? "+" : "", effectInput.ongoingText);
                 break;
-            case "RevealTracers":
-            case "RevealSpiders":
-            case "RevealTeams":
-            case "RevealContacts":
+            case "StatusTracers":
+            case "StatusSpiders":
+            case "StatusTeams":
+            case "StatusContacts":
             case "ConnectionSecurity":
-                /*effectOngoing.text = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);*/
                 effectOngoing.text = string.Format("{0}", effect.description);
                 break;
             default:
-                /*effectOngoing.text = string.Format("{0}{1} ({2}){3}", colourEffect, effect.outcome.name, effectInput.ongoingText, colourEnd);*/
                 effectOngoing.text = string.Format("{0} ({1})", effect.outcome.name, effectInput.ongoingText);
                 break;
         }

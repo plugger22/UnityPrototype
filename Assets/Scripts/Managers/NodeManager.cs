@@ -31,10 +31,10 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public EffectOutcome outcomeNodeSecurity;
     [HideInInspector] public EffectOutcome outcomeNodeStability;
     [HideInInspector] public EffectOutcome outcomeNodeSupport;
-    [HideInInspector] public EffectOutcome outcomeRevealSpiders;
-    [HideInInspector] public EffectOutcome outcomeRevealTracers;
-    [HideInInspector] public EffectOutcome outcomeRevealContacts;
-    [HideInInspector] public EffectOutcome outcomeRevealTeams;
+    [HideInInspector] public EffectOutcome outcomeStatusSpiders;
+    [HideInInspector] public EffectOutcome outcomeStatusTracers;
+    [HideInInspector] public EffectOutcome outcomeStatusContacts;
+    [HideInInspector] public EffectOutcome outcomeStatusTeams;
 
     string colourDefault;
     string colourAlert;
@@ -100,17 +100,17 @@ public class NodeManager : MonoBehaviour
                     case "NodeSupport":
                         outcomeNodeSupport = outcomeObject;
                         break;
-                    case "RevealSpiders":
-                        outcomeRevealSpiders = outcomeObject;
+                    case "StatusSpiders":
+                        outcomeStatusSpiders = outcomeObject;
                         break;
-                    case "RevealTracers":
-                        outcomeRevealTracers = outcomeObject;
+                    case "StatusTracers":
+                        outcomeStatusTracers = outcomeObject;
                         break;
-                    case "RevealContacts":
-                        outcomeRevealContacts = outcomeObject;
+                    case "StatusContacts":
+                        outcomeStatusContacts = outcomeObject;
                         break;
-                    case "RevealTeams":
-                        outcomeRevealTeams = outcomeObject;
+                    case "StatusTeams":
+                        outcomeStatusTeams = outcomeObject;
                         break;
                 }
             }
@@ -119,10 +119,10 @@ public class NodeManager : MonoBehaviour
         if (outcomeNodeSecurity == null) { Debug.LogError("Invalid outcomeNodeSecurity (Null)"); }
         if (outcomeNodeStability == null) { Debug.LogError("Invalid outcomeNodeStability (Null)"); }
         if (outcomeNodeSupport == null) { Debug.LogError("Invalid outcomeNodeSupport (Null)"); }
-        if (outcomeRevealSpiders == null) { Debug.LogError("Invalid outcomeRevealSpiders (Null)"); }
-        if (outcomeRevealTracers == null) { Debug.LogError("Invalid outcomeRevealTracers (Null)"); }
-        if (outcomeRevealContacts == null) { Debug.LogError("Invalid outcomeRevealContacts (Null)"); }
-        if (outcomeRevealTeams == null) { Debug.LogError("Invalid outcomeRevealTeams (Null)"); }
+        if (outcomeStatusSpiders == null) { Debug.LogError("Invalid outcomeStatusSpiders (Null)"); }
+        if (outcomeStatusTracers == null) { Debug.LogError("Invalid outcomeStatusTracers (Null)"); }
+        if (outcomeStatusContacts == null) { Debug.LogError("Invalid outcomeStatusContacts (Null)"); }
+        if (outcomeStatusTeams == null) { Debug.LogError("Invalid outcomeStatusTeams (Null)"); }
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);

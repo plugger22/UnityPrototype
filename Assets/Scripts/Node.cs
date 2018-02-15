@@ -68,7 +68,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealTracers);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusTracers);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTracerKnown; }
@@ -81,7 +81,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealSpiders);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusSpiders);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isSpiderKnown; }
@@ -94,7 +94,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealContacts);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusContacts);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isContactKnown; }
@@ -107,7 +107,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeRevealTeams);
+            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusTeams);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTeamKnown; }
@@ -672,19 +672,19 @@ public class Node : MonoBehaviour
                     case "NodeSupport":
                         Support += process.value;
                         break;
-                    case "RevealTracers":
+                    case "StatusTracers":
                         if (process.value <= 0) { isTracerKnown = false; }
                         else { isTracerKnown = true; }
                         break;
-                    case "RevealSpiders":
+                    case "StatusSpiders":
                         if (process.value <= 0) { isSpiderKnown = false; }
                         else { isSpiderKnown = true; }
                         break;
-                    case "RevealTeams":
+                    case "StatusTeams":
                         if (process.value <= 0) { isTeamKnown = false; }
                         else { isTeamKnown = true; }
                         break;
-                    case "RevealContacts":
+                    case "StatusContacts":
                         if (process.value <= 0) { isActorKnown = false; }
                         else { isActorKnown = true; }
                         break;
