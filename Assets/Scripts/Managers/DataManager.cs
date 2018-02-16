@@ -229,7 +229,7 @@ public class DataManager : MonoBehaviour
                             break;
                     }
                     break;
-                //all other cases
+                //all other effects
                 default:
                     effect.textTag = effect.description;
                     break;
