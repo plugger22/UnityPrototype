@@ -197,6 +197,7 @@ public class TurnManager : MonoBehaviour
     {
         _actionsCurrent = 0;
         Debug.Log("TurnManager: - - - EndTurnFinal - - - " + "\n");
+        EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
     }
 
 

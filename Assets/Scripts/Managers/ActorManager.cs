@@ -459,7 +459,9 @@ public class ActorManager : MonoBehaviour
                                                         if (effect.outcome.name.Equals("Renown"))
                                                         { builder.Append(string.Format("{0}Player {1}{2}", colourGoodEffect, effect.description, colourEnd)); }
                                                         else
-                                                        { builder.Append(string.Format("{0}Player {1}{2}", colourBadEffect, effect.description, colourEnd)); }
+                                                        {
+                                                            builder.Append(string.Format("{0}Player {1}{2}", colourBadEffect, effect.description, colourEnd));
+                                                        }
                                                     }
                                                     else
                                                     {

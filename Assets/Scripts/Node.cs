@@ -437,6 +437,7 @@ public class Node : MonoBehaviour
             foreach (var ongoingEffect in listOfOngoingEffects)
             {
                 EffectDataTooltip data = new EffectDataTooltip();
+                //data.text = string.Format("{0} {1}{2}", ongoingEffect.text, ongoingEffect.value > 0 ? "+" : "", ongoingEffect.value);
                 data.text = ongoingEffect.text;
                 data.type = ongoingEffect.type;
                 tempList.Add(data);

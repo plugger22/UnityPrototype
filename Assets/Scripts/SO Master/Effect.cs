@@ -26,7 +26,7 @@ public class Effect : ScriptableObject
     public EffectType type;                                     //used so that ActorManager.cs -> GetActorActions can colour the effects correctly for the tooltips
     [Tooltip("Single, one shot, effect or Ongoing?")]
     public EffectDuration duration;                             //once off effect or ongoing?
-
+    [Tooltip("Value is always POSITIVE. Use operand 'Subtract' to handle negative numbers")]
     public int value;                                           //leave as '0' if there is no specific stat adjustment
 
     [Tooltip("True only for cases where a ModalGenericPicker is needed rather than a straight ProcessEffect. False by default. Negates normal effect processing")]
