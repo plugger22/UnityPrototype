@@ -10,8 +10,9 @@ using gameAPI;
 public class Effect : ScriptableObject
 {
     [HideInInspector] public int effectID;                      //dynamically set by DataManager.cs
-    [Tooltip("Keep short as used for the tooltip")]
-    public string description;                                  //tooltip, eg. "Stability +1"
+    [Tooltip("Keep short as used for the tooltip. Note that '+1' tags are added dynamically during import. Keep decription to text only")]
+    public string description;                                  //tooltip, eg. "Stability"
+    [HideInInspector] public string textTag;                    //text that is used in game. Dynamically assigned at time of import (DataManager.cs)
     //criteria 
     [Tooltip("Any criterial that must be satisfied before the effect can be applied")]
     public List<Criteria> listOfCriteria;                       //list of effect criteria that must be true for an effect to occur

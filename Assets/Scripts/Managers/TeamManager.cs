@@ -937,7 +937,7 @@ public void InitialiseTeams()
                     {
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         isError = effectReturn.errorFlag;
-                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
+                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.textTag, node.nodeName, node.nodeID);
                         Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
                         GameManager.instance.dataScript.AddMessage(message);
                     }
@@ -1005,7 +1005,7 @@ public void InitialiseTeams()
                     {
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         isError = effectReturn.errorFlag;
-                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.description, node.nodeName, node.nodeID);
+                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.Arc.name, team.Name, effect.textTag, node.nodeName, node.nodeID);
                         Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.TeamID);
                         GameManager.instance.dataScript.AddMessage(message);
                     }

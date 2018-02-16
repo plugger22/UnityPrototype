@@ -218,15 +218,20 @@ public class DataManager : MonoBehaviour
                     switch (effect.operand.name)
                     {
                         case "Add":
-                            effect.description = string.Format("{0} +{1}", effect.description, effect.value);
+                            effect.textTag = string.Format("{0} +{1}", effect.description, effect.value);
                             break;
                         case "Subtract":
-                            effect.description = string.Format("{0} -{1}", effect.description, effect.value);
+                            effect.textTag = string.Format("{0} -{1}", effect.description, effect.value);
                             break;
                         default:
                             Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                            effect.textTag = "Unknown";
                             break;
                     }
+                    break;
+                //all other cases
+                default:
+                    effect.textTag = effect.description;
                     break;
             }
             //add to dictionary

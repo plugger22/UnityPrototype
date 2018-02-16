@@ -492,7 +492,7 @@ public class EffectManager : MonoBehaviour
                                 case "Add":
                                     if (GameManager.instance.playerScript.invisibility < 3)
                                     { GameManager.instance.playerScript.invisibility++; }
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
                                 case "Subtract":
                                     //does player have any invisibility type gear?
@@ -546,7 +546,7 @@ public class EffectManager : MonoBehaviour
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourEffect, effect.description,
+                                            effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourEffect, effect.textTag,
                                                 invisibility, colourEnd);
                                         }
                                         //mincap zero
@@ -568,7 +568,7 @@ public class EffectManager : MonoBehaviour
                                     case "Add":
                                         if (actor.datapoint2 < 3)
                                         { actor.datapoint2++; }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.description,
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.textTag,
                                             actor.datapoint2, colourEnd);
                                         break;
                                     case "Subtract":
@@ -583,7 +583,7 @@ public class EffectManager : MonoBehaviour
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.description,
+                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.textTag,
                                                 invisibility, colourEnd);
                                         }
                                         //mincap zero
@@ -619,13 +619,13 @@ public class EffectManager : MonoBehaviour
                             {
                                 case "Add":
                                     playerRenown += effect.value;
-                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourGood, effect.description,
+                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourGood, effect.textTag,
                                         playerRenown, colourEnd);
                                     break;
                                 case "Subtract":
                                     playerRenown -= effect.value;
                                     playerRenown = Mathf.Max(0, playerRenown);
-                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourBad, effect.description,
+                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourBad, effect.textTag,
                                         playerRenown, colourEnd);
                                     break;
                             }
@@ -640,13 +640,13 @@ public class EffectManager : MonoBehaviour
                                 {
                                     case "Add":
                                         actor.renown += effect.value;
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourBad, actor.arc.name, effect.description,
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourBad, actor.arc.name, effect.textTag,
                                             actor.renown, colourEnd);
                                         break;
                                     case "Subtract":
                                         actor.renown -= effect.value;
                                         actor.renown = Mathf.Max(0, actor.renown);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourGood, actor.arc.name, effect.description,
+                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourGood, actor.arc.name, effect.textTag,
                                             actor.renown, colourEnd);
                                         break;
                                 }
@@ -1046,19 +1046,19 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourDefault, colourEnd);
-                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
                                 case "StatusSpiders":
                                     effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the cities security system{1}", colourDefault, colourEnd);
-                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
                                 case "StatusContacts":
                                     effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout the city{1}", colourDefault, colourEnd);
-                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
                                 case "StatusTeams":
                                     effectResolve.topText = string.Format("{0}The city grapevine is alive and well{1}", colourDefault, colourEnd);
-                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
@@ -1085,7 +1085,7 @@ public class EffectManager : MonoBehaviour
 
                                 case "StatusSpiders":
                                     effectResolve.topText = string.Format("{0}ICE has been deployed to conceal all Spiders within the City{1}", colourDefault, colourEnd);
-                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
 
                                 default:
@@ -1482,7 +1482,7 @@ public class EffectManager : MonoBehaviour
             case "StatusTeams":
             case "StatusContacts":
             case "ConnectionSecurity":
-                effectOngoing.text = string.Format("{0}", effect.description);
+                effectOngoing.text = string.Format("{0}", effect.textTag);
                 break;
             default:
                 effectOngoing.text = string.Format("{0} ({1})", effect.outcome.name, effectInput.ongoingText);
