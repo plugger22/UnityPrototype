@@ -55,7 +55,7 @@ public class NodeManager : MonoBehaviour
     public int NodeShowFlag
     {
         get { return _nodeShowFlag; }
-        set { _nodeShowFlag = value; Debug.Log(string.Format("NodeShowFlag -> {0}{1}", value, "\n"));}
+        set { _nodeShowFlag = value; Debug.Log(string.Format("NodeShowFlag -> {0}{1}", value, "\n")); }
     }
 
     public bool NodeRedraw
@@ -81,7 +81,7 @@ public class NodeManager : MonoBehaviour
         //find specific SO's and assign to outcome fields
         string path;
         var outcomeGUID = AssetDatabase.FindAssets("t:EffectOutcome");
-        foreach(var guid in outcomeGUID)
+        foreach (var guid in outcomeGUID)
         {
             path = AssetDatabase.GUIDToAssetPath(guid);
             //get SO
@@ -129,6 +129,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
         EventManager.instance.AddListener(EventType.DiceReturn, OnEvent);
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
     }
 
 
@@ -148,7 +149,7 @@ public class NodeManager : MonoBehaviour
                 break;
             case EventType.NodeDisplay:
                 NodeUI nodeUI = (NodeUI)Param;
-                switch(nodeUI)
+                switch (nodeUI)
                 {
                     case NodeUI.Reset:
                         ResetNodes();
@@ -191,6 +192,9 @@ public class NodeManager : MonoBehaviour
             case EventType.DiceReturn:
                 DiceReturnData data = Param as DiceReturnData;
                 ProcessDiceMove(data);
+                break;
+            case EventType.StartTurnLate:
+                ProcessNodeTimers();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -527,7 +531,7 @@ public class NodeManager : MonoBehaviour
                             node.SetMaterial(nodeMaterial);
                         }
                     }
-                    displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, nodeList.Count, colourEnd, 
+                    displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, nodeList.Count, colourEnd,
                     colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
                 }
                 else
@@ -577,9 +581,9 @@ public class NodeManager : MonoBehaviour
         else { minionTitle = "Rebel "; }
         if (actor != null)
         {
-            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} node{11}{12}", colourHighlight, actor.actorName, colourEnd, 
+            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} node{11}{12}", colourHighlight, actor.actorName, colourEnd,
                 colourDefault, minionTitle, colourEnd,
-                colourHighlight, actor.arc.name, colourEnd, 
+                colourHighlight, actor.arc.name, colourEnd,
                 colourDefault, tempList.Count, tempList.Count != 1 ? "s" : "", colourEnd);
             GameManager.instance.alertScript.SetAlertUI(displayText);
             NodeShowFlag = 1;
@@ -637,7 +641,7 @@ public class NodeManager : MonoBehaviour
             if (NodeShowFlag > 1)
             { GameManager.instance.alertScript.CloseAlertUI(); }
             if (NodeShowFlag > 0) { NodeShowFlag++; }
-            
+
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) returned from dataManager in RedrawNodes"); }
     }
@@ -731,11 +735,11 @@ public class NodeManager : MonoBehaviour
                                             moveGearDetails.ai_Delay = 4 - Mathf.Abs(gear.data - secLevel);
                                             builderDetail.Append(string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
                                               moveGearDetails.ai_Delay, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd));
-                                            
+
                                         }
                                     }
                                     //add gear chance of compromise
-                                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}% chance of being compromised{3}", "\n", colourAlert, 
+                                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}% chance of being compromised{3}", "\n", colourAlert,
                                         GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID), colourEnd));
 
                                     //Move details
@@ -1014,7 +1018,7 @@ public class NodeManager : MonoBehaviour
 
         //all done, go to outcome
         ProcessMoveOutcome(node, builder.ToString());
-        
+
     }
 
     /// <summary>
@@ -1180,7 +1184,7 @@ public class NodeManager : MonoBehaviour
             Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
             if (dictOfNodes != null)
             {
-                foreach(var node in dictOfNodes)
+                foreach (var node in dictOfNodes)
                 { node.Value.RemoveOngoingEffect(ongoingID); }
             }
             else { Debug.LogError("Invalid dictOfNodes (Null)"); }
@@ -1188,5 +1192,20 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError(string.Format("Invalid ongoingID {0} (must be zero or above)", ongoingID)); }
     }
 
-    //place new methods above here
+
+    /// <summary>
+    /// Decrement all ongoing Effect timers in nodes and delete any that have expired
+    /// </summary>
+    private void ProcessNodeTimers()
+    {
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            foreach (var node in dictOfNodes)
+            { node.Value.ProcessOngoingEffectTimers(); }
+        }
+    }
+
+
+    //new methods above here
 }

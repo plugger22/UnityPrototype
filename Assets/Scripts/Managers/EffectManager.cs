@@ -12,6 +12,8 @@ using System.Text;
 /// </summary>
 public class EffectManager : MonoBehaviour
 {
+    [Tooltip("How long do ongoing effects last for? Global setting")]
+    [Range(3,20)] public int ongoingEffectTimer = 3;
 
     //colour palette for Modal Outcome
     private string colourGood; //good effect Rebel / bad effect Authority

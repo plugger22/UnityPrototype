@@ -644,6 +644,51 @@ public class Node : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Returns tally of ongoing effects for the specified field, '0' if none
+    /// </summary>
+    /// <param name="outcome"></param>
+    /// <returns></returns>
+    private int GetOngoingEffect(EffectOutcome outcome)
+    {
+        int value = 0;
+        if (listOfOngoingEffects.Count > 0)
+        {
+            foreach (var adjust in listOfOngoingEffects)
+            {
+                if (adjust.outcome == outcome)
+                { value += adjust.value; }
+            }
+        }
+        return value;
+    }
+
+    /// <summary>
+    /// Checks each effect, if any, decrements timers and deletes any that have expired
+    /// </summary>
+    public void ProcessOngoingEffectTimers()
+    {
+        if (listOfOngoingEffects.Count > 0)
+        {
+            for(int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
+            {
+                //decrement timer
+                listOfOngoingEffects[i].timer--;
+                if (listOfOngoingEffects[i].timer <= 0)
+                {
+                    //message
+                    Debug.Log(string.Format("REMOVE: Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", listOfOngoingEffects[i].ongoingID, 
+                        listOfOngoingEffects[i].text, nodeID, "\n"));
+                    //delete effect
+                    listOfOngoingEffects.RemoveAt(i);
+                }
+            }
+            
+        }
+    }
+
+
     /// <summary>
     /// changes fields and handles ongoing effects. Main method of changing node fields.
     /// Note: Ongoing effect doesn't affect field, just updates dictOfAdjustments ready for the following turns
@@ -749,24 +794,6 @@ public class Node : MonoBehaviour
         { Debug.LogError("Invalid effectProcess (Null)"); }
     }
 
-    /// <summary>
-    /// Returns tally of ongoing effects for the specified field, '0' if none
-    /// </summary>
-    /// <param name="outcome"></param>
-    /// <returns></returns>
-    private int GetOngoingEffect(EffectOutcome outcome)
-    {
-        int value = 0;
-        if (listOfOngoingEffects.Count > 0)
-        {
-            foreach(var adjust in listOfOngoingEffects)
-            {
-                if (adjust.outcome == outcome)
-                { value += adjust.value; }
-            }
-        }
-        return value;
-    }
 
     /// <summary>
     /// //stats are reversed for Authority FOR DISPLAY ONLY (a stat of 0 for resistance is very bad but it shows as a stat of 3, very good, for the authority side)
