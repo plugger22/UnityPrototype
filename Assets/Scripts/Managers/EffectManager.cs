@@ -869,7 +869,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}The Node security system has been scanned for intruders{1}", colourDefault, colourEnd);
                                     break;
                                 case "StatusSpiders":
-                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into the Node security system{1}", colourDefault, colourEnd);
+                                    effectResolve.topText = string.Format("{0}A Spider has been covertly inserted into the Node security system{1}", colourDefault, colourEnd);
                                     break;
                                 case "StatusContacts":
                                     effectResolve.topText = string.Format("{0}Listening bots have been deployed to the Node{1}", colourDefault, colourEnd);
@@ -895,6 +895,18 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "NodeSupport":
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusTracers":
+                                    effectResolve.topText = string.Format("{0}The Node security system has been spoofed to conceal Tracers{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusSpiders":
+                                    effectResolve.topText = string.Format("{0}ICE has been inserted into the Node security system to conceal Spiders{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusContacts":
+                                    effectResolve.topText = string.Format("{0}Listening bots have been muted to conceal Contacts{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusTeams":
+                                    effectResolve.topText = string.Format("{0}The local Node grapevine has been shut down to conceal Teams{1}", colourDefault, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
@@ -969,6 +981,18 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "NodeSupport":
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity in neighbouring nodes{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusTracers":
+                                    effectResolve.topText = string.Format("{0}The neighbouring security systems have been spoofed to hide Tracers{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusSpiders":
+                                    effectResolve.topText = string.Format("{0}ICE has been inserted into the neighbouring security systems to conceal Spiders{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusContacts":
+                                    effectResolve.topText = string.Format("{0}Listening bots have been muted to conceal Contacts{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusTeams":
+                                    effectResolve.topText = string.Format("{0}The local neighbourhood grapevine has been shut down to conceal Teams{1}", colourDefault, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
@@ -1052,11 +1076,18 @@ public class EffectManager : MonoBehaviour
                                 case "NodeSupport":
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout the city{1}", colourDefault, colourEnd);
                                     break;
-
+                                case "StatusTracers":
+                                    effectResolve.topText = string.Format("{0}Countermeasures have been deployed to conceal all Tracers within the City{1}", colourDefault, colourEnd);
+                                    break;
                                 case "StatusSpiders":
                                     effectResolve.topText = string.Format("{0}ICE has been deployed to conceal all Spiders within the City{1}", colourDefault, colourEnd);
                                     break;
-
+                                case "StatusContacs":
+                                    effectResolve.topText = string.Format("{0}Countermeasures have been deployed to conceal all Contacts within the City{1}", colourDefault, colourEnd);
+                                    break;
+                                case "StatusTeams":
+                                    effectResolve.topText = string.Format("{0}ICE has been deployed to conceal all Teams within the City{1}", colourDefault, colourEnd);
+                                    break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
                                     effectResolve.isError = true;
@@ -1116,7 +1147,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}{1} security systems have been scanned for intruders{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                     break;
                                 case "StatusSpiders":
-                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into {1}security systems{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into {1} security systems{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                     break;
                                 case "StatusContacts":
                                     effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
@@ -1142,6 +1173,18 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "NodeSupport":
                                     effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                case "StatusTracers":
+                                    effectResolve.topText = string.Format("{0}{1} security systems have been spoofed to conceal Tracers{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                case "StatusSpiders":
+                                    effectResolve.topText = string.Format("{0}ICE has been inserted into {1} security systems to conceal Spiders{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                case "StatusContacts":
+                                    effectResolve.topText = string.Format("{0}Countermeasures have been taken in {1} nodes to conceal Contacts{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
+                                    break;
+                                case "StatusTeams":
+                                    effectResolve.topText = string.Format("{0}The {1} grapevine has been shut down to conceal Teams{2}", colourDefault, node.Arc.name.ToUpper(), colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
