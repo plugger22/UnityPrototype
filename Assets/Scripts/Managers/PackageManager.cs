@@ -98,6 +98,8 @@ namespace packageAPI
         public int timer;                                                 //how long does the effect last for?
         public EffectOutcome outcome;
         public EffectType type;                                           //benefit, or otherwise, of effect from POV of Resistance
+        public EffectApply apply;
+        public Side side;
 
         public EffectDataOngoing()
         { timer = GameManager.instance.effectScript.ongoingEffectTimer; }

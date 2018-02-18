@@ -43,10 +43,14 @@ public class DebugGUI : MonoBehaviour
     // Update is called once per frame
     private void Update ()
     {
+        //Toggle debug view on/off with 'D'
 		if (Input.GetKeyDown("d") == true)
-        { showGUI = true; }
-        if (Input.GetKeyDown("h") == true)
-        { showGUI = false; }
+        {
+            if (showGUI == false)
+            { showGUI = true; }
+            else { showGUI = false; }
+        }
+
 	}
 
     private void OnGUI()

@@ -261,7 +261,11 @@ public class Connection : MonoBehaviour {
                     { isNotDuplicate = false; break; }
                 }
                 if (isNotDuplicate == true)
-                { listOfOngoingEffects.Add(ongoing); }
+                {
+                    listOfOngoingEffects.Add(ongoing);
+                    //add to register & create message
+                    GameManager.instance.dataScript.AddOngoingEffectToDict(ongoing, connID);
+                }
             }
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
@@ -284,6 +288,9 @@ public class Connection : MonoBehaviour {
                 if (ongoing.ongoingID == uniqueID)
                 {
                     Debug.Log(string.Format("Connection, ID {0}, Ongoing Effect ID {1}, \"{2}\", REMOVED{3}", connID,  ongoing.ongoingID, ongoing.text,"\n"));
+                    //add to register & create message
+                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing, connID);
+                    //remove from list
                     listOfOngoingEffects.RemoveAt(i);
                     isRemoved = true;
                 }

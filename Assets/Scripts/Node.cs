@@ -628,8 +628,12 @@ public class Node : MonoBehaviour
             effect.timer = ongoing.timer;
             effect.outcome = ongoing.outcome;
             effect.type = ongoing.type;
+            effect.apply = ongoing.apply;
+            effect.side = ongoing.side;
             //add new ongoing effect
             listOfOngoingEffects.Add(effect);
+            //add to register & create message
+            GameManager.instance.dataScript.AddOngoingEffectToDict(effect, nodeID);
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
@@ -649,6 +653,7 @@ public class Node : MonoBehaviour
                 if (ongoing.ongoingID == uniqueID)
                 {
                     //Debug.Log(string.Format("Node Effect: {0}, ID {1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
+                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing, nodeID);
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }
@@ -693,6 +698,7 @@ public class Node : MonoBehaviour
                     //message
                     Debug.Log(string.Format("REMOVE: Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.text, nodeID, "\n"));
                     //delete effect
+                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing, nodeID);
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }

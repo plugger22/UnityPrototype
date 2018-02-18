@@ -1484,6 +1484,8 @@ public class EffectManager : MonoBehaviour
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
         effectOngoing.type = effect.type;
+        effectOngoing.apply = effect.apply;
+        effectOngoing.side = effectInput.side;
         //descriptor
         switch (effect.outcome.name)
         {

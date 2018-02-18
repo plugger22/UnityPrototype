@@ -693,16 +693,6 @@ public class TargetManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
         if (node != null)
         {
-            /*//loop nodes
-            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
-            if (dictOfNodes != null)
-            {
-                int ongoingID = target.ongoingID;
-                foreach(var nodeTemp in dictOfNodes)
-                { nodeTemp.Value.RemoveOngoingEffect(ongoingID); }
-            }
-            else { Debug.LogError("Invalid dictOfNodes (Null) -> Nodes not checked for relevant ongoing effects"); }*/
-
             GameManager.instance.connScript.RemoveOngoingEffect(target.ongoingID);
             GameManager.instance.nodeScript.RemoveOngoingEffect(target.ongoingID);
             //admin

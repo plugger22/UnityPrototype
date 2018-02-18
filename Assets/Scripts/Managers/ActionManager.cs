@@ -151,13 +151,12 @@ public class ActionManager : MonoBehaviour
                                 {
                                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
 
-                                    //DEBUG -> needs to be added to an item of GEAR, for example, so it can be linked to effects
-                                    //DEBUG -> can't do it just like this as there is no way to tie the two together. Done here for testing purposes only
-
-                                    //add to register
+                                    //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
+                                    
+                                    /*//add to register
                                     string registerDetails = string.Format("Effect \"{0}\", ID {1}, at {2}, ID {3}, t{4}", action.name, effect.effectID, node.Arc.name.ToUpper(),
                                         node.nodeID, GameManager.instance.turnScript.Turn);
-                                    GameManager.instance.dataScript.AddOngoingIDToDict(dataInput.ongoingID, registerDetails);
+                                    GameManager.instance.dataScript.AddOngoingEffectToDict(dataInput.ongoingID, registerDetails);*/
                                 }
                                 else { dataInput.ongoingID = -1; dataInput.ongoingText = ""; }
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
@@ -361,10 +360,10 @@ public class ActionManager : MonoBehaviour
                         dataInput.ongoingText = "Target";
                         //add to target so it can link to effects
                         target.ongoingID = dataInput.ongoingID;
-                        //add to register
+                        /*//add to register
                         string registerDetails = string.Format("Target \"{0}\", ID {1}, at {2}, ID {3}, t{4}",  target.name, target.targetID, node.Arc.name.ToUpper(), 
                             node.nodeID, GameManager.instance.turnScript.Turn);
-                        GameManager.instance.dataScript.AddOngoingIDToDict(target.ongoingID, registerDetails);
+                        GameManager.instance.dataScript.AddOngoingEffectToDict(target.ongoingID, registerDetails);*/
                     }
                     //any effects to process?
                     if (listOfEffects.Count > 0)

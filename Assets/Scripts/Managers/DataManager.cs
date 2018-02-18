@@ -7,6 +7,7 @@ using UnityEditor;
 using gameAPI;
 using Random = UnityEngine.Random;
 using System.Text;
+using packageAPI;
 
 /// <summary>
 /// Data repositry class
@@ -2068,13 +2069,27 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="ongoingID"></param>
     /// <param name="details"></param>
-    public void AddOngoingIDToDict(int ongoingID, string details)
+    public void AddOngoingEffectToDict(EffectDataOngoing ongoing, int nodeID)
     {
-        //add to dictionary
-        try
-        { dictOfOngoingID.Add(ongoingID, details); }
-        catch (ArgumentException)
-        { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoingID, details)); }
+        if (ongoing != null)
+        {
+            //add new ongoing effect only if no other instance of it exists, ignore otherwise
+            if (dictOfOngoingID.ContainsKey(ongoing.ongoingID) == false)
+            {
+                string text = string.Format("OngoingID {0}, {1}, {2}", ongoing.ongoingID, ongoing.text, ongoing.apply.name);
+                //add to dictionary
+                try
+                {
+                    dictOfOngoingID.Add(ongoing.ongoingID, text);
+                    //generate message
+                    Message message = GameManager.instance.messageScript.OngoingEffectCreated(text, ongoing.side, nodeID);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoing.ongoingID, text)); }
+            }
+        }
+        else { Debug.LogError("Invalid Ongoing effect (Null)"); }
     }
 
     /// <summary>
@@ -2086,8 +2101,30 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" OngoingID Register{0}", "\n"));
         foreach(var ongoing in dictOfOngoingID)
-        { builder.Append(string.Format("{0} {1} ID: {2}", "\n", ongoing.Key, ongoing.Value)); }
+        { builder.Append(string.Format("{0} {1}", "\n", ongoing.Value)); }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// Remove an effect from the dictionary and, if present, generate a message for the relevant side. NodeID could also be ConnID for connections
+    /// </summary>
+    /// <param name="ongoing"></param>
+    public void RemoveOngoingEffect(EffectDataOngoing ongoing, int nodeID)
+    {
+        if (ongoing != null)
+        {
+            //if entry has already been deleted, eg. for an ongoing 'NodeAll' effect then ignore. Message is generated for the first instance only.
+            if (dictOfOngoingID.ContainsKey(ongoing.ongoingID))
+            {
+                //remove entry
+                dictOfOngoingID.Remove(ongoing.ongoingID);
+                //generate message
+                string text = string.Format("OngoingID {0}, {1}, {2}", ongoing.ongoingID, ongoing.text, ongoing.apply.name);
+                Message message = GameManager.instance.messageScript.OngoingEffectExpired(text, ongoing.side, nodeID);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+        }
+        else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
 
     /// <summary>

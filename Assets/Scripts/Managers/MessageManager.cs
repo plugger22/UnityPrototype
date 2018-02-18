@@ -581,5 +581,60 @@ public Message PlayerMove(string text, int nodeID)
     }
 
 
+    //
+    // - - - Effects - - -
+    //
+
+    /// <summary>
+    /// Ongoing effect that has been created (node or connection)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="side"></param>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public Message OngoingEffectCreated(string text, Side side, int nodeID)
+    {
+        Debug.Assert(side > Side.None, string.Format("Invalid side {0}", side));
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID/connID {0}", nodeID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.EFFECT;
+            message.subType = MessageSubType.Ongoing_Created;
+            message.side = side;
+            message.isPublic = false;
+            message.data0 = nodeID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Ongoing effect that timed out (expired) automatically or has been shut down
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Message OngoingEffectExpired(string text, Side side, int nodeID)
+    {
+        Debug.Assert(side > Side.None, string.Format("Invalid side {0}", side));
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID/connID {0}", nodeID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.EFFECT;
+            message.subType = MessageSubType.Ongoing_Expired;
+            message.side = side;
+            message.isPublic = true;
+            message.data0 = nodeID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //new methods above here
 }
