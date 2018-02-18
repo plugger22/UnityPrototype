@@ -619,7 +619,18 @@ public class Node : MonoBehaviour
     public void AddOngoingEffect(EffectDataOngoing ongoing)
     {
         if (ongoing != null)
-        { listOfOngoingEffects.Add(ongoing); }
+        {
+            //create a new value effect as otherwise passed by reference and timers will decrement for identical ongoingID's as one.
+            EffectDataOngoing effect = new EffectDataOngoing();
+            effect.ongoingID = ongoing.ongoingID;
+            effect.text = ongoing.text;
+            effect.value = ongoing.value;
+            effect.timer = ongoing.timer;
+            effect.outcome = ongoing.outcome;
+            effect.type = ongoing.type;
+            //add new ongoing effect
+            listOfOngoingEffects.Add(effect);
+        }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
 
@@ -637,7 +648,7 @@ public class Node : MonoBehaviour
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
-                    Debug.Log(string.Format("Node Effect: {0}, ID {1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
+                    //Debug.Log(string.Format("Node Effect: {0}, ID {1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }
@@ -674,12 +685,13 @@ public class Node : MonoBehaviour
             for(int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
             {
                 //decrement timer
-                listOfOngoingEffects[i].timer--;
-                if (listOfOngoingEffects[i].timer <= 0)
+                EffectDataOngoing ongoing = listOfOngoingEffects[i];
+                Debug.Log(string.Format("Node ID {0}, Timer before {1}{2}", nodeID, ongoing.timer, "\n"));
+                ongoing.timer--;
+                if (ongoing.timer <= 0)
                 {
                     //message
-                    Debug.Log(string.Format("REMOVE: Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", listOfOngoingEffects[i].ongoingID, 
-                        listOfOngoingEffects[i].text, nodeID, "\n"));
+                    Debug.Log(string.Format("REMOVE: Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.text, nodeID, "\n"));
                     //delete effect
                     listOfOngoingEffects.RemoveAt(i);
                 }

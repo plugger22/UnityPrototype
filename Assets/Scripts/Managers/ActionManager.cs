@@ -146,6 +146,20 @@ public class ActionManager : MonoBehaviour
                             //
                             foreach (Effect effect in listOfEffects)
                             {
+                                //ongoing effect?
+                                if (effect.duration.name == "Ongoing")
+                                {
+                                    dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
+
+                                    //DEBUG -> needs to be added to an item of GEAR, for example, so it can be linked to effects
+                                    //DEBUG -> can't do it just like this as there is no way to tie the two together. Done here for testing purposes only
+
+                                    //add to register
+                                    string registerDetails = string.Format("Effect \"{0}\", ID {1}, at {2}, ID {3}, t{4}", action.name, effect.effectID, node.Arc.name.ToUpper(),
+                                        node.nodeID, GameManager.instance.turnScript.Turn);
+                                    GameManager.instance.dataScript.AddOngoingIDToDict(dataInput.ongoingID, registerDetails);
+                                }
+                                else { dataInput.ongoingID = -1; dataInput.ongoingText = ""; }
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                 if (effectReturn != null)
                                 {

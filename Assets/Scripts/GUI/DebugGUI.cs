@@ -428,7 +428,7 @@ public class DebugGUI : MonoBehaviour
                     case 14:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DisplayOngoingRegister();
-                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
                 }
             }

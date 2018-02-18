@@ -1198,6 +1198,7 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void ProcessNodeTimers()
     {
+        //Debug.LogWarning(string.Format("PROCESSNODETIMER: turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
         if (dictOfNodes != null)
         {

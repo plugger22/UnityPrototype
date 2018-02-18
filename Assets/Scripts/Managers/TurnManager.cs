@@ -122,9 +122,9 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void StartTurnEarly()
     {
-        Debug.Log("TurnManager: - - - StartTurnEarly - - - " + "\n");
         //increment turn counter
         _turn++;
+        Debug.Log(string.Format("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
     }
 
@@ -133,7 +133,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        Debug.Log("TurnManager: - - - StartTurnLate - - - " + "\n");
+        Debug.Log(string.Format("TurnManager: - - - StartTurnLate - - - turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         EventManager.instance.PostNotification(EventType.StartTurnLate, this);
     }
 
@@ -143,7 +143,7 @@ public class TurnManager : MonoBehaviour
     private bool StartTurnFinal()
     {
         bool playerInteraction = true;
-        Debug.Log("TurnManager: - - - StartTurnFinal - - - " + "\n");
+        Debug.Log(string.Format("TurnManager: - - - StartTurnFinal - - - turn {0}{1}", GameManager.instance.turnScript, "\n"));
         switch (GameManager.instance.sideScript.PlayerSide)
         {
             case Side.Resistance:
@@ -166,7 +166,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     private void EndTurnAI()
     {
-        Debug.Log("TurnManager: - - - EndTurnAI - - - " + "\n");
+        Debug.Log(string.Format("TurnManager: - - - EndTurnAI - - - turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         switch (GameManager.instance.sideScript.PlayerSide)
         {
             case Side.Resistance:
@@ -196,7 +196,7 @@ public class TurnManager : MonoBehaviour
     private void EndTurnFinal()
     {
         _actionsCurrent = 0;
-        Debug.Log("TurnManager: - - - EndTurnFinal - - - " + "\n");
+        Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
     }
 
