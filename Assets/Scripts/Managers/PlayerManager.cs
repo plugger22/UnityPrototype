@@ -97,7 +97,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="gearType"></param>
     /// <returns></returns>
-    public int CheckGearTypePresent(GearType gearType)
+    public int CheckGearTypePresent(GearTypeEnum gearType)
     {
         int gearID = -1;
         int rarity = -1;

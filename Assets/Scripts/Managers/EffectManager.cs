@@ -501,7 +501,7 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "Subtract":
                                     //does player have any invisibility type gear?
-                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GearType.Invisibility);
+                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GearTypeEnum.Invisibility);
                                     if (gearID > -1)
                                     {
                                         //gear present -> No drop in Invisibility

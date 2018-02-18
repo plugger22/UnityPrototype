@@ -63,6 +63,7 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
 
     //gear lists (available gear for this level) -> gearID's
+    public List<GearRarity> listOfGearRarity = new List<GearRarity>();
     public List<int> listOfCommonGear = new List<int>();
     public List<int> listOfRareGear = new List<int>();
     public List<int> listOfUniqueGear = new List<int>();
@@ -366,6 +367,25 @@ public class DataManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfGear has {0} entries{1}", counter, "\n"));
+        //
+        // - - - Gear Rarity - - -
+        //
+        //get GUID of all SO Gear Rarity objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var gearRarityGUID = AssetDatabase.FindAssets("t:GearRarity");
+        foreach (var guid in gearRarityGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object gearRarityObject = AssetDatabase.LoadAssetAtPath(path, typeof(GearRarity));
+            //assign a zero based unique ID number
+            GearRarity gearRarity = gearRarityObject as GearRarity;
+            //add to list
+            if (gearRarity != null)
+            { listOfGearRarity.Add(gearRarity); }
+            else { Debug.LogError("Invalid gearRarity (Null)"); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> listOfGearRarity has {0} entries{1}", listOfGearRarity.Count, "\n"));
         //
         // - - - Actor Qualities - - -
         //

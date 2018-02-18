@@ -269,7 +269,7 @@ public class GearManager : MonoBehaviour
                         //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
                         switch(gear.type)
                         {
-                            case GearType.Movement:
+                            case GearTypeEnum.Movement:
                                 builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
                                 break;
                         }

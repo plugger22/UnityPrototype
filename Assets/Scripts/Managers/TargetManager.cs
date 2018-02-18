@@ -495,7 +495,7 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 { tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.actorArc.name, colourEnd)); }
                                 //player has special gear?
-                                if (target.gearType != GearType.None)
+                                if (target.gearType != GearTypeEnum.None)
                                 {
                                     int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gearType);
                                     if (gearID > -1)
@@ -528,7 +528,7 @@ public class TargetManager : MonoBehaviour
                                     }
                                 }
                                 //gear not applicable (only when player at node)
-                                if (target.gearType != GearType.None)
+                                if (target.gearType != GearTypeEnum.None)
                                 { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gearType, colourEnd)); }
                             }
                             break;
@@ -616,7 +616,7 @@ public class TargetManager : MonoBehaviour
                             if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
                             {
                                 //player has special gear?
-                                if (target.gearType != GearType.None)
+                                if (target.gearType != GearTypeEnum.None)
                                 {
                                     int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gearType);
                                     if (gearID > -1)
