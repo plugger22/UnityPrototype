@@ -12,11 +12,10 @@ public class Gear : ScriptableObject
     [HideInInspector] public int gearID;
 
     public string description;
-    public GearLevel rarity;        // 1 -> common, 2 -> rare, 3 -> unique (one off)
     public GearTypeEnum type;
     public MetaLevel metaLevel;       //eg. city / state / country
 
-    public GearRarity gearRarity;
+    public GearRarity rarity;       //common / rare / unique
     public GearType gearType;
 
     public int data;               //multipurpose datapoint that depends on gear category

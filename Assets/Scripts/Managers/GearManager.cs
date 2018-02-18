@@ -17,6 +17,17 @@ public class GearManager : MonoBehaviour
     [Tooltip("Chance gear will be compromised and be no longer of any benefit after each use")]
     [Range(25, 75)] public int chanceOfCompromise = 50;
 
+    //used for quick reference  -> rarity
+    [HideInInspector] public GearRarity gearCommon;
+    [HideInInspector] public GearRarity gearRare;
+    [HideInInspector] public GearRarity gearUnique;
+    //quick reference -> type
+    [HideInInspector] public GearType typeHacking;
+    [HideInInspector] public GearType typeInfiltration;
+    [HideInInspector] public GearType typeInvisibility;
+    [HideInInspector] public GearType typeKinetic;
+    [HideInInspector] public GearType typeMovement;
+    [HideInInspector] public GearType typeRecovery;
 
     private string colourEffectGood;
     private string colourEffectNeutral;
@@ -36,6 +47,77 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        //initialise fast access variables -> rarity
+        List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
+        if (listOfGearRarity != null)
+        {
+            foreach(GearRarity rarity in listOfGearRarity)
+            {
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //Also dynamically assign gearRarity.level values (0/1/2). Do so here as lots of gear calc's depend on these and they need to be correct
+                switch (rarity.name)
+                {
+                    case "Common":
+                        gearCommon = rarity;
+                        rarity.level = 0;
+                        break;
+                    case "Rare":
+                        gearRare = rarity;
+                        rarity.level = 1;
+                        break;
+                    case "Unique":
+                        gearUnique = rarity;
+                        rarity.level = 2;
+                        break;
+                }
+            }
+            //error check
+            if (gearCommon == null) { Debug.LogError("Invalid gearCommon (Null)"); }
+            if (gearRare == null) { Debug.LogError("Invalid gearRare (Null)"); }
+            if (gearUnique == null) { Debug.LogError("Invalid gearUnique (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfGearRarity (Null)"); }
+
+        //initialise fast access variables -> type
+        List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
+        if (listOfGearType != null)
+        {
+            foreach (GearType gearType in listOfGearType)
+            {
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                switch (gearType.name)
+                {
+                    case "Hacking":
+                        typeHacking = gearType;
+                        break;
+                    case "Infiltration":
+                        typeInfiltration = gearType;
+                        break;
+                    case "Invisibility":
+                        typeInvisibility = gearType;
+                        break;
+                    case "Kinetic":
+                        typeKinetic = gearType;
+                        break;
+                    case "Movement":
+                        typeMovement = gearType;
+                        break;
+                    case "Recovery":
+                        typeRecovery = gearType;
+                        break;
+                }
+            }
+            //error check
+            if (typeHacking == null) { Debug.LogError("Invalid typeHacking (Null)"); }
+            if (typeInfiltration == null) { Debug.LogError("Invalid typeInfiltration (Null)"); }
+            if (typeInvisibility == null) { Debug.LogError("Invalid typeInvisibility (Null)"); }
+            if (typeKinetic == null) { Debug.LogError("Invalid typeKinetic (Null)"); }
+            if (typeMovement == null) { Debug.LogError("Invalid typeMovement (Null)"); }
+            if (typeRecovery == null) { Debug.LogError("Invalid typeRecovery (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfGearType (Null)"); }
+
+        //initialise gear lists
         Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
         if (dictOfGear != null)
         {
@@ -53,13 +135,19 @@ public class GearManager : MonoBehaviour
                 {
                     //assign to a list based on rarity
                     /*arrayOfGearLists[(int)gearEntry.Value.rarity].Add(gearEntry.Key);*/
-                    int index = gearEntry.Value.gearRarity.level - 1;
+                    int index = gearEntry.Value.rarity.level;
                     arrayOfGearLists[index].Add(gearEntry.Key);
                 }
             }
             //initialise dataManager lists with local lists
             for (int i = 0; i < arrayOfGearLists.Length; i++)
-            { GameManager.instance.dataScript.SetGearList(arrayOfGearLists[i], (GearLevel)i); }
+            {
+                GearRarity indexRarity = GameManager.instance.dataScript.GetGearRarity(i);
+                if (indexRarity != null)
+                /*{ GameManager.instance.dataScript.SetGearList(arrayOfGearLists[i], (GearLevel)i); }*/
+                { GameManager.instance.dataScript.SetGearList(arrayOfGearLists[i], indexRarity); }
+                else { Debug.LogError("Invalid indexRarity (Null)"); }
+            }
         }
         else { Debug.LogError("Invalid dictOfGear (Null) -> Gear not initialised"); }
         //event Listeners
@@ -171,8 +259,8 @@ public class GearManager : MonoBehaviour
             //
             //generate temp list of gear to choose from
             //
-            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
-            List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Rare));
+            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
+            List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearRare));
             //remove from lists any gear that the player currently has
             List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
             if (tempPlayerGear.Count > 0)
@@ -270,16 +358,16 @@ public class GearManager : MonoBehaviour
                         if(gear.data == 3) { colourGearEffect = colourEffectGood; }
                         else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
                         //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
-                        switch(gear.type)
+                        switch(gear.gearType.name)
                         {
-                            case GearTypeEnum.Movement:
+                            case "Movement":
                                 builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
                                 break;
                         }
                         tooltipDetails.textHeader = builderHeader.ToString();
                         tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity, colourEnd, 
-                            "\n", colourSide, gear.type, colourEnd);
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd, 
+                            "\n", colourSide, gear.gearType.name, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
@@ -343,7 +431,7 @@ public class GearManager : MonoBehaviour
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
                                     colourDefault, colourEnd));
                                 //message
-                                string textMsg = string.Format("{0}, ID {1}, ({2}) has been acquired", gear.name, gear.gearID, gear.type, node.nodeID);
+                                string textMsg = string.Format("{0}, ID {1}, ({2}) has been acquired", gear.name, gear.gearID, gear.gearType.name, node.nodeID);
                                 Message messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
                                 if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
@@ -411,14 +499,14 @@ public class GearManager : MonoBehaviour
         {
             
             //chance of compromise varies depending on gear rarity
-            switch (gear.rarity)
+            switch (gear.rarity.name)
             {
-                case GearLevel.Unique:
+                case "Unique":
                     //halved chance
                     chance = chanceOfCompromise / 2;
                     break;
-                case GearLevel.Rare:
-                case GearLevel.Common:
+                case "Rare":
+                case "Common":
                     chance = chanceOfCompromise;
                     break;
             }

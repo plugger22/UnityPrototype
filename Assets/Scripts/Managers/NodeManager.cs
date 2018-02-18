@@ -699,13 +699,15 @@ public class NodeManager : MonoBehaviour
                     List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                     if (listOfGear.Count > 0)
                     {
+                        string movement = GameManager.instance.gearScript.typeMovement.name;
                         for (int i = 0; i < listOfGear.Count; i++)
                         {
                             StringBuilder builderDetail = new StringBuilder();
                             Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                             if (gear != null)
                             {
-                                if (gear.type == GearTypeEnum.Movement)
+                                /*if (gear.type == GearTypeEnum.Movement)*/
+                                if (gear.gearType.name.Equals(movement) == true)
                                 {
                                     //
                                     // - - - Create Gear Button (one for each item of relevant gear in Player's possesion)

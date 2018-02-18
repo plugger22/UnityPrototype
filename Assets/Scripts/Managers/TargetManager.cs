@@ -355,7 +355,7 @@ public class TargetManager : MonoBehaviour
 
                     tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, 
                         GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
-                    tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gearType, colourEnd));
+                    tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gear.name, colourEnd));
                     tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
                 }
                 //target COMPLETED
@@ -495,18 +495,18 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 { tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.actorArc.name, colourEnd)); }
                                 //player has special gear?
-                                if (target.gearType != GearTypeEnum.None)
+                                if (target.gear != null)
                                 {
-                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gearType);
+                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
                                     if (gearID > -1)
                                     {
                                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                         if (gear != null)
-                                        { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, gear.name, gearEffect * (int)gear.rarity, colourEnd)); }
+                                        { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
                                         else { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
                                     }
                                     else
-                                    { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gearType, colourEnd)); }
+                                    { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gear.name, colourEnd)); }
                                 }
                             }
                             else
@@ -528,8 +528,8 @@ public class TargetManager : MonoBehaviour
                                     }
                                 }
                                 //gear not applicable (only when player at node)
-                                if (target.gearType != GearTypeEnum.None)
-                                { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gearType, colourEnd)); }
+                                if (target.gear != null)
+                                { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gear.name, colourEnd)); }
                             }
                             break;
                         case TargetFactors.NodeSecurity:
@@ -616,14 +616,14 @@ public class TargetManager : MonoBehaviour
                             if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
                             {
                                 //player has special gear?
-                                if (target.gearType != GearTypeEnum.None)
+                                if (target.gear != null)
                                 {
-                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gearType);
+                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
                                     if (gearID > -1)
                                     {
                                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                         if (gear != null)
-                                        { tally += gearEffect * (int)gear.rarity; }
+                                        { tally += gearEffect * (gear.rarity.level + 1); }
                                         else { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
                                     }
                                 }

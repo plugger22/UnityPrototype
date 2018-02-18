@@ -97,7 +97,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="gearType"></param>
     /// <returns></returns>
-    public int CheckGearTypePresent(GearTypeEnum gearType)
+    public int CheckGearTypePresent(GearType gearType)
     {
         int gearID = -1;
         int rarity = -1;
@@ -109,12 +109,12 @@ public class PlayerManager : MonoBehaviour
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
                 {
-                    if (gear.type == gearType)
+                    if (gear.gearType.name.Equals(gearType.name) == true)
                     {
                         //is it a better piece of gear (higher rarity) than already found?
-                        if ((int)gear.rarity > rarity)
+                        if (gear.rarity.level > rarity)
                         {
-                            rarity = (int)gear.rarity;
+                            rarity = gear.rarity.level;
                             gearID = gear.gearID;
                         }
                     }
@@ -254,9 +254,9 @@ public class PlayerManager : MonoBehaviour
                 builder.AppendLine();
                 builder.Append(string.Format(" gearID {0}", gear.gearID));
                 builder.AppendLine();
-                builder.Append(string.Format(" rarity \"{0}\"", gear.rarity));
+                builder.Append(string.Format(" rarity \"{0}\"", gear.rarity.name));
                 builder.AppendLine();
-                builder.Append(string.Format(" gearType \"{0}\"", gear.type));
+                builder.Append(string.Format(" gearType \"{0}\"", gear.gearType.name));
                 builder.AppendLine();
                 builder.Append(string.Format(" data {0}", gear.data));
             }

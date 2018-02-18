@@ -202,7 +202,7 @@ public class EffectManager : MonoBehaviour
                                 break;
                             case "GearAvailability":
                                 //checks to see if at least 1 piece of unused common gear is available
-                                List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GearLevel.Common));
+                                List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
                                 if (tempCommonGear.Count > 0)
                                 {
                                     //remove from lists any gear that the player currently has
@@ -501,7 +501,7 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "Subtract":
                                     //does player have any invisibility type gear?
-                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GearTypeEnum.Invisibility);
+                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
                                     if (gearID > -1)
                                     {
                                         //gear present -> No drop in Invisibility

@@ -64,6 +64,7 @@ public class DataManager : MonoBehaviour
 
     //gear lists (available gear for this level) -> gearID's
     public List<GearRarity> listOfGearRarity = new List<GearRarity>();
+    public List<GearType> listOfGearType = new List<GearType>();
     public List<int> listOfCommonGear = new List<int>();
     public List<int> listOfRareGear = new List<int>();
     public List<int> listOfUniqueGear = new List<int>();
@@ -370,7 +371,6 @@ public class DataManager : MonoBehaviour
         //
         // - - - Gear Rarity - - -
         //
-        //get GUID of all SO Gear Rarity objects -> Note that I'm searching the entire database here so it's not folder dependant
         var gearRarityGUID = AssetDatabase.FindAssets("t:GearRarity");
         foreach (var guid in gearRarityGUID)
         {
@@ -378,7 +378,6 @@ public class DataManager : MonoBehaviour
             path = AssetDatabase.GUIDToAssetPath(guid);
             //get SO
             UnityEngine.Object gearRarityObject = AssetDatabase.LoadAssetAtPath(path, typeof(GearRarity));
-            //assign a zero based unique ID number
             GearRarity gearRarity = gearRarityObject as GearRarity;
             //add to list
             if (gearRarity != null)
@@ -386,6 +385,23 @@ public class DataManager : MonoBehaviour
             else { Debug.LogError("Invalid gearRarity (Null)"); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> listOfGearRarity has {0} entries{1}", listOfGearRarity.Count, "\n"));
+        //
+        // - - - Gear Type - - -
+        //
+        var gearTypeGUID = AssetDatabase.FindAssets("t:GearType");
+        foreach (var guid in gearTypeGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object gearTypeObject = AssetDatabase.LoadAssetAtPath(path, typeof(GearType));
+            GearType gearType = gearTypeObject as GearType;
+            //add to list
+            if (gearType != null)
+            { listOfGearType.Add(gearType); }
+            else { Debug.LogError("Invalid gearType (Null)"); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
         //
         // - - - Actor Qualities - - -
         //
@@ -1750,6 +1766,27 @@ public class DataManager : MonoBehaviour
     public int GetNumOfGearRarity()
     { return listOfGearRarity.Count; }
 
+    public List<GearRarity> GetListOfGearRarity()
+    { return listOfGearRarity; }
+
+    public List<GearType> GetListOfGearType()
+    { return listOfGearType; }
+
+    /// <summary>
+    /// returns GearRarity for the specified level, null if not found
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public GearRarity GetGearRarity(int level)
+    {
+        for (int i = 0; i < listOfGearRarity.Count; i++)
+        {
+            if (listOfGearRarity[i].level == level)
+            { return listOfGearRarity[i]; }
+        }
+        return null;
+    }
+
     /// <summary>
     /// returns item of Gear, Null if not found
     /// </summary>
@@ -1768,28 +1805,28 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="listOfGearID"></param>
     /// <param name="rarity"></param>
-    public void SetGearList(List<int> listOfGearID, GearLevel rarity)
+    public void SetGearList(List<int> listOfGearID, GearRarity rarity)
     {
         if (listOfGearID != null)
         {
             if (listOfGearID.Count > 0)
             {
-                switch(rarity)
+                switch(rarity.name)
                 {
-                    case GearLevel.Common:
+                    case "Common":
                         listOfCommonGear.AddRange(listOfGearID);
                         break;
-                    case GearLevel.Rare:
+                    case "Rare":
                         listOfRareGear.AddRange(listOfGearID);
                         break;
-                    case GearLevel.Unique:
+                    case "Unique":
                         listOfUniqueGear.AddRange(listOfGearID);
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity));
+                        Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity.name));
                         break;
                 }
-                Debug.Log(string.Format("DataManager -> SetGearList {0} records for GearLevel \"{1}\"{2}", listOfGearID.Count, rarity, "\n"));
+                Debug.Log(string.Format("DataManager -> SetGearList {0} records for GearLevel \"{1}\"{2}", listOfGearID.Count, rarity.name, "\n"));
             }
             else { Debug.LogError("Empty listOfGearID"); }
         }
@@ -1797,26 +1834,26 @@ public class DataManager : MonoBehaviour
     }
     
     /// <summary>
-    /// returns a list of gear according to rarity that is appropriate for the current level
+    /// returns a list of gear according to rarity that is appropriate for the current rarity
     /// </summary>
     /// <param name="rarity"></param>
     /// <returns></returns>
-    public List<int> GetListOfGear(GearLevel rarity)
+    public List<int> GetListOfGear(GearRarity rarity)
     {
         List<int> tempList = new List<int>();
-        switch (rarity)
+        switch (rarity.name)
         {
-            case GearLevel.Common:
+            case "Common":
                 tempList = listOfCommonGear;
                 break;
-            case GearLevel.Rare:
+            case "Rare":
                 tempList = listOfRareGear;
                 break;
-            case GearLevel.Unique:
+            case "Unique":
                 tempList = listOfUniqueGear;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity));
+                Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity.name));
                 break;
         }
         //return list
@@ -2103,7 +2140,7 @@ public class DataManager : MonoBehaviour
             //add new ongoing effect only if no other instance of it exists, ignore otherwise
             if (dictOfOngoingID.ContainsKey(ongoing.ongoingID) == false)
             {
-                string text = string.Format("OngoingID {0}, {1}, {2}", ongoing.ongoingID, ongoing.text, ongoing.apply.name);
+                string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);
                 //add to dictionary
                 try
                 {
@@ -2146,7 +2183,7 @@ public class DataManager : MonoBehaviour
                 //remove entry
                 dictOfOngoingID.Remove(ongoing.ongoingID);
                 //generate message
-                string text = string.Format("OngoingID {0}, {1}, {2}", ongoing.ongoingID, ongoing.text, ongoing.apply.name);
+                string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);
                 Message message = GameManager.instance.messageScript.OngoingEffectExpired(text, ongoing.side, nodeID);
                 GameManager.instance.dataScript.AddMessage(message);
             }
