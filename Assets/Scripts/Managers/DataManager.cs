@@ -1744,6 +1744,13 @@ public class DataManager : MonoBehaviour
     { return dictOfGear; }
 
     /// <summary>
+    /// returns number of rarity types (used for array sizing in GearManager.cs -> Initialise)
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumOfGearRarity()
+    { return listOfGearRarity.Count; }
+
+    /// <summary>
     /// returns item of Gear, Null if not found
     /// </summary>
     /// <param name="gearID"></param>

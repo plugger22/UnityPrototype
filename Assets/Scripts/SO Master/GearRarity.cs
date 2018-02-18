@@ -9,4 +9,6 @@ using UnityEngine;
 public class GearRarity : ScriptableObject
 {
     public string descriptor;
+    [Tooltip("The level of gear -> '0' for Low, '1' for Mid, '2' for High")]
+    [Range(0, 2)] public int level;           //0 to 2
 }
