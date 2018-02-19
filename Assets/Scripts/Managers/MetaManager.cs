@@ -18,7 +18,10 @@ public class MetaManager : MonoBehaviour
     [HideInInspector] public GlobalChance chanceLow;
     [HideInInspector] public GlobalChance chanceMedium;
     [HideInInspector] public GlobalChance chanceHigh;
-
+    //globalType
+    [HideInInspector] public GlobalType typeGood;
+    [HideInInspector] public GlobalType typeNeutral;
+    [HideInInspector] public GlobalType typeBad;
 
     public void Initialise()
     {
@@ -62,7 +65,7 @@ public class MetaManager : MonoBehaviour
             foreach (var chance in dictOfGlobalChance)
             {
                 //pick out and assign the ones required for fast acess, ignore the rest. 
-                //Also dynamically assign GlobalMeta.level values (0/1/2). 
+                //Also dynamically assign GlobalChance.level values (0/1/2). 
                 switch (chance.Key)
                 {
                     case "Low":
@@ -83,9 +86,40 @@ public class MetaManager : MonoBehaviour
             if (chanceLow == null) { Debug.LogError("Invalid chanceLow (Null)"); }
             if (chanceMedium == null) { Debug.LogError("Invalid chanceMedium (Null)"); }
             if (chanceHigh == null) { Debug.LogError("Invalid chanceHigh (Null)"); }
-            //set state
-            metaLevel = metaBottom;
         }
+        //
+        // - - - GlobalType - - -
+        //
+        Dictionary<string, GlobalType> dictOfGlobalType = GameManager.instance.dataScript.GetDictOfGlobalType();
+        if (dictOfGlobalType != null)
+        {
+            foreach (var type in dictOfGlobalType)
+            {
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //Also dynamically assign GlobalType.level values (0/1/2). 
+                switch (type.Key)
+                {
+                    case "Bad":
+                        typeBad = type.Value;
+                        type.Value.level = 0;
+                        break;
+                    case "Neutral":
+                        typeNeutral = type.Value;
+                        type.Value.level = 1;
+                        break;
+                    case "Good":
+                        typeGood = type.Value;
+                        type.Value.level = 2;
+                        break;
+                }
+            }
+            //error check
+            if (typeBad == null) { Debug.LogError("Invalid typeBad (Null)"); }
+            if (typeNeutral == null) { Debug.LogError("Invalid typeNeutral (Null)"); }
+            if (typeGood == null) { Debug.LogError("Invalid typeGood (Null)"); }
+        }            
+        //set state
+        metaLevel = metaBottom;
     }
 
     /// <summary>

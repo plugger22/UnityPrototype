@@ -9,8 +9,9 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Trait")]
 public class Trait : ScriptableObject
 {
-    public int TraitID { get; set; }                //unique #, zero based -> assigned automatically by DataManager.Initialise
+    [HideInInspector] public int traitID;           //unique #, zero based -> assigned automatically by DataManager.Initialise
     public Side side;                               //which side does the trait apply to
-    public TraitType type;                          //good, neutral, bad
+    [Tooltip("Is the trait good, neutral or bad (value assigned dynamically 2 / 1 / 0)")]
+    public GlobalType typeOfTrait;                         //
 
 }

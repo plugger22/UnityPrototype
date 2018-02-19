@@ -34,6 +34,7 @@ public class TooltipActor : MonoBehaviour
     private string colourQuality;
     private string colourAction;
     private string colourArc;
+    private string colourDefault;
     private string colourEnd;
 
 
@@ -97,6 +98,7 @@ public class TooltipActor : MonoBehaviour
         colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourAction = GameManager.instance.colourScript.GetColour(ColourType.actorAction);
         colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -130,13 +132,22 @@ public class TooltipActor : MonoBehaviour
         if (actor != null)
         {
             string colourTrait = colourQuality;
-            switch(actor.trait.type)
+            if (actor.trait.typeOfTrait != null)
             {
-                case TraitType.Good: colourTrait = colourGood; break;
-                case TraitType.Neutral: colourTrait = colourNeutral; break;
-                case TraitType.Bad: colourTrait = colourBad; break;
+                switch (actor.trait.typeOfTrait.name)
+                {
+                    case "Good": colourTrait = colourGood; break;
+                    case "Neutral": colourTrait = colourNeutral; break;
+                    case "Bad": colourTrait = colourBad; break;
+                }
+            }
+            else
+            {
+                colourTrait = colourDefault;
+                Debug.LogWarning("Invalid actor.trait.typeOfTrait (Null)");
             }
             actorTrait.text = string.Format("{0}{1}{2}", colourTrait, actor.trait.name, colourEnd);
+
         }
         else { Debug.LogWarning(string.Format("Actor \"[0}\" has an invalid Trait (Null)", name)); }
         //action

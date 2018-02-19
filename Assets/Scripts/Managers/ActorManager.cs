@@ -985,7 +985,7 @@ public class ActorManager : MonoBehaviour
                         }
                         //trait and action
                         tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">", 
-                            GameManager.instance.colourScript.GetValueColour(3 - (int)actor.trait.type), 
+                            GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level), 
                             "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;

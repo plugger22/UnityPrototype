@@ -144,7 +144,7 @@ public class ColourManager : MonoBehaviour
 
 
     /// <summary>
-    /// subMethod  to provide correct colour for various good/neutral/bad texts, eg. stats and trait. Same for both sides cause High is good, low is bad throughout
+    /// subMethod  to provide correct colour for various good/neutral/bad stats and trait. Same for both sides cause High is good, low is bad throughout (3/2/1/0)
     /// </summary>
     /// <param name="datapoint"></param>
     /// <returns></returns>

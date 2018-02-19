@@ -90,8 +90,11 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
+
+    //global SO's (enum equivalents)
     private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
     private Dictionary<string, GlobalChance> dictOfGlobalChance = new Dictionary<string, GlobalChance>();   //Key -> GlobalChance.name, Value -> GlobalChance
+    private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();         //Key -> GlobalType.name, Value -> GlobalType
 
     /// <summary>
     /// default constructor
@@ -150,11 +153,11 @@ public class DataManager : MonoBehaviour
             UnityEngine.Object traitObject = AssetDatabase.LoadAssetAtPath(path, typeof(Trait));
             //assign a zero based unique ID number
             Trait trait = traitObject as Trait;
-            trait.TraitID = counter++;
+            trait.traitID = counter++;
             //add to dictionary
             try
             {
-                dictOfTraits.Add(trait.TraitID, trait);
+                dictOfTraits.Add(trait.traitID, trait);
                 //add to list
                 listOfAllTraits.Add(trait);
             }
@@ -446,6 +449,27 @@ public class DataManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", chance.name)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
+        //
+        // - - - GlobalType - - -
+        //
+        var typeGUID = AssetDatabase.FindAssets("t:GlobalType");
+        foreach (var guid in typeGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object typeObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalType));
+            //assign a zero based unique ID number
+            GlobalType type = typeObject as GlobalType;
+            //add to dictionary
+            try
+            { dictOfGlobalType.Add(type.name, type); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid GlobalType (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid GlobalType (duplicate) \"{0}\"", type.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalType has {0} entries{1}", dictOfGlobalType.Count, "\n"));
         //
         // - - - Actor Qualities - - -
         //
@@ -2272,6 +2296,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, GlobalChance> GetDictOfGlobalChance()
     { return dictOfGlobalChance; }
+
+    public Dictionary<string, GlobalType> GetDictOfGlobalType()
+    { return dictOfGlobalType; }
 
     /// <summary>
     /// returns level of globalMeta based on string (metaLevel SO name). Returns '-1' if not found

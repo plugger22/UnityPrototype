@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
+
+
 namespace gameAPI
 {
+    /// <summary>
+    /// Enums -> only for use in code, anything that is in an SO requires an SO enum approach
+    /// </summary>
+
     //
     // - - - Game Manager - - -
     //
@@ -13,8 +20,8 @@ namespace gameAPI
     public enum ResistanceState { Normal, Captured }                                    //player as Resistance
     public enum AuthorityState { Normal }                                               //player as Authority
     public enum MetaLevel { None, City, State, Nation }
-    public enum AuthorityActor { Superintendent, Minister, Secretary}              //different names for authority actors depending on MetaLevel
-    
+    public enum AuthorityActor { Superintendent, Minister, Secretary }              //different names for authority actors depending on MetaLevel
+
     //
     // - - - Level Manager
     //
@@ -23,26 +30,26 @@ namespace gameAPI
     //
     // - - - Node Manager - - 
     // 
-    public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count}    //DataManager arrayOfNodes index
+    public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count }    //DataManager arrayOfNodes index
     public enum NodeType { Normal, Highlight, Active, Player, Count }
-    public enum NodeUI {                                                            //parameter for NodeDisplay event
+    public enum NodeUI
+    {                                                            //parameter for NodeDisplay event
         None,
         Reset, Redraw, Move,
         ShowTargets, ShowSpiders, ShowTracers, ShowTeams,
         NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6, NodeArc7, NodeArc8, NodeArc9
-        };             
+    };
 
     //
     // - - - Decisions and Targets - - -
     //
-    public enum Status {Dormant, Active, Live, Completed, Contained }
-    public enum Activation { Low, Medium, High}                                     //chance of becoming 'Live' once 'Active'
+    public enum Status { Dormant, Active, Live, Completed, Contained }
+    public enum Activation { Low, Medium, High }                                     //chance of becoming 'Live' once 'Active'
 
     //
     // - - - Actors - - -
     //
-    public enum TraitType { Good, Neutral, Bad}
-    public enum ActorStatus { Active, Inactive, Reserve, Pool, Captured}
+    public enum ActorStatus { Active, Inactive, Reserve, Pool, Captured }
 
     //
     // - - - Action Manager - - -
@@ -60,14 +67,15 @@ namespace gameAPI
     //
     // - - - Dice - - -
     //
-    public enum DiceOutcome { None, Ignore, Auto, Roll}
+    public enum DiceOutcome { None, Ignore, Auto, Roll }
 
     //
     // - - - Messages - - -
     //
-    public enum MessageCategory { None, Current, Pending, Archive}
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT}
-    public enum MessageSubType {
+    public enum MessageCategory { None, Current, Pending, Archive }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT }
+    public enum MessageSubType
+    {
         None,
         //Player
         Plyr_Move,
@@ -102,12 +110,14 @@ namespace gameAPI
     // - - - Teams - - -
     //
     //public enum TeamType { None, Civil, Damage, Probe, Media, Control, Erasure, Spider} -> not needed
-    public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count}           //DataManager arrayOfTeams  index
-    public enum TeamPool { Reserve, OnMap, InTransit, Count}                  //Different pools that teams move between
-    public enum NATO {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
+    public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count }           //DataManager arrayOfTeams  index
+    public enum TeamPool { Reserve, OnMap, InTransit, Count }                  //Different pools that teams move between
+    public enum NATO
+    {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
         Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike,
         November, Oscar, Papa, Quebec, Romeo, Sierra, Tango, Uniform, Victor, Whiskey, Xray, Yankee, Zulu,
-        Count }
+        Count
+    }
 
 
 
