@@ -422,14 +422,14 @@ public class ActorManager : MonoBehaviour
                                     listOfEffects = tempAction.listOfEffects;
                                     if (listOfEffects.Count > 0)
                                     {
-                                        string colourEffect = colourNeutralEffect;
+                                        string colourEffect = colourDefault;
                                         for (int i = 0; i < listOfEffects.Count; i++)
                                         {
                                             Effect effect = listOfEffects[i];
                                             //colour code effects according to type
-                                            if (effect.type != null)
+                                            if (effect.typeOfEffect != null)
                                             {
-                                                switch (effect.type.name)
+                                                switch (effect.typeOfEffect.name)
                                                 {
                                                     case "Good":
                                                         colourEffect = colourGoodEffect;
@@ -677,22 +677,30 @@ public class ActorManager : MonoBehaviour
                                             if (builder.Length > 0) { builder.AppendLine(); }
                                             if (effect.outcome.name.Equals("Renown") == false)
                                             {
-                                                //sort out colour, remember effect.type is from POV of resistance so good will be bad for authority
-                                                switch (effect.type.name)
+                                                //sort out colour, remember effect.typeOfEffect is from POV of resistance so good will be bad for authority
+                                                if (effect.typeOfEffect != null)
                                                 {
-                                                    case "Good":
-                                                        builder.Append(string.Format("{0}{1}{2}", colourBadEffect, effect.textTag, colourEnd));
-                                                        break;
-                                                    case "Neutral":
-                                                        builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, effect.textTag, colourEnd));
-                                                        break;
-                                                    case "Bad":
-                                                        builder.Append(string.Format("{0}{1}{2}", colourGoodEffect, effect.textTag, colourEnd));
-                                                        break;
-                                                    default:
-                                                        builder.Append(string.Format("{0}{1}{2}", colourDefault, effect.textTag, colourEnd));
-                                                        Debug.LogError(string.Format("Invalid effect.type \"{0}\"", effect.type.name));
-                                                        break;
+                                                    switch (effect.typeOfEffect.name)
+                                                    {
+                                                        case "Good":
+                                                            builder.Append(string.Format("{0}{1}{2}", colourBadEffect, effect.textTag, colourEnd));
+                                                            break;
+                                                        case "Neutral":
+                                                            builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, effect.textTag, colourEnd));
+                                                            break;
+                                                        case "Bad":
+                                                            builder.Append(string.Format("{0}{1}{2}", colourGoodEffect, effect.textTag, colourEnd));
+                                                            break;
+                                                        default:
+                                                            builder.Append(string.Format("{0}{1}{2}", colourDefault, effect.textTag, colourEnd));
+                                                            Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                                                            break;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    builder.Append(effect.textTag);
+                                                    Debug.LogWarning(string.Format("Invalid effect.typeOfEffect (Null) for \"{0}\"", effect.name));
                                                 }
                                                 //if an ANY TEAM action then display available teams
                                                 if (isAnyTeam == true)

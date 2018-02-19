@@ -339,23 +339,27 @@ public class EffectManager : MonoBehaviour
             //sort out colour based on type (which is effect benefit from POV of Resistance)
             string colourEffect = colourDefault;
             string colourText = colourDefault;
-            switch (effect.type.name)
+            if (effect.typeOfEffect != null)
             {
-                case "Good":
-                    colourEffect = colourGood;
-                    break;
-                case "Neutral":
-                    colourEffect = colourNeutral;
-                    colourText = colourNeutral;
-                    break;
-                case "Bad":
-                    colourEffect = colourBad;
-                    colourText = colourAlert;
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid effect.type \"{0}\"", effect.type.name));
-                    break;
+                switch (effect.typeOfEffect.name)
+                {
+                    case "Good":
+                        colourEffect = colourGood;
+                        break;
+                    case "Neutral":
+                        colourEffect = colourNeutral;
+                        colourText = colourNeutral;
+                        break;
+                    case "Bad":
+                        colourEffect = colourBad;
+                        colourText = colourAlert;
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                        break;
+                }
             }
+            else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
             //what's affected?
             switch (effect.outcome.name)
             {
@@ -830,23 +834,27 @@ public class EffectManager : MonoBehaviour
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
         string colourText = colourDefault;
-        switch (effect.type.name)
+        if (effect.typeOfEffect != null)
         {
-            case "Good":
-                colourEffect = colourGood;
-                break;
-            case "Neutral":
-                colourEffect = colourNeutral;
-                colourText = colourNeutral;
-                break;
-            case "Bad":
-                colourEffect = colourBad;
-                colourText = colourAlert;
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid effect.type \"{0}\"", effect.type.name));
-                break;
+            switch (effect.typeOfEffect.name)
+            {
+                case "Good":
+                    colourEffect = colourGood;
+                    break;
+                case "Neutral":
+                    colourEffect = colourNeutral;
+                    colourText = colourNeutral;
+                    break;
+                case "Bad":
+                    colourEffect = colourBad;
+                    colourText = colourAlert;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                    break;
+            }
         }
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         //data package to send to node for field processing
@@ -1254,23 +1262,27 @@ public class EffectManager : MonoBehaviour
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
         string colourText = colourDefault;
-        switch (effect.type.name)
+        if (effect.typeOfEffect != null)
         {
-            case "Good":
-                colourEffect = colourGood;
-                break;
-            case "Neutral":
-                colourEffect = colourNeutral;
-                colourText = colourNeutral;
-                break;
-            case "Bad":
-                colourEffect = colourBad;
-                colourText = colourAlert;
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid effect.type \"{0}\"", effect.type.name));
-                break;
+            switch (effect.typeOfEffect.name)
+            {
+                case "Good":
+                    colourEffect = colourGood;
+                    break;
+                case "Neutral":
+                    colourEffect = colourNeutral;
+                    colourText = colourNeutral;
+                    break;
+                case "Bad":
+                    colourEffect = colourBad;
+                    colourText = colourAlert;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                    break;
+            }
         }
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         //data package to send to node for field processing
@@ -1483,7 +1495,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.outcome = effect.outcome;
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
-        effectOngoing.type = effect.type;
+        effectOngoing.type = effect.typeOfEffect;
         effectOngoing.apply = effect.apply;
         effectOngoing.side = effectInput.side;
         //descriptor

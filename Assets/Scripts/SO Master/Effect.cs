@@ -24,7 +24,8 @@ public class Effect : ScriptableObject
     [Tooltip("Use Add or Subtract if appropriate, otherwise ignore")]
     public EffectOperator operand;                              //leave as 'None' if there is no specific stat adjustment
     [Tooltip("The effect from the point of view of the Resistance")]
-    public EffectType type;                                     //used so that ActorManager.cs -> GetActorActions can colour the effects correctly for the tooltips
+    public GlobalType typeOfEffect;
+
     [Tooltip("Single, one shot, effect or Ongoing?")]
     public EffectDuration duration;                             //once off effect or ongoing?
     [Tooltip("Value is always POSITIVE. Use operand 'Subtract' to handle negative numbers")]

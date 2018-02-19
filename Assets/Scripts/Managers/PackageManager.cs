@@ -97,7 +97,7 @@ namespace packageAPI
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public int timer;                                                 //how long does the effect last for?
         public EffectOutcome outcome;
-        public EffectType type;                                           //benefit, or otherwise, of effect from POV of Resistance
+        public GlobalType type;                                           //benefit, or otherwise, of effect from POV of Resistance
         public EffectApply apply;
         public Side side;
 
@@ -112,7 +112,7 @@ namespace packageAPI
     public class EffectDataTooltip
     {
         public string text;
-        public EffectType type;
+        public GlobalType type;
     }
 
 }
