@@ -14,10 +14,17 @@ public class MetaManager : MonoBehaviour
     [HideInInspector] public GlobalMeta metaBottom;
     [HideInInspector] public GlobalMeta metaMiddle;
     [HideInInspector] public GlobalMeta metaTop;
+    //globalChance
+    [HideInInspector] public GlobalChance chanceLow;
+    [HideInInspector] public GlobalChance chanceMedium;
+    [HideInInspector] public GlobalChance chanceHigh;
+
 
     public void Initialise()
     {
-        //initialise fast access fields -> GlobalMeta
+        //
+        // - - - GlobalMeta - - -
+        //
         Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
         if (dictOfGlobalMeta != null)
         {
@@ -45,6 +52,37 @@ public class MetaManager : MonoBehaviour
             if (metaBottom == null) { Debug.LogError("Invalid metaBottom (Null)"); }
             if (metaMiddle == null) { Debug.LogError("Invalid metaMiddle (Null)"); }
             if (metaTop == null) { Debug.LogError("Invalid metaTop (Null)"); }
+        }
+        //
+        // - - - GlobalChance - - -
+        //
+        Dictionary<string, GlobalChance> dictOfGlobalChance = GameManager.instance.dataScript.GetDictOfGlobalChance();
+        if (dictOfGlobalChance != null)
+        {
+            foreach (var chance in dictOfGlobalChance)
+            {
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //Also dynamically assign GlobalMeta.level values (0/1/2). 
+                switch (chance.Key)
+                {
+                    case "Low":
+                        chanceLow = chance.Value;
+                        chance.Value.level = 0;
+                        break;
+                    case "Medium":
+                        chanceMedium = chance.Value;
+                        chance.Value.level = 1;
+                        break;
+                    case "High":
+                        chanceHigh = chance.Value;
+                        chance.Value.level = 2;
+                        break;
+                }
+            }
+            //error check
+            if (chanceLow == null) { Debug.LogError("Invalid chanceLow (Null)"); }
+            if (chanceMedium == null) { Debug.LogError("Invalid chanceMedium (Null)"); }
+            if (chanceHigh == null) { Debug.LogError("Invalid chanceHigh (Null)"); }
             //set state
             metaLevel = metaBottom;
         }

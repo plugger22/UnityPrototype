@@ -143,11 +143,11 @@ public class GameManager : MonoBehaviour
         dataScript.InitialiseEarly();
         actorScript.Initialise();
         levelScript.Initialise();
-        //immediately after levelScript
-        dataScript.InitialiseLate();
+        dataScript.InitialiseLate();    //must be immediately after levelScript.Initialise
         guiScript.Initialise();
         inputScript.Initialise();
         metaScript.Initialise();
+        dataScript.InitialiseFinal();   //must be after metaScript.Initialise
         actionScript.Initialise();
         effectScript.Initialise();
         targetScript.Initialise();

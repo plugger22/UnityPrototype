@@ -90,7 +90,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
-    private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>(); //Key -> GlobalMeta.name, Value -> GlobalMeta
+    private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
+    private Dictionary<string, GlobalChance> dictOfGlobalChance = new Dictionary<string, GlobalChance>();   //Key -> GlobalChance.name, Value -> GlobalChance
 
     /// <summary>
     /// default constructor
@@ -421,9 +422,30 @@ public class DataManager : MonoBehaviour
             catch (ArgumentNullException)
             { Debug.LogError("Invalid GlobalMeta (Null)"); }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\" for \"{1}\"", counter, meta.name)); }
+            { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", meta.name)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
+        //
+        // - - - GlobalChance - - -
+        //
+        var chanceGUID = AssetDatabase.FindAssets("t:GlobalChance");
+        foreach (var guid in chanceGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object chanceObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalChance));
+            //assign a zero based unique ID number
+            GlobalChance chance = chanceObject as GlobalChance;
+            //add to dictionary
+            try
+            { dictOfGlobalChance.Add(chance.name, chance); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid GlobalChance (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", chance.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
         //
         // - - - Actor Qualities - - -
         //
@@ -506,28 +528,41 @@ public class DataManager : MonoBehaviour
             Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
         }
         else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
+        //Actor Nodes
+        UpdateActorNodes();
+        //event listener
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+    }
+
+    /// <summary>
+    /// stuff that is done a lot later in the process (dependant on other stuff being done first). Must be after metaScript.Initialise()
+    /// </summary>
+    public void InitialiseFinal()
+    {
         //
-        // - - - Possible Targets - - -
+        // - - - Possible Targets - - - 
         //
+        int currentMetaLevel = GameManager.instance.metaScript.metaLevel.level;
         foreach (var target in dictOfTargets)
         {
             //add to list pf Possible targets if a level 1 target & nodes of the required type are available
             if (target.Value.targetLevel == 1)
             {
-                //add to list of Possible targets
-                if (CheckNodeInfo(target.Value.nodeArc.NodeArcID, NodeInfo.Number) > 0)
-                { possibleTargetsPool.Add(target.Value); }
-                else
+                //check target is the correct metaLevel or that no metaLevel has been specified
+                if (target.Value.metaLevel == null || target.Value.metaLevel.level == currentMetaLevel)
                 {
-                    Debug.Log(string.Format("DataManager: {0} has been ignored as there are no required node types present (\"{1}\"){2}",
-                        target.Value.name, target.Value.nodeArc.name, "\n"));
+                    //add to list of Possible targets
+                    if (CheckNodeInfo(target.Value.nodeArc.NodeArcID, NodeInfo.Number) > 0)
+                    { possibleTargetsPool.Add(target.Value); }
+                    else
+                    {
+                        Debug.Log(string.Format("DataManager: {0} has been ignored as there are no required node types present (\"{1}\"){2}",
+                            target.Value.name, target.Value.nodeArc.name, "\n"));
+                    }
                 }
             }
         }
-        //Actor Nodes
-        UpdateActorNodes();
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));
     }
 
     /// <summary>
@@ -2234,6 +2269,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, GlobalMeta> GetDictOfGlobalMeta()
     { return dictOfGlobalMeta; }
+
+    public Dictionary<string, GlobalChance> GetDictOfGlobalChance()
+    { return dictOfGlobalChance; }
 
     /// <summary>
     /// returns level of globalMeta based on string (metaLevel SO name). Returns '-1' if not found
