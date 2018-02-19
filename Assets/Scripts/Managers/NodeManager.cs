@@ -707,7 +707,7 @@ public class NodeManager : MonoBehaviour
                             if (gear != null)
                             {
                                 /*if (gear.type == GearTypeEnum.Movement)*/
-                                if (gear.gearType.name.Equals(movement) == true)
+                                if (gear.type.name.Equals(movement) == true)
                                 {
                                     //
                                     // - - - Create Gear Button (one for each item of relevant gear in Player's possesion)

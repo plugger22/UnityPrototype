@@ -358,7 +358,7 @@ public class GearManager : MonoBehaviour
                         if(gear.data == 3) { colourGearEffect = colourEffectGood; }
                         else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
                         //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
-                        switch(gear.gearType.name)
+                        switch(gear.type.name)
                         {
                             case "Movement":
                                 builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
@@ -367,7 +367,7 @@ public class GearManager : MonoBehaviour
                         tooltipDetails.textHeader = builderHeader.ToString();
                         tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
                         tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd, 
-                            "\n", colourSide, gear.gearType.name, colourEnd);
+                            "\n", colourSide, gear.type.name, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
@@ -431,7 +431,7 @@ public class GearManager : MonoBehaviour
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
                                     colourDefault, colourEnd));
                                 //message
-                                string textMsg = string.Format("{0}, ID {1}, ({2}) has been acquired", gear.name, gear.gearID, gear.gearType.name, node.nodeID);
+                                string textMsg = string.Format("{0}, ID {1}, ({2}) has been acquired", gear.name, gear.gearID, gear.type.name, node.nodeID);
                                 Message messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
                                 if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise

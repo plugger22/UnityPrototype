@@ -109,7 +109,7 @@ public class PlayerManager : MonoBehaviour
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
                 {
-                    if (gear.gearType.name.Equals(gearType.name) == true)
+                    if (gear.type.name.Equals(gearType.name) == true)
                     {
                         //is it a better piece of gear (higher rarity) than already found?
                         if (gear.rarity.level > rarity)
@@ -224,7 +224,7 @@ public class PlayerManager : MonoBehaviour
             {
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
-                { builder.Append(string.Format(" {0}, ID {1}{2}", gear.name, gear.gearID, "\n"));}
+                { builder.Append(string.Format(" {0}, ID {1}, {2}{3}", gear.name, gear.gearID, gear.type.name, "\n"));}
             }
         }
         else { builder.Append(" No gear in inventory"); }
@@ -256,7 +256,7 @@ public class PlayerManager : MonoBehaviour
                 builder.AppendLine();
                 builder.Append(string.Format(" rarity \"{0}\"", gear.rarity.name));
                 builder.AppendLine();
-                builder.Append(string.Format(" gearType \"{0}\"", gear.gearType.name));
+                builder.Append(string.Format(" gearType \"{0}\"", gear.type.name));
                 builder.AppendLine();
                 builder.Append(string.Format(" data {0}", gear.data));
             }

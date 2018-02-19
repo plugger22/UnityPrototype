@@ -54,8 +54,8 @@ namespace gameAPI
     //
     // - - - Gear - - -
     //
-    public enum GearLevel { Common, Rare, Unique, Count}
-    public enum GearTypeEnum { None, Infiltration, Kinetic, Hacking, Stealth, Invisibility, Movement, Recovery}
+    //public enum GearLevel { Common, Rare, Unique, Count}
+    //public enum GearTypeEnum { None, Infiltration, Kinetic, Hacking, Stealth, Invisibility, Movement, Recovery}
 
     //
     // - - - Dice - - -

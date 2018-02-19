@@ -18,7 +18,6 @@ public class Target : ScriptableObject
     
     public Activation activation = Activation.Medium;                        //chance of going live each turn, if active
     public ActorArc actorArc;                       //actor arc with special bonus for target resolution (max. 1)
-    public GearTypeEnum gearType;
     public GearType gear;
 
     [HideInInspector] public Status targetStatus;      //default status of Dormant
