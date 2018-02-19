@@ -236,15 +236,11 @@ public class ModalTeamPicker : MonoBehaviour
             if (actor != null)
             {
                 builder.AppendLine();
-
-                /*builder.Append(string.Format("{0}, {1} of {2} has deployed {3} of {4} teams", actor.Name, (AuthorityActor)GameManager.instance.GetMetaLevel(),
-                     actor.Arc.name, actor.CheckNumOfTeams(), actor.Datapoint2));*/
-
                 string colourNumbers = colourGood;
                 if (actor.CheckNumOfTeams() == actor.datapoint2)
                 { colourNumbers = colourBad; }
                 builder.Append(string.Format("{0}, {1} of {2}{3}{4} has deployed {5}{6}{7} of {8}{9}{10} teams",
-                    actor.actorName, (AuthorityActor)GameManager.instance.turnScript.metaLevel, colourActor, actor.arc.name, colourEnd,
+                    actor.actorName, GameManager.instance.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
                     colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd));
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) from ActorSlotID {0}", teamActorSlotID)); }

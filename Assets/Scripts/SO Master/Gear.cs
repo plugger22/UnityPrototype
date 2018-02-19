@@ -12,7 +12,8 @@ public class Gear : ScriptableObject
     [HideInInspector] public int gearID;
 
     public string description;
-    public MetaLevel metaLevel;       //eg. city / state / country
+    [Tooltip("Only select an option here if the Gear is restricted to a particular metaLevel, otherwise leave as None (null)")]
+    public GlobalMeta metaLevel;  //local / state / national
 
     public GearRarity rarity;       //common / rare / unique
     public GearType type;

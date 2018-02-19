@@ -250,7 +250,9 @@ public class PlayerManager : MonoBehaviour
                 builder.AppendLine();
                 builder.Append(string.Format(" {0}", gear.name.ToUpper()));
                 builder.AppendLine();
-                builder.Append(string.Format(" Metalevel \"{0}\"", gear.metaLevel));
+                if (gear.metaLevel != null)
+                { builder.Append(string.Format(" Metalevel \"{0}\"", gear.metaLevel.name)); }
+                else { builder.Append(" MetaLevel \"None\""); }
                 builder.AppendLine();
                 builder.Append(string.Format(" gearID {0}", gear.gearID));
                 builder.AppendLine();

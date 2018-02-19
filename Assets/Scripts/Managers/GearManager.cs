@@ -121,9 +121,8 @@ public class GearManager : MonoBehaviour
         Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
         if (dictOfGear != null)
         {
-            int gameLevel = (int)GameManager.instance.turnScript.metaLevel;
+            int gameLevel = GameManager.instance.metaScript.metaLevel.level;
             //set up an array of Lists, with index corresponding to GearLevel enum, eg. Common / Rare / Unique
-            /*List<int>[] arrayOfGearLists = new List<int>[(int)GearLevel.Count];*/
             List<int>[] arrayOfGearLists = new List<int>[(int)GameManager.instance.dataScript.GetNumOfGearRarity()];
             for (int i = 0; i < arrayOfGearLists.Length; i++)
             { arrayOfGearLists[i] = new List<int>(); }
@@ -131,10 +130,9 @@ public class GearManager : MonoBehaviour
             foreach (var gearEntry in dictOfGear)
             {
                 //check appropriate for metaLevel (same level or 'none', both are acceptable)
-                if (gearEntry.Value.metaLevel == MetaLevel.None || (int)gearEntry.Value.metaLevel == gameLevel)
+                if (gearEntry.Value.metaLevel == null || gearEntry.Value.metaLevel.level == gameLevel)
                 {
                     //assign to a list based on rarity
-                    /*arrayOfGearLists[(int)gearEntry.Value.rarity].Add(gearEntry.Key);*/
                     int index = gearEntry.Value.rarity.level;
                     arrayOfGearLists[index].Add(gearEntry.Key);
                 }
@@ -144,7 +142,6 @@ public class GearManager : MonoBehaviour
             {
                 GearRarity indexRarity = GameManager.instance.dataScript.GetGearRarity(i);
                 if (indexRarity != null)
-                /*{ GameManager.instance.dataScript.SetGearList(arrayOfGearLists[i], (GearLevel)i); }*/
                 { GameManager.instance.dataScript.SetGearList(arrayOfGearLists[i], indexRarity); }
                 else { Debug.LogError("Invalid indexRarity (Null)"); }
             }

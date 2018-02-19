@@ -12,7 +12,9 @@ public class Target : ScriptableObject
     
     [Tooltip("Keep short, eg. 'Rolling Blackouts'")]
     public string description;                       //eg. "Rolling Blackouts" (keep short)
-    public MetaLevel metaLevel;                   //which meta level?
+    //public MetaLevel metaLevel;                   //which meta level?
+    [Tooltip("Only select an option here if the Target is restricted to a particular metaLevel, otherwise leave as None (null)")]
+    public GlobalMeta metaLevel;
     [Range(1, 3)] public int targetLevel = 1;                         //from 1 to 3, lowest to highest. Level 1 can trigger a Level 2 which can trigger a level 3
     public NodeArc nodeArc;                       //which Node Arc it applies to, eg. "Government"
     

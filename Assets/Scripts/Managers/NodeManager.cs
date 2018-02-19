@@ -577,7 +577,7 @@ public class NodeManager : MonoBehaviour
         string minionTitle;
         //work out minion's appropriate title
         if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
-        { minionTitle = string.Format("{0} of ", (AuthorityActor)GameManager.instance.turnScript.metaLevel); }
+        { minionTitle = string.Format("{0} of ", GameManager.instance.metaScript.GetAuthorityTitle()); }
         else { minionTitle = "Rebel "; }
         if (actor != null)
         {

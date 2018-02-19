@@ -90,6 +90,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
+    private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>(); //Key -> GlobalMeta.name, Value -> GlobalMeta
 
     /// <summary>
     /// default constructor
@@ -402,6 +403,27 @@ public class DataManager : MonoBehaviour
             else { Debug.LogError("Invalid gearType (Null)"); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
+        //
+        // - - - GlobalMeta - - -
+        //
+        var metaGUID = AssetDatabase.FindAssets("t:GlobalMeta");
+        foreach (var guid in metaGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalMeta));
+            //assign a zero based unique ID number
+            GlobalMeta meta = metaObject as GlobalMeta;
+            //add to dictionary
+            try
+            { dictOfGlobalMeta.Add(meta.name, meta); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid GlobalMeta (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\" for \"{1}\"", counter, meta.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
         //
         // - - - Actor Qualities - - -
         //
@@ -2204,6 +2226,26 @@ public class DataManager : MonoBehaviour
                 GameManager.instance.nodeScript.RemoveOngoingEffect(register.Key);
             }
         }
+    }
+
+    //
+    // - - - Global SO's - - -
+    //
+
+    public Dictionary<string, GlobalMeta> GetDictOfGlobalMeta()
+    { return dictOfGlobalMeta; }
+
+    /// <summary>
+    /// returns level of globalMeta based on string (metaLevel SO name). Returns '-1' if not found
+    /// </summary>
+    /// <param name="metaName"></param>
+    /// <returns></returns>
+    public int GetGlobalMetaLevel(string metaName)
+    {
+        int level = -1;
+        if (dictOfGlobalMeta.ContainsKey(metaName) == true)
+        { level = dictOfGlobalMeta[metaName].level; }
+        return level;
     }
 
     //new methods above here

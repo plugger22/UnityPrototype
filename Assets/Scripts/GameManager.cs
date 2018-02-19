@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
 {
     #region variables
     public static GameManager instance = null;      //static instance of GameManager which allows it to be accessed by any other script
-    [HideInInspector] public LevelManager levelScript;                //sets up the levels
-    [HideInInspector] public DataManager dataScript;                  //data Manager
+    [HideInInspector] public LevelManager levelScript;                //Level Manager
+    [HideInInspector] public MetaManager metaScript;                  //Meta Manager
+    [HideInInspector] public DataManager dataScript;                  //Data Manager
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
@@ -84,6 +85,7 @@ public class GameManager : MonoBehaviour
         Random.InitState(seed);
         //Get component references
         levelScript = GetComponent<LevelManager>();
+        metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
         actorScript = GetComponent<ActorManager>();
@@ -145,6 +147,7 @@ public class GameManager : MonoBehaviour
         dataScript.InitialiseLate();
         guiScript.Initialise();
         inputScript.Initialise();
+        metaScript.Initialise();
         actionScript.Initialise();
         effectScript.Initialise();
         targetScript.Initialise();

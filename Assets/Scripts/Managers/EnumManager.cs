@@ -13,7 +13,7 @@ namespace gameAPI
     public enum ResistanceState { Normal, Captured }                                    //player as Resistance
     public enum AuthorityState { Normal }                                               //player as Authority
     public enum MetaLevel { None, City, State, Nation }
-    public enum AuthorityActor { None, Superintendent, Minister, Secretary}              //different names for authority actors depending on MetaLevel
+    public enum AuthorityActor { Superintendent, Minister, Secretary}              //different names for authority actors depending on MetaLevel
     
     //
     // - - - Level Manager
@@ -49,7 +49,7 @@ namespace gameAPI
     //
     //public enum Comparison { None, LessThan, GreaterThan, EqualTo }
     //public enum Result { None, Add, Subtract }
-    public enum ActionType { None, Node, NeutraliseTeam, Gear, Recruit}
+    //public enum ActionType { None, Node, NeutraliseTeam, Gear, Recruit}
 
     //
     // - - - Gear - - -

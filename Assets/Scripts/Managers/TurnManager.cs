@@ -18,7 +18,7 @@ public class TurnManager : MonoBehaviour
 
     public float showSplashTimeout = 2.0f;
 
-    [HideInInspector] public MetaLevel metaLevel;
+    
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthorityState authorityState;
     [HideInInspector] public Side currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
     {
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
-        metaLevel = MetaLevel.City;
+        
         resistanceState = ResistanceState.Normal;
         authorityState = AuthorityState.Normal;
         //current side

@@ -657,7 +657,7 @@ public class ActorManager : MonoBehaviour
                             tooltipMain = tempAction.tooltipText;
                             //tweak if ANY TEAM
                             if (isAnyTeam == true)
-                            { tooltipMain = string.Format("{0} as the {1} has Influence here", tooltipMain, (AuthorityActor)GameManager.instance.turnScript.metaLevel); }
+                            { tooltipMain = string.Format("{0} as the {1} has Influence here", tooltipMain, GameManager.instance.metaScript.GetAuthorityTitle()); }
                             //valid action?
                             if (tempAction != null)
                             {
