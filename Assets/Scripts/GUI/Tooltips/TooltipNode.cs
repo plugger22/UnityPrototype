@@ -100,15 +100,18 @@ public class TooltipNode : MonoBehaviour
     public void SetColours()
     {
         //output colours for good and bad depend on player side
-        switch (GameManager.instance.sideScript.PlayerSide)
+        switch (GameManager.instance.sideScript.PlayerSide.name)
         {
-            case Side.Resistance:
+            case "Resistance":
                 colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
                 colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
                 break;
-            case Side.Authority:
+            case "Authority":
                 colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
                 colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
         //colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
@@ -134,6 +137,9 @@ public class TooltipNode : MonoBehaviour
     public void SetTooltip(NodeTooltipData data)
     {
         bool proceedFlag;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
+        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //open panel at start
         tooltipNodeObject.SetActive(true);
         //set opacity to zero (invisible)
@@ -167,8 +173,8 @@ public class TooltipNode : MonoBehaviour
         builderActor.Append(colourActive);
         //ascertain whether actors shown or not
         proceedFlag = false;
-        if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { proceedFlag = true; }
-        else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+        if (playerSide.level == globalResistance.level) { proceedFlag = true; }
+        else if (playerSide.level == globalAuthority.level)
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
@@ -183,7 +189,7 @@ public class TooltipNode : MonoBehaviour
             //FOW off or Resistance side
             if (proceedFlag == true)
             {
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                if (playerSide.level == globalResistance.level)
                 {
                     for (int i = 0; i < data.listOfActive.Count; i++)
                     {
@@ -191,7 +197,7 @@ public class TooltipNode : MonoBehaviour
                         builderActor.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd));
                     }
                 }
-                else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+                else if (playerSide.level == globalAuthority.level)
                 { builderActor.Append(string.Format("{0}Resistance Contacts present{1}", colourNeutral, colourEnd)); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
@@ -203,9 +209,9 @@ public class TooltipNode : MonoBehaviour
             //no actor contacts present at node -> FOW off or Resistance side
             if (proceedFlag == true)
             {
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                if (playerSide.level == globalResistance.level)
                 { builderActor.Append(string.Format("{0}<size=90%>No Actors have Contacts</size>{1}", colourDefault, colourEnd)); }
-                else if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+                else if (playerSide.level == globalAuthority.level)
                 { builderActor.Append(string.Format("{0}<size=90%>No Resistance Contacts present</size>{1}", colourDefault, colourEnd)); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
@@ -251,8 +257,8 @@ public class TooltipNode : MonoBehaviour
         // - - - Teams  - - -
         //
         proceedFlag = false;
-        if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { proceedFlag = true; }
-        else if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+        if (playerSide.level == globalAuthority.level) { proceedFlag = true; }
+        else if (playerSide.level == globalResistance.level)
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {

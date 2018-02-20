@@ -127,7 +127,7 @@ public class CaptureManager : MonoBehaviour
         //change player state
         GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
         //add renown to authority actor who owns the team
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.ActorSlotID, Side.Authority);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.ActorSlotID, GameManager.instance.globalScript.sideAuthority);
         if (actor != null)
         { actor.renown++; }
         else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.ActorSlotID)); }
@@ -163,7 +163,7 @@ public class CaptureManager : MonoBehaviour
             textBottom = builder.ToString(),
             sprite = GameManager.instance.outcomeScript.errorSprite,
             isAction = false,
-            side = Side.Resistance
+            side = GameManager.instance.globalScript.sideResistance
         };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -211,7 +211,7 @@ public class CaptureManager : MonoBehaviour
             textBottom = builder.ToString(),
             sprite = GameManager.instance.outcomeScript.errorSprite,
             isAction = false,
-            side = Side.Resistance
+            side = GameManager.instance.globalScript.sideResistance
         };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -255,7 +255,7 @@ public class CaptureManager : MonoBehaviour
                 textBottom = builder.ToString(),
                 sprite = GameManager.instance.outcomeScript.errorSprite,
                 isAction = false,
-                side = Side.Resistance
+                side = GameManager.instance.globalScript.sideResistance
             };
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
@@ -305,7 +305,7 @@ public class CaptureManager : MonoBehaviour
                     textBottom = builder.ToString(),
                     sprite = GameManager.instance.outcomeScript.errorSprite,
                     isAction = false,
-                    side = Side.Resistance
+                    side = GameManager.instance.globalScript.sideResistance
                 };
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
             }

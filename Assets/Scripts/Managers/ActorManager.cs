@@ -165,7 +165,7 @@ public class ActorManager : MonoBehaviour
         GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
         GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //Authority
-        List<ActorArc> listOfArcs = GameManager.instance.dataScript.GetActorArcs(Side.Authority);
+        List<ActorArc> listOfArcs = GameManager.instance.dataScript.GetActorArcs(globalAuthority);
         if (listOfArcs != null)
         {
             numOfArcs = listOfArcs.Count;
@@ -177,7 +177,7 @@ public class ActorManager : MonoBehaviour
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
                     GameManager.instance.dataScript.AddActorToDict(actorOne);
-                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, Side.Authority);
+                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level two actor
@@ -185,7 +185,7 @@ public class ActorManager : MonoBehaviour
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorTwo);
-                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, Side.Authority);
+                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level three actor
@@ -193,14 +193,14 @@ public class ActorManager : MonoBehaviour
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorThree);
-                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, Side.Authority);
+                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorThree (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
             }
         }
         else { Debug.LogError("Invalid list of Authority Actor Arcs (Null)"); }
         //Resistance
-        listOfArcs = GameManager.instance.dataScript.GetActorArcs(Side.Resistance);
+        listOfArcs = GameManager.instance.dataScript.GetActorArcs(globalResistance);
         if (listOfArcs != null)
         {
             numOfArcs = listOfArcs.Count;
@@ -212,7 +212,7 @@ public class ActorManager : MonoBehaviour
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
                     GameManager.instance.dataScript.AddActorToDict(actorOne);
-                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, Side.Resistance);
+                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level two actor
@@ -220,7 +220,7 @@ public class ActorManager : MonoBehaviour
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorTwo);
-                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, Side.Resistance);
+                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level three actor
@@ -228,7 +228,7 @@ public class ActorManager : MonoBehaviour
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorThree);
-                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, Side.Resistance);
+                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorThree (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
             }
@@ -370,11 +370,12 @@ public class ActorManager : MonoBehaviour
                         bool targetProceed = false;
                         //can tackle target if Player at node or target specified actor is present in line-up
                         if (nodeID == playerID) { targetProceed = true; }
-                        else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, Side.Resistance) == true) { targetProceed = true; }
+                        else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, globalResistance) == true) { targetProceed = true; }
                         //target live and dancing
                         if (targetProceed == true)
                         {
-                            string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault, target.description, colourEnd);
+                            string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault, 
+                                target.description, colourEnd);
                             //button target details
                             EventButtonDetails targetDetails = new EventButtonDetails()
                             {
@@ -401,7 +402,7 @@ public class ActorManager : MonoBehaviour
                 // - - - Actors - - - 
                 //
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
-                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Resistance);
+                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
                 foreach (Actor actor in arrayOfActors)
                 {
                     proceedFlag = true;
@@ -492,7 +493,7 @@ public class ActorManager : MonoBehaviour
                                         //Details to pass on for processing via button click
                                         ModalActionDetails actionDetails = new ModalActionDetails() { };
 
-                                        actionDetails.side = Side.Resistance;
+                                        actionDetails.side = globalResistance;
                                         actionDetails.NodeID = nodeID;
                                         actionDetails.ActorSlotID = actor.slotID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
@@ -585,7 +586,7 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Authority - - -
             //
-            else if (playerSide == Side.Authority)
+            else if (playerSide.level == globalAuthority.level)
             {
                 int teamID;
                 bool isAnyTeam;
@@ -627,7 +628,7 @@ public class ActorManager : MonoBehaviour
 
                 //get a list pre-emptively as it's computationally expensive to do so on demand
                 List<string> tempTeamList = GameManager.instance.dataScript.GetAvailableReserveTeams(node);
-                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Authority);
+                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                 foreach (Actor actor in arrayOfActors)
                 {
@@ -635,7 +636,7 @@ public class ActorManager : MonoBehaviour
                     details = null;
                     isAnyTeam = false;
                     //correct side?
-                    if (actor.actorSide == playerSide)
+                    if (actor.side.level == playerSide.level)
                     {
                         //actor active?
                         if (actor.Status == ActorStatus.Active)
@@ -738,7 +739,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //Details to pass on for processing via button click
                                     ModalActionDetails actionDetails = new ModalActionDetails() { };
-                                    actionDetails.side = Side.Authority;
+                                    actionDetails.side = globalAuthority;
                                     actionDetails.NodeID = nodeID;
                                     actionDetails.ActorSlotID = actor.slotID;
                                     //Node action is standard but other actions are possible
@@ -824,23 +825,23 @@ public class ActorManager : MonoBehaviour
     {
         Debug.Assert(level > 0 && level <= 3, string.Format("Invalid level {0}", level));
         ModalActionDetails details = new ModalActionDetails();
-        Side side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //ignore node and actorSlotID
         details.side = side;
         details.Level = level;
         details.NodeID = -1;
         details.ActorSlotID = -1;
         //get event
-        switch (side)
+        switch (side.name)
         {
-            case Side.Authority:
+            case "Authority":
                 details.EventType = EventType.GenericRecruitActorAuthority;
                 break;
-            case Side.Resistance:
+            case "Resistance":
                 details.EventType = EventType.GenericRecruitActorResistance;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", side));
+                Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
                 break;
         }
         InitialiseGenericPickerRecruit(details);
@@ -854,9 +855,11 @@ public class ActorManager : MonoBehaviour
     {
         bool errorFlag = false;
         int index, countOfRecruits;
+        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = null;
-        if (details.side == Side.Resistance)
+        if (details.side.level == GameManager.instance.globalScript.sideResistance.level)
         {
             node = GameManager.instance.dataScript.GetNode(details.NodeID);
             if (node != null)
@@ -865,7 +868,7 @@ public class ActorManager : MonoBehaviour
                 int actorID = 999;
                 if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, Side.Resistance);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, globalResistance);
                     if (actor != null)
                     { actorID = actor.actorID; }
                     else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.ActorSlotID)); errorFlag = true; }
@@ -889,13 +892,13 @@ public class ActorManager : MonoBehaviour
                 }
             }
         }
-        if (details.side == Side.Authority || node != null)
+        if (details.side.level == globalAuthority.level || node != null)
         {
-            if (details.side == Side.Resistance) { genericDetails.returnEvent = EventType.GenericRecruitActorResistance; }
-            else if (details.side == Side.Authority) { genericDetails.returnEvent = EventType.GenericRecruitActorAuthority; }
+            if (details.side.level == globalResistance.level) { genericDetails.returnEvent = EventType.GenericRecruitActorResistance; }
+            else if (details.side.level == globalAuthority.level) { genericDetails.returnEvent = EventType.GenericRecruitActorAuthority; }
             else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
             genericDetails.side = details.side;
-            if (details.side == Side.Resistance)
+            if (details.side.level == globalResistance.level)
             { genericDetails.nodeID = details.NodeID; }
             else { genericDetails.nodeID = -1; }
             genericDetails.actorSlotID = details.ActorSlotID;
@@ -912,7 +915,7 @@ public class ActorManager : MonoBehaviour
             List<int> listOfPickerActors = new List<int>();
             List<int> listOfCurrentArcIDs = new List<int>(GameManager.instance.dataScript.GetAllCurrentActorArcIDs(details.side));
             //selection methodology varies for each side -> need to populate 'listOfPoolActors'
-            if (details.side == Side.Resistance)
+            if (details.side.level == globalResistance.level)
             {
                 if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
@@ -937,7 +940,7 @@ public class ActorManager : MonoBehaviour
                 }
             }
             //Authority
-            else if (details.side == Side.Authority)
+            else if (details.side.level == globalAuthority.level)
             {
                 //placeholder -> select from 3 x specified level options (random types, could be the same as currently OnMap)
                 listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(details.Level, details.side));
@@ -1017,7 +1020,7 @@ public class ActorManager : MonoBehaviour
         {
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.side = Side.Resistance;
+            outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been a Snafu in communication and no recruits can be found.";
             outcomeDetails.textBottom = "Heads will roll!";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -1040,23 +1043,23 @@ public class ActorManager : MonoBehaviour
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
-        Side side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data.optionID > -1)
         {
             //find actor
-            Actor actorCurrent = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, side);
+            Actor actorCurrent = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
             if (actorCurrent != null)
             {
                 Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
                 if (actorRecruited != null)
                 {
                     //add actor to reserve pool
-                    if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
+                    if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, playerSide) == true)
                     {
                         //change actor's status
                         actorRecruited.Status = ActorStatus.Reserve;
                         //remove actor from appropriate pool list
-                        GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
+                        GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, playerSide);
                         //sprite of recruited actor
                         sprite = actorRecruited.arc.baseSprite;
 
@@ -1067,7 +1070,8 @@ public class ActorManager : MonoBehaviour
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(),
                             actorRecruited.actorID);
-                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, Side.Resistance);
+                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, 
+                            GameManager.instance.globalScript.sideResistance);
                         if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                         //Process any other effects, if acquisition was successfull, ignore otherwise
                         Action action = actorCurrent.arc.nodeAction;
@@ -1133,7 +1137,7 @@ public class ActorManager : MonoBehaviour
         outcomeDetails.textTop = builderTop.ToString();
         outcomeDetails.textBottom = builderBottom.ToString();
         outcomeDetails.sprite = sprite;
-        outcomeDetails.side = side;
+        outcomeDetails.side = playerSide;
         //action expended automatically for recruit actor
         if (successFlag == true)
         { outcomeDetails.isAction = true; }
@@ -1151,7 +1155,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
-        Side side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         if (data.optionID > -1)
         {
             //find actor
@@ -1170,7 +1174,8 @@ public class ActorManager : MonoBehaviour
                     //message
                     string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(),
                         actorRecruited.actorID);
-                    Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, Side.Authority);
+                    Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, 
+                        GameManager.instance.globalScript.sideAuthority);
                     if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                     //actor successfully recruited
                     builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
@@ -1217,15 +1222,17 @@ public class ActorManager : MonoBehaviour
     public string DisplayPools()
     {
         List<int> listOfActors = new List<int>();
+        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         StringBuilder builder = new StringBuilder();
         //Resistance
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, Side.Resistance), " ResistanceActorPoolLevelOne"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, Side.Resistance), " ResistanceActorPoolLevelTwo"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, Side.Resistance), " ResistanceActorPoolLevelThree"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, globalResistance), " ResistanceActorPoolLevelOne"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, globalResistance), " ResistanceActorPoolLevelTwo"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, globalResistance), " ResistanceActorPoolLevelThree"));
         //Authority
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, Side.Authority), " AuthorityActorPoolLevelOne"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, Side.Authority), " AuthorityActorPoolLevelTwo"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, Side.Authority), " AuthorityActorPoolLevelThree"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, globalAuthority), " AuthorityActorPoolLevelOne"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, globalAuthority), " AuthorityActorPoolLevelTwo"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, globalAuthority), " AuthorityActorPoolLevelThree"));
         return builder.ToString();
     }
 

@@ -117,9 +117,9 @@ public class ModalOutcome : MonoBehaviour
         //register action status
         isAction = details.isAction;
         //set confirm button image and sprite states
-        switch (details.side)
+        switch (details.side.name)
         {
-            case Side.Authority:
+            case "Authority":
                 //set button sprites
                 confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
                 //set sprite transitions
@@ -128,7 +128,7 @@ public class ModalOutcome : MonoBehaviour
                 spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
                 confirmButton.spriteState = spriteStateAuthority;
                 break;
-            case Side.Resistance:
+            case "Resistance":
                 //set button sprites
                 confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
                 //set sprite transitions

@@ -61,15 +61,18 @@ public class EffectManager : MonoBehaviour
     public void SetColours()
     {
         //output colours for good and bad depend on player side
-        switch (GameManager.instance.sideScript.PlayerSide)
+        switch (GameManager.instance.sideScript.PlayerSide.name)
         {
-            case Side.Resistance:
+            case "Resistance":
                 colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
                 colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
                 break;
-            case Side.Authority:
+            case "Authority":
                 colourGood = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
                 colourBad = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
@@ -117,7 +120,7 @@ public class EffectManager : MonoBehaviour
                 if (actorSlotID != -1)
                 {
                     //get actor
-                    actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
+                    actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.globalScript.sideAuthority);
                     if (actor == null)
                     {
                         Debug.LogError("Invalid actorSlotID -> Criteria Check cancelled");

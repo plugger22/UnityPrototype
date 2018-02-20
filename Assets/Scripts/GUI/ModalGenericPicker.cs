@@ -162,9 +162,9 @@ public class ModalGenericPicker : MonoBehaviour
         if (details != null)
         {
             //set up modal panel & buttons to be side appropriate
-            switch(details.side)
+            switch(details.side.name)
             {
-                case Side.Authority:
+                case "Authority":
                     modalPanel.sprite = GameManager.instance.sideScript.picker_background_Authority;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
@@ -176,7 +176,7 @@ public class ModalGenericPicker : MonoBehaviour
                     buttonCancel.spriteState = spriteStateAuthority;
                     buttonConfirm.spriteState = spriteStateAuthority;
                     break;
-                case Side.Resistance:
+                case "Resistance":
                     modalPanel.sprite = GameManager.instance.sideScript.picker_background_Rebel;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
@@ -189,7 +189,7 @@ public class ModalGenericPicker : MonoBehaviour
                     buttonConfirm.spriteState = spriteStateRebel;
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid side \"{0}\"", details.side));
+                    Debug.LogError(string.Format("Invalid side \"{0}\"", details.side.name));
                     break;
             }
             if (details.arrayOfOptions.Length > 0)
