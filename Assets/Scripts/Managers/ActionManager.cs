@@ -154,7 +154,7 @@ public class ActionManager : MonoBehaviour
                                     //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
                                     
                                     /*//add to register
-                                    string registerDetails = string.Format("Effect \"{0}\", ID {1}, at {2}, ID {3}, t{4}", action.name, effect.effectID, node.Arc.name.ToUpper(),
+                                    string registerDetails = string.Format("Effect \"{0}\", ID {1}, at {2}, ID {3}, t{4}", action.name, effect.effectID, node.Arc.name,
                                         node.nodeID, GameManager.instance.turnScript.Turn);
                                     GameManager.instance.dataScript.AddOngoingEffectToDict(dataInput.ongoingID, registerDetails);*/
                                 }
@@ -361,7 +361,7 @@ public class ActionManager : MonoBehaviour
                         //add to target so it can link to effects
                         target.ongoingID = dataInput.ongoingID;
                         /*//add to register
-                        string registerDetails = string.Format("Target \"{0}\", ID {1}, at {2}, ID {3}, t{4}",  target.name, target.targetID, node.Arc.name.ToUpper(), 
+                        string registerDetails = string.Format("Target \"{0}\", ID {1}, at {2}, ID {3}, t{4}",  target.name, target.targetID, node.Arc.name, 
                             node.nodeID, GameManager.instance.turnScript.Turn);
                         GameManager.instance.dataScript.AddOngoingEffectToDict(target.ongoingID, registerDetails);*/
                     }

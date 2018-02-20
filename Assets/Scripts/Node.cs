@@ -254,7 +254,7 @@ public class Node : MonoBehaviour
                 if (listOfTeams.Count > 0)
                 {
                     foreach (Team team in listOfTeams)
-                    { teamList.Add(team.Arc.name.ToUpper()); }
+                    { teamList.Add(team.Arc.name); }
                 }
                 List<string> targetList = new List<string>();
                 if (targetID > -1)

@@ -61,7 +61,7 @@ public class PlayerManager : MonoBehaviour
     {
         int nodeID = 0;
         //place Player in a random start location (Sprawl node)
-        int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("Sprawl");
+        int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("SPRAWL");
         Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
         if (node != null)
         {
@@ -82,7 +82,7 @@ public class PlayerManager : MonoBehaviour
         numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
 
         //message
-        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name.ToUpper(), node.nodeID);
+        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
         if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
     }

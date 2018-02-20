@@ -680,7 +680,7 @@ public class NodeManager : MonoBehaviour
         if (node != null)
         {
             string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.nodeName, colourEnd, "\n",
-                colourDefault, node.Arc.name.ToUpper(), node.nodeID, colourEnd);
+                colourDefault, node.Arc.name, node.nodeID, colourEnd);
             string moveMain = "UNKNOWN";
             int adjustInvisibility = 0;
             //Get Connection (between new node and Player's current location)
@@ -863,7 +863,7 @@ public class NodeManager : MonoBehaviour
                 nodePlayer = moveDetails.nodeID;
                 //update move list
                 node.SetMoveNodes();
-                string destination = string.Format("\"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name.ToUpper(), node.nodeID);
+                string destination = string.Format("\"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
                 //message
@@ -889,7 +889,7 @@ public class NodeManager : MonoBehaviour
                     if (connection != null)
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
-                            node.nodeName, node.Arc.name.ToUpper(), moveDetails.nodeID);
+                            node.nodeName, node.Arc.name, moveDetails.nodeID);
                         Message messageAI = GameManager.instance.messageScript.AISpotMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
                         if (messageAI != null) { GameManager.instance.dataScript.AddMessage(messageAI); }
                     }

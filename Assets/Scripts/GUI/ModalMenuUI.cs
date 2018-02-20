@@ -91,7 +91,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 if (listOfTeams.Count > 0)
                 {
                     foreach(Team team in listOfTeams)
-                    { teamList.Add(string.Format("{0} team", team.Arc.name.ToUpper())); }
+                    { teamList.Add(string.Format("{0} team", team.Arc.name)); }
                 }
                 //adjust position prior to sending
                 Vector3 position = transform.position;

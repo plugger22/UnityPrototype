@@ -213,25 +213,21 @@ public class DataManager : MonoBehaviour
             UnityEngine.Object nodeArcObject = AssetDatabase.LoadAssetAtPath(path, typeof(NodeArc));
             //assign a zero based unique ID number
             NodeArc nodeArc = nodeArcObject as NodeArc;
-            nodeArc.NodeArcID = counter++;
-            //generate a four letter (first 4 of name in CAPS) as a short form tag
-            length = nodeArc.name.Length;
-            length = length >= 4 ? 4 : length;
-            nodeArc.NodeArcTag = nodeArc.name.Substring(0, length).ToUpper();
+            nodeArc.nodeArcID = counter++;
             //add to dictionary
             try
-            { dictOfNodeArcs.Add(nodeArc.NodeArcID, nodeArc); }
+            { dictOfNodeArcs.Add(nodeArc.nodeArcID, nodeArc); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid NodeArc (Null)"); counter--; }
             catch (ArgumentException)
             { Debug.LogError(string.Format("Invalid NodeArc (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeArc.name)); counter--; }
             //add to lookup dictionary
             try
-            { dictOfLookUpNodeArcs.Add(nodeArc.name, nodeArc.NodeArcID); }
+            { dictOfLookUpNodeArcs.Add(nodeArc.name, nodeArc.nodeArcID); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid NodeArc (Null)"); }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid NodeArc (duplicate) Name \"{0}\" for ID \"{1}\"", nodeArc.name, nodeArc.NodeArcID)); }
+            { Debug.LogError(string.Format("Invalid NodeArc (duplicate) Name \"{0}\" for ID \"{1}\"", nodeArc.name, nodeArc.nodeArcID)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfNodeArcs has {0} entries{1}", counter, "\n"));
         //
@@ -531,7 +527,7 @@ public class DataManager : MonoBehaviour
                 else
                 {
                     Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", resistanceQualities[i].name, resistanceQualities[i].side.name, "\n"));
-                    arrayOfQualities[(int)Side.Resistance, i] = "Unknown";
+                    arrayOfQualities[globalResistance.level, i] = "Unknown";
                 }
             }
             else { arrayOfQualities[globalResistance.level, i] = "Unknown"; }
@@ -564,7 +560,7 @@ public class DataManager : MonoBehaviour
         foreach(var nodeObj in dictOfNodeObjects)
         {
             Node node = nodeObj.Value.GetComponent<Node>();
-            listOfNodesByType[node.Arc.NodeArcID].Add(node);
+            listOfNodesByType[node.Arc.nodeArcID].Add(node);
         }
         //
         // - - - Nodes - - -
@@ -581,7 +577,7 @@ public class DataManager : MonoBehaviour
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Node (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.nodeName)); }
+                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name)); }
             }
             Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
         }
@@ -610,7 +606,7 @@ public class DataManager : MonoBehaviour
                 if (target.Value.metaLevel == null || target.Value.metaLevel.level == currentMetaLevel)
                 {
                     //add to list of Possible targets
-                    if (CheckNodeInfo(target.Value.nodeArc.NodeArcID, NodeInfo.Number) > 0)
+                    if (CheckNodeInfo(target.Value.nodeArc.nodeArcID, NodeInfo.Number) > 0)
                     { possibleTargetsPool.Add(target.Value); }
                     else
                     {
@@ -711,7 +707,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns nodeArcID for specified nodeArc name, eg. "Corporate". Returns '-1' if not found in lookup dictionary
+    /// returns nodeArcID for specified nodeArc name, eg. "Corporate". Returns '-1' if not found in lookup dictionary. Must be in CAPS
     /// </summary>
     /// <param name="nodeArcName"></param>
     /// <returns></returns>
@@ -1224,7 +1220,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns TeamArcID of named teamArc type. returns '-1' if not found in dict
+    /// returns TeamArcID of named teamArc type. returns '-1' if not found in dict. teamArcName must be in CAPS
     /// </summary>
     /// <param name="teamArcName"></param>
     /// <returns></returns>
@@ -1395,7 +1391,7 @@ public class DataManager : MonoBehaviour
     {
         if (dictOfTeams.ContainsKey(teamID))
         { return dictOfTeams[teamID]; }
-        else { Debug.LogWarning(string.Format("Not found in TeamID {0}, in dict {1}", teamID, "\n")); }
+        else { Debug.LogWarning(string.Format("TeamID {0} not found in dictOfTeams {1}", teamID, "\n")); }
         return null;
     }
 
@@ -1467,7 +1463,7 @@ public class DataManager : MonoBehaviour
                     if (duplicatesList.Exists(x => x == team.Arc.TeamArcID) == false)
                     {
                         //add team type name to both return list & duplicates list
-                        tempList.Add(team.Arc.name.ToUpper());
+                        tempList.Add(team.Arc.name);
                         duplicatesList.Add(team.Arc.TeamArcID);
                     }
                 }

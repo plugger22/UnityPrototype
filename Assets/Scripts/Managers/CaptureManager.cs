@@ -111,7 +111,7 @@ public class CaptureManager : MonoBehaviour
     private void CapturePlayer(AIDetails details)
     {
         //PLAYER CAPTURED
-        string text = string.Format("Player Captured at \"{0}\", {1}", details.node.nodeName, details.node.Arc.name.ToUpper());
+        string text = string.Format("Player Captured at \"{0}\", {1}", details.node.nodeName, details.node.Arc.name);
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?
@@ -182,8 +182,8 @@ public class CaptureManager : MonoBehaviour
         //any carry over text?
         if (string.IsNullOrEmpty(details.effects) == false)
         { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
-        string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", details.actor.actorName, details.node.nodeName, details.node.Arc.name.ToUpper());
-        builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name.ToUpper(), colourEnd, "\n", "\n"));
+        string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", details.actor.actorName, details.node.nodeName, details.node.Arc.name);
+        builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name, colourEnd, "\n", "\n"));
         //message
         Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.TeamID, details.actor.actorID);
         GameManager.instance.dataScript.AddMessage(message);
@@ -245,7 +245,7 @@ public class CaptureManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            string text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name.ToUpper());
+            string text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
             Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, 999);
             GameManager.instance.dataScript.AddMessage(message);
             //player released outcome window

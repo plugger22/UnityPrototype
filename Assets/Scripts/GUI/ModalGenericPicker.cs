@@ -326,7 +326,7 @@ public class ModalGenericPicker : MonoBehaviour
                         Team teamRecall = GameManager.instance.dataScript.GetTeam(optionID);
                         if (teamRecall != null)
                         {
-                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.Arc.name, colourEnd, colourDefault, colourEnd);
                             Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", optionID, "\n"));
                         }
                         else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }
@@ -335,7 +335,7 @@ public class ModalGenericPicker : MonoBehaviour
                         Team teamNeutralise = GameManager.instance.dataScript.GetTeam(optionID);
                         if (teamNeutralise != null)
                         {
-                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.Arc.name, colourEnd, colourDefault, colourEnd);
                             Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", optionID, "\n"));
                         }
                         else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }

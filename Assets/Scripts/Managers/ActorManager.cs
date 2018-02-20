@@ -612,7 +612,7 @@ public class ActorManager : MonoBehaviour
                         foreach(Team team in listOfTeams)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutralEffect, team.Arc.name.ToUpper(), team.Name, colourEnd));
+                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutralEffect, team.Arc.name, team.Name, colourEnd));
                         }
                         //button details
                         EventButtonDetails recallDetails = new EventButtonDetails()
@@ -1069,7 +1069,7 @@ public class ActorManager : MonoBehaviour
                         builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
                             actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
                         //message
-                        string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(),
+                        string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
                         Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, 
                             GameManager.instance.globalScript.sideResistance);
@@ -1173,7 +1173,7 @@ public class ActorManager : MonoBehaviour
                     //sprite of recruited actor
                     sprite = actorRecruited.arc.baseSprite;
                     //message
-                    string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name.ToUpper(),
+                    string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                         actorRecruited.actorID);
                     Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, 
                         GameManager.instance.globalScript.sideAuthority);

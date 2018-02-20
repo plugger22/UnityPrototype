@@ -208,7 +208,7 @@ public class ModalTeamPicker : MonoBehaviour
             teamActorSlotID = details.ActorSlotID;
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, GameManager.instance.globalScript.sideAuthority);
             int numTeams = node.CheckNumOfTeams();
-            builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name.ToUpper(), node.nodeName, numTeams, 
+            builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name, node.nodeName, numTeams, 
                 numTeams != 1 ? "s" : "", colourEnd));
             //teams at node
             if (numTeams > 0)
@@ -222,7 +222,7 @@ public class ModalTeamPicker : MonoBehaviour
                         int counter = 0;
                         foreach (Team team in listOfTeams)
                         {
-                            builder.Append(team.Arc.name.ToUpper());
+                            builder.Append(team.Arc.name);
                             counter++;
                             if (counter < listOfTeams.Count)
                             { builder.Append(", "); }
@@ -289,13 +289,13 @@ public class ModalTeamPicker : MonoBehaviour
                         {
                             textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.Arc.name, team.Name);
                             //default team tooltip header
-                            teamType = team.Arc.name.ToUpper();
+                            teamType = team.Arc.name;
                         }
                         else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", teamID)); }
                     }
                     else
                     {
-                        teamType = GameManager.instance.dataScript.GetTeamArc(arcIndex).name.ToUpper();
+                        teamType = GameManager.instance.dataScript.GetTeamArc(arcIndex).name;
                     }
                     //header tooltip text
                     listOfTeamTooltipsHeader.Add(string.Format("{0}{1}{2}", colourSide, teamType, colourEnd));
@@ -416,7 +416,7 @@ public class ModalTeamPicker : MonoBehaviour
                 Team team = GameManager.instance.dataScript.GetTeam(teamID);
                 if (team != null)
                 {
-                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.Arc.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.Arc.name, colourEnd, colourDefault, colourEnd);
                     //record most recently chosen selection
                     teamIDSelected = teamID;
                     Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", teamID, "\n"));

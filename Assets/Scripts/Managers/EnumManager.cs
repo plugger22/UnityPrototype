@@ -15,7 +15,7 @@ namespace gameAPI
     //
     // - - - Game Manager - - -
     //
-    public enum Side { None, Authority, Resistance, Count }                                   //Sides available in game
+    //public enum Side { None, Authority, Resistance, Count }                                   //Sides available in game
     public enum GameState { Normal, ModalOutcome, ModalActionMenu, ModalPicker, ModalDice }
     public enum ResistanceState { Normal, Captured }                                    //player as Resistance
     public enum AuthorityState { Normal }                                               //player as Authority
@@ -51,18 +51,6 @@ namespace gameAPI
     //
     public enum ActorStatus { Active, Inactive, Reserve, Pool, Captured }
 
-    //
-    // - - - Action Manager - - -
-    //
-    //public enum Comparison { None, LessThan, GreaterThan, EqualTo }
-    //public enum Result { None, Add, Subtract }
-    //public enum ActionType { None, Node, NeutraliseTeam, Gear, Recruit}
-
-    //
-    // - - - Gear - - -
-    //
-    //public enum GearLevel { Common, Rare, Unique, Count}
-    //public enum GearTypeEnum { None, Infiltration, Kinetic, Hacking, Stealth, Invisibility, Movement, Recovery}
 
     //
     // - - - Dice - - -

@@ -145,7 +145,7 @@ public class TargetManager : MonoBehaviour
                 index = Random.Range(0, listOfPossibleTargets.Count);
                 Target target = listOfPossibleTargets[index];
                 //get target nodeArcId
-                nodeArcID = target.nodeArc.NodeArcID;
+                nodeArcID = target.nodeArc.nodeArcID;
                 //check that there is a suitable spare node available
                 totalOfType = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.Number);
                 totalOfTypewithTargets = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsAll);

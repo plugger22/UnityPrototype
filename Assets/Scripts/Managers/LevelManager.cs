@@ -672,7 +672,7 @@ public class LevelManager : MonoBehaviour
             //target -> none
             node.targetID = -1;
             //keep a tally of how many of each type have been generated
-            index = node.Arc.NodeArcID;
+            index = node.Arc.nodeArcID;
             if (index < numRecords)
             { arrayOfNodeTypeTotals[index]++; }
             else { Debug.LogError(string.Format("Number of NodeArcs exceeded by nodeArcID {0} for Node {1}", index, node.Arc.name)); }
@@ -698,7 +698,7 @@ public class LevelManager : MonoBehaviour
     private void InitialiseArrayOfActiveNodes()
     {
         //initialise arrayOfActiveNodes prior to use
-        arrayOfActiveNodes = new bool[listOfNodeObjects.Count, (int)Side.Count, GameManager.instance.actorScript.numOfOnMapActors];
+        arrayOfActiveNodes = new bool[listOfNodeObjects.Count, GameManager.instance.dataScript.GetNumOfGlobalSide(), GameManager.instance.actorScript.numOfOnMapActors];
     }
 
     /// <summary>
@@ -743,16 +743,16 @@ public class LevelManager : MonoBehaviour
                     foreach(NodeArc arc in listOfNodeArcs)
                     {
                         chance = primary * actor.datapoint0;
-                        arrayOfArcs[arc.NodeArcID] = chance;
-                        Debug.Log(string.Format("{0}  primary NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.NodeArcID, side.name, "\n"));
+                        arrayOfArcs[arc.nodeArcID] = chance;
+                        Debug.Log(string.Format("{0}  primary NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.nodeArcID, side.name, "\n"));
                     }
                     //get actors Exclusion NodeArc preferences
                     listOfNodeArcs.Clear();
                     listOfNodeArcs.AddRange(actor.arc.listPrefExclude);
                     foreach (NodeArc arc in listOfNodeArcs)
                     {
-                        arrayOfArcs[arc.NodeArcID] = 0;
-                        Debug.Log(string.Format("{0}  Exclusion NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.NodeArcID, side.name, "\n"));
+                        arrayOfArcs[arc.nodeArcID] = 0;
+                        Debug.Log(string.Format("{0}  Exclusion NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.nodeArcID, side.name, "\n"));
                     }
                     //debug summary
                     Debug.Log(string.Format("{0} {1} - {2} - {3} - {4} - {5} - {6}, side {7}{8}", actor.arc.actorName, arrayOfArcs[0], arrayOfArcs[1], arrayOfArcs[2], 
@@ -764,7 +764,7 @@ public class LevelManager : MonoBehaviour
                     {
                         Node node = listOfNodeObjects[nodeIndex].GetComponent<Node>();
                         //node active?
-                        if (Random.Range(0, 100) < arrayOfArcs[node.Arc.NodeArcID])
+                        if (Random.Range(0, 100) < arrayOfArcs[node.Arc.nodeArcID])
                         {
                             counter++;
                             arrayOfActiveNodes[nodeIndex, side.level, actorIndex] = true;
@@ -790,7 +790,7 @@ public class LevelManager : MonoBehaviour
                                 if (arrayOfActiveNodes[nodeIndex, side.level, actorIndex] == false)
                                 {
                                     //chance of node being active (increase the odds of this happening)
-                                    if ((Random.Range(0, 100) - modifier) < arrayOfArcs[node.Arc.NodeArcID])
+                                    if ((Random.Range(0, 100) - modifier) < arrayOfArcs[node.Arc.nodeArcID])
                                     {
                                         counter++;
                                         arrayOfActiveNodes[nodeIndex, side.level, actorIndex] = true;

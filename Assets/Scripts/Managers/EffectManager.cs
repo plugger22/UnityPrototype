@@ -784,9 +784,9 @@ public class EffectManager : MonoBehaviour
                 string operation = "inserted";
                 if (isInserted == false) { operation = "recalled"; }
                 return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}", 
-                    colourNeutral, team.Arc.name.ToUpper(), colourEnd, 
+                    colourNeutral, team.Arc.name, colourEnd, 
                     colourNormal, team.Name, operation, colourEnd,  
-                    colourBad, node.Arc.name.ToUpper(), colourEnd, colourNormal, node.nodeName, colourEnd);
+                    colourBad, node.Arc.name, colourEnd, colourNormal, node.nodeName, colourEnd);
             }
             else
             {
@@ -1154,25 +1154,25 @@ public class EffectManager : MonoBehaviour
                             switch (effect.outcome.name)
                             {
                                 case "NodeSecurity":
-                                    effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been swept and strengthened{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been swept and strengthened{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "NodeStability":
-                                    effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the {1} situation{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the {1} situation{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusTracers":
-                                    effectResolve.topText = string.Format("{0}{1} security systems have been scanned for intruders{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}{1} security systems have been scanned for intruders{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusSpiders":
-                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into {1} security systems{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}A Tracer has been covertly inserted into {1} security systems{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusContacts":
-                                    effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout {1} nodes{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}Listening bots have been deployed throughout {1} nodes{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusTeams":
-                                    effectResolve.topText = string.Format("{0}The {1} grapevine is alive and well{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}The {1} grapevine is alive and well{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
@@ -1185,25 +1185,25 @@ public class EffectManager : MonoBehaviour
                             switch (effect.outcome.name)
                             {
                                 case "NodeSecurity":
-                                    effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}Security systems in {1} nodes have been successfully hacked{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "NodeStability":
-                                    effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout {1} nodes{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout {1} nodes{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusTracers":
-                                    effectResolve.topText = string.Format("{0}{1} security systems have been spoofed to conceal Tracers{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}{1} security systems have been spoofed to conceal Tracers{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusSpiders":
-                                    effectResolve.topText = string.Format("{0}ICE has been inserted into {1} security systems to conceal Spiders{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}ICE has been inserted into {1} security systems to conceal Spiders{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusContacts":
-                                    effectResolve.topText = string.Format("{0}Countermeasures have been taken in {1} nodes to conceal Contacts{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}Countermeasures have been taken in {1} nodes to conceal Contacts{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusTeams":
-                                    effectResolve.topText = string.Format("{0}The {1} grapevine has been shut down to conceal Teams{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                    effectResolve.topText = string.Format("{0}The {1} grapevine has been shut down to conceal Teams{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
@@ -1235,7 +1235,7 @@ public class EffectManager : MonoBehaviour
                     foreach (var nodeTemp in dictOfNodes)
                     {
                         //same node Arc type and not the current node?
-                        if (nodeTemp.Value.Arc.NodeArcID == node.Arc.NodeArcID && nodeTemp.Value.nodeID != node.nodeID)
+                        if (nodeTemp.Value.Arc.nodeArcID == node.Arc.nodeArcID && nodeTemp.Value.nodeID != node.nodeID)
                         { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
                     }
                 }
@@ -1390,7 +1390,7 @@ public class EffectManager : MonoBehaviour
                         switch (effect.outcome.name)
                         {
                             case "ConnectionSecurity":
-                                effectResolve.topText = string.Format("{0}{1} Connections have raised their security{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.topText = string.Format("{0}{1} Connections have raised their security{2}", colourText, node.Arc.name, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security +{1}{2}", colourEffect, effect.value, colourEnd);
                                 break;
                         }
@@ -1400,7 +1400,7 @@ public class EffectManager : MonoBehaviour
                         switch (effect.outcome.name)
                         {
                             case "ConnectionSecurity":
-                                effectResolve.topText = string.Format("{0}{1} Connections have lowered their security{2}", colourText, node.Arc.name.ToUpper(), colourEnd);
+                                effectResolve.topText = string.Format("{0}{1} Connections have lowered their security{2}", colourText, node.Arc.name, colourEnd);
                                 effectResolve.bottomText = string.Format("{0}Connection Security -{1}{2}", colourEffect, effect.value, colourEnd);
                                 break;
                         }
@@ -1430,7 +1430,7 @@ public class EffectManager : MonoBehaviour
                     foreach (var nodeTemp in dictOfAllNodes)
                     {
                         //same node Arc type and not the current node?
-                        if (nodeTemp.Value.Arc.NodeArcID == node.Arc.NodeArcID && nodeTemp.Value.nodeID != node.nodeID)
+                        if (nodeTemp.Value.Arc.nodeArcID == node.Arc.nodeArcID && nodeTemp.Value.nodeID != node.nodeID)
                         { nodeTemp.Value.ProcessConnectionEffect(effectProcess); }
                     }
                 }

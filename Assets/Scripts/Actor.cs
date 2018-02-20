@@ -12,9 +12,6 @@ namespace gameAPI
         [HideInInspector] public int datapoint0;               //higher the number (1 to 3), see DM: arrayOfQualities for string tags
         [HideInInspector] public int datapoint1;               //higher the better (1 to 3)
         [HideInInspector] public int datapoint2;               //higher the better (1 to 3)
-
-        [HideInInspector] public Side actorSide;
-
         [HideInInspector] public GlobalSide side;
         [HideInInspector] public int slotID;                    //actor slot ID (eg, 0 to 3)
         [HideInInspector] public int actorID;
