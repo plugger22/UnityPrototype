@@ -17,7 +17,7 @@ public class DataManager : MonoBehaviour
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
-    private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.Both->4 x Null)
+    private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None->4 x Null)
     private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
@@ -95,6 +95,99 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
     private Dictionary<string, GlobalChance> dictOfGlobalChance = new Dictionary<string, GlobalChance>();   //Key -> GlobalChance.name, Value -> GlobalChance
     private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();         //Key -> GlobalType.name, Value -> GlobalType
+    private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();         //Key -> GlobalSide.name, Value -> GlobalSide
+
+    /// <summary>
+    /// first up initialisation
+    /// </summary>
+    public void InitialiseStart()
+    {
+        string path;
+        //
+        // - - - GlobalMeta - - -
+        //
+        var metaGUID = AssetDatabase.FindAssets("t:GlobalMeta");
+        foreach (var guid in metaGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalMeta));
+            //assign a zero based unique ID number
+            GlobalMeta meta = metaObject as GlobalMeta;
+            //add to dictionary
+            try
+            { dictOfGlobalMeta.Add(meta.name, meta); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid GlobalMeta (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", meta.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
+        //
+        // - - - GlobalChance - - -
+        //
+        var chanceGUID = AssetDatabase.FindAssets("t:GlobalChance");
+        foreach (var guid in chanceGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object chanceObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalChance));
+            //assign a zero based unique ID number
+            GlobalChance chance = chanceObject as GlobalChance;
+            //add to dictionary
+            try
+            { dictOfGlobalChance.Add(chance.name, chance); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid GlobalChance (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", chance.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
+        //
+        // - - - GlobalType - - -
+        //
+        var typeGUID = AssetDatabase.FindAssets("t:GlobalType");
+        foreach (var guid in typeGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object typeObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalType));
+            //assign a zero based unique ID number
+            GlobalType type = typeObject as GlobalType;
+            //add to dictionary
+            try
+            { dictOfGlobalType.Add(type.name, type); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid GlobalType (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid GlobalType (duplicate) \"{0}\"", type.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalType has {0} entries{1}", dictOfGlobalType.Count, "\n"));
+        //
+        // - - - GlobalSide - - -
+        //
+        var sideGUID = AssetDatabase.FindAssets("t:GlobalSide");
+        foreach (var guid in sideGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object sideObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalSide));
+            //assign a zero based unique ID number
+            GlobalSide side = sideObject as GlobalSide;
+            //add to dictionary
+            try
+            { dictOfGlobalSide.Add(side.name, side); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid GlobalSide (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid GlobalSide (duplicate) \"{0}\"", side.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalSide has {0} entries{1}", dictOfGlobalSide.Count, "\n"));
+    }
 
     /// <summary>
     /// default constructor
@@ -407,69 +500,7 @@ public class DataManager : MonoBehaviour
             else { Debug.LogError("Invalid gearType (Null)"); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
-        //
-        // - - - GlobalMeta - - -
-        //
-        var metaGUID = AssetDatabase.FindAssets("t:GlobalMeta");
-        foreach (var guid in metaGUID)
-        {
-            //get path
-            path = AssetDatabase.GUIDToAssetPath(guid);
-            //get SO
-            UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalMeta));
-            //assign a zero based unique ID number
-            GlobalMeta meta = metaObject as GlobalMeta;
-            //add to dictionary
-            try
-            { dictOfGlobalMeta.Add(meta.name, meta); }
-            catch (ArgumentNullException)
-            { Debug.LogError("Invalid GlobalMeta (Null)"); }
-            catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", meta.name)); }
-        }
-        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
-        //
-        // - - - GlobalChance - - -
-        //
-        var chanceGUID = AssetDatabase.FindAssets("t:GlobalChance");
-        foreach (var guid in chanceGUID)
-        {
-            //get path
-            path = AssetDatabase.GUIDToAssetPath(guid);
-            //get SO
-            UnityEngine.Object chanceObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalChance));
-            //assign a zero based unique ID number
-            GlobalChance chance = chanceObject as GlobalChance;
-            //add to dictionary
-            try
-            { dictOfGlobalChance.Add(chance.name, chance); }
-            catch (ArgumentNullException)
-            { Debug.LogError("Invalid GlobalChance (Null)"); }
-            catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", chance.name)); }
-        }
-        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
-        //
-        // - - - GlobalType - - -
-        //
-        var typeGUID = AssetDatabase.FindAssets("t:GlobalType");
-        foreach (var guid in typeGUID)
-        {
-            //get path
-            path = AssetDatabase.GUIDToAssetPath(guid);
-            //get SO
-            UnityEngine.Object typeObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalType));
-            //assign a zero based unique ID number
-            GlobalType type = typeObject as GlobalType;
-            //add to dictionary
-            try
-            { dictOfGlobalType.Add(type.name, type); }
-            catch (ArgumentNullException)
-            { Debug.LogError("Invalid GlobalType (Null)"); }
-            catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid GlobalType (duplicate) \"{0}\"", type.name)); }
-        }
-        Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalType has {0} entries{1}", dictOfGlobalType.Count, "\n"));
+
         //
         // - - - Actor Qualities - - -
         //
@@ -2300,7 +2331,13 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, GlobalType> GetDictOfGlobalType()
     { return dictOfGlobalType; }
 
-    /// <summary>
+    public Dictionary<string, GlobalSide> GetDictOfGlobalSide()
+    { return dictOfGlobalSide; }
+
+    public int GetNumOfGlobalSide()
+    { return dictOfGlobalSide.Count; }
+
+    /*/// <summary>
     /// returns level of globalMeta based on string (metaLevel SO name). Returns '-1' if not found
     /// </summary>
     /// <param name="metaName"></param>
@@ -2311,7 +2348,7 @@ public class DataManager : MonoBehaviour
         if (dictOfGlobalMeta.ContainsKey(metaName) == true)
         { level = dictOfGlobalMeta[metaName].level; }
         return level;
-    }
+    }*/
 
     //new methods above here
 }

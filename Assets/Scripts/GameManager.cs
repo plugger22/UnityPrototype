@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MetaManager metaScript;                  //Meta Manager
     [HideInInspector] public DataManager dataScript;                  //Data Manager
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
+    [HideInInspector] public GlobalManager globalScript;              //Global Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ActionManager actionScript;              //Action Manager
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
+        globalScript = GetComponent<GlobalManager>():
         actorScript = GetComponent<ActorManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
@@ -140,6 +142,8 @@ public class GameManager : MonoBehaviour
     {
         sideScript.Initialise();
         actorScript.PreInitialiseActors();
+        dataScript.InitialiseStart();
+        globalScript.Initialise();      //must be after dataScript.InitialiseStart and before dataScript.InitialiseEarly
         dataScript.InitialiseEarly();
         actorScript.Initialise();
         levelScript.Initialise();
