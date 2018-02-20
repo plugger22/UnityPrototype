@@ -13,7 +13,6 @@ public class Action : ScriptableObject
 
     //NOTE -> name of Scriptable Object is node action button title
 
-    //public Side side;                           //which side the action applies to
     public string tooltipText;                  //descriptive text
     public ActorArc intendedActor;              //for info purposes only to aid placing correct action with correct ActorArc
     public List<Effect> listOfEffects;          //effects of action

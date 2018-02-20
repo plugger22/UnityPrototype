@@ -88,7 +88,7 @@ public class TooltipNode : MonoBehaviour
                 SetColours();
                 break;
             case EventType.ChangeSide:
-                InitialiseTooltip((Side)Param);
+                InitialiseTooltip((GlobalSide)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -390,14 +390,15 @@ public class TooltipNode : MonoBehaviour
     /// set up sprites on node tooltip for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    public void InitialiseTooltip(Side side)
+    public void InitialiseTooltip(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = tooltipNodeObject.GetComponent<Image>();
         //assign side specific sprites
-        switch (side)
+        switch (side.name)
         {
-            case Side.Authority:
+            case "Authority":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
@@ -405,13 +406,16 @@ public class TooltipNode : MonoBehaviour
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
-            case Side.Resistance:
+            case "Resistance":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
                 break;
         }
     }
