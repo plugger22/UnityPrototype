@@ -57,8 +57,8 @@ public class ActorManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent);
         EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent);
         //create active, OnMap actors
-        InitialiseActors(numOfOnMapActors, Side.Resistance);
-        InitialiseActors(numOfOnMapActors, Side.Authority);
+        InitialiseActors(numOfOnMapActors, GameManager.instance.globalScript.sideResistance);
+        InitialiseActors(numOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         //create pool actors
         InitialisePoolActors();
 
@@ -133,7 +133,7 @@ public class ActorManager : MonoBehaviour
     /// Set up number of required actors (minions supporting play)
     /// </summary>
     /// <param name="num"></param>
-    public void InitialiseActors(int num, Side side)
+    public void InitialiseActors(int num, GlobalSide side)
     {
         if (num > 0)
         {
@@ -162,6 +162,8 @@ public class ActorManager : MonoBehaviour
     public void InitialisePoolActors()
     {
         int numOfArcs;
+        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //Authority
         List<ActorArc> listOfArcs = GameManager.instance.dataScript.GetActorArcs(Side.Authority);
         if (listOfArcs != null)
@@ -170,7 +172,7 @@ public class ActorManager : MonoBehaviour
             for (int i = 0; i < numOfArcs; i++)
             {
                 //level one actor
-                Actor actorOne = CreateActor(Side.Authority, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
+                Actor actorOne = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
                 if (actorOne != null)
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
@@ -179,7 +181,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level two actor
-                Actor actorTwo = CreateActor(Side.Authority, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
+                Actor actorTwo = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorTwo);
@@ -187,7 +189,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level three actor
-                Actor actorThree = CreateActor(Side.Authority, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
+                Actor actorThree = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorThree);
@@ -205,7 +207,7 @@ public class ActorManager : MonoBehaviour
             for (int i = 0; i < numOfArcs; i++)
             {
                 //level one actor
-                Actor actorOne = CreateActor(Side.Resistance, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
+                Actor actorOne = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
                 if (actorOne != null)
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
@@ -214,7 +216,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level two actor
-                Actor actorTwo = CreateActor(Side.Resistance, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
+                Actor actorTwo = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorTwo);
@@ -222,7 +224,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level three actor
-                Actor actorThree = CreateActor(Side.Resistance, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
+                Actor actorThree = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorThree);
@@ -242,7 +244,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="arc"></param>
     /// <param name="level"></param>
     /// <returns></returns>
-    public Actor CreateActor(Side side, int actorArcID, int level, ActorStatus status, int slotID = -1)
+    public Actor CreateActor(GlobalSide side, int actorArcID, int level, ActorStatus status, int slotID = -1)
     {
         Debug.Assert(level > 0 && level < 4, "Invalid level (must be between 1 and 3)");
         Debug.Assert(slotID >= -1 && slotID <= numOfOnMapActors, "Invalid slotID (must be -1 (default) or between 1 and 3");
@@ -251,7 +253,7 @@ public class ActorManager : MonoBehaviour
         if (arc != null)
         {
             //check actor arc is the correct side
-            if (arc.side == side)
+            if (arc.arcSide.level == side.level)
             {
                 //create new actor
                 Actor actor = new Actor();
@@ -259,7 +261,7 @@ public class ActorManager : MonoBehaviour
                 actor.actorID = actorIDCounter++;
                 actor.slotID = slotID;
                 actor.level = level;
-                actor.actorSide = side;
+                actor.side = side;
                 actor.arc = arc;
                 actor.actorName = arc.actorName;
                 actor.trait = GameManager.instance.dataScript.GetRandomTrait();
@@ -271,7 +273,7 @@ public class ActorManager : MonoBehaviour
                 //level -> assign
                 actor.datapoint0 = Random.Range(limitLower, limitUpper); //connections and influence
                 actor.datapoint1 = Random.Range(limitLower, limitUpper); //motivation and support
-                if (side == Side.Resistance)
+                if (side.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
                     switch(actor.level)
@@ -288,7 +290,7 @@ public class ActorManager : MonoBehaviour
                     }
                     
                 }
-                else if (side == Side.Authority)
+                else if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { actor.datapoint2 = Random.Range(limitLower, limitUpper); /*Ability*/}
                 //OnMap actor
                 if (slotID > -1)
@@ -328,9 +330,11 @@ public class ActorManager : MonoBehaviour
         bool proceedFlag;
         int actionID;
         Actor[] arrayOfActors;
-        Side side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //color code for button tooltip header text, eg. "Operator"ss
-        if ( side == Side.Authority)
+        if ( playerSide.level == globalAuthority.level)
         { sideColour = colourAuthority; }
         else { sideColour = colourResistance; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
@@ -348,7 +352,7 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Resistance - - -
             //
-            if (side == Side.Resistance)
+            if (playerSide.level == globalResistance.level)
             {
                 //'Cancel' button tooltip)
                 if (nodeID == playerID)
@@ -403,13 +407,13 @@ public class ActorManager : MonoBehaviour
                     proceedFlag = true;
                     details = null;
                     //correct side?
-                    if (actor.actorSide == side)
+                    if (actor.side.level == playerSide.level)
                     {
                         //actor active?
                         if (actor.Status == ActorStatus.Active)
                         {
                             //active node for actor or player at node
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.slotID) == true ||
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.slotID) == true ||
                                 nodeID == playerID)
                             {
                                 //get node action
@@ -581,7 +585,7 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Authority - - -
             //
-            else if (side == Side.Authority)
+            else if (playerSide == Side.Authority)
             {
                 int teamID;
                 bool isAnyTeam;
@@ -631,7 +635,7 @@ public class ActorManager : MonoBehaviour
                     details = null;
                     isAnyTeam = false;
                     //correct side?
-                    if (actor.actorSide == side)
+                    if (actor.actorSide == playerSide)
                     {
                         //actor active?
                         if (actor.Status == ActorStatus.Active)

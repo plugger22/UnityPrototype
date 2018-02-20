@@ -27,10 +27,10 @@ public class SideManager : MonoBehaviour
     public Sprite button_Click;
 
 
-    private Side _playerSide;
+    private GlobalSide _playerSide;
 
     //what side is the player
-    public Side PlayerSide
+    public GlobalSide PlayerSide
     {
         get { return _playerSide; }
         set
@@ -46,7 +46,7 @@ public class SideManager : MonoBehaviour
     public void Initialise()
     {
         //set side
-        PlayerSide = Side.Resistance;
+        PlayerSide = GameManager.instance.globalScript.sideResistance;
     }
 
 

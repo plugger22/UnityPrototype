@@ -24,6 +24,7 @@ public class ActorArc : ScriptableObject
 
     //preferred team (applies to authority actors only)
     public TeamArc preferredTeam;
+    public GlobalSide arcSide;
 
     //node preferences (which nodes are liable to be active on the map for this Actor type)
     public List<NodeArc> listPrefPrimary = new List<NodeArc>();         //full chance of node being active

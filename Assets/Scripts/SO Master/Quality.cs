@@ -10,5 +10,6 @@ using gameAPI;
 public class Quality: ScriptableObject
 {
     public string description;
-    public Side side;
+    //public Side side;
+    public GlobalSide side;
 }

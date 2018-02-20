@@ -57,8 +57,8 @@ public class LevelManager : MonoBehaviour
         AssignNodeArcs();
         AssignSecurityLevels();
         InitialiseArrayOfActiveNodes();
-        AssignActorsToNodes(Side.Authority);
-        AssignActorsToNodes(Side.Resistance);
+        AssignActorsToNodes(GameManager.instance.globalScript.sideAuthority);
+        AssignActorsToNodes(GameManager.instance.globalScript.sideResistance);
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw);
     }
 
@@ -487,8 +487,9 @@ public class LevelManager : MonoBehaviour
     /// returns a string made up of Actors data
     /// </summary>
     /// <returns></returns>
-    public string GetActorAnalysis(Side side)
+    public string GetActorAnalysis(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         StringBuilder builder = new StringBuilder();
         builder.Append("Actor Analysis" + "\n\n");
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
@@ -496,18 +497,18 @@ public class LevelManager : MonoBehaviour
         foreach (Actor actor in arrayOfActors)
         {
             builder.Append(string.Format("{0}, ID {1},  Renown: {2}{3}", actor.arc.actorName, actor.actorID, actor.renown, "\n"));
-            switch (side)
+            switch (side.name)
             {
-                case Side.Authority:
+                case "Authority":
                     builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
                         listOfActorNodesAuthority[actor.slotID].Count, "\n\n"));
                     break;
-                case Side.Resistance:
+                case "Resistance":
                     builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
                         listOfActorNodesResistance[actor.slotID].Count, "\n\n"));
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid side \"{0}\"", side));
+                    Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
                     break;
             }
         }
@@ -704,7 +705,7 @@ public class LevelManager : MonoBehaviour
     /// sets up nodes to be active, or not, for each of the selected actors
     /// </summary>
     /// <param name="arrayOfActors"></param>
-    private void AssignActorsToNodes(Side side)
+    private void AssignActorsToNodes(GlobalSide side)
     {
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);           //the four, or less, available actors for the level
         int[] arrayOfArcs = new int[GameManager.instance.dataScript.CheckNumNodeArcs()];    //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
@@ -743,7 +744,7 @@ public class LevelManager : MonoBehaviour
                     {
                         chance = primary * actor.datapoint0;
                         arrayOfArcs[arc.NodeArcID] = chance;
-                        Debug.Log(string.Format("{0}  primary NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.NodeArcID, side, "\n"));
+                        Debug.Log(string.Format("{0}  primary NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.NodeArcID, side.name, "\n"));
                     }
                     //get actors Exclusion NodeArc preferences
                     listOfNodeArcs.Clear();
@@ -751,11 +752,11 @@ public class LevelManager : MonoBehaviour
                     foreach (NodeArc arc in listOfNodeArcs)
                     {
                         arrayOfArcs[arc.NodeArcID] = 0;
-                        Debug.Log(string.Format("{0}  Exclusion NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.NodeArcID, side, "\n"));
+                        Debug.Log(string.Format("{0}  Exclusion NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.NodeArcID, side.name, "\n"));
                     }
                     //debug summary
                     Debug.Log(string.Format("{0} {1} - {2} - {3} - {4} - {5} - {6}, side {7}{8}", actor.arc.actorName, arrayOfArcs[0], arrayOfArcs[1], arrayOfArcs[2], 
-                        arrayOfArcs[3], arrayOfArcs[4], arrayOfArcs[5], side, "\n"));
+                        arrayOfArcs[3], arrayOfArcs[4], arrayOfArcs[5], side.name, "\n"));
 
                     //loop nodes and check if any are active
                     counter = 0;
@@ -766,12 +767,12 @@ public class LevelManager : MonoBehaviour
                         if (Random.Range(0, 100) < arrayOfArcs[node.Arc.NodeArcID])
                         {
                             counter++;
-                            arrayOfActiveNodes[nodeIndex, (int)side, actorIndex] = true;
+                            arrayOfActiveNodes[nodeIndex, side.level, actorIndex] = true;
                             //add to list of Active nodes for that actor
                             arrayOfNodeLists[actorIndex].Add(listOfNodeObjects[nodeIndex]);
                         }
                     }
-                    Debug.Log(string.Format("First Pass -> {0} is active in {1} nodes, side {2}{3}", actor.arc.actorName, counter, side, "\n"));
+                    Debug.Log(string.Format("First Pass -> {0} is active in {1} nodes, side {2}{3}", actor.arc.actorName, counter, side.name, "\n"));
                     bool checkFlag;
                     int modifier = 0;
                     //check minimum number of active nodes has been achieved
@@ -786,13 +787,13 @@ public class LevelManager : MonoBehaviour
                             {
                                 Node node = listOfNodeObjects[nodeIndex].GetComponent<Node>();
                                 //check node not already active
-                                if (arrayOfActiveNodes[nodeIndex, (int)side, actorIndex] == false)
+                                if (arrayOfActiveNodes[nodeIndex, side.level, actorIndex] == false)
                                 {
                                     //chance of node being active (increase the odds of this happening)
                                     if ((Random.Range(0, 100) - modifier) < arrayOfArcs[node.Arc.NodeArcID])
                                     {
                                         counter++;
-                                        arrayOfActiveNodes[nodeIndex, (int)side, actorIndex] = true;
+                                        arrayOfActiveNodes[nodeIndex, side.level, actorIndex] = true;
                                         //add to list of Active ndoes for that actor
                                         arrayOfNodeLists[actorIndex].Add(listOfNodeObjects[nodeIndex]);
                                     }
@@ -811,33 +812,33 @@ public class LevelManager : MonoBehaviour
                             //message once per complete node loop
                             if (counter < minimumNumOfNodes)
                             { Debug.LogWarning(string.Format("One complete loop of Nodes completed trying to attain the minimum numer of Nodes, modifier {0}, side {1}{2}", 
-                                modifier, side, "\n")); }
+                                modifier, side.name, "\n")); }
                         }
                         while (counter < minimumNumOfNodes && checkFlag == true);
 
-                        Debug.Log(string.Format("Later Passes -> {0} is active in {1} nodes, side {2}{3}", actor.arc.actorName, counter, side, "\n"));
+                        Debug.Log(string.Format("Later Passes -> {0} is active in {1} nodes, side {2}{3}", actor.arc.actorName, counter, side.name, "\n"));
                     }
                 }
                 //transfer lists of nodes across
                 for (int i = 0; i < length; i++)
                 {
-                    switch (side)
+                    switch (side.name)
                     {
-                        case Side.Authority:
+                        case "Authority":
                             listOfActorNodesAuthority.Add(new List<GameObject>(arrayOfNodeLists[i]));
                             break;
-                        case Side.Resistance:
+                        case "Resistance":
                             listOfActorNodesResistance.Add(new List<GameObject>(arrayOfNodeLists[i]));
                             break;
                         default:
-                            Debug.LogError(string.Format("Invalid side \"{0}\"", side));
+                            Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
                             break;
                     }
                 }
             }
-            else { Debug.LogError(string.Format("No Actors within arrayOfActors -> Nodes not initialised for Actor use, side {0}", side)); }
+            else { Debug.LogError(string.Format("No Actors within arrayOfActors -> Nodes not initialised for Actor use, side {0}", side.name)); }
         }
-        else { Debug.LogError(string.Format("Invalid arrayOfActors (Null) -> Nodes not initialised for Actor use, side {0}", side)); }
+        else { Debug.LogError(string.Format("Invalid arrayOfActors (Null) -> Nodes not initialised for Actor use, side {0}", side.name)); }
     }
 
     #endregion
@@ -894,11 +895,12 @@ public class LevelManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public bool CheckNodeActive(int nodeID, Side side, int slotID)
+    public bool CheckNodeActive(int nodeID, GlobalSide side, int slotID)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(nodeID > -1 && nodeID < numOfNodes, "Invalid nodeID input");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
-        return arrayOfActiveNodes[nodeID, (int)side, slotID];
+        return arrayOfActiveNodes[nodeID, side.level, slotID];
     }
 
     public int[] GetNodeTypeTotals()
@@ -912,19 +914,20 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public List<List<GameObject>> GetListOfActorNodes(Side side)
+    public List<List<GameObject>> GetListOfActorNodes(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         List<List<GameObject>> tempList = new List<List<GameObject>>();
-        switch (side)
+        switch (side.name)
         {
-            case Side.Authority:
+            case "Authority":
                 tempList = listOfActorNodesAuthority;
                 break;
-            case Side.Resistance:
+            case "Resistance":
                 tempList = listOfActorNodesResistance;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", side));
+                Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
                 break;
         }
         return tempList;

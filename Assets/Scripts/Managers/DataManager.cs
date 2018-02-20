@@ -197,6 +197,8 @@ public class DataManager : MonoBehaviour
         int counter = 0;
         int length;
         string path;
+        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //
         // - - - Node Arcs - - -
         //
@@ -266,6 +268,7 @@ public class DataManager : MonoBehaviour
         counter = 0;
         //get GUID of all SO ActorArc Objects -> Note that I'm searching the entire database here so it's not folder dependant
         var arcGUID = AssetDatabase.FindAssets("t:ActorArc");
+
         foreach (var guid in arcGUID)
         {
             //get path
@@ -284,9 +287,9 @@ public class DataManager : MonoBehaviour
             {
                 dictOfActorArcs.Add(arc.ActorArcID, arc);
                 //add to list
-                if (arc.side == Side.Authority) { authorityActorArcs.Add(arc); }
-                else if (arc.side == Side.Resistance) { resistanceActorArcs.Add(arc); }
-                else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.side, arc.name)); }
+                if (arc.arcSide.level == globalAuthority.level) { authorityActorArcs.Add(arc); }
+                else if (arc.arcSide.level == globalResistance.level) { resistanceActorArcs.Add(arc); }
+                else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.arcSide.name, arc.name)); }
             }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }
@@ -505,36 +508,36 @@ public class DataManager : MonoBehaviour
         // - - - Actor Qualities - - -
         //
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
-        arrayOfQualities = new string[(int)Side.Count, numOfQualities];
+        arrayOfQualities = new string[GetNumOfGlobalSide(), numOfQualities];
         for(int i = 0; i < 3; i++)
         {
             //authority qualities
             if (authorityQualities[i] != null)
             {
-                if (authorityQualities[i].side == Side.Authority)
-                { arrayOfQualities[(int)Side.Authority, i] = authorityQualities[i].name; }
+                if (authorityQualities[i].side.level == globalAuthority.level)
+                { arrayOfQualities[globalAuthority.level, i] = authorityQualities[i].name; }
                 else
                 {
-                    Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", authorityQualities[i].name, authorityQualities[i].side, "\n"));
-                    arrayOfQualities[(int)Side.Authority, i] = "Unknown";
+                    Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", authorityQualities[i].name, authorityQualities[i].side.name, "\n"));
+                    arrayOfQualities[globalAuthority.level, i] = "Unknown";
                 }
             }
-            else { arrayOfQualities[(int)Side.Authority, i] = "Unknown"; }
+            else { arrayOfQualities[globalAuthority.level, i] = "Unknown"; }
             //resistance qualities
             if (resistanceQualities[i] != null)
             {
-                if (resistanceQualities[i].side == Side.Resistance)
-                { arrayOfQualities[(int)Side.Resistance, i] = resistanceQualities[i].name; }
+                if (resistanceQualities[i].side.level == globalResistance.level)
+                { arrayOfQualities[globalResistance.level, i] = resistanceQualities[i].name; }
                 else
                 {
-                    Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", resistanceQualities[i].name, resistanceQualities[i].side, "\n"));
+                    Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", resistanceQualities[i].name, resistanceQualities[i].side.name, "\n"));
                     arrayOfQualities[(int)Side.Resistance, i] = "Unknown";
                 }
             }
-            else { arrayOfQualities[(int)Side.Resistance, i] = "Unknown"; }
+            else { arrayOfQualities[globalResistance.level, i] = "Unknown"; }
         }
         //arrayOfActors
-        arrayOfActors = new Actor[(int)Side.Count, GameManager.instance.actorScript.numOfOnMapActors];
+        arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.numOfOnMapActors];
     }
 
 
@@ -759,12 +762,13 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="num"></param>
     /// <returns></returns>
-    public List<ActorArc> GetRandomActorArcs(int num, Side side)
+    public List<ActorArc> GetRandomActorArcs(int num, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         //filter for the required side
         List<ActorArc> tempMaster = new List<ActorArc>();
-        if(side == Side.Authority) { tempMaster.AddRange(authorityActorArcs); }
-        else if (side == Side.Resistance) { tempMaster.AddRange(resistanceActorArcs); }
+        if(side.level == GameManager.instance.globalScript.sideAuthority.level) { tempMaster.AddRange(authorityActorArcs); }
+        else if (side.level == GameManager.instance.globalScript.sideResistance.level) { tempMaster.AddRange(resistanceActorArcs); }
 
         if (tempMaster.Count > 0)
         {
@@ -792,11 +796,11 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public List<ActorArc> GetActorArcs(Side side)
+    public List<ActorArc> GetActorArcs(GlobalSide side)
     {
-        if (side == Side.Authority) { return authorityActorArcs; }
-        else if (side == Side.Resistance) { return resistanceActorArcs; }
-        else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side)); }
+        if (side.level == GameManager.instance.globalScript.sideAuthority.level) { return authorityActorArcs; }
+        else if (side.level == GameManager.instance.globalScript.sideResistance.level) { return resistanceActorArcs; }
+        else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side.name)); }
         return null;
     }
 
@@ -1498,12 +1502,12 @@ public class DataManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="actor"></param>
     /// <param name="slotID"></param>
-    public void AddCurrentActor(Side side, Actor actor, int slotID)
+    public void AddCurrentActor(GlobalSide side, Actor actor, int slotID)
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
         if (actor != null)
         {
-            arrayOfActors[(int)side, slotID] = actor;
+            arrayOfActors[side.level, slotID] = actor;
         }
         else { Debug.LogError("Invalid actor (null)"); }
     }
@@ -1529,29 +1533,33 @@ public class DataManager : MonoBehaviour
     /// Adds an actor to one of the three (by level and side) pools from which actors can be recruited from
     /// </summary>
     /// <param name="level"></param>
-    public void AddActorToPool(int actorID, int level, Side side)
+    public void AddActorToPool(int actorID, int level, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
         Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
-        if (side == Side.Authority)
+        switch (side.name)
         {
-            switch (level)
-            {
-                case 1: authorityActorPoolLevelOne.Add(actorID); break;
-                case 2: authorityActorPoolLevelTwo.Add(actorID); break;
-                case 3: authorityActorPoolLevelThree.Add(actorID); break;
-            }
+            case "Authority":
+                switch (level)
+                {
+                    case 1: authorityActorPoolLevelOne.Add(actorID); break;
+                    case 2: authorityActorPoolLevelTwo.Add(actorID); break;
+                    case 3: authorityActorPoolLevelThree.Add(actorID); break;
+                }
+                break;
+            case "Resistance":
+                switch (level)
+                {
+                    case 1: resistanceActorPoolLevelOne.Add(actorID); break;
+                    case 2: resistanceActorPoolLevelTwo.Add(actorID); break;
+                    case 3: resistanceActorPoolLevelThree.Add(actorID); break;
+                }
+                break;
+            default:
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side.name));
+                break;
         }
-        else if (side == Side.Resistance)
-        {
-            switch (level)
-            {
-                case 1: resistanceActorPoolLevelOne.Add(actorID); break;
-                case 2: resistanceActorPoolLevelTwo.Add(actorID); break;
-                case 3: resistanceActorPoolLevelThree.Add(actorID); break;
-            }
-        }
-        else { Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side)); }
     }
 
     /// <summary>
@@ -1560,29 +1568,33 @@ public class DataManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="level"></param>
     /// <param name="side"></param>
-    public void RemoveActorFromPool(int actorID, int level, Side side)
+    public void RemoveActorFromPool(int actorID, int level, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
         Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
-        if (side == Side.Authority)
+        switch (side.name)
         {
-            switch (level)
-            {
-                case 1: authorityActorPoolLevelOne.Remove(actorID); break;
-                case 2: authorityActorPoolLevelTwo.Remove(actorID); break;
-                case 3: authorityActorPoolLevelThree.Remove(actorID); break;
-            }
+            case "Authority":
+                switch (level)
+                {
+                    case 1: authorityActorPoolLevelOne.Remove(actorID); break;
+                    case 2: authorityActorPoolLevelTwo.Remove(actorID); break;
+                    case 3: authorityActorPoolLevelThree.Remove(actorID); break;
+                }
+                break;
+            case "Resistance":
+                switch (level)
+                {
+                    case 1: resistanceActorPoolLevelOne.Remove(actorID); break;
+                    case 2: resistanceActorPoolLevelTwo.Remove(actorID); break;
+                    case 3: resistanceActorPoolLevelThree.Remove(actorID); break;
+                }
+                break;
+            default:
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT removed from pool", side.name));
+                break;
         }
-        else if (side == Side.Resistance)
-        {
-            switch (level)
-            {
-                case 1: resistanceActorPoolLevelOne.Remove(actorID); break;
-                case 2: resistanceActorPoolLevelTwo.Remove(actorID); break;
-                case 3: resistanceActorPoolLevelThree.Remove(actorID); break;
-            }
-        }
-        else { Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT removed from pool", side)); }
     }
 
     /// <summary>
@@ -1590,28 +1602,29 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="actorID"></param>
     /// <param name="side"></param>
-    public bool AddActorToReserve(int actorID, Side side)
+    public bool AddActorToReserve(int actorID, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
         bool successFlag = true;
-        if (side == Side.Authority)
+        switch (side.name)
         {
-            //check space in Authority reserve pool
-            if (authorityActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
-            { authorityActorReserve.Add(actorID); }
-            else { successFlag = false; }
-        }
-        else if (side == Side.Resistance)
-        {
-            //check space in Resistance reserve pool
-            if (resistanceActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
-            { resistanceActorReserve.Add(actorID); }
-            else { successFlag = false; }
-        }
-        else
-        {
-            Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side));
-            successFlag = false;
+            case "Authority":
+                //check space in Authority reserve pool
+                if (authorityActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
+                { authorityActorReserve.Add(actorID); }
+                else { successFlag = false; }
+                break;
+            case "Resistance":
+                //check space in Resistance reserve pool
+                if (resistanceActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
+                { resistanceActorReserve.Add(actorID); }
+                else { successFlag = false; }
+                break;
+            default:
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side.name));
+                successFlag = false;
+                break;
         }
         return successFlag;
     }
@@ -1622,13 +1635,13 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int GetNumOfActorsInReserve()
     {
-        if (GameManager.instance.sideScript.PlayerSide == Side.Authority)
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { return authorityActorReserve.Count; }
-        else if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+        else if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
         { return resistanceActorReserve.Count; }
         else
         {
-            Debug.LogWarning(string.Format("Invalid Side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
+            Debug.LogWarning(string.Format("Invalid Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
             return 0;
         }
     }
@@ -1638,16 +1651,16 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    public List<int> GetActorPool(int level, Side side)
+    public List<int> GetActorPool(int level, GlobalSide side)
     {
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
-        if (side == Side.Authority)
+        if (side.level == GameManager.instance.globalScript.sideAuthority.level)
         {
             if (level == 1) { return authorityActorPoolLevelOne; }
             else if (level == 2) { return authorityActorPoolLevelTwo; }
             else { return authorityActorPoolLevelThree; }
         }
-        else if (side == Side.Resistance)
+        else if (side.level == GameManager.instance.globalScript.sideResistance.level)
         {
             if (level == 1) { return resistanceActorPoolLevelOne; }
             else if (level == 2) { return resistanceActorPoolLevelTwo; }
@@ -1655,7 +1668,7 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Side \"{0}\"", side));
+            Debug.LogError(string.Format("Invalid Side \"{0}\"", side.name));
             return null;
         }
     }
@@ -1664,12 +1677,13 @@ public class DataManager : MonoBehaviour
     /// Get array of OnMap (active and inactive) actors for a specified side
     /// </summary>
     /// <returns></returns>
-    public Actor[] GetCurrentActors(Side side)
+    public Actor[] GetCurrentActors(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         int total = GameManager.instance.actorScript.numOfOnMapActors;
         Actor[] tempArray = new Actor[total];
         for (int i = 0; i < total; i++)
-        { tempArray[i] = arrayOfActors[(int)side, i]; }
+        { tempArray[i] = arrayOfActors[side.level, i]; }
         return tempArray;
     }
 
@@ -1688,10 +1702,11 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public Actor GetCurrentActor(int slotID, Side side)
+    public Actor GetCurrentActor(int slotID, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, string.Format("Invalid slotID {0}", slotID));
-        return arrayOfActors[(int)side, slotID];
+        return arrayOfActors[side.level, slotID];
     }
 
     /// <summary>
@@ -1699,10 +1714,11 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public string GetCurrentActorType(int slotID, Side side)
+    public string GetCurrentActorType(int slotID, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].arc.name;
+        return arrayOfActors[side.level, slotID].arc.name;
     }
 
     /// <summary>
@@ -1710,11 +1726,12 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public List<int> GetAllCurrentActorArcIDs(Side side)
+    public List<int> GetAllCurrentActorArcIDs(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         List<int> tempList = new List<int>();
         for (int i = 0; i < GameManager.instance.actorScript.numOfOnMapActors; i++)
-        { tempList.Add(arrayOfActors[(int)side, i].arc.ActorArcID); }
+        { tempList.Add(arrayOfActors[side.level, i].arc.ActorArcID); }
         if (tempList.Count > 0) { return tempList; }
         return null;
     }
@@ -1724,11 +1741,12 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
-    public int[] GetActorStats(int slotID, Side side)
+    public int[] GetActorStats(int slotID, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
-        int[] arrayOfStats = new int[]{ arrayOfActors[(int)side, slotID].datapoint0, arrayOfActors[(int)side, slotID].datapoint1,
-            arrayOfActors[(int)side, slotID].datapoint2};
+        int[] arrayOfStats = new int[]{ arrayOfActors[side.level, slotID].datapoint0, arrayOfActors[side.level, slotID].datapoint1,
+            arrayOfActors[side.level, slotID].datapoint2};
         return arrayOfStats;
     }
 
@@ -1738,10 +1756,11 @@ public class DataManager : MonoBehaviour
     /// <param name="slotID"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Action GetActorAction(int slotID, Side side)
+    public Action GetActorAction(int slotID, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
-        return arrayOfActors[(int)side, slotID].arc.nodeAction;
+        return arrayOfActors[side.level, slotID].arc.nodeAction;
     }
 
     /// <summary>
@@ -1749,13 +1768,14 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    public int CheckActorPresent(int actorArcID, Side side)
+    public int CheckActorPresent(int actorArcID, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         int slotID = -1;
         int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
         for (int i = 0; i < numOfActors; i++)
         {
-            Actor actor = arrayOfActors[(int)side, i];
+            Actor actor = arrayOfActors[side.level, i];
             if (actor.arc.ActorArcID == actorArcID && actor.Status == ActorStatus.Active)
             { return actor.slotID; }
         }
@@ -1767,14 +1787,15 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="arc"></param>
     /// <returns></returns>
-    public bool CheckActorArcPresent(ActorArc arc, Side side)
+    public bool CheckActorArcPresent(ActorArc arc, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         if (arc != null)
         {
             int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
             for (int i = 0; i < numOfActors; i++)
             {
-                Actor actor = arrayOfActors[(int)side, i];
+                Actor actor = arrayOfActors[side.level, i];
                 if (actor.arc == arc && actor.Status == ActorStatus.Active) { return true; }
             }
             return false;
@@ -1837,13 +1858,14 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public string[] GetQualities(Side side)
+    public string[] GetQualities(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         string[] tempArray = new string[numOfQualities];
         for (int i = 0; i < numOfQualities; i++)
         {
-            tempArray[i] = arrayOfQualities[(int)side, i];
+            tempArray[i] = arrayOfQualities[side.level, i];
         }
         return tempArray;
     }
@@ -1854,10 +1876,11 @@ public class DataManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="qualityNum"></param>
     /// <returns></returns>
-    public string GetQuality(Side side, int qualityNum)
+    public string GetQuality(GlobalSide side, int qualityNum)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
-        return arrayOfQualities[(int)side, qualityNum];
+        return arrayOfQualities[side.level, qualityNum];
     }
 
     //
@@ -2213,24 +2236,28 @@ public class DataManager : MonoBehaviour
             builderAuthority.Append(string.Format("{0}{1} Messages -> Authority{2}", "\n", "\n", "\n"));
             foreach (var record in tempDict)
             {
-                switch (record.Value.side)
+                if (record.Value.side != null)
                 {
-                    case Side.Resistance:
-                        builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                        builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
-                            record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
-                            record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
-                        break;
-                    case Side.Authority:
-                        builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                        builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
-                            record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
-                            record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
-                        break;
-                    default:
-                        builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side, record.Key, "\n"));
-                        break;
+                    switch (record.Value.side.name)
+                    {
+                        case "Resistance":
+                            builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
+                            builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
+                                record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
+                                record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
+                            break;
+                        case "Authority":
+                            builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
+                            builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
+                                record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
+                                record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
+                            break;
+                        default:
+                            builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side.name, record.Key, "\n"));
+                            break;
+                    }
                 }
+                else { Debug.LogError(string.Format("Invalid record.Value.side (Null), \"{0}\"", record.Value.text)); }
             }
         }
         //combine two lists
