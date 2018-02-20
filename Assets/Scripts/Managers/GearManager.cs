@@ -213,6 +213,7 @@ public class GearManager : MonoBehaviour
     {
         bool errorFlag = false;
         int gearID, index;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
         if (node != null)
@@ -221,7 +222,7 @@ public class GearManager : MonoBehaviour
             int actorID = 999;
             if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, Side.Resistance);
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, globalResistance);
                 if (actor != null)
                 { actorID = actor.actorID; }
                 else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.ActorSlotID)); errorFlag = true; }
@@ -245,7 +246,7 @@ public class GearManager : MonoBehaviour
             }
             //Obtain Gear
             genericDetails.returnEvent = EventType.GenericGearChoice;
-            genericDetails.side = Side.Resistance;
+            genericDetails.side = globalResistance;
             genericDetails.nodeID = details.NodeID;
             genericDetails.actorSlotID = details.ActorSlotID;
             //picker text
@@ -285,7 +286,7 @@ public class GearManager : MonoBehaviour
                 {
                     //chance of rare gear -> base chance * actor ability (or 1 if player)
                     int chance = chanceOfRareGear;
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, Side.Resistance);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, globalResistance);
                     if (actor != null)
                     {
                         //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
@@ -383,7 +384,7 @@ public class GearManager : MonoBehaviour
         {
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.side = Side.Resistance;
+            outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
             outcomeDetails.textBottom = "Heads will roll!";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -415,7 +416,7 @@ public class GearManager : MonoBehaviour
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, Side.Resistance);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.globalScript.sideResistance);
                         if (actor != null)
                         {
                             StringBuilder builderTop = new StringBuilder();
@@ -467,7 +468,7 @@ public class GearManager : MonoBehaviour
                             details.textTop = builderTop.ToString();
                             details.textBottom = builderBottom.ToString();
                             details.sprite = sprite;
-                            details.side = Side.Resistance;
+                            details.side = GameManager.instance.globalScript.sideResistance;
                             if (successFlag == true)
                             { details.isAction = true; }
                             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);

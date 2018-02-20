@@ -348,7 +348,7 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
-    /// Team in neutralised by the Resitance. Returns null if text invalid
+    /// Team in neutralised by the Resistance. Returns null if text invalid
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>

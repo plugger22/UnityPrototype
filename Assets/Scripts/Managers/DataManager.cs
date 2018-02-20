@@ -287,9 +287,9 @@ public class DataManager : MonoBehaviour
             {
                 dictOfActorArcs.Add(arc.ActorArcID, arc);
                 //add to list
-                if (arc.arcSide.level == globalAuthority.level) { authorityActorArcs.Add(arc); }
-                else if (arc.arcSide.level == globalResistance.level) { resistanceActorArcs.Add(arc); }
-                else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.arcSide.name, arc.name)); }
+                if (arc.side.level == globalAuthority.level) { authorityActorArcs.Add(arc); }
+                else if (arc.side.level == globalResistance.level) { resistanceActorArcs.Add(arc); }
+                else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.side.name, arc.name)); }
             }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }

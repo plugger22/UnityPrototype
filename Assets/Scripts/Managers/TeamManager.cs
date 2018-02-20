@@ -22,6 +22,9 @@ public class TeamManager : MonoBehaviour
     [Tooltip("The increase to node security due to the presence of a SecurityTeam")]
     public int securityTeamEffect = 2;
 
+    //fast access fields
+    private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
 
     private string colourEffect;
     private string colourSide;
@@ -40,6 +43,9 @@ public class TeamManager : MonoBehaviour
     {
         InitialiseTeams();
         SeedTeamsOnMap();     //DEBUG
+        //fast acess fields
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
@@ -114,7 +120,7 @@ public class TeamManager : MonoBehaviour
     private void EndTurn()
     {
         //set turnSide 
-        GameManager.instance.turnScript.currentSide = Side.Authority;
+        GameManager.instance.turnScript.currentSide = globalAuthority;
         //decrement all timers in OnMap pool
         List<int> teamPool = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
         if (teamPool != null)
@@ -141,7 +147,7 @@ public class TeamManager : MonoBehaviour
     {
         List<int> teamPool = new List<int>();
         //set turnSide 
-        GameManager.instance.turnScript.currentSide = Side.Authority;
+        GameManager.instance.turnScript.currentSide = globalAuthority;
         //check InTransit pool -> move any teams here to the Reserve pool -> Note: do this BEFORE checking OnMap pool below
         teamPool.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit));
         if (teamPool != null)
@@ -178,7 +184,7 @@ public class TeamManager : MonoBehaviour
                         {
 
 
-                            Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
+                            Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, globalAuthority);
                             MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node);
                             if (actor != null)
                             {                            
@@ -219,7 +225,7 @@ public void InitialiseTeams()
         else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
 
         //Add extra teams equal to each Authority actors ability level and off their preferred type
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Authority);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
         if (arrayOfActors.Length > 0)
         {
             int ability, arcID;
@@ -319,7 +325,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
                         if (actor != null)
                         {
                             if (actor.Status == ActorStatus.Active)
@@ -404,7 +410,7 @@ public void InitialiseTeams()
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
                         if (actor != null)
                         {
                             if (actor.Status == ActorStatus.Active)
@@ -521,7 +527,7 @@ public void InitialiseTeams()
         StringBuilder builder = new StringBuilder();
         builder.Append(" OnMap Teams by Actor");
         builder.AppendLine();
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(Side.Authority);
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
         foreach(Actor actor in arrayOfActors)
         {
             builder.AppendLine();
@@ -594,7 +600,7 @@ public void InitialiseTeams()
             if (listOfTeams != null && listOfTeams.Count > 0)
             {
                 genericDetails.returnEvent = EventType.GenericTeamRecall;
-                genericDetails.side = Side.Authority;
+                genericDetails.side = globalAuthority;
                 genericDetails.nodeID = nodeID;
                 genericDetails.actorSlotID = -1;
                 //picker text
@@ -622,7 +628,7 @@ public void InitialiseTeams()
                         if (team.Timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
                         tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}", 
                             dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.Timer, colourEnd, team.Timer != 1 ? "s" : "");
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, globalAuthority);
                         if (actor != null)
                         {
                             deployedTeams = actor.CheckNumOfTeams();
@@ -664,7 +670,7 @@ public void InitialiseTeams()
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Recalled.";
             outcomeDetails.textBottom = "Heads will roll!";
-            outcomeDetails.side = Side.Authority;
+            outcomeDetails.side = globalAuthority;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else
@@ -692,7 +698,7 @@ public void InitialiseTeams()
             if (listOfTeams != null && listOfTeams.Count > 0)
             {
                 genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
-                genericDetails.side = Side.Resistance;
+                genericDetails.side = globalResistance;
                 genericDetails.nodeID = details.NodeID;
                 genericDetails.actorSlotID = details.ActorSlotID;
                 //picker text
@@ -749,7 +755,7 @@ public void InitialiseTeams()
         {
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.side = Side.Resistance;
+            outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -786,7 +792,7 @@ public void InitialiseTeams()
                         textTop = GameManager.instance.effectScript.SetTopTeamText(team.TeamID, false);
                         textBottom = "The team will spend one turn in Transit and be available thereafter";
                         int actorID = -1;
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, Side.Authority);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, globalAuthority);
                         if (actor != null) { actorID = actor.actorID; }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", team.ActorSlotID)); }
                         if (MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node) == true)
@@ -810,7 +816,7 @@ public void InitialiseTeams()
                         details.textTop = textTop;
                         details.textBottom = textBottom;
                         details.sprite = sprite;
-                        details.side = Side.Authority;
+                        details.side = globalAuthority;
                         if (successFlag == true)
                         { details.isAction = true; }
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
@@ -844,7 +850,7 @@ public void InitialiseTeams()
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, Side.Resistance);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, globalResistance);
                         if (actor != null)
                         {
                             StringBuilder builderTop = new StringBuilder();
@@ -898,7 +904,7 @@ public void InitialiseTeams()
                             details.textTop = builderTop.ToString();
                             details.textBottom = builderBottom.ToString();
                             details.sprite = sprite;
-                            details.side = Side.Resistance;
+                            details.side = globalResistance;
                             if (successFlag == true)
                             { details.isAction = true; }
                             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);

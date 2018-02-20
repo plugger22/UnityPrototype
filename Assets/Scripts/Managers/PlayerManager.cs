@@ -18,27 +18,31 @@ public class PlayerManager : MonoBehaviour
     private int _renownResistance;
     private int _renownAuthority;
 
+    //for fast access
+    private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
+
     public int Renown
     {
         get
         {
-            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { return _renownResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { return _renownAuthority; }
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { return _renownResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { return _renownAuthority; }
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.currentSide == Side.Resistance) { return _renownResistance; }
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return _renownResistance; }
                 else {return _renownAuthority; }
             }
         }
         set
         {
-            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance) { _renownResistance = value; }
-            else if (GameManager.instance.sideScript.PlayerSide == Side.Authority) { _renownAuthority = value; }
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { _renownResistance = value; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { _renownAuthority = value; }
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.currentSide == Side.Resistance) { _renownResistance = value; }
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { _renownResistance = value; }
                 else { _renownAuthority = value; }
             }
         }
@@ -73,7 +77,9 @@ public class PlayerManager : MonoBehaviour
         Renown = 0;
         invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
-
+        //fast acess fields
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name.ToUpper(), node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
@@ -210,7 +216,7 @@ public class PlayerManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
-        if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         { builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
         builder.Append(string.Format(" State {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));

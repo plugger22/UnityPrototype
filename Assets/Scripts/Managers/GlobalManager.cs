@@ -20,6 +20,7 @@ public class GlobalManager : MonoBehaviour
     [HideInInspector] public GlobalType typeNeutral;
     [HideInInspector] public GlobalType typeBad;
     //globalSide
+    [HideInInspector] public GlobalSide sideAI;
     [HideInInspector] public GlobalSide sideAuthority;
     [HideInInspector] public GlobalSide sideResistance;
 
@@ -130,20 +131,24 @@ public class GlobalManager : MonoBehaviour
                 //Also dynamically assign GlobalSide.level values (0/1). 
                 switch (side.Key)
                 {
+                    case "AI":
+                        sideAI = side.Value;
+                        side.Value.level = 0;
+                        break;
                     case "Authority":
                         sideAuthority = side.Value;
-                        side.Value.level = 0;
+                        side.Value.level = 1;
                         break;
                     case "Resistance":
                         sideResistance = side.Value;
-                        side.Value.level = 1;
+                        side.Value.level = 2;
                         break;
                 }
             }
             //error check
-            if (typeBad == null) { Debug.LogError("Invalid typeBad (Null)"); }
-            if (typeNeutral == null) { Debug.LogError("Invalid typeNeutral (Null)"); }
-            if (typeGood == null) { Debug.LogError("Invalid typeGood (Null)"); }
+            if (sideAI == null) { Debug.LogError("Invalid sideAI (Null)"); }
+            if (sideAuthority == null) { Debug.LogError("Invalid sideAuthority (Null)"); }
+            if (sideResistance == null) { Debug.LogError("Invalid sideResistance (Null)"); }
         }
     }
 

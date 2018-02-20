@@ -159,7 +159,7 @@ public class Node : MonoBehaviour
                 GameManager.instance.tooltipNodeScript.CloseTooltip();
             }
             //Action Menu -> not valid if Resistance Plyr and Captured, etc.
-            if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
             {
                 if (GameManager.instance.turnScript.resistanceState != ResistanceState.Normal)
                 { proceedFlag = false; }
@@ -211,7 +211,7 @@ public class Node : MonoBehaviour
                     GameManager.instance.tooltipNodeScript.CloseTooltip();
                 }
                 //move action invalid if resistance player is captured, etc.
-                if (GameManager.instance.sideScript.PlayerSide == Side.Resistance)
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
                     {
@@ -414,7 +414,7 @@ public class Node : MonoBehaviour
     {
         List<string> tempList = new List<string>();
         int limit = GameManager.instance.actorScript.numOfOnMapActors;
-        Side side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {
             if (GameManager.instance.levelScript.CheckNodeActive(nodeID, side, i) == true)
@@ -820,17 +820,17 @@ public class Node : MonoBehaviour
     private int[] GetStats()
     {
         int[] arrayOfStats;
-        switch (GameManager.instance.sideScript.PlayerSide)
+        switch (GameManager.instance.sideScript.PlayerSide.name)
         {
-            case Side.Resistance:
+            case "Resistance":
                 arrayOfStats = new int[] { Stability, Support, Security };
                 break;
-            case Side.Authority:
+            case "Authority":
                 arrayOfStats = new int[] { 3 - Stability, 3 - Support, 3 - Security };
                 break;
             default:
                 arrayOfStats = new int[] { Stability, Support, Security };
-                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
+                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
 

@@ -253,7 +253,7 @@ public class ActorManager : MonoBehaviour
         if (arc != null)
         {
             //check actor arc is the correct side
-            if (arc.arcSide.level == side.level)
+            if (arc.side.level == side.level)
             {
                 //create new actor
                 Actor actor = new Actor();

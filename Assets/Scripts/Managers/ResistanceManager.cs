@@ -6,7 +6,7 @@ using modalAPI;
 using gameAPI;
 
 /// <summary>
-/// Handles all Resitance related matters
+/// Handles all Resistance related matters
 /// </summary>
 public class ResistanceManager : MonoBehaviour
 {

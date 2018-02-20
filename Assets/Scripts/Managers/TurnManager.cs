@@ -21,7 +21,7 @@ public class TurnManager : MonoBehaviour
     
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthorityState authorityState;
-    [HideInInspector] public Side currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
+    [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
 
     [SerializeField, HideInInspector]
     private int _turn;
@@ -81,7 +81,7 @@ public class TurnManager : MonoBehaviour
                 UseAction();
                 break;
             case EventType.ChangeSide:
-                ChangeSide((Side)Param);
+                ChangeSide((GlobalSide)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -144,17 +144,20 @@ public class TurnManager : MonoBehaviour
     {
         bool playerInteraction = true;
         Debug.Log(string.Format("TurnManager: - - - StartTurnFinal - - - turn {0}{1}", GameManager.instance.turnScript, "\n"));
-        switch (GameManager.instance.sideScript.PlayerSide)
+        switch (GameManager.instance.sideScript.PlayerSide.name)
         {
-            case Side.Resistance:
-                currentSide = Side.Resistance;
+            case "Resistance":
+                currentSide = GameManager.instance.globalScript.sideResistance;
                 break;
-            case Side.Authority:
-                currentSide = Side.Authority;
+            case "Authority":
+                currentSide = GameManager.instance.globalScript.sideAuthority;
                 break;
-            case Side.None:
+            case "AI":
                 //It's an AI vs. AI game so you need to go straight to EndTurnAI as there will be no player interaction
                 playerInteraction = false;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
         return playerInteraction;
@@ -167,24 +170,27 @@ public class TurnManager : MonoBehaviour
     private void EndTurnAI()
     {
         Debug.Log(string.Format("TurnManager: - - - EndTurnAI - - - turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        switch (GameManager.instance.sideScript.PlayerSide)
+        switch (GameManager.instance.sideScript.PlayerSide.name)
         {
-            case Side.Resistance:
+            case "Resistance":
                 //process Authority AI
-                currentSide = Side.Authority;
+                currentSide = GameManager.instance.globalScript.sideAuthority;
                 GameManager.instance.aiScript.ProcessAISideAuthority();
                 break;
-            case Side.Authority:
+            case "Authority":
                 //process Resistance AI
-                currentSide = Side.Resistance;
+                currentSide = GameManager.instance.globalScript.sideResistance;
                 GameManager.instance.aiScript.ProcessAISideResistance();
                 break;
-            case Side.None:
+            case "AI":
                 //Process both sides AI, resistance first
-                currentSide = Side.Resistance;
+                currentSide = GameManager.instance.globalScript.sideResistance;
                 GameManager.instance.aiScript.ProcessAISideResistance();
-                currentSide = Side.Authority;
+                currentSide = GameManager.instance.globalScript.sideAuthority;
                 GameManager.instance.aiScript.ProcessAISideAuthority();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
     }
@@ -201,7 +207,7 @@ public class TurnManager : MonoBehaviour
     }
 
 
-    public void ChangeSide(Side side)
+    public void ChangeSide(GlobalSide side)
     {
         UpdateActionsLimit(side);
     }
@@ -210,14 +216,14 @@ public class TurnManager : MonoBehaviour
     /// sub-method to set up action limit based on player's current side
     /// </summary>
     /// <param name="side"></param>
-    private void UpdateActionsLimit(Side side)
+    private void UpdateActionsLimit(GlobalSide side)
     {
         _actionsCurrent = 0;
-        switch (side)
+        switch (side.name)
         {
-            case Side.Authority: _actionsLimit = actionsAuthority; break;
-            case Side.Resistance: _actionsLimit = actionsResistance; break;
-            default: Debug.LogError(string.Format("Invalid side {0}", side)); break;
+            case "Authority": _actionsLimit = actionsAuthority; break;
+            case "Resistance": _actionsLimit = actionsResistance; break;
+            default: Debug.LogError(string.Format("Invalid side {0}", side.name)); break;
         }
     }
 
