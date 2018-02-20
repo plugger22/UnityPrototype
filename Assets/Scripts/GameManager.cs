@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
-        globalScript = GetComponent<GlobalManager>():
+        globalScript = GetComponent<GlobalManager>();
         actorScript = GetComponent<ActorManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();

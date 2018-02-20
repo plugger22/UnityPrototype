@@ -190,7 +190,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// default constructor
+    /// default main constructor
     /// </summary>
     public void InitialiseEarly()
     {
