@@ -140,10 +140,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseGame()
     {
-        sideScript.Initialise();
+        dataScript.InitialiseStart();   //must be first
+        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly        
+        sideScript.Initialise();       
         actorScript.PreInitialiseActors();
-        dataScript.InitialiseStart();
-        globalScript.Initialise();      //must be after dataScript.InitialiseStart and before dataScript.InitialiseEarly
         dataScript.InitialiseEarly();
         actorScript.Initialise();
         levelScript.Initialise();

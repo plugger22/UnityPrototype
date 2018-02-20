@@ -139,7 +139,7 @@ public class ModalDiceUI : MonoBehaviour
                 CloseDiceUI();
                 break;
             case EventType.ChangeSide:
-                ChangeSides((Side)Param);
+                ChangeSides((GlobalSide)Param);
                 break;
             case EventType.ChangeColour:
                 SetColours();
@@ -314,18 +314,22 @@ public class ModalDiceUI : MonoBehaviour
     /// Set up sprites on ModalDiceUI window for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    private void ChangeSides(Side side)
+    private void ChangeSides(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = modalPanelObject.GetComponent<Image>();
         //assign side specific sprites
-        switch (side)
+        switch (side.name)
         {
-            case Side.Authority:
+            case "Authority":
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundAuthority;
                 break;
-            case Side.Resistance:
+            case "Resistance":
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundRebel;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
                 break;
         }
     }

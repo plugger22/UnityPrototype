@@ -72,14 +72,15 @@ public class PlayerManager : MonoBehaviour
         else
         { Debug.LogWarning("PlayerManager: Invalid node (Null). Player placed in node '0' by default"); }
         //set player node
-        GameManager.instance.nodeScript.nodePlayer = nodeID;
+        GameManager.instance.nodeScript.nodePlayer = nodeID;        
+        //fast acess fields (BEFORE set stats below)
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
         //set stats
         Renown = 0;
         invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
-        //fast acess fields
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
+
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name.ToUpper(), node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);

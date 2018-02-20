@@ -49,35 +49,4 @@ public class SideManager : MonoBehaviour
         PlayerSide = GameManager.instance.globalScript.sideResistance;
     }
 
-
-    /*/// <summary>
-    /// Called when an event happens
-    /// </summary>
-    /// <param name="eventType"></param>
-    /// <param name="Sender"></param>
-    /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object Param = null)
-    {
-        //Detect Event type
-        switch(eventType)
-        {
-            case EventType.ChangeSide:
-                SwapSides((Side)Param);
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Swaps gfx around for UI elements
-    /// </summary>
-    /// <param name="side"></param>
-    public void SwapSides(Side side)
-    {
-        GameManager.instance.tooltipNodeScript.InitialiseTooltip(side);
-        GameManager.instance.tooltipActorScript.InitialiseTooltip(side);
-        GameManager.instance.outcomeScript.InitialiseOutcome(side);
-    }*/
 }

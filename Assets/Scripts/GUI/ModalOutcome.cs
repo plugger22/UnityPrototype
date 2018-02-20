@@ -89,7 +89,7 @@ public class ModalOutcome : MonoBehaviour
                 CloseModalOutcome();
                 break;
             case EventType.ChangeSide:
-                InitialiseOutcome((Side)Param);
+                InitialiseOutcome((GlobalSide)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -217,18 +217,22 @@ public class ModalOutcome : MonoBehaviour
     /// set up sprites on outcome window for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    private void InitialiseOutcome(Side side)
+    private void InitialiseOutcome(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = modalOutcomeWindow.GetComponent<Image>();
         //assign side specific sprites
-        switch (side)
+        switch (side.name)
         {
-            case Side.Authority:
+            case "Authority":
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundAuthority;
                 break;
-            case Side.Resistance:
+            case "Resistance":
                 background.sprite = GameManager.instance.sideScript.outcome_backgroundRebel;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
                 break;
         }
     }

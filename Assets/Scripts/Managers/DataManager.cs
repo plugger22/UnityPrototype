@@ -804,19 +804,6 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-    /*/// <summary>
-    /// returns number of individual actor arcs for a side, '-1' if a problem
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public int GetNumOfActorArcs(Side side)
-    {
-        if (side == Side.Authority) { return authorityActorArcs.Count; }
-        else if (side == Side.Resistance) { return resistanceActorArcs.Count; }
-        else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side)); }
-        return -1; 
-    }*/
-
     /// <summary>
     /// Gets specified actor Arc, returns null if not found
     /// </summary>

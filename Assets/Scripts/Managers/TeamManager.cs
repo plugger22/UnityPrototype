@@ -40,12 +40,14 @@ public class TeamManager : MonoBehaviour
     /// Set up at start
     /// </summary>
     public void Initialise()
-    {
-        InitialiseTeams();
-        SeedTeamsOnMap();     //DEBUG
-        //fast acess fields
+    {        
+        //fast acess fields -> BEFORE InitialiseTeams below
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        //Teams
+        InitialiseTeams();
+        SeedTeamsOnMap();     //DEBUG
+
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
