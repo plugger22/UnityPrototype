@@ -38,6 +38,8 @@ public class TooltipNode : MonoBehaviour
     private float fadeInTime;
     private int offset;
 
+
+
     //colour Palette
     private string colourGood;
     private string colourNeutral;

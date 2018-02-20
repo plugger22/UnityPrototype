@@ -25,6 +25,10 @@ public class ActorManager : MonoBehaviour
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
+    //fast access fields
+    private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
+
     //colour palette for Generic tool tip
     private string colourResistance;
     private string colourAuthority;
@@ -50,6 +54,9 @@ public class ActorManager : MonoBehaviour
 
     public void Initialise()
     {
+        //fast acess fields
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.RecruitAction, OnEvent);
@@ -162,8 +169,6 @@ public class ActorManager : MonoBehaviour
     public void InitialisePoolActors()
     {
         int numOfArcs;
-        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //Authority
         List<ActorArc> listOfArcs = GameManager.instance.dataScript.GetActorArcs(globalAuthority);
         if (listOfArcs != null)
@@ -331,8 +336,6 @@ public class ActorManager : MonoBehaviour
         int actionID;
         Actor[] arrayOfActors;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //color code for button tooltip header text, eg. "Operator"ss
         if ( playerSide.level == globalAuthority.level)
         { sideColour = colourAuthority; }
@@ -855,8 +858,6 @@ public class ActorManager : MonoBehaviour
     {
         bool errorFlag = false;
         int index, countOfRecruits;
-        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = null;
         if (details.side.level == GameManager.instance.globalScript.sideResistance.level)
@@ -1222,8 +1223,6 @@ public class ActorManager : MonoBehaviour
     public string DisplayPools()
     {
         List<int> listOfActors = new List<int>();
-        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         StringBuilder builder = new StringBuilder();
         //Resistance
         builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, globalResistance), " ResistanceActorPoolLevelOne"));
