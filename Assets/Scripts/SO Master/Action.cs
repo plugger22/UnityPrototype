@@ -14,8 +14,10 @@ public class Action : ScriptableObject
     //NOTE -> name of Scriptable Object is node action button title
 
     public string tooltipText;                  //descriptive text
-    public ActorArc intendedActor;              //for info purposes only to aid placing correct action with correct ActorArc
-    public List<Effect> listOfEffects;          //effects of action
+    [Tooltip("For info purposes only to aid placing correct action with correct ActorArc")]
+    public ActorArc intendedActor;
+    [Tooltip("Effects of Action")]
+    public List<Effect> listOfEffects; 
     [Tooltip("Applies to Resistance actions only, use default 'none' if none of these apply")]
     public ActionSpecial special;               //special resistance (node) action (eg. "GetGear/GetRecruit/NeutraliseTeam"), null if none
 
