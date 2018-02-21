@@ -27,6 +27,7 @@ public class ActionManager : MonoBehaviour
     {
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
+        EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent);
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
@@ -46,6 +47,10 @@ public class ActionManager : MonoBehaviour
             case EventType.NodeAction:
                 ModalActionDetails detailsNode = Param as ModalActionDetails;
                 ProcessNodeAction(detailsNode);
+                break;
+            case EventType.NodeGearAction:
+                ModalActionDetails detailsGear = Param as ModalActionDetails;
+                ProcessNodeGearAction(detailsGear);
                 break;
             case EventType.InsertTeamAction:
                 ModalActionDetails detailsTeam = Param as ModalActionDetails;
@@ -104,11 +109,11 @@ public class ActionManager : MonoBehaviour
         if (details != null)
         {
             //get Actor
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, GameManager.instance.sideScript.PlayerSide);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, GameManager.instance.sideScript.PlayerSide);
             if (actor != null)
             {
                 //get node
-                GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(details.NodeID);
+                GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(details.nodeID);
                 if (nodeObject != null)
                 {
                     Node node = nodeObject.GetComponent<Node>();
@@ -231,6 +236,119 @@ public class ActionManager : MonoBehaviour
         { outcomeDetails.isAction = true; }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
+
+    /// <summary>
+    /// Process Node Gear related actions (player's current node, Resistance)
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessNodeGearAction(ModalActionDetails details)
+    {
+            bool errorFlag = false;
+            bool isAction = false;
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            //default data 
+            outcomeDetails.side = details.side;
+            outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+            outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+            outcomeDetails.sprite = errorSprite;
+            //resolve action
+            if (details != null)
+            {
+                //get node
+                GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(details.nodeID);
+                if (nodeObject != null)
+                {
+                    Node node = nodeObject.GetComponent<Node>();
+                    if (node != null)
+                    {
+
+                        //Get Action & Effects
+                        Action action = details.gearAction;
+                        List<Effect> listOfEffects = action.GetEffects();
+                        if (listOfEffects.Count > 0)
+                        {
+                            //return class
+                            EffectDataReturn effectReturn = new EffectDataReturn();
+                            //two builders for top and bottom texts
+                            StringBuilder builderTop = new StringBuilder();
+                            StringBuilder builderBottom = new StringBuilder();
+                            //pass through data package
+                            EffectDataInput dataInput = new EffectDataInput();
+                            //
+                            // - - - Process effects
+                            //
+                            foreach (Effect effect in listOfEffects)
+                            {
+                                //no ongoing effect allowed for nodeGear actions
+                                dataInput.ongoingID = -1;
+                                dataInput.ongoingText = "";
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                                if (effectReturn != null)
+                                {
+                                    outcomeDetails.sprite = errorSprite;
+                                    //update stringBuilder texts
+                                    if (effectReturn.topText.Length > 0)
+                                    {
+                                        builderTop.AppendLine(); builderTop.AppendLine();
+                                        builderTop.Append(effectReturn.topText);
+                                    }
+                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                    builderBottom.Append(effectReturn.bottomText);
+                                    //exit effect loop on error
+                                    if (effectReturn.errorFlag == true) { break; }
+                                    //valid action? -> only has to be true once for an action to be valid
+                                    if (effectReturn.isAction == true) { isAction = true; }
+                                }
+                                else
+                                {
+                                    builderTop.AppendLine();
+                                    builderTop.Append("Error");
+                                    builderBottom.AppendLine();
+                                    builderBottom.Append("Error");
+                                    effectReturn.errorFlag = true;
+                                    break;
+                                }
+                            }
+                            //texts
+                            outcomeDetails.textTop = builderTop.ToString();
+                            outcomeDetails.textBottom = builderBottom.ToString();
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("There are no Effects for this \"{0}\" Action", action.name));
+                            errorFlag = true;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Invalid Node (null)");
+                        errorFlag = true;
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Invalid NodeObject (null)");
+                    errorFlag = true;
+                }
+            }
+            else
+            {
+                errorFlag = true;
+                Debug.LogError("Invalid ModalActionDetails (null) as argument");
+            }
+            if (errorFlag == true)
+            {
+                //fault, pass default data to Outcome window
+                outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+                outcomeDetails.textBottom = "Bad, all Bad";
+                outcomeDetails.sprite = errorSprite;
+            }
+            //action (if valid) expended -> must be BEFORE outcome window event
+            if (errorFlag == false && isAction == true)
+            { outcomeDetails.isAction = true; }
+            //generate a create modal window event
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
     /// <summary>

@@ -849,52 +849,6 @@ public class NodeManager : MonoBehaviour
                 };
                 tempList.Add(eventDetails);
                 //
-                // - - - Gear Node Effects - - -
-                //
-                // only applies if R-clicked on Player's current node
-                if (nodeID == nodePlayer)
-                {
-                    int gearID;
-                    //
-                    // - - - Kinetic Gear - - -
-                    //
-                    gearID = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeKinetic);
-                    {
-                        if (gearID > -1)
-                        {
-                            Gear kineticGear = GameManager.instance.dataScript.GetGear(gearID);
-                            if (kineticGear != null)
-                            {
-                                //Details to pass on for processing via button click
-                                ModalActionDetails kineticAction = new ModalActionDetails() { };
-
-                                kineticAction.side = GameManager.instance.globalScript.sideResistance;
-                                kineticAction.NodeID = nodeID;
-                                kineticAction.ActorSlotID = -1;
-                                //Kinetic gear present
-                                EventButtonDetails kineticDetails = new EventButtonDetails()
-                                {
-                                    buttonTitle = "Use Kinetic Gear",
-                                    buttonTooltipHeader = string.Format("{0}{1}{2}", colourEffectNeutral, kineticGear.name, colourEnd),
-                                    buttonTooltipMain = moveMain,
-                                    buttonTooltipDetail = moveDetail,
-                                    //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, kineticAction); }
-                                };
-                                tempList.Add(kineticDetails);
-                            }
-                        }
-                    }
-
-                    //
-                    // - - - Hacking Gear - - -
-                    //
-
-                    //
-                    // - - - Persuasion Gear - - -
-                    //
-                }
-                //
                 // - - - Cancel
                 //
                 //Cancel button is added last
@@ -970,22 +924,6 @@ public class NodeManager : MonoBehaviour
                             Gear kineticGear = listOfKineticGear[index];
                             if (kineticGear != null)
                             {
-                                /*//Details to pass on for processing via button click
-                                ModalActionDetails kineticAction = new ModalActionDetails() { };
-
-                                kineticAction.side = GameManager.instance.globalScript.sideResistance;
-                                kineticAction.NodeID = nodeID;
-                                kineticAction.ActorSlotID = -1;
-                                //Kinetic gear present
-                                EventButtonDetails kineticDetails = new EventButtonDetails()
-                                {
-                                    buttonTitle = string.Format("Use {0}", kineticGear.name),
-                                    buttonTooltipHeader = string.Format("{0}{1}{2}", colourEffectNeutral, kineticGear.name, colourEnd),
-                                    buttonTooltipMain = "Placeholder",
-                                    buttonTooltipDetail = "Placeholder",
-                                    //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, kineticAction); }
-                                };*/
                                 tempAction = actionKinetic;
                                 if (tempAction != null)
                                 {
@@ -1050,8 +988,8 @@ public class NodeManager : MonoBehaviour
                                         ModalActionDetails actionDetails = new ModalActionDetails() { };
 
                                         actionDetails.side = GameManager.instance.globalScript.sideResistance;
-                                        actionDetails.NodeID = nodeID;
-                                        actionDetails.ActorSlotID = -1;
+                                        actionDetails.nodeID = nodeID;
+                                        actionDetails.gearAction = actionKinetic;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails kineticDetails = new EventButtonDetails()
                                         {
@@ -1060,14 +998,13 @@ public class NodeManager : MonoBehaviour
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
+                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails); }
                                         };
+                                        tempList.Add(kineticDetails);
                                     }
                                 }
                                 else { Debug.LogError("Invalid actionKinetic (Null)"); }
-
-                                tempList.Add(kineticDetails);
-                            }
+                                                            }
                         }
                     }
                 }
@@ -1078,10 +1015,6 @@ public class NodeManager : MonoBehaviour
 
                 //
                 // - - - Persuasion Gear - - -
-                //
-
-                //
-                // - - - Recovery Gear - - -
                 //
 
                 //

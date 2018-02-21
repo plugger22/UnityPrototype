@@ -37,10 +37,20 @@ namespace modalAPI
     public class ModalActionDetails
     {
         public GlobalSide side;
-        public int NodeID { get; set; }
-        public int ActorSlotID { get; set; }
-        public EventType EventType { get; set; }                       //event that is triggered when action button clicked
-        public int Level { get; set; }                                 //Authority only: level of actor to recruit (1 to 3)
+        public int nodeID;
+        public int actorSlotID;                                         //for standard actor based node actions, ignore otherwise
+        public EventType eventType;                                     //event that is triggered when action button clicked
+        //special case fields
+        public int level;                                               //Authority only: level of actor to recruit (1 to 3)
+        public Action gearAction;                                       //Resitance only: Special node Gear actions, eg. gearKinetic
+
+        public ModalActionDetails()
+        {
+            nodeID = -1;
+            actorSlotID = -1;
+            level = -1;
+            gearAction = null;
+        }
     }
 
 

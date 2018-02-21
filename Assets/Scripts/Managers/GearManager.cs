@@ -220,17 +220,17 @@ public class GearManager : MonoBehaviour
         int gearID, index;
         GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
+        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
         if (node != null)
         {
             //check for player/actor being captured
             int actorID = 999;
             if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, globalResistance);
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
                 if (actor != null)
                 { actorID = actor.actorID; }
-                else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.ActorSlotID)); errorFlag = true; }
+                else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorSlotID)); errorFlag = true; }
             }
             //check capture provided no errors
             if (errorFlag == false)
@@ -252,8 +252,8 @@ public class GearManager : MonoBehaviour
             //Obtain Gear
             genericDetails.returnEvent = EventType.GenericGearChoice;
             genericDetails.side = globalResistance;
-            genericDetails.nodeID = details.NodeID;
-            genericDetails.actorSlotID = details.ActorSlotID;
+            genericDetails.nodeID = details.nodeID;
+            genericDetails.actorSlotID = details.actorSlotID;
             //picker text
             genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffectNeutral, colourEnd, colourNormal, colourEnd);
             genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
@@ -291,7 +291,7 @@ public class GearManager : MonoBehaviour
                 {
                     //chance of rare gear -> base chance * actor ability (or 1 if player)
                     int chance = chanceOfRareGear;
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, globalResistance);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
                     if (actor != null)
                     {
                         //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
@@ -301,7 +301,7 @@ public class GearManager : MonoBehaviour
                     else
                     {
                         chance = 0;
-                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.ActorSlotID));
+                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID));
                     }
                     if (Random.Range(0, 100) < chance)
                     {
@@ -381,7 +381,7 @@ public class GearManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.NodeID));
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
             errorFlag = true;
         }
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue

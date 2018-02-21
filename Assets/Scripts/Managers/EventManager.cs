@@ -23,6 +23,7 @@ public enum EventType
     NodeDisplay,
     //action menu
     NodeAction,
+    NodeGearAction,
     TargetAction,
     InsertTeamAction,
     RecallTeamAction,

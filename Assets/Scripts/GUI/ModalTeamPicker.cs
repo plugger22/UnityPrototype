@@ -200,12 +200,12 @@ public class ModalTeamPicker : MonoBehaviour
         canvasGroup.alpha = 100;
         //Set up texts
         topText.text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
-        Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
+        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
         if (node != null)
         {
             //track core data needed to resolve Insert team action
             teamNode = node;
-            teamActorSlotID = details.ActorSlotID;
+            teamActorSlotID = details.actorSlotID;
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, GameManager.instance.globalScript.sideAuthority);
             int numTeams = node.CheckNumOfTeams();
             builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name, node.nodeName, numTeams, 
@@ -245,7 +245,7 @@ public class ModalTeamPicker : MonoBehaviour
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) from ActorSlotID {0}", teamActorSlotID)); }
         }
-        else { Debug.LogError(string.Format("Invalid node (Null) for details.NodeID {0}", details.NodeID)); }
+        else { Debug.LogError(string.Format("Invalid node (Null) for details.NodeID {0}", details.nodeID)); }
         middleText.text = builder.ToString();
         //
         // - - - Teams - - -

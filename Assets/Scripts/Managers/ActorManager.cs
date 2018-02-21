@@ -497,8 +497,8 @@ public class ActorManager : MonoBehaviour
                                         ModalActionDetails actionDetails = new ModalActionDetails() { };
 
                                         actionDetails.side = globalResistance;
-                                        actionDetails.NodeID = nodeID;
-                                        actionDetails.ActorSlotID = actor.slotID;
+                                        actionDetails.nodeID = nodeID;
+                                        actionDetails.actorSlotID = actor.slotID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         if (actor.arc.nodeAction.special == null)
                                         {
@@ -743,8 +743,8 @@ public class ActorManager : MonoBehaviour
                                     //Details to pass on for processing via button click
                                     ModalActionDetails actionDetails = new ModalActionDetails() { };
                                     actionDetails.side = globalAuthority;
-                                    actionDetails.NodeID = nodeID;
-                                    actionDetails.ActorSlotID = actor.slotID;
+                                    actionDetails.nodeID = nodeID;
+                                    actionDetails.actorSlotID = actor.slotID;
                                     //Node action is standard but other actions are possible
                                     UnityAction clickAction = null;
                                     //Team action
@@ -831,17 +831,17 @@ public class ActorManager : MonoBehaviour
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //ignore node and actorSlotID
         details.side = side;
-        details.Level = level;
-        details.NodeID = -1;
-        details.ActorSlotID = -1;
+        details.level = level;
+        details.nodeID = -1;
+        details.actorSlotID = -1;
         //get event
         switch (side.name)
         {
             case "Authority":
-                details.EventType = EventType.GenericRecruitActorAuthority;
+                details.eventType = EventType.GenericRecruitActorAuthority;
                 break;
             case "Resistance":
-                details.EventType = EventType.GenericRecruitActorResistance;
+                details.eventType = EventType.GenericRecruitActorResistance;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
@@ -862,17 +862,17 @@ public class ActorManager : MonoBehaviour
         Node node = null;
         if (details.side.level == GameManager.instance.globalScript.sideResistance.level)
         {
-            node = GameManager.instance.dataScript.GetNode(details.NodeID);
+            node = GameManager.instance.dataScript.GetNode(details.nodeID);
             if (node != null)
             {
                 //check for player/actor being captured
                 int actorID = 999;
                 if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.ActorSlotID, globalResistance);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
                     if (actor != null)
                     { actorID = actor.actorID; }
-                    else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.ActorSlotID)); errorFlag = true; }
+                    else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorSlotID)); errorFlag = true; }
                 }
                 //check capture provided no errors
                 if (errorFlag == false)
@@ -900,9 +900,9 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
             genericDetails.side = details.side;
             if (details.side.level == globalResistance.level)
-            { genericDetails.nodeID = details.NodeID; }
+            { genericDetails.nodeID = details.nodeID; }
             else { genericDetails.nodeID = -1; }
-            genericDetails.actorSlotID = details.ActorSlotID;
+            genericDetails.actorSlotID = details.actorSlotID;
             //picker text
             genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourNeutralEffect, colourEnd, colourNormal, colourEnd);
             genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
@@ -944,7 +944,7 @@ public class ActorManager : MonoBehaviour
             else if (details.side.level == globalAuthority.level)
             {
                 //placeholder -> select from 3 x specified level options (random types, could be the same as currently OnMap)
-                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(details.Level, details.side));
+                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(details.level, details.side));
             }
             else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
             //
@@ -1013,7 +1013,7 @@ public class ActorManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.NodeID));
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
             errorFlag = true;
         }
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue

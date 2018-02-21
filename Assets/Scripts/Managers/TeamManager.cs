@@ -692,7 +692,7 @@ public void InitialiseTeams()
         bool errorFlag = false;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         //does the node have any teams that can be neutralised?
-        Node node = GameManager.instance.dataScript.GetNode(details.NodeID);
+        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
         if (node != null)
         {
             //double check to see if there are teams present at the node
@@ -701,8 +701,8 @@ public void InitialiseTeams()
             {
                 genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
                 genericDetails.side = globalResistance;
-                genericDetails.nodeID = details.NodeID;
-                genericDetails.actorSlotID = details.ActorSlotID;
+                genericDetails.nodeID = details.nodeID;
+                genericDetails.actorSlotID = details.actorSlotID;
                 //picker text
                 genericDetails.textTop = string.Format("{0}Neutralise{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                 genericDetails.textMiddle = string.Format("{0}Operatives are in place to Neutralise a team. The team will be forced to retire immediately{1}",
@@ -736,20 +736,20 @@ public void InitialiseTeams()
                     //check that limit hasn't been exceeded (max 3 options)
                     if (i > 2)
                     {
-                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", details.NodeID));
+                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", details.nodeID));
                         break;
                     }
                 }
             }
             else
             {
-                Debug.LogError(string.Format("Invalid listOfTeams (Empty or Null) for NodeID {0}", details.NodeID));
+                Debug.LogError(string.Format("Invalid listOfTeams (Empty or Null) for NodeID {0}", details.nodeID));
                 errorFlag = true;
             }
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.NodeID));
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
             errorFlag = true;
         }
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
