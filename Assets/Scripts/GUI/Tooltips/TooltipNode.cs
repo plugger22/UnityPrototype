@@ -304,7 +304,7 @@ public class TooltipNode : MonoBehaviour
         else
         { nodeTarget.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
         //
-        // - - - Stats - - - (Security / Stability / Support)
+        // - - - Stats - - - 
         //
         int checkCounter = 0;
         int statData;

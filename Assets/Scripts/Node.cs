@@ -205,22 +205,26 @@ public class Node : MonoBehaviour
             {
                 //exit any tooltip
                 if (onMouseFlag == true)
-                {
-                    onMouseFlag = false;
-                    StopCoroutine("ShowTooltip");
-                    GameManager.instance.tooltipNodeScript.CloseTooltip();
-                }
+                { onMouseFlag = false; }
                 //move action invalid if resistance player is captured, etc.
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
                     {
+                        //exit any tooltip
+                        StopCoroutine("ShowTooltip");
+                        GameManager.instance.tooltipNodeScript.CloseTooltip();
                         //Create a Move Menu at the node
                         if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
                         { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID); }
                         //highlight all possible move options
                         else
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move); }
+                        {
+                            EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move);
+                            //if at Player's current node then Special Node menu (gear actions)
+                            if (nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            { EventManager.instance.PostNotification(EventType.CreateSpecialNodeMenu, this, nodeID); }
+                        }
                     }
                 }
             }

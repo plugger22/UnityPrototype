@@ -17,6 +17,7 @@ public enum EventType
     OpenOutcomeWindow,
     CloseOutcomeWindow,
     CreateMoveMenu,
+    CreateSpecialNodeMenu,
     //CloseTeamPicker,
     ShowTargetNodes,
     NodeDisplay,

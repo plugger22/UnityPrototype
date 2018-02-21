@@ -146,6 +146,37 @@ public class PlayerManager : MonoBehaviour
     { return listOfGear; }
 
     /// <summary>
+    /// returns a list of all gear that matches the specified type, null if none
+    /// </summary>
+    /// <param name="gearType"></param>
+    /// <returns></returns>
+    public List<Gear> GetListOfGearType(GearType gearType)
+    {
+        Debug.Assert(gearType != null, "Invalid gearType (Null)");
+        List<Gear> listOfSpecificGear = null;
+        if (listOfGear.Count > 0)
+        {
+            //loop through looking for best piece of gear that matches the type
+            for (int i = 0; i < listOfGear.Count; i++)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                if (gear != null)
+                {
+                    if (gear.type.name.Equals(gearType.name) == true)
+                    {
+                        //initialise list if haven't already done so
+                        if (listOfSpecificGear == null)
+                        { listOfSpecificGear = new List<Gear>(); }
+                        //add gear to list
+                        listOfSpecificGear.Add(gear);
+                    }
+                }
+            }
+        }
+        return listOfSpecificGear;
+    }
+
+    /// <summary>
     /// add gear to player's inventory. Checks for duplicates and null Gear. Returns true if successful.
     /// </summary>
     /// <param name="gearID"></param>

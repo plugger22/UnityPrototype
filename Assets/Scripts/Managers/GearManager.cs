@@ -28,6 +28,7 @@ public class GearManager : MonoBehaviour
     [HideInInspector] public GearType typeKinetic;
     [HideInInspector] public GearType typeMovement;
     [HideInInspector] public GearType typeRecovery;
+    [HideInInspector] public GearType typePersuasion;
 
     private string colourEffectGood;
     private string colourEffectNeutral;
@@ -105,6 +106,9 @@ public class GearManager : MonoBehaviour
                     case "Recovery":
                         typeRecovery = gearType;
                         break;
+                    case "Persuasion":
+                        typePersuasion = gearType;
+                        break;
                 }
             }
             //error check
@@ -114,6 +118,7 @@ public class GearManager : MonoBehaviour
             if (typeKinetic == null) { Debug.LogError("Invalid typeKinetic (Null)"); }
             if (typeMovement == null) { Debug.LogError("Invalid typeMovement (Null)"); }
             if (typeRecovery == null) { Debug.LogError("Invalid typeRecovery (Null)"); }
+            if (typePersuasion == null) { Debug.LogError("Invalid typePersuasion (Null)"); }
         }
         else { Debug.LogError("Invalid listOfGearType (Null)"); }
 

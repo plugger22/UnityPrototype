@@ -127,6 +127,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
+        EventManager.instance.AddListener(EventType.CreateSpecialNodeMenu, OnEvent);
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
         EventManager.instance.AddListener(EventType.DiceReturn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
@@ -184,6 +185,9 @@ public class NodeManager : MonoBehaviour
                 break;
             case EventType.CreateMoveMenu:
                 CreateMoveMenu((int)Param);
+                break;
+            case EventType.CreateSpecialNodeMenu:
+                CreateSpecialNodeMenu((int)Param);
                 break;
             case EventType.MoveAction:
                 ModalMoveDetails details = Param as ModalMoveDetails;
@@ -813,6 +817,52 @@ public class NodeManager : MonoBehaviour
                 };
                 tempList.Add(eventDetails);
                 //
+                // - - - Gear Node Effects - - -
+                //
+                // only applies if R-clicked on Player's current node
+                if (nodeID == nodePlayer)
+                {
+                    int gearID;
+                    //
+                    // - - - Kinetic Gear - - -
+                    //
+                    gearID = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeKinetic);
+                    {
+                        if (gearID > -1)
+                        {
+                            Gear kineticGear = GameManager.instance.dataScript.GetGear(gearID);
+                            if (kineticGear != null)
+                            {
+                                //Details to pass on for processing via button click
+                                ModalActionDetails kineticAction = new ModalActionDetails() { };
+
+                                kineticAction.side = GameManager.instance.globalScript.sideResistance;
+                                kineticAction.NodeID = nodeID;
+                                kineticAction.ActorSlotID = -1;
+                                //Kinetic gear present
+                                EventButtonDetails kineticDetails = new EventButtonDetails()
+                                {
+                                    buttonTitle = "Use Kinetic Gear",
+                                    buttonTooltipHeader = string.Format("{0}{1}{2}", colourEffectNeutral, kineticGear.name, colourEnd),
+                                    buttonTooltipMain = moveMain,
+                                    buttonTooltipDetail = moveDetail,
+                                    //use a Lambda to pass arguments to the action
+                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, kineticAction); }
+                                };
+                                tempList.Add(kineticDetails);
+                            }
+                        }
+                    }
+
+                    //
+                    // - - - Hacking Gear - - -
+                    //
+
+                    //
+                    // - - - Persuasion Gear - - -
+                    //
+                }
+                //
                 // - - - Cancel
                 //
                 //Cancel button is added last
@@ -830,6 +880,103 @@ public class NodeManager : MonoBehaviour
                 tempList.Add(cancelDetails);
             }
             else { Debug.LogError("Invalid Connection (Null)"); }
+        }
+        else { Debug.LogError(string.Format("Invalid Node (null), ID {0}", nodeID)); }
+        //
+        // - - - Action Menu
+        //
+        ModalPanelDetails details = new ModalPanelDetails()
+        {
+            nodeID = nodeID,
+            nodeName = node.nodeName,
+            nodeDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
+            nodePos = node.transform.position,
+            listOfButtonDetails = tempList
+        };
+        //activate menu
+        GameManager.instance.actionMenuScript.SetActionMenu(details);
+    }
+
+    /// <summary>
+    /// Right Click the Resistance Player's current node -> gear actions
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void CreateSpecialNodeMenu(int nodeID)
+    {
+        Debug.Log("CreateSpecialNodeMenu");
+
+        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
+
+        //Get Node
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+
+            //
+            // - - - Gear Node Effects - - -
+            //
+            // only applies if R-clicked on Player's current node
+            if (nodeID == nodePlayer)
+            {
+                //
+                // - - - Kinetic Gear - - -
+                //
+                List<Gear> listOfKineticGear = GameManager.instance.playerScript.GetListOfGearType(GameManager.instance.gearScript.typeKinetic);
+                {
+                    if (listOfKineticGear != null)
+                    {
+                        //loop list of gear and create a button for each item
+                        for (int i = 0; i < listOfKineticGear.Count; i++)
+                        {
+                            Gear kineticGear = listOfKineticGear[i];
+                            if (kineticGear != null)
+                            {
+                                //Details to pass on for processing via button click
+                                ModalActionDetails kineticAction = new ModalActionDetails() { };
+
+                                kineticAction.side = GameManager.instance.globalScript.sideResistance;
+                                kineticAction.NodeID = nodeID;
+                                kineticAction.ActorSlotID = -1;
+                                //Kinetic gear present
+                                EventButtonDetails kineticDetails = new EventButtonDetails()
+                                {
+                                    buttonTitle = string.Format("Use {0}", kineticGear.name),
+                                    buttonTooltipHeader = string.Format("{0}{1}{2}", colourEffectNeutral, kineticGear.name, colourEnd),
+                                    buttonTooltipMain = "Placeholder",
+                                    buttonTooltipDetail = "Placeholder",
+                                    //use a Lambda to pass arguments to the action
+                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, kineticAction); }
+                                };
+                                tempList.Add(kineticDetails);
+                            }
+                        }
+                    }
+                }
+
+                //
+                // - - - Hacking Gear - - -
+                //
+
+                //
+                // - - - Persuasion Gear - - -
+                //
+            }
+            //
+            // - - - Cancel
+            //
+            //Cancel button is added last
+            EventButtonDetails cancelDetails = null;
+            //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+            };
+            //add Cancel button to list
+            tempList.Add(cancelDetails);
         }
         else { Debug.LogError(string.Format("Invalid Node (null), ID {0}", nodeID)); }
         //
