@@ -30,7 +30,6 @@ public class HelpManager : MonoBehaviour
         builder.Append(string.Format(" Sprawl Nodes -> F6{0}", "\n"));
         builder.Append(string.Format(" Utility Nodes -> F7{0}{1}", "\n", "\n"));
         builder.Append(string.Format(" Debug Show -> D{0}", "\n"));
-        builder.Append(string.Format(" Debug Hide -> H{0}", "\n"));
         return builder.ToString();
     }
 

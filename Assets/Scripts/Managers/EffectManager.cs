@@ -486,9 +486,6 @@ public class EffectManager : MonoBehaviour
                 case "NeutraliseTeam":
                     //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
                     break;
-                case "SpreadInstability":
-                    //TO DO
-                    break;
                 case "Invisibility":
                     //raise/lower invisibility of actor or Player
                     if (node != null)
@@ -684,7 +681,7 @@ public class EffectManager : MonoBehaviour
                     // Not needed as handled by a different process, keep for reference
                     break;
                 case "CivilTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Civil");
+                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     //insert team
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
@@ -695,7 +692,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 case "ControlTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Control");
+                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
@@ -704,7 +701,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 case "DamageTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Damage");
+                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
@@ -713,7 +710,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 case "ErasureTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
@@ -722,7 +719,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 case "MediaTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Media");
+                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
@@ -731,7 +728,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 case "ProbeTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Probe");
+                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("PROBE");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
@@ -740,7 +737,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 case "SpiderTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("Spider");
+                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts

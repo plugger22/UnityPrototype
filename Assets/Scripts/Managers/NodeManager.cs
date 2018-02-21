@@ -1028,7 +1028,7 @@ public class NodeManager : MonoBehaviour
                     {
                         buttonTitle = "CANCEL",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                        buttonTooltipMain = "There are some limitations",
+                        buttonTooltipMain = "There are some limitations preventing gear use",
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }

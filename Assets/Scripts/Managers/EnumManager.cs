@@ -97,7 +97,6 @@ namespace gameAPI
     //
     // - - - Teams - - -
     //
-    //public enum TeamType { None, Civil, Damage, Probe, Media, Control, Erasure, Spider} -> not needed
     public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count }           //DataManager arrayOfTeams  index
     public enum TeamPool { Reserve, OnMap, InTransit, Count }                  //Different pools that teams move between
     public enum NATO

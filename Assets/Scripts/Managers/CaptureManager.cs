@@ -339,7 +339,7 @@ public class CaptureManager : MonoBehaviour
                         //Erasure team picks up player/actor immediately if invisibility 0
                         if (GameManager.instance.playerScript.invisibility == 0)
                         {
-                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
                             if (teamArcID > -1)
                             {
                                 int teamID = node.CheckTeamPresent(teamArcID);
@@ -359,7 +359,7 @@ public class CaptureManager : MonoBehaviour
                                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                 }
                             }
-                            else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
+                            /*else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }*/
                         }
                     }
                     else { Debug.LogError(string.Format("Player not at the nodeID {0}", nodeID)); }
@@ -373,7 +373,7 @@ public class CaptureManager : MonoBehaviour
                         //Erasure team picks up player/actor immediately if invisibility 0
                         if (actor.datapoint2 == 0)
                         {
-                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("Erasure");
+                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
                             if (teamArcID > -1)
                             {
                                 int teamID = node.CheckTeamPresent(teamArcID);
@@ -393,7 +393,7 @@ public class CaptureManager : MonoBehaviour
                                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                 }
                             }
-                            else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }
+                            /*else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }*/
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", actorID)); }
