@@ -143,119 +143,192 @@ public class EffectManager : MonoBehaviour
                 {
                     foreach (Criteria criteria in effect.listOfCriteria)
                     {
-                        switch (criteria.effectCriteria.name)
+                        if (criteria != null)
                         {
-                            case "NodeSecurityMin":
-                                val = GameManager.instance.nodeScript.minNodeValue;
-                                compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "Security " + compareTip); }
-                                break;
-                            case "NodeStabilityMin":
-                                val = GameManager.instance.nodeScript.minNodeValue;
-                                compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "Stability " + compareTip); }
-                                break;
-                            case "NodeSupportMax":
-                                val = GameManager.instance.nodeScript.maxNodeValue;
-                                compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "Support " + compareTip); }
-                                break;
-                            case "NumRecruitsCurrent":
-                                val = GameManager.instance.dataScript.GetNumOfActorsInReserve();
-                                compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "maxxed Recruit allowance"); }
-                                break;
-                            case "NumTeamsMin":
-                                val = GameManager.instance.teamScript.minTeamsAtNode;
-                                compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "no Teams present"); }
-                                break;
-                            case "NumTeamsMax":
-                                val = GameManager.instance.teamScript.maxTeamsAtNode;
-                                compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "Max teams present"); }
-                                break;
-                            case "NumTracers":
-                                if (node.isTracer == true)
-                                { BuildString(result, "Tracer already present"); }
-                                break;
-                            case "TargetInfoMax":
-                                val = GameManager.instance.targetScript.maxTargetInfo;
-                                compareTip = ComparisonCheck(val, node.targetID, criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "Full Info already"); }
-                                break;
-                            case "TargetPresent":
-                                //check that a target is present at the node
-                                if (node.targetID < 0)
-                                { BuildString(result, "No Target present"); }
-                                break;
-                            case "NumGearMax":
-                                //Note: effect criteria value is ignored in this case
-                                val = GameManager.instance.gearScript.maxNumOfGear;
-                                compareTip = ComparisonCheck(val, GameManager.instance.playerScript.GetNumOfGear(), criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "maxxed Gear Allowance"); }
-                                break;
-                            case "GearAvailability":
-                                //checks to see if at least 1 piece of unused common gear is available
-                                List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
-                                if (tempCommonGear.Count > 0)
+                            if (criteria.apply != null)
+                            {
+                                switch (criteria.apply.name)
                                 {
-                                    //remove from lists any gear that the player currently has
-                                    List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
-                                    int gearID;
-                                    if (tempPlayerGear.Count > 0)
-                                    {
-                                        for (int i = 0; i < tempPlayerGear.Count; i++)
+                                    //apply to current Node
+                                    case "NodeCurrent":
+                                        if (criteria.effectCriteria != null)
                                         {
-                                            gearID = tempPlayerGear[i];
-                                            if (tempCommonGear.Exists(id => id == gearID) == true)
-                                            { tempCommonGear.Remove(gearID); }
+                                            switch (criteria.effectCriteria.name)
+                                            {
+                                                case "NodeSecurityMin":
+                                                    val = GameManager.instance.nodeScript.minNodeValue;
+                                                    compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Security " + compareTip); }
+                                                    break;
+                                                case "NodeStabilityMin":
+                                                    val = GameManager.instance.nodeScript.minNodeValue;
+                                                    compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Stability " + compareTip); }
+                                                    break;
+                                                case "NodeSupportMax":
+                                                    val = GameManager.instance.nodeScript.maxNodeValue;
+                                                    compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Support " + compareTip); }
+                                                    break;
+                                                case "NumRecruitsCurrent":
+                                                    val = GameManager.instance.dataScript.GetNumOfActorsInReserve();
+                                                    compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "maxxed Recruit allowance"); }
+                                                    break;
+                                                case "NumTeamsMin":
+                                                    val = GameManager.instance.teamScript.minTeamsAtNode;
+                                                    compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "no Teams present"); }
+                                                    break;
+                                                case "NumTeamsMax":
+                                                    val = GameManager.instance.teamScript.maxTeamsAtNode;
+                                                    compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Max teams present"); }
+                                                    break;
+                                                case "NumTracers":
+                                                    if (node.isTracer == true)
+                                                    { BuildString(result, "Tracer already present"); }
+                                                    break;
+                                                case "TargetInfoMax":
+                                                    val = GameManager.instance.targetScript.maxTargetInfo;
+                                                    compareTip = ComparisonCheck(val, node.targetID, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Full Info already"); }
+                                                    break;
+                                                case "TargetPresent":
+                                                    //check that a target is present at the node
+                                                    if (node.targetID < 0)
+                                                    { BuildString(result, "No Target present"); }
+                                                    break;
+                                                case "NumGearMax":
+                                                    //Note: effect criteria value is ignored in this case
+                                                    val = GameManager.instance.gearScript.maxNumOfGear;
+                                                    compareTip = ComparisonCheck(val, GameManager.instance.playerScript.GetNumOfGear(), criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "maxxed Gear Allowance"); }
+                                                    break;
+                                                case "GearAvailability":
+                                                    //checks to see if at least 1 piece of unused common gear is available
+                                                    List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
+                                                    if (tempCommonGear.Count > 0)
+                                                    {
+                                                        //remove from lists any gear that the player currently has
+                                                        List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
+                                                        int gearID;
+                                                        if (tempPlayerGear.Count > 0)
+                                                        {
+                                                            for (int i = 0; i < tempPlayerGear.Count; i++)
+                                                            {
+                                                                gearID = tempPlayerGear[i];
+                                                                if (tempCommonGear.Exists(id => id == gearID) == true)
+                                                                { tempCommonGear.Remove(gearID); }
+                                                            }
+                                                        }
+                                                        if (tempCommonGear.Count == 0)
+                                                        { BuildString(result, "No Gear available"); }
+                                                    }
+                                                    else { BuildString(result, "No Gear available"); }
+                                                    break;
+                                                case "RebelCauseMin":
+                                                    val = GameManager.instance.rebelScript.resistanceCauseMin;
+                                                    compareTip = ComparisonCheck(val, GameManager.instance.rebelScript.resistanceCause, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Rebel Cause  " + compareTip); }
+                                                    break;
+                                                case "TeamActorAbility":
+                                                    //actor can only have a number of teams OnMap equal to their ability at any time
+                                                    if (actor.CheckNumOfTeams() >= actor.datapoint2)
+                                                    { BuildString(result, "Actor Ability exceeded"); }
+                                                    break;
+                                                case "TeamIdentical":
+                                                    //there can only be one team of a type at a node
+                                                    if (node.CheckTeamPresent(teamArcID) > -1)
+                                                    { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
+                                                    break;
+                                                case "TeamPreferred":
+                                                    //there must be a spare team in the reserve pool of the actors preferred typ
+                                                    if (GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve) < 1)
+                                                    { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
+                                                    break;
+                                                case "TeamAny":
+                                                    //there must be a spare team of any type in the reserve pool
+                                                    if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
+                                                    { BuildString(result, string.Format("No Teams available", teamArc.name)); }
+                                                    break;
+                                                default:
+                                                    BuildString(result, "Error!");
+                                                    Debug.LogWarning(string.Format("NodeCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                    errorFlag = true;
+                                                    break;
+                                            }
                                         }
-                                    }
-                                    if (tempCommonGear.Count == 0)
-                                    { BuildString(result, "No Gear available"); }
+                                        else
+                                        {
+                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for Effect \"{0}\", criteria {1}", effect.name, criteria.name));
+                                            errorFlag = true;
+                                        }
+                                        break;
+                                    //Apply to neighbouring nodes
+                                    case "NodeNeighbours":
+                                        if (criteria.effectCriteria != null)
+                                        {
+                                            switch (criteria.effectCriteria.name)
+                                            {
+                                                case "NodeStabilityMin":
+                                                    //at least one neighbouring node must have stability > 0
+                                                    val = GameManager.instance.nodeScript.minNodeValue;
+                                                    List<Node> listOfNeighbouringNodes = node.GetNeighbouringNodes();
+                                                    if (listOfNeighbouringNodes != null)
+                                                    {
+                                                        bool atLeastOneOK = false;
+                                                        //loop neighbouring nodes (current node excluded)
+                                                        foreach (Node nearNode in listOfNeighbouringNodes)
+                                                        {
+                                                            compareTip = ComparisonCheck(val, nearNode.Stability, criteria.comparison);
+                                                            if (compareTip == null)
+                                                            { atLeastOneOK = true; break; }
+                                                        }
+                                                        if (atLeastOneOK == false)
+                                                        { BuildString(result, "Near Nodes Stability > 0");}
+                                                    }
+                                                    else { Debug.LogError("Invalid listOfNeighbouringNodes (Null)"); errorFlag = true; }
+                                                    break;
+                                                default:
+                                                    BuildString(result, "Error!");
+                                                    Debug.LogWarning(string.Format("NodeNeighbours: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                    errorFlag = true;
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for Effect \"{0}\", criteria {1}", effect.name, criteria.name));
+                                            errorFlag = true;
+                                        }
+                                        break;
+                                    default:
+                                        BuildString(result, "Error!");
+                                        Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));
+                                        errorFlag = true;
+                                        break;
                                 }
-                                else { BuildString(result, "No Gear available"); }
-                                break;
-                            case "RebelCauseMin":
-                                val = GameManager.instance.rebelScript.resistanceCauseMin;
-                                compareTip = ComparisonCheck(val, GameManager.instance.rebelScript.resistanceCause, criteria.comparison);
-                                if (compareTip != null)
-                                { BuildString(result, "Rebel Cause  " + compareTip); }
-                                break;
-                            case "TeamActorAbility":
-                                //actor can only have a number of teams OnMap equal to their ability at any time
-                                if (actor.CheckNumOfTeams() >= actor.datapoint2)
-                                { BuildString(result, "Actor Ability exceeded"); }
-                                break;
-                            case "TeamIdentical":
-                                //there can only be one team of a type at a node
-                                if (node.CheckTeamPresent(teamArcID) > -1)
-                                { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
-                                break;
-                            case "TeamPreferred":
-                                //there must be a spare team in the reserve pool of the actors preferred typ
-                                if (GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve) < 1)
-                                { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
-                                break;
-                            case "TeamAny":
-                                //there must be a spare team of any type in the reserve pool
-                                if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
-                                { BuildString(result, string.Format("No Teams available", teamArc.name)); }
-                                break;
-                            default:
-                                BuildString(result, "Error!");
-                                Debug.LogWarning(string.Format("Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                            }
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid criteria.apply (null) for Effect \"{0}\", criteria {1}", effect.name, criteria.name));
                                 errorFlag = true;
-                                break;
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid criteria (null) for Effect \"{0}\"", effect.name));
+                            errorFlag = true;
                         }
                         //exit on error
                         if (errorFlag == true)

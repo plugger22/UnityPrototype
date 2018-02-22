@@ -9,6 +9,9 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Effect / Criteria")]
 public class Criteria : ScriptableObject
 {
+    public string description;
     public EffectCriteria effectCriteria;
     public EffectOperator comparison;                   //operand > / < / = to
+    [Tooltip("The extent of the criteria check, eg. current Node, neighbouring nodes, etc.")]
+    public EffectApply apply;
 }
