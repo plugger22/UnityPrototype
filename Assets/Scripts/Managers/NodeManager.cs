@@ -219,7 +219,7 @@ public class NodeManager : MonoBehaviour
                 CreateMoveMenu((int)Param);
                 break;
             case EventType.CreateSpecialNodeMenu:
-                CreateSpecialNodeMenu((int)Param);
+                CreateGearlNodeMenu((int)Param);
                 break;
             case EventType.MoveAction:
                 ModalMoveDetails details = Param as ModalMoveDetails;
@@ -893,7 +893,7 @@ public class NodeManager : MonoBehaviour
     /// Right Click the Resistance Player's current node -> gear actions
     /// </summary>
     /// <param name="nodeID"></param>
-    private void CreateSpecialNodeMenu(int nodeID)
+    private void CreateGearlNodeMenu(int nodeID)
     {
         Debug.Log("CreateSpecialNodeMenu");
 
@@ -996,6 +996,7 @@ public class NodeManager : MonoBehaviour
                                         actionDetails.side = GameManager.instance.globalScript.sideResistance;
                                         actionDetails.nodeID = nodeID;
                                         actionDetails.gearAction = actionKinetic;
+                                        actionDetails.gearID = kineticGear.gearID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails kineticDetails = new EventButtonDetails()
                                         {
