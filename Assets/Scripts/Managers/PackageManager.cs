@@ -115,4 +115,14 @@ namespace packageAPI
         public GlobalType type;
     }
 
+
+    /// <summary>
+    /// used to return data from ModalDiceUI.cs -> ProcessDiceOutcome to NodeManager.cs -> ProcessMoveOutcome
+    /// </summary>
+    public class MoveReturnData
+    {
+        public Node node;
+        public string text;
+    }
+
 }

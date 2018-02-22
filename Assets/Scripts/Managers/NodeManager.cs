@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using gameAPI;
 using modalAPI;
+using packageAPI;
 using System.Text;
 
 /// <summary>
@@ -159,7 +160,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
         EventManager.instance.AddListener(EventType.CreateSpecialNodeMenu, OnEvent);
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceReturn, OnEvent);
+        //EventManager.instance.AddListener(EventType.DiceReturn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
     }
 
@@ -223,9 +224,13 @@ public class NodeManager : MonoBehaviour
                 ModalMoveDetails details = Param as ModalMoveDetails;
                 ProcessPlayerMove(details);
                 break;
-            case EventType.DiceReturn:
+            /*case EventType.DiceReturn:
                 DiceReturnData data = Param as DiceReturnData;
                 ProcessDiceMove(data);
+                break;*/
+            case EventType.DiceReturnMove:
+                MoveReturnData data = Param as MoveReturnData;
+                ProcessMoveOutcome(data);
                 break;
             case EventType.StartTurnLate:
                 ProcessNodeTimers();
@@ -1142,10 +1147,11 @@ public class NodeManager : MonoBehaviour
                         passThroughData.gearID = gear.gearID;
                         passThroughData.renownCost = renownCost;
                         passThroughData.text = builder.ToString();
+                        passThroughData.type = DiceType.Move;
                         diceDetails.passData = passThroughData;
                         //go straight to an outcome dialogue if not enough renown and option set to ignore dice roller
                         if (diceDetails.isEnoughRenown == false && GameManager.instance.optionScript.autoGearResolution == true)
-                        { ProcessAutoDiceMove(diceDetails); }
+                        { EventManager.instance.PostNotification(EventType.DiceBypass, this, diceDetails); }
                         //roll dice
                         else
                         { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails); }
@@ -1156,7 +1162,12 @@ public class NodeManager : MonoBehaviour
                 {
                     //No gear involved, move straight to outcome, otherwise skip outcome if connection has no security as unnecessary
                     if (moveDetails.changeInvisibility != 0)
-                    { ProcessMoveOutcome(node, builder.ToString()); }
+                    {
+                        MoveReturnData moveData = new MoveReturnData();
+                        moveData.node = node;
+                        moveData.text = builder.ToString();
+                        ProcessMoveOutcome(moveData);
+                    }
                     else { EventManager.instance.PostNotification(EventType.UseAction, this); }
                 }
             }
@@ -1167,7 +1178,7 @@ public class NodeManager : MonoBehaviour
         { Debug.LogError("Invalid ModalMoveDetails (Null)"); }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// return event from dice roller (Move -> gear compromised or not)
     /// </summary>
     /// <param name="data"></param>
@@ -1274,15 +1285,16 @@ public class NodeManager : MonoBehaviour
         outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
+    */
 
     /// <summary>
     /// ProcessPlayerMove -> ProcessMoveOutcome. Node checked for Null in calling procedure
     /// </summary>
-    private void ProcessMoveOutcome(Node node, string textBottom)
+    private void ProcessMoveOutcome(MoveReturnData data)
     {
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //Erasure team picks up player immediately if invisibility 0
-        AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, 999);
+        AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(data.node.nodeID, 999);
         if (aiDetails != null)
         {
             //Player captured!
@@ -1293,7 +1305,7 @@ public class NodeManager : MonoBehaviour
         else
         {
             outcomeDetails.textTop = "Player has moved";
-            outcomeDetails.textBottom = textBottom;
+            outcomeDetails.textBottom = data.text;
             outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
             outcomeDetails.isAction = true;
             outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
@@ -1303,7 +1315,7 @@ public class NodeManager : MonoBehaviour
 
 
 
-
+    /*
     /// <summary>
     /// submethod to handle gear comprised for ProcessPlayerMove (node and Gear not tested for null as already checked in calling method)
     /// </summary>
@@ -1350,6 +1362,7 @@ public class NodeManager : MonoBehaviour
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
     }
+    */
 
     /// <summary>
     /// Sets the node.isActor flag (true if any actor has a connection at node). Run everytime an actor changes status to keep flags up to date.

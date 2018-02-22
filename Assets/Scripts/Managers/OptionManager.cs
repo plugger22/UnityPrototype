@@ -60,7 +60,14 @@ public class OptionManager : MonoBehaviour
         return builder.ToString();
     }
 
-
+    /// <summary>
+    /// Toggle option
+    /// </summary>
+    public void ToggleAutoGearResolution()
+    {
+        if (autoGearResolution == true) { autoGearResolution = false; }
+        else { autoGearResolution = true; }
+    }
 
     //place methods above here
 }

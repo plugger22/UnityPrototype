@@ -68,7 +68,9 @@ public enum EventType
     DiceConfirm,
     DiceRenownYes,
     DiceRenownNo,
-    DiceReturn,
+    DiceBypass,
+    DiceReturnMove,
+    DiceReturnGear,
     //AI
     Capture,
     ReleasePlayer,

@@ -42,7 +42,7 @@ namespace modalAPI
         public EventType eventType;                                     //event that is triggered when action button clicked
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
-        public Action gearAction;                                       //Resitance only: Special node Gear actions, eg. gearKinetic
+        public Action gearAction;                                       //Resistance only: Special node Gear actions, eg. gearKinetic
 
         public ModalActionDetails()
         {
@@ -109,6 +109,7 @@ namespace modalAPI
         public int gearID;
         public int renownCost;
         public string text;
+        public DiceType type;                                   //what is the dice being rolled for?
     }
     
     /// <summary>
@@ -122,6 +123,7 @@ namespace modalAPI
         public DiceOutcome outcome;             //option chosen by Player at start
         public PassThroughDiceData passData;    //ignore if no gear involved
     }
+
 
     //
     // - - - Modal Generic Picker - - -

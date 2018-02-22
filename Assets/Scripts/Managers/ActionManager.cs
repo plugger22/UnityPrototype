@@ -425,7 +425,7 @@ public class ActionManager : MonoBehaviour
                 //NOT captured, proceed with target
 
                 //
-                // - - - Process target - - -  TO DO
+                // - - - Process target - - -  
                 //
                 int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);

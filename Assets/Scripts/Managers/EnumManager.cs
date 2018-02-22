@@ -56,6 +56,7 @@ namespace gameAPI
     // - - - Dice - - -
     //
     public enum DiceOutcome { None, Ignore, Auto, Roll }
+    public enum DiceType { None, Move, Gear}                                //reason dice is being rolled
 
     //
     // - - - Messages - - -

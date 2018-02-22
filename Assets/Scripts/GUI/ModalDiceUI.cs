@@ -1,7 +1,9 @@
 ﻿using gameAPI;
 using modalAPI;
+using packageAPI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -98,6 +100,7 @@ public class ModalDiceUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.DiceIgnore, OnEvent);
         EventManager.instance.AddListener(EventType.DiceAuto, OnEvent);
+        EventManager.instance.AddListener(EventType.DiceBypass, OnEvent);
         EventManager.instance.AddListener(EventType.DiceRoll, OnEvent);
         EventManager.instance.AddListener(EventType.DiceConfirm, OnEvent);
         EventManager.instance.AddListener(EventType.DiceRenownYes, OnEvent);
@@ -152,6 +155,10 @@ public class ModalDiceUI : MonoBehaviour
                 break;
             case EventType.DiceAuto:
                 DiceAuto();
+                break;
+            case EventType.DiceBypass:
+                ModalDiceDetails data = Param as ModalDiceDetails;
+                ProcessAutoDiceOutcome(data);
                 break;
             case EventType.DiceConfirm:
                 DiceConfirm();
@@ -363,7 +370,8 @@ public class ModalDiceUI : MonoBehaviour
         returnData.isSuccess = isSuccess;
         returnData.isRenown = isRenownSpent;
         returnData.passData = passData;
-        EventManager.instance.PostNotification(EventType.DiceReturn, this, returnData);
+        
+        
     }
 
     //
@@ -411,10 +419,11 @@ public class ModalDiceUI : MonoBehaviour
     private void DiceIgnore()
     {
         outcome = DiceOutcome.Ignore;
-        isDisplayResult = false;
+        isDisplayResult = true;
         ProcessRoll();
         CloseDiceUI();
         ReturnDiceData();
+        ProcessDiceOutcome(returnData);
     }
 
     /// <summary>
@@ -427,6 +436,7 @@ public class ModalDiceUI : MonoBehaviour
         ProcessRoll();
         CloseDiceUI();
         ReturnDiceData();
+        ProcessDiceOutcome(returnData);
     }
 
     /// <summary>
@@ -436,6 +446,7 @@ public class ModalDiceUI : MonoBehaviour
     {
         CloseDiceUI();
         ReturnDiceData();
+        ProcessDiceOutcome(returnData);
     }
 
     /// <summary>
@@ -446,6 +457,7 @@ public class ModalDiceUI : MonoBehaviour
         isRenownSpent = true;
         CloseDiceUI();
         ReturnDiceData();
+        ProcessDiceOutcome(returnData);
     }
 
     /// <summary>
@@ -456,7 +468,133 @@ public class ModalDiceUI : MonoBehaviour
         isRenownSpent = false;
         CloseDiceUI();
         ReturnDiceData();
+        ProcessDiceOutcome(returnData);
     }
-    
+
+
+    /// <summary>
+    /// return event from dice roller (assumed to be for all gear related activity)
+    /// </summary>
+    /// <param name="data"></param>
+    private void ProcessDiceOutcome(DiceReturnData data)
+    {
+        //no need to check for nulls for node and gear as already checked in ProcessPlayerMove (calling method)
+        Node node = GameManager.instance.dataScript.GetNode(data.passData.nodeID);
+        Gear gear = GameManager.instance.dataScript.GetGear(data.passData.gearID);
+        StringBuilder builder = new StringBuilder();
+        builder.Append(data.passData.text);
+        //process gear and renown outcome
+        if (data != null)
+        {
+            switch (data.outcome)
+            {
+                case DiceOutcome.Ignore:
+                    //bypasses roller, accepts result, no renown intervention
+                    if (data.isSuccess == true)
+                    {
+                        GameManager.instance.gearScript.GearUsed(gear, node);
+                    }
+                    else
+                    {
+                        //bad result stands -> gear compromised
+                        builder.Append(GameManager.instance.gearScript.GearUsedAndCompromised(gear, node));
+                    }
+                    break;
+                case DiceOutcome.Auto:
+                    //bypass roller, auto spends renown to avert a bad result
+                    if (data.isSuccess == true)
+                    {
+                        GameManager.instance.gearScript.GearUsed(gear, node);
+                    }
+                    else
+                    {
+                        //bad result  -> gear compromised but renown auto spent to negate
+                        builder.Append(GameManager.instance.gearScript.RenownUsed(gear, node, data.passData.renownCost));
+                        GameManager.instance.gearScript.GearUsed(gear, node);
+                    }
+                    break;
+                case DiceOutcome.Roll:
+                    //rolls dice, if bad result has option to spend renown to negate
+                    if (data.isSuccess == true)
+                    {
+                        GameManager.instance.gearScript.GearUsed(gear, node);
+                    }
+                    //Fail result
+                    else
+                    {
+                        if (data.isRenown == true)
+                        {
+                            //player spent renown to negate a bad result
+                            GameManager.instance.gearScript.GearUsed(gear, node);
+                            builder.Append(GameManager.instance.gearScript.RenownUsed(gear, node, data.passData.renownCost));
+                        }
+                        else
+                        {
+                            //bad result stands -> gear compromised
+                            builder.Append(GameManager.instance.gearScript.GearUsedAndCompromised(gear, node));
+                        }
+                    }
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid returnData.outcome \"{0}\"", data.outcome));
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid DiceReturnData (Null)"); }
+
+        //all done, go to specific outcome
+        if (data.passData != null)
+        {
+            MoveReturnData details = new MoveReturnData();
+            details.text = builder.ToString();
+            details.node = node;
+
+            switch (passData.type)
+            {
+                case DiceType.Move:
+                    EventManager.instance.PostNotification(EventType.DiceReturnMove, this, details);
+                    break;
+            }
+        }
+        
+
+    }
+
+
+    /// <summary>
+    /// ProcessPlayerMove -> used when gear involved but not enough renown to mitigate a bad result (optionAutoGear = true)
+    /// </summary>
+    /// <param name="details"></param>
+    private void ProcessAutoDiceOutcome(ModalDiceDetails details)
+    {
+        string gearResult = "";
+        //Roll
+        if (Random.Range(0, 100) > details.chance)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(details.passData.gearID);
+            if (gear != null)
+            {
+                Node node = GameManager.instance.dataScript.GetNode(details.passData.nodeID);
+                if (node != null)
+                {
+                    //remove gear and return string for outcome dialogue
+                    gearResult = GameManager.instance.gearScript.GearUsedAndCompromised(gear, node);
+                }
+                else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", details.passData.nodeID)); }
+            }
+            else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", details.passData.gearID)); }
+        }
+        // Outcome
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.textTop = "Player has moved";
+        if (gearResult.Length > 0)
+        { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
+        else { outcomeDetails.textBottom = details.passData.text; }
+        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
+
+
+
     //place methods above here
 }
