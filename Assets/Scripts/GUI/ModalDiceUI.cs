@@ -478,14 +478,14 @@ public class ModalDiceUI : MonoBehaviour
     /// <param name="data"></param>
     private void ProcessDiceOutcome(DiceReturnData data)
     {
-        //no need to check for nulls for node and gear as already checked in ProcessPlayerMove (calling method)
-        Node node = GameManager.instance.dataScript.GetNode(data.passData.nodeID);
-        Gear gear = GameManager.instance.dataScript.GetGear(data.passData.gearID);
-        StringBuilder builder = new StringBuilder();
-        builder.Append(data.passData.text);
-        //process gear and renown outcome
         if (data != null)
         {
+            //no need to check for nulls for node and gear as already checked in ProcessPlayerMove (calling method)
+            Node node = GameManager.instance.dataScript.GetNode(data.passData.nodeID);
+            Gear gear = GameManager.instance.dataScript.GetGear(data.passData.gearID);
+            StringBuilder builder = new StringBuilder();
+            builder.Append(data.passData.text);
+            //process gear and renown outcome
             switch (data.outcome)
             {
                 case DiceOutcome.Ignore:
@@ -539,24 +539,29 @@ public class ModalDiceUI : MonoBehaviour
                     Debug.LogError(string.Format("Invalid returnData.outcome \"{0}\"", data.outcome));
                     break;
             }
-        }
-        else { Debug.LogError("Invalid DiceReturnData (Null)"); }
-
-        //all done, go to specific outcome
-        if (data.passData != null)
-        {
-            MoveReturnData details = new MoveReturnData();
-            details.text = builder.ToString();
-            details.node = node;
-
-            switch (passData.type)
+            //all done, go to specific outcome
+            if (data.passData != null)
             {
-                case DiceType.Move:
-                    EventManager.instance.PostNotification(EventType.DiceReturnMove, this, details);
-                    break;
+                switch (passData.type)
+                {
+                    case DiceType.Move:
+                        MoveReturnData details = new MoveReturnData();
+                        details.text = builder.ToString();
+                        details.node = node;
+                        EventManager.instance.PostNotification(EventType.DiceReturnMove, this, details);
+                        break;
+                    case DiceType.Gear:
+
+                        //TO DO
+
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid passData.type \"{0}\"", passData.type));
+                        break;
+                }
             }
         }
-        
+        else { Debug.LogError("Invalid DiceReturnData (Null)"); }
 
     }
 
@@ -591,6 +596,7 @@ public class ModalDiceUI : MonoBehaviour
         { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
         else { outcomeDetails.textBottom = details.passData.text; }
         outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+        outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
