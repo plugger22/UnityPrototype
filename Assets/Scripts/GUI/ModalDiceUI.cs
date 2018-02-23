@@ -592,6 +592,8 @@ public class ModalDiceUI : MonoBehaviour
         bool isError = false;
         Gear gear = GameManager.instance.dataScript.GetGear(details.passData.gearID);
         Node node = GameManager.instance.dataScript.GetNode(details.passData.nodeID);
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //Auto resolve gear outcome (no scope for renown use as there is insufficient renown available)
         if (gear != null)
         {
             if (node != null)
@@ -611,18 +613,53 @@ public class ModalDiceUI : MonoBehaviour
             else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", details.passData.nodeID)); isError = true; }
         }
         else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", details.passData.gearID)); isError = true; }
+        //Outcome processing -> no Error
         if (isError == false)
         {
-            // Outcome
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.textTop = "Player has moved";
-            if (gearResult.Length > 0)
-            { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
-            else { outcomeDetails.textBottom = details.passData.text; }
-            outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
             outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            switch (details.passData.type)
+            {
+                case DiceType.Move:
+                    //MOVE
+                    outcomeDetails.textTop = "Player has moved";
+                    if (gearResult.Length > 0)
+                    { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
+                    else
+                    { outcomeDetails.textBottom = details.passData.text; }
+                    outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+                    break;
+                case DiceType.Gear:
+
+                    if (details.passData.outcome != null)
+                    {
+                        outcomeDetails = details.passData.outcome;
+                        //Combine the gear outcome with the effects outcome -> Gear needs to come AFTER effects (renown calcs are in this order)
+                        outcomeDetails.textTop = details.passData.outcome.textTop;
+                        outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.outcome.textBottom, gearResult);
+                        outcomeDetails.sprite = GameManager.instance.actionScript.errorSprite;
+                    }
+                    else
+                    {
+                        //invalid pass through ModalOutcomedetails
+                        Debug.LogError("Invalid details.passData.outcome (Null)");
+                        isError = true;
+                    }
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid details.passData.type \"{0}\"", details.passData.type));
+                    isError = true;
+                    break;
+            }
         }
+        //Outcome -> Error
+        if (isError == true)
+        {
+            
+            outcomeDetails.textTop = "Error! The wheels have fallen off";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = GameManager.instance.actionScript.errorSprite;
+        }
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
 
