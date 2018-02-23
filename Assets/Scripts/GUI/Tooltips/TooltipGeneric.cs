@@ -86,16 +86,12 @@ public class TooltipGeneric : MonoBehaviour
             genericDetail.gameObject.SetActive(true);
             dividerBottom.gameObject.SetActive(true);
         }
-
+        //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
+        Canvas.ForceUpdateCanvases();
+        rectTransform = tooltipGenericObject.GetComponent<RectTransform>();
         //get dimensions of dynamic tooltip
         float width = rectTransform.rect.width;
         float height = rectTransform.rect.height;
-        //height showing zero due to vertical layout group for first call
-        if (height == 0)
-        {
-            Canvas.ForceUpdateCanvases();
-            height = rectTransform.rect.height;
-        }
         //place tooltip adjacent to the button
         screenPos.y -= height / 4;
         if (screenPos.y + height >= Screen.height)

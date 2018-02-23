@@ -180,15 +180,12 @@ public class ModalActionMenu : MonoBehaviour
 
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(details.nodePos);
+        //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
+        Canvas.ForceUpdateCanvases();
+        rectTransform = modalMenuObject.GetComponent<RectTransform>();
         //get dimensions of dynamic menu
         float width = rectTransform.rect.width;
         float height = rectTransform.rect.height;
-        //height showing zero due to layout group for first call
-        if (height == 0)
-        {
-            Canvas.ForceUpdateCanvases();
-            height = rectTransform.rect.height;
-        }
         //calculate offset - height (default above)
         if (screenPos.y + height + offset < Screen.height)
         { screenPos.y += height + offset; }
