@@ -523,6 +523,7 @@ public class GearManager : MonoBehaviour
     }
 
 
+
     /// <summary>
     /// submethod to handle gear comprised for ProcessPlayerMove (node and Gear not tested for null as already checked in calling method)
     /// </summary>
@@ -533,7 +534,7 @@ public class GearManager : MonoBehaviour
         //remove gear from inventory
         GameManager.instance.playerScript.RemoveGear(gear.gearID);
         //message -> gear compromised
-        string textMsg = string.Format("{0}, ID {1} has been comprised while moving", gear.name, gear.gearID);
+        string textMsg = string.Format("{0}, ID {1} has been comprised", gear.name, gear.gearID);
         Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.nodeID, gear.gearID);
         if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
         //return text string for builder
@@ -545,12 +546,13 @@ public class GearManager : MonoBehaviour
     /// </summary>
     /// <param name="gear"></param>
     /// <param name="node"></param>
-    public void GearUsed(Gear gear, Node node)
+    public string GearUsed(Gear gear, Node node)
     {
         //message
-        string textMsg = string.Format("{0}, ID {1} has been used while moving", gear.name, gear.gearID);
+        string textMsg = string.Format("{0}, ID {1} has been used", gear.name, gear.gearID);
         Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
         if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
+        return string.Format("{0}{1}{2}Gear used and O.K{3}", "\n", "\n", colourGear, colourEnd);
     }
 
     /// <summary>
@@ -561,14 +563,17 @@ public class GearManager : MonoBehaviour
     public string RenownUsed(Gear gear, Node node, int amount)
     {
         //update player renown
-        GameManager.instance.playerScript.Renown -= amount;
+        int renown = GameManager.instance.playerScript.Renown;
+        renown -= amount;
+        GameManager.instance.playerScript.Renown = renown;
         //message
         string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
         Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
         if (messageRenown != null) { GameManager.instance.dataScript.AddMessage(messageRenown); }
         //return text string for builder
-        return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
+        return string.Format("{0}{1}{2}Gear saved, Renown -{3} (Now {4})", "\n", "\n", colourEffectBad, amount, renown, colourEnd);
     }
+
 
     //new methods above here
 }

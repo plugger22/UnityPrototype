@@ -480,86 +480,102 @@ public class ModalDiceUI : MonoBehaviour
     {
         if (data != null)
         {
-            //no need to check for nulls for node and gear as already checked in ProcessPlayerMove (calling method)
-            Node node = GameManager.instance.dataScript.GetNode(data.passData.nodeID);
-            Gear gear = GameManager.instance.dataScript.GetGear(data.passData.gearID);
-            StringBuilder builder = new StringBuilder();
-            builder.Append(data.passData.text);
-            //process gear and renown outcome
-            switch (data.outcome)
+            if (data.passData != null)
             {
-                case DiceOutcome.Ignore:
-                    //bypasses roller, accepts result, no renown intervention
-                    if (data.isSuccess == true)
-                    {
-                        GameManager.instance.gearScript.GearUsed(gear, node);
-                    }
-                    else
-                    {
-                        //bad result stands -> gear compromised
-                        builder.Append(GameManager.instance.gearScript.GearUsedAndCompromised(gear, node));
-                    }
-                    break;
-                case DiceOutcome.Auto:
-                    //bypass roller, auto spends renown to avert a bad result
-                    if (data.isSuccess == true)
-                    {
-                        GameManager.instance.gearScript.GearUsed(gear, node);
-                    }
-                    else
-                    {
-                        //bad result  -> gear compromised but renown auto spent to negate
-                        builder.Append(GameManager.instance.gearScript.RenownUsed(gear, node, data.passData.renownCost));
-                        GameManager.instance.gearScript.GearUsed(gear, node);
-                    }
-                    break;
-                case DiceOutcome.Roll:
-                    //rolls dice, if bad result has option to spend renown to negate
-                    if (data.isSuccess == true)
-                    {
-                        GameManager.instance.gearScript.GearUsed(gear, node);
-                    }
-                    //Fail result
-                    else
-                    {
-                        if (data.isRenown == true)
+                //no need to check for nulls for node and gear as already checked in ProcessPlayerMove (calling method)
+                Node node = GameManager.instance.dataScript.GetNode(data.passData.nodeID);
+                Gear gear = GameManager.instance.dataScript.GetGear(data.passData.gearID);
+                StringBuilder builder = new StringBuilder();
+                builder.Append(data.passData.text);
+                //process gear and renown outcome
+                switch (data.outcome)
+                {
+                    case DiceOutcome.Ignore:
+                        //bypasses roller, accepts result, no renown intervention
+                        if (data.isSuccess == true)
                         {
-                            //player spent renown to negate a bad result
-                            GameManager.instance.gearScript.GearUsed(gear, node);
-                            builder.Append(GameManager.instance.gearScript.RenownUsed(gear, node, data.passData.renownCost));
+                            builder.Append(GameManager.instance.gearScript.GearUsed(gear, node));
                         }
                         else
                         {
                             //bad result stands -> gear compromised
                             builder.Append(GameManager.instance.gearScript.GearUsedAndCompromised(gear, node));
                         }
-                    }
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid returnData.outcome \"{0}\"", data.outcome));
-                    break;
-            }
-            //all done, go to specific outcome
-            if (data.passData != null)
-            {
+                        break;
+                    case DiceOutcome.Auto:
+                        //bypass roller, auto spends renown to avert a bad result
+                        if (data.isSuccess == true)
+                        {
+                            builder.Append(GameManager.instance.gearScript.GearUsed(gear, node));
+                        }
+                        else
+                        {
+                            //bad result  -> gear compromised but renown auto spent to negate
+                            builder.Append(GameManager.instance.gearScript.RenownUsed(gear, node, data.passData.renownCost));
+                            GameManager.instance.gearScript.GearUsed(gear, node);
+                        }
+                        break;
+                    case DiceOutcome.Roll:
+                        //rolls dice, if bad result has option to spend renown to negate
+                        if (data.isSuccess == true)
+                        {
+                            builder.Append(GameManager.instance.gearScript.GearUsed(gear, node));
+                        }
+                        //Fail result
+                        else
+                        {
+                            if (data.isRenown == true)
+                            {
+                                //player spent renown to negate a bad result
+                                GameManager.instance.gearScript.GearUsed(gear, node);
+                                builder.Append(GameManager.instance.gearScript.RenownUsed(gear, node, data.passData.renownCost));
+                            }
+                            else
+                            {
+                                //bad result stands -> gear compromised
+                                builder.Append(GameManager.instance.gearScript.GearUsedAndCompromised(gear, node));
+                            }
+                        }
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid returnData.outcome \"{0}\"", data.outcome));
+                        break;
+                }
+                //all done, go to specific outcome
                 switch (passData.type)
                 {
                     case DiceType.Move:
+                        //send data back to NodeManager.cs -> ProcessMoveOutcome for resolution
                         MoveReturnData details = new MoveReturnData();
                         details.text = builder.ToString();
                         details.node = node;
                         EventManager.instance.PostNotification(EventType.DiceReturnMove, this, details);
                         break;
                     case DiceType.Gear:
-
-                        //TO DO
-
+                        //all done, combine texts and output
+                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                        if (passData.outcome != null)
+                        {
+                            outcomeDetails = passData.outcome;
+                            //Combine the gear outcome with the effects outcome -> Gear needs to come AFTER effects (renown calcs are in this order)
+                            outcomeDetails.textBottom = string.Format("{0}{1}", passData.outcome.textBottom, builder.ToString());
+                        }
+                        else
+                        {
+                            //fault, pass default data to Outcome window
+                            outcomeDetails.textTop = "Error! No Pass Throught data ModalOutcomeWindow details";
+                            outcomeDetails.textBottom = "Bad, all Bad";
+                            outcomeDetails.sprite = GameManager.instance.actionScript.errorSprite;
+                        }
+                        //generate a create modal window event
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid passData.type \"{0}\"", passData.type));
                         break;
                 }
             }
+            else { Debug.LogError("Invalid DiceReturnData.passData (Null)"); }
         }
         else { Debug.LogError("Invalid DiceReturnData (Null)"); }
 

@@ -248,6 +248,8 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
+        Node node = null;
+        Action action = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
@@ -261,12 +263,12 @@ public class ActionManager : MonoBehaviour
             GameObject nodeObject = GameManager.instance.dataScript.GetNodeObject(details.nodeID);
             if (nodeObject != null)
             {
-                Node node = nodeObject.GetComponent<Node>();
+                node = nodeObject.GetComponent<Node>();
                 if (node != null)
                 {
 
                     //Get Action & Effects
-                    Action action = details.gearAction;
+                    action = details.gearAction;
                     List<Effect> listOfEffects = action.GetEffects();
                     if (listOfEffects.Count > 0)
                     {
@@ -360,8 +362,14 @@ public class ActionManager : MonoBehaviour
                 ModalDiceDetails diceDetails = new ModalDiceDetails();
                 diceDetails.chance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                 diceDetails.renownCost = renownCost;
-                diceDetails.topText = string.Format("{0}{1}{2} used to move{3}{4}{5}% Chance{6} of it being compromised and lost", colourNeutral,
-                    gear.name, colourEnd, "\n", colourBad, diceDetails.chance, colourEnd);
+                if (action != null)
+                {
+                    diceDetails.topText = string.Format("{0}{1}{2} used to {3}{4}{5}{6}{7}% Chance{8} of it being compromised and lost", colourNeutral,
+                        gear.name, colourEnd, action.tooltipText, "\n", "\n", colourBad, diceDetails.chance, colourEnd);
+                }
+                else { diceDetails.topText = string.Format("Missing Data{0}{1}{2}% Chance{3} of it being compromised and lost", "\n", colourBad, 
+                    diceDetails.chance, colourEnd);
+                }
                 if (GameManager.instance.playerScript.Renown >= renownCost) { diceDetails.isEnoughRenown = true; }
                 else { diceDetails.isEnoughRenown = false; }
                 //as gear involved data will be needed to be passed through from this method
@@ -369,8 +377,8 @@ public class ActionManager : MonoBehaviour
                 passThroughData.nodeID = node.nodeID;
                 passThroughData.gearID = gear.gearID;
                 passThroughData.renownCost = renownCost;
-                passThroughData.text = builder.ToString();
-                passThroughData.type = DiceType.Move;
+                /*passThroughData.text = builder.ToString();*/
+                passThroughData.type = DiceType.Gear;
                 passThroughData.outcome = outcomeDetails;
                 diceDetails.passData = passThroughData;
                 //go straight to an outcome dialogue if not enough renown and option set to ignore dice roller

@@ -180,7 +180,7 @@ public class ModalActionMenu : MonoBehaviour
 
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(details.nodePos);
-        //get dimensions of dynamic tooltip
+        //get dimensions of dynamic menu
         float width = rectTransform.rect.width;
         float height = rectTransform.rect.height;
         //height showing zero due to layout group for first call
