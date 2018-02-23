@@ -636,7 +636,7 @@ public class ModalDiceUI : MonoBehaviour
                         //Combine the gear outcome with the effects outcome -> Gear needs to come AFTER effects (renown calcs are in this order)
                         outcomeDetails.textTop = details.passData.outcome.textTop;
                         outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.outcome.textBottom, gearResult);
-                        outcomeDetails.sprite = GameManager.instance.actionScript.errorSprite;
+                        outcomeDetails.sprite = details.passData.outcome.sprite;
                     }
                     else
                     {
