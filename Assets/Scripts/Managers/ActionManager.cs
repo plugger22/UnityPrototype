@@ -251,6 +251,9 @@ public class ActionManager : MonoBehaviour
         Node node = null;
         Action action = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //renown (do prior to effects as Player renown will change)
+        int renownCost = GameManager.instance.playerScript.renownCostGear;
+        int renownBefore = GameManager.instance.playerScript.Renown;
         //default data 
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
@@ -355,7 +358,7 @@ public class ActionManager : MonoBehaviour
         if (errorFlag == false)
         {
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
-            int renownCost = GameManager.instance.playerScript.renownCostGear;
+            
             if (gear != null)
             {
                 //chance of Gear being Compromised
@@ -370,7 +373,7 @@ public class ActionManager : MonoBehaviour
                 else { diceDetails.topText = string.Format("Missing Data{0}{1}{2}% Chance{3} of it being compromised and lost", "\n", colourBad, 
                     diceDetails.chance, colourEnd);
                 }
-                if (GameManager.instance.playerScript.Renown >= renownCost) { diceDetails.isEnoughRenown = true; }
+                if (renownBefore >= renownCost) { diceDetails.isEnoughRenown = true; }
                 else { diceDetails.isEnoughRenown = false; }
                 //as gear involved data will be needed to be passed through from this method
                 PassThroughDiceData passThroughData = new PassThroughDiceData();

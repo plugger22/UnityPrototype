@@ -221,9 +221,9 @@ public class Node : MonoBehaviour
                         else
                         {
                             EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move);
-                            //if at Player's current node then Special Node menu (gear actions)
+                            //if at Player's current node then Gear Node menu
                             if (nodeID == GameManager.instance.nodeScript.nodePlayer)
-                            { EventManager.instance.PostNotification(EventType.CreateSpecialNodeMenu, this, nodeID); }
+                            { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID); }
                         }
                     }
                 }

@@ -589,31 +589,40 @@ public class ModalDiceUI : MonoBehaviour
     private void ProcessAutoDiceOutcome(ModalDiceDetails details)
     {
         string gearResult = "";
-        //Roll
-        if (Random.Range(0, 100) > details.chance)
+        bool isError = false;
+        Gear gear = GameManager.instance.dataScript.GetGear(details.passData.gearID);
+        Node node = GameManager.instance.dataScript.GetNode(details.passData.nodeID);
+        if (gear != null)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(details.passData.gearID);
-            if (gear != null)
+            if (node != null)
             {
-                Node node = GameManager.instance.dataScript.GetNode(details.passData.nodeID);
-                if (node != null)
+                //Roll for gear
+                if (Random.Range(0, 100) > details.chance)
                 {
-                    //remove gear and return string for outcome dialogue
+                    //Gear Compromised -> Remove gear and return string for outcome dialogue
                     gearResult = GameManager.instance.gearScript.GearUsedAndCompromised(gear, node);
                 }
-                else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", details.passData.nodeID)); }
+                else
+                {
+                    //Gear O.K
+                    gearResult = GameManager.instance.gearScript.GearUsed(gear, node);
+                }
             }
-            else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", details.passData.gearID)); }
+            else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", details.passData.nodeID)); isError = true; }
         }
-        // Outcome
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.textTop = "Player has moved";
-        if (gearResult.Length > 0)
-        { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
-        else { outcomeDetails.textBottom = details.passData.text; }
-        outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
-        outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", details.passData.gearID)); isError = true; }
+        if (isError == false)
+        {
+            // Outcome
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.textTop = "Player has moved";
+            if (gearResult.Length > 0)
+            { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
+            else { outcomeDetails.textBottom = details.passData.text; }
+            outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+            outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
     }
 
 

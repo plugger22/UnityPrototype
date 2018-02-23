@@ -158,7 +158,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
-        EventManager.instance.AddListener(EventType.CreateSpecialNodeMenu, OnEvent);
+        EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent);
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
         EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent);
         //EventManager.instance.AddListener(EventType.DiceReturn, OnEvent);
@@ -218,17 +218,13 @@ public class NodeManager : MonoBehaviour
             case EventType.CreateMoveMenu:
                 CreateMoveMenu((int)Param);
                 break;
-            case EventType.CreateSpecialNodeMenu:
+            case EventType.CreateGearNodeMenu:
                 CreateGearlNodeMenu((int)Param);
                 break;
             case EventType.MoveAction:
                 ModalMoveDetails details = Param as ModalMoveDetails;
                 ProcessPlayerMove(details);
                 break;
-            /*case EventType.DiceReturn:
-                DiceReturnData data = Param as DiceReturnData;
-                ProcessDiceMove(data);
-                break;*/
             case EventType.DiceReturnMove:
                 MoveReturnData data = Param as MoveReturnData;
                 ProcessMoveOutcome(data);
@@ -903,7 +899,6 @@ public class NodeManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-
             //
             // - - - Gear Node Effects - - -
             //
@@ -1011,19 +1006,208 @@ public class NodeManager : MonoBehaviour
                                     }
                                 }
                                 else { Debug.LogError("Invalid actionKinetic (Null)"); }
-                                                            }
+                            }
                         }
                     }
                 }
-
                 //
                 // - - - Hacking Gear - - -
                 //
+                List<Gear> listOfHackingGear = GameManager.instance.playerScript.GetListOfGearType(GameManager.instance.gearScript.typeHacking);
+                {
+                    if (listOfHackingGear != null)
+                    {
+                        //loop list of gear and create a button for each item
+                        for (int index = 0; index < listOfHackingGear.Count; index++)
+                        {
+                            proceedFlag = true;
+                            Gear hackingGear = listOfHackingGear[index];
+                            if (hackingGear != null)
+                            {
+                                tempAction = actionHacking;
+                                if (tempAction != null)
+                                {
+                                    //effects
+                                    StringBuilder builder = new StringBuilder();
+                                    listOfEffects = tempAction.listOfEffects;
+                                    if (listOfEffects.Count > 0)
+                                    {
+                                        string colourEffect = colourDefault;
+                                        for (int i = 0; i < listOfEffects.Count; i++)
+                                        {
+                                            Effect effect = listOfEffects[i];
+                                            //colour code effects according to type
+                                            if (effect.typeOfEffect != null)
+                                            {
+                                                switch (effect.typeOfEffect.name)
+                                                {
+                                                    case "Good":
+                                                        colourEffect = colourEffectGood;
+                                                        break;
+                                                    case "Neutral":
+                                                        colourEffect = colourEffectNeutral;
+                                                        break;
+                                                    case "Bad":
+                                                        colourEffect = colourEffectBad;
+                                                        break;
+                                                }
+                                            }
+                                            //check effect criteria is valid
+                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                            if (effectCriteria == null)
+                                            {
+                                                //Effect criteria O.K -> tool tip text
+                                                if (builder.Length > 0) { builder.AppendLine(); }
+                                                if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
+                                                else
+                                                {
+                                                    //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
+                                                    if (effect.outcome.name.Equals("Renown"))
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectGood, effect.textTag, colourEnd)); }
+                                                    else
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectBad, effect.textTag, colourEnd)); }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //invalid effect criteria -> Action cancelled
+                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                    colourInvalid, hackingGear.name, "\n", colourEnd,
+                                                    colourResistance, effectCriteria, colourEnd));
+                                                proceedFlag = false;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
+                                    if (proceedFlag == true)
+                                    {
+                                        //Details to pass on for processing via button click
+                                        ModalActionDetails actionDetails = new ModalActionDetails() { };
 
+                                        actionDetails.side = GameManager.instance.globalScript.sideResistance;
+                                        actionDetails.nodeID = nodeID;
+                                        actionDetails.gearAction = actionHacking;
+                                        actionDetails.gearID = hackingGear.gearID;
+                                        //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                        EventButtonDetails hackingDetails = new EventButtonDetails()
+                                        {
+                                            buttonTitle = string.Format("Use {0}", hackingGear.name),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, hackingGear.name, colourEnd),
+                                            buttonTooltipMain = tempAction.tooltipText,
+                                            buttonTooltipDetail = builder.ToString(),
+                                            //use a Lambda to pass arguments to the action
+                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails); }
+                                        };
+                                        tempList.Add(hackingDetails);
+                                    }
+                                }
+                                else { Debug.LogError("Invalid actionHacking (Null)"); }
+                            }
+                        }
+                    }
+                }
                 //
                 // - - - Persuasion Gear - - -
                 //
+                List<Gear> listOfPersuasionGear = GameManager.instance.playerScript.GetListOfGearType(GameManager.instance.gearScript.typePersuasion);
+                {
+                    if (listOfPersuasionGear != null)
+                    {
+                        //loop list of gear and create a button for each item
+                        for (int index = 0; index < listOfPersuasionGear.Count; index++)
+                        {
+                            proceedFlag = true;
+                            Gear persuasionGear = listOfPersuasionGear[index];
+                            if (persuasionGear != null)
+                            {
+                                tempAction = actionPersuasion;
+                                if (tempAction != null)
+                                {
+                                    //effects
+                                    StringBuilder builder = new StringBuilder();
+                                    listOfEffects = tempAction.listOfEffects;
+                                    if (listOfEffects.Count > 0)
+                                    {
+                                        string colourEffect = colourDefault;
+                                        for (int i = 0; i < listOfEffects.Count; i++)
+                                        {
+                                            Effect effect = listOfEffects[i];
+                                            //colour code effects according to type
+                                            if (effect.typeOfEffect != null)
+                                            {
+                                                switch (effect.typeOfEffect.name)
+                                                {
+                                                    case "Good":
+                                                        colourEffect = colourEffectGood;
+                                                        break;
+                                                    case "Neutral":
+                                                        colourEffect = colourEffectNeutral;
+                                                        break;
+                                                    case "Bad":
+                                                        colourEffect = colourEffectBad;
+                                                        break;
+                                                }
+                                            }
+                                            //check effect criteria is valid
+                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                            if (effectCriteria == null)
+                                            {
+                                                //Effect criteria O.K -> tool tip text
+                                                if (builder.Length > 0) { builder.AppendLine(); }
+                                                if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
+                                                else
+                                                {
+                                                    //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
+                                                    if (effect.outcome.name.Equals("Renown"))
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectGood, effect.textTag, colourEnd)); }
+                                                    else
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectBad, effect.textTag, colourEnd)); }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //invalid effect criteria -> Action cancelled
+                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                    colourInvalid, persuasionGear.name, "\n", colourEnd,
+                                                    colourResistance, effectCriteria, colourEnd));
+                                                proceedFlag = false;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
+                                    if (proceedFlag == true)
+                                    {
+                                        //Details to pass on for processing via button click
+                                        ModalActionDetails actionDetails = new ModalActionDetails() { };
 
+                                        actionDetails.side = GameManager.instance.globalScript.sideResistance;
+                                        actionDetails.nodeID = nodeID;
+                                        actionDetails.gearAction = actionPersuasion;
+                                        actionDetails.gearID = persuasionGear.gearID;
+                                        //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                        EventButtonDetails persuasionDetails = new EventButtonDetails()
+                                        {
+                                            buttonTitle = string.Format("Use {0}", persuasionGear.name),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, persuasionGear.name, colourEnd),
+                                            buttonTooltipMain = tempAction.tooltipText,
+                                            buttonTooltipDetail = builder.ToString(),
+                                            //use a Lambda to pass arguments to the action
+                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails); }
+                                        };
+                                        tempList.Add(persuasionDetails);
+                                    }
+                                }
+                                else { Debug.LogError("Invalid actionPersuasion (Null)"); }
+                            }
+                        }
+                    }
+                }
                 //
                 // - - - Cancel
                 //
@@ -1072,6 +1256,7 @@ public class NodeManager : MonoBehaviour
         //activate menu
         GameManager.instance.actionMenuScript.SetActionMenu(details);
     }
+
 
     /// <summary>
     /// Move player to the specified node
