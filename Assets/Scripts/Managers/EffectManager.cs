@@ -471,7 +471,7 @@ public class EffectManager : MonoBehaviour
                 // - - - Other - - -
                 //
                 case "Recruit":
-                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
+                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
                     break;
                 case "ConnectionSecurity":
                     if (node != null)
@@ -551,13 +551,13 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 case "Gear":
-                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
+                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
                     break;
                 case "TargetInfo":
                     //TO DO
                     break;
                 case "NeutraliseTeam":
-                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetActorActions
+                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
                     break;
                 case "Invisibility":
                     //raise/lower invisibility of actor or Player

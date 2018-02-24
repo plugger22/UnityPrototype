@@ -51,6 +51,10 @@ namespace gameAPI
     //
     public enum ActorStatus { Active, Inactive, Reserve, Pool, Captured }
 
+    //
+    // - - - Action Menu - - -
+    //
+    public enum ActionMenuType { None, Node, Actor, Gear, Move}
 
     //
     // - - - Dice - - -

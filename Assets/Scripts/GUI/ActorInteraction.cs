@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
+using modalAPI;
 
 /// <summary>
 /// handles all Actor image related mouse interaction
@@ -18,7 +19,7 @@ public class ActorInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExi
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
     }
 
-
+    
     /// <summary>
     /// Mouse Over event
     /// </summary>
@@ -37,6 +38,7 @@ public class ActorInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExi
         StopAllCoroutines();
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
     }
+    
 
     /// <summary>
     /// After a set delay, highlight all active nodes for this actor

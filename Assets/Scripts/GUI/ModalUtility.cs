@@ -24,11 +24,12 @@ namespace modalAPI
     /// </summary>
     public class ModalPanelDetails
     {
-        public string nodeName;
-        public string nodeDetails;
-        public int nodeID;
+        public string itemName;                                         //node, Actor or gear name
+        public string itemDetails;
+        public int itemID;
         public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
-        public Vector3 nodePos;                                         //position of node in world units (transform)
+        public Vector3 itemPos;                                         //position of item in world units (transform)
+        public ActionMenuType menuType;                                 //what type of action menu is it? (Node / Actor / Gear, etc.)
     }
 
     /// <summary>

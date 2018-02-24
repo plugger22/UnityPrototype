@@ -453,7 +453,7 @@ public class TargetManager : MonoBehaviour
 
     /// <summary>
     /// Returns all factors involved in a particular targets resolution (eg. effects chance of success). 
-    /// Used by ActorManager.cs -> GetActorActions for action button tooltip
+    /// Used by ActorManager.cs -> GetNodeActions for action button tooltip
     /// NOTE: Tweak listOfFactors in Initialise() if you want to change any factors in the calculations
     /// </summary>
     /// <param name="targetID"></param>

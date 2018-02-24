@@ -19,7 +19,7 @@ public class ModalActionMenu : MonoBehaviour
     public Image modalPanel;
     public Image background;
     public Image divider;
-    public TextMeshProUGUI nodeDetails;
+    public TextMeshProUGUI itemDetails;
     public Button button1;
     public Button button2;
     public Button button3;
@@ -116,10 +116,16 @@ public class ModalActionMenu : MonoBehaviour
         button6.gameObject.SetActive(false);
 
         //set up ModalActionObject
-        nodeDetails.text = string.Format("{0}{1}{2}", details.nodeName, "\n", details.nodeDetails);
-        //pass nodeID onto text script to facilitate node tooltip on mouseover
-        ModalMenuUI modal = nodeDetails.GetComponent<ModalMenuUI>();
-        modal.NodeID = details.nodeID;
+        itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
+        //tooltip at top of menu
+        switch (details.menuType)
+        {
+            case ActionMenuType.Node:
+                //pass nodeID onto text script to facilitate node tooltip on mouseover
+                ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();
+                modal.NodeID = details.itemID;
+                break;
+        }
         //There can be a max of 6 buttons (1 x target, 4 x actor actions, 1 x Cancel)
         int counter = 0;
         Button tempButton;
@@ -179,7 +185,7 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(true);
 
         //convert coordinates
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(details.nodePos);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);
         //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
         Canvas.ForceUpdateCanvases();
         rectTransform = modalMenuObject.GetComponent<RectTransform>();

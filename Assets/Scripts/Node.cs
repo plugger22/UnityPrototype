@@ -168,11 +168,12 @@ public class Node : MonoBehaviour
             {
                 ModalPanelDetails details = new ModalPanelDetails()
                 {
-                    nodeID = nodeID,
-                    nodeName = this.nodeName,
-                    nodeDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
-                    nodePos = transform.position,
-                    listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(nodeID)
+                    itemID = nodeID,
+                    itemName = this.nodeName,
+                    itemDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
+                    itemPos = transform.position,
+                    listOfButtonDetails = GameManager.instance.actorScript.GetNodeActions(nodeID),
+                    menuType = ActionMenuType.Node
                 };
                 //activate menu
                 GameManager.instance.actionMenuScript.SetActionMenu(details);

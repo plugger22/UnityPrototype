@@ -323,11 +323,12 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). 
-    /// Max 4 Actor + 1 Target actions with an additional 'Cancel' buttnn added last automatically -> total six buttons (hardwired into GUI design)
+    /// Resistance -> Max 4 Actor + 1 Target actions with an additional 'Cancel' buttnn added last automatically -> total six buttons (hardwired into GUI design)
+    /// Authority -> Insert and Recall Teams
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public List<EventButtonDetails> GetActorActions(int nodeID)
+    public List<EventButtonDetails> GetNodeActions(int nodeID)
     {
         string sideColour;
         string cancelText = null;
@@ -817,6 +818,70 @@ public class ActorManager : MonoBehaviour
             tempList.Add(cancelDetails);
         }
         else { Debug.LogError(string.Format("Invalid Node (null), ID {0}{1}", nodeID, "\n")); }
+        return tempList;
+    }
+
+
+    /// <summary>
+    /// Returns a list of all relevant Actor Actions for the actor to enable a ModalActionMenu to be put together (one button per action). 
+    /// Resitance -> up to 3 x 'Give Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Send to Reserve' and an automatic Cancel button
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public List<EventButtonDetails> GetActorActions(int actorID)
+    {
+        string sideColour;
+        string cancelText = null;
+        string effectCriteria;
+        bool proceedFlag;
+        int actionID;
+        Actor[] arrayOfActors;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"ss
+        if (playerSide.level == globalAuthority.level)
+        { sideColour = colourAuthority; }
+        else { sideColour = colourResistance; }
+        //return list of button details
+        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
+        //Cancel button tooltip (handles all no go cases)
+        StringBuilder infoBuilder = new StringBuilder();
+
+        //Debug
+        cancelText = "Test tooltip";
+        infoBuilder.Append("Test data");
+
+        //
+        // - - - Cancel - - - (both sides)
+        //
+        //Cancel button is added last
+        EventButtonDetails cancelDetails = null;
+        if (infoBuilder.Length > 0)
+        {
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                buttonTooltipMain = cancelText,
+                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+            };
+        }
+        else
+        {
+            //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                buttonTooltipMain = cancelText,
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+            };
+        }
+        //add Cancel button to list
+        tempList.Add(cancelDetails);
+
         return tempList;
     }
 

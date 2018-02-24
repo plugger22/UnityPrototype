@@ -875,11 +875,12 @@ public class NodeManager : MonoBehaviour
         //
         ModalPanelDetails details = new ModalPanelDetails()
         {
-            nodeID = nodeID,
-            nodeName = node.nodeName,
-            nodeDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
-            nodePos = node.transform.position,
-            listOfButtonDetails = tempList
+            itemID = nodeID,
+            itemName = node.nodeName,
+            itemDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
+            itemPos = node.transform.position,
+            listOfButtonDetails = tempList,
+            menuType = ActionMenuType.Move
         };
         //activate menu
         GameManager.instance.actionMenuScript.SetActionMenu(details);
@@ -1247,11 +1248,12 @@ public class NodeManager : MonoBehaviour
         //
         ModalPanelDetails details = new ModalPanelDetails()
         {
-            nodeID = nodeID,
-            nodeName = node.nodeName,
-            nodeDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
-            nodePos = node.transform.position,
-            listOfButtonDetails = tempList
+            itemID = nodeID,
+            itemName = node.nodeName,
+            itemDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
+            itemPos = node.transform.position,
+            listOfButtonDetails = tempList,
+            menuType = ActionMenuType.Gear
         };
         //activate menu
         GameManager.instance.actionMenuScript.SetActionMenu(details);
