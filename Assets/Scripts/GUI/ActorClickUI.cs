@@ -13,6 +13,12 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
 {
     private int actorSlotID = 0;
 
+    public void Awake()
+    {
+        actorSlotID = GetComponentInParent<ActorInteraction>().actorSlotID;
+        //Debug.Log(string.Format("ActorClickUI: actorSlotID {0}{1}", actorSlotID, "\n"));
+    }
+
     /// <summary>
     /// Mouse click -> Right: Actor Action Menu
     /// </summary>
@@ -40,6 +46,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                         {
                             //adjust position prior to sending
                             Vector3 position = transform.position;
+                            position.y -= 100;
                             position = Camera.main.ScreenToWorldPoint(position);
                             ModalPanelDetails details = new ModalPanelDetails()
                             {
