@@ -10,6 +10,11 @@ using TMPro;
 /// </summary>
 public class GUIManager : MonoBehaviour
 {
+    [Tooltip("Alpha of Actor portraits when ActorStatus is 'Active'")]
+    [Range(0f,1f)] public float alphaActive = 1.0f;
+    [Tooltip("Alpha of Actor portraits when ActorStatus is 'InActive'")]
+    [Range(0f, 1f)] public float alphaInactive = 0.45f;
+
     //Actor display at bottom
     private GameObject Actor0;
     private GameObject Actor1;

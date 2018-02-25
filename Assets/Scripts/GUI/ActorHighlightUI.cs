@@ -22,12 +22,14 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     
     /// <summary>
-    /// Mouse Over event
+    /// Mouse Over event -> Only show active nodes if actor active
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerEnter (PointerEventData eventData)
     {
-        StartCoroutine(ShowActiveNodes());
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
+        if (actor != null && actor.Status == ActorStatus.Active)
+        { StartCoroutine(ShowActiveNodes()); }
     }
 
     /// <summary>

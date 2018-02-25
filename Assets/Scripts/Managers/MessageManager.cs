@@ -133,7 +133,23 @@ public Message PlayerMove(string text, int nodeID)
     // - - - Actions - - -
     //
 
-
+    public Message ActorStatus(string text, int actorID)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Actor_Status;
+            message.side = GameManager.instance.globalScript.sideResistance;
+            message.isPublic = false;
+            message.data0 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
 
     //
     // - - - AI - - -

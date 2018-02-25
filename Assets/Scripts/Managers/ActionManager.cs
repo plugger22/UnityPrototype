@@ -31,8 +31,12 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
         EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent);
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.LieLowAction, OnEvent);
+        EventManager.instance.AddListener(EventType.ActivateAction, OnEvent);
+        EventManager.instance.AddListener(EventType.DismissAction, OnEvent);
+        EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent);
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
     /// <summary>
@@ -439,7 +443,54 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     /// <param name="details"></param>
     public void ProcessLieLowAction(ModalActionDetails details)
-    { }
+    {
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = errorSprite;
+        if (details != null)
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
+            if (actor != null)
+            {
+                /*string title = "";
+                if (details.side == GameManager.instance.globalScript.sideAuthority)
+                { title = string.Format(" {0}", GameManager.instance.metaScript.GetAuthorityTitle()); }*/
+                actor.Status = ActorStatus.Inactive;
+                int numOfTurns = 3 - actor.datapoint2;
+                outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName );
+                outcomeDetails.textBottom = string.Format("{0}{1} will be Inactive for {2} turn{3} or until Activated{4}", colourNeutral, actor.actorName, 
+                    numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                //message
+                string text = string.Format("{0} {1}, is lying Low. Status: \"{2}\"", actor.arc.name, actor.actorName, actor.Status); 
+                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = errorSprite;
+        }
+        else
+        {
+            //change alpha of actor to indicate inactive status
+            GameManager.instance.guiScript.UpdateActorAlpha(details.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false)
+        { outcomeDetails.isAction = true; }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
 
 
     /// <summary>

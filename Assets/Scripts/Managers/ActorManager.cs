@@ -16,12 +16,17 @@ public class ActorManager : MonoBehaviour
 {
 
     [HideInInspector] public int numOfActiveActors;    //Actors who are OnMap and active, eg. not asleep or captured
-    
+    [Tooltip("Maxium number of actors (Active or Inactive) that can be onMap (eg. 'Onscreen') at any one time")]
     [Range(1, 4)] public int numOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
-                                                        //is the total for one side (duplicated by the other side)
-    [Range(1, 6)] public int numOfReserveActors = 4;    //total number of actors that can be in the replacement pool (both sides)
+    [Tooltip("Maximum number of actors that can be in the replacement pool (applies to both sides)")]
+    [Range(1, 6)] public int numOfReserveActors = 4;    //
+    [Tooltip("The maximum number of stats (Qualities) that an actor can have")]
+    [Range(2,4)] public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
 
-    public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
+    [Tooltip("Maximum value of an actor datapoint stat")]
+    [Range(2, 4)] public int maxStatValue = 3;
+    [Tooltip("Minimum value of an actor datapoint stat")]
+    [Range(2, 4)] public int minStatValue = 0;
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
@@ -58,6 +63,7 @@ public class ActorManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         //event listener is registered in InitialiseActors() due to GameManager sequence.
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.RecruitAction, OnEvent);
         EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent);
@@ -85,6 +91,9 @@ public class ActorManager : MonoBehaviour
             case EventType.ChangeColour:
                 SetColours();
                 break;
+            case EventType.StartTurnLate:
+                StartTurnLate();
+                break;
             case EventType.RecruitAction:
                 ModalActionDetails details = Param as ModalActionDetails;
                 InitialiseGenericPickerRecruit(details);
@@ -104,6 +113,14 @@ public class ActorManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
+    }
+
+    /// <summary>
+    /// Pre turn processing
+    /// </summary>
+    private void StartTurnLate()
+    {
+        CheckInactiveActors();
     }
 
     /// <summary>
@@ -830,7 +847,7 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetActorActions(int actorSlotID)
     {
-        string sideColour;
+        string sideColour, tooltipText;
         string cancelText = null;
         bool isResistance;
         //return list of button details
@@ -847,10 +864,7 @@ public class ActorManager : MonoBehaviour
         //if actor is Null, a single button (Cancel) menu is still provided
         if (actor != null)
         {
-            //Debug
-            cancelText = "Test tooltip";
-            infoBuilder.Append("Test data");
-
+            cancelText = string.Format("{0} {1}", actor.arc.name, actor.actorName);
             switch (actor.Status)
             {
                 case ActorStatus.Active:
@@ -880,21 +894,32 @@ public class ActorManager : MonoBehaviour
                         //
                         // - - - Lie Low - - -
                         //
-                        ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
-                        lielowActionDetails.side = playerSide;
-                        lielowActionDetails.actorSlotID = actor.slotID;
-
-                        EventButtonDetails lielowDetails = new EventButtonDetails()
+                        //Invisibility must be less than max
+                        if (actor.datapoint2 < maxStatValue)
                         {
-                            buttonTitle = "Lie Low",
-                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                            buttonTooltipMain = cancelText,
-                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
-                            //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails); }
-                        };
-                        //add Lie Low button to list
-                        tempList.Add(lielowDetails);
+                            ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                            lielowActionDetails.side = playerSide;
+                            lielowActionDetails.actorSlotID = actor.slotID;
+                            int numOfTurns = 3 - actor.datapoint2;
+                            tooltipText = string.Format("{0} will regain Invisibility and automatically return in {1} turn{2}", actor.actorName, numOfTurns,
+                                numOfTurns != 1 ? "s" : "");
+                            EventButtonDetails lielowDetails = new EventButtonDetails()
+                            {
+                                buttonTitle = "Lie Low",
+                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
+                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                //use a Lambda to pass arguments to the action
+                                action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails); }
+                            };
+                            //add Lie Low button to list
+                            tempList.Add(lielowDetails);
+                        }
+                        else
+                        {
+                            //actor invisiblity at max
+                            infoBuilder.Append(string.Format("{0} Invisibility at Max and can't Lie Low", actor.arc.name));
+                        }
                         //
                         // - - - Give Gear - - -
                         //
@@ -974,6 +999,10 @@ public class ActorManager : MonoBehaviour
 
         }
         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
+
+        //Debug
+        if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
+        if (infoBuilder.Length == 0) { infoBuilder.Append("Test data"); }
 
         //
         // - - - Cancel - - - (both sides)
@@ -1459,6 +1488,14 @@ public class ActorManager : MonoBehaviour
         }
         subBuilder.AppendLine();
         return subBuilder.ToString();
+    }
+
+    /// <summary>
+    /// Checks all OnMap Inactive actors, increments invisibility and returns any at max value back to Active status
+    /// </summary>
+    private void CheckInactiveActors()
+    {
+
     }
 
     //new methods above here

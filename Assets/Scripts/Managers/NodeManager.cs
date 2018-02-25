@@ -12,15 +12,17 @@ using System.Text;
 /// </summary>
 public class NodeManager : MonoBehaviour
 {
-    [Tooltip("% chance times actor.Ability of a primary node being active for an Actor")]
-    public int nodePrimaryChance;                                   //% chance (times actor.Ability) of a primary node being active for an actor, halved for secondary, default 10%
-    public int nodeActiveMinimum;                                   //minimum number of active nodes on a map for any actor type, default 3
+    [Tooltip("% chance times actor.Ability of a primary node being active for an Actor, halved for secondary node")]
+    [Range(10,40)] public int nodePrimaryChance = 20;                                
+    [Tooltip("Minimum number of active nodes on a map for any actor type")]
+    [Range(0,4)] public int nodeActiveMinimum = 3;
+    [Tooltip("Node Colour Types")]
     public Material[] arrayOfNodeTypes;
 
     [Tooltip("Maximum value of a node datapoint")]
-    public int maxNodeValue = 3;
+    [Range(2,4)] public int maxNodeValue = 3;
     [Tooltip("Minimum value of a node datapoint")]
-    public int minNodeValue = 0;
+    [Range(2, 4)] public int minNodeValue = 0;
 
     [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
