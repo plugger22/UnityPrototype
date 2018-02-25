@@ -81,14 +81,30 @@ public class GUIManager : MonoBehaviour
         listOfActorPortraits.Add(picture1);
         listOfActorPortraits.Add(picture2);
         listOfActorPortraits.Add(picture3);
-        //assign actor text & sprites (type of Actor)
-        UpdateActorGUI();
+        //assign actorSlotID's to all Actor components
+        Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
+        Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
+        Actor2.GetComponent<ActorHighlightUI>().actorSlotID = 2;
+        Actor3.GetComponent<ActorHighlightUI>().actorSlotID = 3;
+        picture0.GetComponent<ActorClickUI>().actorSlotID = 0;
+        picture1.GetComponent<ActorClickUI>().actorSlotID = 1;
+        picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
+        picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
+        type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
+        type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
+        type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
+        type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
         //make sure raycasts are active, eg. node tooltips
         isBlocked = false;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
 
+    public void InitialiseLate()
+    {
+        //assign actor text & sprites (type of Actor)
+        UpdateActorGUI();
+    }
 
     /// <summary>
     /// handles events

@@ -295,6 +295,8 @@ public class ModalGenericPicker : MonoBehaviour
     {
         modalGenericObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
+        //close generic tooltip (safety check)
+        GameManager.instance.tooltipGenericScript.CloseTooltip();
         //deselect all generic options to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this);
         SetConfirmButton(false);

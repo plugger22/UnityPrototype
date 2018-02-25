@@ -893,7 +893,7 @@ public class NodeManager : MonoBehaviour
     private void CreateGearlNodeMenu(int nodeID)
     {
         Debug.Log("CreateSpecialNodeMenu");
-
+        int counter = 0;                    //num of gear that can be used
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
 
         //Get Node
@@ -929,6 +929,7 @@ public class NodeManager : MonoBehaviour
                                 tempAction = actionKinetic;
                                 if (tempAction != null)
                                 {
+                                    counter++;
                                     //effects
                                     StringBuilder builder = new StringBuilder();
                                     listOfEffects = tempAction.listOfEffects;
@@ -1028,6 +1029,7 @@ public class NodeManager : MonoBehaviour
                                 tempAction = actionHacking;
                                 if (tempAction != null)
                                 {
+                                    counter++;
                                     //effects
                                     StringBuilder builder = new StringBuilder();
                                     listOfEffects = tempAction.listOfEffects;
@@ -1127,6 +1129,7 @@ public class NodeManager : MonoBehaviour
                                 tempAction = actionPersuasion;
                                 if (tempAction != null)
                                 {
+                                    counter++;
                                     //effects
                                     StringBuilder builder = new StringBuilder();
                                     listOfEffects = tempAction.listOfEffects;
@@ -1214,26 +1217,58 @@ public class NodeManager : MonoBehaviour
                 //
                 //Cancel button is added last
                 EventButtonDetails cancelDetails = null;
-                if (infoBuilder.Length > 0)
+                //does player have gear?
+                if (GameManager.instance.playerScript.GetNumOfGear() > 0)
                 {
-                    cancelDetails = new EventButtonDetails()
+                    //is there any relevant, node-use, gear?
+                    if (counter > 0)
                     {
-                        buttonTitle = "CANCEL",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                        buttonTooltipMain = "There are some limitations preventing gear use",
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
-                    };
+                        //are there any restrictions on the use of the node-type gear?
+                        if (infoBuilder.Length > 0)
+                        {
+                            //node-type gear present but there are restrictions
+                            cancelDetails = new EventButtonDetails()
+                            {
+                                buttonTitle = "CANCEL",
+                                buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                                buttonTooltipMain = "There are some limitations preventing gear use",
+                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                                //use a Lambda to pass arguments to the action
+                                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                            };
+                        }
+                        else
+                        {
+                            //node-type gear present but no restrictions
+                            cancelDetails = new EventButtonDetails()
+                            {
+                                buttonTitle = "CANCEL",
+                                buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                                buttonTooltipMain = "You decide not to use your gear to carry out a Node action",
+                                //use a Lambda to pass arguments to the action
+                                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                            };
+                        }
+                    }
+                    else
+                        //Gear present but none of it can be used at Nodes
+                        cancelDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "CANCEL",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                            buttonTooltipMain = "You can only take Gear actions at a Node if you have gear with that capability",
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                        };
                 }
                 else
                 {
-                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                    //NO GEAR
                     cancelDetails = new EventButtonDetails()
                     {
                         buttonTitle = "CANCEL",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                        buttonTooltipMain = "You decide to keep your powder dry",
+                        buttonTooltipMain = "You do not have any Gear",
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
                     };

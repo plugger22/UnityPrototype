@@ -11,12 +11,12 @@ using modalAPI;
 /// </summary>
 public class ActorClickUI : MonoBehaviour, IPointerClickHandler
 {
-    private int actorSlotID = 0;
+    [HideInInspector] public int actorSlotID = 0;
 
     public void Awake()
     {
-        actorSlotID = GetComponentInParent<ActorInteraction>().actorSlotID;
-        //Debug.Log(string.Format("ActorClickUI: actorSlotID {0}{1}", actorSlotID, "\n"));
+        //actorSlotID = GetComponentInParent<ActorHighlightUI>().actorSlotID;
+        Debug.Log(string.Format("ActorClickUI: actorSlotID {0}{1}", actorSlotID, "\n"));
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(string.Format("ActorClickUI: Button Clicked{0}", "\n"));
+        //Debug.Log(string.Format("ActorClickUI: Button Clicked slotID {0}{1}", actorSlotID, "\n"));
         bool proceedFlag = true;
         switch (eventData.button)
         {
@@ -41,13 +41,15 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                     }
                     if (proceedFlag == true)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetActor(actorSlotID);
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
                         if (actor != null)
                         {
                             //adjust position prior to sending
                             Vector3 position = transform.position;
-                            position.y -= 100;
+                            position.x += 25;
+                            position.y -= 50;
                             position = Camera.main.ScreenToWorldPoint(position);
+                            //actor
                             ModalPanelDetails details = new ModalPanelDetails()
                             {
                                 itemID = actor.actorID,

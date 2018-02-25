@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 using gameAPI;
 
 /// <summary>
-/// handles UI interaction for Actors
+/// handles UI tooltip for Actors
 /// </summary>
-public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private int offset;
-    private int slotID;
+    [HideInInspector] public int actorSlotID;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
@@ -34,7 +34,7 @@ public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
         mouseOverFade /= 2; 
         offset = GameManager.instance.tooltipScript.tooltipOffset;
-        slotID = parent.GetComponent<ActorInteraction>().actorSlotID;
+        //actorSlotID = parent.GetComponent<ActorHighlightUI>().actorSlotID;
     }
 
     /// <summary>
@@ -71,11 +71,11 @@ public class ActorUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 GlobalSide side = GameManager.instance.sideScript.PlayerSide;
                 GameManager.instance.tooltipActorScript.SetTooltip
                     (
-                    GameManager.instance.dataScript.GetCurrentActor(slotID, side),
+                    GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
                     GameManager.instance.dataScript.GetQualities(side),
-                    GameManager.instance.dataScript.GetActorStats(slotID, side),
+                    GameManager.instance.dataScript.GetActorStats(actorSlotID, side),
                     //GameManager.instance.dataScript.GetActorTrait(slotID, side),
-                    GameManager.instance.dataScript.GetActorAction(slotID, side),
+                    GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
                     //parent.GetComponent<RectTransform>().position, -> does the same job as the transform line below
                     parent.transform.position,
                     parent.GetComponent<RectTransform>().rect.width,

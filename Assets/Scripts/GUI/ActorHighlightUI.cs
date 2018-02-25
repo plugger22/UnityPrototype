@@ -6,11 +6,12 @@ using gameAPI;
 using modalAPI;
 
 /// <summary>
-/// handles all Actor image related mouse interaction
+/// handles all Actor face image + text mouse interactions -> show highlighted nodes
+/// Right click on face is ActorClickUI.cs & mouseover tooltip on text is ActorTooltipUI.cs
 /// </summary>
-public class ActorInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public int actorSlotID;               //0 to 3, assuming 4 actors
+    [HideInInspector] public int actorSlotID;               //0 to 3, assuming 4 actors
     private float mouseOverDelay;         //delay in seconds before mouseOver kicks in
 
 
