@@ -10,7 +10,6 @@ using TMPro;
 /// </summary>
 public class GUIManager : MonoBehaviour
 {
-
     //Actor display at bottom
     private GameObject Actor0;
     private GameObject Actor1;
@@ -192,5 +191,6 @@ public class GUIManager : MonoBehaviour
 
     public bool CheckIsBlocked()
     { return isBlocked; }
+
 
 }

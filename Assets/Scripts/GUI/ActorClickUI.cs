@@ -56,7 +56,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                                 itemName = actor.actorName,
                                 itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
                                 itemPos = position,
-                                listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(actor.actorID),
+                                listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(actorSlotID),
                                 menuType = ActionMenuType.Actor
                             };
                             //activate menu

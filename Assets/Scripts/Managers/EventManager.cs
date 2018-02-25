@@ -21,7 +21,7 @@ public enum EventType
     //CloseTeamPicker,
     ShowTargetNodes,
     NodeDisplay,
-    //action menu
+    //action Node menu
     NodeAction,
     NodeGearAction,
     TargetAction,
@@ -31,6 +31,10 @@ public enum EventType
     GearAction,
     RecruitAction,
     MoveAction,
+    DismissAction,
+    LieLowAction,
+    ActivateAction,
+    GiveGearAction,
     //decisions
     RecruitDecision,
     //turn manager

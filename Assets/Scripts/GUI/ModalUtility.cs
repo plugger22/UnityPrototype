@@ -33,14 +33,15 @@ namespace modalAPI
     }
 
     /// <summary>
-    /// data fed to ActionManager.cs -> ProcessNodeAction to facilitate processing the node action
+    /// data fed to ActionManager.cs -> Process 'x' Action to facilitate processing the node action
     /// </summary>
     public class ModalActionDetails
     {
         public GlobalSide side;
         public int nodeID;
         public int actorSlotID;                                         //for standard actor based node actions, ignore otherwise
-        public EventType eventType;                                     //event that is triggered when action button clicked
+        public EventType eventType;                                     //event that is triggered (Only used for Recruit Actors, ignore otherwise)
+
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
         public int gearID;                                              //Resistance only: special node gear actions

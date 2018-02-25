@@ -826,55 +826,195 @@ public class ActorManager : MonoBehaviour
     /// Returns a list of all relevant Actor Actions for the actor to enable a ModalActionMenu to be put together (one button per action). 
     /// Resitance -> up to 3 x 'Give Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Send to Reserve' and an automatic Cancel button
     /// </summary>
-    /// <param name="actorID"></param>
+    /// <param name="actorSlotID"></param>
     /// <returns></returns>
-    public List<EventButtonDetails> GetActorActions(int actorID)
+    public List<EventButtonDetails> GetActorActions(int actorSlotID)
     {
         string sideColour;
         string cancelText = null;
-        string effectCriteria;
-        bool proceedFlag;
-        int actionID;
-        Actor[] arrayOfActors;
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        //color code for button tooltip header text, eg. "Operator"ss
-        if (playerSide.level == globalAuthority.level)
-        { sideColour = colourAuthority; }
-        else { sideColour = colourResistance; }
+        bool isResistance;
         //return list of button details
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
         //Cancel button tooltip (handles all no go cases)
         StringBuilder infoBuilder = new StringBuilder();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"ss
+        if (playerSide.level == globalAuthority.level)
+        { sideColour = colourAuthority; isResistance = false; }
+        else { sideColour = colourResistance; isResistance = true; }
+        //get actor
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, playerSide);
+        //if actor is Null, a single button (Cancel) menu is still provided
+        if (actor != null)
+        {
+            //Debug
+            cancelText = "Test tooltip";
+            infoBuilder.Append("Test data");
 
-        //Debug
-        cancelText = "Test tooltip";
-        infoBuilder.Append("Test data");
+            switch (actor.Status)
+            {
+                case ActorStatus.Active:
+                    //
+                    // - - - Dismiss (both sides) - - - 
+                    //
+                    ModalActionDetails dismissActionDetails = new ModalActionDetails() { };
+                    dismissActionDetails.side = playerSide;
+                    dismissActionDetails.actorSlotID = actor.slotID;
+
+                    EventButtonDetails dismissDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "DISMISS",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                        buttonTooltipMain = cancelText,
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.DismissAction, this, dismissActionDetails); }
+                    };
+                    //add Lie Low button to list
+                    tempList.Add(dismissDetails);
+                    //
+                    // - - - Resistance - - -
+                    //
+                    if (isResistance == true)
+                    {
+                        //
+                        // - - - Lie Low - - -
+                        //
+                        ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                        lielowActionDetails.side = playerSide;
+                        lielowActionDetails.actorSlotID = actor.slotID;
+
+                        EventButtonDetails lielowDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "Lie Low",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                            buttonTooltipMain = cancelText,
+                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails); }
+                        };
+                        //add Lie Low button to list
+                        tempList.Add(lielowDetails);
+                        //
+                        // - - - Give Gear - - -
+                        //
+                        int numOfGear = GameManager.instance.playerScript.GetNumOfGear();
+                        if (numOfGear > 0)
+                        {
+                            List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                            if (listOfGear != null)
+                            {
+                                //loop gear and create a button for each
+                                for (int i = 0; i < numOfGear; i++)
+                                {
+                                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                                    if (gear != null)
+                                    {
+                                        ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                                        gearActionDetails.side = playerSide;
+                                        gearActionDetails.actorSlotID = actor.slotID;
+                                        gearActionDetails.gearID = gear.gearID;
+
+                                        EventButtonDetails gearDetails = new EventButtonDetails()
+                                        {
+                                            buttonTitle = string.Format("Give {0}", gear.name),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                            buttonTooltipMain = cancelText,
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                                            //use a Lambda to pass arguments to the action
+                                            action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); }
+                                        };
+                                        //add Lie Low button to list
+                                        tempList.Add(gearDetails);
+                                    }
+                                    else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+                                }
+                            }
+                            else { Debug.LogError("Invalid listOfGear (Null)"); }
+                        }
+                    }
+
+                    break;
+                //
+                // - - - Actor Inactive - - -
+                //
+                case ActorStatus.Inactive:
+                    //
+                    // - - - Resistance - - -
+                    //
+                    if (isResistance == true)
+                    {
+                        //
+                        // - - - Activate - - -
+                        //
+                        ModalActionDetails activateActionDetails = new ModalActionDetails() { };
+                        activateActionDetails.side = playerSide;
+                        activateActionDetails.actorSlotID = actor.slotID;
+
+                        EventButtonDetails activateDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "Activate",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                            buttonTooltipMain = cancelText,
+                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails); }
+                        };
+                        //add Lie Low button to list
+                        tempList.Add(activateDetails);
+                    }
+                    break;
+                //
+                // - - - Actor Captured or other - - -
+                //
+                default:
+                    cancelText = string.Format("{0}Actor is \"{1}\" and out of contact{2}", colourBadEffect, actor.Status, colourEnd);
+                    break;
+            }
+
+        }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
 
         //
         // - - - Cancel - - - (both sides)
         //
         //Cancel button is added last
         EventButtonDetails cancelDetails = null;
-        if (infoBuilder.Length > 0)
+        if (actor != null)
         {
-            cancelDetails = new EventButtonDetails()
+            if (infoBuilder.Length > 0)
             {
-                buttonTitle = "CANCEL",
-                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                buttonTooltipMain = cancelText,
-                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
-                //use a Lambda to pass arguments to the action
-                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
-            };
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = cancelText,
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                };
+            }
+            else
+            {
+                //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = cancelText,
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                };
+            }
         }
         else
         {
-            //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+            //Null actor -> invalid menu creation
             cancelDetails = new EventButtonDetails()
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                buttonTooltipMain = cancelText,
+                buttonTooltipMain = string.Format("{0}Invalid Actor{1}",colourBadEffect, colourEnd),
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
             };

@@ -61,6 +61,22 @@ public class ActionManager : MonoBehaviour
             case EventType.TargetAction:
                 ProcessNodeTarget((int)Param);
                 break;
+            case EventType.DismissAction:
+                ModalActionDetails detailsDismiss = Param as ModalActionDetails;
+                ProcessDismissAction(detailsDismiss);
+                break;
+            case EventType.LieLowAction:
+                ModalActionDetails detailsLieLow = Param as ModalActionDetails;
+                ProcessLieLowAction(detailsLieLow);
+                break;
+            case EventType.ActivateAction:
+                ModalActionDetails detailsActivate = Param as ModalActionDetails;
+                ProcessActivateAction(detailsActivate);
+                break;
+            case EventType.GiveGearAction:
+                ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
+                ProcessGiveGearAction(detailsGiveGear);
+                break;
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -408,6 +424,40 @@ public class ActionManager : MonoBehaviour
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }
+
+
+    /// <summary>
+    /// Process Dismiss actor action
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessDismissAction(ModalActionDetails details)
+    { }
+
+
+    /// <summary>
+    /// Process Lie Low actor action
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessLieLowAction(ModalActionDetails details)
+    { }
+
+
+    /// <summary>
+    /// Process Activate actor action
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessActivateAction(ModalActionDetails details)
+    { }
+
+
+    /// <summary>
+    /// Process Give Gear actor action
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessGiveGearAction(ModalActionDetails details)
+    { }
+
+
 
     /// <summary>
     /// Process node Target
