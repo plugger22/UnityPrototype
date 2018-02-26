@@ -34,6 +34,20 @@ namespace packageAPI
         public Vector3 tooltipPos;
     }
 
+    /// <summary>
+    /// used to pass data package to actor Tooltip
+    /// </summary>
+    public class ActorTooltipData
+    {
+        public float width;
+        public float height;
+        public Vector3 screenPos;
+        public Actor actor;
+        public Action action;
+        public string[] arrayOfQualities;
+        public int[] arrayOfStats;
+    }
+
     //
     // - - - Effect Data Packages - - -
     //

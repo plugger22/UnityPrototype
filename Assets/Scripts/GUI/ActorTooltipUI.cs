@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// handles UI tooltip for Actors
@@ -69,18 +69,17 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
             {
                 GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-                GameManager.instance.tooltipActorScript.SetTooltip
-                    (
-                    GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
-                    GameManager.instance.dataScript.GetQualities(side),
-                    GameManager.instance.dataScript.GetActorStats(actorSlotID, side),
-                    //GameManager.instance.dataScript.GetActorTrait(slotID, side),
-                    GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
-                    //parent.GetComponent<RectTransform>().position, -> does the same job as the transform line below
-                    parent.transform.position,
-                    parent.GetComponent<RectTransform>().rect.width,
-                    parent.GetComponent<RectTransform>().rect.height
-                    );
+                ActorTooltipData data = new ActorTooltipData()
+                {
+                    width = parent.GetComponent<RectTransform>().rect.width,
+                    height = parent.GetComponent<RectTransform>().rect.height,
+                    screenPos = parent.transform.position,
+                    actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
+                    action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
+                    arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
+                    arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
+                };
+                GameManager.instance.tooltipActorScript.SetTooltip(data);
                 yield return null;
             }
             //fade in
