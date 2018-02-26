@@ -849,6 +849,7 @@ public class ActorManager : MonoBehaviour
     {
         string sideColour, tooltipText;
         string cancelText = null;
+        int benefit;
         bool isResistance;
         //return list of button details
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
@@ -939,13 +940,38 @@ public class ActorManager : MonoBehaviour
                                         gearActionDetails.side = playerSide;
                                         gearActionDetails.actorSlotID = actor.actorSlotID;
                                         gearActionDetails.gearID = gear.gearID;
-                                        
+                                        //get actor's preferred gear
+                                        GearType preferredGear = actor.arc.preferredGear;
+                                        if (preferredGear != null)
+                                        {
+                                            switch (gear.rarity.name)
+                                            {
+                                                case "Common": benefit = 1; break;
+                                                case "Rare": benefit = 2; break;
+                                                case "Unique": benefit = 3; break;
+                                                default:
+                                                    benefit = 0;
+                                                    Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gear.rarity.name));
+                                                    break;
+                                            }
+                                            if (preferredGear.name.Equals(gear.type.name) == true)
+                                            { tooltipText = string.Format("Preferred Gear for {0}{1}{2} motivation +{3}{4}Transfer {5} renown to Player", actor.arc.name, "\n", 
+                                                actor.actorName, benefit, "\n", benefit); }
+                                            else
+                                            { tooltipText = string.Format("NOT Preferred Gear (prefers {0}){1}{2} motivation +{3}", preferredGear.name, "\n", 
+                                                actor.actorName, benefit); }
+                                        }
+                                        else
+                                        {
+                                            tooltipText = "Unknown Preferred Gear";
+                                            Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
+                                        }
                                         EventButtonDetails gearDetails = new EventButtonDetails()
                                         {
                                             buttonTitle = string.Format("Give {0}", gear.name),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                            buttonTooltipMain = cancelText,
-                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                                            buttonTooltipMain = string.Format("Give {0} ({1}) to {2} {3}", gear.name, gear.type.name, actor.arc.name, actor.actorName),
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                             //use a Lambda to pass arguments to the action
                                             action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); }
                                         };
@@ -957,6 +983,8 @@ public class ActorManager : MonoBehaviour
                             }
                             else { Debug.LogError("Invalid listOfGear (Null)"); }
                         }
+                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                        infoBuilder.Append("You have no Gear to give");
                     }
 
                     break;

@@ -25,11 +25,14 @@ public class ActorArc : ScriptableObject
     public TeamArc preferredTeam;
     public GlobalSide side;
 
-    //
+    //Preferences
     [Tooltip("Node preferences (which nodes are liable to be active on the map for this Actor type) -> Full chance of node being active")]
     public List<NodeArc> listPrefPrimary = new List<NodeArc>();
     [Tooltip("Node preferences (which nodes are liable to be active on the map for this Actor type) -> NO chance of node being active")]
     public List<NodeArc> listPrefExclude = new List<NodeArc>();
+    [Tooltip("The type of Gear the actor prefers (you gain a renown transfer from them for giving them this type of gear)")]
+    public GearType preferredGear;
+
 
 
 }
