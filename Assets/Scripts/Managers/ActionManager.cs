@@ -549,11 +549,92 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Process Give Gear actor action
+    /// Process Give Gear actor action (Resistance only)
     /// </summary>
     /// <param name="details"></param>
     public void ProcessGiveGearAction(ModalActionDetails details)
-    { }
+    {
+        int benefit;
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        Gear gear = null;
+        Actor actor = null;
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = errorSprite;
+        if (details != null)
+        {
+            actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
+            if (actor != null)
+            {
+                gear = GameManager.instance.dataScript.GetGear(details.gearID);
+                if (gear != null)
+                {
+                    //Give Gear
+                    outcomeDetails.textTop = string.Format("{0} {1} thanks you for the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+
+                    //get actor's preferred gear
+                    GearType preferredGear = actor.arc.preferredGear;
+                    if (preferredGear != null)
+                    {
+                        switch (gear.rarity.name)
+                        {
+                            case "Common": benefit = 1; break;
+                            case "Rare": benefit = 2; break;
+                            case "Unique": benefit = 3; break;
+                            default:
+                                benefit = 0;
+                                Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gear.rarity.name));
+                                break;
+                        }
+                        if (preferredGear.name.Equals(gear.type.name) == true)
+                        {
+                            //Preferred gear (renown transfer)
+                            outcomeDetails.textBottom = string.Format("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
+                              colourBad, gear.name, colourEnd, "\n","\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
+                        }
+                        else
+                        {
+                            //Not preferred gear (motivation boost only)
+                            outcomeDetails.textBottom = string.Format("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}",
+                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, colourEnd);
+                        }
+                    }
+                    else
+                    { Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name)); errorFlag = true; }
+
+                    //message
+                    string text = string.Format("");
+                    /*Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID);
+                    GameManager.instance.dataScript.AddMessage(message);*/
+                }
+                else { Debug.LogError(string.Format("Invalid gear (Null) for details.gearID {0}", details.gearID)); errorFlag = true; }
+            }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = errorSprite;
+        }
+        else
+        {
+            //Remove Gear
+            if (gear != null)
+            { GameManager.instance.playerScript.RemoveGear(gear.gearID); }
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false)
+        { outcomeDetails.isAction = true; }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
 
 
 

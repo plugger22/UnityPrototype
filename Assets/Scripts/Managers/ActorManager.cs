@@ -955,11 +955,11 @@ public class ActorManager : MonoBehaviour
                                                     break;
                                             }
                                             if (preferredGear.name.Equals(gear.type.name) == true)
-                                            { tooltipText = string.Format("Preferred Gear for {0}{1}{2} motivation +{3}{4}Transfer {5} renown to Player", actor.arc.name, "\n", 
-                                                actor.actorName, benefit, "\n", benefit); }
+                                            { tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}", 
+                                                actor.arc.name, "\n", colourGoodEffect, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd); }
                                             else
-                                            { tooltipText = string.Format("NOT Preferred Gear (prefers {0}){1}{2} motivation +{3}", preferredGear.name, "\n", 
-                                                actor.actorName, benefit); }
+                                            { tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutralEffect, 
+                                                preferredGear.name, colourEnd, "\n", colourGoodEffect, actor.actorName, benefit, colourEnd); }
                                         }
                                         else
                                         {
@@ -970,7 +970,8 @@ public class ActorManager : MonoBehaviour
                                         {
                                             buttonTitle = string.Format("Give {0}", gear.name),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                            buttonTooltipMain = string.Format("Give {0} ({1}) to {2} {3}", gear.name, gear.type.name, actor.arc.name, actor.actorName),
+                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutralEffect, gear.type.name, 
+                                            colourEnd, actor.arc.name, actor.actorName),
                                             buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                             //use a Lambda to pass arguments to the action
                                             action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); }
