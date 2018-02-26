@@ -214,8 +214,12 @@ public class TooltipActor : MonoBehaviour
         /*//calculate offset - height (default above)
         //screenPos.y += height / 2 + offset * 3;*/
 
+        //update rectTransform to get correct height as it changes everytime with dynamic resizing of tooltip
+        Canvas.ForceUpdateCanvases();
+        rectTransform = tooltipActorObject.GetComponent<RectTransform>();
+        float height = rectTransform.rect.height;
         //base y pos at zero (bottom of screen). Adjust up from there.
-        data.screenPos.y = data.height + offset;
+        data.screenPos.y = height + offset;
         data.screenPos.x -= data.width / 10;
         //width
         if (data.screenPos.x + data.width / 2 >= Screen.width)
@@ -280,11 +284,13 @@ public class TooltipActor : MonoBehaviour
             case "Authority":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
             case "Resistance":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 break;
             default:

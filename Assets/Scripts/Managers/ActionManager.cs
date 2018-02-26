@@ -439,7 +439,7 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Process Lie Low actor action
+    /// Process Lie Low actor action (Resistance only)
     /// </summary>
     /// <param name="details"></param>
     public void ProcessLieLowAction(ModalActionDetails details)
