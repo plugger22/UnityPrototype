@@ -939,7 +939,7 @@ public class ActorManager : MonoBehaviour
                                         gearActionDetails.side = playerSide;
                                         gearActionDetails.actorSlotID = actor.actorSlotID;
                                         gearActionDetails.gearID = gear.gearID;
-
+                                        
                                         EventButtonDetails gearDetails = new EventButtonDetails()
                                         {
                                             buttonTitle = string.Format("Give {0}", gear.name),
@@ -975,18 +975,22 @@ public class ActorManager : MonoBehaviour
                         ModalActionDetails activateActionDetails = new ModalActionDetails() { };
                         activateActionDetails.side = playerSide;
                         activateActionDetails.actorSlotID = actor.actorSlotID;
-
+                        int numOfTurns = 3 - actor.datapoint2;
+                        tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", actor.actorName, numOfTurns,
+                            numOfTurns != 1 ? "s" : "");
                         EventButtonDetails activateDetails = new EventButtonDetails()
                         {
                             buttonTitle = "Activate",
                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                            buttonTooltipMain = cancelText,
-                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                            buttonTooltipMain = string.Format("{0} {1} will be Immediately Recalled", actor.arc.name, actor.actorName),
+                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                             //use a Lambda to pass arguments to the action
                             action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails); }
                         };
                         //add Lie Low button to list
                         tempList.Add(activateDetails);
+                        //cancel tooltips
+                        infoBuilder.Append("Gear cannot be given when Lying Low");
                     }
                     break;
                 //
