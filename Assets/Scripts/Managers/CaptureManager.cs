@@ -199,7 +199,7 @@ public class CaptureManager : MonoBehaviour
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //reduce actor alpha to show inactive (sprite and text)
-        GameManager.instance.guiScript.UpdateActorAlpha(details.actor.slotID, GameManager.instance.guiScript.alphaInactive);
+        GameManager.instance.guiScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
         //admin
         GameManager.instance.actorScript.numOfActiveActors--;
         details.actor.Status = ActorStatus.Captured;
@@ -290,7 +290,7 @@ public class CaptureManager : MonoBehaviour
                 details.actor.datapoint2 = invisibilityNew;
                 builder.Append(string.Format("{0}{1} Invisibility +{2} (Now {3}){4}", colourGood, details.actor.actorName, invisibilityNew, invisibilityNew, colourEnd));
                 //update actor alpha
-                GameManager.instance.guiScript.UpdateActorAlpha(details.actor.slotID, GameManager.instance.guiScript.alphaActive);
+                GameManager.instance.guiScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                 /*GameManager.instance.nodeScript.NodeRedraw = true;*/
                 //admin
                 GameManager.instance.actorScript.numOfActiveActors++;

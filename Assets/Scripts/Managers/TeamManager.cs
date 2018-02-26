@@ -352,7 +352,7 @@ public void InitialiseTeams()
                                                 actor.AddTeam(team.TeamID);
                                                 //update team stats
                                                 team.NodeID = node.nodeID;
-                                                team.ActorSlotID = actor.slotID;
+                                                team.ActorSlotID = actor.actorSlotID;
                                                 team.Timer = deployTime;
                                                 team.TurnDeployed = GameManager.instance.turnScript.Turn;
                                                 //confirmation

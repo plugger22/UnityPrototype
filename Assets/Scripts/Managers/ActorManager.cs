@@ -281,7 +281,7 @@ public class ActorManager : MonoBehaviour
                 Actor actor = new Actor();
                 //data
                 actor.actorID = actorIDCounter++;
-                actor.slotID = slotID;
+                actor.actorSlotID = slotID;
                 actor.level = level;
                 actor.side = side;
                 actor.arc = arc;
@@ -435,7 +435,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.Status == ActorStatus.Active)
                         {
                             //active node for actor or player at node
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.slotID) == true ||
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true ||
                                 nodeID == playerID)
                             {
                                 //get node action
@@ -516,7 +516,7 @@ public class ActorManager : MonoBehaviour
 
                                         actionDetails.side = globalResistance;
                                         actionDetails.nodeID = nodeID;
-                                        actionDetails.actorSlotID = actor.slotID;
+                                        actionDetails.actorSlotID = actor.actorSlotID;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         if (actor.arc.nodeAction.special == null)
                                         {
@@ -666,7 +666,7 @@ public class ActorManager : MonoBehaviour
                             teamID = actor.arc.preferredTeam.TeamArcID;
                             tempAction = null;
                             //active node for actor
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.slotID) == true)
+                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.actorSlotID) == true)
                             {
                                 //get ANY TEAM node action
                                 actionID = GameManager.instance.dataScript.GetActionID("Any Team");
@@ -696,7 +696,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         Effect effect = listOfEffects[i];
                                         //check effect criteria is valid
-                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.slotID, teamID);
+                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.actorSlotID, teamID);
                                         if (effectCriteria == null)
                                         {
                                             //Effect criteria O.K -> tool tip text
@@ -762,7 +762,7 @@ public class ActorManager : MonoBehaviour
                                     ModalActionDetails actionDetails = new ModalActionDetails() { };
                                     actionDetails.side = globalAuthority;
                                     actionDetails.nodeID = nodeID;
-                                    actionDetails.actorSlotID = actor.slotID;
+                                    actionDetails.actorSlotID = actor.actorSlotID;
                                     //Node action is standard but other actions are possible
                                     UnityAction clickAction = null;
                                     //Team action
@@ -785,7 +785,7 @@ public class ActorManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.slotID));
+                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.actorSlotID));
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                 infoBuilder.Append(string.Format("{0} is having a bad day", actor.arc.name));
                             }
@@ -873,7 +873,7 @@ public class ActorManager : MonoBehaviour
                     //
                     ModalActionDetails dismissActionDetails = new ModalActionDetails() { };
                     dismissActionDetails.side = playerSide;
-                    dismissActionDetails.actorSlotID = actor.slotID;
+                    dismissActionDetails.actorSlotID = actor.actorSlotID;
 
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {
@@ -899,9 +899,9 @@ public class ActorManager : MonoBehaviour
                         {
                             ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                             lielowActionDetails.side = playerSide;
-                            lielowActionDetails.actorSlotID = actor.slotID;
+                            lielowActionDetails.actorSlotID = actor.actorSlotID;
                             int numOfTurns = 3 - actor.datapoint2;
-                            tooltipText = string.Format("{0} will regain Invisibility and automatically return in {1} turn{2}", actor.actorName, numOfTurns,
+                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1} turn{2}", actor.actorName, numOfTurns,
                                 numOfTurns != 1 ? "s" : "");
                             EventButtonDetails lielowDetails = new EventButtonDetails()
                             {
@@ -937,7 +937,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                         gearActionDetails.side = playerSide;
-                                        gearActionDetails.actorSlotID = actor.slotID;
+                                        gearActionDetails.actorSlotID = actor.actorSlotID;
                                         gearActionDetails.gearID = gear.gearID;
 
                                         EventButtonDetails gearDetails = new EventButtonDetails()
@@ -974,7 +974,7 @@ public class ActorManager : MonoBehaviour
                         //
                         ModalActionDetails activateActionDetails = new ModalActionDetails() { };
                         activateActionDetails.side = playerSide;
-                        activateActionDetails.actorSlotID = actor.slotID;
+                        activateActionDetails.actorSlotID = actor.actorSlotID;
 
                         EventButtonDetails activateDetails = new EventButtonDetails()
                         {
@@ -1491,11 +1491,44 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks all OnMap Inactive actors, increments invisibility and returns any at max value back to Active status
+    /// Checks all OnMap Inactive Resistance actors, increments invisibility and returns any at max value back to Active status
     /// </summary>
     private void CheckInactiveActors()
     {
-
+        //
+        // - - - Resistance actors - - -
+        //
+        Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActorsResistance != null)
+        {
+            for (int i = 0; i < arrayOfActorsResistance.Length; i++)
+            {
+                Actor actor = arrayOfActorsResistance[i];
+                if (actor != null)
+                {
+                    if (actor.Status == ActorStatus.Inactive)
+                    {
+                        if (actor.datapoint2 >= maxStatValue)
+                        {
+                            //actor has recovered from lying low, needs to be activated
+                            actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
+                            actor.Status = ActorStatus.Active;
+                            GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                            string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
+                            Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, true);
+                            GameManager.instance.dataScript.AddMessage(message);
+                        }
+                        else
+                        {
+                            //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
+                            actor.datapoint2++;
+                        }
+                    }
+                }
+                else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
     }
 
     //new methods above here

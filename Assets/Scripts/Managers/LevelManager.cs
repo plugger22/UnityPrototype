@@ -501,11 +501,11 @@ public class LevelManager : MonoBehaviour
             {
                 case "Authority":
                     builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
-                        listOfActorNodesAuthority[actor.slotID].Count, "\n\n"));
+                        listOfActorNodesAuthority[actor.actorSlotID].Count, "\n\n"));
                     break;
                 case "Resistance":
                     builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
-                        listOfActorNodesResistance[actor.slotID].Count, "\n\n"));
+                        listOfActorNodesResistance[actor.actorSlotID].Count, "\n\n"));
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

@@ -1760,7 +1760,7 @@ public class DataManager : MonoBehaviour
         {
             Actor actor = arrayOfActors[side.level, i];
             if (actor.arc.ActorArcID == actorArcID && actor.Status == ActorStatus.Active)
-            { return actor.slotID; }
+            { return actor.actorSlotID; }
         }
         return slotID;
     }
