@@ -216,7 +216,8 @@ public class TooltipActor : MonoBehaviour
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();*/
 
         //convert coordinates
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
+        //Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
+        Vector3 screenPos = data.tooltipPos;
         Canvas.ForceUpdateCanvases();
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
         float height = rectTransform.rect.height;

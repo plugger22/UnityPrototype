@@ -155,7 +155,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             //adjust position prior to sending
                             Vector3 positionActor = transform.position;
                             positionActor.x += 100;
-                            positionActor.y += 500;
+                            positionActor.y -= 100;
                             positionActor = Camera.main.ScreenToWorldPoint(positionActor);
 
                             ActorTooltipData actorTooltip = new ActorTooltipData()
