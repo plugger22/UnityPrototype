@@ -16,6 +16,12 @@ public class GearManager : MonoBehaviour
     [Range(1, 10)] public int chanceOfRareGear = 5;
     [Tooltip("Chance gear will be compromised and be no longer of any benefit after each use")]
     [Range(25, 75)] public int chanceOfCompromise = 50;
+    [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Common gear to an Actor")]
+    [Range(1, 3)] public int gearBenefitCommon = 1;
+    [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Rare gear to an Actor")]
+    [Range(1, 5)] public int gearBenefitRare = 2;
+    [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Unique gear to an Actor")]
+    [Range(1, 10)] public int gearBenefitUnique = 3;
 
     //used for quick reference  -> rarity
     [HideInInspector] public GearRarity gearCommon;
@@ -434,7 +440,7 @@ public class GearManager : MonoBehaviour
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
                                     colourDefault, colourEnd));
                                 //message
-                                string textMsg = string.Format("{0}, ID {1}, ({2}) has been acquired", gear.name, gear.gearID, gear.type.name, node.nodeID);
+                                string textMsg = string.Format("{0} ({1}) has been acquired at {2}", gear.name, gear.type.name, node.nodeName);
                                 Message messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
                                 if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise

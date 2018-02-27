@@ -946,9 +946,9 @@ public class ActorManager : MonoBehaviour
                                         {
                                             switch (gear.rarity.name)
                                             {
-                                                case "Common": benefit = 1; break;
-                                                case "Rare": benefit = 2; break;
-                                                case "Unique": benefit = 3; break;
+                                                case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
+                                                case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
+                                                case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
                                                 default:
                                                     benefit = 0;
                                                     Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gear.rarity.name));

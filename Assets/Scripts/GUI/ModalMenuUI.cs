@@ -11,7 +11,8 @@ using packageAPI;
 public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
-    public int NodeID { get; set; }
+    [HideInInspector] public int nodeID;
+    [HideInInspector] public ActionMenuType menuType;
 
     private int offset;
     private float mouseOverDelay;
@@ -37,7 +38,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         //mouseOverFade /= 2;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         //need to get nodeObject details at start to accomodate OnPointerEnter & node component details later in coroutine
-        nodeObject = GameManager.instance.dataScript.GetNodeObject(NodeID);
+        nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
 
     }
 
@@ -75,52 +76,60 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         //activate tool tip if mouse still over node
         if (onMouseFlag == true)
         {
-            //need to regularly update node details, rather than just at game start
-            nodeObject = GameManager.instance.dataScript.GetNodeObject(NodeID);
-            if (nodeObject != null)
-            { node = nodeObject.GetComponent<Node>(); }
-            //do once
-            while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
+            switch (menuType)
             {
+                case ActionMenuType.Node:
+                    //need to regularly update node details, rather than just at game start
+                    nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
+                    if (nodeObject != null)
+                    { node = nodeObject.GetComponent<Node>(); }
+                    //do once
+                    while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
+                    {
 
-                List<string> activeList = node.GetNodeActors();
-                List<EffectDataTooltip> effectsList = node.GetOngoingEffects();
-                List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.targetID);
-                List<string> teamList = new List<string>();
-                List<Team> listOfTeams = node.GetTeams();
-                if (listOfTeams.Count > 0)
-                {
-                    foreach(Team team in listOfTeams)
-                    { teamList.Add(string.Format("{0} team", team.Arc.name)); }
-                }
-                //adjust position prior to sending
-                Vector3 position = transform.position;
-                position.x += 100;
-                position.y -= 100;
-                position = Camera.main.ScreenToWorldPoint(position);
-                
-                NodeTooltipData dataTooltip = new NodeTooltipData()
-                {
-                    nodeName = node.nodeName,
-                    type = string.Format("{0} ID {1}", node.Arc.name, NodeID),
-                    arrayOfStats = new int[] { node.Stability, node.Support, node.Security },
-                    listOfActive = activeList,
-                    listOfEffects = effectsList,
-                    listOfTeams = teamList,
-                    listOfTargets = targetList,
-                    tooltipPos = position
-                    };
-                GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
-                yield return null;
-            }
-            //fade in
-            float alphaCurrent;
-            while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0)
-            {
-                alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
-                alphaCurrent += Time.deltaTime / mouseOverFade;
-                GameManager.instance.tooltipNodeScript.SetOpacity(alphaCurrent);
-                yield return null;
+                        List<string> activeList = node.GetNodeActors();
+                        List<EffectDataTooltip> effectsList = node.GetOngoingEffects();
+                        List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.targetID);
+                        List<string> teamList = new List<string>();
+                        List<Team> listOfTeams = node.GetTeams();
+                        if (listOfTeams.Count > 0)
+                        {
+                            foreach (Team team in listOfTeams)
+                            { teamList.Add(string.Format("{0} team", team.Arc.name)); }
+                        }
+                        //adjust position prior to sending
+                        Vector3 position = transform.position;
+                        position.x += 100;
+                        position.y -= 100;
+                        position = Camera.main.ScreenToWorldPoint(position);
+
+                        NodeTooltipData dataTooltip = new NodeTooltipData()
+                        {
+                            nodeName = node.nodeName,
+                            type = string.Format("{0} ID {1}", node.Arc.name, nodeID),
+                            arrayOfStats = new int[] { node.Stability, node.Support, node.Security },
+                            listOfActive = activeList,
+                            listOfEffects = effectsList,
+                            listOfTeams = teamList,
+                            listOfTargets = targetList,
+                            tooltipPos = position
+                        };
+                        GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
+                        yield return null;
+                    }
+                    //fade in
+                    float alphaCurrent;
+                    while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0)
+                    {
+                        alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
+                        alphaCurrent += Time.deltaTime / mouseOverFade;
+                        GameManager.instance.tooltipNodeScript.SetOpacity(alphaCurrent);
+                        yield return null;
+                    }
+                    break;
+                case ActionMenuType.Actor:
+
+                    break;
             }
         }
     }

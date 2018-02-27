@@ -554,8 +554,10 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessGiveGearAction(ModalActionDetails details)
     {
-        int benefit;
+        int benefit = 0;
+        int renownGiven = 0;
         bool errorFlag = false;
+        bool preferredFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         Gear gear = null;
         Actor actor = null;
@@ -581,9 +583,9 @@ public class ActionManager : MonoBehaviour
                     {
                         switch (gear.rarity.name)
                         {
-                            case "Common": benefit = 1; break;
-                            case "Rare": benefit = 2; break;
-                            case "Unique": benefit = 3; break;
+                            case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
+                            case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
+                            case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
                             default:
                                 benefit = 0;
                                 Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gear.rarity.name));
@@ -594,6 +596,7 @@ public class ActionManager : MonoBehaviour
                             //Preferred gear (renown transfer)
                             outcomeDetails.textBottom = string.Format("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
                               colourBad, gear.name, colourEnd, "\n","\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
+                            preferredFlag = true;
                         }
                         else
                         {
@@ -605,10 +608,6 @@ public class ActionManager : MonoBehaviour
                     else
                     { Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name)); errorFlag = true; }
 
-                    //message
-                    string text = string.Format("");
-                    /*Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID);
-                    GameManager.instance.dataScript.AddMessage(message);*/
                 }
                 else { Debug.LogError(string.Format("Invalid gear (Null) for details.gearID {0}", details.gearID)); errorFlag = true; }
             }
@@ -628,6 +627,26 @@ public class ActionManager : MonoBehaviour
             //Remove Gear
             if (gear != null)
             { GameManager.instance.playerScript.RemoveGear(gear.gearID); }
+            //give actor motivation boost
+            actor.datapoint1 += benefit;
+            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+            //if preferred transfer renown
+            if (preferredFlag == true)
+            {
+                if (actor.renown > 0)
+                {
+                    //take from actor
+                    renownGiven = Mathf.Min(benefit, actor.renown);
+                    actor.renown -= benefit;
+                    actor.renown = Mathf.Max(0, actor.renown);
+                    //give to Player
+                    GameManager.instance.playerScript.Renown += renownGiven;
+                }
+            }
+            //message
+            string text = string.Format("{0} ({1}) given to {2} {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
+            Message message = GameManager.instance.messageScript.GiveGear(text, actor.actorID, gear.gearID, renownGiven);
+            GameManager.instance.dataScript.AddMessage(message);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)

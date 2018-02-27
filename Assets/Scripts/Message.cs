@@ -37,6 +37,10 @@ namespace gameAPI
         {
             msgID = messageCounter++;
             turnCreated = GameManager.instance.turnScript.Turn;
+            //default values
+            data0 = -1;
+            data1 = -1;
+            data2 = -1;
         }
 
 

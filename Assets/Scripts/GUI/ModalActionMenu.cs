@@ -114,7 +114,7 @@ public class ModalActionMenu : MonoBehaviour
         button4.gameObject.SetActive(false);
         button5.gameObject.SetActive(false);
         button6.gameObject.SetActive(false);
-
+        
         //set up ModalActionObject
         itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
         //tooltip at top of menu
@@ -123,7 +123,8 @@ public class ModalActionMenu : MonoBehaviour
             case ActionMenuType.Node:
                 //pass nodeID onto text script to facilitate node tooltip on mouseover
                 ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();
-                modal.NodeID = details.itemID;
+                modal.nodeID = details.itemID;
+                modal.menuType = details.menuType;
                 break;
         }
         //There can be a max of 6 buttons (1 x target, 4 x actor actions, 1 x Cancel)

@@ -87,6 +87,7 @@ namespace gameAPI
         Gear_Comprised,
         Gear_Used,
         Gear_Obtained,
+        Gear_Given,
         //Actor
         Actor_Recruited,
         Actor_Action,

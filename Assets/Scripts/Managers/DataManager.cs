@@ -2225,13 +2225,13 @@ public class DataManager : MonoBehaviour
                     {
                         case "Resistance":
                             builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                            builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
+                            builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
                                 record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
                                 record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
                             break;
                         case "Authority":
                             builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                            builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} - {4} - {5}  {6} {7}{8}", record.Key, record.Value.type,
+                            builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
                                 record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
                                 record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
                             break;
