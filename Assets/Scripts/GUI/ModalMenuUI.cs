@@ -115,9 +115,9 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             foreach (Team team in listOfTeams)
                             { teamList.Add(string.Format("{0} team", team.Arc.name)); }
                         }
-                        //adjust position prior to sending
-                        Vector3 positionNode = transform.position;
-                        positionNode.x += 100;
+                        //adjust position prior to sending (rectTransform is in World units)
+                        Vector3 positionNode = rectTransform.position;
+                        positionNode.x += 150;
                         positionNode.y -= 100;
                         positionNode = Camera.main.ScreenToWorldPoint(positionNode);
 
@@ -153,10 +153,9 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
                         {
                             //adjust position prior to sending
-                            Vector3 positionActor = transform.position;
-                            positionActor.x += 100;
+                            Vector3 positionActor = rectTransform.position;
+                            positionActor.x += 50;
                             positionActor.y -= 100;
-                            positionActor = Camera.main.ScreenToWorldPoint(positionActor);
 
                             ActorTooltipData actorTooltip = new ActorTooltipData()
                             {

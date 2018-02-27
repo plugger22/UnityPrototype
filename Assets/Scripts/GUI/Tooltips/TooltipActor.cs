@@ -207,42 +207,24 @@ public class TooltipActor : MonoBehaviour
             }
             actorStats.text = builder.ToString();
         }
-
-
-        /*//calculate offset - height (default above)
-        //screenPos.y += height / 2 + offset * 3;
-        //update rectTransform to get correct height as it changes everytime with dynamic resizing of tooltip
-        Canvas.ForceUpdateCanvases();
-        rectTransform = tooltipActorObject.GetComponent<RectTransform>();*/
-
-        //convert coordinates
-        //Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
-        Vector3 screenPos = data.tooltipPos;
+        //Coordinates -> You need to send World (object.transform) coordinates
+        Vector3 worldPos = data.tooltipPos;
+        //update required to get dimensions as tooltip is dynamic
         Canvas.ForceUpdateCanvases();
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
         float height = rectTransform.rect.height;
         float width = rectTransform.rect.width;
         //base y pos at zero (bottom of screen). Adjust up from there.
-
-        /*data.tooltipPos.y = height + offset;
-        //data.screenPos.x -= data.width / 10;
-        data.tooltipPos.x -= width / 10;
+        worldPos.y +=  height + offset;
+        worldPos.x -= width / 10;
         //width
-        if (data.tooltipPos.x + width / 2 >= Screen.width)
-        { data.tooltipPos.x -= width / 2 + data.tooltipPos.x - Screen.width; }
-        else if (data.tooltipPos.x - width / 2 <= 0)
-        { data.tooltipPos.x += width / 2 - data.tooltipPos.x; }*/
-
-        screenPos.y = height + offset;
-        screenPos.x -= width / 10;
-        //width
-        if (screenPos.x + width / 2 >= Screen.width)
-        { screenPos.x -= width / 2 + screenPos.x - Screen.width; }
-        else if (screenPos.x - width / 2 <= 0)
-        { screenPos.x += width / 2 - screenPos.x; }
+        if (worldPos.x + width / 2 >= Screen.width)
+        { worldPos.x -= width / 2 + worldPos.x - Screen.width; }
+        else if (worldPos.x - width / 2 <= 0)
+        { worldPos.x += width / 2 - worldPos.x; }
 
         //set new position
-        tooltipActorObject.transform.position = screenPos;
+        tooltipActorObject.transform.position = worldPos;
         Debug.Log("UI: Open -> TooltipActor" + "\n");
     }
 
