@@ -113,7 +113,6 @@ public class TooltipActor : MonoBehaviour
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
     /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    /*public void SetTooltip(Actor actor, string[] arrayOfQualities, int[] arrayOfStats, Action action, Vector3 screenPos, float width, float height)*/
     public void SetTooltip(ActorTooltipData data)
     {
 
@@ -209,26 +208,40 @@ public class TooltipActor : MonoBehaviour
             actorStats.text = builder.ToString();
         }
 
-        //Debug.Log("ScreenPos " + screenPos.x + " : " + screenPos.y + "  W: " + width + " H: " + height + " ScreenHeight: " + Screen.height + "\n");
 
         /*//calculate offset - height (default above)
-        //screenPos.y += height / 2 + offset * 3;*/
-
+        //screenPos.y += height / 2 + offset * 3;
         //update rectTransform to get correct height as it changes everytime with dynamic resizing of tooltip
+        Canvas.ForceUpdateCanvases();
+        rectTransform = tooltipActorObject.GetComponent<RectTransform>();*/
+
+        //convert coordinates
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
         Canvas.ForceUpdateCanvases();
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
         float height = rectTransform.rect.height;
+        float width = rectTransform.rect.width;
         //base y pos at zero (bottom of screen). Adjust up from there.
-        data.screenPos.y = height + offset;
-        data.screenPos.x -= data.width / 10;
-        //width
-        if (data.screenPos.x + data.width / 2 >= Screen.width)
-        { data.screenPos.x -= data.width / 2 + data.screenPos.x - Screen.width; }
-        else if (data.screenPos.x - data.width / 2 <= 0)
-        { data.screenPos.x += data.width / 2 - data.screenPos.x; }
-        //set new position
-        tooltipActorObject.transform.position = data.screenPos;
 
+        /*data.tooltipPos.y = height + offset;
+        //data.screenPos.x -= data.width / 10;
+        data.tooltipPos.x -= width / 10;
+        //width
+        if (data.tooltipPos.x + width / 2 >= Screen.width)
+        { data.tooltipPos.x -= width / 2 + data.tooltipPos.x - Screen.width; }
+        else if (data.tooltipPos.x - width / 2 <= 0)
+        { data.tooltipPos.x += width / 2 - data.tooltipPos.x; }*/
+
+        screenPos.y = height + offset;
+        screenPos.x -= width / 10;
+        //width
+        if (screenPos.x + width / 2 >= Screen.width)
+        { screenPos.x -= width / 2 + screenPos.x - Screen.width; }
+        else if (screenPos.x - width / 2 <= 0)
+        { screenPos.x += width / 2 - screenPos.x; }
+
+        //set new position
+        tooltipActorObject.transform.position = screenPos;
         Debug.Log("UI: Open -> TooltipActor" + "\n");
     }
 

@@ -71,9 +71,9 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 GlobalSide side = GameManager.instance.sideScript.PlayerSide;
                 ActorTooltipData data = new ActorTooltipData()
                 {
-                    width = parent.GetComponent<RectTransform>().rect.width,
-                    height = parent.GetComponent<RectTransform>().rect.height,
-                    screenPos = parent.transform.position,
+                    /*width = parent.GetComponent<RectTransform>().rect.width,
+                    height = parent.GetComponent<RectTransform>().rect.height,*/
+                    tooltipPos = parent.transform.position,
                     actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
                     action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
                     arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),

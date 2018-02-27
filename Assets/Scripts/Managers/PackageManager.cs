@@ -39,9 +39,7 @@ namespace packageAPI
     /// </summary>
     public class ActorTooltipData
     {
-        public float width;
-        public float height;
-        public Vector3 screenPos;
+        public Vector3 tooltipPos;
         public Actor actor;
         public Action action;
         public string[] arrayOfQualities;

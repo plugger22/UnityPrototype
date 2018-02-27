@@ -6,12 +6,13 @@ using gameAPI;
 using packageAPI;
 
 /// <summary>
-/// allows Node tooltip to show with mouseover of Modal Action Menu header (node details)
+/// allows Node / Actor tooltip to show with mouseover of Modal Action Menu header
 /// </summary>
 public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
+    //data needed for tooltips and passed by ModalActionMenu.cs -> SetActionMenu
     [HideInInspector] public int nodeID;
+    [HideInInspector] public int actorSlotID;
     [HideInInspector] public ActionMenuType menuType;
 
     private int offset;
@@ -50,8 +51,16 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        if (nodeObject != null)
-        { StartCoroutine(ShowTooltip()); }
+        switch (menuType)
+        {
+            case ActionMenuType.Node:
+                if (nodeObject != null)
+                { StartCoroutine(ShowTooltip()); }
+                break;
+            case ActionMenuType.Actor:
+                StartCoroutine(ShowTooltip());
+                break;
+        }
     }
 
     /// <summary>
@@ -62,7 +71,15 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         onMouseFlag = false;
         StopCoroutine(ShowTooltip());
-        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        switch (menuType)
+        {
+            case ActionMenuType.Node:
+                GameManager.instance.tooltipNodeScript.CloseTooltip();
+                break;
+            case ActionMenuType.Actor:
+                GameManager.instance.tooltipActorScript.CloseTooltip();
+                break;
+        }
     }
 
     /// <summary>
@@ -71,6 +88,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     /// <returns></returns>
     private IEnumerator ShowTooltip()
     {
+        float alphaCurrent;
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over node
@@ -98,12 +116,12 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             { teamList.Add(string.Format("{0} team", team.Arc.name)); }
                         }
                         //adjust position prior to sending
-                        Vector3 position = transform.position;
-                        position.x += 100;
-                        position.y -= 100;
-                        position = Camera.main.ScreenToWorldPoint(position);
+                        Vector3 positionNode = transform.position;
+                        positionNode.x += 100;
+                        positionNode.y -= 100;
+                        positionNode = Camera.main.ScreenToWorldPoint(positionNode);
 
-                        NodeTooltipData dataTooltip = new NodeTooltipData()
+                        NodeTooltipData nodeTooltip = new NodeTooltipData()
                         {
                             nodeName = node.nodeName,
                             type = string.Format("{0} ID {1}", node.Arc.name, nodeID),
@@ -112,13 +130,12 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             listOfEffects = effectsList,
                             listOfTeams = teamList,
                             listOfTargets = targetList,
-                            tooltipPos = position
+                            tooltipPos = positionNode
                         };
-                        GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
+                        GameManager.instance.tooltipNodeScript.SetTooltip(nodeTooltip);
                         yield return null;
                     }
                     //fade in
-                    float alphaCurrent;
                     while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0)
                     {
                         alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
@@ -128,7 +145,39 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     }
                     break;
                 case ActionMenuType.Actor:
+                    GlobalSide side = GameManager.instance.globalScript.sideResistance;
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+                    if (actor != null)
+                    {
+                        //do once
+                        while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
+                        {
+                            //adjust position prior to sending
+                            Vector3 positionActor = transform.position;
+                            positionActor.x += 100;
+                            positionActor.y += 500;
+                            positionActor = Camera.main.ScreenToWorldPoint(positionActor);
 
+                            ActorTooltipData actorTooltip = new ActorTooltipData()
+                            {
+                                tooltipPos = positionActor,
+                                actor = actor,
+                                action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
+                                arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
+                                arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
+                            };
+                            GameManager.instance.tooltipActorScript.SetTooltip(actorTooltip);
+                            yield return null;
+                            //fade in
+                            while (GameManager.instance.tooltipActorScript.GetOpacity() < 1.0)
+                            {
+                                alphaCurrent = GameManager.instance.tooltipActorScript.GetOpacity();
+                                alphaCurrent += Time.deltaTime / mouseOverFade;
+                                GameManager.instance.tooltipActorScript.SetOpacity(alphaCurrent);
+                                yield return null;
+                            }
+                        }
+                    }
                     break;
             }
         }

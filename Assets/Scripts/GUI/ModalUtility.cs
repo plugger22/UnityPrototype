@@ -24,7 +24,7 @@ namespace modalAPI
     /// </summary>
     public class ModalPanelDetails
     {
-        public string itemName;                                         //node, Actor or gear name
+        public string itemName;                                         //multipurpose node, Actor or gear name
         public string itemDetails;
         public int itemID;
         public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
