@@ -63,6 +63,7 @@ public enum EventType
     GenericGearChoice,
     GenericRecruitActorResistance,
     GenericRecruitActorAuthority,
+    GenericHandleActor,
     //dice UI
     OpenDiceUI,
     CloseDiceUI,

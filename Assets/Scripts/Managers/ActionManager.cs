@@ -24,6 +24,8 @@ public class ActionManager : MonoBehaviour
     private string colourNeutral;
     private string colourBad;
     private string colourAlert;
+    private string colourResistance;
+    private string colourAuthority;
     private string colourEnd;
 
     public void Initialise()
@@ -37,6 +39,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.DismissAction, OnEvent);
         EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent);
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
@@ -82,6 +85,10 @@ public class ActionManager : MonoBehaviour
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
                 ProcessGiveGearAction(detailsGiveGear);
                 break;
+            case EventType.GenericHandleActor:
+                GenericReturnData returnDataRecall = Param as GenericReturnData;
+                ProcessHandleActor(returnDataRecall);
+                break;
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -104,6 +111,8 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.error);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
@@ -439,15 +448,38 @@ public class ActionManager : MonoBehaviour
     public void ProcessDismissAction(ModalActionDetails details)
     {
         bool errorFlag = true;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        string title;
+        string sideColour;
+        bool isResistance = true;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"ss
+        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { sideColour = colourAuthority; isResistance = false; }
+        else { sideColour = colourResistance; isResistance = true; }
         GenericPickerDetails genericDetails = new GenericPickerDetails();
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        if (actor != null)
+        {
+            genericDetails.returnEvent = EventType.GenericHandleActor;
+            genericDetails.side = playerSide;
+            genericDetails.nodeID = -1;
+            genericDetails.actorSlotID = details.actorSlotID;
+            title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
+            //picker text
+            genericDetails.textTop = string.Format("{0}Manage{1} {2}{3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title, 
+                actor.actorName, colourEnd);
+            genericDetails.textMiddle = string.Format("{0}You have a range of managerial options at your disposal. Be prepared to justify your decision{1}",
+                colourNormal, colourEnd);
+            genericDetails.textBottom = "Click on an option to Select. Press CONFIRM once done. Mouseover options for more information.";
+        }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
         {
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.side = side;
+            outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to conduct any Managerial actions at this point for reasons unknown{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Phone calls are being made but don't hold your breath";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -891,6 +923,14 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenTeamPicker, this, details);
     }
 
+    /// <summary>
+    /// 'Dismiss' Actor action. Implements action.
+    /// </summary>
+    /// <param name="teamID"></param>
+    public void ProcessHandleActor(GenericReturnData data)
+    {
+
+    }
 
     //methods above here
 }
