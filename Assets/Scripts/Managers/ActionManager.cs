@@ -23,6 +23,7 @@ public class ActionManager : MonoBehaviour
     private string colourGood;
     private string colourNeutral;
     private string colourBad;
+    private string colourAlert;
     private string colourEnd;
 
     public void Initialise()
@@ -108,6 +109,7 @@ public class ActionManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -435,7 +437,27 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     /// <param name="details"></param>
     public void ProcessDismissAction(ModalActionDetails details)
-    { }
+    {
+        bool errorFlag = true;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = side;
+            outcomeDetails.textTop = string.Format("{0}You are unable to conduct any Managerial actions at this point for reasons unknown{1}", colourAlert, colourEnd);
+            outcomeDetails.textBottom = "Phone calls are being made but don't hold your breath";
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //activate Generic Picker window
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+        }
+    }
 
 
     /// <summary>

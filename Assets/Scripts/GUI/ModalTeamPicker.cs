@@ -91,8 +91,6 @@ public class ModalTeamPicker : MonoBehaviour
                             teamUI.teamImage.sprite = arc.sprite;
                             //assign to text (name of teamArc)
                             teamUI.teamText.text = arc.name;
-                            /*//assign team Arc
-                            teamUI.teamArcID = arc.TeamArcID;*/
                         }
                         else { Debug.LogError("Invalid TeamChoicUI component (Null)"); }
 

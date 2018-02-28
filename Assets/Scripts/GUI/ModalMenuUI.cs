@@ -145,7 +145,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     }
                     break;
                 case ActionMenuType.Actor:
-                    GlobalSide side = GameManager.instance.globalScript.sideResistance;
+                    GlobalSide side = GameManager.instance.sideScript.PlayerSide;
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                     if (actor != null)
                     {

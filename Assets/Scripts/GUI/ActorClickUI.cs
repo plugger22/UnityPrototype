@@ -52,7 +52,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             //actor
                             ModalPanelDetails details = new ModalPanelDetails()
                             {
-                                itemID = actor.actorID,
+                                itemID = actor.actorSlotID,
                                 itemName = actor.actorName,
                                 itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
                                 itemPos = position,

@@ -847,7 +847,7 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetActorActions(int actorSlotID)
     {
-        string sideColour, tooltipText;
+        string sideColour, tooltipText, title;
         string cancelText = null;
         int benefit;
         bool isResistance;
@@ -865,6 +865,7 @@ public class ActorManager : MonoBehaviour
         //if actor is Null, a single button (Cancel) menu is still provided
         if (actor != null)
         {
+            title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
             cancelText = string.Format("{0} {1}", actor.arc.name, actor.actorName);
             switch (actor.Status)
             {
@@ -875,13 +876,14 @@ public class ActorManager : MonoBehaviour
                     ModalActionDetails dismissActionDetails = new ModalActionDetails() { };
                     dismissActionDetails.side = playerSide;
                     dismissActionDetails.actorSlotID = actor.actorSlotID;
-
+                    tooltipText = string.Format("Select to choose what to do with {0} (send to the Reserve Pool, Dismiss or Dispose Off)", actor.actorName);
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {
                         buttonTitle = "DISMISS",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = cancelText,
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                        buttonTooltipMain = string.Format("Unfortunately {0}{1}{2} {3}{4}  isn't working out", colourNeutralEffect, actor.arc.name, colourEnd, 
+                        title, actor.actorName),
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.DismissAction, this, dismissActionDetails); }
                     };
