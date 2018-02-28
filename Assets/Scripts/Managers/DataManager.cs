@@ -62,6 +62,12 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfFourConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
 
+    //manage actor choices
+    public List<ManageAction> listOfActorHandle = new List<ManageAction>();
+    public List<ManageAction> listOfActorReserve = new List<ManageAction>();
+    public List<ManageAction> listOfActorDismiss = new List<ManageAction>();
+    public List<ManageAction> listOfActorDispose = new List<ManageAction>();
+
     //gear lists (available gear for this level) -> gearID's
     public List<GearRarity> listOfGearRarity = new List<GearRarity>();
     public List<GearType> listOfGearType = new List<GearType>();
@@ -78,6 +84,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
+    private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>(); //Key -> ManageAction.name, Value -> ManageAction
     private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();            //Key -> action name, Value -> actionID
     private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
     private Dictionary<int, Target> dictOfTargets = new Dictionary<int, Target>();                  //Key -> targetID, Value -> Target
@@ -499,7 +506,56 @@ public class DataManager : MonoBehaviour
             else { Debug.LogError("Invalid gearType (Null)"); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
-
+        //
+        // - - - Manage Actions - - -
+        //
+        var manageGUID = AssetDatabase.FindAssets("t:ManageAction");
+        foreach (var guid in manageGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object manageObject = AssetDatabase.LoadAssetAtPath(path, typeof(ManageAction));
+            ManageAction manage = manageObject as ManageAction;
+            //add to dictionary
+            try
+            {
+                dictOfManageActions.Add(manage.name, manage);
+                //add to the appropriate fast access list
+                switch(manage.manage.name)
+                {
+                    case "ActorHandle":
+                        listOfActorHandle.Add(manage);
+                        break;
+                    case "ActorReserve":
+                        listOfActorReserve.Add(manage);
+                        break;
+                    case "ActorDismiss":
+                        listOfActorDismiss.Add(manage);
+                        break;
+                    case "ActorDispose":
+                        listOfActorDispose.Add(manage);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid manage.manage.name \"{0}\"", manage.manage.name));
+                        break;
+                }
+            }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid manage Action (Null)"); counter--; }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid ManageAction (duplicate name)  \"{0}\"", manage.name)); }
+            //sort fast access list by order
+            List<ManageAction> listOfSortedActions = new List<ManageAction>();
+            if (listOfActorHandle.Count > 0)
+            {
+                var manageActions = from element in listOfActorHandle
+                                    orderby element.order
+                                    select element;
+                listOfActorHandle = manageActions.ToList();
+            }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n"));
         //
         // - - - Actor Qualities - - -
         //
