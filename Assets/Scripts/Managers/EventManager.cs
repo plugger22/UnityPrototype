@@ -31,7 +31,10 @@ public enum EventType
     GearAction,
     RecruitAction,
     MoveAction,
-    DismissAction,
+    ManageActorAction,
+    /*ReserveActorAction,
+    DismissActorAction,
+    DisposeActorAction,*/
     LieLowAction,
     ActivateAction,
     GiveGearAction,

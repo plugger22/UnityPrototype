@@ -871,21 +871,21 @@ public class ActorManager : MonoBehaviour
             {
                 case ActorStatus.Active:
                     //
-                    // - - - Dismiss (both sides) - - - 
+                    // - - - Manage (both sides) - - - 
                     //
-                    ModalActionDetails dismissActionDetails = new ModalActionDetails() { };
-                    dismissActionDetails.side = playerSide;
-                    dismissActionDetails.actorSlotID = actor.actorSlotID;
+                    ModalActionDetails manageActionDetails = new ModalActionDetails() { };
+                    manageActionDetails.side = playerSide;
+                    manageActionDetails.actorSlotID = actor.actorSlotID;
                     tooltipText = string.Format("Select to choose what to do with {0} (send to the Reserve Pool, Dismiss or Dispose Off)", actor.actorName);
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {
-                        buttonTitle = "DISMISS",
+                        buttonTitle = "MANAGE",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                         buttonTooltipMain = string.Format("Unfortunately {0}{1}{2} {3}{4}  isn't working out", colourNeutralEffect, actor.arc.name, colourEnd, 
                         title, actor.actorName),
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.DismissAction, this, dismissActionDetails); }
+                        action = () => { EventManager.instance.PostNotification(EventType.ManageActorAction, this, manageActionDetails); }
                     };
                     //add Lie Low button to list
                     tempList.Add(dismissDetails);

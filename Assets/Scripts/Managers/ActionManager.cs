@@ -7,6 +7,13 @@ using modalAPI;
 using gameAPI;
 using packageAPI;
 using System.Text;
+using delegateAPI;
+
+namespace delegateAPI
+{
+
+    public delegate void manageDelegate(ModalActionDetails details);
+}
 
 /// <summary>
 /// Handles all action related matters
@@ -36,7 +43,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
         EventManager.instance.AddListener(EventType.LieLowAction, OnEvent);
         EventManager.instance.AddListener(EventType.ActivateAction, OnEvent);
-        EventManager.instance.AddListener(EventType.DismissAction, OnEvent);
+        EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent);
         EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent);
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
         EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent);
@@ -69,9 +76,9 @@ public class ActionManager : MonoBehaviour
             case EventType.TargetAction:
                 ProcessNodeTarget((int)Param);
                 break;
-            case EventType.DismissAction:
+            case EventType.ManageActorAction:
                 ModalActionDetails detailsDismiss = Param as ModalActionDetails;
-                ProcessDismissAction(detailsDismiss);
+                ProcessManageActorAction(detailsDismiss);
                 break;
             case EventType.LieLowAction:
                 ModalActionDetails detailsLieLow = Param as ModalActionDetails;
@@ -442,10 +449,10 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Process Dismiss actor action
+    /// Process Manage actor action (first of the nested Manage actor menu's -> provides 'Reserve', 'Dismiss' & 'Dispose' options
     /// </summary>
     /// <param name="details"></param>
-    public void ProcessDismissAction(ModalActionDetails details)
+    private void ProcessManageActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         string title;
@@ -487,8 +494,96 @@ public class ActionManager : MonoBehaviour
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
-                            //optionID = manageAction.order,
-                            optionText = manageAction.manage.name,
+                            optionID = details.actorSlotID,
+                            optionText = manageAction.name,
+                            sprite = manageAction.sprite
+                        };
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
+                        {
+                            textHeader = string.Format("{0}INFO{1}", colourSide, colourEnd),
+                            textMain = manageAction.tooltipMain,
+                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
+                        };
+                        //add to arrays
+                        arrayOfGenericOptions[i] = option;
+                        arrayOfTooltips[i] = tooltip;
+                    }
+                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfHandleOptions[{0}]", i)); }
+                }
+                //add options to picker data package
+                genericDetails.arrayOfOptions = arrayOfGenericOptions;
+                genericDetails.arrayOfTooltips = arrayOfTooltips;
+            }
+            else { Debug.LogError("Invalid listOfHandleOptions (Null)"); errorFlag = true; }
+
+        }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = playerSide;
+            outcomeDetails.textTop = string.Format("{0}You are unable to conduct any Managerial actions at this point for reasons unknown{1}", colourAlert, colourEnd);
+            outcomeDetails.textBottom = "Phone calls are being made but don't hold your breath";
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //activate Generic Picker window
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+        }
+    }
+
+    /// <summary>
+    /// Process Manage -> Send to Reserve -> actor action (second level of the nested Manage actor menus)
+    /// </summary>
+    /// <param name="details"></param>
+    private void ProcessReserveActorAction(ModalActionDetails details)
+    {
+        bool errorFlag = false;
+        string title;
+        string colourSide;
+        bool isResistance = true;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"ss
+        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { colourSide = colourAuthority; isResistance = false; }
+        else { colourSide = colourResistance; isResistance = true; }
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        if (actor != null)
+        {
+            //ActorHandle
+            List<ManageAction> listOfHandleOptions = GameManager.instance.dataScript.GetListOfActorHandle();
+            if (listOfHandleOptions != null)
+            {
+                genericDetails.returnEvent = EventType.GenericHandleActor;
+                genericDetails.side = playerSide;
+                //genericDetails.nodeID = -1;
+                genericDetails.actorSlotID = details.actorSlotID;
+                title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
+                //picker text
+                genericDetails.textTop = string.Format("{0}Manage{1} {2}{3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
+                    actor.actorName, colourEnd);
+                genericDetails.textMiddle = string.Format("{0}You have a range of managerial options at your disposal. Be prepared to justify your decision{1}",
+                    colourNormal, colourEnd);
+                genericDetails.textBottom = "Click on an option to Select. Press CONFIRM once done. Mouseover options for more information.";
+                //Create a set of options for the picker -> take only the first three options (picker can't handle more)
+                GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
+                GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
+                int numOfOptions = Mathf.Min(3, listOfHandleOptions.Count);
+                for (int i = 0; i < numOfOptions; i++)
+                {
+                    ManageAction manageAction = listOfHandleOptions[i];
+                    if (manageAction != null)
+                    {
+                        GenericOptionDetails option = new GenericOptionDetails()
+                        {
+                            text = manageAction.optionTitle,
+                            optionID = details.actorSlotID,
+                            optionText = manageAction.name,
                             sprite = manageAction.sprite
                         };
                         GenericTooltipDetails tooltip = new GenericTooltipDetails()
@@ -970,6 +1065,8 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         string colourSide;
         bool isResistance = true;
+        manageDelegate handler = null;
+        ModalActionDetails details = new ModalActionDetails();
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
@@ -982,14 +1079,15 @@ public class ActionManager : MonoBehaviour
             {
                 switch (data.optionText)
                 {
-                    case "ActorReserve":
-
+                    case "HandleReserve":
+                        Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
+                        handler = ProcessReserveActorAction(details);
                         break;
-                    case "ActorDismiss":
-
+                    case "HandleDismiss":
+                        Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
                         break;
-                    case "ActorDispose":
-
+                    case "HandleDispose":
+                        Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));

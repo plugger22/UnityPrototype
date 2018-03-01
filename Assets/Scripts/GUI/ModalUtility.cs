@@ -162,7 +162,7 @@ namespace modalAPI
     {
         public Sprite sprite;
         public string text;                 //keep SHORT
-        [Tooltip("Used when the Generic Picker returns a result which is then processed, eg. teamID, gearID, etc.")]
+        [Tooltip("Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.")]
         public int optionID;
         [Tooltip("Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise")]
         public string optionText;
@@ -183,7 +183,7 @@ namespace modalAPI
     /// </summary>
     public class GenericReturnData
     {
-        [Tooltip("Used when the Generic Picker returns a result which is then processed, eg. teamID, gearID, etc.")]
+        [Tooltip("Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.")]
         public int optionID;
         [Tooltip("Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise")]
         public string optionText;

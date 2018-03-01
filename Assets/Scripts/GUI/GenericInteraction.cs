@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using modalAPI;
 
 namespace gameAPI
 {
@@ -12,9 +13,9 @@ namespace gameAPI
     {
         public Image highlightImage;
         public Image optionImage;
-        public TextMeshProUGUI optionText;
+        public TextMeshProUGUI displayText;
 
-        [HideInInspector] public int optionID;            //specific id for option that is returned  to originating class if selected
+        [HideInInspector] public GenericReturnData data;
 
         private bool isSelected;                            //has the team been selected
         [HideInInspector] public bool isActive;             //is the team a valid choice option or is it greyed out? (can't be selected)
@@ -26,6 +27,7 @@ namespace gameAPI
         private void Awake()
         {
             isSelected = false;
+            data = new GenericReturnData();
         }
 
         /// <summary>
@@ -77,7 +79,7 @@ namespace gameAPI
                 {
                     //deactivate any other currently selected option and switch Confirm button on
                     EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this);
-                    EventManager.instance.PostNotification(EventType.ConfirmGenericActivate, this, optionID);
+                    EventManager.instance.PostNotification(EventType.ConfirmGenericActivate, this, data);
                     //NOTE: Event call must be made BEFORE activating this choice otherwise it'll deactivate it immediately
                     tempColour.a = 1.0f;
                     isSelected = true;

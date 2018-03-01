@@ -34,6 +34,7 @@ public class ModalGenericPicker : MonoBehaviour
     private static ModalGenericPicker modalGenericPicker;
 
     private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
+    private string optionTextSelected;                        //used for nested Generic Picker windows, ignore otherwise
     private int nodeIDSelected;
     private int actorSlotIDSelected; 
     private EventType returnEvent;                          //event to trigger once confirmation button is clicked
@@ -110,7 +111,8 @@ public class ModalGenericPicker : MonoBehaviour
                 SetColours();
                 break;
             case EventType.ConfirmGenericActivate:
-                SetConfirmButton(true, (int)Param);
+                GenericReturnData data = Param as GenericReturnData;
+                SetConfirmButton(true, data);
                 break;
             case EventType.ConfirmGenericDeactivate:
                 SetConfirmButton(false);
@@ -211,8 +213,9 @@ public class ModalGenericPicker : MonoBehaviour
                                 arrayOfGenericOptions[i].SetActive(true);
                                 //populate data
                                 genericData.optionImage.sprite = details.arrayOfOptions[i].sprite;
-                                genericData.optionText.text = details.arrayOfOptions[i].text;
-                                genericData.optionID = details.arrayOfOptions[i].optionID;
+                                genericData.displayText.text = details.arrayOfOptions[i].text;
+                                genericData.data.optionID = details.arrayOfOptions[i].optionID;
+                                genericData.data.optionText = details.arrayOfOptions[i].optionText;
                                 //activate option (in Generic picker assumed all options are active)
                                 genericData.isActive = true;
 
@@ -307,62 +310,114 @@ public class ModalGenericPicker : MonoBehaviour
 
 
     /// <summary>
-    /// Confirm button switched on/off. Only ON and visible if a generic optin has been selected
+    /// Confirm button switched on/off. Only ON and visible if a generic option has been selected and a data package returned
     /// </summary>
     /// <param name="activate"></param>
-    public void SetConfirmButton(bool isActive, int optionID = -1)
+    public void SetConfirmButton(bool isActive, GenericReturnData data = null)
     {
         string text = "Unknown"; ;
         //An option is selected
         if (isActive == true)
         {
             buttonConfirm.gameObject.SetActive(true);
-            if (optionID > -1)
+            if (data != null)
             {
                 //update currently selected option
-                optionIDSelected = optionID;
+                optionIDSelected = data.optionID;
+                optionTextSelected = data.optionText;
                 //change top text to show which option selected
-                switch(returnEvent)
+                switch (returnEvent)
                 {
                     case EventType.GenericTeamRecall:
-                        Team teamRecall = GameManager.instance.dataScript.GetTeam(optionID);
-                        if (teamRecall != null)
+                        if (data.optionID > -1)
                         {
-                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.Arc.name, colourEnd, colourDefault, colourEnd);
-                            Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", optionID, "\n"));
+                            Team teamRecall = GameManager.instance.dataScript.GetTeam(data.optionID);
+                            if (teamRecall != null)
+                            {
+                                text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.Arc.name, colourEnd, colourDefault, colourEnd);
+                                Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", data.optionID, "\n"));
+                            }
+                            else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", data.optionID)); }
                         }
-                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }
+                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                     case EventType.GenericNeutraliseTeam:
-                        Team teamNeutralise = GameManager.instance.dataScript.GetTeam(optionID);
-                        if (teamNeutralise != null)
+                        if (data.optionID > -1)
                         {
-                            text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.Arc.name, colourEnd, colourDefault, colourEnd);
-                            Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", optionID, "\n"));
+                            Team teamNeutralise = GameManager.instance.dataScript.GetTeam(data.optionID);
+                            if (teamNeutralise != null)
+                            {
+                                text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.Arc.name, colourEnd, colourDefault, colourEnd);
+                                Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", data.optionID, "\n"));
+                            }
+                            else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", data.optionID)); }
                         }
-                        else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", optionID)); }
+                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                     case EventType.GenericGearChoice:
-                        Gear gear = GameManager.instance.dataScript.GetGear(optionID);
-                        if (gear != null)
+                        if (data.optionID > -1)
                         {
-                            text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.name.ToUpper(), colourEnd, colourDefault, colourEnd);
-                            Debug.Log(string.Format("GearPicker: gearID {0} selected{1}", optionID, "\n"));
+                            Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
+                            if (gear != null)
+                            {
+                                text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                                Debug.Log(string.Format("GearPicker: gearID {0} selected{1}", data.optionID, "\n"));
+                            }
+                            else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", data.optionID)); }
                         }
-                        else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", optionID)); }
+                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                     case EventType.GenericRecruitActorResistance:
                     case EventType.GenericRecruitActorAuthority:
-                        Actor actor = GameManager.instance.dataScript.GetActor(optionID);
-                        if (actor != null)
+                        if (data.optionID > -1)
                         {
-                            text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                            Debug.Log(string.Format("RecruitPicker: actorID {0} selected{1}", optionID, "\n"));
+                            Actor actor = GameManager.instance.dataScript.GetActor(data.optionID);
+                            if (actor != null)
+                            {
+                                text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
+                                Debug.Log(string.Format("RecruitPicker: actorID {0} selected{1}", data.optionID, "\n"));
+                            }
+                            else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.optionID)); }
                         }
-                        else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", optionID)); }
+                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
+                        break;
+                    case EventType.GenericHandleActor:
+                        if (data.optionID > -1)
+                        {
+                            if (string.IsNullOrEmpty(data.optionText) == false)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(data.optionID);
+                                if (actor != null)
+                                {
+                                    switch (data.optionText)
+                                    {
+                                        case "HandleReserve":
+                                            text = string.Format("{0}Send {1} to Reserve Pool{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, to RESERVE pool selected{2}", actor.actorName, data.optionID, "\n"));
+                                            break;
+                                        case "HandleDismiss":
+                                            text = string.Format("{0}Fire {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, FIRE selected{2}", actor.actorName, data.optionID, "\n"));
+                                            break;
+                                        case "HandleDispose":
+                                            text = string.Format("{0}Dispose of {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE selected{2}", actor.actorName, data.optionID, "\n"));
+                                            break;
+                                        default:
+                                            Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                            break;
+                                    }
+
+                                }
+                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.optionID)); }
+                            }
+                            else { Debug.LogError("Invalid data.optionText (Null or Empty)"); }
+                        }
+                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                 }
             }
+            else { Debug.LogError("Invalid GenericReturnData (Null)"); }
         }
         else
         {
@@ -383,6 +438,9 @@ public class ModalGenericPicker : MonoBehaviour
                 case EventType.GenericRecruitActorAuthority:
                     text = string.Format("{0}Recruit{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
+                case EventType.GenericHandleActor:
+                    text = string.Format("{0}Managerial{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
                 default:
                     text = string.Format("{0}Select {1}{2}ANY{3}{4} Option{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
                     break;
@@ -399,6 +457,7 @@ public class ModalGenericPicker : MonoBehaviour
     {
         GenericReturnData returnData = new GenericReturnData();
         returnData.optionID = optionIDSelected;
+        returnData.optionText = optionTextSelected;
         returnData.nodeID = nodeIDSelected;
         returnData.actorSlotID = actorSlotIDSelected;
         //close picker window regardless
@@ -411,6 +470,7 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.GenericGearChoice:
             case EventType.GenericRecruitActorResistance:
             case EventType.GenericRecruitActorAuthority:
+            case EventType.GenericHandleActor:
                 EventManager.instance.PostNotification(returnEvent, this, returnData);
                 break;
             default:
