@@ -447,30 +447,68 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessDismissAction(ModalActionDetails details)
     {
-        bool errorFlag = true;
+        bool errorFlag = false;
         string title;
-        string sideColour;
+        string colourSide;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-        { sideColour = colourAuthority; isResistance = false; }
-        else { sideColour = colourResistance; isResistance = true; }
+        { colourSide = colourAuthority; isResistance = false; }
+        else { colourSide = colourResistance; isResistance = true; }
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
         if (actor != null)
         {
-            genericDetails.returnEvent = EventType.GenericHandleActor;
-            genericDetails.side = playerSide;
-            genericDetails.nodeID = -1;
-            genericDetails.actorSlotID = details.actorSlotID;
-            title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
-            //picker text
-            genericDetails.textTop = string.Format("{0}Manage{1} {2}{3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title, 
-                actor.actorName, colourEnd);
-            genericDetails.textMiddle = string.Format("{0}You have a range of managerial options at your disposal. Be prepared to justify your decision{1}",
-                colourNormal, colourEnd);
-            genericDetails.textBottom = "Click on an option to Select. Press CONFIRM once done. Mouseover options for more information.";
+            //ActorHandle
+            List<ManageAction> listOfHandleOptions = GameManager.instance.dataScript.GetListOfActorHandle();
+            if (listOfHandleOptions != null)
+            {
+                genericDetails.returnEvent = EventType.GenericHandleActor;
+                genericDetails.side = playerSide;
+                //genericDetails.nodeID = -1;
+                genericDetails.actorSlotID = details.actorSlotID;
+                title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
+                //picker text
+                genericDetails.textTop = string.Format("{0}Manage{1} {2}{3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
+                    actor.actorName, colourEnd);
+                genericDetails.textMiddle = string.Format("{0}You have a range of managerial options at your disposal. Be prepared to justify your decision{1}",
+                    colourNormal, colourEnd);
+                genericDetails.textBottom = "Click on an option to Select. Press CONFIRM once done. Mouseover options for more information.";
+                //Create a set of options for the picker -> take only the first three options (picker can't handle more)
+                GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
+                GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
+                int numOfOptions = Mathf.Min(3, listOfHandleOptions.Count);
+                for(int i = 0; i < numOfOptions; i++)
+                {
+                    ManageAction manageAction = listOfHandleOptions[i];
+                    if (manageAction != null)
+                    {
+                        GenericOptionDetails option = new GenericOptionDetails()
+                        {
+                            text = manageAction.optionTitle,
+                            //optionID = manageAction.order,
+                            optionText = manageAction.manage.name,
+                            sprite = manageAction.sprite
+                        };
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
+                        {
+                            textHeader = string.Format("{0}INFO{1}", colourSide, colourEnd),
+                            textMain = manageAction.tooltipMain,
+                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
+                        };
+                        //add to arrays
+                        arrayOfGenericOptions[i] = option;
+                        arrayOfTooltips[i] = tooltip;
+                    }
+                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfHandleOptions[{0}]", i)); }
+                }
+                //add options to picker data package
+                genericDetails.arrayOfOptions = arrayOfGenericOptions;
+                genericDetails.arrayOfTooltips = arrayOfTooltips;
+            }
+            else { Debug.LogError("Invalid listOfHandleOptions (Null)"); errorFlag = true; }
+
         }
         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
 
@@ -924,12 +962,59 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 'Dismiss' Actor action. Implements action.
+    /// 'Hande' Actor action. Branches to specific Generic Picker window depending on option selected
     /// </summary>
     /// <param name="teamID"></param>
     public void ProcessHandleActor(GenericReturnData data)
     {
+        bool errorFlag = false;
+        string colourSide;
+        bool isResistance = true;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"ss
+        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { colourSide = colourAuthority; isResistance = false; }
+        else { colourSide = colourResistance; isResistance = true; }
+    
+        if (data != null)
+        {
+            if (string.IsNullOrEmpty(data.optionText) == false)
+            {
+                switch (data.optionText)
+                {
+                    case "ActorReserve":
 
+                        break;
+                    case "ActorDismiss":
+
+                        break;
+                    case "ActorDispose":
+
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                        errorFlag = true;
+                        break;
+                }
+            }
+            else { Debug.LogError("Invalid data.optionText (Null or empty"); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid GenericReturnData (Null)"); errorFlag = true; }
+
+        //final processing -> either branch to the next Generic picker window or kick out an error outcome window
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = playerSide;
+            outcomeDetails.textTop = string.Format("{0}You are unable to conduct any Managerial actions at this point for reasons unknown{1}", colourAlert, colourEnd);
+            outcomeDetails.textBottom = "Phone calls are being made but don't hold your breath";
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+
+        }
     }
 
     //methods above here

@@ -516,52 +516,79 @@ public class DataManager : MonoBehaviour
             path = AssetDatabase.GUIDToAssetPath(guid);
             //get SO
             UnityEngine.Object manageObject = AssetDatabase.LoadAssetAtPath(path, typeof(ManageAction));
-            ManageAction manage = manageObject as ManageAction;
+            ManageAction manageAction = manageObject as ManageAction;
             //add to dictionary
             try
             {
-                dictOfManageActions.Add(manage.name, manage);
+                dictOfManageActions.Add(manageAction.name, manageAction);
                 //add to the appropriate fast access list
-                switch(manage.manage.name)
+                switch (manageAction.manage.name)
                 {
                     case "ActorHandle":
-                        listOfActorHandle.Add(manage);
+                        listOfActorHandle.Add(manageAction);
                         break;
                     case "ActorReserve":
-                        listOfActorReserve.Add(manage);
+                        listOfActorReserve.Add(manageAction);
                         break;
                     case "ActorDismiss":
-                        listOfActorDismiss.Add(manage);
+                        listOfActorDismiss.Add(manageAction);
                         break;
                     case "ActorDispose":
-                        listOfActorDispose.Add(manage);
+                        listOfActorDispose.Add(manageAction);
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid manage.manage.name \"{0}\"", manage.manage.name));
+                        Debug.LogError(string.Format("Invalid manage.manage.name \"{0}\"", manageAction.manage.name));
                         break;
                 }
             }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid manage Action (Null)"); counter--; }
             catch (ArgumentException)
-            { Debug.LogError(string.Format("Invalid ManageAction (duplicate name)  \"{0}\"", manage.name)); }
-            //sort fast access list by order
-            List<ManageAction> listOfSortedActions = new List<ManageAction>();
-            if (listOfActorHandle.Count > 0)
-            {
-                var manageActions = from element in listOfActorHandle
-                                    orderby element.order
-                                    select element;
-                listOfActorHandle = manageActions.ToList();
-            }
+            { Debug.LogError(string.Format("Invalid ManageAction (duplicate name)  \"{0}\"", manageAction.name)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n"));
+        //sort fast access lists by order -> ActorHandle
+        if (listOfActorHandle.Count > 0)
+        {
+            var manageActions = from element in listOfActorHandle
+                                orderby element.order
+                                select element;
+            listOfActorHandle = manageActions.ToList();
+        }
+        else { Debug.LogError("There are no entries in listOfActorHandle"); }
+        //ActorReserve
+        if (listOfActorReserve.Count > 0)
+        {
+            var manageActions = from element in listOfActorReserve
+                                orderby element.order
+                                select element;
+            listOfActorReserve = manageActions.ToList();
+        }
+        else { Debug.LogError("There are no entries in listOfActorReserve"); }
+        //ActorDismiss
+        if (listOfActorDismiss.Count > 0)
+        {
+            var manageActions = from element in listOfActorDismiss
+                                orderby element.order
+                                select element;
+            listOfActorDismiss = manageActions.ToList();
+        }
+        else { Debug.LogError("There are no entries in listOfActorDismiss"); }
+        //ActorDispose
+        if (listOfActorDispose.Count > 0)
+        {
+            var manageActions = from element in listOfActorDispose
+                                orderby element.order
+                                select element;
+            listOfActorDispose = manageActions.ToList();
+        }
+        else { Debug.LogError("There are no entries in listOfActorDispose"); }
         //
         // - - - Actor Qualities - - -
         //
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         arrayOfQualities = new string[GetNumOfGlobalSide(), numOfQualities];
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             //authority qualities
             if (authorityQualities[i] != null)
@@ -2383,6 +2410,22 @@ public class DataManager : MonoBehaviour
             }
         }
     }
+
+    //
+    // - - - Manage - - -
+    //
+
+    public List<ManageAction> GetListOfActorHandle()
+    { return listOfActorHandle; }
+
+    public List<ManageAction> GetListOfActorReserve()
+    { return listOfActorReserve; }
+
+    public List<ManageAction> GetListOfActorDismiss()
+    { return listOfActorDismiss; }
+
+    public List<ManageAction> GetListOfActorDispose()
+    { return listOfActorDispose; }
 
     //
     // - - - Global SO's - - -
