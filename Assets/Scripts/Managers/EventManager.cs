@@ -32,9 +32,6 @@ public enum EventType
     RecruitAction,
     MoveAction,
     ManageActorAction,
-    /*ReserveActorAction,
-    DismissActorAction,
-    DisposeActorAction,*/
     LieLowAction,
     ActivateAction,
     GiveGearAction,
@@ -67,6 +64,9 @@ public enum EventType
     GenericRecruitActorResistance,
     GenericRecruitActorAuthority,
     GenericHandleActor,
+    GenericReserveActor,
+    GenericDismissActor,
+    GenericDisposeActor,
     //dice UI
     OpenDiceUI,
     CloseDiceUI,
