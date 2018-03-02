@@ -57,6 +57,7 @@ public enum EventType
     ConfirmGenericActivate,
     ConfirmGenericDeactivate,
     ConfirmGenericChoice,
+    BackButtonGeneric,
     //generic picker returns
     GenericTeamRecall,
     GenericNeutraliseTeam,

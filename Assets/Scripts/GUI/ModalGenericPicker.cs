@@ -22,6 +22,7 @@ public class ModalGenericPicker : MonoBehaviour
     public TextMeshProUGUI bottomText;
 
     public Button buttonCancel;
+    public Button buttonBack;
     public Button buttonConfirm;
 
     public Sprite errorSprite;                              //sprite to display in event of an error in the outcome dialogue
@@ -30,14 +31,15 @@ public class ModalGenericPicker : MonoBehaviour
 
     //private CanvasGroup canvasGroup;
     private ButtonInteraction buttonInteraction;
-
+    private ButtonInteraction buttonBackInteraction;        //specifically for the Back button as it can be dynamically updated
     private static ModalGenericPicker modalGenericPicker;
 
     private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
     private string optionTextSelected;                        //used for nested Generic Picker windows, ignore otherwise
     private int nodeIDSelected;
     private int actorSlotIDSelected; 
-    private EventType returnEvent;                          //event to trigger once confirmation button is clicked
+    private EventType defaultReturnEvent;                          //event to trigger once confirmation button is clicked
+    private EventType backReturnEvent;                //event triggered when back button clicked (dynamic -> SetBackButton)
 
     private string colourEffect;
     private string colourSide;
@@ -71,6 +73,12 @@ public class ModalGenericPicker : MonoBehaviour
         if (buttonInteraction != null)
         { buttonInteraction.SetEvent(EventType.ConfirmGenericChoice); }
         else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
+        //Back button event (default -> can be set dynamically using 'SetBackButton' method
+        buttonBackInteraction = buttonBack.GetComponent<ButtonInteraction>();
+        if (buttonBackInteraction != null)
+        { buttonBackInteraction.SetEvent(EventType.BackButtonGeneric); }
+        else { Debug.LogError("Invalid buttonBackInteraction (Null)"); }
+        backReturnEvent = EventType.None;
         //cancel button event
         buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
         if (buttonInteraction != null)
@@ -120,6 +128,9 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.ConfirmGenericChoice:
                 ProcessGenericChoice();
                 break;
+            case EventType.BackButtonGeneric:
+                ProcessBackButton();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -141,7 +152,12 @@ public class ModalGenericPicker : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
-
+    /// <summary>
+    /// Sets the 'Back' button for cases where you want to step back in a nested window situation. Set to EventType.None otherwise (prevents Back button displaying)
+    /// </summary>
+    /// <param name="eventType"></param>
+    public void SetBackButton(EventType eventType)
+    { backReturnEvent = eventType; }
 
     /// <summary>
     /// Sets up Generic picker window
@@ -157,38 +173,46 @@ public class ModalGenericPicker : MonoBehaviour
         modalGenericObject.SetActive(true);
         //confirm button should be switched off at the start
         buttonConfirm.gameObject.SetActive(false);
-        
+        //back button only switched on if it has a valid underlying eventType
+        if (backReturnEvent == EventType.None)
+        { buttonBack.gameObject.SetActive(false); }
+        else { buttonBack.gameObject.SetActive(true); }
+
         //canvasGroup.alpha = 100;
 
         //populate dialogue
         if (details != null)
         {
             //set up modal panel & buttons to be side appropriate
-            switch(details.side.name)
+            switch (details.side.name)
             {
                 case "Authority":
                     modalPanel.sprite = GameManager.instance.sideScript.picker_background_Authority;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
                     buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                    buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
                     //set sprite transitions
                     SpriteState spriteStateAuthority = new SpriteState();
                     spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
                     spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
                     buttonCancel.spriteState = spriteStateAuthority;
                     buttonConfirm.spriteState = spriteStateAuthority;
+                    buttonBack.spriteState = spriteStateAuthority;
                     break;
                 case "Resistance":
                     modalPanel.sprite = GameManager.instance.sideScript.picker_background_Rebel;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
                     buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
+                    buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
                     //set sprite transitions
                     SpriteState spriteStateRebel = new SpriteState();
                     spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Rebel;
                     spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
                     buttonCancel.spriteState = spriteStateRebel;
                     buttonConfirm.spriteState = spriteStateRebel;
+                    buttonBack.spriteState = spriteStateRebel;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid side \"{0}\"", details.side.name));
@@ -256,7 +280,7 @@ public class ModalGenericPicker : MonoBehaviour
                     }
                 }
                 //register return event for reference once user confirms a choice
-                returnEvent = details.returnEvent;
+                defaultReturnEvent = details.returnEvent;
             }
         }
         else
@@ -308,6 +332,17 @@ public class ModalGenericPicker : MonoBehaviour
         Debug.Log("UI: Close -> ModalGenericPicker" + "\n");
     }
 
+    /// <summary>
+    /// Back button selected -> current instance of Picker window closed and new event generated (opens new instance with previous window)
+    /// </summary>
+    private void ProcessBackButton()
+    {
+        //close current GenericPicker Window
+        CloseGenericPicker();
+        //trigger event that calls previous window
+        EventManager.instance.PostNotification(backReturnEvent, this);
+    }
+
 
     /// <summary>
     /// Confirm button switched on/off. Only ON and visible if a generic option has been selected and a data package returned
@@ -326,7 +361,7 @@ public class ModalGenericPicker : MonoBehaviour
                 optionIDSelected = data.optionID;
                 optionTextSelected = data.optionText;
                 //change top text to show which option selected
-                switch (returnEvent)
+                switch (defaultReturnEvent)
                 {
                     case EventType.GenericTeamRecall:
                         if (data.optionID > -1)
@@ -423,7 +458,7 @@ public class ModalGenericPicker : MonoBehaviour
         {
             //Nothing currently selected, show generic message
             buttonConfirm.gameObject.SetActive(false);
-            switch (returnEvent)
+            switch (defaultReturnEvent)
             {
                 case EventType.GenericTeamRecall:
                     text = string.Format("{0}Recall{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
@@ -440,6 +475,15 @@ public class ModalGenericPicker : MonoBehaviour
                     break;
                 case EventType.GenericHandleActor:
                     text = string.Format("{0}Managerial{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
+                case EventType.GenericReserveActor:
+                    text = string.Format("{0}Reserve Pool{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
+                case EventType.GenericDismissActor:
+                    text = string.Format("{0}Dismiss{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
+                case EventType.GenericDisposeActor:
+                    text = string.Format("{0}Dispose off{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
                 default:
                     text = string.Format("{0}Select {1}{2}ANY{3}{4} Option{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
@@ -463,7 +507,7 @@ public class ModalGenericPicker : MonoBehaviour
         //close picker window regardless
         EventManager.instance.PostNotification(EventType.CloseGenericPicker, this);
         //trigger the appropriate return Event and pass selected optionID back to the originating class
-        switch (returnEvent)
+        switch (defaultReturnEvent)
         {
             case EventType.GenericTeamRecall:
             case EventType.GenericNeutraliseTeam:
@@ -471,13 +515,17 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.GenericRecruitActorResistance:
             case EventType.GenericRecruitActorAuthority:
             case EventType.GenericHandleActor:
-                EventManager.instance.PostNotification(returnEvent, this, returnData);
+            case EventType.GenericReserveActor:
+            case EventType.GenericDismissActor:
+            case EventType.GenericDisposeActor:
+                EventManager.instance.PostNotification(defaultReturnEvent, this, returnData);
                 break;
             default:
-                Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", returnEvent));
+                Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", defaultReturnEvent));
                 break;
         }
     }
+
 
 
 

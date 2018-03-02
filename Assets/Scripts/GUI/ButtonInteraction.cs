@@ -50,9 +50,10 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
     /// </summary>
     /// <param name="type"></param>
     public void SetEvent(EventType type)
-    {
-        eventType = type;
-    }
+    { eventType = type; }
+
+    public EventType GetEvent()
+    { return eventType; }
 
     /// <summary>
     /// Generate event/s when button clicked

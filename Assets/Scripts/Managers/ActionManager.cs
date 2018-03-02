@@ -1,7 +1,4 @@
-﻿
-
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using modalAPI;
 using gameAPI;
@@ -9,11 +6,7 @@ using packageAPI;
 using System.Text;
 using delegateAPI;
 
-namespace delegateAPI
-{
 
-    public delegate void manageDelegate(ModalActionDetails d);
-}
 
 /// <summary>
 /// Handles all action related matters
@@ -47,6 +40,9 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent);
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
         EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericReserveActor, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent);
+        EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
@@ -93,8 +89,20 @@ public class ActionManager : MonoBehaviour
                 ProcessGiveGearAction(detailsGiveGear);
                 break;
             case EventType.GenericHandleActor:
-                GenericReturnData returnDataRecall = Param as GenericReturnData;
-                ProcessHandleActor(returnDataRecall);
+                GenericReturnData returnDataHandle = Param as GenericReturnData;
+                ProcessHandleActor(returnDataHandle);
+                break;
+            case EventType.GenericReserveActor:
+                GenericReturnData returnDataReserve = Param as GenericReturnData;
+                ProcessReserveActorAction(returnDataReserve);
+                break;
+            case EventType.GenericDismissActor:
+                GenericReturnData returnDataDismiss = Param as GenericReturnData;
+                ProcessDismissActorAction(returnDataDismiss);
+                break;
+            case EventType.GenericDisposeActor:
+                GenericReturnData returnDataDispose = Param as GenericReturnData;
+                ProcessDisposeActorAction(returnDataDispose);
                 break;
             case EventType.ChangeColour:
                 SetColours();
@@ -458,6 +466,8 @@ public class ActionManager : MonoBehaviour
         string title;
         string colourSide;
         bool isResistance = true;
+        //Disable back button as you are on the top level of the nested options
+        GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
@@ -480,7 +490,7 @@ public class ActionManager : MonoBehaviour
                     actor.actorName, colourEnd);
                 genericDetails.textMiddle = string.Format("{0}You have a range of managerial options at your disposal. Be prepared to justify your decision{1}",
                     colourNormal, colourEnd);
-                genericDetails.textBottom = "Click on an option to Select. Press CONFIRM once done. Mouseover options for more information.";
+                genericDetails.textBottom = "Click on an option toggle Select. Press CONFIRM once done. Mouseover options for more information.";
                 //Create a set of options for the picker -> take only the first three options (picker can't handle more)
                 GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
                 GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
@@ -540,7 +550,7 @@ public class ActionManager : MonoBehaviour
     /// Process Manage -> Send to Reserve -> actor action (second level of the nested Manage actor menus)
     /// </summary>
     /// <param name="details"></param>
-    private void ProcessReserveActorAction(ModalActionDetails details)
+    private void InitialiseReserveActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         string title;
@@ -564,11 +574,11 @@ public class ActionManager : MonoBehaviour
                 genericDetails.actorSlotID = details.actorSlotID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
-                genericDetails.textTop = string.Format("{0}Send {1} to the Reserve Pool{2}{3}{4} {5}{6}{7}", colourNeutral, actor.arc.name, colourEnd, colourNormal, actor.arc.name, title,
+                genericDetails.textTop = string.Format("{0}Send {1} to the Reserve Pool{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
                     actor.actorName, colourEnd);
-                genericDetails.textMiddle = string.Format("{0}{1} asks that you explain yourself{2}",
+                genericDetails.textMiddle = string.Format("{0}{1} asks to return as soon as possible{2}",
                     colourNormal, actor.actorName, colourEnd);
-                genericDetails.textBottom = "Click on an option to Select. Press CONFIRM once done. Mouseover options for more information.";
+                genericDetails.textBottom = "Click on an option toggle Select. Press CONFIRM once done. Mouseover options for more information.";
                 //Create a set of options for the picker -> take only the first three options (picker can't handle more)
                 GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
                 GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
@@ -628,7 +638,7 @@ public class ActionManager : MonoBehaviour
     /// Process Manage -> Dismiss Actor -> actor action (second level of the nested Manage actor menus)
     /// </summary>
     /// <param name="details"></param>
-    private void ProcessDismissActorAction(ModalActionDetails details)
+    private void InitialiseDismissActorAction(ModalActionDetails details)
     {
     }
 
@@ -636,7 +646,7 @@ public class ActionManager : MonoBehaviour
     /// Process Manage -> Dispose of Actor -> actor action (second level of the nested Manage actor menus)
     /// </summary>
     /// <param name="details"></param>
-    private void ProcessDisposeActorAction(ModalActionDetails details)
+    private void InitialiseDisposeActorAction(ModalActionDetails details)
     {
     }
 
@@ -858,7 +868,6 @@ public class ActionManager : MonoBehaviour
     }
 
 
-
     /// <summary>
     /// Process node Target
     /// </summary>
@@ -1062,6 +1071,30 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// processes final selection for a Reserve Actor Action
+    /// </summary>
+    private void ProcessReserveActorAction(GenericReturnData data)
+    {
+
+    }
+
+    /// <summary>
+    /// processes final selection for a Dismiss Actor Action
+    /// </summary>
+    private void ProcessDismissActorAction(GenericReturnData data)
+    {
+
+    }
+
+    /// <summary>
+    /// processes final selection for a Dispose Actor Action
+    /// </summary>
+    private void ProcessDisposeActorAction(GenericReturnData data)
+    {
+
+    }
+
+    /// <summary>
     /// Handles Authority "ANY TEAM" action
     /// </summary>
     /// <param name="details"></param>
@@ -1087,24 +1120,29 @@ public class ActionManager : MonoBehaviour
         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; isResistance = false; }
         else { colourSide = colourResistance; isResistance = true; }
-    
         if (data != null)
         {
+            //pass through data
+            details.actorSlotID = data.actorSlotID;
+            details.side = playerSide;
             if (string.IsNullOrEmpty(data.optionText) == false)
             {
                 switch (data.optionText)
                 {
                     case "HandleReserve":
                         Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
-                        handler = ProcessReserveActorAction;
+                        handler = InitialiseReserveActorAction;
+                        details.eventType = EventType.GenericReserveActor;
                         break;
                     case "HandleDismiss":
                         Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
-                        handler = ProcessDismissActorAction;
+                        handler = InitialiseDismissActorAction;
+                        details.eventType = EventType.GenericDismissActor;
                         break;
                     case "HandleDispose":
                         Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
-                        handler = ProcessDisposeActorAction;
+                        handler = InitialiseDisposeActorAction;
+                        details.eventType = EventType.GenericDisposeActor;
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
@@ -1115,7 +1153,6 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid data.optionText (Null or empty"); errorFlag = true; }
         }
         else { Debug.LogError("Invalid GenericReturnData (Null)"); errorFlag = true; }
-
         //final processing -> either branch to the next Generic picker window or kick out an error outcome window
         if (errorFlag == true)
         {
@@ -1128,9 +1165,14 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            //branch to the appropriate method for the second level of the Manage Generic Picker via the delegate
+            
             if (handler != null)
-            { handler(details); }
+            {
+                //activate Back button to enable user to flip back a window
+                GameManager.instance.genericPickerScript.SetBackButton(EventType.GenericHandleActor);
+                //branch to the appropriate method for the second level of the Manage Generic Picker via the delegate
+                handler(details);
+            }
         }
     }
 
