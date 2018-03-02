@@ -462,13 +462,15 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     private void ProcessManageActorAction(ModalActionDetails details)
     {
+        Debug.Log(string.Format("Memory: total {0}{1}", System.GC.GetTotalMemory(false), "\n"));
         bool errorFlag = false;
         string title;
         string colourSide;
         bool isResistance = true;
-        //Disable back button as you are on the top level of the nested options
-        GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //Initialise nested option windows & sisable back button as you are on the top level of the nested options
+        GameManager.instance.genericPickerScript.InitialiseNestedOptions(details);
+        GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
         //color code for button tooltip header text, eg. "Operator"ss
         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; isResistance = false; }
@@ -1169,7 +1171,7 @@ public class ActionManager : MonoBehaviour
             if (handler != null)
             {
                 //activate Back button to enable user to flip back a window
-                GameManager.instance.genericPickerScript.SetBackButton(EventType.GenericHandleActor);
+                GameManager.instance.genericPickerScript.SetBackButton(EventType.ManageActorAction);
                 //branch to the appropriate method for the second level of the Manage Generic Picker via the delegate
                 handler(details);
             }

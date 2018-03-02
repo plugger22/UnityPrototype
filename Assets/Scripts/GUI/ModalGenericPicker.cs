@@ -39,7 +39,8 @@ public class ModalGenericPicker : MonoBehaviour
     private int nodeIDSelected;
     private int actorSlotIDSelected; 
     private EventType defaultReturnEvent;                          //event to trigger once confirmation button is clicked
-    private EventType backReturnEvent;                //event triggered when back button clicked (dynamic -> SetBackButton)
+    private EventType backReturnEvent;                  //event triggered when back button clicked (dynamic -> SetBackButton)
+    private ModalActionDetails nestedDetails;           //used only if there are multiple, nested, option windows (dynamic -> InitialiseNestedOptions)
 
     private string colourEffect;
     private string colourSide;
@@ -95,6 +96,7 @@ public class ModalGenericPicker : MonoBehaviour
         EventManager.instance.AddListener(EventType.ConfirmGenericActivate, OnEvent);
         EventManager.instance.AddListener(EventType.ConfirmGenericChoice, OnEvent);
         EventManager.instance.AddListener(EventType.ConfirmGenericDeactivate, OnEvent);
+        EventManager.instance.AddListener(EventType.BackButtonGeneric, OnEvent);
     }
 
     /// <summary>
@@ -150,6 +152,18 @@ public class ModalGenericPicker : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
+    /// <summary>
+    /// If using multiple nested option windows you need to call this prior to using a back button to ensure it has the details needed to pass through
+    /// to the previous window
+    /// </summary>
+    /// <param name="details"></param>
+    public void InitialiseNestedOptions(ModalActionDetails details)
+    {
+        if (details != null)
+        { nestedDetails = details; }
+        else { Debug.LogError("Invalid ModalActionDetails (null)"); }
     }
 
     /// <summary>
@@ -340,7 +354,7 @@ public class ModalGenericPicker : MonoBehaviour
         //close current GenericPicker Window
         CloseGenericPicker();
         //trigger event that calls previous window
-        EventManager.instance.PostNotification(backReturnEvent, this);
+        EventManager.instance.PostNotification(backReturnEvent, this, nestedDetails);
     }
 
 
