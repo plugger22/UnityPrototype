@@ -576,7 +576,7 @@ public class ActionManager : MonoBehaviour
                 genericDetails.actorSlotID = details.actorSlotID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
-                genericDetails.textTop = string.Format("{0}Send {1} to the Reserve Pool{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
+                genericDetails.textTop = string.Format("{0}Send to the Reserve Pool{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
                     actor.actorName, colourEnd);
                 genericDetails.textMiddle = string.Format("{0}{1} asks to return as soon as possible{2}",
                     colourNormal, actor.actorName, colourEnd);
@@ -642,6 +642,86 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseDismissActorAction(ModalActionDetails details)
     {
+        bool errorFlag = false;
+        string title;
+        string colourSide;
+        bool isResistance = true;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"
+        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { colourSide = colourAuthority; isResistance = false; }
+        else { colourSide = colourResistance; isResistance = true; }
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        if (actor != null)
+        {
+            //ActorHandle
+            List<ManageAction> listOfManageOptions = GameManager.instance.dataScript.GetListOfActorDismiss();
+            if (listOfManageOptions != null)
+            {
+                genericDetails.returnEvent = EventType.GenericDismissActor;
+                genericDetails.side = playerSide;
+                genericDetails.actorSlotID = details.actorSlotID;
+                title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
+                //picker text
+                genericDetails.textTop = string.Format("{0}Dismiss{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
+                    actor.actorName, colourEnd);
+                genericDetails.textMiddle = string.Format("{0}{1} demands to know why?{2}",
+                    colourNormal, actor.actorName, colourEnd);
+                genericDetails.textBottom = "Click on an option toggle Select. Press CONFIRM once done. Mouseover options for more information.";
+                //Create a set of options for the picker -> take only the first three options (picker can't handle more)
+                GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
+                GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
+                int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
+                for (int i = 0; i < numOfOptions; i++)
+                {
+                    ManageAction manageAction = listOfManageOptions[i];
+                    if (manageAction != null)
+                    {
+                        GenericOptionDetails option = new GenericOptionDetails()
+                        {
+                            text = manageAction.optionTitle,
+                            optionID = details.actorSlotID,
+                            optionText = manageAction.name,
+                            sprite = manageAction.sprite
+                        };
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
+                        {
+                            textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd),
+                            textMain = manageAction.tooltipMain,
+                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
+                        };
+                        //add to arrays
+                        arrayOfGenericOptions[i] = option;
+                        arrayOfTooltips[i] = tooltip;
+                    }
+                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+                }
+                //add options to picker data package
+                genericDetails.arrayOfOptions = arrayOfGenericOptions;
+                genericDetails.arrayOfTooltips = arrayOfTooltips;
+            }
+            else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
+
+        }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = playerSide;
+            outcomeDetails.textTop = string.Format("{0}You are unable to Dismiss of anyone at this time{1}", colourAlert, colourEnd);
+            outcomeDetails.textBottom = "Why this is so is under investigation";
+            outcomeDetails.sprite = errorSprite;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //activate Generic Picker window
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+        }
     }
 
     /// <summary>
@@ -650,6 +730,85 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseDisposeActorAction(ModalActionDetails details)
     {
+        bool errorFlag = false;
+        string title;
+        string colourSide;
+        bool isResistance = true;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"
+        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { colourSide = colourAuthority; isResistance = false; }
+        else { colourSide = colourResistance; isResistance = true; }
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        if (actor != null)
+        {
+            //ActorHandle
+            List<ManageAction> listOfManageOptions = GameManager.instance.dataScript.GetListOfActorDispose();
+            if (listOfManageOptions != null)
+            {
+                genericDetails.returnEvent = EventType.GenericDisposeActor;
+                genericDetails.side = playerSide;
+                genericDetails.actorSlotID = details.actorSlotID;
+                title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
+                //picker text
+                genericDetails.textTop = string.Format("{0}Dispose of{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
+                    actor.actorName, colourEnd);
+                genericDetails.textMiddle = string.Format("{0}HQ requests that you provide a reason{1}", colourNormal, colourEnd);
+                genericDetails.textBottom = "Click on an option toggle Select. Press CONFIRM once done. Mouseover options for more information.";
+                //Create a set of options for the picker -> take only the first three options (picker can't handle more)
+                GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
+                GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
+                int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
+                for (int i = 0; i < numOfOptions; i++)
+                {
+                    ManageAction manageAction = listOfManageOptions[i];
+                    if (manageAction != null)
+                    {
+                        GenericOptionDetails option = new GenericOptionDetails()
+                        {
+                            text = manageAction.optionTitle,
+                            optionID = details.actorSlotID,
+                            optionText = manageAction.name,
+                            sprite = manageAction.sprite
+                        };
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
+                        {
+                            textHeader = string.Format("{0}DISPOSE of{1}", colourSide, colourEnd),
+                            textMain = manageAction.tooltipMain,
+                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
+                        };
+                        //add to arrays
+                        arrayOfGenericOptions[i] = option;
+                        arrayOfTooltips[i] = tooltip;
+                    }
+                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+                }
+                //add options to picker data package
+                genericDetails.arrayOfOptions = arrayOfGenericOptions;
+                genericDetails.arrayOfTooltips = arrayOfTooltips;
+            }
+            else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
+
+        }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = playerSide;
+            outcomeDetails.textTop = string.Format("{0}You are unable to Dispose of anyone at this time{1}", colourAlert, colourEnd);
+            outcomeDetails.textBottom = "Why this is so is under investigation";
+            outcomeDetails.sprite = errorSprite;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //activate Generic Picker window
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+        }
     }
 
         /// <summary>
