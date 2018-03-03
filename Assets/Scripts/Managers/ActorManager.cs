@@ -1314,86 +1314,91 @@ public class ActorManager : MonoBehaviour
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        if (data.optionID > -1)
+        if (data != null)
         {
-            //find actor
-            Actor actorCurrent = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
-            if (actorCurrent != null)
+            if (data.optionID > -1)
             {
-                Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
-                if (actorRecruited != null)
+                //find actor
+                Actor actorCurrent = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
+                if (actorCurrent != null)
                 {
-                    //add actor to reserve pool
-                    if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, playerSide) == true)
+                    Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
+                    if (actorRecruited != null)
                     {
-                        //change actor's status
-                        actorRecruited.Status = ActorStatus.Reserve;
-                        //remove actor from appropriate pool list
-                        GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, playerSide);
-                        //sprite of recruited actor
-                        sprite = actorRecruited.arc.baseSprite;
-
-                        //actor successfully recruited
-                        builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
-                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
-                            actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
-                        //message
-                        string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
-                            actorRecruited.actorID);
-                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, 
-                            GameManager.instance.globalScript.sideResistance);
-                        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
-                        //Process any other effects, if acquisition was successfull, ignore otherwise
-                        Action action = actorCurrent.arc.nodeAction;
-                        List<Effect> listOfEffects = action.GetEffects();
-                        if (listOfEffects.Count > 0)
+                        //add actor to reserve pool
+                        if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, playerSide) == true)
                         {
-                            EffectDataInput dataInput = new EffectDataInput();
-                            Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
-                            if (node != null)
+                            //change actor's status
+                            actorRecruited.Status = ActorStatus.Reserve;
+                            //remove actor from appropriate pool list
+                            GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, playerSide);
+                            //sprite of recruited actor
+                            sprite = actorRecruited.arc.baseSprite;
+
+                            //actor successfully recruited
+                            builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
+                            builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
+                                actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+                            //message
+                            string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
+                                actorRecruited.actorID);
+                            Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID,
+                                GameManager.instance.globalScript.sideResistance);
+                            if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                            //Process any other effects, if acquisition was successfull, ignore otherwise
+                            Action action = actorCurrent.arc.nodeAction;
+                            List<Effect> listOfEffects = action.GetEffects();
+                            if (listOfEffects.Count > 0)
                             {
-                                foreach (Effect effect in listOfEffects)
+                                EffectDataInput dataInput = new EffectDataInput();
+                                Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                                if (node != null)
                                 {
-                                    if (effect.ignoreEffect == false)
+                                    foreach (Effect effect in listOfEffects)
                                     {
-                                        EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actorCurrent);
-                                        if (effectReturn != null)
+                                        if (effect.ignoreEffect == false)
                                         {
-                                            builderTop.AppendLine();
-                                            builderTop.Append(effectReturn.topText);
-                                            builderBottom.AppendLine();
-                                            builderBottom.AppendLine();
-                                            builderBottom.Append(effectReturn.bottomText);
-                                            //exit effect loop on error
-                                            if (effectReturn.errorFlag == true) { break; }
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actorCurrent);
+                                            if (effectReturn != null)
+                                            {
+                                                builderTop.AppendLine();
+                                                builderTop.Append(effectReturn.topText);
+                                                builderBottom.AppendLine();
+                                                builderBottom.AppendLine();
+                                                builderBottom.Append(effectReturn.bottomText);
+                                                //exit effect loop on error
+                                                if (effectReturn.errorFlag == true) { break; }
+                                            }
+                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
                                         }
-                                        else { Debug.LogError("Invalid effectReturn (Null)"); }
                                     }
                                 }
+                                else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", data.nodeID)); }
                             }
-                            else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", data.nodeID)); }
+                        }
+                        else
+                        {
+                            //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                            successFlag = false;
                         }
                     }
                     else
                     {
-                        //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                        Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
                         successFlag = false;
                     }
                 }
                 else
                 {
-                    Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
+                    Debug.LogWarning(string.Format("Invalid Current Actor (Null) for actorSlotID {0}", data.actorSlotID));
                     successFlag = false;
                 }
             }
             else
-            {
-                Debug.LogWarning(string.Format("Invalid Current Actor (Null) for actorSlotID {0}", data.actorSlotID));
-                successFlag = false;
-            }
+            { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
         }
         else
-        { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
+        { Debug.LogError("Invalid GenericReturnData (Null)"); successFlag = false; }
         //failed outcome
         if (successFlag == false)
         {
@@ -1426,46 +1431,51 @@ public class ActorManager : MonoBehaviour
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        if (data.optionID > -1)
+        if (data != null)
         {
-            //find actor
-            Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
-            if (actorRecruited != null)
+            if (data.optionID > -1)
             {
-                //add actor to reserve pool
-                if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
+                //find actor
+                Actor actorRecruited = GameManager.instance.dataScript.GetActor(data.optionID);
+                if (actorRecruited != null)
                 {
-                    //change actor's status
-                    actorRecruited.Status = ActorStatus.Reserve;
-                    //remove actor from appropriate pool list
-                    GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
-                    //sprite of recruited actor
-                    sprite = actorRecruited.arc.baseSprite;
-                    //message
-                    string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
-                        actorRecruited.actorID);
-                    Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, 
-                        GameManager.instance.globalScript.sideAuthority);
-                    if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
-                    //actor successfully recruited
-                    builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
-                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
-                        actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+                    //add actor to reserve pool
+                    if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
+                    {
+                        //change actor's status
+                        actorRecruited.Status = ActorStatus.Reserve;
+                        //remove actor from appropriate pool list
+                        GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
+                        //sprite of recruited actor
+                        sprite = actorRecruited.arc.baseSprite;
+                        //message
+                        string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
+                            actorRecruited.actorID);
+                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID,
+                            GameManager.instance.globalScript.sideAuthority);
+                        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                        //actor successfully recruited
+                        builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
+                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
+                            actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+                    }
+                    else
+                    {
+                        //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                        successFlag = false;
+                    }
                 }
                 else
                 {
-                    //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                    Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
                     successFlag = false;
                 }
             }
             else
-            {
-                Debug.LogWarning(string.Format("Invalid Recruited Actor (Null) for actorID {0}", data.optionID));
-                successFlag = false;
-            }
+            { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
         }
         else
-        { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
+        { Debug.LogError("Invalid GenericDataReturn (Null)"); successFlag = false; }
         //failed outcome
         if (successFlag == false)
         {

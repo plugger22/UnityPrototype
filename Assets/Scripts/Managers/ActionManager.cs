@@ -1236,7 +1236,131 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     private void ProcessReserveActorAction(GenericReturnData data)
     {
+        bool successFlag = true;
+        string textMsg = "Unknown";
+        StringBuilder builderTop = new StringBuilder();
+        StringBuilder builderBottom = new StringBuilder();
+        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        if (data != null)
+        {
+            if (data.optionID > -1)
+            {
+                //find actor
+                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
+                if (actor != null)
+                {
+                    //add actor to reserve pool
+                    if (GameManager.instance.dataScript.AddActorToReserve(actor.actorID, playerSide) == true)
+                    {
+                        //change actor's status
+                        actor.Status = ActorStatus.Reserve;
+                        //remove actor from appropriate pool list
+                        GameManager.instance.dataScript.RemoveActorFromPool(actor.actorID, actor.level, playerSide);
+                        //sprite of recruited actor
+                        sprite = actor.arc.baseSprite;
+                        //actor successfully moved to reserve
+                        if (string.IsNullOrEmpty(data.optionText) == false)
+                        {
+                            switch (data.optionText)
+                            {
+                                case "ReserveRest":
+                                    builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
+                                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
+                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));
+                                    //message
+                                    textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actor.actorName, actor.arc.name,
+                                        actor.actorID);
+                                    break;
+                                case "ReservePromise":
 
+                                    break;
+                                case "ReserveNoPromise":
+
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            //no optionText provided -> default data
+                        }
+                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actor.actorID, playerSide);
+                        GameManager.instance.dataScript.AddMessage(message);
+                        //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
+
+                        /*Action action = actorCurrent.arc.nodeAction;
+                            List<Effect> listOfEffects = action.GetEffects();
+                            if (listOfEffects.Count > 0)
+                            {
+                                EffectDataInput dataInput = new EffectDataInput();
+                                Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                                if (node != null)
+                                {
+                                    foreach (Effect effect in listOfEffects)
+                                    {
+                                        if (effect.ignoreEffect == false)
+                                        {
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actorCurrent);
+                                            if (effectReturn != null)
+                                            {
+                                                builderTop.AppendLine();
+                                                builderTop.Append(effectReturn.topText);
+                                                builderBottom.AppendLine();
+                                                builderBottom.AppendLine();
+                                                builderBottom.Append(effectReturn.bottomText);
+                                                //exit effect loop on error
+                                                if (effectReturn.errorFlag == true) { break; }
+                                            }
+                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
+                                        }
+                                    }
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", data.nodeID)); }
+                            }*/
+                    }
+                    else
+                    {
+                        //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                        successFlag = false;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(string.Format("Invalid Actor (Null) for actorSlotID {0}", data.optionID));
+                    successFlag = false;
+                }
+
+            }
+            else
+            { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
+        }
+        else
+        {
+            Debug.LogError("Invalid GenericReturnData (Null)");
+            successFlag = false;
+        }
+        //failed outcome
+        if (successFlag == false)
+        {
+            builderTop.Append("Something has gone wrong. You are unable to move anyone to the Reserve Pool at present");
+            builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
+        }
+        //
+        // - - - Outcome - - - 
+        //
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.textTop = builderTop.ToString();
+        outcomeDetails.textBottom = builderBottom.ToString();
+        outcomeDetails.sprite = sprite;
+        outcomeDetails.side = playerSide;
+        //action expended automatically for manage actor
+        if (successFlag == true)
+        { outcomeDetails.isAction = true; }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
     /// <summary>
