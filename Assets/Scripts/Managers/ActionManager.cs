@@ -1232,7 +1232,7 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// processes final selection for a Reserve Actor Action
+    /// processes final selection for a Reserve Actor Action (both sides)
     /// </summary>
     private void ProcessReserveActorAction(GenericReturnData data)
     {
@@ -1255,6 +1255,12 @@ public class ActionManager : MonoBehaviour
                     {                     
                         //sprite of recruited actor
                         sprite = actor.arc.baseSprite;
+                        //authority actor?
+                        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                        {
+                            //remove all active teams connected with this actor
+                            GameManager.instance.teamScript.TeamCleanUp(actor);
+                        }
                         //actor successfully moved to reserve
                         if (string.IsNullOrEmpty(data.optionText) == false)
                         {

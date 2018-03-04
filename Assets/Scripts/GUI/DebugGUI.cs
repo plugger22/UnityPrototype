@@ -359,19 +359,19 @@ public class DebugGUI : MonoBehaviour
                     //team pool analysis
                     case 2:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.teamScript.GetTeamAnalysis();
+                        analysis = GameManager.instance.teamScript.DisplayTeamAnalysis();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                         break;
                     //teams
                     case 3:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.teamScript.GetIndividualTeams();
+                        analysis = GameManager.instance.teamScript.DisplayIndividualTeams();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);
                         break;
                     //actor Teams
                     case 4:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.teamScript.GetTeamActorAnalysis();
+                        analysis = GameManager.instance.teamScript.DisplayTeamActorAnalysis();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);
                         break;
                     //player's gear

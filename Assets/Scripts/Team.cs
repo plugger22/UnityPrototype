@@ -8,17 +8,17 @@ namespace gameAPI
 
     public class Team
     {
-        [HideInInspector] public int TeamID;
-        [HideInInspector] public string Name;
+        [HideInInspector] public int teamID;
+        [HideInInspector] public string teamName;
 
         private static int teamCounter = 0;
 
-        [HideInInspector] public TeamPool Pool;
-        [HideInInspector] public TeamArc Arc;
-        [HideInInspector] public int ActorSlotID;                //which actor has deployed the team, '-1' if none
-        [HideInInspector] public int NodeID;                 //nodeID where team is located if 'OnMap'. '-1' if none.
-        [HideInInspector] public int Timer;                 //countdown timer for deployment OnMap. '-1' if none.
-        [HideInInspector] public int TurnDeployed;          //if deployed OnMap, turn number of when it first happened.
+        [HideInInspector] public TeamPool pool;
+        [HideInInspector] public TeamArc arc;
+        [HideInInspector] public int actorSlotID;                //which actor has deployed the team, '-1' if none
+        [HideInInspector] public int nodeID;                 //nodeID where team is located if 'OnMap'. '-1' if none.
+        [HideInInspector] public int timer;                 //countdown timer for deployment OnMap. '-1' if none.
+        [HideInInspector] public int turnDeployed;          //if deployed OnMap, turn number of when it first happened.
 
         /// <summary>
         /// Creates a new team of a particular TeamArcType, eg. "Security"
@@ -34,8 +34,8 @@ namespace gameAPI
                 TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    TeamID = teamCounter++;
-                    this.Arc = teamArc;
+                    teamID = teamCounter++;
+                    this.arc = teamArc;
                     InitialiseTeamData(count);
                     AddToCollections(this);
                 }
@@ -58,8 +58,8 @@ namespace gameAPI
                 TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    TeamID = teamCounter++;
-                    this.Arc = teamArc;
+                    teamID = teamCounter++;
+                    this.arc = teamArc;
                     InitialiseTeamData(count);
                     AddToCollections(this);
                 }
@@ -76,14 +76,14 @@ namespace gameAPI
         /// <param name="team"></param>
         private void InitialiseTeamData(int count)
         {
-            Pool = TeamPool.Reserve;
-            ActorSlotID = -1;
-            NodeID = -1;
-            Timer = -1;
-            TurnDeployed = -1;
+            pool = TeamPool.Reserve;
+            actorSlotID = -1;
+            nodeID = -1;
+            timer = -1;
+            turnDeployed = -1;
             if (count > -1 && count < (int)NATO.Count)
-            { Name = "Team " + (NATO)count; }
-            else { Name = "Team Unknown"; }
+            { teamName = "Team " + (NATO)count; }
+            else { teamName = "Team Unknown"; }
         }
 
         /// <summary>
@@ -92,11 +92,11 @@ namespace gameAPI
         /// <param name="pool"></param>
         public void ResetTeamData(TeamPool pool)
         {
-            Pool = pool;
-            ActorSlotID = -1;
-            NodeID = -1;
-            Timer = -1;
-            TurnDeployed = -1;
+            this.pool = pool;
+            actorSlotID = -1;
+            nodeID = -1;
+            timer = -1;
+            turnDeployed = -1;
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace gameAPI
         private void AddToCollections(Team team)
         {
             if (GameManager.instance.dataScript.AddTeamToDict(team) == true)
-            { GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.TeamID); }
+            { GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID); }
         }
 
     }

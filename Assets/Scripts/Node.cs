@@ -259,7 +259,7 @@ public class Node : MonoBehaviour
                 if (listOfTeams.Count > 0)
                 {
                     foreach (Team team in listOfTeams)
-                    { teamList.Add(team.Arc.name); }
+                    { teamList.Add(team.arc.name); }
                 }
                 List<string> targetList = new List<string>();
                 if (targetID > -1)
@@ -535,16 +535,16 @@ public class Node : MonoBehaviour
             if (listOfTeams.Count < GameManager.instance.teamScript.maxTeamsAtNode)
             {
                 //check a similar type of team not already present
-                int nodeArcID = team.Arc.TeamArcID;
+                int nodeArcID = team.arc.TeamArcID;
                 if (listOfTeams.Count > 0)
                 {
                     foreach(Team teamExisting in listOfTeams)
                     {
-                        if (teamExisting.Arc.TeamArcID == nodeArcID)
+                        if (teamExisting.arc.TeamArcID == nodeArcID)
                         {
                             //already a similar team present -> no go
                             Debug.LogWarning(string.Format("{0} Team NOT added to node {1}, ID {2} as already a similar team present{3}", 
-                                team.Arc.name, nodeName, nodeID, "\n"));
+                                team.arc.name, nodeName, nodeID, "\n"));
                             return false;
                         }
                     }
@@ -552,11 +552,11 @@ public class Node : MonoBehaviour
                 //Add team
                 listOfTeams.Add(team);
                 //initialise Team data
-                team.NodeID = nodeID;
-                team.ActorSlotID = actorID;
-                team.Pool = TeamPool.OnMap;
-                team.Timer = GameManager.instance.teamScript.deployTime;
-                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.Arc.name, nodeName, nodeID, "\n"));
+                team.nodeID = nodeID;
+                team.actorSlotID = actorID;
+                team.pool = TeamPool.OnMap;
+                team.timer = GameManager.instance.teamScript.deployTime;
+                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, nodeName, nodeID, "\n"));
                 return true;
             }
             else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", nodeName, nodeID, "\n")); }
@@ -573,7 +573,7 @@ public class Node : MonoBehaviour
     {
         for(int i = 0; i < listOfTeams.Count; i++)
         {
-            if (listOfTeams[i].TeamID == teamID)
+            if (listOfTeams[i].teamID == teamID)
             {
                 listOfTeams.RemoveAt(i);
                 Debug.Log(string.Format("TeamID {0} removed from Node ID {1}{2}", teamID, nodeID, "\n"));
@@ -605,8 +605,8 @@ public class Node : MonoBehaviour
         {
             foreach (Team team in listOfTeams)
             {
-                if (team.Arc.TeamArcID == teamArcID)
-                { return team.TeamID; }
+                if (team.arc.TeamArcID == teamArcID)
+                { return team.teamID; }
             }
         }
         return -1;

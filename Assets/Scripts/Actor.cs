@@ -22,7 +22,8 @@ namespace gameAPI
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;
         
-        
+        private List<int> listOfTeams = new List<int>();    //teamID of all teams that the actor has currently deployed OnMap
+
         //private backing field
         private ActorStatus _status;
 
@@ -38,11 +39,6 @@ namespace gameAPI
                 { GameManager.instance.nodeScript.SetNodeActorFlags(); }
             }
         }
-        
-
-        
-
-        private List<int> listOfTeams = new List<int>();    //teamID of all teams that the actor has currently deployed OnMap
 
         public Actor()
         {

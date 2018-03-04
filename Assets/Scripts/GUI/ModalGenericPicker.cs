@@ -254,6 +254,7 @@ public class ModalGenericPicker : MonoBehaviour
                                 genericData.displayText.text = details.arrayOfOptions[i].text;
                                 genericData.data.optionID = details.arrayOfOptions[i].optionID;
                                 genericData.data.optionText = details.arrayOfOptions[i].optionText;
+                                genericData.data.actorSlotID = details.actorSlotID;
                                 //activate option (in Generic picker assumed all options are active)
                                 genericData.isActive = true;
 
@@ -383,7 +384,7 @@ public class ModalGenericPicker : MonoBehaviour
                             Team teamRecall = GameManager.instance.dataScript.GetTeam(data.optionID);
                             if (teamRecall != null)
                             {
-                                text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.Arc.name, colourEnd, colourDefault, colourEnd);
+                                text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.arc.name, colourEnd, colourDefault, colourEnd);
                                 Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", data.optionID, "\n"));
                             }
                             else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", data.optionID)); }
@@ -396,7 +397,7 @@ public class ModalGenericPicker : MonoBehaviour
                             Team teamNeutralise = GameManager.instance.dataScript.GetTeam(data.optionID);
                             if (teamNeutralise != null)
                             {
-                                text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.Arc.name, colourEnd, colourDefault, colourEnd);
+                                text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.arc.name, colourEnd, colourDefault, colourEnd);
                                 Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", data.optionID, "\n"));
                             }
                             else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", data.optionID)); }
@@ -431,26 +432,26 @@ public class ModalGenericPicker : MonoBehaviour
                         else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                     case EventType.GenericHandleActor:
-                        if (data.optionID > -1)
+                        if (data.actorSlotID > -1)
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.optionID);
+                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)
                                     {
                                         case "HandleReserve":
                                             text = string.Format("{0}Send {1} to Reserve Pool{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, to RESERVE pool selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, to RESERVE pool selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "HandleDismiss":
                                             text = string.Format("{0}Fire {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, FIRE selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, FIRE selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "HandleDispose":
                                             text = string.Format("{0}Dispose of {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         default:
                                             Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
@@ -458,33 +459,33 @@ public class ModalGenericPicker : MonoBehaviour
                                     }
 
                                 }
-                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.optionID)); }
+                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.actorSlotID)); }
                             }
                             else { Debug.LogError("Invalid data.optionText (Null or Empty)"); }
                         }
                         else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                     case EventType.GenericReserveActor:
-                        if (data.optionID > -1)
+                        if (data.actorSlotID > -1)
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.optionID);
+                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)
                                     {
                                         case "ReserveRest":
                                             text = string.Format("{0}Send {1} to Rest{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, REST selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, REST selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "ReservePromise":
                                             text = string.Format("{0}You Promise {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, PROMISE selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, PROMISE selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "ReserveNoPromise":
                                             text = string.Format("{0}NO promises to {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, NO PROMISE selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, NO PROMISE selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         default:
                                             Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
@@ -492,33 +493,33 @@ public class ModalGenericPicker : MonoBehaviour
                                     }
 
                                 }
-                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.optionID)); }
+                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.actorSlotID)); }
                             }
                             else { Debug.LogError("Invalid data.optionText (Null or Empty)"); }
                         }
-                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
+                        else { Debug.LogError("Invalid data.actorSlotID (< 0)"); }
                         break;
                     case EventType.GenericDismissActor:
-                        if (data.optionID > -1)
+                        if (data.actorSlotID > -1)
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.optionID);
+                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)
                                     {
                                         case "DismissPromote":
                                             text = string.Format("{0}Promote {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, PROMOTE selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, PROMOTE selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "DismissIncompetent":
                                             text = string.Format("{0}Dismiss {1} for Incompetence{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, INCOMPETENT selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, INCOMPETENT selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "DismissUnsuited":
                                             text = string.Format("{0}Dismiss {1} for Unsuitability{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, UNSUITED selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, UNSUITED selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         default:
                                             Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
@@ -526,33 +527,33 @@ public class ModalGenericPicker : MonoBehaviour
                                     }
 
                                 }
-                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.optionID)); }
+                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.actorSlotID)); }
                             }
                             else { Debug.LogError("Invalid data.optionText (Null or Empty)"); }
                         }
-                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
+                        else { Debug.LogError("Invalid data.actorSlotID (< 0)"); }
                         break;
                     case EventType.GenericDisposeActor:
-                        if (data.optionID > -1)
+                        if (data.actorSlotID > -1)
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.optionID);
+                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)
                                     {
                                         case "DisposeLoyalty":
                                             text = string.Format("{0}Dispose of {1} because they are Disloyal{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE due to LOYALTY selected{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE due to LOYALTY selected{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "DisposeCorrupt":
                                             text = string.Format("{0}Dispose of {1} because they are Corrupt{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE due to CORRUPTION{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE due to CORRUPTION{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         case "DisposeHabit":
                                             text = string.Format("{0}Dispose of {1} because you can{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE due to HABIT{2}", actor.actorName, data.optionID, "\n"));
+                                            Debug.Log(string.Format("ManagePicker: {0}, ID {1}, DISPOSE due to HABIT{2}", actor.actorName, data.actorSlotID, "\n"));
                                             break;
                                         default:
                                             Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
@@ -560,11 +561,11 @@ public class ModalGenericPicker : MonoBehaviour
                                     }
 
                                 }
-                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.optionID)); }
+                                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", data.actorSlotID)); }
                             }
                             else { Debug.LogError("Invalid data.optionText (Null or Empty)"); }
                         }
-                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
+                        else { Debug.LogError("Invalid data.actorSlotID (< 0)"); }
                         break;
                 }
             }

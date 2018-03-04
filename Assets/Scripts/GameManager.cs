@@ -184,31 +184,6 @@ public class GameManager : MonoBehaviour
         { inputScript.ProcessInput(); }
     }
 
-    /*/// <summary>
-    /// event handler
-    /// </summary>
-    /// <param name="eventType"></param>
-    /// <param name="Sender"></param>
-    /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object Param = null)
-    {
-        //detect event type
-        switch (eventType)
-        {
-            case EventType.ExitGame:
-                Quit();
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
-                break;
-        }
-    }*/
-
-
-
-
-
-
 
 
     //place methods above here

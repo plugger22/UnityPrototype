@@ -220,7 +220,7 @@ public class ModalTeamPicker : MonoBehaviour
                         int counter = 0;
                         foreach (Team team in listOfTeams)
                         {
-                            builder.Append(team.Arc.name);
+                            builder.Append(team.arc.name);
                             counter++;
                             if (counter < listOfTeams.Count)
                             { builder.Append(", "); }
@@ -285,9 +285,9 @@ public class ModalTeamPicker : MonoBehaviour
                         Team team = GameManager.instance.dataScript.GetTeam(teamID);
                         if (team != null)
                         {
-                            textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.Arc.name, team.Name);
+                            textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.arc.name, team.teamName);
                             //default team tooltip header
-                            teamType = team.Arc.name;
+                            teamType = team.arc.name;
                         }
                         else { Debug.LogError(string.Format("Invalid Team (Null) for teamID {0}", teamID)); }
                     }
@@ -414,7 +414,7 @@ public class ModalTeamPicker : MonoBehaviour
                 Team team = GameManager.instance.dataScript.GetTeam(teamID);
                 if (team != null)
                 {
-                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.Arc.name, colourEnd, colourDefault, colourEnd);
+                    text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.arc.name, colourEnd, colourDefault, colourEnd);
                     //record most recently chosen selection
                     teamIDSelected = teamID;
                     Debug.Log(string.Format("TeamPicker: teamArcID {0} selected{1}", teamID, "\n"));
@@ -465,7 +465,7 @@ public class ModalTeamPicker : MonoBehaviour
             Team team = GameManager.instance.dataScript.GetTeam(teamIDSelected);
             if (team != null)
             {
-                TeamInteraction teamInteract = arrayOfTeamOptions[team.Arc.TeamArcID].GetComponent<TeamInteraction>();
+                TeamInteraction teamInteract = arrayOfTeamOptions[team.arc.TeamArcID].GetComponent<TeamInteraction>();
                 if (teamInteract != null)
                 { details.sprite = teamInteract.teamImage.sprite; }
                 else { successFlag = false; }

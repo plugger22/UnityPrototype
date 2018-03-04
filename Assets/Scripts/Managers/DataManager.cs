@@ -1348,11 +1348,11 @@ public class DataManager : MonoBehaviour
         bool successFlag = true;
         //add to dictionary
         try
-        { dictOfTeams.Add(team.TeamID, team); }
+        { dictOfTeams.Add(team.teamID, team); }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid Team (Null)"); successFlag = false; }
         catch (ArgumentException)
-        { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.TeamID, team.Arc.name, team.Name, "\n")); successFlag = false; }
+        { Debug.LogError(string.Format("Invalid Team (duplicate) TeamID \"{0}\" for {1} \"{2}\"{3}", team.teamID, team.arc.name, team.teamName, "\n")); successFlag = false; }
         return successFlag;
     }
 
@@ -1460,7 +1460,7 @@ public class DataManager : MonoBehaviour
             //loop list of teamID's looking for a matching teamArc
             for (int i = 0; i < tempList.Count; i++)
             {
-                if (GetTeam(tempList[i]).Arc.TeamArcID == teamArcID)
+                if (GetTeam(tempList[i]).arc.TeamArcID == teamArcID)
                 { return tempList[i]; }
             }
         }
@@ -1527,10 +1527,10 @@ public class DataManager : MonoBehaviour
             {
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
-                    teamArcID = listOfTeams[i].Arc.TeamArcID;
+                    teamArcID = listOfTeams[i].arc.TeamArcID;
                     //if not present in list Of Arcs (tempArcs) then add
                     if (tempArcs.Exists(x => x == teamArcID) == true)
-                    { tempList.Add(listOfTeams[i].Arc.name); }
+                    { tempList.Add(listOfTeams[i].arc.name); }
                 }
             }
         }
@@ -1543,14 +1543,14 @@ public class DataManager : MonoBehaviour
             {
                 Team team = GetTeam(teamPoolReserve[i]);
                 //check team not present at node
-                if (tempArcs.Exists(x => x == team.Arc.TeamArcID) == false)
+                if (tempArcs.Exists(x => x == team.arc.TeamArcID) == false)
                 {
                     //check team not present in duplicatesList
-                    if (duplicatesList.Exists(x => x == team.Arc.TeamArcID) == false)
+                    if (duplicatesList.Exists(x => x == team.arc.TeamArcID) == false)
                     {
                         //add team type name to both return list & duplicates list
-                        tempList.Add(team.Arc.name);
-                        duplicatesList.Add(team.Arc.TeamArcID);
+                        tempList.Add(team.arc.name);
+                        duplicatesList.Add(team.arc.TeamArcID);
                     }
                 }
             }

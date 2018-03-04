@@ -634,7 +634,7 @@ public class ActorManager : MonoBehaviour
                         foreach(Team team in listOfTeams)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutralEffect, team.Arc.name, team.Name, colourEnd));
+                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutralEffect, team.arc.name, team.teamName, colourEnd));
                         }
                         //button details
                         EventButtonDetails recallDetails = new EventButtonDetails()

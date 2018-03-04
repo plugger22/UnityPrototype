@@ -848,19 +848,19 @@ public class EffectManager : MonoBehaviour
         if (team != null)
         {
             //get node
-            Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
+            Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
             if (node != null)
             {
                 string operation = "inserted";
                 if (isInserted == false) { operation = "recalled"; }
                 return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}", 
-                    colourNeutral, team.Arc.name, colourEnd, 
-                    colourNormal, team.Name, operation, colourEnd,  
+                    colourNeutral, team.arc.name, colourEnd, 
+                    colourNormal, team.teamName, operation, colourEnd,  
                     colourBad, node.Arc.name, colourEnd, colourNormal, node.nodeName, colourEnd);
             }
             else
             {
-                Debug.LogError(string.Format("Invalid node (Null) for team.NodeID {0}", team.NodeID));
+                Debug.LogError(string.Format("Invalid node (Null) for team.NodeID {0}", team.nodeID));
                 return "Unknown";
             }
         }

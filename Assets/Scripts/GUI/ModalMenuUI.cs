@@ -113,7 +113,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         if (listOfTeams.Count > 0)
                         {
                             foreach (Team team in listOfTeams)
-                            { teamList.Add(string.Format("{0} team", team.Arc.name)); }
+                            { teamList.Add(string.Format("{0} team", team.arc.name)); }
                         }
                         //adjust position prior to sending (rectTransform is in World units)
                         Vector3 positionNode = rectTransform.position;

@@ -119,7 +119,7 @@ public class CaptureManager : MonoBehaviour
         { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
         builder.Append(string.Format("{0}Player has been Captured{1}{2}{3}", colourBad, colourEnd, "\n", "\n"));
         //message
-        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.TeamID);
+        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.teamID);
         GameManager.instance.dataScript.AddMessage(message);
         //update node trackers
         GameManager.instance.nodeScript.nodePlayer = -1;
@@ -127,12 +127,12 @@ public class CaptureManager : MonoBehaviour
         //change player state
         GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
         //add renown to authority actor who owns the team (only if they are still OnMap
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.ActorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
         {
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.ActorSlotID, GameManager.instance.globalScript.sideAuthority);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority);
             if (actor != null)
             { actor.renown++; }
-            else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.ActorSlotID)); }
+            else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
         }
         //lower resistance Cause
         int cause = GameManager.instance.rebelScript.resistanceCause;
@@ -188,7 +188,7 @@ public class CaptureManager : MonoBehaviour
         string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", details.actor.actorName, details.node.nodeName, details.node.Arc.name);
         builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name, colourEnd, "\n", "\n"));
         //message
-        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.TeamID, details.actor.actorID);
+        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.teamID, details.actor.actorID);
         GameManager.instance.dataScript.AddMessage(message);
         //lower resistance Cause
         int cause = GameManager.instance.rebelScript.resistanceCause;
