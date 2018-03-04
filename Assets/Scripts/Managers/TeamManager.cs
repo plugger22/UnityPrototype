@@ -184,8 +184,6 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.NodeID);
                         if (node != null)
                         {
-
-
                             Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.ActorSlotID, globalAuthority);
                             MoveTeam(TeamPool.InTransit, team.TeamID, team.ActorSlotID, node);
                             if (actor != null)
@@ -197,7 +195,12 @@ public class TeamManager : MonoBehaviour
                                 Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.nodeID, team.TeamID, actor.actorID);
                                 if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                             }
-                            else { Debug.LogError(string.Format("Invalid actor (null) for actorSlotID {0}", team.ActorSlotID)); }
+                            else
+                            {
+                                //error if there should be an actor in the slot
+                                if (GameManager.instance.dataScript.CheckActorSlotStatus(team.ActorSlotID, globalAuthority) == true)
+                                { Debug.LogError(string.Format("Invalid actor (null) for actorSlotID {0}", team.ActorSlotID)); }
+                            }
                         }
                         else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.NodeID)); }
                     }
@@ -279,7 +282,9 @@ public void InitialiseTeams()
                     {
                         //get a random Actor
                         actorSlotID = Random.Range(0, GameManager.instance.actorScript.maxNumOfOnMapActors);
-                        MoveTeam(TeamPool.OnMap, teamData.Key, actorSlotID, node);
+                        //only do so if Actor is present in slot (player might start level with less than full complement of actors)
+                        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
+                        { MoveTeam(TeamPool.OnMap, teamData.Key, actorSlotID, node); }
                     }
                     else { Debug.LogError("Invalid node (Null)"); }
                 }
@@ -365,7 +370,7 @@ public void InitialiseTeams()
                                             }
                                             else
                                             {
-                                                Debug.LogWarning(string.Format("Node Add team operation failed for \"{0} {1}\" (could be duplicate)", 
+                                                Debug.LogWarning(string.Format("Node Add team operation failed for \"{0} {1}\" (could be duplicate)",
                                                     team.Arc.name, team.Name));
                                                 successFlag = false;
                                             }
@@ -398,8 +403,11 @@ public void InitialiseTeams()
                         }
                         else
                         {
-                            Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID));
-                            successFlag = false;
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
+                            {
+                                Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID));
+                                successFlag = false;
+                            }
                         }
                     }
                     else
@@ -450,8 +458,11 @@ public void InitialiseTeams()
                         }
                         else
                         {
-                            Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID));
-                            successFlag = false;
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
+                            {
+                                Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID));
+                                successFlag = false;
+                            }
                         }
                     }
                     else
