@@ -15,6 +15,11 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Alpha of Actor portraits when ActorStatus is 'InActive'")]
     [Range(0f, 1f)] public float alphaInactive = 0.45f;
 
+    [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
+    public Sprite vacantAuthorityActor;
+    [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
+    public Sprite vacantResistanceActor;
+
     //Actor display at bottom
     private GameObject Actor0;
     private GameObject Actor1;
@@ -137,18 +142,38 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// places actor data (type and sprite) into GUI elements via lists
     /// </summary>
-    private void UpdateActorGUI()
+    public void UpdateActorGUI()
     {
-        int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
+        int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
         if (arrayOfActors != null)
         {
             if (arrayOfActors.Length == numOfActors)
             {
+                //loop actors
                 for (int i = 0; i < numOfActors; i++)
                 {
-                    listOfActorTypes[i].text = arrayOfActors[i].arc.name;
-                    listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
+                    //check if actorSlotID has an actor first
+                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                    {
+                        listOfActorTypes[i].text = arrayOfActors[i].arc.name;
+                        listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
+                    }
+                    else
+                    {
+                        //vacant position
+                        listOfActorTypes[i].text = "VACANT";
+                        switch (side.level)
+                        {
+                            case 1: listOfActorPortraits[i].sprite = vacantAuthorityActor; break;
+                            case 2: listOfActorPortraits[i].sprite = vacantResistanceActor; break;
+                            default:
+                                Debug.LogError(string.Format("Invalid side.level \"{0}\" {1}", side.name, side.level));
+                                break;
+                        }
+                        
+                    }
                 }
             }
             else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
@@ -163,7 +188,7 @@ public class GUIManager : MonoBehaviour
     /// <param name="alpha"></param>
     public void UpdateActorAlpha(int actorSlotID, float alpha)
     {
-        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID");
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
         switch(actorSlotID)
         {
             case 0:

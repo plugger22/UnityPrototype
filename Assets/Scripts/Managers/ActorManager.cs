@@ -17,9 +17,9 @@ public class ActorManager : MonoBehaviour
 
     [HideInInspector] public int numOfActiveActors;    //Actors who are OnMap and active, eg. not asleep or captured
     [Tooltip("Maxium number of actors (Active or Inactive) that can be onMap (eg. 'Onscreen') at any one time")]
-    [Range(1, 4)] public int numOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
+    [Range(1, 4)] public int maxNumOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
     [Tooltip("Maximum number of actors that can be in the replacement pool (applies to both sides)")]
-    [Range(1, 6)] public int numOfReserveActors = 4;    //
+    [Range(1, 6)] public int maxNumOfReserveActors = 4;    //
     [Tooltip("The maximum number of stats (Qualities) that an actor can have")]
     [Range(2,4)] public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
 
@@ -52,8 +52,8 @@ public class ActorManager : MonoBehaviour
     public void PreInitialiseActors()
     {
         //number of actors, default 4
-        numOfOnMapActors = numOfOnMapActors == 4 ? numOfOnMapActors : 4;
-        numOfActiveActors = numOfOnMapActors;
+        maxNumOfOnMapActors = maxNumOfOnMapActors == 4 ? maxNumOfOnMapActors : 4;
+        numOfActiveActors = maxNumOfOnMapActors;
     }
 
 
@@ -70,8 +70,8 @@ public class ActorManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent);
         EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent);
         //create active, OnMap actors
-        InitialiseActors(numOfOnMapActors, GameManager.instance.globalScript.sideResistance);
-        InitialiseActors(numOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
+        InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
+        InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         //create pool actors
         InitialisePoolActors();
 
@@ -269,7 +269,7 @@ public class ActorManager : MonoBehaviour
     public Actor CreateActor(GlobalSide side, int actorArcID, int level, ActorStatus status, int slotID = -1)
     {
         Debug.Assert(level > 0 && level < 4, "Invalid level (must be between 1 and 3)");
-        Debug.Assert(slotID >= -1 && slotID <= numOfOnMapActors, "Invalid slotID (must be -1 (default) or between 1 and 3");
+        Debug.Assert(slotID >= -1 && slotID <= maxNumOfOnMapActors, "Invalid slotID (must be -1 (default) or between 1 and 3");
         //check a valid actor Arc parameter
         ActorArc arc = GameManager.instance.dataScript.GetActorArc(actorArcID);
         if (arc != null)

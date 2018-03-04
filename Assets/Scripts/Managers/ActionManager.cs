@@ -1251,12 +1251,8 @@ public class ActionManager : MonoBehaviour
                 if (actor != null)
                 {
                     //add actor to reserve pool
-                    if (GameManager.instance.dataScript.AddActorToReserve(actor.actorID, playerSide) == true)
-                    {
-                        //change actor's status
-                        actor.Status = ActorStatus.Reserve;
-                        //remove actor from appropriate pool list
-                        GameManager.instance.dataScript.RemoveActorFromPool(actor.actorID, actor.level, playerSide);
+                    if ( GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
+                    {                     
                         //sprite of recruited actor
                         sprite = actor.arc.baseSprite;
                         //actor successfully moved to reserve

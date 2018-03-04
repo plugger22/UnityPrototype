@@ -10,5 +10,5 @@ public class GlobalSide : ScriptableObject
 {
     public string descriptor;
 
-    [HideInInspector] public int level;         //assigned dynamically during MetaManager.initialise (0/1/2)
+    [HideInInspector] public int level;         //assigned dynamically during GlobaManager.initialise (0 - AI / 1 - Authority / 2 - Resistance)
 }

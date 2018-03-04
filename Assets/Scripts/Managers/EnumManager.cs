@@ -49,7 +49,7 @@ namespace gameAPI
     //
     // - - - Actors - - -
     //
-    public enum ActorStatus { Active, Inactive, Reserve, Pool, Captured }
+    public enum ActorStatus { Active, Inactive, Reserve, Pool, Captured, Dismissed, Killed }
 
     //
     // - - - Action Menu - - -

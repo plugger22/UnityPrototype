@@ -174,8 +174,8 @@ public class EffectManager : MonoBehaviour
                                                     { BuildString(result, "Support " + compareTip); }
                                                     break;
                                                 case "NumRecruitsCurrent":
-                                                    val = GameManager.instance.dataScript.GetNumOfActorsInReserve();
-                                                    compareTip = ComparisonCheck(GameManager.instance.actorScript.numOfReserveActors, val, criteria.comparison);
+                                                    val = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
+                                                    compareTip = ComparisonCheck(GameManager.instance.actorScript.maxNumOfReserveActors, val, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "maxxed Recruit allowance"); }
                                                     break;

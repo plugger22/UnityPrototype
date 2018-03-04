@@ -418,7 +418,7 @@ public class Node : MonoBehaviour
     public List<string> GetNodeActors()
     {
         List<string> tempList = new List<string>();
-        int limit = GameManager.instance.actorScript.numOfOnMapActors;
+        int limit = GameManager.instance.actorScript.maxNumOfOnMapActors;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {

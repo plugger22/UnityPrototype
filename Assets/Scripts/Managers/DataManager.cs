@@ -18,6 +18,7 @@ public class DataManager : MonoBehaviour
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
     private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None->4 x Null)
+    private bool[,] arrayOfActorsPresent;                                                       //array determining if an actorSlot is filled (True) or vacant (False)
     private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
@@ -615,8 +616,9 @@ public class DataManager : MonoBehaviour
             }
             else { arrayOfQualities[globalResistance.level, i] = "Unknown"; }
         }
-        //arrayOfActors
-        arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.numOfOnMapActors];
+        //arrayOfActors & Positions
+        arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
+        arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
     }
 
 
@@ -877,6 +879,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<ActorArc> GetActorArcs(GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         if (side.level == GameManager.instance.globalScript.sideAuthority.level) { return authorityActorArcs; }
         else if (side.level == GameManager.instance.globalScript.sideResistance.level) { return resistanceActorArcs; }
         else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side.name)); }
@@ -1570,12 +1573,60 @@ public class DataManager : MonoBehaviour
     /// <param name="slotID"></param>
     public void AddCurrentActor(GlobalSide side, Actor actor, int slotID)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         if (actor != null)
         {
             arrayOfActors[side.level, slotID] = actor;
+            //ensure position is set to 'Filled'
+            arrayOfActorsPresent[side.level, slotID] = true;
         }
         else { Debug.LogError("Invalid actor (null)"); }
+    }
+
+    /// <summary>
+    /// Removes current actor and handles all relevant admin details. Returns true if actor removed successfully
+    /// NOTE: Actor status will be updated if operation successful otherwise no change
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public bool RemoveCurrentActor(GlobalSide side, Actor actor, ActorStatus status)
+    {
+        Debug.Assert(side != null, "Invalid side (Null)");
+        if (actor != null)
+        {
+            //admin depends on where actor is going
+            switch(status)
+            {
+                case ActorStatus.Reserve:
+                    if (AddActorToReserve(actor.actorID, side) == true)
+                    {
+                        //update actor arrays
+                        arrayOfActors[side.level, actor.actorSlotID] = null;
+                        arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
+                        //update actor status
+                        actor.Status = status;
+                        //update actor GUI display
+                        GameManager.instance.guiScript.UpdateActorGUI();
+                        return true;
+                    }
+                    else
+                    { Debug.LogWarning("RemoveCurrentActor: Reserve Pool is Full"); }
+                    break;
+                case ActorStatus.Dismissed:
+
+                    break;
+                case ActorStatus.Killed:
+
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid Status \"{0}\" for {1}, {2}, ID {3}", status, actor.arc.name, actor.actorName, actor.actorID));
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid actor (Null)"); }
+        return false;
     }
     
     /// <summary>
@@ -1677,13 +1728,13 @@ public class DataManager : MonoBehaviour
         {
             case "Authority":
                 //check space in Authority reserve pool
-                if (authorityActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
+                if (authorityActorReserve.Count < GameManager.instance.actorScript.maxNumOfReserveActors)
                 { authorityActorReserve.Add(actorID); }
                 else { successFlag = false; }
                 break;
             case "Resistance":
                 //check space in Resistance reserve pool
-                if (resistanceActorReserve.Count < GameManager.instance.actorScript.numOfReserveActors)
+                if (resistanceActorReserve.Count < GameManager.instance.actorScript.maxNumOfReserveActors)
                 { resistanceActorReserve.Add(actorID); }
                 else { successFlag = false; }
                 break;
@@ -1699,7 +1750,7 @@ public class DataManager : MonoBehaviour
     /// returns number of actors currently in the relevant reserve pool (auto figures out side from optionManager.cs -> playerSide). '0' if an issue.
     /// </summary>
     /// <returns></returns>
-    public int GetNumOfActorsInReserve()
+    public int CheckNumOfActorsInReserve()
     {
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { return authorityActorReserve.Count; }
@@ -1719,6 +1770,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<int> GetActorPool(int level, GlobalSide side)
     {
+        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
         if (side.level == GameManager.instance.globalScript.sideAuthority.level)
         {
@@ -1746,7 +1798,7 @@ public class DataManager : MonoBehaviour
     public Actor[] GetCurrentActors(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        int total = GameManager.instance.actorScript.numOfOnMapActors;
+        int total = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Actor[] tempArray = new Actor[total];
         for (int i = 0; i < total; i++)
         { tempArray[i] = arrayOfActors[side.level, i]; }
@@ -1771,7 +1823,7 @@ public class DataManager : MonoBehaviour
     public Actor GetCurrentActor(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, string.Format("Invalid slotID {0}", slotID));
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, string.Format("Invalid slotID {0}", slotID));
         return arrayOfActors[side.level, slotID];
     }
 
@@ -1783,7 +1835,7 @@ public class DataManager : MonoBehaviour
     public string GetCurrentActorType(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[side.level, slotID].arc.name;
     }
 
@@ -1796,7 +1848,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         List<int> tempList = new List<int>();
-        for (int i = 0; i < GameManager.instance.actorScript.numOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
         { tempList.Add(arrayOfActors[side.level, i].arc.ActorArcID); }
         if (tempList.Count > 0) { return tempList; }
         return null;
@@ -1810,7 +1862,7 @@ public class DataManager : MonoBehaviour
     public int[] GetActorStats(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         int[] arrayOfStats = new int[]{ arrayOfActors[side.level, slotID].datapoint0, arrayOfActors[side.level, slotID].datapoint1,
             arrayOfActors[side.level, slotID].datapoint2};
         return arrayOfStats;
@@ -1825,7 +1877,7 @@ public class DataManager : MonoBehaviour
     public Action GetActorAction(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[side.level, slotID].arc.nodeAction;
     }
 
@@ -1838,7 +1890,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         int slotID = -1;
-        int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
+        int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         for (int i = 0; i < numOfActors; i++)
         {
             Actor actor = arrayOfActors[side.level, i];
@@ -1858,7 +1910,7 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         if (arc != null)
         {
-            int numOfActors = GameManager.instance.actorScript.numOfOnMapActors;
+            int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
             for (int i = 0; i < numOfActors; i++)
             {
                 Actor actor = arrayOfActors[side.level, i];
@@ -1870,6 +1922,19 @@ public class DataManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// returns true if actorSlotID is currently filled by an actor, false if the position is vacant. 
+    /// Call prior to any Check/Get actorslotID methods to check if an actor is there in the first place as otherwise you'll end up with a Null actor error
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public bool CheckActorSlotStatus(int slotID, GlobalSide side)
+    {
+        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        return arrayOfActorsPresent[side.level, slotID];
+    }
 
     /// <summary>
     /// debug method to show contents of both sides reserve lists
@@ -1915,7 +1980,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<GameObject> GetListOfActorNodes(int slotID)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
         return listOfActorNodes[slotID];
     }
 

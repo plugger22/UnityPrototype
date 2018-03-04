@@ -698,7 +698,7 @@ public class LevelManager : MonoBehaviour
     private void InitialiseArrayOfActiveNodes()
     {
         //initialise arrayOfActiveNodes prior to use
-        arrayOfActiveNodes = new bool[listOfNodeObjects.Count, GameManager.instance.dataScript.GetNumOfGlobalSide(), GameManager.instance.actorScript.numOfOnMapActors];
+        arrayOfActiveNodes = new bool[listOfNodeObjects.Count, GameManager.instance.dataScript.GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
     }
 
     /// <summary>
@@ -899,7 +899,7 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(nodeID > -1 && nodeID < numOfNodes, "Invalid nodeID input");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         return arrayOfActiveNodes[nodeID, side.level, slotID];
     }
 

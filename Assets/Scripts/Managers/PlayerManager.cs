@@ -79,7 +79,7 @@ public class PlayerManager : MonoBehaviour
         //set stats
         Renown = 0;
         invisibility = 3;
-        numOfRecruits = GameManager.instance.actorScript.numOfOnMapActors;
+        numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
 
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
@@ -252,7 +252,7 @@ public class PlayerManager : MonoBehaviour
         { builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
         builder.Append(string.Format(" State {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
-        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}{3}", numOfRecruits, GameManager.instance.dataScript.GetNumOfActorsInReserve(), "\n", "\n"));
+        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}{3}", numOfRecruits, GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n", "\n"));
         builder.Append(string.Format(" Resistance Cause  {0} of {1}", GameManager.instance.rebelScript.resistanceCause, 
             GameManager.instance.rebelScript.resistanceCauseMax));
         builder.Append(string.Format("{0}{1} Gear{2}", "\n", "\n", "\n"));

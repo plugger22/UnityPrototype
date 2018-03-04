@@ -600,7 +600,7 @@ public class NodeManager : MonoBehaviour
     /// <param name="slotID"></param>
     public void ShowActiveNodes(int slotID)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.numOfOnMapActors, "Invalid slotID");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
         //set all nodes to default colour first
         ResetNodes();
         //change material for selected nodes
@@ -1444,7 +1444,7 @@ public class NodeManager : MonoBehaviour
             foreach (var node in dictOfNodes)
             { node.Value.isContact = false; }
             //loop Resistance actors
-            for (int slotID = 0; slotID < GameManager.instance.actorScript.numOfOnMapActors; slotID++)
+            for (int slotID = 0; slotID < GameManager.instance.actorScript.maxNumOfOnMapActors; slotID++)
             {
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.globalScript.sideResistance);
                 if (actor != null)

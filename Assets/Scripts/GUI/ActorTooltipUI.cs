@@ -44,7 +44,8 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter (PointerEventData eventData)
     {
         onMouseFlag = true;
-        StartCoroutine(ShowActorTooltip());
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        { StartCoroutine(ShowActorTooltip()); }
     }
 
     /// <summary>

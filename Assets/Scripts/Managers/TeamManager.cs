@@ -278,7 +278,7 @@ public void InitialiseTeams()
                     if (node != null)
                     {
                         //get a random Actor
-                        actorSlotID = Random.Range(0, GameManager.instance.actorScript.numOfOnMapActors);
+                        actorSlotID = Random.Range(0, GameManager.instance.actorScript.maxNumOfOnMapActors);
                         MoveTeam(TeamPool.OnMap, teamData.Key, actorSlotID, node);
                     }
                     else { Debug.LogError("Invalid node (Null)"); }
@@ -324,7 +324,7 @@ public void InitialiseTeams()
                     Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}{4}", team.Arc.name, team.Name, team.TeamID, destinationPool, "\n"));
                     break;
                 case TeamPool.OnMap:
-                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
+                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors)
                     {
                         //Get Actor
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
@@ -409,7 +409,7 @@ public void InitialiseTeams()
                     }
                     break;
                 case TeamPool.InTransit:
-                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.numOfOnMapActors)
+                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors)
                     {
                         //Get Actor
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
