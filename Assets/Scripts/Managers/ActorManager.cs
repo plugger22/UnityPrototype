@@ -426,181 +426,185 @@ public class ActorManager : MonoBehaviour
                 arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
                 foreach (Actor actor in arrayOfActors)
                 {
-                    proceedFlag = true;
-                    details = null;
-                    //correct side?
-                    if (actor.side.level == playerSide.level)
+                    //if invalid actor or vacant position then ignore
+                    if (actor != null)
                     {
-                        //actor active?
-                        if (actor.Status == ActorStatus.Active)
+                        proceedFlag = true;
+                        details = null;
+                        //correct side?
+                        if (actor.side.level == playerSide.level)
                         {
-                            //active node for actor or player at node
-                            if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true ||
-                                nodeID == playerID)
+                            //actor active?
+                            if (actor.Status == ActorStatus.Active)
                             {
-                                //get node action
-                                tempAction = actor.arc.nodeAction;
-
-                                if (tempAction != null)
+                                //active node for actor or player at node
+                                if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true ||
+                                    nodeID == playerID)
                                 {
-                                    //effects
-                                    StringBuilder builder = new StringBuilder();
-                                    listOfEffects = tempAction.listOfEffects;
-                                    if (listOfEffects.Count > 0)
+                                    //get node action
+                                    tempAction = actor.arc.nodeAction;
+
+                                    if (tempAction != null)
                                     {
-                                        string colourEffect = colourDefault;
-                                        for (int i = 0; i < listOfEffects.Count; i++)
+                                        //effects
+                                        StringBuilder builder = new StringBuilder();
+                                        listOfEffects = tempAction.listOfEffects;
+                                        if (listOfEffects.Count > 0)
                                         {
-                                            Effect effect = listOfEffects[i];
-                                            //colour code effects according to type
-                                            if (effect.typeOfEffect != null)
+                                            string colourEffect = colourDefault;
+                                            for (int i = 0; i < listOfEffects.Count; i++)
                                             {
-                                                switch (effect.typeOfEffect.name)
+                                                Effect effect = listOfEffects[i];
+                                                //colour code effects according to type
+                                                if (effect.typeOfEffect != null)
                                                 {
-                                                    case "Good":
-                                                        colourEffect = colourGoodEffect;
-                                                        break;
-                                                    case "Neutral":
-                                                        colourEffect = colourNeutralEffect;
-                                                        break;
-                                                    case "Bad":
-                                                        colourEffect = colourBadEffect;
-                                                        break;
-                                                }
-                                            }
-                                            //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
-                                            if (effectCriteria == null)
-                                            {
-                                                //Effect criteria O.K -> tool tip text
-                                                if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
-                                                { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
-                                                else
-                                                {
-                                                    //handle renown & invisibility situatiosn - players or actors?
-                                                    if (nodeID == playerID)
+                                                    switch (effect.typeOfEffect.name)
                                                     {
-                                                        //player affected (good for renown, bad for invisibility)
-                                                        if (effect.outcome.name.Equals("Renown"))
-                                                        { builder.Append(string.Format("{0}Player {1}{2}", colourGoodEffect, effect.textTag, colourEnd)); }
-                                                        else
-                                                        {
-                                                            builder.Append(string.Format("{0}Player {1}{2}", colourBadEffect, effect.textTag, colourEnd));
-                                                        }
+                                                        case "Good":
+                                                            colourEffect = colourGoodEffect;
+                                                            break;
+                                                        case "Neutral":
+                                                            colourEffect = colourNeutralEffect;
+                                                            break;
+                                                        case "Bad":
+                                                            colourEffect = colourBadEffect;
+                                                            break;
                                                     }
+                                                }
+                                                //check effect criteria is valid
+                                                effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                                if (effectCriteria == null)
+                                                {
+                                                    //Effect criteria O.K -> tool tip text
+                                                    if (builder.Length > 0) { builder.AppendLine(); }
+                                                    if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                    { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
                                                     else
                                                     {
-                                                        //actor affected
-                                                        builder.Append(string.Format("{0}{1} {2}{3}", colourBadEffect, actor.arc.name, effect.textTag, colourEnd));
+                                                        //handle renown & invisibility situatiosn - players or actors?
+                                                        if (nodeID == playerID)
+                                                        {
+                                                            //player affected (good for renown, bad for invisibility)
+                                                            if (effect.outcome.name.Equals("Renown"))
+                                                            { builder.Append(string.Format("{0}Player {1}{2}", colourGoodEffect, effect.textTag, colourEnd)); }
+                                                            else
+                                                            {
+                                                                builder.Append(string.Format("{0}Player {1}{2}", colourBadEffect, effect.textTag, colourEnd));
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            //actor affected
+                                                            builder.Append(string.Format("{0}{1} {2}{3}", colourBadEffect, actor.arc.name, effect.textTag, colourEnd));
+                                                        }
                                                     }
                                                 }
+                                                else
+                                                {
+                                                    //invalid effect criteria -> Action cancelled
+                                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                    infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                        colourInvalid, actor.arc.name, "\n", colourEnd,
+                                                        colourAuthority, effectCriteria, colourEnd));
+                                                    proceedFlag = false;
+                                                }
                                             }
+                                        }
+                                        else
+                                        { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
+                                        if (proceedFlag == true)
+                                        {
+                                            //Details to pass on for processing via button click
+                                            ModalActionDetails actionDetails = new ModalActionDetails() { };
+
+                                            actionDetails.side = globalResistance;
+                                            actionDetails.nodeID = nodeID;
+                                            actionDetails.actorSlotID = actor.actorSlotID;
+                                            //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                            if (actor.arc.nodeAction.special == null)
+                                            {
+                                                details = new EventButtonDetails()
+                                                {
+                                                    buttonTitle = tempAction.name,
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                    buttonTooltipMain = tempAction.tooltipText,
+                                                    buttonTooltipDetail = builder.ToString(),
+                                                    //use a Lambda to pass arguments to the action
+                                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
+                                                };
+                                            }
+                                            //special case, Resistance node actions only
                                             else
                                             {
-                                                //invalid effect criteria -> Action cancelled
-                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, actor.arc.name, "\n", colourEnd,
-                                                    colourAuthority, effectCriteria, colourEnd));
-                                                proceedFlag = false;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
-                                    if (proceedFlag == true)
-                                    {
-                                        //Details to pass on for processing via button click
-                                        ModalActionDetails actionDetails = new ModalActionDetails() { };
-
-                                        actionDetails.side = globalResistance;
-                                        actionDetails.nodeID = nodeID;
-                                        actionDetails.actorSlotID = actor.actorSlotID;
-                                        //pass all relevant details to ModalActionMenu via Node.OnClick()
-                                        if (actor.arc.nodeAction.special == null)
-                                        {
-                                            details = new EventButtonDetails()
-                                            {
-                                                buttonTitle = tempAction.name,
-                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                buttonTooltipMain = tempAction.tooltipText,
-                                                buttonTooltipDetail = builder.ToString(),
-                                                //use a Lambda to pass arguments to the action
-                                                action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
-                                            };
-                                        }
-                                        //special case, Resistance node actions only
-                                        else
-                                        {
-                                            switch (actor.arc.nodeAction.special.name)
-                                            {
-                                                case "NeutraliseTeam":
-                                                    details = new EventButtonDetails()
-                                                    {
-                                                        buttonTitle = tempAction.name,
-                                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                        buttonTooltipMain = tempAction.tooltipText,
-                                                        buttonTooltipDetail = builder.ToString(),
-                                                        action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
-                                                    };
-                                                    break;
-                                                case "GetGear":
-                                                    details = new EventButtonDetails()
-                                                    {
-                                                        buttonTitle = tempAction.name,
-                                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                        buttonTooltipMain = tempAction.tooltipText,
-                                                        buttonTooltipDetail = builder.ToString(),
-                                                        action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
-                                                    };
-                                                    break;
-                                                case "GetRecruit":
-                                                    details = new EventButtonDetails()
-                                                    {
-                                                        buttonTitle = tempAction.name,
-                                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                        buttonTooltipMain = tempAction.tooltipText,
-                                                        buttonTooltipDetail = builder.ToString(),
-                                                        action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails); }
-                                                    };
-                                                    break;
-                                                default:
-                                                    Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.special \"{0}\"", actor.arc.nodeAction.special.name));
-                                                    break;
+                                                switch (actor.arc.nodeAction.special.name)
+                                                {
+                                                    case "NeutraliseTeam":
+                                                        details = new EventButtonDetails()
+                                                        {
+                                                            buttonTitle = tempAction.name,
+                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                            buttonTooltipMain = tempAction.tooltipText,
+                                                            buttonTooltipDetail = builder.ToString(),
+                                                            action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
+                                                        };
+                                                        break;
+                                                    case "GetGear":
+                                                        details = new EventButtonDetails()
+                                                        {
+                                                            buttonTitle = tempAction.name,
+                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                            buttonTooltipMain = tempAction.tooltipText,
+                                                            buttonTooltipDetail = builder.ToString(),
+                                                            action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
+                                                        };
+                                                        break;
+                                                    case "GetRecruit":
+                                                        details = new EventButtonDetails()
+                                                        {
+                                                            buttonTitle = tempAction.name,
+                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                            buttonTooltipMain = tempAction.tooltipText,
+                                                            buttonTooltipDetail = builder.ToString(),
+                                                            action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails); }
+                                                        };
+                                                        break;
+                                                    default:
+                                                        Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.special \"{0}\"", actor.arc.nodeAction.special.name));
+                                                        break;
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                else
+                                {
+                                    //actor has no connections at node
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name));
+                                }
                             }
                             else
                             {
-                                //actor has no connections at node
+                                //actor isn't Active
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name));
+                                switch (actor.Status)
+                                {
+                                    case ActorStatus.Inactive:
+                                        infoBuilder.Append(string.Format("{0} is lying low and unavailable", actor.arc.name));
+                                        break;
+                                    case ActorStatus.Captured:
+                                        infoBuilder.Append(string.Format("{0} has been captured", actor.arc.name));
+                                        break;
+                                    default:
+                                        infoBuilder.Append(string.Format("{0} is unavailable", actor.arc.name));
+                                        break;
+                                }
                             }
-                        }
-                        else
-                        {
-                            //actor isn't Active
-                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            switch(actor.Status)
-                            {
-                                case ActorStatus.Inactive:
-                                    infoBuilder.Append(string.Format("{0} is lying low and unavailable", actor.arc.name));
-                                    break;
-                                case ActorStatus.Captured:
-                                    infoBuilder.Append(string.Format("{0} has been captured", actor.arc.name));
-                                    break;
-                                default:
-                                    infoBuilder.Append(string.Format("{0} is unavailable", actor.arc.name));
-                                    break;
-                            }
-                        }
 
-                        //add to list
-                        if (details != null)
-                        { tempList.Add(details); }
+                            //add to list
+                            if (details != null)
+                            { tempList.Add(details); }
+                        }
                     }
                 }
             }
@@ -1141,7 +1145,11 @@ public class ActorManager : MonoBehaviour
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
                     if (actor != null)
                     { actorID = actor.actorID; }
-                    else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+                    else
+                    {
+                        Debug.LogError(string.Format("Invalid actor (Null) for details.ActorSlotID {0}", details.actorSlotID));
+                        errorFlag = true;
+                    }
                 }
                 //check capture provided no errors
                 if (errorFlag == false)
@@ -1548,29 +1556,33 @@ public class ActorManager : MonoBehaviour
         {
             for (int i = 0; i < arrayOfActorsResistance.Length; i++)
             {
-                Actor actor = arrayOfActorsResistance[i];
-                if (actor != null)
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
-                    if (actor.Status == ActorStatus.Inactive)
+                    Actor actor = arrayOfActorsResistance[i];
+                    if (actor != null)
                     {
-                        if (actor.datapoint2 >= maxStatValue)
+                        if (actor.Status == ActorStatus.Inactive)
                         {
-                            //actor has recovered from lying low, needs to be activated
-                            actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
-                            actor.Status = ActorStatus.Active;
-                            GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-                            string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
-                            Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, true);
-                            GameManager.instance.dataScript.AddMessage(message);
-                        }
-                        else
-                        {
-                            //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
-                            actor.datapoint2++;
+                            if (actor.datapoint2 >= maxStatValue)
+                            {
+                                //actor has recovered from lying low, needs to be activated
+                                actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
+                                actor.Status = ActorStatus.Active;
+                                GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
+                                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, true);
+                                GameManager.instance.dataScript.AddMessage(message);
+                            }
+                            else
+                            {
+                                //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
+                                actor.datapoint2++;
+                            }
                         }
                     }
+                    else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
                 }
-                else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }

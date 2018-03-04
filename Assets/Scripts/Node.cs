@@ -422,9 +422,13 @@ public class Node : MonoBehaviour
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         for (int i = 0; i < limit; i++)
         {
-            if (GameManager.instance.levelScript.CheckNodeActive(nodeID, side, i) == true)
+            //actor present at node (not vacant)
+            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
             {
-                tempList.Add(GameManager.instance.dataScript.GetCurrentActorType(i, side));
+                if (GameManager.instance.levelScript.CheckNodeActive(nodeID, side, i) == true)
+                {
+                    tempList.Add(GameManager.instance.dataScript.GetCurrentActorType(i, side));
+                }
             }
         }
         return tempList;

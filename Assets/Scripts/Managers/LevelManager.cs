@@ -496,20 +496,24 @@ public class LevelManager : MonoBehaviour
         //loop actors
         foreach (Actor actor in arrayOfActors)
         {
-            builder.Append(string.Format("{0}, ID {1},  Renown: {2}{3}", actor.arc.actorName, actor.actorID, actor.renown, "\n"));
-            switch (side.name)
+            //ignore invalid actors or slots where there is no actor (Vacant)
+            if (actor != null)
             {
-                case "Authority":
-                    builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
-                        listOfActorNodesAuthority[actor.actorSlotID].Count, "\n\n"));
-                    break;
-                case "Resistance":
-                    builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
-                        listOfActorNodesResistance[actor.actorSlotID].Count, "\n\n"));
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
-                    break;
+                builder.Append(string.Format("{0}, ID {1},  Renown: {2}{3}", actor.arc.actorName, actor.actorID, actor.renown, "\n"));
+                switch (side.name)
+                {
+                    case "Authority":
+                        builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
+                            listOfActorNodesAuthority[actor.actorSlotID].Count, "\n\n"));
+                        break;
+                    case "Resistance":
+                        builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
+                            listOfActorNodesResistance[actor.actorSlotID].Count, "\n\n"));
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
+                        break;
+                }
             }
         }
         return builder.ToString();

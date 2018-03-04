@@ -189,23 +189,27 @@ public class GUIManager : MonoBehaviour
     public void UpdateActorAlpha(int actorSlotID, float alpha)
     {
         Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        switch(actorSlotID)
+        //check actor present in slot, eg. not vacant
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
         {
-            case 0:
-                canvas0.alpha = alpha;
-                break;
-            case 1:
-                canvas1.alpha = alpha;
-                break;
-            case 2:
-                canvas2.alpha = alpha;
-                break;
-            case 3:
-                canvas3.alpha = alpha;
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid actorSlotID {0}", actorSlotID));
-                break;
+            switch (actorSlotID)
+            {
+                case 0:
+                    canvas0.alpha = alpha;
+                    break;
+                case 1:
+                    canvas1.alpha = alpha;
+                    break;
+                case 2:
+                    canvas2.alpha = alpha;
+                    break;
+                case 3:
+                    canvas3.alpha = alpha;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid actorSlotID {0}", actorSlotID));
+                    break;
+            }
         }
     }
 

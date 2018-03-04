@@ -126,11 +126,14 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.nodeScript.nodeCaptured = details.node.nodeID;
         //change player state
         GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
-        //add renown to authority actor who owns the team
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.ActorSlotID, GameManager.instance.globalScript.sideAuthority);
-        if (actor != null)
-        { actor.renown++; }
-        else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.ActorSlotID)); }
+        //add renown to authority actor who owns the team (only if they are still OnMap
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.ActorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.ActorSlotID, GameManager.instance.globalScript.sideAuthority);
+            if (actor != null)
+            { actor.renown++; }
+            else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.ActorSlotID)); }
+        }
         //lower resistance Cause
         int cause = GameManager.instance.rebelScript.resistanceCause;
         cause -= playerCaptured;
