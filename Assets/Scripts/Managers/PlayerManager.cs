@@ -13,7 +13,13 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int numOfRecruits;
     [HideInInspector] public int invisibility;
     [HideInInspector] public int actorID = 999;
-    
+    [HideInInspector] public ActorStatus status;
+
+    [Range(1, 3)] public int renownCostGear = 1;
+
+    private List<int> listOfGear = new List<int>();                     //gearID's of all gear items in inventory
+    private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
+
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
     private int _renownAuthority;
@@ -51,9 +57,7 @@ public class PlayerManager : MonoBehaviour
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this
 
-        [Range(1,3)] public int renownCostGear = 1;
 
-    private List<int> listOfGear = new List<int>();                 //gearID's of all gear items in inventory
 
 
 
@@ -237,6 +241,88 @@ public class PlayerManager : MonoBehaviour
     }
 
     //
+    // - - - Conditions - - -
+    //
+    /// <summary>
+    /// Add a new condition to list provided it isn't already present
+    /// </summary>
+    /// <param name="condition"></param>
+    public void AddCondition(Condition condition)
+    {
+        if (condition != null)
+        {
+            //check that condition isn't already present
+            if (CheckConditionPresent(condition) == false)
+            {
+                listOfConditions.Add(condition);
+                //message
+                string msgText = string.Format("Player gains condition \"{0}\"", condition.name);
+                Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+        }
+        else { Debug.LogError("Invalid condition (Null)"); }
+    }
+
+    /// <summary>
+    /// Checks if actor has a specified condition 
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    public bool CheckConditionPresent(Condition condition)
+    {
+        if (condition != null)
+        {
+            if (listOfConditions.Count > 0)
+            {
+                foreach (Condition checkCondition in listOfConditions)
+                {
+                    if (checkCondition.name.Equals(condition.name) == true)
+                    { return true; }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid condition (Null)"); }
+        return false;
+    }
+
+    /// <summary>
+    /// Removes a specified condition if present
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    public bool RemoveCondition(Condition condition)
+    {
+        if (condition != null)
+        {
+            if (listOfConditions.Count > 0)
+            {
+                //reverse loop -> delete and return if found
+                for (int i = listOfConditions.Count - 1; i >= 0; i--)
+                {
+                    if (listOfConditions[i].name.Equals(condition.name) == true)
+                    {
+                        listOfConditions.RemoveAt(i);
+                        //message
+                        string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
+                        Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                        GameManager.instance.dataScript.AddMessage(message);
+                        return true;
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid condition (Null)"); }
+        return false;
+    }
+
+    public List<Condition> GetListOfConditions()
+    { return listOfConditions; }
+
+    public int CheckNumOfConditions()
+    { return listOfConditions.Count; }
+
+    //
     // - - - Debug
     //
 
@@ -248,24 +334,39 @@ public class PlayerManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
+        builder.Append(string.Format("- Stats{0}", "\n"));
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         { builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
-        builder.Append(string.Format(" State {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
-        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}{3}", numOfRecruits, GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n", "\n"));
-        builder.Append(string.Format(" Resistance Cause  {0} of {1}", GameManager.instance.rebelScript.resistanceCause, 
-            GameManager.instance.rebelScript.resistanceCauseMax));
-        builder.Append(string.Format("{0}{1} Gear{2}", "\n", "\n", "\n"));
-        if (listOfGear.Count > 0)
+        builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
+        if (listOfConditions.Count > 0)
         {
-            for (int i = 0; i < listOfGear.Count; i++)
-            {
-                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
-                if (gear != null)
-                { builder.Append(string.Format(" {0}, ID {1}, {2}{3}", gear.name, gear.gearID, gear.type.name, "\n"));}
-            }
+            for (int i = 0; i < listOfConditions.Count; i++)
+            { builder.Append(string.Format(" {0}{1}", listOfConditions[i].name, "\n")); }
         }
-        else { builder.Append(" No gear in inventory"); }
+        builder.Append(string.Format("{0}- States{1}", "\n", "\n"));
+        builder.Append(string.Format(" Player {0}{1}", status, "\n"));
+        builder.Append(string.Format("{0}- Global{1}", "\n", "\n"));
+        builder.Append(string.Format(" Resistance Cause  {0} of {1}{2}", GameManager.instance.rebelScript.resistanceCause,
+            GameManager.instance.rebelScript.resistanceCauseMax, "\n"));
+        builder.Append(string.Format(" resistanceState {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
+        builder.Append(string.Format(" authorityState {0}{1}", GameManager.instance.turnScript.authorityState, "\n"));
+        builder.Append(string.Format("{0}- Reserve Pool{1}", "\n", "\n"));
+        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}", numOfRecruits, GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n"));
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+        {
+            builder.Append(string.Format("{0}- Gear{1}", "\n", "\n"));
+            if (listOfGear.Count > 0)
+            {
+                for (int i = 0; i < listOfGear.Count; i++)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                    if (gear != null)
+                    { builder.Append(string.Format(" {0}, ID {1}, {2}{3}", gear.name, gear.gearID, gear.type.name, "\n")); }
+                }
+            }
+            else { builder.Append(" No gear in inventory"); }
+        }
         return builder.ToString();
     }
 

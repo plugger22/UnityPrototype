@@ -78,11 +78,11 @@ public class ActionManager : MonoBehaviour
                 break;
             case EventType.LieLowAction:
                 ModalActionDetails detailsLieLow = Param as ModalActionDetails;
-                ProcessLieLowAction(detailsLieLow);
+                ProcessLieLowActorAction(detailsLieLow);
                 break;
             case EventType.ActivateAction:
                 ModalActionDetails detailsActivate = Param as ModalActionDetails;
-                ProcessActivateAction(detailsActivate);
+                ProcessActivateActorAction(detailsActivate);
                 break;
             case EventType.GiveGearAction:
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
@@ -201,15 +201,9 @@ public class ActionManager : MonoBehaviour
                             {
                                 //ongoing effect?
                                 if (effect.duration.name == "Ongoing")
-                                {
-                                    dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
-
+                                { 
                                     //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
-                                    
-                                    /*//add to register
-                                    string registerDetails = string.Format("Effect \"{0}\", ID {1}, at {2}, ID {3}, t{4}", action.name, effect.effectID, node.Arc.name,
-                                        node.nodeID, GameManager.instance.turnScript.Turn);
-                                    GameManager.instance.dataScript.AddOngoingEffectToDict(dataInput.ongoingID, registerDetails);*/
+                                    dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
                                 }
                                 else { dataInput.ongoingID = -1; dataInput.ongoingText = ""; }
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
@@ -815,7 +809,7 @@ public class ActionManager : MonoBehaviour
         /// Process Lie Low actor action (Resistance only)
         /// </summary>
         /// <param name="details"></param>
-        public void ProcessLieLowAction(ModalActionDetails details)
+        public void ProcessLieLowActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
@@ -877,7 +871,7 @@ public class ActionManager : MonoBehaviour
     /// Process Activate actor action (Resistance only at present but set up for both sides)
     /// </summary>
     /// <param name="details"></param>
-    public void ProcessActivateAction(ModalActionDetails details)
+    public void ProcessActivateActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();

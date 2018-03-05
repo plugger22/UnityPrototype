@@ -414,15 +414,18 @@ public class GearManager : MonoBehaviour
     public void ProcessGearChoice(GenericReturnData data)
     {
         bool successFlag = true;
+        bool isInvisibility = false;
         if (data.optionID > -1)
         {
             //get currently selected node
             if (data.nodeID != -1)
             {
                 Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
-                
                 if (gear != null)
                 {
+                    //check whether it is invisible type gear (if so then invisibility -1 effect is ignored)
+                    if (gear.type.name.Equals("Invisibility") == true)
+                    { isInvisibility = true; }
                     Sprite sprite = gear.sprite;
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
@@ -433,7 +436,7 @@ public class GearManager : MonoBehaviour
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
 
-                            if (GameManager.instance.playerScript.AddGear(data.optionID) == true)
+                            if (GameManager.instance.playerScript.AddGear(gear.gearID) == true)
                             {
                                 //gear successfully acquired
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
@@ -453,16 +456,23 @@ public class GearManager : MonoBehaviour
                                     {
                                         if (effect.ignoreEffect == false)
                                         {
-                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
-                                            if (effectReturn != null)
+                                            //ignore invisiblity effect in case of fixer/player getting invisibility gear 
+                                            if (isInvisibility == true && effect.outcome.name.Equals("Invisibility") == true)
+                                            { Debug.Log(string.Format("ProcessGearChoice: {0} effect ignored due to Invisibility{1}", effect.name, "\n")); }
+                                            else
                                             {
-                                                builderTop.AppendLine();
-                                                builderTop.Append(effectReturn.topText);
-                                                builderBottom.AppendLine();
-                                                builderBottom.AppendLine();
-                                                builderBottom.Append(effectReturn.bottomText);
+                                                //process effect normally
+                                                EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                                                if (effectReturn != null)
+                                                {
+                                                    builderTop.AppendLine();
+                                                    builderTop.Append(effectReturn.topText);
+                                                    builderBottom.AppendLine();
+                                                    builderBottom.AppendLine();
+                                                    builderBottom.Append(effectReturn.bottomText);
+                                                }
+                                                else { Debug.LogError("Invalid effectReturn (Null)"); }
                                             }
-                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
                                         }
                                     }
                                 }
