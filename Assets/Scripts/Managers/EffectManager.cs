@@ -1602,7 +1602,7 @@ public class EffectManager : MonoBehaviour
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
         string colourText = colourDefault;
-        Condition condition;
+        Condition condition = null;
         if (effect.typeOfEffect != null)
         {
             switch (effect.typeOfEffect.name)
@@ -1626,44 +1626,52 @@ public class EffectManager : MonoBehaviour
         else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
-
+        //get condition
         switch(effect.outcome.name)
         {
             case "ConditionStressed":
                 condition = GameManager.instance.dataScript.GetCondition("STRESSED");
-                if (condition != null)
-                {
-                    switch (effect.operand.name)
-                    {
-                        case "Add":
-                            //only add stress condition if NOT already present
-                            if (actor.CheckConditionPresent(condition) == false)
-                            {
-                                actor.AddCondition(condition);
-                                effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.name, colourEnd);
-                            }
-                            break;
-                        case "Subtract":
-                            //only remove stress condition if present
-                            if (actor.CheckConditionPresent(condition) == true)
-                            {
-                                actor.RemoveCondition(condition);
-                                effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.name, colourEnd);
-                            }
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
-                            break;
-                    }
-                }
-                else { Debug.LogError(string.Format("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name)); }
                 break;
-
+            case "ConditionIncompetent":
+                condition = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
+                break;
+            case "ConditionCorrupt":
+                condition = GameManager.instance.dataScript.GetCondition("CORRUPT");
+                break;
+            case "ConditionQuestionable":
+                condition = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+                break;
             default:
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                 break;
         }
-
+        //resolve effect outcome
+        if (condition != null)
+        {
+            switch (effect.operand.name)
+            {
+                case "Add":
+                    //only add condition if NOT already present
+                    if (actor.CheckConditionPresent(condition) == false)
+                    {
+                        actor.AddCondition(condition);
+                        effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.name, colourEnd);
+                    }
+                    break;
+                case "Subtract":
+                    //only remove  condition if present
+                    if (actor.CheckConditionPresent(condition) == true)
+                    {
+                        actor.RemoveCondition(condition);
+                        effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.name, colourEnd);
+                    }
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                    break;
+            }
+        }
+        else { Debug.LogError(string.Format("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name)); }
         return effectResolve;
     }
 
