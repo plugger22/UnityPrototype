@@ -9,7 +9,7 @@ namespace gameAPI
     /// </summary>
     public class Actor
     {
-        [HideInInspector] public int datapoint0;               //higher the number (1 to 3), see DM: arrayOfQualities for string tags
+        [HideInInspector] public int datapoint0;               //higher the number (1 to 3), see DM: arrayOfStats for string tags
         [HideInInspector] public int datapoint1;               //higher the better (1 to 3)
         [HideInInspector] public int datapoint2;               //higher the better (1 to 3)
         [HideInInspector] public GlobalSide side;
@@ -22,7 +22,8 @@ namespace gameAPI
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;
         
-        private List<int> listOfTeams = new List<int>();    //teamID of all teams that the actor has currently deployed OnMap
+        private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
+        private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
 
         //private backing field
         private ActorStatus _status;
@@ -69,5 +70,76 @@ namespace gameAPI
         public List<int> GetTeams()
         { return listOfTeams; }
 
+        /// <summary>
+        /// Add a new condition to list provided it isn't already present
+        /// </summary>
+        /// <param name="condition"></param>
+        public void AddCondition(Condition condition)
+        {
+            if (condition != null)
+            {
+                //check that condition isn't already present
+                if (CheckConditionPresent(condition) == false)
+                { listOfConditions.Add(condition); }
+            }
+            else { Debug.LogError("Invalid condition (Null)"); }
+        }
+
+        /// <summary>
+        /// Checks if actor has a specified condition 
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public bool CheckConditionPresent(Condition condition)
+        {
+            if (condition != null)
+            {
+                if (listOfConditions.Count > 0)
+                {
+                    foreach (Condition checkCondition in listOfConditions)
+                    {
+                        if (checkCondition.name.Equals(condition.name) == true)
+                        { return true; }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid condition (Null)"); }
+            return false;
+        }
+
+        /// <summary>
+        /// Removes a specified condition if present
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public bool RemoveCondition(Condition condition)
+        {
+            if (condition != null)
+            {
+                if (listOfConditions.Count > 0)
+                {
+                    //reverse loop -> delete and return if found
+                    for (int i = listOfConditions.Count - 1; i >= 0; i--)
+                    {
+                        if (listOfConditions[i].name.Equals(condition.name) == true)
+                        {
+                            listOfConditions.RemoveAt(i);
+                            return true;
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid condition (Null)"); }
+            return false;
+        }
+
+        public List<Condition> GetListOfConditions()
+        { return listOfConditions; }
+
+        public int CheckNumOfConditions()
+        { return listOfConditions.Count; }
+
+
+        //place methods above here
     }
 }

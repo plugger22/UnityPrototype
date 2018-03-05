@@ -819,6 +819,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        StringBuilder builder = new StringBuilder();
         //default data 
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
@@ -829,14 +830,17 @@ public class ActionManager : MonoBehaviour
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
             if (actor != null)
             {
-                /*string title = "";
-                if (details.side == GameManager.instance.globalScript.sideAuthority)
-                { title = string.Format(" {0}", GameManager.instance.metaScript.GetAuthorityTitle()); }*/
                 actor.Status = ActorStatus.Inactive;
                 int numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName );
-                outcomeDetails.textBottom = string.Format("{0}{1} will be Inactive for {2} turn{3} or until Activated{4}", colourNeutral, actor.actorName, 
-                    numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                builder.Append(string.Format("{0}{1} will be Inactive for {2} turn{3} or until Activated{4}", colourNeutral, actor.actorName, 
+                    numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd));
+                builder.AppendLine(); builder.AppendLine();
+                builder.Append(string.Format("{0}Invisibility +1 each turn Inactive{1}", colourGood, colourEnd));
+                builder.AppendLine(); builder.AppendLine();
+                builder.Append(string.Format("{0}Any Stress will be removed once Invisibility recovered{1}", colourGood, colourEnd));
+                builder.AppendLine(); builder.AppendLine();
+                builder.Append(string.Format("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd));
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status); 
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -860,7 +864,10 @@ public class ActionManager : MonoBehaviour
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.textBottom = builder.ToString();
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -1291,7 +1298,7 @@ public class ActionManager : MonoBehaviour
                             }
                             //teams
                             if (numOfTeams > 0)
-                            { builderBottom.Append(string.Format("{0}{1}{2}{3} related Team{4} sent to Reserve Pool{5}", "\n", "\n", colourBad, numOfTeams,
+                            { builderBottom.Append(string.Format("{0}{1}{2}{3} related Team{4} sent to the Reserve Pool{5}", "\n", "\n", colourBad, numOfTeams,
                                 numOfTeams != 1 ? "s" : "", colourEnd)); }
                         }
                         else

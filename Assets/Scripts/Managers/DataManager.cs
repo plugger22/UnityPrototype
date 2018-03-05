@@ -19,7 +19,7 @@ public class DataManager : MonoBehaviour
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
     private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None->4 x Null)
     private bool[,] arrayOfActorsPresent;                                                       //array determining if an actorSlot is filled (True) or vacant (False)
-    private string[,] arrayOfQualities;                                                         //tags for actor qualities -> index[(int)Side, 3 Qualities]
+    private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
 
     //actor quality input arrays (used to populate arrayOfQualities)
@@ -104,6 +104,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalChance> dictOfGlobalChance = new Dictionary<string, GlobalChance>();   //Key -> GlobalChance.name, Value -> GlobalChance
     private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();         //Key -> GlobalType.name, Value -> GlobalType
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();         //Key -> GlobalSide.name, Value -> GlobalSide
+    private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
 
     /// <summary>
     /// first up initialisation
@@ -195,6 +196,27 @@ public class DataManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid GlobalSide (duplicate) \"{0}\"", side.name)); }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfGlobalSide has {0} entries{1}", dictOfGlobalSide.Count, "\n"));
+        //
+        // - - - Conditions - - -
+        //
+        var conditionGUID = AssetDatabase.FindAssets("t:Condition");
+        foreach (var guid in conditionGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object conditionObject = AssetDatabase.LoadAssetAtPath(path, typeof(Condition));
+            //assign a zero based unique ID number
+            Condition condition = conditionObject as Condition;
+            //add to dictionary
+            try
+            { dictOfConditions.Add(condition.name, condition); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Condition (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.name)); }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
     }
 
     /// <summary>
@@ -588,33 +610,33 @@ public class DataManager : MonoBehaviour
         // - - - Actor Qualities - - -
         //
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
-        arrayOfQualities = new string[GetNumOfGlobalSide(), numOfQualities];
+        arrayOfStatTags = new string[GetNumOfGlobalSide(), numOfQualities];
         for (int i = 0; i < 3; i++)
         {
             //authority qualities
             if (authorityQualities[i] != null)
             {
                 if (authorityQualities[i].side.level == globalAuthority.level)
-                { arrayOfQualities[globalAuthority.level, i] = authorityQualities[i].name; }
+                { arrayOfStatTags[globalAuthority.level, i] = authorityQualities[i].name; }
                 else
                 {
                     Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", authorityQualities[i].name, authorityQualities[i].side.name, "\n"));
-                    arrayOfQualities[globalAuthority.level, i] = "Unknown";
+                    arrayOfStatTags[globalAuthority.level, i] = "Unknown";
                 }
             }
-            else { arrayOfQualities[globalAuthority.level, i] = "Unknown"; }
+            else { arrayOfStatTags[globalAuthority.level, i] = "Unknown"; }
             //resistance qualities
             if (resistanceQualities[i] != null)
             {
                 if (resistanceQualities[i].side.level == globalResistance.level)
-                { arrayOfQualities[globalResistance.level, i] = resistanceQualities[i].name; }
+                { arrayOfStatTags[globalResistance.level, i] = resistanceQualities[i].name; }
                 else
                 {
                     Debug.LogWarning(string.Format("Quality (\"{0}\")is the wrong side (\"{1}\"){2}", resistanceQualities[i].name, resistanceQualities[i].side.name, "\n"));
-                    arrayOfQualities[globalResistance.level, i] = "Unknown";
+                    arrayOfStatTags[globalResistance.level, i] = "Unknown";
                 }
             }
-            else { arrayOfQualities[globalResistance.level, i] = "Unknown"; }
+            else { arrayOfStatTags[globalResistance.level, i] = "Unknown"; }
         }
         //arrayOfActors & Positions
         arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
@@ -1996,7 +2018,7 @@ public class DataManager : MonoBehaviour
         string[] tempArray = new string[numOfQualities];
         for (int i = 0; i < numOfQualities; i++)
         {
-            tempArray[i] = arrayOfQualities[side.level, i];
+            tempArray[i] = arrayOfStatTags[side.level, i];
         }
         return tempArray;
     }
@@ -2011,7 +2033,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
-        return arrayOfQualities[side.level, qualityNum];
+        return arrayOfStatTags[side.level, qualityNum];
     }
 
     //
@@ -2510,6 +2532,24 @@ public class DataManager : MonoBehaviour
 
     public int GetNumOfGlobalSide()
     { return dictOfGlobalSide.Count; }
+
+    /// <summary>
+    /// Returns condition SO, Null if not found in dictionary
+    /// </summary>
+    /// <param name="conditionName"></param>
+    /// <returns></returns>
+    public Condition GetCondition(string conditionName)
+    {
+        Condition condition = null;
+        if (string.IsNullOrEmpty(conditionName) == false)
+        {
+            if (dictOfConditions.ContainsKey(conditionName))
+            { return dictOfConditions[conditionName]; }
+            else { Debug.LogWarning(string.Format("Condition \"{0}\" not found in dictOfConditions{1}", conditionName, "\n")); }
+        }
+        else { Debug.LogError("Invalid conditionName (Null or Empty)"); }
+        return condition;
+    }
 
     /*/// <summary>
     /// returns level of globalMeta based on string (metaLevel SO name). Returns '-1' if not found

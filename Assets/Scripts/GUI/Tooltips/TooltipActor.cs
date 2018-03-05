@@ -15,11 +15,13 @@ public class TooltipActor : MonoBehaviour
     public TextMeshProUGUI actorName;
     public TextMeshProUGUI actorStatus;
     public TextMeshProUGUI actorQualities;
+    public TextMeshProUGUI actorConditions;
     public TextMeshProUGUI actorStats;
     public TextMeshProUGUI actorTrait;
     public TextMeshProUGUI actorAction;
     public Image dividerTop;                   //Side specific sprites for tooltips
-    public Image dividerMiddle;
+    public Image dividerMiddleUpper;
+    public Image dividerMiddleLower;
     public Image dividerBottom;
     public GameObject tooltipActorObject;
 
@@ -123,12 +125,14 @@ public class TooltipActor : MonoBehaviour
         //set state of all items in tooltip window
         actorName.gameObject.SetActive(true);
         actorStatus.gameObject.SetActive(false);
+        actorConditions.gameObject.SetActive(false);
         actorStats.gameObject.SetActive(true);
         actorQualities.gameObject.SetActive(true);
         actorTrait.gameObject.SetActive(true);
         actorAction.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
-        dividerMiddle.gameObject.SetActive(false);
+        dividerMiddleUpper.gameObject.SetActive(false);
+        dividerMiddleLower.gameObject.SetActive(false);
         dividerBottom.gameObject.SetActive(true);
         if (data.actor != null)
         {
@@ -139,7 +143,7 @@ public class TooltipActor : MonoBehaviour
             {
                 //activate UI components
                 actorStatus.gameObject.SetActive(true);
-                dividerMiddle.gameObject.SetActive(true);
+                dividerMiddleUpper.gameObject.SetActive(true);
                 switch(data.actor.Status)
                 {
                     case ActorStatus.Inactive:
@@ -155,6 +159,25 @@ public class TooltipActor : MonoBehaviour
                         break;
                 }
             }
+            //Conditions
+            if (data.actor.CheckNumOfConditions() > 0)
+            {
+                List<Condition> listOfConditions = data.actor.GetListOfConditions();
+                if (listOfConditions != null)
+                {
+                    dividerMiddleLower.gameObject.SetActive(true);
+                    actorConditions.gameObject.SetActive(true);
+                    string conditionText = "";
+                    foreach(Condition condition in listOfConditions)
+                    {
+                        if (conditionText.Length > 0) { conditionText += "\n"; }
+                        conditionText += string.Format("{0}{1}{2}", colourBad, condition.name, colourEnd);
+                    }
+                    actorConditions.text = conditionText;
+                }
+                else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
+            }
+
             //Trait
             string colourTrait = colourQuality;
             if (data.actor.trait.typeOfTrait != null)
@@ -280,13 +303,15 @@ public class TooltipActor : MonoBehaviour
             case "Authority":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
             case "Resistance":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 break;
             default:

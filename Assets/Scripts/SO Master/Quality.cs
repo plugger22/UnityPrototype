@@ -6,7 +6,7 @@ using gameAPI;
 /// <summary>
 /// Actor qualities, eg. Connections and Influence
 /// </summary>
-[CreateAssetMenu(menuName = "Quality")]
+[CreateAssetMenu(menuName = "Actor / Quality")]
 public class Quality: ScriptableObject
 {
     public string description;

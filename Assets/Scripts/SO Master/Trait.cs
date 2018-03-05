@@ -6,7 +6,7 @@ using gameAPI;
 /// <summary>
 /// Actor trait
 /// </summary>
-[CreateAssetMenu(menuName = "Trait")]
+[CreateAssetMenu(menuName = "Actor / Trait")]
 public class Trait : ScriptableObject
 {
     [HideInInspector] public int traitID;           //unique #, zero based -> assigned automatically by DataManager.Initialise
