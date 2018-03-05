@@ -468,6 +468,39 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 //
+                // - - - Conditions (both sides) - - -
+                //
+                case "ConditionStressed":
+                case "ConditionIncompetent":
+                case "ConditionCorrupt":
+                case "ConditionQuestionable":
+                    if (node != null)
+                    {
+                        //only assign condition to actor if it's an actor action, not a player one
+                        if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
+                        {
+                            //if a null actor just ignore effect as null is the default for actors. No need for an error message
+                            if (actor != null)
+                            {
+                                EffectDataResolve resolve = ResolveConditionData(effect, actor);
+                                if (resolve.isError == true)
+                                { effectReturn.errorFlag = true; }
+                                else
+                                {
+                                    effectReturn.topText = resolve.topText;
+                                    effectReturn.bottomText = resolve.bottomText;
+                                    effectReturn.isAction = true;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                        effectReturn.errorFlag = true;
+                    }
+                    break;
+                //
                 // - - - Other - - -
                 //
                 case "Recruit":
@@ -1540,8 +1573,6 @@ public class EffectManager : MonoBehaviour
                 if (effect.duration.name.Equals("Ongoing"))
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
-                    /*//DEBUG -> remove when finished with testing
-                    effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();*/
                 }
                 //Process Connection effect
                 Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
@@ -1556,6 +1587,83 @@ public class EffectManager : MonoBehaviour
                 break;
         }
         //return data to calling method (ProcessEffect)
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// Sub method to process Actor Condition
+    /// Note: effect and actor checked for null by the calling method
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveConditionData(Effect effect, Actor actor)
+    {
+        //sort out colour based on type (which is effect benefit from POV of Resistance)
+        string colourEffect = colourDefault;
+        string colourText = colourDefault;
+        Condition condition;
+        if (effect.typeOfEffect != null)
+        {
+            switch (effect.typeOfEffect.name)
+            {
+                case "Good":
+                    colourEffect = colourGood;
+                    break;
+                case "Neutral":
+                    colourEffect = colourNeutral;
+                    colourText = colourNeutral;
+                    break;
+                case "Bad":
+                    colourEffect = colourBad;
+                    colourText = colourAlert;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                    break;
+            }
+        }
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+
+        switch(effect.outcome.name)
+        {
+            case "ConditionStressed":
+                condition = GameManager.instance.dataScript.GetCondition("STRESSED");
+                if (condition != null)
+                {
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            //only add stress condition if NOT already present
+                            if (actor.CheckConditionPresent(condition) == false)
+                            {
+                                actor.AddCondition(condition);
+                                effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.name, colourEnd);
+                            }
+                            break;
+                        case "Subtract":
+                            //only remove stress condition if present
+                            if (actor.CheckConditionPresent(condition) == true)
+                            {
+                                actor.RemoveCondition(condition);
+                                effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.name, colourEnd);
+                            }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                            break;
+                    }
+                }
+                else { Debug.LogError(string.Format("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name)); }
+                break;
+
+            default:
+                Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
+                break;
+        }
+
         return effectResolve;
     }
 

@@ -159,6 +159,32 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// Actor condition gained or removed, eg. 'Stressed'
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actorID"></param>
+    /// <param name="side"></param>
+    /// <param name="isPublic"></param>
+    /// <returns></returns>
+    public Message ActorCondition(string text, int actorID, GlobalSide side, bool isPublic = false)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Condition;
+            message.side = side;
+            message.isPublic = isPublic;
+            message.data0 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Player gifts an actor with gear and may receive some renown in return if it's the actor's preferred gear type
     /// </summary>
     /// <param name="text"></param>

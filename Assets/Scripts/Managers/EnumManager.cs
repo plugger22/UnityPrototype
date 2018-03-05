@@ -92,6 +92,7 @@ namespace gameAPI
         Actor_Recruited,
         Actor_Action,
         Actor_Status,
+        Actor_Condition,
         //Target
         Target_Attempt,
         Target_Contained,

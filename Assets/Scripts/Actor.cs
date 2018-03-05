@@ -80,7 +80,13 @@ namespace gameAPI
             {
                 //check that condition isn't already present
                 if (CheckConditionPresent(condition) == false)
-                { listOfConditions.Add(condition); }
+                {
+                    listOfConditions.Add(condition);
+                    //message
+                    string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
+                    Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
             }
             else { Debug.LogError("Invalid condition (Null)"); }
         }
@@ -124,6 +130,10 @@ namespace gameAPI
                         if (listOfConditions[i].name.Equals(condition.name) == true)
                         {
                             listOfConditions.RemoveAt(i);
+                            //message
+                            string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.name);
+                            Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                            GameManager.instance.dataScript.AddMessage(message);
                             return true;
                         }
                     }
