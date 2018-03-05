@@ -140,7 +140,7 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="actorID"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorStatus(string text, int actorID, bool isPublic = false)
+    public Message ActorStatus(string text, int actorID, GlobalSide side, bool isPublic = false)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
@@ -149,7 +149,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Actor_Status;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = side;
             message.isPublic = isPublic;
             message.data0 = actorID;
             return message;

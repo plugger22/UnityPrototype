@@ -1571,7 +1571,7 @@ public class ActorManager : MonoBehaviour
                                 actor.Status = ActorStatus.Active;
                                 GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                 string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
-                                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, true);
+                                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, GameManager.instance.sideScript.PlayerSide, true);
                                 GameManager.instance.dataScript.AddMessage(message);
                             }
                             else

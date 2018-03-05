@@ -1018,10 +1018,12 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// Whenever an Authority actor is removed from the map (even if sent to the reserves) run this method to clean up any OnMap or InTransit teams connected with
     /// the actor. They are all placed (instantly) into the Reserve team Pool to prevent errors when accessing actors that are no longer there.
+    /// Returns the number of teams that have been cleaned up
     /// </summary>
     /// <param name="actor"></param>
-    public void TeamCleanUp(Actor actor)
+    public int TeamCleanUp(Actor actor)
     {
+        int counter = 0;
         if (actor != null)
         {
             List<int> listOfTeams = actor.GetTeams();
@@ -1033,6 +1035,7 @@ public class TeamManager : MonoBehaviour
                     Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
                     if (team != null)
                     {
+                        counter++;
                         //update tallies & remove team from their pool
                         GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
                         switch (team.pool)
@@ -1071,6 +1074,8 @@ public class TeamManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid actor (Null)"); }
+        //return number of teams removed and sent to the reserves
+        return counter;
     }
 
 

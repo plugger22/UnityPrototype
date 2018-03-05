@@ -436,7 +436,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
+                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)
@@ -470,7 +470,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
+                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)
@@ -504,7 +504,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
+                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)
@@ -538,7 +538,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionText) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
+                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionText)

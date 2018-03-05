@@ -839,7 +839,7 @@ public class ActionManager : MonoBehaviour
                     numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status); 
-                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID);
+                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
@@ -894,7 +894,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
                 //message
                 string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID);
+                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
@@ -1237,17 +1237,18 @@ public class ActionManager : MonoBehaviour
     private void ProcessReserveActorAction(GenericReturnData data)
     {
         bool successFlag = true;
-        string textMsg = "Unknown";
+        string msgText = "Unknown";
+        int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data != null)
         {
-            if (data.optionID > -1)
+            if (data.actorSlotID > -1)
             {
                 //find actor
-                Actor actor = GameManager.instance.dataScript.GetActor(data.actorSlotID);
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                 if (actor != null)
                 {
                     //add actor to reserve pool
@@ -1259,7 +1260,7 @@ public class ActionManager : MonoBehaviour
                         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                         {
                             //remove all active teams connected with this actor
-                            GameManager.instance.teamScript.TeamCleanUp(actor);
+                            numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
                         }
                         //actor successfully moved to reserve
                         if (string.IsNullOrEmpty(data.optionText) == false)
@@ -1270,26 +1271,36 @@ public class ActionManager : MonoBehaviour
                                     builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
                                     builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
                                         actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));
-                                    //message
-                                    textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actor.actorName, actor.arc.name,
-                                        actor.actorID);
+                                    msgText = "Resting";
                                     break;
                                 case "ReservePromise":
-
+                                    builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
+                                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
+                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));
+                                    msgText = "Promised";
                                     break;
                                 case "ReserveNoPromise":
-
+                                    builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
+                                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
+                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));
+                                    msgText = "No Promise";
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
                                     break;
                             }
+                            //teams
+                            if (numOfTeams > 0)
+                            { builderBottom.Append(string.Format("{0}{1}{2}{3} related Team{4} sent to Reserve Pool{5}", "\n", "\n", colourBad, numOfTeams,
+                                numOfTeams != 1 ? "s" : "", colourEnd)); }
                         }
                         else
                         {
                             //no optionText provided -> default data
                         }
-                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actor.actorID, playerSide);
+                        //message
+                        string text = string.Format("{0} {1} moved to the Reserves ({2})", actor.arc.name, actor.actorName, msgText);
+                        Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, playerSide);
                         GameManager.instance.dataScript.AddMessage(message);
                         //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
 
@@ -1337,7 +1348,7 @@ public class ActionManager : MonoBehaviour
 
             }
             else
-            { Debug.LogWarning(string.Format("Invalid optionID {0}", data.optionID)); }
+            { Debug.LogWarning(string.Format("Invalid actorSlotID {0}", data.actorSlotID)); }
         }
         else
         {
