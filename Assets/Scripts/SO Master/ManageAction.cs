@@ -19,6 +19,7 @@ public class ManageAction : ScriptableObject
     public string tooltipDetails;
     [Tooltip("The order (low to high) that the options appear (left to right) in the Generic Picker. Aim to give everyone in a set a unique number")]
     [Range(1,3)] public int order;
-
+    [Tooltip("Any criteria that must be valid (ALL of them) in order for the option to be active (greyed out otherwise)")]
+    public List<Criteria> listOfCriteria;
 
 }

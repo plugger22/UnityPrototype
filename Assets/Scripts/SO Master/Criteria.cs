@@ -10,8 +10,10 @@ using gameAPI;
 public class Criteria : ScriptableObject
 {
     public string description;
+    [Tooltip("The game data that is being checked")]
     public EffectCriteria effectCriteria;
-    public EffectOperator comparison;                   //operand > / < / = to
-    [Tooltip("The extent of the criteria check, eg. current Node, neighbouring nodes, etc.")]
+    [Tooltip("Use only operands  > / < / = to")]
+    public EffectOperator comparison;
+    [Tooltip("The extent of the criteria check, eg. current Node, neighbouring nodes, Actor, etc.")]
     public EffectApply apply;
 }
