@@ -14,7 +14,7 @@ public class Effect : ScriptableObject
     public string description;                                  //tooltip, eg. "Stability"
     [HideInInspector] public string textTag;                    //text that is used in game. Dynamically assigned at time of import (DataManager.cs)
     //criteria 
-    [Tooltip("Any criterial that must be satisfied before the effect can be applied")]
+    [Tooltip("Criteria that must be satisfied (ALL) before the effect can be applied")]
     public List<Criteria> listOfCriteria;                       //list of effect criteria that must be true for an effect to occur
     //result of effect
     [Tooltip("Applies to the current node, the current plus all neighbouring nodes, all nodes or nodes of the same type as the current one")]

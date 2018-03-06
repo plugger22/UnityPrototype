@@ -501,7 +501,8 @@ public class ActionManager : MonoBehaviour
                             text = manageAction.optionTitle,
                             optionID = details.actorSlotID,
                             optionText = manageAction.name,
-                            sprite = manageAction.sprite
+                            sprite = manageAction.sprite,
+                            isOptionActive = false
                         };
                         GenericTooltipDetails tooltip = new GenericTooltipDetails()
                         {

@@ -958,7 +958,7 @@ public class NodeManager : MonoBehaviour
                                                 }
                                             }
                                             //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect.listOfCriteria, effect.name, nodeID);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text
@@ -1058,7 +1058,7 @@ public class NodeManager : MonoBehaviour
                                                 }
                                             }
                                             //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect.listOfCriteria, effect.name, nodeID);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text
@@ -1158,7 +1158,7 @@ public class NodeManager : MonoBehaviour
                                                 }
                                             }
                                             //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                            effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect.listOfCriteria, effect.name, nodeID);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text

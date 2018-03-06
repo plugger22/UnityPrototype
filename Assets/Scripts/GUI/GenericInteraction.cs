@@ -91,7 +91,7 @@ namespace gameAPI
 
 
         /// <summary>
-        /// Deselect team choice (event call) as a result of another team being selected
+        /// Deselect generic choice (event call) as a result of another generic choice being selected
         /// </summary>
         private void DeSelectGeneric()
         {

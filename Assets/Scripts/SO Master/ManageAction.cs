@@ -19,4 +19,6 @@ public class ManageAction : ScriptableObject
     public string tooltipDetails;
     [Tooltip("The order (low to high) that the options appear (left to right) in the Generic Picker. Aim to give everyone in a set a unique number")]
     [Range(1,3)] public int order;
+
+
 }

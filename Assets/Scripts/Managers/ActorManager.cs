@@ -22,11 +22,22 @@ public class ActorManager : MonoBehaviour
     [Range(1, 6)] public int maxNumOfReserveActors = 4;    //
     [Tooltip("The maximum number of stats (Qualities) that an actor can have")]
     [Range(2,4)] public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
-
     [Tooltip("Maximum value of an actor datapoint stat")]
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
     [Range(2, 4)] public int minStatValue = 0;
+    [Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their restlessTimer expires")]
+    [Range(1, 50)] public int chanceOfUnhappy = 20;
+    [Tooltip("Multiplier to the chanceOfUnhappy for an actor who has been promised that they will be recalled within a set time period")]
+    [Range(1, 5)] public int unhappyPromiseFactor = 3;
+    [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their restless timer will be set to this number of turns.")]
+    [Range(1, 10)] public int promiseReserveTimer = 10;
+    [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their restless timer will be set to this number of turns.")]
+    [Range(1, 10)] public int noPromiseReserveTimer = 5;
+    [Tooltip("Actor sent to Reserves to Rest. Their restless timer will be set to this number of turns.")]
+    [Range(1, 10)] public int restingReserveTimer = 10;
+    [Tooltip("Actor Recruited and placed in Reserves. Their restless timer will be set to this number of turns.")]
+    [Range(1, 10)] public int recruitedReserveTimer = 5;
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
@@ -472,7 +483,7 @@ public class ActorManager : MonoBehaviour
                                                     }
                                                 }
                                                 //check effect criteria is valid
-                                                effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID);
+                                                effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect.listOfCriteria, effect.name, nodeID);
                                                 if (effectCriteria == null)
                                                 {
                                                     //Effect criteria O.K -> tool tip text
@@ -700,7 +711,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         Effect effect = listOfEffects[i];
                                         //check effect criteria is valid
-                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect, nodeID, actor.actorSlotID, teamID);
+                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect.listOfCriteria, effect.name, nodeID, actor.actorSlotID, teamID);
                                         if (effectCriteria == null)
                                         {
                                             //Effect criteria O.K -> tool tip text
@@ -845,7 +856,7 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the actor to enable a ModalActionMenu to be put together (one button per action). 
-    /// Resitance -> up to 3 x 'Give Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Send to Reserve' and an automatic Cancel button
+    /// Resitance -> up to 3 x 'Give Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Manage' and an automatic Cancel button (6 total)
     /// </summary>
     /// <param name="actorSlotID"></param>
     /// <returns></returns>

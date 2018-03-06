@@ -320,7 +320,7 @@ public class ModalTeamPicker : MonoBehaviour
             else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty)"); }
         }
 
-        //loop list of Teams and deactivate those that are valid picks
+        //loop list of Teams and deactivate those that aren't valid picks
         int limit = arrayOfTeamOptions.Length;
         for (int teamIndex = 0; teamIndex < listOfTeamIDs.Count; teamIndex++)
         {

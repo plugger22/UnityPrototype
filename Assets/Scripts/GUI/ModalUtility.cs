@@ -162,10 +162,12 @@ namespace modalAPI
     {
         public Sprite sprite;
         public string text;                 //keep SHORT
-        [Tooltip("Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.")]
-        public int optionID;
-        [Tooltip("Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise")]
-        public string optionText;
+        public int optionID;                //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
+        public string optionText;           //Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise
+        public bool isOptionActive;         //if false then option shown greyed out an is unselectable
+
+        public GenericOptionDetails()
+        { isOptionActive = true; }
     }
 
     /// <summary>
@@ -183,10 +185,8 @@ namespace modalAPI
     /// </summary>
     public class GenericReturnData
     {
-        [Tooltip("Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.")]
-        public int optionID;
-        [Tooltip("Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise")]
-        public string optionText;
+        public int optionID;        //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
+        public string optionText;   //Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise
         public int nodeID;
         public int actorSlotID;                    
     }

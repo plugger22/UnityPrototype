@@ -88,7 +88,7 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>
-    public string CheckEffectCriteria(Effect effect, int nodeID = -1, int actorSlotID = -1, int teamArcID = -1)
+    public string CheckEffectCriteria(List<Criteria> listOfCriteria, string effectName, int nodeID = -1, int actorSlotID = -1, int teamArcID = -1)
     {
         int val;
         StringBuilder result = new StringBuilder();
@@ -97,9 +97,7 @@ public class EffectManager : MonoBehaviour
         bool errorFlag = false;
         Actor actor = null;
         TeamArc teamArc = null;
-        if (effect != null)
-        {
-            if (effect.listOfCriteria != null && effect.listOfCriteria.Count > 0)
+            if (listOfCriteria != null && listOfCriteria.Count > 0)
             {
                 //
                 // - - - access necessary data prior to loop
@@ -141,7 +139,7 @@ public class EffectManager : MonoBehaviour
                 //O.K to proceed?
                 if (errorFlag == false)
                 {
-                    foreach (Criteria criteria in effect.listOfCriteria)
+                    foreach (Criteria criteria in listOfCriteria)
                     {
                         if (criteria != null)
                         {
@@ -263,14 +261,14 @@ public class EffectManager : MonoBehaviour
                                                     break;
                                                 default:
                                                     BuildString(result, "Error!");
-                                                    Debug.LogWarning(string.Format("NodeCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                    Debug.LogWarning(string.Format("NodeCurrent: Invalid criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                                     errorFlag = true;
                                                     break;
                                             }
                                         }
                                         else
                                         {
-                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for Effect \"{0}\", criteria {1}", effect.name, criteria.name));
+                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for Effect \"{0}\", criteria {1}", effectName, criteria.name));
                                             errorFlag = true;
                                         }
                                         break;
@@ -308,7 +306,7 @@ public class EffectManager : MonoBehaviour
                                         }
                                         else
                                         {
-                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for Effect \"{0}\", criteria {1}", effect.name, criteria.name));
+                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for Effect \"{0}\", criteria {1}", effectName, criteria.name));
                                             errorFlag = true;
                                         }
                                         break;
@@ -321,13 +319,13 @@ public class EffectManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid criteria.apply (null) for Effect \"{0}\", criteria {1}", effect.name, criteria.name));
+                                Debug.LogError(string.Format("Invalid criteria.apply (null) for Effect \"{0}\", criteria {1}", effectName, criteria.name));
                                 errorFlag = true;
                             }
                         }
                         else
                         {
-                            Debug.LogError(string.Format("Invalid criteria (null) for Effect \"{0}\"", effect.name));
+                            Debug.LogError(string.Format("Invalid criteria (null) for Effect \"{0}\"", effectName));
                             errorFlag = true;
                         }
                         //exit on error
@@ -336,9 +334,6 @@ public class EffectManager : MonoBehaviour
                     }
                 }
             }
-        }
-        else
-        { Debug.LogError("Invalid Effect (Null) -> effect criteria check cancelled"); }
         if (result.Length > 0)
         { return result.ToString(); }
         else { return null; }

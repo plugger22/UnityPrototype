@@ -27,7 +27,7 @@ public class ModalGenericPicker : MonoBehaviour
 
     public Sprite errorSprite;                              //sprite to display in event of an error in the outcome dialogue
 
-    public GameObject[] arrayOfGenericOptions;                //place generic image UI elements here (3 options)
+    public GameObject[] arrayOfGenericOptions;                //place generic option UI elements here (3 options)
 
     //private CanvasGroup canvasGroup;
     private ButtonInteraction buttonInteraction;
@@ -179,6 +179,8 @@ public class ModalGenericPicker : MonoBehaviour
     private void SetGenericPicker(GenericPickerDetails details)
     {
         bool errorFlag = false;
+        CanvasGroup genericCanvasGroup;
+        GenericInteraction genericData;
         //set modal status
         GameManager.instance.guiScript.SetIsBlocked(true);
         //activate main panel
@@ -241,38 +243,57 @@ public class ModalGenericPicker : MonoBehaviour
                 {
                     if (arrayOfGenericOptions[i] != null)
                     {
-                        GenericInteraction genericData = arrayOfGenericOptions[i].GetComponent<GenericInteraction>();
+                        genericData = arrayOfGenericOptions[i].GetComponent<GenericInteraction>();
                         if (genericData != null)
                         {
-                            //there are 3 options but not all of them may be used
-                            if (details.arrayOfOptions[i] != null)
+                            //get option canvas
+                            genericCanvasGroup = arrayOfGenericOptions[i].GetComponent<CanvasGroup>();
+                            if (genericCanvasGroup != null)
                             {
-                                //activate option
-                                arrayOfGenericOptions[i].SetActive(true);
-                                //populate data
-                                genericData.optionImage.sprite = details.arrayOfOptions[i].sprite;
-                                genericData.displayText.text = details.arrayOfOptions[i].text;
-                                genericData.data.optionID = details.arrayOfOptions[i].optionID;
-                                genericData.data.optionText = details.arrayOfOptions[i].optionText;
-                                genericData.data.actorSlotID = details.actorSlotID;
-                                //activate option (in Generic picker assumed all options are active)
-                                genericData.isActive = true;
-
-                                //tooltips
-                                GenericTooltipUI tooltipUI = arrayOfGenericOptions[i].GetComponent<GenericTooltipUI>();
-                                if (tooltipUI != null)
+                                //there are 3 options but not all of them may be used
+                                if (details.arrayOfOptions[i] != null)
                                 {
-                                    GenericTooltipDetails tooltipDetails = details.arrayOfTooltips[i];
-                                    if (tooltipDetails != null)
+                                    //activate option
+                                    arrayOfGenericOptions[i].SetActive(true);
+                                    //populate data
+                                    genericData.optionImage.sprite = details.arrayOfOptions[i].sprite;
+                                    genericData.displayText.text = details.arrayOfOptions[i].text;
+                                    genericData.data.optionID = details.arrayOfOptions[i].optionID;
+                                    genericData.data.optionText = details.arrayOfOptions[i].optionText;
+                                    genericData.data.actorSlotID = details.actorSlotID;
+                                    //option Active or Not?
+                                    if (details.arrayOfOptions[i].isOptionActive == true)
                                     {
-                                        tooltipUI.ToolTipHeader = details.arrayOfTooltips[i].textHeader;
-                                        tooltipUI.ToolTipMain = details.arrayOfTooltips[i].textMain;
-                                        tooltipUI.ToolTipEffect = details.arrayOfTooltips[i].textDetails;
+                                        //activate option 
+                                        genericCanvasGroup.alpha = 1.0f;
+                                        genericCanvasGroup.interactable = true;
+                                        genericData.isActive = true;
                                     }
-                                    else { Debug.LogError(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                    else
+                                    {
+                                        //deactivate option
+                                        genericCanvasGroup.alpha = 0.25f;
+                                        genericCanvasGroup.interactable = false;
+                                        genericData.isActive = false;
+                                    }
+                                    //tooltips
+                                    GenericTooltipUI tooltipUI = arrayOfGenericOptions[i].GetComponent<GenericTooltipUI>();
+                                    if (tooltipUI != null)
+                                    {
+                                        GenericTooltipDetails tooltipDetails = details.arrayOfTooltips[i];
+                                        if (tooltipDetails != null)
+                                        {
+                                            tooltipUI.ToolTipHeader = details.arrayOfTooltips[i].textHeader;
+                                            tooltipUI.ToolTipMain = details.arrayOfTooltips[i].textMain;
+                                            tooltipUI.ToolTipEffect = details.arrayOfTooltips[i].textDetails;
+                                        }
+                                        else { Debug.LogError(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                    }
+                                    else
+                                    { Debug.LogError(string.Format("Invalid tooltipUI (Null) for arrayOfOptions[\"{0}\"]", i)); }
                                 }
-                                else
-                                { Debug.LogError(string.Format("Invalid tooltipUI (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                else { Debug.LogError(string.Format("Invalid genericCanvasGroup for arrayOfGenericOptions[{0}]", i)); }
+
                             }
                             else
                             { arrayOfGenericOptions[i].SetActive(false); }
