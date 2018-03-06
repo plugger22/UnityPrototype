@@ -294,7 +294,7 @@ public class ActionManager : MonoBehaviour
         Action action = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //renown (do prior to effects as Player renown will change)
-        int renownCost = GameManager.instance.playerScript.renownCostGear;
+        int renownCost = GameManager.instance.actorScript.renownCostGear;
         int renownBefore = GameManager.instance.playerScript.Renown;
         //default data 
         outcomeDetails.side = details.side;
@@ -511,7 +511,12 @@ public class ActionManager : MonoBehaviour
                         //check any criteria for action is valid
                         if (manageAction.listOfCriteria.Count > 0)
                         {
-                            criteriaText = GameManager.instance.effectScript.CheckCriteria(manageAction.listOfCriteria, details.nodeID, actor.actorSlotID);
+                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                            {
+                                actorSlotID = actor.actorSlotID,
+                                listOfCriteria = manageAction.listOfCriteria
+                            };
+                            criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                             if (criteriaText == null)
                             {
                                 //option activated
@@ -614,28 +619,6 @@ public class ActionManager : MonoBehaviour
                 for (int i = 0; i < numOfOptions; i++)
                 {
                     ManageAction manageAction = listOfManageOptions[i];
-
-                    /*if (manageAction != null)
-                    {
-                        GenericOptionDetails option = new GenericOptionDetails()
-                        {
-                            text = manageAction.optionTitle,
-                            optionID = details.actorSlotID,
-                            optionText = manageAction.name,
-                            sprite = manageAction.sprite
-                        };
-                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
-                        {
-                            textHeader = string.Format("{0}Send to the RESERVES{1}", colourSide, colourEnd),
-                            textMain = manageAction.tooltipMain,
-                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
-                        };
-                        //add to arrays
-                        arrayOfGenericOptions[i] = option;
-                        arrayOfTooltips[i] = tooltip;
-                    }
-                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }*/
-
                     if (manageAction != null)
                     {
                         GenericTooltipDetails tooltip = new GenericTooltipDetails();
@@ -649,7 +632,12 @@ public class ActionManager : MonoBehaviour
                         //check any criteria for action is valid
                         if (manageAction.listOfCriteria.Count > 0)
                         {
-                            criteriaText = GameManager.instance.effectScript.CheckCriteria(manageAction.listOfCriteria, details.nodeID, actor.actorSlotID);
+                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                            {
+                                actorSlotID = actor.actorSlotID,
+                                listOfCriteria = manageAction.listOfCriteria
+                            };
+                            criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                             if (criteriaText == null)
                             {
                                 //option activated
@@ -719,8 +707,7 @@ public class ActionManager : MonoBehaviour
     private void InitialiseDismissActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
-        string title;
-        string colourSide;
+        string title, colourSide, criteriaText;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -754,24 +741,57 @@ public class ActionManager : MonoBehaviour
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
                     {
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails();
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
                             optionID = details.actorSlotID,
                             optionText = manageAction.name,
-                            sprite = manageAction.sprite
+                            sprite = manageAction.sprite,
                         };
-                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
+                        //check any criteria for action is valid
+                        if (manageAction.listOfCriteria.Count > 0)
                         {
-                            textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd),
-                            textMain = manageAction.tooltipMain,
-                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
-                        };
+                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                            {
+                                actorSlotID = actor.actorSlotID,
+                                listOfCriteria = manageAction.listOfCriteria
+                            };
+                            criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                            if (criteriaText == null)
+                            {
+                                //option activated
+                                option.isOptionActive = true;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            }
+                            else
+                            {
+                                //option deactivated
+                                option.isOptionActive = false;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);
+                            }
+                        }
+                        else
+                        {
+                            //no criteria, option automatically activated
+                            option.isOptionActive = true;
+                            //tooltip
+                            tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
+                            tooltip.textMain = manageAction.tooltipMain;
+                            tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                        }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
                     }
                     else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;
@@ -807,8 +827,7 @@ public class ActionManager : MonoBehaviour
     private void InitialiseDisposeActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
-        string title;
-        string colourSide;
+        string title, colourSide, criteriaText;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -841,24 +860,57 @@ public class ActionManager : MonoBehaviour
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
                     {
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails();
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
                             optionID = details.actorSlotID,
                             optionText = manageAction.name,
-                            sprite = manageAction.sprite
+                            sprite = manageAction.sprite,
                         };
-                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
+                        //check any criteria for action is valid
+                        if (manageAction.listOfCriteria.Count > 0)
                         {
-                            textHeader = string.Format("{0}DISPOSE of{1}", colourSide, colourEnd),
-                            textMain = manageAction.tooltipMain,
-                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
-                        };
+                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                            {
+                                actorSlotID = actor.actorSlotID,
+                                listOfCriteria = manageAction.listOfCriteria
+                            };
+                            criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                            if (criteriaText == null)
+                            {
+                                //option activated
+                                option.isOptionActive = true;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            }
+                            else
+                            {
+                                //option deactivated
+                                option.isOptionActive = false;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);
+                            }
+                        }
+                        else
+                        {
+                            //no criteria, option automatically activated
+                            option.isOptionActive = true;
+                            //tooltip
+                            tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
+                            tooltip.textMain = manageAction.tooltipMain;
+                            tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                        }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
                     }
                     else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;

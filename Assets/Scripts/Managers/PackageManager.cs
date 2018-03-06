@@ -51,6 +51,24 @@ namespace packageAPI
     //
 
     /// <summary>
+    /// used to pass data to CheckCriteria (EffectManager.cs)
+    /// </summary>
+    public class CriteriaDataInput
+    {
+        public int nodeID;                          //optional
+        public int actorSlotID;                     //optional
+        public int teamArcID;                       //optional
+        public List<Criteria> listOfCriteria;
+
+        public CriteriaDataInput()
+        {
+            nodeID = -1;
+            actorSlotID = -1;
+            teamArcID = -1;
+        }
+    }
+
+    /// <summary>
     /// used to pass data into ProcessEffect
     /// </summary>
     public class EffectDataInput

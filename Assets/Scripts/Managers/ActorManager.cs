@@ -38,6 +38,14 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int restingReserveTimer = 10;
     [Tooltip("Actor Recruited and placed in Reserves. Their restless timer will be set to this number of turns.")]
     [Range(1, 10)] public int recruitedReserveTimer = 5;
+    [Tooltip("Renown cost for negating a bad gear use roll")]
+    [Range(1, 3)] public int renownCostGear = 1;
+    [Tooltip("Base Renown cost for carrying out Manage Reserve Actor actions")]
+    [Range(1, 5)] public int manageReserveRenown = 1;
+    [Tooltip("Base Renown cost for carrying out Manage Dismiss Actor actions")]
+    [Range(1, 5)] public int manageDismissRenown = 2;
+    [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
+    [Range(1, 5)] public int manageDisposeRenown = 3;
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
@@ -483,7 +491,12 @@ public class ActorManager : MonoBehaviour
                                                     }
                                                 }
                                                 //check effect criteria is valid
-                                                effectCriteria = GameManager.instance.effectScript.CheckCriteria(effect.listOfCriteria, nodeID);
+                                                CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                                {
+                                                    nodeID = nodeID,
+                                                    listOfCriteria = effect.listOfCriteria
+                                                };
+                                                effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                                                 if (effectCriteria == null)
                                                 {
                                                     //Effect criteria O.K -> tool tip text
@@ -624,7 +637,7 @@ public class ActorManager : MonoBehaviour
             //
             else if (playerSide.level == globalAuthority.level)
             {
-                int teamID;
+                int teamArcID;
                 bool isAnyTeam;
                 string tooltipMain;
                 //'Cancel' button tooltip)
@@ -678,7 +691,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.Status == ActorStatus.Active)
                         {
                             //assign preferred team as default (doesn't matter if actor has ANY Team action)
-                            teamID = actor.arc.preferredTeam.TeamArcID;
+                            teamArcID = actor.arc.preferredTeam.TeamArcID;
                             tempAction = null;
                             //active node for actor
                             if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.actorSlotID) == true)
@@ -711,7 +724,14 @@ public class ActorManager : MonoBehaviour
                                     {
                                         Effect effect = listOfEffects[i];
                                         //check effect criteria is valid
-                                        effectCriteria = GameManager.instance.effectScript.CheckCriteria(effect.listOfCriteria, nodeID, actor.actorSlotID, teamID);
+                                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                        {
+                                            nodeID = nodeID,
+                                            teamArcID = teamArcID,
+                                            actorSlotID = actor.actorSlotID,
+                                            listOfCriteria = effect.listOfCriteria
+                                        };
+                                        effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                                         if (effectCriteria == null)
                                         {
                                             //Effect criteria O.K -> tool tip text
@@ -891,7 +911,6 @@ public class ActorManager : MonoBehaviour
                     ModalActionDetails manageActionDetails = new ModalActionDetails() { };
                     manageActionDetails.side = playerSide;
                     manageActionDetails.actorSlotID = actor.actorSlotID;
-                    manageActionDetails.nodeID = GameManager.instance.nodeScript.nodePlayer;
                     tooltipText = string.Format("Select to choose what to do with {0} (send to the Reserve Pool, Dismiss or Dispose Off)", actor.actorName);
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {

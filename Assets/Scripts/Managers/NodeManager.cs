@@ -958,7 +958,12 @@ public class NodeManager : MonoBehaviour
                                                 }
                                             }
                                             //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(effect.listOfCriteria, nodeID);
+                                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                            {
+                                                nodeID = nodeID,
+                                                listOfCriteria = effect.listOfCriteria
+                                            };
+                                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text
@@ -1058,7 +1063,12 @@ public class NodeManager : MonoBehaviour
                                                 }
                                             }
                                             //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(effect.listOfCriteria, nodeID);
+                                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                            {
+                                                nodeID = nodeID,
+                                                listOfCriteria = effect.listOfCriteria
+                                            };
+                                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text
@@ -1158,7 +1168,12 @@ public class NodeManager : MonoBehaviour
                                                 }
                                             }
                                             //check effect criteria is valid
-                                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(effect.listOfCriteria, nodeID);
+                                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                            {
+                                                nodeID = nodeID,
+                                                listOfCriteria = effect.listOfCriteria
+                                            };
+                                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                                             if (effectCriteria == null)
                                             {
                                                 //Effect criteria O.K -> tool tip text
@@ -1356,7 +1371,7 @@ public class NodeManager : MonoBehaviour
                 if (moveDetails.gearID > -1)
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
-                    int renownCost = GameManager.instance.playerScript.renownCostGear;
+                    int renownCost = GameManager.instance.actorScript.renownCostGear;
                     if (gear != null)
                     {
                         //chance of Gear being Compromised
@@ -1438,6 +1453,7 @@ public class NodeManager : MonoBehaviour
     public void SetNodeActorFlags()
     {
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        GlobalSide side = GameManager.instance.globalScript.sideResistance;
         if (dictOfNodes != null)
         {
             //set all to false
@@ -1446,30 +1462,34 @@ public class NodeManager : MonoBehaviour
             //loop Resistance actors
             for (int slotID = 0; slotID < GameManager.instance.actorScript.maxNumOfOnMapActors; slotID++)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.globalScript.sideResistance);
-                if (actor != null)
+                //check there an actor present in the slot
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, side) == true)
                 {
-                    //only consider actor if Active
-                    if (actor.Status == ActorStatus.Active)
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, side);
+                    if (actor != null)
                     {
-                        List<GameObject> listOfNodes = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
-                        if (listOfNodes != null)
+                        //only consider actor if Active
+                        if (actor.Status == ActorStatus.Active)
                         {
-                            //loop nodes where actor has a connection
-                            for (int i = 0; i < listOfNodes.Count; i++)
+                            List<GameObject> listOfNodes = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
+                            if (listOfNodes != null)
                             {
-                                //set flag to true
-                                Node node = listOfNodes[i].GetComponent<Node>();
-                                if (node != null)
-                                { node.isContact = true; }
-                                else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
-                            }
+                                //loop nodes where actor has a connection
+                                for (int i = 0; i < listOfNodes.Count; i++)
+                                {
+                                    //set flag to true
+                                    Node node = listOfNodes[i].GetComponent<Node>();
+                                    if (node != null)
+                                    { node.isContact = true; }
+                                    else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
+                                }
 
+                            }
+                            else { Debug.LogError(string.Format("Invalid listOfNodes (Null) for slotID {0}", slotID)); }
                         }
-                        else { Debug.LogError(string.Format("Invalid listOfNodes (Null) for slotID {0}", slotID)); }
                     }
+                    else { Debug.LogError(string.Format("Invalid Actor (null) for slotID {0}", slotID)); }
                 }
-                else { Debug.LogError(string.Format("Invalid Actor (null) for slotID {0}", slotID)); }
             }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }

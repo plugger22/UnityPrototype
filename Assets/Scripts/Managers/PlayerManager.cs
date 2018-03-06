@@ -15,14 +15,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int actorID = 999;
     [HideInInspector] public ActorStatus status;
 
-    [Tooltip("Renown cost for negating a bad gear use roll")]
-    [Range(1, 3)] public int renownCostGear = 1;
-    [Tooltip("Base Renown cost for carrying out Manage Reserve Actor actions")]
-    [Range(1, 5)] public int manageReserveRenown = 1;
-    [Tooltip("Base Renown cost for carrying out Manage Dismiss Actor actions")]
-    [Range(1, 5)] public int manageDismissRenown = 2;
-    [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
-    [Range(1, 5)] public int manageDisposeRenown = 3;
+
 
     private List<int> listOfGear = new List<int>();                     //gearID's of all gear items in inventory
     private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
