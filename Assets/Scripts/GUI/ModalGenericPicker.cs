@@ -246,12 +246,12 @@ public class ModalGenericPicker : MonoBehaviour
                         genericData = arrayOfGenericOptions[i].GetComponent<GenericInteraction>();
                         if (genericData != null)
                         {
-                            //get option canvas
-                            genericCanvasGroup = arrayOfGenericOptions[i].GetComponent<CanvasGroup>();
-                            if (genericCanvasGroup != null)
+                            //there are 3 options but not all of them may be used
+                            if (details.arrayOfOptions[i] != null)
                             {
-                                //there are 3 options but not all of them may be used
-                                if (details.arrayOfOptions[i] != null)
+                                //get option canvas
+                                genericCanvasGroup = arrayOfGenericOptions[i].GetComponent<CanvasGroup>();
+                                if (genericCanvasGroup != null)
                                 {
                                     //activate option
                                     arrayOfGenericOptions[i].SetActive(true);
@@ -305,7 +305,6 @@ public class ModalGenericPicker : MonoBehaviour
                             errorFlag = true;
                             break;
                         }
-
                     }
                     else
                     {

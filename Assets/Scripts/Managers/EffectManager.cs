@@ -315,19 +315,36 @@ public class EffectManager : MonoBehaviour
                                 case "ActorCurrent":
                                     if (criteria.effectCriteria != null)
                                     {
+                                        int playerRenown;
                                         switch (criteria.effectCriteria.name)
                                         {
                                             case "ConditionStressedYes":
-
+                                                //there can only be one team of a type at a node
+                                                Condition condition = GameManager.instance.dataScript.GetCondition("STRESSED");
+                                                if (condition != null)
+                                                {
+                                                    if (actor.CheckConditionPresent(condition) == false)
+                                                    { BuildString(result, string.Format(" {0} isn't STRESSED", actor.actorName)); }
+                                                }
+                                                else { Debug.LogError("Invalid condition (Null) for STRESSED"); errorFlag = true; }
                                                 break;
                                             case "RenownReserveMin":
-
+                                                int renownReserve = GameManager.instance.playerScript.manageReserveRenown;
+                                                playerRenown = GameManager.instance.playerScript.Renown;
+                                                if (playerRenown < renownReserve)
+                                                { BuildString(result, string.Format("You need at least {0} Renown (currently {1})", renownReserve, playerRenown)); }
                                                 break;
                                             case "RenownDismissMin":
-
+                                                int renownDismiss = GameManager.instance.playerScript.manageDismissRenown;
+                                                playerRenown = GameManager.instance.playerScript.Renown;
+                                                if (playerRenown < renownDismiss)
+                                                { BuildString(result, string.Format("You need at least {0} Renown (currently {1})", renownDismiss, playerRenown)); }
                                                 break;
                                             case "RenownDisposeMin":
-
+                                                int renownDispose = GameManager.instance.playerScript.manageDisposeRenown;
+                                                playerRenown = GameManager.instance.playerScript.Renown;
+                                                if (playerRenown < renownDispose)
+                                                { BuildString(result, string.Format("You need at least {0} Renown (currently {1})", renownDispose, playerRenown)); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");

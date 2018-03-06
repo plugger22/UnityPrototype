@@ -24,6 +24,7 @@ public class ActionManager : MonoBehaviour
     private string colourNeutral;
     private string colourBad;
     private string colourAlert;
+    private string colourInvalid;
     private string colourResistance;
     private string colourAuthority;
     private string colourEnd;
@@ -132,6 +133,7 @@ public class ActionManager : MonoBehaviour
         colourError = GameManager.instance.colourScript.GetColour(ColourType.error);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
@@ -460,6 +462,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         string title;
         string colourSide;
+        string criteriaText;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //Initialise nested option windows & sisable back button as you are on the top level of the nested options
@@ -491,25 +494,52 @@ public class ActionManager : MonoBehaviour
                 GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
                 GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
                 int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
+                //loop options
                 for(int i = 0; i < numOfOptions; i++)
                 {
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
                     {
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails();
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
                             optionID = details.actorSlotID,
                             optionText = manageAction.name,
                             sprite = manageAction.sprite,
-                            isOptionActive = false
                         };
-                        GenericTooltipDetails tooltip = new GenericTooltipDetails()
+                        //check any criteria for action is valid
+                        if (manageAction.listOfCriteria.Count > 0)
                         {
-                            textHeader = string.Format("{0}MANAGE{1}", colourSide, colourEnd),
-                            textMain = manageAction.tooltipMain,
-                            textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd)
-                        };
+                            criteriaText = GameManager.instance.effectScript.CheckCriteria(manageAction.listOfCriteria, details.nodeID, actor.actorSlotID);
+                            if (criteriaText == null)
+                            {
+                                //option activated
+                                option.isOptionActive = true;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}MANAGE{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            }
+                            else
+                            {
+                                //option deactivated
+                                option.isOptionActive = false;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}MANAGE{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);
+                            }
+                        }
+                        else
+                        {
+                            //no criteria, option automatically activated
+                            option.isOptionActive = true;
+                            //tooltip
+                            tooltip.textHeader = string.Format("{0}MANAGE{1}", colourSide, colourEnd);
+                            tooltip.textMain = manageAction.tooltipMain;
+                            tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                        }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
@@ -552,6 +582,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         string title;
         string colourSide;
+        string criteriaText;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -583,7 +614,8 @@ public class ActionManager : MonoBehaviour
                 for (int i = 0; i < numOfOptions; i++)
                 {
                     ManageAction manageAction = listOfManageOptions[i];
-                    if (manageAction != null)
+
+                    /*if (manageAction != null)
                     {
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
@@ -602,7 +634,56 @@ public class ActionManager : MonoBehaviour
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
                     }
+                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }*/
+
+                    if (manageAction != null)
+                    {
+                        GenericTooltipDetails tooltip = new GenericTooltipDetails();
+                        GenericOptionDetails option = new GenericOptionDetails()
+                        {
+                            text = manageAction.optionTitle,
+                            optionID = details.actorSlotID,
+                            optionText = manageAction.name,
+                            sprite = manageAction.sprite,
+                        };
+                        //check any criteria for action is valid
+                        if (manageAction.listOfCriteria.Count > 0)
+                        {
+                            criteriaText = GameManager.instance.effectScript.CheckCriteria(manageAction.listOfCriteria, details.nodeID, actor.actorSlotID);
+                            if (criteriaText == null)
+                            {
+                                //option activated
+                                option.isOptionActive = true;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}Send to the RESERVES{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            }
+                            else
+                            {
+                                //option deactivated
+                                option.isOptionActive = false;
+                                //tooltip
+                                tooltip.textHeader = string.Format("{0}MANAGE{1}", colourSide, colourEnd);
+                                tooltip.textMain = manageAction.tooltipMain;
+                                tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);
+                            }
+                        }
+                        else
+                        {
+                            //no criteria, option automatically activated
+                            option.isOptionActive = true;
+                            //tooltip
+                            tooltip.textHeader = string.Format("{0}Send to the RESERVES{1}", colourSide, colourEnd);
+                            tooltip.textMain = manageAction.tooltipMain;
+                            tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                        }
+                        //add to arrays
+                        arrayOfGenericOptions[i] = option;
+                        arrayOfTooltips[i] = tooltip;
+                    }
                     else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;

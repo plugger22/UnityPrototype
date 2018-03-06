@@ -891,6 +891,7 @@ public class ActorManager : MonoBehaviour
                     ModalActionDetails manageActionDetails = new ModalActionDetails() { };
                     manageActionDetails.side = playerSide;
                     manageActionDetails.actorSlotID = actor.actorSlotID;
+                    manageActionDetails.nodeID = GameManager.instance.nodeScript.nodePlayer;
                     tooltipText = string.Format("Select to choose what to do with {0} (send to the Reserve Pool, Dismiss or Dispose Off)", actor.actorName);
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {
