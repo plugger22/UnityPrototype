@@ -483,7 +483,7 @@ public class ActorManager : MonoBehaviour
                                                     }
                                                 }
                                                 //check effect criteria is valid
-                                                effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect.listOfCriteria, effect.name, nodeID);
+                                                effectCriteria = GameManager.instance.effectScript.CheckCriteria(effect.listOfCriteria, nodeID);
                                                 if (effectCriteria == null)
                                                 {
                                                     //Effect criteria O.K -> tool tip text
@@ -711,7 +711,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         Effect effect = listOfEffects[i];
                                         //check effect criteria is valid
-                                        effectCriteria = GameManager.instance.effectScript.CheckEffectCriteria(effect.listOfCriteria, effect.name, nodeID, actor.actorSlotID, teamID);
+                                        effectCriteria = GameManager.instance.effectScript.CheckCriteria(effect.listOfCriteria, nodeID, actor.actorSlotID, teamID);
                                         if (effectCriteria == null)
                                         {
                                             //Effect criteria O.K -> tool tip text
