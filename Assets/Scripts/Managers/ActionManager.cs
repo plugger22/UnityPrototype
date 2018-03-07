@@ -1446,20 +1446,20 @@ public class ActionManager : MonoBehaviour
                             {
                                 case "ReserveRest":
                                     builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
-                                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
-                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));
+                                    /*builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
+                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));*/
                                     msgText = "Resting";
                                     break;
                                 case "ReservePromise":
                                     builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
-                                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
-                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));
+                                    /*builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
+                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));*/
                                     msgText = "Promised";
                                     break;
                                 case "ReserveNoPromise":
                                     builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
-                                    builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
-                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));
+                                    /*builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
+                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));*/
                                     msgText = "No Promise";
                                     break;
                                 default:
@@ -1468,8 +1468,12 @@ public class ActionManager : MonoBehaviour
                             }
                             //teams
                             if (numOfTeams > 0)
-                            { builderBottom.Append(string.Format("{0}{1}{2}{3} related Team{4} sent to the Reserve Pool{5}", "\n", "\n", colourBad, numOfTeams,
-                                numOfTeams != 1 ? "s" : "", colourEnd)); }
+                            {
+                                if (builderBottom.Length > 0)
+                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                                numOfTeams != 1 ? "s" : "", colourEnd));
+                            }
                         }
                         else
                         {
@@ -1488,24 +1492,25 @@ public class ActionManager : MonoBehaviour
                             {
                                 EffectDataInput dataInput = new EffectDataInput();
 
-                                    foreach (Effect effect in listOfEffects)
+                                foreach (Effect effect in listOfEffects)
+                                {
+                                    if (effect.ignoreEffect == false)
                                     {
-                                        if (effect.ignoreEffect == false)
+                                        EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
+                                        if (effectReturn != null)
                                         {
-                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
-                                            if (effectReturn != null)
-                                            {
-                                                builderTop.AppendLine();
-                                                builderTop.Append(effectReturn.topText);
-                                                builderBottom.AppendLine();
-                                                builderBottom.AppendLine();
-                                                builderBottom.Append(effectReturn.bottomText);
-                                                //exit effect loop on error
-                                                if (effectReturn.errorFlag == true) { break; }
-                                            }
-                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
+                                            if (builderTop.Length > 0)
+                                            { builderTop.AppendLine(); }
+                                            builderTop.Append(effectReturn.topText);
+                                            if (builderBottom.Length > 0)
+                                            { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                            builderBottom.Append(effectReturn.bottomText);
+                                            //exit effect loop on error
+                                            if (effectReturn.errorFlag == true) { break; }
                                         }
+                                        else { Debug.LogError("Invalid effectReturn (Null)"); }
                                     }
+                                }
                             }
                         }
                         else
