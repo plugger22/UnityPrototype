@@ -26,17 +26,17 @@ public class ActorManager : MonoBehaviour
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
     [Range(2, 4)] public int minStatValue = 0;
-    [Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their restlessTimer expires")]
+    [Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their unhappyTimer expires")]
     [Range(1, 50)] public int chanceOfUnhappy = 20;
     [Tooltip("Multiplier to the chanceOfUnhappy for an actor who has been promised that they will be recalled within a set time period")]
     [Range(1, 5)] public int unhappyPromiseFactor = 3;
-    [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their restless timer will be set to this number of turns.")]
+    [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int promiseReserveTimer = 10;
-    [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their restless timer will be set to this number of turns.")]
+    [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int noPromiseReserveTimer = 5;
-    [Tooltip("Actor sent to Reserves to Rest. Their restless timer will be set to this number of turns.")]
-    [Range(1, 10)] public int restingReserveTimer = 10;
-    [Tooltip("Actor Recruited and placed in Reserves. Their restless timer will be set to this number of turns.")]
+    [Tooltip("Actor sent to Reserves to Rest. Their unhappy timer will be set to this number of turns.")]
+    [Range(1, 10)] public int restReserveTimer = 10;
+    [Tooltip("Actor Recruited and placed in Reserves. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int recruitedReserveTimer = 5;
     [Tooltip("Renown cost for negating a bad gear use roll")]
     [Range(1, 3)] public int renownCostGear = 1;

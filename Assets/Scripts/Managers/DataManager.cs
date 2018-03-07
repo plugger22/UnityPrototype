@@ -2551,6 +2551,24 @@ public class DataManager : MonoBehaviour
         return condition;
     }
 
+    /// <summary>
+    /// Returns ManageAction SO, Null if not found in dictionary
+    /// </summary>
+    /// <param name="actionName"></param>
+    /// <returns></returns>
+    public ManageAction GetManageAction(string actionName)
+    {
+            ManageAction manageAction = null;
+            if (string.IsNullOrEmpty(actionName) == false)
+            {
+                if (dictOfManageActions.ContainsKey(actionName))
+                { return dictOfManageActions[actionName]; }
+                else { Debug.LogWarning(string.Format("ManageAction \"{0}\" not found in dictOfManageActions{1}", actionName, "\n")); }
+            }
+            else { Debug.LogError("Invalid actionName (Null or Empty)"); }
+            return manageAction;
+    }
+
     /*/// <summary>
     /// returns level of globalMeta based on string (metaLevel SO name). Returns '-1' if not found
     /// </summary>

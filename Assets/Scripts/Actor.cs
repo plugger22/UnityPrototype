@@ -18,7 +18,7 @@ namespace gameAPI
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
         [HideInInspector] public int renown;                    //starts at '0' and goes up (no limit)
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
-        [HideInInspector] public int restlessTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
+        [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;

@@ -1877,9 +1877,86 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private EffectDataResolve ResolveManageData(Effect effect, Actor actor)
     {
-        EffectDataResolve resolve = new EffectDataResolve();
-
-        return resolve;
+        int data;
+        //sort out colour based on type (which is effect benefit from POV of Resistance)
+        string colourEffect = colourDefault;
+        string colourText = colourDefault;
+        if (effect.typeOfEffect != null)
+        {
+            switch (effect.typeOfEffect.name)
+            {
+                case "Good":
+                    colourEffect = colourGood;
+                    break;
+                case "Neutral":
+                    colourEffect = colourNeutral;
+                    colourText = colourNeutral;
+                    break;
+                case "Bad":
+                    colourEffect = colourBad;
+                    colourText = colourAlert;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                    break;
+            }
+        }
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //get condition
+        switch (effect.outcome.name)
+        {
+            case "ActorToReserves":
+                effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
+                break;
+            case "ActorPromoted":
+                effectResolve.bottomText = string.Format("{0}{1} promoted{2}", colourEffect, actor.actorName, colourEnd);
+                break;
+            case "ActorDismissed":
+                effectResolve.bottomText = string.Format("{0}{1} dismissed{2}", colourEffect, actor.actorName, colourEnd);
+                break;
+            case "ActorDisposedOff":
+                effectResolve.bottomText = string.Format("{0}{1} killed{2}", colourEffect, actor.actorName, colourEnd);
+                break;
+            case "ManageReserveRenown":
+                data = GameManager.instance.actorScript.manageReserveRenown;
+                GameManager.instance.playerScript.Renown -= data;
+                effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                break;
+            case "ManageDismissRenown":
+                data = GameManager.instance.actorScript.manageDismissRenown;
+                GameManager.instance.playerScript.Renown -= data;
+                effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                break;
+            case "ManageDisposeRenown":
+                data = GameManager.instance.actorScript.manageDisposeRenown;
+                GameManager.instance.playerScript.Renown -= data;
+                effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                break;
+            case "UnhappyTimerRest":
+                data = GameManager.instance.actorScript.restReserveTimer;
+                actor.unhappyTimer = data;
+                effectResolve.bottomText = string.Format("{0}{1} Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data,
+                    data != 1 ? "s" : "", colourEnd);
+                break;
+            case "UnhappyTimerPromise":
+                data = GameManager.instance.actorScript.promiseReserveTimer;
+                actor.unhappyTimer = data;
+                effectResolve.bottomText = string.Format("{0}{1} Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data,
+                    data != 1 ? "s" : "", colourEnd);
+                break;
+            case "UnhappyTimerNoPromise":
+                data = GameManager.instance.actorScript.noPromiseReserveTimer;
+                actor.unhappyTimer = data;
+                effectResolve.bottomText = string.Format("{0}{1} Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data, 
+                    data != 1 ? "s" : "", colourEnd);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
+                break;
+        }
+        return effectResolve;
     }
 
     /// <summary>

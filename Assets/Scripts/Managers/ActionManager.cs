@@ -1480,20 +1480,19 @@ public class ActionManager : MonoBehaviour
                         Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, playerSide);
                         GameManager.instance.dataScript.AddMessage(message);
                         //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
-
-                        /*Action action = actorCurrent.arc.nodeAction;
-                            List<Effect> listOfEffects = action.GetEffects();
+                        ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
+                        if (manageAction != null)
+                        {
+                            List<Effect> listOfEffects = manageAction.listOfEffects;
                             if (listOfEffects.Count > 0)
                             {
                                 EffectDataInput dataInput = new EffectDataInput();
-                                Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
-                                if (node != null)
-                                {
+
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
                                         {
-                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actorCurrent);
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
                                             if (effectReturn != null)
                                             {
                                                 builderTop.AppendLine();
@@ -1507,9 +1506,13 @@ public class ActionManager : MonoBehaviour
                                             else { Debug.LogError("Invalid effectReturn (Null)"); }
                                         }
                                     }
-                                }
-                                else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", data.nodeID)); }
-                            }*/
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText));
+                            successFlag = false;
+                        }
                     }
                     else
                     {
