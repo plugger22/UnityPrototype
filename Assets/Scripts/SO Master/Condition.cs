@@ -9,4 +9,6 @@ using UnityEngine;
 public class Condition : ScriptableObject
 {
     public string descriptor;
+    [Tooltip("From Point of View of Actor (should be the same for both sides")]
+    public GlobalType type;
 }

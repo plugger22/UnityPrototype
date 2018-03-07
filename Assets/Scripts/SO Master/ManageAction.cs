@@ -21,5 +21,9 @@ public class ManageAction : ScriptableObject
     [Range(1,3)] public int order;
     [Tooltip("Any criteria that must be valid (ALL of them) in order for the option to be active (greyed out otherwise)")]
     public List<Criteria> listOfCriteria;
+    [Tooltip("Effects that occur when this Manage Action is selected")]
+    public List<Effect> listOfEffects;
+    [Tooltip("If the action requires a renown cost to use then True, otherwise default false. Cost is added to the tooltip dynamically")]
+    public bool isRenownCost;
 
 }

@@ -168,12 +168,27 @@ public class TooltipActor : MonoBehaviour
                     dividerMiddleLower.gameObject.SetActive(true);
                     actorConditions.gameObject.SetActive(true);
                     string conditionText = "";
+                    StringBuilder builderCondition = new StringBuilder();
                     foreach(Condition condition in listOfConditions)
                     {
-                        if (conditionText.Length > 0) { conditionText += "\n"; }
-                        conditionText += string.Format("{0}{1}{2}", colourBad, condition.name, colourEnd);
+                        if (conditionText.Length > 0) { builderCondition.AppendLine(); }
+                        switch(condition.type.name)
+                        {
+                            case "Good":
+                                builderCondition.Append(string.Format("{0}{1}{2}", colourGood, condition.name, colourEnd));
+                                break;
+                            case "Bad":
+                                builderCondition.Append(string.Format("{0}{1}{2}", colourBad, condition.name, colourEnd));
+                                break;
+                            case "Neutral":
+                                builderCondition.Append(string.Format("{0}{1}{2}", colourNeutral, condition.name, colourEnd));
+                                break;
+                            default:
+                                Debug.LogError(string.Format("Invalid condition.type.name \"{0}\"", condition.type.name));
+                                break;
+                        }
                     }
-                    actorConditions.text = conditionText;
+                    actorConditions.text = builderCondition.ToString();
                 }
                 else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
             }

@@ -213,7 +213,7 @@ public class ActionManager : MonoBehaviour
                                 {
                                     outcomeDetails.sprite = actor.arc.actionSprite;
                                     //update stringBuilder texts
-                                    if (effectReturn.topText.Length > 0)
+                                    if (string.IsNullOrEmpty(effectReturn.topText) == false)
                                     {
                                         builderTop.AppendLine(); builderTop.AppendLine();
                                         builderTop.Append(effectReturn.topText);
@@ -585,9 +585,8 @@ public class ActionManager : MonoBehaviour
     private void InitialiseReserveActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
-        string title;
-        string colourSide;
-        string criteriaText;
+        string title, colourSide, criteriaText, tooltipText;
+        int renownCost = GameManager.instance.actorScript.manageReserveRenown;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -645,16 +644,25 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}Send to the RESERVES{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                if (manageAction.isRenownCost == true)
+                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                                else
+                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd);
+                                }
                             }
                             else
                             {
-                                //option deactivated
+                                //option DEACTIVATED
                                 option.isOptionActive = false;
                                 //tooltip
-                                tooltip.textHeader = string.Format("{0}MANAGE{1}", colourSide, colourEnd);
+                                tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);
+                                if (manageAction.isRenownCost == true)
+                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
+                                else
+                                { tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
+                                    colourEnd); }
                             }
                         }
                         else
@@ -664,7 +672,11 @@ public class ActionManager : MonoBehaviour
                             //tooltip
                             tooltip.textHeader = string.Format("{0}Send to the RESERVES{1}", colourSide, colourEnd);
                             tooltip.textMain = manageAction.tooltipMain;
-                            tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            if (manageAction.isRenownCost == true)
+                            { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                            else
+                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
                         }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
@@ -707,7 +719,8 @@ public class ActionManager : MonoBehaviour
     private void InitialiseDismissActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
-        string title, colourSide, criteriaText;
+        string title, colourSide, criteriaText, tooltipText;
+        int renownCost = GameManager.instance.actorScript.manageDismissRenown;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -765,16 +778,26 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                if (manageAction.isRenownCost == true)
+                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                                else
+                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
                             }
                             else
                             {
-                                //option deactivated
+                                //option DEACTIVATED
                                 option.isOptionActive = false;
                                 //tooltip
-                                tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
+                                tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);
+                                if (manageAction.isRenownCost == true)
+                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
+                                else
+                                {
+                                    tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
+                                      colourEnd);
+                                }
                             }
                         }
                         else
@@ -784,7 +807,11 @@ public class ActionManager : MonoBehaviour
                             //tooltip
                             tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
                             tooltip.textMain = manageAction.tooltipMain;
-                            tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            if (manageAction.isRenownCost == true)
+                            { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                            else
+                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
                         }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
@@ -827,7 +854,8 @@ public class ActionManager : MonoBehaviour
     private void InitialiseDisposeActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
-        string title, colourSide, criteriaText;
+        string title, colourSide, criteriaText, tooltipText;
+        int renownCost = GameManager.instance.actorScript.manageDisposeRenown;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -884,16 +912,26 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                if (manageAction.isRenownCost == true)
+                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                                else
+                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
                             }
                             else
                             {
-                                //option deactivated
+                                //option DEACTIVATED
                                 option.isOptionActive = false;
                                 //tooltip
-                                tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
+                                tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);
+                                if (manageAction.isRenownCost == true)
+                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
+                                else
+                                {
+                                    tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
+                                      colourEnd);
+                                }
                             }
                         }
                         else
@@ -903,7 +941,11 @@ public class ActionManager : MonoBehaviour
                             //tooltip
                             tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
                             tooltip.textMain = manageAction.tooltipMain;
-                            tooltip.textDetails = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            if (manageAction.isRenownCost == true)
+                            { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                            else
+                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
                         }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;

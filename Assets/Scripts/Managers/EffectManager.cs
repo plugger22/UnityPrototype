@@ -311,7 +311,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't STRESSED", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to be STRESSED", actor.actorName)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for STRESSED"); errorFlag = true; }
                                                 }
@@ -325,7 +325,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't CORRUPT", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to be CORRUPT", actor.actorName)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for CORRUPT"); errorFlag = true; }
                                                 }
@@ -339,7 +339,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't INCOMPETENT", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to be INCOMPETENT", actor.actorName)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for INCOMPETENT"); errorFlag = true; }
                                                 }
@@ -353,9 +353,23 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't QUESTIONABLE", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to have QUESTIONABLE loyalty", actor.actorName)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for QUESTIONABLE"); errorFlag = true; }
+                                                }
+                                                else
+                                                { Debug.LogError(string.Format("Invalid actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                break;
+                                            case "ConditionStarYes":
+                                                if (actor != null)
+                                                {
+                                                    Condition condition = GameManager.instance.dataScript.GetCondition("STAR");
+                                                    if (condition != null)
+                                                    {
+                                                        if (actor.CheckConditionPresent(condition) == false)
+                                                        { BuildString(result, string.Format(" {0} needs to be a STAR", actor.actorName)); }
+                                                    }
+                                                    else { Debug.LogError("Invalid condition (Null) for STAR"); errorFlag = true; }
                                                 }
                                                 else
                                                 { Debug.LogError(string.Format("Invalid actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
@@ -592,6 +606,7 @@ public class EffectManager : MonoBehaviour
                 case "ConditionIncompetent":
                 case "ConditionCorrupt":
                 case "ConditionQuestionable":
+                case "ConditionStar":
                     if (node != null)
                     {
 
@@ -614,6 +629,32 @@ public class EffectManager : MonoBehaviour
                     {
                         Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
                         effectReturn.errorFlag = true;
+                    }
+                    break;
+                //
+                // - - - Manage - - -
+                //
+                case "ActorDismissed":
+                case "ActorDisposedOff":
+                case "ActorPromoted":
+                case "ActorToReserves":
+                case "ManageDismissRenown":
+                case "ManageDisposeRenown":
+                case "ManageReserveRenown":
+                case "UnhappyTimerNoPromise":
+                case "UnhappyTimerPromise":
+                case "UnhappyTimerRest":
+                    if (actor != null)
+                    {
+                        EffectDataResolve resolve = ResolveManageData(effect, actor);
+                        if (resolve.isError == true)
+                        { effectReturn.errorFlag = true; }
+                        else
+                        {
+                            effectReturn.topText = resolve.topText;
+                            effectReturn.bottomText = resolve.bottomText;
+                            effectReturn.isAction = true;
+                        }
                     }
                     break;
                 //
@@ -1757,6 +1798,9 @@ public class EffectManager : MonoBehaviour
             case "ConditionQuestionable":
                 condition = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
                 break;
+            case "ConditionStar":
+                condition = GameManager.instance.dataScript.GetCondition("STAR");
+                break;
             default:
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                 break;
@@ -1775,6 +1819,7 @@ public class EffectManager : MonoBehaviour
                         if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
                         {
                             GameManager.instance.playerScript.AddCondition(condition);
+                            
                             effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.name, colourEnd);
                         }
                         break;
@@ -1821,6 +1866,20 @@ public class EffectManager : MonoBehaviour
         }
         else { Debug.LogError(string.Format("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name)); }
         return effectResolve;
+    }
+
+    /// <summary>
+    /// subMethod to handle all manage effects
+    /// Note: Actor has been checked for null by the calling method
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveManageData(Effect effect, Actor actor)
+    {
+        EffectDataResolve resolve = new EffectDataResolve();
+
+        return resolve;
     }
 
     /// <summary>
