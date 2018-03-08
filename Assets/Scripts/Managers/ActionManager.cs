@@ -203,7 +203,7 @@ public class ActionManager : MonoBehaviour
                             {
                                 //ongoing effect?
                                 if (effect.duration.name == "Ongoing")
-                                { 
+                                {
                                     //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
                                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
                                 }
@@ -400,7 +400,7 @@ public class ActionManager : MonoBehaviour
         if (errorFlag == false)
         {
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
-            
+
             if (gear != null)
             {
                 //chance of Gear being Compromised
@@ -412,7 +412,7 @@ public class ActionManager : MonoBehaviour
                     diceDetails.topText = string.Format("{0}{1}{2} used to {3}{4}{5}{6}{7}% Chance{8} of it being compromised and lost", colourNeutral,
                         gear.name, colourEnd, action.tooltipText, "\n", "\n", colourBad, diceDetails.chance, colourEnd);
                 }
-                else { diceDetails.topText = string.Format("Missing Data{0}{1}{2}% Chance{3} of it being compromised and lost", "\n", colourBad, 
+                else { diceDetails.topText = string.Format("Missing Data{0}{1}{2}% Chance{3} of it being compromised and lost", "\n", colourBad,
                     diceDetails.chance, colourEnd);
                 }
                 if (renownBefore >= renownCost) { diceDetails.isEnoughRenown = true; }
@@ -495,7 +495,7 @@ public class ActionManager : MonoBehaviour
                 GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
                 int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
                 //loop options
-                for(int i = 0; i < numOfOptions; i++)
+                for (int i = 0; i < numOfOptions; i++)
                 {
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
@@ -981,11 +981,11 @@ public class ActionManager : MonoBehaviour
         }
     }
 
-        /// <summary>
-        /// Process Lie Low actor action (Resistance only)
-        /// </summary>
-        /// <param name="details"></param>
-        public void ProcessLieLowActorAction(ModalActionDetails details)
+    /// <summary>
+    /// Process Lie Low actor action (Resistance only)
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessLieLowActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
@@ -1002,8 +1002,8 @@ public class ActionManager : MonoBehaviour
             {
                 actor.Status = ActorStatus.Inactive;
                 int numOfTurns = 3 - actor.datapoint2;
-                outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName );
-                builder.Append(string.Format("{0}{1} will be Inactive for {2} turn{3} or until Activated{4}", colourNeutral, actor.actorName, 
+                outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
+                builder.Append(string.Format("{0}{1} will be Inactive for {2} turn{3} or until Activated{4}", colourNeutral, actor.actorName,
                     numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd));
                 builder.AppendLine(); builder.AppendLine();
                 builder.Append(string.Format("{0}Invisibility +1 each turn Inactive{1}", colourGood, colourEnd));
@@ -1012,7 +1012,7 @@ public class ActionManager : MonoBehaviour
                 builder.AppendLine(); builder.AppendLine();
                 builder.Append(string.Format("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd));
                 //message
-                string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status); 
+                string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
@@ -1145,7 +1145,7 @@ public class ActionManager : MonoBehaviour
                         {
                             //Preferred gear (renown transfer)
                             outcomeDetails.textBottom = string.Format("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
-                              colourBad, gear.name, colourEnd, "\n","\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
+                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
                             preferredFlag = true;
                         }
                         else
@@ -1235,7 +1235,7 @@ public class ActionManager : MonoBehaviour
                 //
                 // - - - Actor/Player captured beforehand (target is safe if captured) -> if so exit - - -
                 //
-                
+
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                 { details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID); }
@@ -1429,8 +1429,8 @@ public class ActionManager : MonoBehaviour
                 if (actor != null)
                 {
                     //add actor to reserve pool
-                    if ( GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
-                    {                     
+                    if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
+                    {
                         //sprite of recruited actor
                         sprite = actor.arc.baseSprite;
                         //authority actor?
@@ -1439,27 +1439,25 @@ public class ActionManager : MonoBehaviour
                             //remove all active teams connected with this actor
                             numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
                         }
+                        builderTop.AppendLine();
                         //actor successfully moved to reserve
                         if (string.IsNullOrEmpty(data.optionText) == false)
                         {
                             switch (data.optionText)
                             {
                                 case "ReserveRest":
-                                    builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
-                                    /*builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
-                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));*/
+                                    builderTop.Append(string.Format("{0}{1} {2} understands the need for Rest{3}", colourNormal, actor.arc.name,
+                                        actor.actorName, colourEnd));
                                     msgText = "Resting";
                                     break;
                                 case "ReservePromise":
-                                    builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
-                                    /*builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
-                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));*/
+                                    builderTop.Append(string.Format("{0}{1} {2} accepts your word that they will be recalled within a reasonable time period{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
                                     msgText = "Promised";
                                     break;
                                 case "ReserveNoPromise":
-                                    builderTop.Append(string.Format("{0}{1} understands the need for Rest{2}", colourNormal, actor.actorName, colourEnd));
-                                    /*builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been moved to the Reserves{5}", colourNeutral,
-                                        actor.arc.name, colourEnd, colourNormal, actor.actorName, colourEnd));*/
+                                    builderTop.Append(string.Format("{0}{1} {2} is confused and doesn't understand why they are being cast aside{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
                                     msgText = "No Promise";
                                     break;
                                 default:
@@ -1477,7 +1475,9 @@ public class ActionManager : MonoBehaviour
                         }
                         else
                         {
-                            //no optionText provided -> default data
+                            //default data for missing outcome
+                            Debug.LogWarning(string.Format("Invalid optionText (Null or empty) for {0} {1}", actor.actorName, actor.arc.name));
+                            builderTop.Append(string.Format("{0} {1} is sent to the Reserves", actor.arc.name, actor.actorName));
                         }
                         //message
                         string text = string.Format("{0} {1} moved to the Reserves ({2})", actor.arc.name, actor.actorName, msgText);
@@ -1499,7 +1499,7 @@ public class ActionManager : MonoBehaviour
                                         EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
                                         if (effectReturn != null)
                                         {
-                                            if (builderTop.Length > 0)
+                                            if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)
                                             { builderTop.AppendLine(); }
                                             builderTop.Append(effectReturn.topText);
                                             if (builderBottom.Length > 0)
@@ -1566,7 +1566,153 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     private void ProcessDismissActorAction(GenericReturnData data)
     {
+        bool successFlag = true;
+        string msgTextStatus = "Unknown";
+        string msgTextMain = "Who Knows?";
+        int numOfTeams = 0;
+        StringBuilder builderTop = new StringBuilder();
+        StringBuilder builderBottom = new StringBuilder();
+        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        ActorStatus status = ActorStatus.Dismissed;
+        if (data != null)
+        {
+            if (string.IsNullOrEmpty(data.optionText) == false)
+            {
+                if (data.actorSlotID > -1)
+                {
+                    //find actor
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
+                    if (actor != null)
+                    {
+                        if (data.optionText.Equals("DismissPromote") == true)
+                        { status = ActorStatus.Promoted; }
+                        //add actor to the dismissed or promoted lists
+                        if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, status) == true)
+                        {
+                            //sprite of recruited actor
+                            sprite = actor.arc.baseSprite;
+                            //authority actor?
+                            if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                            {
+                                //remove all active teams connected with this actor
+                                numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
+                            }
+                            builderTop.AppendLine();
+                            //actor successfully dismissed or promoted
+                            switch (data.optionText)
+                            {
+                                case "DismissPromote":
+                                    builderTop.Append(string.Format("{0}{1} {2} shakes your hand and heads off to bigger things{3}", colourNormal, actor.arc.name,
+                                        actor.actorName, colourEnd));
+                                    msgTextStatus = "Promoted";
+                                    msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    break;
+                                case "DismissIncompetent":
+                                    builderTop.Append(string.Format("{0}{1} {2} scowls and curses before stomping off{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    msgTextStatus = "Incompetent";
+                                    msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    break;
+                                case "DismissUnsuited":
+                                    builderTop.Append(string.Format("{0}{1} {2} lets you know that they won't forget this{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    msgTextStatus = "Unsuited";
+                                    msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                    break;
+                            }
+                            //teams
+                            if (numOfTeams > 0)
+                            {
+                                if (builderBottom.Length > 0)
+                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                                numOfTeams != 1 ? "s" : "", colourEnd));
+                            }
+                            //message
+                            Message message = GameManager.instance.messageScript.ActorStatus(msgTextMain, actor.actorID, playerSide);
+                            GameManager.instance.dataScript.AddMessage(message);
+                            //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
+                            ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
+                            if (manageAction != null)
+                            {
+                                List<Effect> listOfEffects = manageAction.listOfEffects;
+                                if (listOfEffects.Count > 0)
+                                {
+                                    EffectDataInput dataInput = new EffectDataInput();
 
+                                    foreach (Effect effect in listOfEffects)
+                                    {
+                                        if (effect.ignoreEffect == false)
+                                        {
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
+                                            if (effectReturn != null)
+                                            {
+                                                if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)
+                                                { builderTop.AppendLine(); }
+                                                builderTop.Append(effectReturn.topText);
+                                                if (builderBottom.Length > 0)
+                                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                                builderBottom.Append(effectReturn.bottomText);
+                                                //exit effect loop on error
+                                                if (effectReturn.errorFlag == true) { break; }
+                                            }
+                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText));
+                                successFlag = false;
+                            }
+                        }
+                        else
+                        {
+                            //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                            successFlag = false;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning(string.Format("Invalid Actor (Null) for actorSlotID {0}", data.optionID));
+                        successFlag = false;
+                    }
+                }
+                else
+                { Debug.LogWarning(string.Format("Invalid actorSlotID {0}", data.actorSlotID)); }
+            }
+            else
+            { Debug.LogError("Invalid optionText (Null or empty)"); }
+        }
+        else
+        {
+            Debug.LogError("Invalid GenericReturnData (Null)");
+            successFlag = false;
+        }
+        //failed outcome
+        if (successFlag == false)
+        {
+            builderTop.Append("Something has gone wrong. You are unable to dismiss or promote anyone at present");
+            builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
+        }
+        //
+        // - - - Outcome - - - 
+        //
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.textTop = builderTop.ToString();
+        outcomeDetails.textBottom = builderBottom.ToString();
+        outcomeDetails.sprite = sprite;
+        outcomeDetails.side = playerSide;
+        //action expended automatically for manage actor
+        if (successFlag == true)
+        { outcomeDetails.isAction = true; }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
     /// <summary>

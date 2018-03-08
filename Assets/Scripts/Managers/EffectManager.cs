@@ -1908,16 +1908,16 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "ActorToReserves":
-                effectResolve.bottomText = string.Format("{0}{1} {2} moved to the Reserves{3}", colourEffect, actor.arc.name, actor.actorName, colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ActorPromoted":
-                effectResolve.bottomText = string.Format("{0}{1} {2} promoted{3}", colourEffect, actor.arc.name, actor.actorName, colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1} promoted{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ActorDismissed":
-                effectResolve.bottomText = string.Format("{0}{1} {2} dismissed{3}", colourEffect, actor.arc.name, actor.actorName, colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1} dismissed{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ActorDisposedOff":
-                effectResolve.bottomText = string.Format("{0}{1} {2} killed{3}", colourEffect, actor.arc.name, actor.actorName, colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1} killed{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ManageReserveRenown":
                 data = GameManager.instance.actorScript.manageReserveRenown;
