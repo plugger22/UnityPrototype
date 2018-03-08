@@ -85,9 +85,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Reserve Lists"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Actor Lists"))
             {
-                Debug.Log("Button -> Toggle Reserve Lists");
+                Debug.Log("Button -> Toggle Actor Lists");
                 if (debugDisplay != 7)
                 { debugDisplay = 7; }
                 else { debugDisplay = 0; }
@@ -386,11 +386,11 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.actorScript.DisplayPools();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 900), analysis, customBackground);
                         break;
-                    //Reserve Lists
+                    //actor Lists
                     case 7:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayReserveLists();
-                        GUI.Box(new Rect(Screen.width - 255, 10, 250, 240), analysis, customBackground);
+                        analysis = GameManager.instance.dataScript.DisplayActorLists();
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 450), analysis, customBackground);
                         break;
                     //Player stats
                     case 8:

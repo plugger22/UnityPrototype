@@ -2082,32 +2082,54 @@ public class DataManager : MonoBehaviour
     /// debug method to show contents of both sides reserve lists
     /// </summary>
     /// <returns></returns>
-    public string DisplayReserveLists()
+    public string DisplayActorLists()
     {
         StringBuilder builder = new StringBuilder();
-        builder.Append(string.Format(" Reserve Lists{0}{1}", "\n", "\n"));
+        builder.Append(string.Format(" Actor Lists{0}{1}", "\n", "\n"));
         //authority
-        builder.Append(string.Format(" Authority Reserve List{0}", "\n"));
-        for (int i = 0; i < authorityActorReserve.Count; i++)
-        {
-            Actor actor = GetActor(authorityActorReserve[i]);
-            if (actor != null)
-            { builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}",actor.actorID, actor.arc.name, actor.level, 
-                actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n")); }
-            else { builder.Append(string.Format("Error for actorID {0}", authorityActorReserve[i])); }
-        }
+        builder.Append(string.Format(" - Authority Reserve List{0}", "\n"));
+        builder.Append(GetActorList(authorityActorReserve));
+        builder.Append(string.Format("{0} - Authority Promoted List{1}", "\n", "\n"));
+        builder.Append(GetActorList(authorityActorPromoted));
+        builder.Append(string.Format("{0} - Authority Dismissed List{1}", "\n", "\n"));
+        builder.Append(GetActorList(authorityActorDismissed));
+        builder.Append(string.Format("{0} - Authority DisposedOf List{1}", "\n", "\n"));
+        builder.Append(GetActorList(authorityActorDisposedOf));
         //resistance
-        builder.Append(string.Format("{0}{1} Resistance Reserve List{2}", "\n", "\n", "\n"));
-        for (int i = 0; i < resistanceActorReserve.Count; i++)
+        builder.Append(string.Format("{0} - Resistance Reserve List{1}", "\n", "\n"));
+        builder.Append(GetActorList(resistanceActorReserve));
+        builder.Append(string.Format("{0} - Resistance Promoted List{1}", "\n", "\n"));
+        builder.Append(GetActorList(resistanceActorPromoted));
+        builder.Append(string.Format("{0} - Resistance Dismissed List{1}", "\n", "\n"));
+        builder.Append(GetActorList(resistanceActorDismissed));
+        builder.Append(string.Format("{0} - Resistance DisposedOf List{1}", "\n", "\n"));
+        builder.Append(GetActorList(resistanceActorDisposedOf));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// sub method for DisplayActorLists (returns list of actors in specified list)
+    /// </summary>
+    /// <param name="listOfActors"></param>
+    /// <returns></returns>
+    private string GetActorList(List<int> listOfActors)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (listOfActors != null)
         {
-            Actor actor = GetActor(resistanceActorReserve[i]);
-            if (actor != null)
+            for (int i = 0; i < listOfActors.Count; i++)
             {
-                builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name, actor.level,
-                  actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n"));
+                Actor actor = GetActor(listOfActors[i]);
+                if (actor != null)
+                {
+                    builder.Append(string.Format(" {0}, ", actor.actorName));
+                    builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name, actor.level,
+                      actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n"));
+                }
+                else { builder.Append(string.Format("Error for actorID {0}", listOfActors[i])); }
             }
-            else { builder.Append(string.Format("Error for actorID {0}", resistanceActorReserve[i])); }
         }
+        else { Debug.LogError("Invalid listOfActors (Null)"); }
         return builder.ToString();
     }
 

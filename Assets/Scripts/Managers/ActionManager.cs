@@ -1720,7 +1720,150 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     private void ProcessDisposeActorAction(GenericReturnData data)
     {
+        bool successFlag = true;
+        string msgTextStatus = "Unknown";
+        string msgTextMain = "Who Knows?";
+        int numOfTeams = 0;
+        StringBuilder builderTop = new StringBuilder();
+        StringBuilder builderBottom = new StringBuilder();
+        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        if (data != null)
+        {
+            if (string.IsNullOrEmpty(data.optionText) == false)
+            {
+                if (data.actorSlotID > -1)
+                {
+                    //find actor
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
+                    if (actor != null)
+                    {
+                        //add actor to the dismissed or promoted lists
+                        if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Killed) == true)
+                        {
+                            //sprite of recruited actor
+                            sprite = actor.arc.baseSprite;
+                            //authority actor?
+                            if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                            {
+                                //remove all active teams connected with this actor
+                                numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
+                            }
+                            builderTop.AppendLine();
+                            //actor successfully dismissed or promoted
+                            switch (data.optionText)
+                            {
+                                case "DisposeLoyalty":
+                                    builderTop.Append(string.Format("{0}{1} {2} vehemently denies being disployal but nobody is listening{3}", colourNormal, actor.arc.name,
+                                        actor.actorName, colourEnd));
+                                    msgTextStatus = "Loyalty";
+                                    msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    break;
+                                case "DisposeCorrupt":
+                                    builderTop.Append(string.Format("{0}{1} {2} protests their innocence but don't they all?{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    msgTextStatus = "Corrupt";
+                                    msgTextMain = string.Format("{0} {1} has been killed({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    break;
+                                case "DisposeHabit":
+                                    builderTop.Append(string.Format("{0}{1} {2} smiles and says that they will be waiting for you in hell{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    msgTextStatus = "Habit";
+                                    msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                    break;
+                            }
+                            //teams
+                            if (numOfTeams > 0)
+                            {
+                                if (builderBottom.Length > 0)
+                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                                numOfTeams != 1 ? "s" : "", colourEnd));
+                            }
+                            //message
+                            Message message = GameManager.instance.messageScript.ActorStatus(msgTextMain, actor.actorID, playerSide);
+                            GameManager.instance.dataScript.AddMessage(message);
+                            //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
+                            ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
+                            if (manageAction != null)
+                            {
+                                List<Effect> listOfEffects = manageAction.listOfEffects;
+                                if (listOfEffects.Count > 0)
+                                {
+                                    EffectDataInput dataInput = new EffectDataInput();
 
+                                    foreach (Effect effect in listOfEffects)
+                                    {
+                                        if (effect.ignoreEffect == false)
+                                        {
+                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
+                                            if (effectReturn != null)
+                                            {
+                                                if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)
+                                                { builderTop.AppendLine(); }
+                                                builderTop.Append(effectReturn.topText);
+                                                if (builderBottom.Length > 0)
+                                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                                builderBottom.Append(effectReturn.bottomText);
+                                                //exit effect loop on error
+                                                if (effectReturn.errorFlag == true) { break; }
+                                            }
+                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText));
+                                successFlag = false;
+                            }
+                        }
+                        else
+                        {
+                            //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                            successFlag = false;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning(string.Format("Invalid Actor (Null) for actorSlotID {0}", data.optionID));
+                        successFlag = false;
+                    }
+                }
+                else
+                { Debug.LogWarning(string.Format("Invalid actorSlotID {0}", data.actorSlotID)); }
+            }
+            else
+            { Debug.LogError("Invalid optionText (Null or empty)"); }
+        }
+        else
+        {
+            Debug.LogError("Invalid GenericReturnData (Null)");
+            successFlag = false;
+        }
+        //failed outcome
+        if (successFlag == false)
+        {
+            builderTop.Append("Something has gone wrong. You are unable to dispose off anyone at present");
+            builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
+        }
+        //
+        // - - - Outcome - - - 
+        //
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.textTop = builderTop.ToString();
+        outcomeDetails.textBottom = builderBottom.ToString();
+        outcomeDetails.sprite = sprite;
+        outcomeDetails.side = playerSide;
+        //action expended automatically for manage actor
+        if (successFlag == true)
+        { outcomeDetails.isAction = true; }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
     /// <summary>
