@@ -1606,7 +1606,8 @@ public class ActionManager : MonoBehaviour
                                     builderTop.Append(string.Format("{0}{1} {2} shakes your hand and heads off to bigger things{3}", colourNormal, actor.arc.name,
                                         actor.actorName, colourEnd));
                                     msgTextStatus = "Promoted";
-                                    msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName, 
+                                        GameManager.instance.factionScript.GetCurrentFaction().name);
                                     break;
                                 case "DismissIncompetent":
                                     builderTop.Append(string.Format("{0}{1} {2} scowls and curses before stomping off{3}",

@@ -105,6 +105,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
+    private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
 
     //global SO's (enum equivalents)
     private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
@@ -648,6 +649,31 @@ public class DataManager : MonoBehaviour
         //arrayOfActors & Positions
         arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
         arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
+        //
+        // - - - Factions - - -
+        //
+        counter = 0;
+        //get GUID of all SO Faction Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var factionGUID = AssetDatabase.FindAssets("t:Faction");
+        foreach (var guid in factionGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object factionObject = AssetDatabase.LoadAssetAtPath(path, typeof(Faction));
+            //assign a zero based unique ID number
+            Faction faction = factionObject as Faction;
+            //set data
+            faction.factionID = counter++;
+            //add to dictionary
+            try
+            { dictOfFactions.Add(faction.factionID, faction); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Faction (Null)"); counter--; }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Faction (duplicate) ID \"{0}\" for \"{1}\"", counter, faction.name)); counter--; }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfFactions has {0} entries{1}", counter, "\n"));
     }
 
 
@@ -2723,6 +2749,37 @@ public class DataManager : MonoBehaviour
         { level = dictOfGlobalMeta[metaName].level; }
         return level;
     }*/
+
+    //
+    // - - - Factions - - - 
+    //
+
+    /// <summary>
+    /// returns a random faction for a side, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Faction GetRandomFaction(GlobalSide sideRequired)
+    {
+        Faction factionReturn = null;
+        List<Faction> listOfFactions = new List<Faction>();
+        switch (sideRequired.name)
+        {
+            case "Authority":
+            case "Resistance":
+                IEnumerable<Faction> factions =
+                    from faction in dictOfFactions
+                    where faction.Value.side.name.Equals(sideRequired.name) == true
+                    select faction.Value;
+                listOfFactions = factions.ToList();
+                factionReturn = listOfFactions[Random.Range(0, listOfFactions.Count)];
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid side \"{0}\"", sideRequired));
+                break;
+        }
+        return factionReturn;
+    }
 
     //new methods above here
 }
