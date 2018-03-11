@@ -46,6 +46,12 @@ public class ActorManager : MonoBehaviour
     [Range(1, 5)] public int manageDismissRenown = 2;
     [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
     [Range(1, 5)] public int manageDisposeRenown = 3;
+    [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
+    [Range(10, 90)] public int unhappyLoseMotivationChance = 50;
+    [Tooltip("Once actor is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
+    [Range(10, 90)] public int unhappyTakeActionChance = 25;
+    [Tooltip("Once actor has taken action as a result of being unhappy this is the number of turns warning period you get before they carry out their action")]
+    [Range(1, 5)]  public int unhappyWarningPeriod = 2;
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
@@ -140,6 +146,7 @@ public class ActorManager : MonoBehaviour
     private void StartTurnLate()
     {
         CheckInactiveActors();
+        CheckReserveActors();
     }
 
     /// <summary>
@@ -1579,9 +1586,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckInactiveActors()
     {
-        //
-        // - - - Resistance actors - - -
-        //
+        // Resistance actors only
         Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActorsResistance != null)
         {
@@ -1618,6 +1623,69 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
     }
+
+
+    /// <summary>
+    /// Checks all reserve pool actors (both sides), decrements unhappy timers and takes appropriate action if any have reached zero
+    /// </summary>
+    private void CheckReserveActors()
+    {
+        List<int> listOfActors = null;
+        //
+        // - - - Resistance - - -
+        //
+        listOfActors = GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve);
+        if (listOfActors != null)
+        {
+            //loop list of reserve actors
+            for (int i = 0; i < listOfActors.Count; i++)
+            {
+                Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                if (actor != null)
+                {
+                    //Decrement unhappy timer if not yet zero
+                    if (actor.unhappyTimer > 0)
+                    {
+                        actor.unhappyTimer--;
+                        Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                        //if timer now zero, gain condition "Unhappy"
+                        if (actor.unhappyTimer == 0)
+                        {
+                            Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
+                            actor.AddCondition(condition);
+                        }
+                    }
+                    else
+                    {
+                        //unhappy timer has reached zero. Is actor's motivation > 0?
+                        if (actor.datapoint1 > 0)
+                        {
+                            //chance of decrementing motivation each turn till it reaches zero
+                            if (Random.Range(0, 100) < unhappyLoseMotivationChance)
+                            {
+                                actor.datapoint1--;
+                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, actor.datapoint1, "\n"));
+                            }
+                        }
+                        else
+                        {
+                            //actor is Unhappy and has 0 motivation. Do they take action?
+                            if (Random.Range(0, 100) < unhappyTakeActionChance)
+                            {
+                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {3}", actor.arc.name, actor.actorName, "\n"));
+                            }
+                        }
+                    }
+                }
+                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", listOfActors[i])); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfActors -> Resistance (Null)"); }
+        //
+        // - - - Authority - - -
+        //
+    }
+
 
     //new methods above here
 }

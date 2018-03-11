@@ -555,16 +555,16 @@ public class DataManager : MonoBehaviour
                 //add to the appropriate fast access list
                 switch (manageAction.manage.name)
                 {
-                    case "ActorHandle":
+                    case "Handle":
                         listOfActorHandle.Add(manageAction);
                         break;
-                    case "ActorReserve":
+                    case "Reserve":
                         listOfActorReserve.Add(manageAction);
                         break;
-                    case "ActorDismiss":
+                    case "Dismiss":
                         listOfActorDismiss.Add(manageAction);
                         break;
-                    case "ActorDispose":
+                    case "Dispose":
                         listOfActorDispose.Add(manageAction);
                         break;
                     default:
@@ -1924,6 +1924,63 @@ public class DataManager : MonoBehaviour
             Debug.LogWarning(string.Format("Invalid Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
             return 0;
         }
+    }
+
+    /// <summary>
+    /// Get list of actors in a specific list. Returns Null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<int> GetActorList(GlobalSide side, ActorList list)
+    {
+        List<int> listOfActors = null;
+        switch (side.name)
+        {
+            case "Authority":
+                switch (list)
+                {
+                    case ActorList.Reserve:
+                        listOfActors = authorityActorReserve;
+                        break;
+                    case ActorList.Dismissed:
+                        listOfActors = authorityActorDismissed;
+                        break;
+                    case ActorList.Promoted:
+                        listOfActors = authorityActorPromoted;
+                        break;
+                    case ActorList.Disposed:
+                        listOfActors = authorityActorDisposedOf;
+                        break;
+                    default:
+                        Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list));
+                        break;
+                }
+                break;
+            case "Resistance":
+                switch (list)
+                {
+                    case ActorList.Reserve:
+                        listOfActors = resistanceActorReserve;
+                        break;
+                    case ActorList.Dismissed:
+                        listOfActors = resistanceActorDismissed;
+                        break;
+                    case ActorList.Promoted:
+                        listOfActors = resistanceActorPromoted;
+                        break;
+                    case ActorList.Disposed:
+                        listOfActors = resistanceActorDisposedOf;
+                        break;
+                    default:
+                        Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list));
+                        break;
+                }
+                break;
+            default:
+                Debug.LogWarning(string.Format("Invalid side \"{0}\"", side));
+                break;
+        }
+        return listOfActors;
     }
 
     /// <summary>
