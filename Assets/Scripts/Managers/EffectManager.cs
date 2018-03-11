@@ -682,6 +682,26 @@ public class EffectManager : MonoBehaviour
                         effectReturn.errorFlag = true;
                     }
                     break;
+                case "Motivation":
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            actor.datapoint1 += effect.value;
+                            actor.datapoint1 = Mathf.Min(3, actor.datapoint1);
+                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.actorName, effect.textTag, colourEnd);
+                            break;
+                        case "Subtract":
+                            actor.datapoint1 -= effect.value;
+                            actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.actorName, effect.textTag, colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectReturn.errorFlag = true;
+                            break;
+                    }
+                    
+                    break;
                 //
                 // - - - Resistance effects
                 //
@@ -1911,7 +1931,7 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ActorPromoted":
-                effectResolve.bottomText = string.Format("{0}{1} promoted{2}", colourEffect, actor.actorName, colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1} promoted and will join faction HQ{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ActorDismissed":
                 effectResolve.bottomText = string.Format("{0}{1} dismissed{2}", colourEffect, actor.actorName, colourEnd);

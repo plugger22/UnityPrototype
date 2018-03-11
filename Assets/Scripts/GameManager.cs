@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TargetManager targetScript;              //Target Manager
     [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
+    [HideInInspector] public FactionManager factionScript;            //Faction Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
     [HideInInspector] public TeamManager teamScript;                  //Team Manager
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
         actorScript = GetComponent<ActorManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
+        factionScript = GetComponent<FactionManager>();
         effectScript = GetComponent<EffectManager>();
         targetScript = GetComponent<TargetManager>();
         optionScript = GetComponent<OptionManager>();
