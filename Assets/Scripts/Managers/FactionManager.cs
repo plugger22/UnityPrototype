@@ -8,8 +8,8 @@ using UnityEngine;
 public class FactionManager : MonoBehaviour
 {
 
-    public Faction currentAuthorityFaction;
-    public Faction currentResistanceFaction;
+    [HideInInspector] public Faction currentAuthorityFaction;
+    [HideInInspector] public Faction currentResistanceFaction;
 
 
     public void Initialise()

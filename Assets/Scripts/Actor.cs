@@ -20,11 +20,13 @@ namespace gameAPI
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
+        [HideInInspector] public bool hasComplained;            //Action taken by actor in reserve pool. Can only complain once.
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;
         
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
+        private List<int> listOfSecrets = new List<int>();
         private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
 
         //private backing field
@@ -151,6 +153,11 @@ namespace gameAPI
         public int CheckNumOfConditions()
         { return listOfConditions.Count; }
 
+        public int CheckNumOfSecrets()
+        { return listOfSecrets.Count; }
+
+        public List<int> GetListOfSecrets()
+        { return listOfSecrets; }
 
         //place methods above here
     }

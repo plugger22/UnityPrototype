@@ -2206,8 +2206,8 @@ public class DataManager : MonoBehaviour
                 if (actor != null)
                 {
                     builder.Append(string.Format(" {0}, ", actor.actorName));
-                    builder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name, actor.level,
-                      actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n"));
+                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} U {6} {7}", actor.actorID, actor.arc.name, actor.level,
+                      actor.datapoint0, actor.datapoint1, actor.datapoint2, actor.unhappyTimer, "\n"));
                 }
                 else { builder.Append(string.Format("Error for actorID {0}", listOfActors[i])); }
             }

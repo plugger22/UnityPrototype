@@ -46,12 +46,19 @@ public class ActorManager : MonoBehaviour
     [Range(1, 5)] public int manageDismissRenown = 2;
     [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
     [Range(1, 5)] public int manageDisposeRenown = 3;
-    [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
-    [Range(10, 90)] public int unhappyLoseMotivationChance = 50;
-    [Tooltip("Once actor is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
-    [Range(10, 90)] public int unhappyTakeActionChance = 25;
     [Tooltip("Once actor has taken action as a result of being unhappy this is the number of turns warning period you get before they carry out their action")]
-    [Range(1, 5)]  public int unhappyWarningPeriod = 2;
+    [Range(1, 5)] public int unhappyWarningPeriod = 2;
+    [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
+    [Range(1, 99)] public int unhappyLoseMotivationChance = 50;
+    [Tooltip("Once actor is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
+    [Range(1, 99)] public int unhappyTakeActionChance = 25;
+    [Tooltip("When an unhappy actor in the Reserve pool takes action this is the first check made (ignored if actor has no secrets")]
+    [Range(1, 99)] public int unhappyRevealSecretChance = 50;
+    [Tooltip("When an unhappy actor in the Reserve pool takes action this is the second check made. Double chance if actor has previously complained")]
+    [Range(1, 99)] public int unhappyLeaveChance = 25;
+    [Tooltip("When an unhappy actor in the Reserve pool takes action this is the third check made. An actor can only complain once")]
+    [Range(1, 99)] public int unhappyComplainChance = 50;
+
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
@@ -1380,7 +1387,8 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, playerSide);
                             //sprite of recruited actor
                             sprite = actorRecruited.arc.baseSprite;
-
+                            //initiliase unhappy timer
+                            actorRecruited.unhappyTimer = recruitedReserveTimer;
                             //actor successfully recruited
                             builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
                             builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
@@ -1494,6 +1502,8 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
                         //sprite of recruited actor
                         sprite = actorRecruited.arc.baseSprite;
+                        //initiliase unhappy timer
+                        actorRecruited.unhappyTimer = recruitedReserveTimer;
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
@@ -1664,7 +1674,8 @@ public class ActorManager : MonoBehaviour
                             if (Random.Range(0, 100) < unhappyLoseMotivationChance)
                             {
                                 actor.datapoint1--;
-                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, actor.datapoint1, "\n"));
+                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, 
+                                    actor.datapoint1, "\n"));
                             }
                         }
                         else
@@ -1673,19 +1684,124 @@ public class ActorManager : MonoBehaviour
                             if (Random.Range(0, 100) < unhappyTakeActionChance)
                             {
                                 Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {3}", actor.arc.name, actor.actorName, "\n"));
+                                TakeAction(actor);
                             }
                         }
                     }
                 }
-                else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", listOfActors[i])); }
+                else { Debug.LogError(string.Format("Invalid Resitance actor (Null) for actorID {0}", listOfActors[i])); }
             }
         }
         else { Debug.LogError("Invalid listOfActors -> Resistance (Null)"); }
         //
         // - - - Authority - - -
         //
+        listOfActors = GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve);
+        if (listOfActors != null)
+        {
+            //loop list of reserve actors
+            for (int i = 0; i < listOfActors.Count; i++)
+            {
+                Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                if (actor != null)
+                {
+                    //Decrement unhappy timer if not yet zero
+                    if (actor.unhappyTimer > 0)
+                    {
+                        actor.unhappyTimer--;
+                        Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                        //if timer now zero, gain condition "Unhappy"
+                        if (actor.unhappyTimer == 0)
+                        {
+                            Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
+                            actor.AddCondition(condition);
+                        }
+                    }
+                    else
+                    {
+                        //unhappy timer has reached zero. Is actor's motivation > 0?
+                        if (actor.datapoint1 > 0)
+                        {
+                            //chance of decrementing motivation each turn till it reaches zero
+                            if (Random.Range(0, 100) < unhappyLoseMotivationChance)
+                            {
+                                actor.datapoint1--;
+                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, 
+                                    actor.datapoint1, "\n"));
+                            }
+                        }
+                        else
+                        {
+                            //actor is Unhappy and has 0 motivation. Do they take action?
+                            if (Random.Range(0, 100) < unhappyTakeActionChance)
+                            {
+                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION {3}", actor.arc.name, actor.actorName, "\n"));
+                                TakeAction(actor);
+                            }
+                        }
+                    }
+                }
+                else { Debug.LogError(string.Format("Invalid Authority actor (Null) for actorID {0}", listOfActors[i])); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfActors -> Authority (Null)"); }
     }
 
+    /// <summary>
+    /// An unhappy actor takes action (both sides)
+    /// NOTE: Actor is assumed to be Null checked by the calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    private void TakeAction(Actor actor)
+    {
+        //Check for secrets first
+        if (actor.CheckNumOfSecrets() > 0)
+        {
+            if (Random.Range(0, 100) < unhappyRevealSecretChance)
+            {
+
+                //TO DO
+                Debug.Log(string.Format("Unhappy Actor: {0} {1} Threatens to reveal a Secret{2}", actor.arc.name, actor.actorName, "\n"));
+                return;
+            }
+        }
+        //Check for Leaving second
+        if (actor.hasComplained == false)
+        {
+            if (Random.Range(0, 100) < (unhappyLeaveChance))
+            {
+
+                //TO DO
+                Debug.Log(string.Format("Unhappy Actor: {0} {1} Threatens to Leave{2}", actor.arc.name, actor.actorName, "\n"));
+                return;
+            }
+        }
+        else
+        {
+            //double chance if actor has already complained
+            if (Random.Range(0, 100) < (unhappyLeaveChance * 2))
+            {
+
+                //TO DO
+                Debug.Log(string.Format("Unhappy Actor: {0} {1} Threatens to Leave{2}", actor.arc.name, actor.actorName, "\n"));
+                return;
+            }
+        }
+        //Check for Complaint third (skip check if actor has already complained)
+        if (actor.hasComplained == false)
+        {
+            if (Random.Range(0, 100) < unhappyComplainChance)
+            {
+
+                //TO DO
+                Debug.Log(string.Format("Unhappy Actor: {0} {1} Threatens to Complain{2}", actor.arc.name, actor.actorName, "\n"));
+                actor.hasComplained = true;
+                return;
+            }
+        }
+
+
+    }
 
     //new methods above here
 }
