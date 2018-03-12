@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
     [HideInInspector] public ModalTeamPicker teamPickerScript;        //Modal Team Picker window
     [HideInInspector] public ModalGenericPicker genericPickerScript;  //Modal Generic Picker window
+    [HideInInspector] public ModalInventoryUI inventoryScript;        //Modal InventoryUI window
     [HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
 
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
         outcomeScript = ModalOutcome.Instance();
         teamPickerScript = ModalTeamPicker.Instance();
         genericPickerScript = ModalGenericPicker.Instance();
+        inventoryScript = ModalInventoryUI.Instance();
         diceScript = ModalDiceUI.Instance();
         alertScript = AlertUI.Instance();
         //sets this to not be destroyed when reloading a scene

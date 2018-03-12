@@ -16,9 +16,11 @@ public class HelpManager : MonoBehaviour
         builder.Append(string.Format(" Keyboard Commands{0},{1}", "\n", "\n"));
         builder.Append(string.Format(" End Turn -> Enter{0}", "\n"));
         builder.Append(string.Format(" Exit     -> X{0}{1}", "\n", "\n"));
+        builder.Append(string.Format(" Reserves -> R{0}", "\n"));
+        builder.Append(string.Format(" Gear -> G{0}{1}", "\n", "\n"));
         builder.Append(string.Format(" Targets -> T{0}", "\n"));
         builder.Append(string.Format(" Spiders -> S{0}", "\n"));
-        builder.Append(string.Format(" Tracers -> C{0}{1}", "\n", "\n"));
+        builder.Append(string.Format(" Tracers -> C{0}", "\n"));
         builder.Append(string.Format(" Teams -> M{0}{1}", "\n", "\n"));
         builder.Append(string.Format(" Actions -> Left Click{0}", "\n"));
         builder.Append(string.Format(" Move -> Right Click{0}{1}", "\n", "\n"));

@@ -68,6 +68,9 @@ public enum EventType
     GenericReserveActor,
     GenericDismissActor,
     GenericDisposeActor,
+    //Inventory UI
+    InventoryOpenUI,
+    InventoryCloseUI,
     //dice UI
     OpenDiceUI,
     CloseDiceUI,

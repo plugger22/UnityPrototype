@@ -50,6 +50,16 @@ public class InputManager : MonoBehaviour
                     EventManager.instance.PostNotification(EventType.NewTurn, this);
                     return;
                 }
+                if (Input.GetButtonDown("ShowReserves") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, "Reserve Pool");
+                    return;
+                }
+                if (Input.GetButtonDown("ShowGear") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, "Gear Inventory");
+                    return;
+                }
                 if (Input.GetButtonDown("ShowTargets") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets);

@@ -1,9 +1,11 @@
-﻿using modalAPI;
+﻿using gameAPI;
+using modalAPI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 /// <summary>
 /// Handles Inventory related UI's, eg. Reserve Actor pool (both sides) and Player Gear (Resistance)
@@ -19,6 +21,7 @@ public class ModalInventoryUI : MonoBehaviour
     public TextMeshProUGUI topText;
     public TextMeshProUGUI middleText;
     public TextMeshProUGUI bottomText;
+    public TextMeshProUGUI headerText;
 
     public Button buttonCancel;
 
@@ -26,7 +29,8 @@ public class ModalInventoryUI : MonoBehaviour
 
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
 
-    private static ModalGenericPicker modalInventoryPicker;
+    private static ModalInventoryUI modalInventoryUI;
+    private ButtonInteraction buttonInteraction;
 
     /*private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
     private string optionTextSelected;                        //used for nested Generic Picker windows, ignore otherwise
@@ -44,4 +48,120 @@ public class ModalInventoryUI : MonoBehaviour
     private string colourGood;
     private string colourBad;
     private string colourEnd;
+
+    /// <summary>
+    /// Static instance so the Modal Generic Picker can be accessed from any script
+    /// </summary>
+    /// <returns></returns>
+    public static ModalInventoryUI Instance()
+    {
+        if (!modalInventoryUI)
+        {
+            modalInventoryUI = FindObjectOfType(typeof(ModalInventoryUI)) as ModalInventoryUI;
+            if (!modalInventoryUI)
+            { Debug.LogError("There needs to be one active ModalInventoryUI script on a GameObject in your scene"); }
+        }
+        return modalInventoryUI;
+    }
+
+
+    private void Awake()
+    {
+        //cancel button event
+        buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.InventoryCloseUI); }
+        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+    }
+
+    private void Start()
+    {
+        //register listener
+        EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent);
+        EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent);
+    }
+
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.InventoryOpenUI:
+                //GenericPickerDetails details = Param as GenericPickerDetails;
+                SetInventoryUI((string)Param);
+                break;
+            case EventType.InventoryCloseUI:
+                CloseInventoryUI();
+                break;
+            case EventType.ChangeColour:
+                SetColours();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
+
+    /// <summary>
+    /// Open up Inventory UI
+    /// </summary>
+    /// <param name="details"></param>
+    private void SetInventoryUI(string header)
+    {
+        bool errorFlag = false;
+        CanvasGroup inventoryCanvasGroup;
+        GenericInteraction inventoryData;
+        //set modal status
+        GameManager.instance.guiScript.SetIsBlocked(true);
+        //activate main panel
+        modalPanelObject.SetActive(true);
+        modalInventoryObject.SetActive(true);
+        modalHeaderObject.SetActive(true);
+        //set header text
+        headerText.text = header;
+    }
+
+
+    /// <summary>
+    /// Close Inventory UI
+    /// </summary>
+    private void CloseInventoryUI()
+    {
+        modalInventoryObject.SetActive(false);
+        GameManager.instance.guiScript.SetIsBlocked(false);
+        //close generic tooltip (safety check)
+        GameManager.instance.tooltipGenericScript.CloseTooltip();
+
+        /*//deselect all generic options to prevent picker opening next time with a preselected team
+        EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this);
+        SetConfirmButton(false);*/
+
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.Normal;
+        Debug.Log(string.Format("UI: Close -> ModalInventoryUI{0}", "\n"));
+    }
+
+    //place new methods above here
 }
