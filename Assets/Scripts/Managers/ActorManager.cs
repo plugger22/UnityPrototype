@@ -1389,6 +1389,7 @@ public class ActorManager : MonoBehaviour
                             sprite = actorRecruited.arc.baseSprite;
                             //initiliase unhappy timer
                             actorRecruited.unhappyTimer = recruitedReserveTimer;
+                            actorRecruited.isNewRecruit = true;
                             //actor successfully recruited
                             builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
                             builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
@@ -1504,6 +1505,7 @@ public class ActorManager : MonoBehaviour
                         sprite = actorRecruited.arc.baseSprite;
                         //initiliase unhappy timer
                         actorRecruited.unhappyTimer = recruitedReserveTimer;
+                        actorRecruited.isNewRecruit = true;
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
@@ -1641,6 +1643,7 @@ public class ActorManager : MonoBehaviour
     private void CheckReserveActors()
     {
         List<int> listOfActors = null;
+        int chance;
         //
         // - - - Resistance - - -
         //
@@ -1671,7 +1674,11 @@ public class ActorManager : MonoBehaviour
                         if (actor.datapoint1 > 0)
                         {
                             //chance of decrementing motivation each turn till it reaches zero
-                            if (Random.Range(0, 100) < unhappyLoseMotivationChance)
+                            chance = unhappyLoseMotivationChance;
+                            //chance is 100% if actor was promised
+                            if (actor.isPromised == true)
+                            { chance = 100; }
+                            if (Random.Range(0, 100) < chance)
                             {
                                 actor.datapoint1--;
                                 Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, 
@@ -1681,7 +1688,11 @@ public class ActorManager : MonoBehaviour
                         else
                         {
                             //actor is Unhappy and has 0 motivation. Do they take action?
-                            if (Random.Range(0, 100) < unhappyTakeActionChance)
+                            chance = unhappyTakeActionChance;
+                            //if actor has previously been reassured, double chance of action
+                            if (actor.isReassured == true)
+                            { chance *= 2; }
+                            if (Random.Range(0, 100) < chance)
                             {
                                 Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {3}", actor.arc.name, actor.actorName, "\n"));
                                 TakeAction(actor);
@@ -1723,19 +1734,28 @@ public class ActorManager : MonoBehaviour
                         if (actor.datapoint1 > 0)
                         {
                             //chance of decrementing motivation each turn till it reaches zero
-                            if (Random.Range(0, 100) < unhappyLoseMotivationChance)
+                            chance = unhappyLoseMotivationChance;
+                            //chance is 100% if actor was promised
+                            if (actor.isPromised == true)
+                            { chance = 100; }
+                            if (Random.Range(0, 100) < chance)
                             {
                                 actor.datapoint1--;
-                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, 
-                                    actor.datapoint1, "\n"));
+                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name, 
+                                    actor.actorName, actor.datapoint1, chance, "\n"));
                             }
                         }
                         else
                         {
                             //actor is Unhappy and has 0 motivation. Do they take action?
-                            if (Random.Range(0, 100) < unhappyTakeActionChance)
+                            chance = unhappyTakeActionChance;
+                            //if actor has previously been reassured, double chance of action
+                            if (actor.isReassured == true)
+                            { chance *= 2; }
+                            if (Random.Range(0, 100) < chance)
                             {
-                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION {3}", actor.arc.name, actor.actorName, "\n"));
+                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION, chance {3}{4}", actor.arc.name, actor.actorName, 
+                                    chance, "\n"));
                                 TakeAction(actor);
                             }
                         }

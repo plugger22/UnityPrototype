@@ -21,6 +21,8 @@ namespace gameAPI
         [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool hasComplained;            //Action taken by actor in reserve pool. Can only complain once.
+        [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
+        [HideInInspector] public bool isReassured;              //true if actor has been reassured, false if not (can only be reassured once)
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;

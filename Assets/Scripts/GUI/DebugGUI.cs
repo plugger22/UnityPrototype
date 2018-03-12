@@ -94,11 +94,11 @@ public class DebugGUI : MonoBehaviour
             }
 
             //third button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Gear Display"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Actor Pools"))
             {
-                Debug.Log("Button -> Toggle Gear");
-                if (debugDisplay != 5)
-                { debugDisplay = 5; }
+                Debug.Log("Button -> Toggle Actor Pools");
+                if (debugDisplay != 6)
+                { debugDisplay = 6; }
                 else { debugDisplay = 0; }
                 
             }
@@ -113,11 +113,11 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Actor Pools"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Gear Display"))
             {
-                Debug.Log("Button -> Toggle Actor Pools");
-                if (debugDisplay != 6)
-                { debugDisplay = 6; }
+                Debug.Log("Button -> Toggle Gear");
+                if (debugDisplay != 5)
+                { debugDisplay = 5; }
                 else { debugDisplay = 0; }
             }
 
