@@ -17,8 +17,8 @@ namespace gameAPI
 
         [HideInInspector] public GenericReturnData data;
 
-        private bool isSelected;                            //has the team been selected
-        [HideInInspector] public bool isActive;             //is the team a valid choice option or is it greyed out? (can't be selected)
+        private bool isSelected;                            //has the option been selected
+        [HideInInspector] public bool isActive;             //is the option a valid choice option or is it greyed out? (can't be selected)
         
 
         /// <summary>
