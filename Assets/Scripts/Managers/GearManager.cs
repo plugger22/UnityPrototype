@@ -162,6 +162,7 @@ public class GearManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.GearAction, OnEvent);
         EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent);
+        EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent);
     }
 
 
@@ -186,6 +187,9 @@ public class GearManager : MonoBehaviour
             case EventType.GenericGearChoice:
                 GenericReturnData returnDataGear = Param as GenericReturnData;
                 ProcessGearChoice(returnDataGear);
+                break;
+            case EventType.InventorySetGear:
+                InitialiseGearInventoryDisplay();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -405,6 +409,18 @@ public class GearManager : MonoBehaviour
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
         }
+    }
+
+    /// <summary>
+    /// sets up all needed data for Resistance Player Gear Inventory and triggers ModalInventoryUI to display such
+    /// </summary>
+    private void InitialiseGearInventoryDisplay()
+    {
+        InventoryInputData data = new InventoryInputData();
+        data.textHeader = "Gear Inventory";
+        data.side = GameManager.instance.sideScript.PlayerSide;
+
+        EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
     }
 
     /// <summary>

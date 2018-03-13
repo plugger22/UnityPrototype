@@ -101,6 +101,7 @@ public class ActorManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent);
         EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent);
         EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent);
+        EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent);
         //create active, OnMap actors
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
@@ -140,6 +141,9 @@ public class ActorManager : MonoBehaviour
             case EventType.GenericRecruitActorAuthority:
                 GenericReturnData returnDataRecruitAuthority = Param as GenericReturnData;
                 ProcessRecruitChoiceAuthority(returnDataRecruitAuthority);
+                break;
+            case EventType.InventorySetReserve:
+                InitialiseReservePoolDisplay();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1354,6 +1358,18 @@ public class ActorManager : MonoBehaviour
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
         }
      
+    }
+
+    /// <summary>
+    /// sets up all needed data for Reserve Actor pool and triggers ModalInventoryUI to display such
+    /// </summary>
+    private void InitialiseReservePoolDisplay()
+    {
+        InventoryInputData data = new InventoryInputData();
+        data.textHeader = "Reserve Actor Pool";
+        data.side = GameManager.instance.sideScript.PlayerSide;
+
+        EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
     }
 
     /// <summary>

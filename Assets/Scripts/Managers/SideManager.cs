@@ -20,6 +20,10 @@ public class SideManager : MonoBehaviour
     public Sprite outcome_backgroundRebel;
     public Sprite picker_background_Authority;
     public Sprite picker_background_Rebel;
+    public Sprite inventory_background_Authority;
+    public Sprite inventory_background_Rebel;
+    public Sprite header_background_Authority;
+    public Sprite header_background_Rebel;
     public Sprite button_Authority;
     public Sprite button_highlight_Authority;
     public Sprite button_Rebel;

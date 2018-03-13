@@ -191,6 +191,32 @@ namespace modalAPI
         public int actorSlotID;                    
     }
 
+    /// <summary>
+    /// Main class passed to InventoryUI for initilisation
+    /// </summary>
+    public class InventoryInputData
+    {
+        public EventType leftClickEvent;                                                        //type of event triggered when any option is left clicked
+        public EventType rightClickEvent;                                                       //type of event triggered when any option is right clicked
+        public string textHeader;
+        public string textTop;
+        public string textBottom;
+        public GlobalSide side;
+        public InventoryOptionData[] arrayOfOptions = new InventoryOptionData[4];                 //only the first four are recognised
+        public GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[4];              //same [index] for both arrays. Keep in synch!!
+    }
+
+    /// <summary>
+    /// subclass for InventoryInputData detailing specific option information
+    /// </summary>
+    public class InventoryOptionData
+    {
+        public Sprite sprite;
+        public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'SCREAMER'
+        public string textLower;                //details that go below name, eg. "Unhappy in 2 turns"
+        public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
+    }
+
     //
     // - - - AI return
     //

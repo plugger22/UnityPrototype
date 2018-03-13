@@ -52,12 +52,12 @@ public class InputManager : MonoBehaviour
                 }
                 if (Input.GetButtonDown("ShowReserves") == true)
                 {
-                    EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, "Reserve Pool");
+                    EventManager.instance.PostNotification(EventType.InventorySetReserve, this, "Reserve Pool");
                     return;
                 }
                 if (Input.GetButtonDown("ShowGear") == true)
                 {
-                    EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, "Gear Inventory");
+                    EventManager.instance.PostNotification(EventType.InventorySetGear, this, "Gear Inventory");
                     return;
                 }
                 if (Input.GetButtonDown("ShowTargets") == true)

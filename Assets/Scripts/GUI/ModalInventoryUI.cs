@@ -17,9 +17,9 @@ public class ModalInventoryUI : MonoBehaviour
     public GameObject modalPanelObject;
     public GameObject modalHeaderObject;
     public Image modalPanel;
+    public Image headerPanel;
 
     public TextMeshProUGUI topText;
-    public TextMeshProUGUI middleText;
     public TextMeshProUGUI bottomText;
     public TextMeshProUGUI headerText;
 
@@ -93,8 +93,8 @@ public class ModalInventoryUI : MonoBehaviour
         switch (eventType)
         {
             case EventType.InventoryOpenUI:
-                //GenericPickerDetails details = Param as GenericPickerDetails;
-                SetInventoryUI((string)Param);
+                InventoryInputData details = Param as InventoryInputData;
+                SetInventoryUI(details);
                 break;
             case EventType.InventoryCloseUI:
                 CloseInventoryUI();
@@ -128,9 +128,8 @@ public class ModalInventoryUI : MonoBehaviour
     /// Open up Inventory UI
     /// </summary>
     /// <param name="details"></param>
-    private void SetInventoryUI(string header)
+    private void SetInventoryUI(InventoryInputData details)
     {
-        bool errorFlag = false;
         CanvasGroup inventoryCanvasGroup;
         GenericInteraction inventoryData;
         //set modal status
@@ -140,8 +139,44 @@ public class ModalInventoryUI : MonoBehaviour
         modalInventoryObject.SetActive(true);
         modalHeaderObject.SetActive(true);
         //set header text
-        headerText.text = header;
-    }
+        headerText.text = details.textHeader;
+        //close node tooltip (safety check)
+        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        //populate dialogue
+        if (details != null)
+        {
+            //set up modal panel & buttons to be side appropriate
+            switch (details.side.name)
+            {
+                case "Authority":
+                    modalPanel.sprite = GameManager.instance.sideScript.inventory_background_Authority;
+                    headerPanel.sprite = GameManager.instance.sideScript.header_background_Authority;
+                    //set button sprites
+                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                    //set sprite transitions
+                    SpriteState spriteStateAuthority = new SpriteState();
+                    spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
+                    spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    buttonCancel.spriteState = spriteStateAuthority;
+                    break;
+                case "Resistance":
+                    modalPanel.sprite = GameManager.instance.sideScript.inventory_background_Rebel;
+                    headerPanel.sprite = GameManager.instance.sideScript.header_background_Rebel;
+                    //set button sprites
+                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
+                    //set sprite transitions
+                    SpriteState spriteStateRebel = new SpriteState();
+                    spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Rebel;
+                    spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    buttonCancel.spriteState = spriteStateRebel;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid side \"{0}\"", details.side.name));
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid InventoryInputData (Null)"); }
+        }
 
 
     /// <summary>

@@ -69,6 +69,8 @@ public enum EventType
     GenericDismissActor,
     GenericDisposeActor,
     //Inventory UI
+    InventorySetReserve,
+    InventorySetGear,
     InventoryOpenUI,
     InventoryCloseUI,
     //dice UI
@@ -159,7 +161,11 @@ public class EventManager : MonoBehaviour
 
         //If no event entry exists, then exit because there are no listeners to notify
         if (!dictOfListeners.TryGetValue(eventType, out ListenList))
-        { return; }
+        {
+            /*DEBUG purposes only
+            Debug.LogError(string.Format("EventManager: There are no listeners for {0}", eventType));*/
+            return;
+        }
 
         //Entry exists. Now notify appropriate listeners
         for (int i = 0; i < ListenList.Count; i++)
