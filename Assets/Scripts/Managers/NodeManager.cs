@@ -1235,7 +1235,7 @@ public class NodeManager : MonoBehaviour
                 //Cancel button is added last
                 EventButtonDetails cancelDetails = null;
                 //does player have gear?
-                if (GameManager.instance.playerScript.GetNumOfGear() > 0)
+                if (GameManager.instance.playerScript.CheckNumOfGear() > 0)
                 {
                     //is there any relevant, node-use, gear?
                     if (counter > 0)
@@ -1439,7 +1439,7 @@ public class NodeManager : MonoBehaviour
         {
             outcomeDetails.textTop = "Player has moved";
             outcomeDetails.textBottom = data.text;
-            outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             outcomeDetails.isAction = true;
             outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);

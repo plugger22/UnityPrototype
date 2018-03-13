@@ -142,7 +142,7 @@ public class PlayerManager : MonoBehaviour
     /// returns the amount of gear the player has in their inventory
     /// </summary>
     /// <returns></returns>
-    public int GetNumOfGear()
+    public int CheckNumOfGear()
     { return listOfGear.Count; }
 
 

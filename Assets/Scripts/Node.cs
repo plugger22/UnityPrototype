@@ -199,6 +199,7 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseOver()
     {
+        //check modal block isn't in place
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             //Right click node -> Show either move options (node highlights) or Move Menu
@@ -250,49 +251,53 @@ public class Node : MonoBehaviour
         //activate tool tip if mouse still over node
         if (onMouseFlag == true)
         {
-            //do once
-            while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
+            //check modal block isn't in place
+            if (GameManager.instance.guiScript.CheckIsBlocked() == false)
             {
-                List<string> activeList = GetNodeActors();
-                List<EffectDataTooltip> effectsList = GetOngoingEffects();
-                List<string> teamList = new List<string>();
-                if (listOfTeams.Count > 0)
+                //do once
+                while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
                 {
-                    foreach (Team team in listOfTeams)
-                    { teamList.Add(team.arc.name); }
-                }
-                List<string> targetList = new List<string>();
-                if (targetID > -1)
-                { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
-                //Transform transform = GetComponent<Transform>();
-                NodeTooltipData dataTooltip = new NodeTooltipData()
-                {
-                    nodeName = nodeName,
-                    type = string.Format("{0} ID {1}", Arc.name, nodeID),
-                    isTracerActive = isTracerActive,
-                    isActor = isContact,
-                    isActorKnown = isActorKnown,
-                    isTeamKnown = isTeamKnown,
-                    arrayOfStats = GetStats(),
-                    listOfActive = activeList,
-                    listOfEffects = effectsList,
-                    listOfTeams = teamList,
-                    listOfTargets = targetList,
-                    tooltipPos = transform.position
+                    List<string> activeList = GetNodeActors();
+                    List<EffectDataTooltip> effectsList = GetOngoingEffects();
+                    List<string> teamList = new List<string>();
+                    if (listOfTeams.Count > 0)
+                    {
+                        foreach (Team team in listOfTeams)
+                        { teamList.Add(team.arc.name); }
+                    }
+                    List<string> targetList = new List<string>();
+                    if (targetID > -1)
+                    { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
+                    //Transform transform = GetComponent<Transform>();
+                    NodeTooltipData dataTooltip = new NodeTooltipData()
+                    {
+                        nodeName = nodeName,
+                        type = string.Format("{0} ID {1}", Arc.name, nodeID),
+                        isTracerActive = isTracerActive,
+                        isActor = isContact,
+                        isActorKnown = isActorKnown,
+                        isTeamKnown = isTeamKnown,
+                        arrayOfStats = GetStats(),
+                        listOfActive = activeList,
+                        listOfEffects = effectsList,
+                        listOfTeams = teamList,
+                        listOfTargets = targetList,
+                        tooltipPos = transform.position
                     };
-                
-                GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
-                yield return null;
-            }
-            //fade in
-            float alphaCurrent;
 
-            while (GameManager.instance.tooltipNodeScript.GetOpacity()< 1.0)
-            {
-                alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
-                alphaCurrent += Time.deltaTime / fadeInTime;
-                GameManager.instance.tooltipNodeScript.SetOpacity(alphaCurrent);
-                yield return null;
+                    GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
+                    yield return null;
+                }
+                //fade in
+                float alphaCurrent;
+
+                while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0)
+                {
+                    alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
+                    alphaCurrent += Time.deltaTime / fadeInTime;
+                    GameManager.instance.tooltipNodeScript.SetOpacity(alphaCurrent);
+                    yield return null;
+                }
             }
         }
     }

@@ -45,6 +45,7 @@ public class GearManager : MonoBehaviour
     private string colourNormal;
     private string colourGood;
     private string colourActor;
+    private string colourAlert;
     private string colourBad;
     private string colourEnd;
 
@@ -212,6 +213,7 @@ public class GearManager : MonoBehaviour
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -416,11 +418,97 @@ public class GearManager : MonoBehaviour
     /// </summary>
     private void InitialiseGearInventoryDisplay()
     {
-        InventoryInputData data = new InventoryInputData();
-        data.textHeader = "Gear Inventory";
-        data.side = GameManager.instance.sideScript.PlayerSide;
-
-        EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
+        int numOfGear;
+        bool errorFlag = false;
+        //close node tooltip -> safety check
+        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        //only for Resistance
+        if (GameManager.instance.sideScript.PlayerSide == GameManager.instance.globalScript.sideResistance)
+        {
+            numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
+            //Check for presence of gear
+            if (numOfGear > 0)
+            {
+                //At least one item of gear is present
+                InventoryInputData data = new InventoryInputData();
+                data.textHeader = "Gear Inventory";
+                data.textTop = string.Format("{0}You have {1} out of {2} possible item{3} of Gear{4}", colourEffectNeutral, numOfGear, maxNumOfGear,
+                    maxNumOfGear != 1 ? "s" : "", colourEnd);
+                data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Options{7}", colourAlert, colourEnd, colourDefault,
+                    colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
+                data.side = GameManager.instance.sideScript.PlayerSide;
+                //Loop Gear list and populate arrays
+                List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                if (listOfGear != null)
+                {
+                    for (int i = 0; i < numOfGear; i++)
+                    {
+                        Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                        if (gear != null)
+                        {
+                            InventoryOptionData optionData = new InventoryOptionData();
+                            optionData.sprite = gear.sprite;
+                            optionData.textUpper = gear.name.ToUpper();
+                            optionData.textLower = gear.rarity.name;
+                            optionData.optionID = gear.gearID;
+                            //add to array
+                            data.arrayOfOptions[i] = optionData;
+                        }
+                        else
+                        { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Invalid listOfGear (Null)");
+                    errorFlag = true;
+                }
+                //data package has been populated, proceed if all O.K
+                if (errorFlag == true)
+                {
+                    //error msg
+                    ModalOutcomeDetails details = new ModalOutcomeDetails()
+                    {
+                        side = GameManager.instance.sideScript.PlayerSide,
+                        textTop = string.Format("{0}Something has gone wrong with your Inventory{1}", colourAlert, colourEnd),
+                        textBottom = "Phone calls are being made. Lots of them.",
+                        sprite = GameManager.instance.guiScript.errorSprite,
+                        isAction = false
+                    };
+                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                }
+                else
+                {
+                    //open Inventory UI
+                    EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
+                }
+            }
+            else
+            {
+                //No actor in reserve
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.instance.sideScript.PlayerSide,
+                    textTop = string.Format("{0}There is currently no gear in your inventory{1}", colourAlert, colourEnd),
+                    textBottom = string.Format("You can have a maximum of {0} items of Gear in your inventtory", maxNumOfGear),
+                    sprite = GameManager.instance.guiScript.infoSprite,
+                    isAction = false
+                };
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+            }
+        }
+        else
+        {
+            //Authority message
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.instance.sideScript.PlayerSide,
+                textTop = string.Format("{0}Gear is only available when you are playing the Resistance side{1}", colourAlert, colourEnd),
+                sprite = GameManager.instance.guiScript.infoSprite,
+                isAction = false
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
     }
 
     /// <summary>

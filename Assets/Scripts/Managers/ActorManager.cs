@@ -71,6 +71,7 @@ public class ActorManager : MonoBehaviour
     private string colourAuthority;
     private string colourCancel;
     private string colourInvalid;
+    private string colourAlert;
     private string colourGoodEffect;
     private string colourNeutralEffect;
     private string colourBadEffect;
@@ -157,7 +158,7 @@ public class ActorManager : MonoBehaviour
     private void StartTurnLate()
     {
         CheckInactiveActors();
-        CheckReserveActors();
+        UpdateReserveActors();
     }
 
     /// <summary>
@@ -184,6 +185,7 @@ public class ActorManager : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -979,7 +981,7 @@ public class ActorManager : MonoBehaviour
                         //
                         // - - - Give Gear - - -
                         //
-                        int numOfGear = GameManager.instance.playerScript.GetNumOfGear();
+                        int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
                         if (numOfGear > 0)
                         {
                             List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
@@ -1365,11 +1367,37 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void InitialiseReservePoolDisplay()
     {
-        InventoryInputData data = new InventoryInputData();
-        data.textHeader = "Reserve Actor Pool";
-        data.side = GameManager.instance.sideScript.PlayerSide;
+        int numOfActors;
+        //close node tooltip -> safety check
+        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
+        //check for presence of actors in reserve pool
+        if (numOfActors > 0)
+        {
+            //At least one actor in reserve
+            InventoryInputData data = new InventoryInputData();
+            data.side = GameManager.instance.sideScript.PlayerSide;
+            data.textHeader = "Reserve Actor Pool";
+            data.textTop = string.Format("{0}You have {1} out of {2} possible Actor{3} in your Reserve pool{4}", colourNeutralEffect, numOfActors, maxNumOfReserveActors,
+                maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
+            data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault, 
+                colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
 
-        EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
+            EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
+        }
+        else
+        {
+            //no actor in reserve
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.instance.sideScript.PlayerSide,
+                textTop = string.Format("{0}There are currently no Actors in your Reserve Pool{1}", colourInvalid, colourEnd),
+                textBottom = string.Format("You can have a maximum of {0} actors in your Reserves", maxNumOfReserveActors),
+                sprite = GameManager.instance.guiScript.infoSprite,
+                isAction = false
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
     }
 
     /// <summary>
@@ -1381,7 +1409,7 @@ public class ActorManager : MonoBehaviour
         bool successFlag = true;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        Sprite sprite = GameManager.instance.guiScript.errorSprite;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data != null)
         {
@@ -1500,7 +1528,7 @@ public class ActorManager : MonoBehaviour
         bool successFlag = true;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        Sprite sprite = GameManager.instance.guiScript.errorSprite;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         if (data != null)
         {
@@ -1656,7 +1684,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Checks all reserve pool actors (both sides), decrements unhappy timers and takes appropriate action if any have reached zero
     /// </summary>
-    private void CheckReserveActors()
+    private void UpdateReserveActors()
     {
         List<int> listOfActors = null;
         int chance;

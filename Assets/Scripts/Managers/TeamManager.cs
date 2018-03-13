@@ -768,7 +768,7 @@ public class TeamManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
-            outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else

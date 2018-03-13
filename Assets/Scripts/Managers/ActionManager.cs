@@ -14,7 +14,6 @@ using delegateAPI;
 public class ActionManager : MonoBehaviour
 {
 
-    public Sprite errorSprite;
     public Sprite targetSprite;
 
     //colour palette for Modal Outcome
@@ -154,7 +153,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = errorSprite;
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         //resolve action
         if (details != null)
         {
@@ -273,7 +272,7 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
@@ -300,7 +299,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = errorSprite;
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         //resolve action
         if (details != null)
         {
@@ -335,7 +334,7 @@ public class ActionManager : MonoBehaviour
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
-                                outcomeDetails.sprite = errorSprite;
+                                outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                                 //update stringBuilder texts
                                 if (effectReturn.topText.Length > 0)
                                 {
@@ -391,7 +390,7 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
@@ -445,7 +444,7 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             //generate a create modal window event
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
@@ -568,7 +567,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to send anyone to the Reserve Pool at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why is that so? Nobody knows.";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else
@@ -702,7 +701,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to send anyone to the Reserve pool at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why is it so? Nobody knows.";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else
@@ -837,7 +836,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to Dismiss of anyone at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why this is so is under investigation";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else
@@ -971,7 +970,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to Dispose of anyone at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why this is so is under investigation";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
         else
@@ -994,7 +993,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = errorSprite;
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
@@ -1025,7 +1024,7 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         else
         {
@@ -1055,7 +1054,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = errorSprite;
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
@@ -1083,7 +1082,7 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         else
         {
@@ -1115,7 +1114,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = errorSprite;
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
@@ -1170,7 +1169,7 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         else
         {
@@ -1397,7 +1396,7 @@ public class ActionManager : MonoBehaviour
                     //fault, pass default data to window
                     outcomeDetails.textTop = "There is a fault in the system. Target not responding";
                     outcomeDetails.textBottom = "Target Acquition Failed";
-                    outcomeDetails.sprite = errorSprite;
+                    outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                 }
                 //generate a create modal window event
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -1418,7 +1417,7 @@ public class ActionManager : MonoBehaviour
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        Sprite sprite = GameManager.instance.guiScript.errorSprite;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data != null)
         {
@@ -1572,7 +1571,7 @@ public class ActionManager : MonoBehaviour
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        Sprite sprite = GameManager.instance.guiScript.errorSprite;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         ActorStatus status = ActorStatus.Dismissed;
         if (data != null)
@@ -1727,7 +1726,7 @@ public class ActionManager : MonoBehaviour
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.instance.outcomeScript.errorSprite;
+        Sprite sprite = GameManager.instance.guiScript.errorSprite;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data != null)
         {

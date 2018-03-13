@@ -142,7 +142,7 @@ public class CaptureManager : MonoBehaviour
         builder.Append(string.Format("{0}Resistance Cause -{1} (Now {2}){3}{4}{5}", colourBad, playerCaptured,
             cause, colourEnd, "\n", "\n"));
         //Gear confiscated
-        int numOfGear = GameManager.instance.playerScript.GetNumOfGear();
+        int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
         if (numOfGear > 0)
         {
             List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
@@ -164,7 +164,7 @@ public class CaptureManager : MonoBehaviour
         {
             textTop = text,
             textBottom = builder.ToString(),
-            sprite = GameManager.instance.outcomeScript.errorSprite,
+            sprite = GameManager.instance.guiScript.errorSprite,
             isAction = false,
             side = GameManager.instance.globalScript.sideResistance
         };
@@ -212,7 +212,7 @@ public class CaptureManager : MonoBehaviour
         {
             textTop = text,
             textBottom = builder.ToString(),
-            sprite = GameManager.instance.outcomeScript.errorSprite,
+            sprite = GameManager.instance.guiScript.errorSprite,
             isAction = false,
             side = GameManager.instance.globalScript.sideResistance
         };
@@ -256,7 +256,7 @@ public class CaptureManager : MonoBehaviour
             {
                 textTop = text,
                 textBottom = builder.ToString(),
-                sprite = GameManager.instance.outcomeScript.errorSprite,
+                sprite = GameManager.instance.guiScript.errorSprite,
                 isAction = false,
                 side = GameManager.instance.globalScript.sideResistance
             };
@@ -306,7 +306,7 @@ public class CaptureManager : MonoBehaviour
                 {
                     textTop = text,
                     textBottom = builder.ToString(),
-                    sprite = GameManager.instance.outcomeScript.errorSprite,
+                    sprite = GameManager.instance.guiScript.errorSprite,
                     isAction = false,
                     side = GameManager.instance.globalScript.sideResistance
                 };

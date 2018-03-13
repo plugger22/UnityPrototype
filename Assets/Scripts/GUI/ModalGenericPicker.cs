@@ -25,8 +25,6 @@ public class ModalGenericPicker : MonoBehaviour
     public Button buttonBack;
     public Button buttonConfirm;
 
-    public Sprite errorSprite;                              //sprite to display in event of an error in the outcome dialogue
-
     public GameObject[] arrayOfGenericOptions;                //place generic option UI elements here (3 options)
 
     //private CanvasGroup canvasGroup;

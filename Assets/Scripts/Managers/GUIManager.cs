@@ -19,6 +19,10 @@ public class GUIManager : MonoBehaviour
     public Sprite vacantAuthorityActor;
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantResistanceActor;
+    [Tooltip("Universal Error sprite")]
+    public Sprite errorSprite;
+    [Tooltip("Universal Info sprite")]
+    public Sprite infoSprite;
 
     //Actor display at bottom
     private GameObject Actor0;

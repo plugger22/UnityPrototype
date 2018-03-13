@@ -565,7 +565,7 @@ public class ModalDiceUI : MonoBehaviour
                             //fault, pass default data to Outcome window
                             outcomeDetails.textTop = "Error! No Pass Throught data ModalOutcomeWindow details";
                             outcomeDetails.textBottom = "Bad, all Bad";
-                            outcomeDetails.sprite = GameManager.instance.actionScript.errorSprite;
+                            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                         }
                         //generate a create modal window event
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -626,7 +626,7 @@ public class ModalDiceUI : MonoBehaviour
                     { outcomeDetails.textBottom = string.Format("{0}{1}", details.passData.text, gearResult); }
                     else
                     { outcomeDetails.textBottom = details.passData.text; }
-                    outcomeDetails.sprite = GameManager.instance.outcomeScript.errorSprite;
+                    outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                     break;
                 case DiceType.Gear:
 
@@ -657,7 +657,7 @@ public class ModalDiceUI : MonoBehaviour
             
             outcomeDetails.textTop = "Error! The wheels have fallen off";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.actionScript.errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }

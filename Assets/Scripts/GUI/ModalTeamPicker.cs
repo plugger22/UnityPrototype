@@ -23,8 +23,6 @@ public class ModalTeamPicker : MonoBehaviour
     public Button buttonCancel;
     public Button buttonConfirm;
 
-    public Sprite errorSprite;                              //sprite to display in event of an error in the outcome dialogue
-    
     public GameObject[] arrayOfTeamOptions;                //place team image UI elements here (should be seven)
 
 
@@ -477,7 +475,7 @@ public class ModalTeamPicker : MonoBehaviour
         {
             details.textTop = "There have been unexplained delays and no team has been inserted";
             details.textBottom = "As soon as you've identified who is at fault heads will roll";
-            details.sprite = errorSprite;
+            details.sprite = GameManager.instance.guiScript.errorSprite;
         }
         //action expended if successful
         if (successFlag == true)

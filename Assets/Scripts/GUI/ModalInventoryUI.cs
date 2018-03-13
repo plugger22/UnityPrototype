@@ -25,8 +25,6 @@ public class ModalInventoryUI : MonoBehaviour
 
     public Button buttonCancel;
 
-    public Sprite errorSprite;                              //sprite to display in event of an error in the outcome dialogue
-
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
 
     private static ModalInventoryUI modalInventoryUI;
@@ -138,10 +136,9 @@ public class ModalInventoryUI : MonoBehaviour
         modalPanelObject.SetActive(true);
         modalInventoryObject.SetActive(true);
         modalHeaderObject.SetActive(true);
-        //set header text
-        headerText.text = details.textHeader;
-        //close node tooltip (safety check)
-        GameManager.instance.tooltipNodeScript.CloseTooltip();
+
+        /*//close node tooltip (safety check)
+        GameManager.instance.tooltipNodeScript.CloseTooltip();*/
         //populate dialogue
         if (details != null)
         {
@@ -173,6 +170,19 @@ public class ModalInventoryUI : MonoBehaviour
                 default:
                     Debug.LogError(string.Format("Invalid side \"{0}\"", details.side.name));
                     break;
+            }
+            //set texts
+            headerText.text = details.textHeader;
+            topText.text = details.textTop;
+            bottomText.text = details.textBottom;
+            //loop array and set options
+            for (int i = 0; i < details.arrayOfOptions.Length; i++)
+            {
+                //valid option?
+                if (arrayOfInventoryOptions[i] != null)
+                {
+
+                }
             }
         }
         else { Debug.LogError("Invalid InventoryInputData (Null)"); }
