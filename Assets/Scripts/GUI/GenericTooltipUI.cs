@@ -9,15 +9,16 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    [HideInInspector] public string toolTipHeader;
+    [HideInInspector] public string toolTipMain;
+    [HideInInspector] public string toolTipEffect;
 
     private int offset;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
     private RectTransform rectTransform;
-    public string ToolTipHeader { get; set; }
-    public string ToolTipMain { get; set; }
-    public string ToolTipEffect { get; set; }
+
 
 
     private void Awake()
@@ -45,7 +46,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        if (string.IsNullOrEmpty(ToolTipMain) == false)
+        if (string.IsNullOrEmpty(toolTipMain) == false)
         { StartCoroutine(ShowGenericTooltip()); }
     }
 
@@ -83,7 +84,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                GameManager.instance.tooltipGenericScript.SetTooltip (ToolTipMain, transform.position, ToolTipHeader, ToolTipEffect );
+                GameManager.instance.tooltipGenericScript.SetTooltip (toolTipMain, transform.position, toolTipHeader, toolTipEffect );
                 yield return null;
             }
             //fade in

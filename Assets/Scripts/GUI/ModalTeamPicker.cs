@@ -364,9 +364,9 @@ public class ModalTeamPicker : MonoBehaviour
                 }
                 //add tooltip
                 GenericTooltipUI optionTooltip = arrayOfTeamOptions[teamIndex].GetComponent<GenericTooltipUI>();
-                optionTooltip.ToolTipHeader = listOfTeamTooltipsHeader[teamIndex];
-                optionTooltip.ToolTipMain = listOfTeamTooltipsMain[teamIndex];
-                optionTooltip.ToolTipEffect = listOfTeamTooltipsDetails[teamIndex];
+                optionTooltip.toolTipHeader = listOfTeamTooltipsHeader[teamIndex];
+                optionTooltip.toolTipMain = listOfTeamTooltipsMain[teamIndex];
+                optionTooltip.toolTipEffect = listOfTeamTooltipsDetails[teamIndex];
             }
             else { Debug.LogWarning(string.Format("teamIndex \"{0}\" has exceeded limit \"{1}\"", teamIndex, limit)); }
         }

@@ -204,51 +204,51 @@ public class ModalDiceUI : MonoBehaviour
         //initilaise button tooltips -> Set 1, Left
         if (generic_1_left != null)
         {
-            generic_1_left.ToolTipHeader = string.Format("{0}IGNORE{1}", colourResistance, colourEnd);
-            generic_1_left.ToolTipMain = "It's not important. Let's speed this up";
-            generic_1_left.ToolTipEffect = string.Format("{0}If the roll fails there is{1}{2} NO opportunity to use Renown{3}{4} to turn it into a success{5}",
+            generic_1_left.toolTipHeader = string.Format("{0}IGNORE{1}", colourResistance, colourEnd);
+            generic_1_left.toolTipMain = "It's not important. Let's speed this up";
+            generic_1_left.toolTipEffect = string.Format("{0}If the roll fails there is{1}{2} NO opportunity to use Renown{3}{4} to turn it into a success{5}",
                 colourNormal, colourEnd, colourDataBad, colourEnd, colourNormal, colourEnd);
         }
         else { Debug.LogError("Invalid generic_1_left button IGNORE (Null)"); }
         //set 1 -> Middle
         if (generic_1_middle != null)
         {
-            generic_1_middle.ToolTipHeader = string.Format("{0}AUTO{1}", colourResistance, colourEnd);
-            generic_1_middle.ToolTipMain = "Switch to Auto Pilot";
-            generic_1_middle.ToolTipEffect = string.Format("{0}If the roll fails, {1}{2}Renown is used AUTOMATICALLY{3}{4} to turn it into a success{5}",
+            generic_1_middle.toolTipHeader = string.Format("{0}AUTO{1}", colourResistance, colourEnd);
+            generic_1_middle.toolTipMain = "Switch to Auto Pilot";
+            generic_1_middle.toolTipEffect = string.Format("{0}If the roll fails, {1}{2}Renown is used AUTOMATICALLY{3}{4} to turn it into a success{5}",
                 colourNormal, colourEnd, colourDataNeutral, colourEnd, colourNormal, colourEnd);
         }
         else { Debug.LogError("Invalid generic_1_middle button AUTO (Null)"); }
         //set 1 -> Right
         if (generic_1_right != null)
         {
-            generic_1_right.ToolTipHeader = string.Format("{0}ROLL{1}", colourResistance, colourEnd);
-            generic_1_right.ToolTipMain = "Luck be a Lady tonight";
-            generic_1_right.ToolTipEffect = string.Format("{0}If the roll fails {1}{2}you can CHOOSE to use Renown{3}{4} to turn it into a success{5}",
+            generic_1_right.toolTipHeader = string.Format("{0}ROLL{1}", colourResistance, colourEnd);
+            generic_1_right.toolTipMain = "Luck be a Lady tonight";
+            generic_1_right.toolTipEffect = string.Format("{0}If the roll fails {1}{2}you can CHOOSE to use Renown{3}{4} to turn it into a success{5}",
                 colourNormal, colourEnd, colourDataGood, colourEnd, colourNormal, colourEnd);
         }
         else { Debug.LogError("Invalid generic_1_right button ROLL (Null)"); }
         //set 2 -> Middle
         if (generic_2_middle != null)
         {
-            generic_2_middle.ToolTipHeader = string.Format("{0}CONFIRM{1}", colourResistance, colourEnd);
-            generic_2_middle.ToolTipMain = "You cannot undo what's already been done";
+            generic_2_middle.toolTipHeader = string.Format("{0}CONFIRM{1}", colourResistance, colourEnd);
+            generic_2_middle.toolTipMain = "You cannot undo what's already been done";
         }
         else { Debug.LogError("Invalid generic_2_middle button CONFIRM (Null)"); }
         //set 3 -> Left
         if (generic_3_left != null)
         {
-            generic_3_left.ToolTipHeader = string.Format("{0}USE RENOWN{1}", colourResistance, colourEnd);
-            generic_3_left.ToolTipMain = "Pull strings. Shake it up. Make things happen.";
-            generic_3_left.ToolTipEffect = string.Format("{0}Spend Renown to turn the roll into a Success{1}", colourDataNeutral, colourEnd);
+            generic_3_left.toolTipHeader = string.Format("{0}USE RENOWN{1}", colourResistance, colourEnd);
+            generic_3_left.toolTipMain = "Pull strings. Shake it up. Make things happen.";
+            generic_3_left.toolTipEffect = string.Format("{0}Spend Renown to turn the roll into a Success{1}", colourDataNeutral, colourEnd);
         }
         else { Debug.LogError("Invalid generic_3_left button USE RENOWN (Null)"); }
         //set 3 -> Right
         if (generic_3_right != null)
         {
-            generic_3_right.ToolTipHeader = string.Format("{0}ACCEPT FAILURE{1}", colourResistance, colourEnd);
-            generic_3_right.ToolTipMain = "It doesn't always go to plan. Adapt. Move on.";
-            generic_3_right.ToolTipEffect = string.Format("{0}Your gear will be compromised{1}", colourDataBad, colourEnd);
+            generic_3_right.toolTipHeader = string.Format("{0}ACCEPT FAILURE{1}", colourResistance, colourEnd);
+            generic_3_right.toolTipMain = "It doesn't always go to plan. Adapt. Move on.";
+            generic_3_right.toolTipEffect = string.Format("{0}Your gear will be compromised{1}", colourDataBad, colourEnd);
         }
         else { Debug.LogError("Invalid generic_3_right button ACCEPT FAILURE (Null)"); }
     }
