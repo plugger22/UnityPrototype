@@ -2727,15 +2727,31 @@ public class DataManager : MonoBehaviour
     // - - - Manage - - -
     //
 
+    /// <summary>
+    /// Manage Action list -> Handle (first level)
+    /// </summary>
+    /// <returns></returns>
     public List<ManageAction> GetListOfActorHandle()
     { return listOfActorHandle; }
 
+    /// <summary>
+    /// Manage Action list -> Reserve (second level)
+    /// </summary>
+    /// <returns></returns>
     public List<ManageAction> GetListOfActorReserve()
     { return listOfActorReserve; }
 
+    /// <summary>
+    /// Manage Action list -> Dismiss (second level)
+    /// </summary>
+    /// <returns></returns>
     public List<ManageAction> GetListOfActorDismiss()
     { return listOfActorDismiss; }
 
+    /// <summary>
+    /// Manage Action list -> Dispose (second level)
+    /// </summary>
+    /// <returns></returns>
     public List<ManageAction> GetListOfActorDispose()
     { return listOfActorDispose; }
 

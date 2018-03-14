@@ -1368,9 +1368,11 @@ public class ActorManager : MonoBehaviour
     private void InitialiseReservePoolDisplay()
     {
         int numOfActors;
+        string colourTrait, unhappySituation;
+        bool errorFlag = false;
         //close node tooltip -> safety check
         GameManager.instance.tooltipNodeScript.CloseTooltip();
-        numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
+        numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve(); 
         //check for presence of actors in reserve pool
         if (numOfActors > 0)
         {
@@ -1383,7 +1385,76 @@ public class ActorManager : MonoBehaviour
             data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault, 
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
 
-            EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
+            //Loop Gear list and populate arrays
+            List<int> listOfActors = GameManager.instance.dataScript.GetActorList(data.side, ActorList.Reserve);
+            if (listOfActors != null)
+            {
+                Condition conditionUnhappy = GameManager.instance.dataScript.GetCondition("UNHAPPY");
+                if (conditionUnhappy != null)
+                {
+                    for (int i = 0; i < listOfActors.Count; i++)
+                    {
+                        Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                        if (actor != null)
+                        {
+                            InventoryOptionData optionData = new InventoryOptionData();
+                            optionData.sprite = actor.arc.baseSprite;
+                            optionData.textUpper = actor.arc.name;
+                            //colour code trait
+                            switch (actor.trait.typeOfTrait.name)
+                            {
+                                case "Good": colourTrait = colourGoodEffect; break;
+                                case "Neutral": colourTrait = colourNeutralEffect; break;
+                                case "Bad": colourTrait = colourBadEffect; break;
+                                default: colourTrait = colourDefault; break;
+                            }
+                            //unhappy situation
+                            if (actor.CheckConditionPresent(conditionUnhappy) == true)
+                            { unhappySituation = string.Format("{0}{1}{2}", colourBadEffect, conditionUnhappy.name, colourEnd); }
+                            else
+                            { unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer, 
+                                actor.unhappyTimer != 1 ? "s" : "", colourEnd); }
+                            //combined text string
+                            optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);
+                            optionData.optionID = actor.actorID;
+                            //add to array
+                            data.arrayOfOptions[i] = optionData;
+                        }
+                        else
+                        { Debug.LogWarning(string.Format("Invalid Actor (Null) for actorID {0}", listOfActors[i])); }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Invalid conditionUnhappy (Null)");
+                    errorFlag = true;
+                }
+            }
+            else
+            {
+                Debug.LogError("Invalid listOfActors (Null)");
+                errorFlag = true;
+            }
+            //data package has been populated, proceed if all O.K
+            if (errorFlag == true)
+            {
+                //error msg
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.instance.sideScript.PlayerSide,
+                    textTop = string.Format("{0}Something has gone pear shaped with your Administration{1}", colourAlert, colourEnd),
+                    textBottom = "Phone calls are being made. Lots of them.",
+                    sprite = GameManager.instance.guiScript.errorSprite,
+                    isAction = false
+                };
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+            }
+            else
+            {
+                //open Inventory UI
+                EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data);
+            }
+
         }
         else
         {

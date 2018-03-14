@@ -26,6 +26,7 @@ public class ModalInventoryUI : MonoBehaviour
     public Button buttonCancel;
 
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
+    private InventoryInteraction[] arrayOfInteractions;         //used for fast access to interaction components
 
     private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
@@ -70,10 +71,26 @@ public class ModalInventoryUI : MonoBehaviour
         if (buttonInteraction != null)
         { buttonInteraction.SetEvent(EventType.InventoryCloseUI); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+        //inventory interaction array set up
+        int numOfOptions = arrayOfInventoryOptions.Length;
+        arrayOfInteractions = new InventoryInteraction[numOfOptions];
+        for (int i = 0; i < numOfOptions; i++)
+        {
+            if (arrayOfInventoryOptions[i] != null)
+            {
+                InventoryInteraction interaction = arrayOfInventoryOptions[i].GetComponent<InventoryInteraction>();
+                if (interaction != null)
+                { arrayOfInteractions[i] = interaction; }
+                else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
+            }
+            else { Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[{0}] (Null)", i)); }
+        }
+
     }
 
+
     private void Start()
-    {
+    {        
         //register listener
         EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent);
         EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent);
@@ -128,8 +145,9 @@ public class ModalInventoryUI : MonoBehaviour
     /// <param name="details"></param>
     private void SetInventoryUI(InventoryInputData details)
     {
-        CanvasGroup inventoryCanvasGroup;
-        GenericInteraction inventoryData;
+        bool errorFlag = false;
+        //CanvasGroup inventoryCanvasGroup;
+        //InventoryInteraction optionInteraction;
         //set modal status
         GameManager.instance.guiScript.SetIsBlocked(true);
         //activate main panel
@@ -181,12 +199,59 @@ public class ModalInventoryUI : MonoBehaviour
                 //valid option?
                 if (arrayOfInventoryOptions[i] != null)
                 {
+                    //optionInteraction = arrayOfInventoryOptions[i].GetComponent<InventoryInteraction>();
+                    if (arrayOfInteractions[i] != null)
+                    {
+                        if (details.arrayOfOptions[i] != null)
+                        {
+                            //activate option
+                            arrayOfInventoryOptions[i].SetActive(true);
+                            //populate data
+                            arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
+                            arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
+                            arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
 
+                        }
+                        else
+                        {
+                            //invalid option, switch off
+                            arrayOfInventoryOptions[i].SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        //error -> Null Interaction data
+                        Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[\"{0}\"] optionInteraction (Null)", i));
+                        errorFlag = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    //error -> Null array
+                    Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[\"{0}\"] (Null)", i));
+                    errorFlag = true;
+                    break;
                 }
             }
         }
-        else { Debug.LogError("Invalid InventoryInputData (Null)"); }
+        else
+        {
+            Debug.LogError("Invalid InventoryInputData (Null)");
+            errorFlag = true;
         }
+        //error outcome message if there is a problem
+        if (errorFlag == true)
+        {
+            modalInventoryObject.SetActive(false);
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
+            outcomeDetails.textBottom = "The WolfMan has been called";
+            outcomeDetails.side = details.side;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+    }
 
 
     /// <summary>

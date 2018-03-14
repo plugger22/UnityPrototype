@@ -419,6 +419,7 @@ public class GearManager : MonoBehaviour
     private void InitialiseGearInventoryDisplay()
     {
         int numOfGear;
+        string colourRarity;
         bool errorFlag = false;
         //close node tooltip -> safety check
         GameManager.instance.tooltipNodeScript.CloseTooltip();
@@ -434,8 +435,8 @@ public class GearManager : MonoBehaviour
                 data.textHeader = "Gear Inventory";
                 data.textTop = string.Format("{0}You have {1} out of {2} possible item{3} of Gear{4}", colourEffectNeutral, numOfGear, maxNumOfGear,
                     maxNumOfGear != 1 ? "s" : "", colourEnd);
-                data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Options{7}", colourAlert, colourEnd, colourDefault,
-                    colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
+                data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Gear Options{7}", colourAlert, colourEnd, 
+                    colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
                 data.side = GameManager.instance.sideScript.PlayerSide;
                 //Loop Gear list and populate arrays
                 List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
@@ -449,7 +450,16 @@ public class GearManager : MonoBehaviour
                             InventoryOptionData optionData = new InventoryOptionData();
                             optionData.sprite = gear.sprite;
                             optionData.textUpper = gear.name.ToUpper();
-                            optionData.textLower = gear.rarity.name;
+                            //colour code Rarity
+                            switch (gear.rarity.name)
+                            {
+                                case "Common": colourRarity = colourEffectBad; break;
+                                case "Rare": colourRarity = colourEffectNeutral; break;
+                                case "Unique": colourRarity = colourEffectGood; break;
+                                default: colourRarity = colourDefault; break;
+                            }
+                            optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n", 
+                                colourDefault, gear.type.name, colourEnd);
                             optionData.optionID = gear.gearID;
                             //add to array
                             data.arrayOfOptions[i] = optionData;

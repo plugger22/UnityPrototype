@@ -96,25 +96,29 @@ public class TurnManager : MonoBehaviour
     {
         bool finishedProcessing = false;
         int safetyCircuit = 0;
-        //continue processing turns until game over if AI vs. AI or single turn process in Player is involved
-        do
+        //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
+        if (GameManager.instance.inputScript.GameState == GameState.Normal)
         {
-            //end the current turn
-            EndTurnAI();
-            EndTurnFinal();
-            //start the new turn
-            StartTurnEarly();
-            StartTurnLate();
-            if (StartTurnFinal() == false)
+            //continue processing turns until game over if AI vs. AI or single turn process in Player is involved
+            do
             {
-                //safety switch to prevent endless loop -> debug only
-                safetyCircuit++;
-                if (safetyCircuit > 10) { finishedProcessing = true; Quit(); }
+                //end the current turn
+                EndTurnAI();
+                EndTurnFinal();
+                //start the new turn
+                StartTurnEarly();
+                StartTurnLate();
+                if (StartTurnFinal() == false)
+                {
+                    //safety switch to prevent endless loop -> debug only
+                    safetyCircuit++;
+                    if (safetyCircuit > 10) { finishedProcessing = true; Quit(); }
+                }
+                else
+                { finishedProcessing = true; }
             }
-            else
-            { finishedProcessing = true; }
+            while (finishedProcessing == false);
         }
-        while (finishedProcessing == false);
     }
 
     /// <summary>
