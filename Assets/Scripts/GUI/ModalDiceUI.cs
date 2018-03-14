@@ -297,7 +297,7 @@ public class ModalDiceUI : MonoBehaviour
         buttonSet_2.SetActive(false);
         buttonSet_3.SetActive(false);
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.ModalDice;
+        GameManager.instance.inputScript.SetModalState(ModalState.DiceRoller);
         GameManager.instance.guiScript.SetIsBlocked(true);
         Debug.Log("UI: Open -> ModalDiceUI" + "\n");
     }
@@ -310,7 +310,7 @@ public class ModalDiceUI : MonoBehaviour
         modalDiceObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.Normal;
+        GameManager.instance.inputScript.ResetStates();
         GameManager.instance.guiScript.SetIsBlocked(false);
         Debug.Log("UI: Close -> ModalDiceUI" + "\n");
     }

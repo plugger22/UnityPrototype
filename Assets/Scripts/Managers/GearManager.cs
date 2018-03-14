@@ -461,8 +461,28 @@ public class GearManager : MonoBehaviour
                             optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n", 
                                 colourDefault, gear.type.name, colourEnd);
                             optionData.optionID = gear.gearID;
+
+                            //tooltip 
+                            GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                            StringBuilder builderHeader = new StringBuilder();
+                            builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
+                            string colourGearEffect = colourEffectNeutral;
+                            if (gear.data == 3) { colourGearEffect = colourEffectGood; }
+                            else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
+                            //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
+                            switch (gear.type.name)
+                            {
+                                case "Movement":
+                                    builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                                    break;
+                            }
+                            tooltipDetails.textHeader = builderHeader.ToString();
+                            tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
+                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd,
+                                "\n", colourSide, gear.type.name, colourEnd);
                             //add to array
                             data.arrayOfOptions[i] = optionData;
+                            data.arrayOfTooltips[i] = tooltipDetails;
                         }
                         else
                         { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }

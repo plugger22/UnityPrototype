@@ -372,7 +372,7 @@ public class ModalTeamPicker : MonoBehaviour
         }
 
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.ModalPicker;
+        GameManager.instance.inputScript.SetModalState(ModalState.TeamPicker);
         Debug.Log("UI: Open -> ModalTeamPicker" + "\n");
     }
 
@@ -391,7 +391,7 @@ public class ModalTeamPicker : MonoBehaviour
         EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
         SetConfirmButton(false);
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.Normal;
+        GameManager.instance.inputScript.ResetStates();
         Debug.Log("UI: Close -> ModalTeamPicker" + "\n");
     }
 

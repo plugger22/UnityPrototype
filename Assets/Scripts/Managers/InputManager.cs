@@ -9,7 +9,8 @@ using gameAPI;
 public class InputManager : MonoBehaviour
 {
 
-    private GameState _gameState;
+    private GameState _gameState;                   //main game state
+    private ModalState _modalState;                 //sub state for when game state is 'ModalUI'
 
     public void Initialise()
     {
@@ -23,8 +24,37 @@ public class InputManager : MonoBehaviour
         set
         {
             _gameState = value;
-            Debug.Log("InputManager -> GameState now " + _gameState + "\n");
+            Debug.Log(string.Format("InputManager: GameState now {0}{1}", _gameState, "\n"));
         }
+    }
+
+    public ModalState ModalState
+    {
+        get { return _modalState; }
+        set
+        {
+            _modalState = value;
+            Debug.Log(string.Format("InputManager: ModalState now {0}{1}", _modalState, "\n"));
+        }
+    }
+
+    /// <summary>
+    /// Quick way of setting Modal state and Game State (to 'ModalUI')
+    /// </summary>
+    /// <param name="modal"></param>
+    public void SetModalState(ModalState modal)
+    {
+        GameState = GameState.ModalUI;
+        ModalState = modal;
+    }
+
+    /// <summary>
+    /// Quick way of reseting game & modal states back to defaults
+    /// </summary>
+    public void ResetStates()
+    {
+        GameState = GameState.Normal;
+        ModalState = ModalState.None;
     }
 
     /// <summary>
@@ -132,23 +162,66 @@ public class InputManager : MonoBehaviour
                     return;
                 }
                 break;
-            case GameState.ModalOutcome:
-                if (Input.GetButtonDown("Cancel") == true)
+                
+            case GameState.ModalUI:
+                //Hotkeys for Modal UI windows
+                switch (_modalState)
                 {
-                    EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this);
-                    return;
-                }
-                if (Input.GetButtonDown("Multipurpose") == true)
-                {
-                    EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this);
-                    return;
-                }
-                break;
-            case GameState.ModalActionMenu:
-                if (Input.GetButtonDown("Cancel") == true)
-                {
-                    EventManager.instance.PostNotification(EventType.CloseActionMenu, this);
-                    return;
+                    case ModalState.Outcome:
+                        if (Input.GetButtonDown("Cancel") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this);
+                            return;
+                        }
+                        if (Input.GetButtonDown("Multipurpose") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this);
+                            return;
+                        }
+                        break;
+                    case ModalState.Inventory:
+                        if (Input.GetButtonDown("Cancel") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.InventoryCloseUI, this);
+                            return;
+                        }
+                        if (Input.GetButtonDown("Multipurpose") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.InventoryCloseUI, this);
+                            return;
+                        }
+                        break;
+                    case ModalState.TeamPicker:
+                        if (Input.GetButtonDown("Cancel") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.CloseTeamPicker, this);
+                            return;
+                        }
+                        if (Input.GetButtonDown("Multipurpose") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.CloseTeamPicker, this);
+                            return;
+                        }
+                        break;
+                    case ModalState.GenericPicker:
+                        if (Input.GetButtonDown("Cancel") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.CloseGenericPicker, this);
+                            return;
+                        }
+                        if (Input.GetButtonDown("Multipurpose") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.CloseGenericPicker, this);
+                            return;
+                        }
+                        break;
+                    case ModalState.ActionMenu:
+                        if (Input.GetButtonDown("Cancel") == true)
+                        {
+                            EventManager.instance.PostNotification(EventType.CloseActionMenu, this);
+                            return;
+                        }
+                        break;
                 }
                 break;
         }

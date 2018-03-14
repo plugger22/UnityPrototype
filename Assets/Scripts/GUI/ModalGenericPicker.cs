@@ -341,7 +341,7 @@ public class ModalGenericPicker : MonoBehaviour
             middleText.text = details.textMiddle;
             bottomText.text = details.textBottom;
             //set game state
-            GameManager.instance.inputScript.GameState = GameState.ModalPicker;
+            GameManager.instance.inputScript.SetModalState(ModalState.GenericPicker);
             Debug.Log("UI: Open -> ModalGenericPicker" + "\n");
         }
     }
@@ -361,7 +361,7 @@ public class ModalGenericPicker : MonoBehaviour
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this);
         SetConfirmButton(false);
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.Normal;
+        GameManager.instance.inputScript.ResetStates();
         Debug.Log("UI: Close -> ModalGenericPicker" + "\n");
     }
 

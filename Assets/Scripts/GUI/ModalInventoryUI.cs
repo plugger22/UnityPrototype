@@ -27,6 +27,7 @@ public class ModalInventoryUI : MonoBehaviour
 
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
     private InventoryInteraction[] arrayOfInteractions;         //used for fast access to interaction components
+    private GenericTooltipUI[] arrayOfTooltips;                 //used for fast access to tooltip components
 
     private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
@@ -71,17 +72,24 @@ public class ModalInventoryUI : MonoBehaviour
         if (buttonInteraction != null)
         { buttonInteraction.SetEvent(EventType.InventoryCloseUI); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
-        //inventory interaction array set up
+        //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfInventoryOptions.Length;
         arrayOfInteractions = new InventoryInteraction[numOfOptions];
+        arrayOfTooltips = new GenericTooltipUI[numOfOptions];
         for (int i = 0; i < numOfOptions; i++)
         {
             if (arrayOfInventoryOptions[i] != null)
             {
+                //interaction
                 InventoryInteraction interaction = arrayOfInventoryOptions[i].GetComponent<InventoryInteraction>();
                 if (interaction != null)
                 { arrayOfInteractions[i] = interaction; }
                 else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
+                //tooltip
+                GenericTooltipUI tooltip = arrayOfInventoryOptions[i].GetComponent<GenericTooltipUI>();
+                if (tooltip != null)
+                { arrayOfTooltips[i] = tooltip; }
+                else { Debug.LogError(string.Format("Invalid GenericTooltipUI for arrayOfInventoryOptions[{0}] (Null)", i)); }
             }
             else { Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[{0}] (Null)", i)); }
         }
@@ -206,11 +214,25 @@ public class ModalInventoryUI : MonoBehaviour
                         {
                             //activate option
                             arrayOfInventoryOptions[i].SetActive(true);
-                            //populate data
+                            //populate option data
                             arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
                             arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
                             arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
-
+                            //tooltip data
+                            if (arrayOfTooltips[i] != null)
+                            {
+                                if (details.arrayOfTooltips[i] != null)
+                                {
+                                    arrayOfTooltips[i].ToolTipHeader = details.arrayOfTooltips[i].textHeader;
+                                    arrayOfTooltips[i].ToolTipMain = details.arrayOfTooltips[i].textMain;
+                                    arrayOfTooltips[i].ToolTipEffect = details.arrayOfTooltips[i].textDetails;
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                            }
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid GenericTooltipUI (Null) in arrayOfTooltips[{0}]", i));
+                            }
                         }
                         else
                         {
@@ -251,6 +273,12 @@ public class ModalInventoryUI : MonoBehaviour
             outcomeDetails.side = details.side;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
+        else
+        {
+            //all good, inventory window displayed
+            GameManager.instance.inputScript.SetModalState(ModalState.Inventory);
+            Debug.Log("UI: Open -> ModalInventoryUI" + "\n");
+        }
     }
 
 
@@ -269,7 +297,7 @@ public class ModalInventoryUI : MonoBehaviour
         SetConfirmButton(false);*/
 
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.Normal;
+        GameManager.instance.inputScript.ResetStates();
         Debug.Log(string.Format("UI: Close -> ModalInventoryUI{0}", "\n"));
     }
 

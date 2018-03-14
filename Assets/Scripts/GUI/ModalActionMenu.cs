@@ -209,8 +209,8 @@ public class ModalActionMenu : MonoBehaviour
         { screenPos.x += offset; }
         //set new position
         modalMenuObject.transform.position = screenPos;
-        //set game state
-        GameManager.instance.inputScript.GameState = GameState.ModalActionMenu;
+        //set states
+        GameManager.instance.inputScript.SetModalState(ModalState.ActionMenu);
         Debug.Log("UI: Open -> ModalActionMenu" + "\n");
     }
 
@@ -225,7 +225,7 @@ public class ModalActionMenu : MonoBehaviour
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.Normal;
+        GameManager.instance.inputScript.ResetStates();
         Debug.Log("UI: Close -> ModalActionMenu" + "\n");
     }
 }

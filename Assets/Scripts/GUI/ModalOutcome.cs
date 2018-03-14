@@ -163,7 +163,7 @@ public class ModalOutcome : MonoBehaviour
         //set position
         modalOutcomeWindow.transform.position = screenPos;
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.ModalOutcome;
+        GameManager.instance.inputScript.SetModalState(ModalState.Outcome);
         Debug.Log("UI: Open -> ModalOutcome window" + "\n");
     }
 
@@ -199,7 +199,7 @@ public class ModalOutcome : MonoBehaviour
         //set modal false
         GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.Normal;
+        GameManager.instance.inputScript.ResetStates();
         //end of turn check
         if (isAction == true)
         { EventManager.instance.PostNotification(EventType.UseAction, this); }
