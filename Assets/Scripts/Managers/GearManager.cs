@@ -433,7 +433,8 @@ public class GearManager : MonoBehaviour
                 //At least one item of gear is present
                 InventoryInputData data = new InventoryInputData();
                 data.textHeader = "Gear Inventory";
-                data.textTop = string.Format("{0}You have {1} out of {2} possible item{3} of Gear{4}", colourEffectNeutral, numOfGear, maxNumOfGear,
+                data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourEffectNeutral, colourEnd, 
+                    colourDefault, numOfGear, colourEnd, colourEffectNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourEffectNeutral, 
                     maxNumOfGear != 1 ? "s" : "", colourEnd);
                 data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Gear Options{7}", colourAlert, colourEnd, 
                     colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);

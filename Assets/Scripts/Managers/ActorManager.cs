@@ -1380,7 +1380,8 @@ public class ActorManager : MonoBehaviour
             InventoryInputData data = new InventoryInputData();
             data.side = GameManager.instance.sideScript.PlayerSide;
             data.textHeader = "Reserve Actor Pool";
-            data.textTop = string.Format("{0}You have {1} out of {2} possible Actor{3} in your Reserve pool{4}", colourNeutralEffect, numOfActors, maxNumOfReserveActors,
+            data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutralEffect, colourEnd,
+                colourDefault, numOfActors, colourEnd, colourNeutralEffect, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutralEffect, 
                 maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
             data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault, 
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
@@ -1417,8 +1418,31 @@ public class ActorManager : MonoBehaviour
                             //combined text string
                             optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);
                             optionData.optionID = actor.actorID;
-                            //add to array
+                            //tooltip
+                            GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                            //arc type and name
+                            tooltipDetails.textHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRecruit, actor.arc.name, colourEnd,
+                                "\n", colourNormal, actor.actorName, colourEnd);
+                            //stats
+                            string[] arrayOfQualities = GameManager.instance.dataScript.GetQualities(data.side);
+                            StringBuilder builder = new StringBuilder();
+                            if (arrayOfQualities.Length > 0)
+                            {
+                                builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
+                                    actor.datapoint0, colourEnd, "\n"));
+                                builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
+                                    actor.datapoint1, colourEnd, "\n"));
+                                builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
+                                    actor.datapoint2, colourEnd));
+                                tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
+                            }
+                            //trait and action
+                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
+                                GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level),
+                                "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                            //add to arrays
                             data.arrayOfOptions[i] = optionData;
+                            data.arrayOfTooltips[i] = tooltipDetails;
                         }
                         else
                         { Debug.LogWarning(string.Format("Invalid Actor (Null) for actorID {0}", listOfActors[i])); }
