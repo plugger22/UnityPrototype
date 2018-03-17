@@ -211,27 +211,28 @@ public class ModalInventoryUI : MonoBehaviour
                     {
                         if (details.arrayOfOptions[i] != null)
                         {
-                                //activate option
-                                arrayOfInventoryOptions[i].SetActive(true);
-                                //populate option data
-                                arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
-                                arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
-                                arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
-                                //tooltip data
-                                if (arrayOfTooltips[i] != null)
+                            //activate option
+                            arrayOfInventoryOptions[i].SetActive(true);
+                            //populate option data
+                            arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
+                            arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
+                            arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
+                            arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
+                            //tooltip data
+                            if (arrayOfTooltips[i] != null)
+                            {
+                                if (details.arrayOfTooltips[i] != null)
                                 {
-                                    if (details.arrayOfTooltips[i] != null)
-                                    {
-                                        arrayOfTooltips[i].toolTipHeader = details.arrayOfTooltips[i].textHeader;
-                                        arrayOfTooltips[i].toolTipMain = details.arrayOfTooltips[i].textMain;
-                                        arrayOfTooltips[i].toolTipEffect = details.arrayOfTooltips[i].textDetails;
-                                    }
-                                    else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                    arrayOfTooltips[i].toolTipHeader = details.arrayOfTooltips[i].textHeader;
+                                    arrayOfTooltips[i].toolTipMain = details.arrayOfTooltips[i].textMain;
+                                    arrayOfTooltips[i].toolTipEffect = details.arrayOfTooltips[i].textDetails;
                                 }
-                                else
-                                {
-                                    Debug.LogError(string.Format("Invalid GenericTooltipUI (Null) in arrayOfTooltips[{0}]", i));
-                                }
+                                else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                            }
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid GenericTooltipUI (Null) in arrayOfTooltips[{0}]", i));
+                            }
                         }
                         else
                         {
