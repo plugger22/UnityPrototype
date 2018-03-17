@@ -268,7 +268,6 @@ public class Node : MonoBehaviour
                     List<string> targetList = new List<string>();
                     if (targetID > -1)
                     { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
-                    //Transform transform = GetComponent<Transform>();
                     NodeTooltipData dataTooltip = new NodeTooltipData()
                     {
                         nodeName = nodeName,
@@ -288,10 +287,9 @@ public class Node : MonoBehaviour
                     GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
                     yield return null;
                 }
-                //fade in
+                //fade in -> only if normal gamestate (eg. not modal)
                 float alphaCurrent;
-
-                while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0)
+                while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0 && GameManager.instance.inputScript.GameState == GameState.Normal)
                 {
                     alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
                     alphaCurrent += Time.deltaTime / fadeInTime;

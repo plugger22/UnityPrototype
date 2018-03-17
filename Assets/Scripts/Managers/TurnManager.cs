@@ -241,16 +241,30 @@ public class TurnManager : MonoBehaviour
         //exceed action limit?
         if (_actionsCurrent > _actionsLimit)
         { Debug.LogError("_actionsLimit exceeded by _actionsCurrent"); }
-        else if (_actionsCurrent == _actionsLimit)
+        /*else if (_actionsCurrent == _actionsLimit)
         {
             //end of turn
             ProcessNewTurn();
-        }
+        }*/
     }
 
-
+    /// <summary>
+    /// returns the number of actions the player has currently used
+    /// </summary>
+    /// <returns></returns>
     public int GetActionsCurrent()
     { return _actionsCurrent; }
+
+    /// <summary>
+    /// Returns true if the player has at least one remaining action, otherwise false
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckRemainingActions()
+    {
+        if (_actionsCurrent < _actionsLimit)
+        { return true; }
+        return false;
+    }
 
 
     /// <summary>

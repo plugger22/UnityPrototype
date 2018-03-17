@@ -303,6 +303,11 @@ public class EffectManager : MonoBehaviour
                                         int playerRenown;
                                         switch (criteria.effectCriteria.name)
                                         {
+                                            case "ActionsRemainingYes":
+                                                //player has at least one action remaining
+                                                if (GameManager.instance.turnScript.CheckRemainingActions() == false)
+                                                { BuildString(result, "All Actions used this turn"); }
+                                                break;
                                             case "ConditionStressedYes":
                                                 //actor has the 'Stressed' condition
                                                 if (actor != null)

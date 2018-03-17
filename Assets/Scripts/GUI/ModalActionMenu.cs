@@ -105,113 +105,125 @@ public class ModalActionMenu : MonoBehaviour
     /// <param name="details"></param>
     public void SetActionMenu(ModalPanelDetails details)
     {
-        modalActionObject.SetActive(true);
-        modalMenuObject.SetActive(true);
-        //set all states to off
-        button1.gameObject.SetActive(false);
-        button2.gameObject.SetActive(false);
-        button3.gameObject.SetActive(false);
-        button4.gameObject.SetActive(false);
-        button5.gameObject.SetActive(false);
-        button6.gameObject.SetActive(false);
-        
-        //set up ModalActionObject
-        itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
-        //tooltip at top of menu -> pass through data
-        ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();
-        modal.menuType = details.menuType;
-        switch (details.menuType)
+        if (GameManager.instance.turnScript.CheckRemainingActions() == true)
         {
-            case ActionMenuType.Node:
-                modal.nodeID = details.itemID;
-                break;
-            case ActionMenuType.Actor:
-                modal.actorSlotID = details.itemID;
-                break;
-        }
-        //There can be a max of 6 buttons (1 x target, 4 x actor actions, 1 x Cancel)
-        int counter = 0;
-        Button tempButton;
-        Text title;
-        foreach(EventButtonDetails buttonDetails in details.listOfButtonDetails)
-        {
-            tempButton = null;
-            title = null;
-            counter++;
-            //get the relevent UI elements
-            switch (counter)
+            modalActionObject.SetActive(true);
+            modalMenuObject.SetActive(true);
+            //set all states to off
+            button1.gameObject.SetActive(false);
+            button2.gameObject.SetActive(false);
+            button3.gameObject.SetActive(false);
+            button4.gameObject.SetActive(false);
+            button5.gameObject.SetActive(false);
+            button6.gameObject.SetActive(false);
+
+            //set up ModalActionObject
+            itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
+            //tooltip at top of menu -> pass through data
+            ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();
+            modal.menuType = details.menuType;
+            switch (details.menuType)
             {
-                case 1:
-                    tempButton = button1;
-                    title = button1Text;
+                case ActionMenuType.Node:
+                    modal.nodeID = details.itemID;
                     break;
-                case 2:
-                    tempButton = button2;
-                    title = button2Text;
-                    break;
-                case 3:
-                    tempButton = button3;
-                    title = button3Text;
-                    break;
-                case 4:
-                    tempButton = button4;
-                    title = button4Text;
-                    break;
-                case 5:
-                    tempButton = button5;
-                    title = button5Text;
-                    break;
-                case 6:
-                    tempButton = button6;
-                    title = button6Text;
-                    break;
-                default:
-                    Debug.LogWarning("To many EventButtonDetails in list!\n");
+                case ActionMenuType.Actor:
+                    modal.actorSlotID = details.itemID;
                     break;
             }
-            //set up the UI elements
-            if (tempButton != null && title != null)
+            //There can be a max of 6 buttons (1 x target, 4 x actor actions, 1 x Cancel)
+            int counter = 0;
+            Button tempButton;
+            Text title;
+            foreach (EventButtonDetails buttonDetails in details.listOfButtonDetails)
             {
-                tempButton.onClick.RemoveAllListeners();
-                tempButton.onClick.AddListener(CloseActionMenu);
-                tempButton.onClick.AddListener(buttonDetails.action);
-                title.text = buttonDetails.buttonTitle;
-                tempButton.gameObject.SetActive(true);
-                GenericTooltipUI generic = tempButton.GetComponent<GenericTooltipUI>();
-                generic.toolTipHeader = buttonDetails.buttonTooltipHeader;
-                generic.toolTipMain = buttonDetails.buttonTooltipMain;
-                generic.toolTipEffect = buttonDetails.buttonTooltipDetail;
+                tempButton = null;
+                title = null;
+                counter++;
+                //get the relevent UI elements
+                switch (counter)
+                {
+                    case 1:
+                        tempButton = button1;
+                        title = button1Text;
+                        break;
+                    case 2:
+                        tempButton = button2;
+                        title = button2Text;
+                        break;
+                    case 3:
+                        tempButton = button3;
+                        title = button3Text;
+                        break;
+                    case 4:
+                        tempButton = button4;
+                        title = button4Text;
+                        break;
+                    case 5:
+                        tempButton = button5;
+                        title = button5Text;
+                        break;
+                    case 6:
+                        tempButton = button6;
+                        title = button6Text;
+                        break;
+                    default:
+                        Debug.LogWarning("To many EventButtonDetails in list!\n");
+                        break;
+                }
+                //set up the UI elements
+                if (tempButton != null && title != null)
+                {
+                    tempButton.onClick.RemoveAllListeners();
+                    tempButton.onClick.AddListener(CloseActionMenu);
+                    tempButton.onClick.AddListener(buttonDetails.action);
+                    title.text = buttonDetails.buttonTitle;
+                    tempButton.gameObject.SetActive(true);
+                    GenericTooltipUI generic = tempButton.GetComponent<GenericTooltipUI>();
+                    generic.toolTipHeader = buttonDetails.buttonTooltipHeader;
+                    generic.toolTipMain = buttonDetails.buttonTooltipMain;
+                    generic.toolTipEffect = buttonDetails.buttonTooltipDetail;
+                }
             }
+
+            //block raycasts to gameobjects
+            GameManager.instance.guiScript.SetIsBlocked(true);
+
+            //convert coordinates
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);
+            //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
+            Canvas.ForceUpdateCanvases();
+            rectTransform = modalMenuObject.GetComponent<RectTransform>();
+            //get dimensions of dynamic menu
+            float width = rectTransform.rect.width;
+            float height = rectTransform.rect.height;
+            //calculate offset - height (default above)
+            if (screenPos.y + height + offset < Screen.height)
+            { screenPos.y += height + offset; }
+            else { screenPos.y -= offset; }
+            //width - default right
+            if (screenPos.x + offset >= Screen.width)
+            { screenPos.x -= offset + screenPos.x - Screen.width; }
+            //go left if needed
+            else if (screenPos.x - offset - width <= 0)
+            { screenPos.x += offset - width; }
+            else
+            { screenPos.x += offset; }
+            //set new position
+            modalMenuObject.transform.position = screenPos;
+            //set states
+            GameManager.instance.inputScript.SetModalState(ModalState.ActionMenu);
+            Debug.Log("UI: Open -> ModalActionMenu" + "\n");
         }
-
-        //block raycasts to gameobjects
-        GameManager.instance.guiScript.SetIsBlocked(true);
-
-        //convert coordinates
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);
-        //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
-        Canvas.ForceUpdateCanvases();
-        rectTransform = modalMenuObject.GetComponent<RectTransform>();
-        //get dimensions of dynamic menu
-        float width = rectTransform.rect.width;
-        float height = rectTransform.rect.height;
-        //calculate offset - height (default above)
-        if (screenPos.y + height + offset < Screen.height)
-        { screenPos.y += height + offset; }
-        else { screenPos.y -= offset; }
-        //width - default right
-        if (screenPos.x + offset >= Screen.width)
-        { screenPos.x -= offset + screenPos.x - Screen.width; }
-        //go left if needed
-        else if (screenPos.x - offset - width <= 0)
-        { screenPos.x += offset - width; }
         else
-        { screenPos.x += offset; }
-        //set new position
-        modalMenuObject.transform.position = screenPos;
-        //set states
-        GameManager.instance.inputScript.SetModalState(ModalState.ActionMenu);
-        Debug.Log("UI: Open -> ModalActionMenu" + "\n");
+        {
+            //insufficient actions remaining -> create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = GameManager.instance.sideScript.PlayerSide;
+            outcomeDetails.textTop = "You have used up all your Actions for this turn";
+            outcomeDetails.sprite = GameManager.instance.guiScript.infoSprite;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
     }
 
 
