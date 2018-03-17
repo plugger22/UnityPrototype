@@ -10,12 +10,12 @@ using System.Text;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
+    public Sprite sprite;
+
     [HideInInspector] public int numOfRecruits;
     [HideInInspector] public int invisibility;
     [HideInInspector] public int actorID = 999;
     [HideInInspector] public ActorStatus status;
-
-
 
     private List<int> listOfGear = new List<int>();                     //gearID's of all gear items in inventory
     private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor

@@ -29,24 +29,28 @@ public class GUIManager : MonoBehaviour
     private GameObject Actor1;
     private GameObject Actor2;
     private GameObject Actor3;
+    private GameObject ActorPlayer;
 
     private Image picture0;
     private Image picture1;
     private Image picture2;
     private Image picture3;
+    private Image picturePlayer;
 
     private TextMeshProUGUI type0;
     private TextMeshProUGUI type1;
     private TextMeshProUGUI type2;
     private TextMeshProUGUI type3;
+    private TextMeshProUGUI typePlayer;
 
     private CanvasGroup canvas0;
     private CanvasGroup canvas1;
     private CanvasGroup canvas2;
     private CanvasGroup canvas3;
+    private CanvasGroup canvasPlayer;
 
-    List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();
-    List<Image> listOfActorPortraits = new List<Image>();
+    List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();       //actors (not player)
+    List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)
 
     private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -57,34 +61,35 @@ public class GUIManager : MonoBehaviour
     /// <param name="arrayOfActors"></param>
     public void Initialise()
     {
-
-        /*List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();
-        List<Image> listOfActorPortraits = new List<Image>();*/
-        
         //get actor obj references
         Actor0 = GameObject.Find("Actor0");
         Actor1 = GameObject.Find("Actor1");
         Actor2 = GameObject.Find("Actor2");
         Actor3 = GameObject.Find("Actor3");
+        ActorPlayer = GameObject.Find("ActorPlayer");
         //get image and text references 
         GameObject temp0 = Actor0.transform.Find("Face").gameObject;
         GameObject temp1 = Actor1.transform.Find("Face").gameObject;
         GameObject temp2 = Actor2.transform.Find("Face").gameObject;
         GameObject temp3 = Actor3.transform.Find("Face").gameObject;
+        GameObject tempPlayer = ActorPlayer.transform.Find("Face").gameObject;
         picture0 = temp0.GetComponentInChildren<Image>();
         picture1 = temp1.GetComponentInChildren<Image>();
         picture2 = temp2.GetComponentInChildren<Image>();
         picture3 = temp3.GetComponentInChildren<Image>();
+        picturePlayer = tempPlayer.GetComponentInChildren<Image>();
         //Can get away with the easy search as there is only a single TMPro object within the master Actor Object Prefab. Can't do this with image above as > 1
         type0 = Actor0.GetComponentInChildren<TextMeshProUGUI>();
         type1 = Actor1.GetComponentInChildren<TextMeshProUGUI>();
         type2 = Actor2.GetComponentInChildren<TextMeshProUGUI>();
         type3 = Actor3.GetComponentInChildren<TextMeshProUGUI>();
+        typePlayer = ActorPlayer.GetComponentInChildren<TextMeshProUGUI>();
         //Canvas Group references
         canvas0 = Actor0.GetComponent<CanvasGroup>();
         canvas1 = Actor1.GetComponent<CanvasGroup>();
         canvas2 = Actor2.GetComponent<CanvasGroup>();
         canvas3 = Actor3.GetComponent<CanvasGroup>();
+        canvasPlayer = ActorPlayer.GetComponent<CanvasGroup>();
         //populate lists
         listOfActorTypes.Add(type0);
         listOfActorTypes.Add(type1);
@@ -107,6 +112,11 @@ public class GUIManager : MonoBehaviour
         type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
         type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
         type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
+        //Player
+        typePlayer.text = "PLAYER";
+        if (GameManager.instance.playerScript.sprite != null)
+        { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
+        else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
         //make sure raycasts are active, eg. node tooltips
         isBlocked = false;
         //event listener
@@ -144,7 +154,7 @@ public class GUIManager : MonoBehaviour
     //
 
     /// <summary>
-    /// places actor data (type and sprite) into GUI elements via lists
+    /// places actor data (type and sprite) into GUI elements via lists (player is static so no need to update)
     /// </summary>
     public void UpdateActorGUI()
     {
