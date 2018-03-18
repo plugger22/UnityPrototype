@@ -24,6 +24,8 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Universal Info sprite")]
     public Sprite infoSprite;
 
+    private int modalLevel;             //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
+
     //Actor display at bottom
     private GameObject Actor0;
     private GameObject Actor1;

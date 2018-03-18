@@ -107,7 +107,7 @@ public class ModalActionMenu : MonoBehaviour
     {
         if (GameManager.instance.turnScript.CheckRemainingActions() == true)
         {
-            modalActionObject.SetActive(true);
+            //modalActionObject.SetActive(true);
             modalMenuObject.SetActive(true);
             //set all states to off
             button1.gameObject.SetActive(false);
@@ -232,7 +232,7 @@ public class ModalActionMenu : MonoBehaviour
     /// </summary>
     public void CloseActionMenu()
     {
-        modalActionObject.SetActive(false);
+        //modalActionObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();

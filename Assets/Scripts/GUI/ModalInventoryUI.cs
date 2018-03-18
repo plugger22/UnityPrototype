@@ -50,7 +50,7 @@ public class ModalInventoryUI : MonoBehaviour
     private string colourEnd;
 
     /// <summary>
-    /// Static instance so the Modal Generic Picker can be accessed from any script
+    /// Static instance so the ModalInventoryUI can be accessed from any script
     /// </summary>
     /// <returns></returns>
     public static ModalInventoryUI Instance()

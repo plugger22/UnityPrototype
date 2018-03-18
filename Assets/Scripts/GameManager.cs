@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalGenericPicker genericPickerScript;  //Modal Generic Picker window
     [HideInInspector] public ModalInventoryUI inventoryScript;        //Modal InventoryUI window
     [HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window
+    [HideInInspector] public ModalGUI modalGUIScropt;                 //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
 
                                                                    
@@ -125,6 +126,7 @@ public class GameManager : MonoBehaviour
         genericPickerScript = ModalGenericPicker.Instance();
         inventoryScript = ModalInventoryUI.Instance();
         diceScript = ModalDiceUI.Instance();
+        modalGUIScropt = ModalGUI.Instance();
         alertScript = AlertUI.Instance();
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
