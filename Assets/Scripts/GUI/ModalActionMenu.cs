@@ -44,6 +44,7 @@ public class ModalActionMenu : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;
+    private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetActionMenu
 
     //colour palette
     /*private string colourEffects;
@@ -186,9 +187,6 @@ public class ModalActionMenu : MonoBehaviour
                 }
             }
 
-            //block raycasts to gameobjects
-            GameManager.instance.guiScript.SetIsBlocked(true);
-
             //convert coordinates
             Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);
             //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
@@ -213,6 +211,9 @@ public class ModalActionMenu : MonoBehaviour
             modalMenuObject.transform.position = screenPos;
             //set states
             GameManager.instance.inputScript.SetModalState(ModalState.ActionMenu);
+            //block raycasts to gameobjects
+            GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
+            modalLevel = details.modalLevel;
             Debug.Log("UI: Open -> ModalActionMenu" + "\n");
         }
         else
@@ -222,6 +223,7 @@ public class ModalActionMenu : MonoBehaviour
             outcomeDetails.side = GameManager.instance.sideScript.PlayerSide;
             outcomeDetails.textTop = "You have used up all your Actions for this turn";
             outcomeDetails.sprite = GameManager.instance.guiScript.infoSprite;
+            outcomeDetails.modalLevel = 2;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }
@@ -235,11 +237,12 @@ public class ModalActionMenu : MonoBehaviour
         //modalActionObject.SetActive(false);
         modalMenuObject.SetActive(false);
 
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        if (GameManager.instance.modalGUIScropt.CheckModalLevel() == 0)
+        { GameManager.instance.inputScript.ResetStates(); }
         Debug.Log("UI: Close -> ModalActionMenu" + "\n");
     }
 }

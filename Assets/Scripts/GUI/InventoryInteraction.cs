@@ -31,7 +31,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
             case PointerEventData.InputButton.Left:
                 break;
             case PointerEventData.InputButton.Right:
-                if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+                if (GameManager.instance.guiScript.CheckIsBlocked(2) == false)
                 {
                     //Action Menu -> not valid if Resistance Plyr and player captured, etc.
                     if (GameManager.instance.turnScript.resistanceState != ResistanceState.Normal)
@@ -51,6 +51,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                             {
                                 itemID = gear.gearID,
                                 itemName = gear.name,
+                                modalLevel = 2,
                                 itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
                                 itemPos = position,
                                 listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.gearID),

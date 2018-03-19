@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using System.Text;
 
 /// <summary>
 /// handles all input
@@ -227,4 +228,20 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Debug method to show game states
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayGameState()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(" Game States");
+        builder.AppendLine(); builder.AppendLine();
+        builder.Append(string.Format(" GameState -> {0}{1}", GameState, "\n"));
+        builder.Append(string.Format(" ModalState -> {0}{1}", ModalState, "\n"));
+        builder.Append(string.Format(" ModalLevel -> {0}{1}", GameManager.instance.modalGUIScropt.CheckModalLevel(), "\n"));
+        return builder.ToString();
+    }
+    
+    //new methods above here
 }

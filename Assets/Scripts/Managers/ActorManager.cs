@@ -1151,16 +1151,16 @@ public class ActorManager : MonoBehaviour
     public List<EventButtonDetails> GetGearInventoryActions(int gearID)
     {            
         //return list of button details
-        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
+        List<EventButtonDetails> tempList = new List<EventButtonDetails>();            
+        //Cancel button tooltip (handles all no go cases)
+        StringBuilder infoBuilder = new StringBuilder();
+        string tooltipText, title;
+        string cancelText = null;
+        int benefit;
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
         if (gear != null)
         {
-            string tooltipText, title;
-            string cancelText = null;
-            int benefit;
-
-            //Cancel button tooltip (handles all no go cases)
-            StringBuilder infoBuilder = new StringBuilder();
+            cancelText = string.Format("{0} {1}", gear.type.name.ToUpper(), gear.name);
             //Loop current, onMap actors
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
             if (arrayOfActors != null)
@@ -1177,6 +1177,7 @@ public class ActorManager : MonoBehaviour
                             gearActionDetails.side = globalResistance;
                             gearActionDetails.actorSlotID = actor.actorSlotID;
                             gearActionDetails.gearID = gear.gearID;
+                            gearActionDetails.modalLevel = 2;
                             //get actor's preferred gear
                             GearType preferredGear = actor.arc.preferredGear;
                             if (preferredGear != null)
@@ -1209,7 +1210,7 @@ public class ActorManager : MonoBehaviour
                             }
                             EventButtonDetails gearDetails = new EventButtonDetails()
                             {
-                                buttonTitle = string.Format("Give {0}", gear.name),
+                                buttonTitle = string.Format("Give to {0}", actor.arc.name),
                                 buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
                                 buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutralEffect, gear.type.name,
                                 colourEnd, actor.arc.name, actor.actorName),
@@ -1231,7 +1232,56 @@ public class ActorManager : MonoBehaviour
         {
             Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
         }
+        //Debug
+        if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
+        if (infoBuilder.Length == 0) { infoBuilder.Append("Test data"); }
 
+        //
+        // - - - Cancel - - - (both sides)
+        //
+        //Cancel button is added last
+        EventButtonDetails cancelDetails = null;
+        if (gear != null)
+        {
+            if (infoBuilder.Length > 0)
+            {
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
+                    buttonTooltipMain = cancelText,
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                };
+            }
+            else
+            {
+                //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
+                    buttonTooltipMain = cancelText,
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                };
+            }
+        }
+        else
+        {
+            //Null gear -> invalid menu creation
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
+                buttonTooltipMain = string.Format("{0}Invalid Gear{1}", colourBadEffect, colourEnd),
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+            };
+        }
+        //add Cancel button to list
+        tempList.Add(cancelDetails);
         return tempList;
     }
 

@@ -26,14 +26,21 @@ namespace modalAPI
     {
         public string itemName;                                         //multipurpose node, Actor or gear name
         public string itemDetails;
-        public int itemID;
+        public int itemID;                                              //multipurpose datapoint, default -1
+        public int modalLevel;                                          //what level modal masking do you want? default 1
         public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
         public Vector3 itemPos;                                         //position of item in world units (transform)
         public ActionMenuType menuType;                                 //what type of action menu is it? (Node / Actor / Gear, etc.)
+
+        public ModalPanelDetails()
+        {
+            modalLevel = 1;
+            itemID = -1;
+        }
     }
 
     /// <summary>
-    /// data fed to ActionManager.cs -> Process 'x' Action to facilitate processing the node action
+    /// data fed to ActionManager.cs -> Process 'x' Action to facilitate processing the action
     /// </summary>
     public class ModalActionDetails
     {
@@ -41,6 +48,7 @@ namespace modalAPI
         public int nodeID;
         public int actorSlotID;                                         //for standard actor based node actions, ignore otherwise
         public EventType eventType;                                     //event that is triggered (Only used for Recruit Actors, ignore otherwise)
+        public int modalLevel;                                          //modal level that the outcome window will be on (same as current), default 1
 
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
@@ -54,6 +62,7 @@ namespace modalAPI
             level = -1;
             gearAction = null;
             gearID = -1;
+            modalLevel = 1;
         }
     }
 
@@ -67,10 +76,14 @@ namespace modalAPI
         public string textTop;
         public string textBottom;
         public Sprite sprite;
+        public int modalLevel;              //modal level of outcome window, default 1
         public bool isAction;               //true if an action has been used
 
         public ModalOutcomeDetails()
-        { isAction = false; }
+        {
+            modalLevel = 1;
+            isAction = false;
+        }
     }
 
     /// <summary>

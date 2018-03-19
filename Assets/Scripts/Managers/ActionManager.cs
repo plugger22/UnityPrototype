@@ -1125,7 +1125,7 @@ public class ActionManager : MonoBehaviour
                 {
                     //Give Gear
                     outcomeDetails.textTop = string.Format("{0} {1} thanks you for the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
-
+                    outcomeDetails.modalLevel = details.modalLevel;
                     //get actor's preferred gear
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)

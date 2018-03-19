@@ -24,6 +24,9 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Universal Info sprite")]
     public Sprite infoSprite;
 
+    [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]
+    [Range(1,2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'
+
    
 
     //Actor display at bottom
@@ -54,8 +57,9 @@ public class GUIManager : MonoBehaviour
     List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();       //actors (not player)
     List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)
 
-    private bool isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+    private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
+                                                                    //array corresponds to modalLevel, one block setting for each level
 
     /// <summary>
     /// Initialises GUI with all relevant data
@@ -119,8 +123,10 @@ public class GUIManager : MonoBehaviour
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
-        //make sure raycasts are active, eg. node tooltips
-        isBlocked = false;
+        //make sure blocking layers are all set to false
+        isBlocked = new bool[numOfModalLevels];
+        for (int i = 0; i < isBlocked.Length; i++)
+        { isBlocked[i] = false; }
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
@@ -232,17 +238,27 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
     /// NOTE: UI elements are blocked through modal panels masks (ModalGUI.cs) and node gameobjects through code (gamestate)
+    /// level is default 1, only use 2 if you require a UI element to open/close ontop of another, retained, UI element. Eg menu ontop of InventoryUI
     /// </summary>
     /// <param name="isBlocked"></param>
     public void SetIsBlocked(bool isBlocked, int level = 1)
     {
-        this.isBlocked = isBlocked;
-        Debug.Log(string.Format("GM: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n"));
+        Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
+        this.isBlocked[level - 1] = isBlocked;
+        Debug.Log(string.Format("GUIManager: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n"));
         GameManager.instance.modalGUIScropt.SetBaseModal(isBlocked, level);
     }
 
-    public bool CheckIsBlocked()
-    { return isBlocked; }
+    /// <summary>
+    /// checks if modal layer blocked for a particular level
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public bool CheckIsBlocked(int level = 1)
+    {
+        Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
+        return isBlocked[level - 1];
+    }
 
 
 }

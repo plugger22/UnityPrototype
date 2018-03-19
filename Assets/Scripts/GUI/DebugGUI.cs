@@ -113,9 +113,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Gear Display"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "GameState"))
             {
-                Debug.Log("Button -> Toggle Gear");
+                Debug.Log("Button -> Toggle Game State");
                 if (debugDisplay != 5)
                 { debugDisplay = 5; }
                 else { debugDisplay = 0; }
@@ -377,7 +377,7 @@ public class DebugGUI : MonoBehaviour
                     //player's gear
                     case 5:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.playerScript.DisplayGear();
+                        analysis = GameManager.instance.inputScript.DisplayGameState();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 400), analysis, customBackground);
                         break;
                     //actor Pools
