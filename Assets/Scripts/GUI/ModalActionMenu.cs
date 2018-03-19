@@ -223,7 +223,7 @@ public class ModalActionMenu : MonoBehaviour
             outcomeDetails.side = GameManager.instance.sideScript.PlayerSide;
             outcomeDetails.textTop = "You have used up all your Actions for this turn";
             outcomeDetails.sprite = GameManager.instance.guiScript.infoSprite;
-            outcomeDetails.modalLevel = 2;
+            outcomeDetails.modalLevel = details.modalLevel;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }
@@ -241,8 +241,7 @@ public class ModalActionMenu : MonoBehaviour
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
         //set game state
-        if (GameManager.instance.modalGUIScropt.CheckModalLevel() == 0)
-        { GameManager.instance.inputScript.ResetStates(); }
+        GameManager.instance.inputScript.ResetStates();
         Debug.Log("UI: Close -> ModalActionMenu" + "\n");
     }
 }

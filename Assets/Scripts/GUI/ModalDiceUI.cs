@@ -311,7 +311,6 @@ public class ModalDiceUI : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state
         GameManager.instance.inputScript.ResetStates();
-        GameManager.instance.guiScript.SetIsBlocked(false);
         Debug.Log("UI: Close -> ModalDiceUI" + "\n");
     }
 

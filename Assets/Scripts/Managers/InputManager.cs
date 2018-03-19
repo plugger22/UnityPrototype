@@ -5,7 +5,7 @@ using gameAPI;
 using System.Text;
 
 /// <summary>
-/// handles all input
+/// handles all input & game states
 /// </summary>
 public class InputManager : MonoBehaviour
 {
@@ -51,11 +51,16 @@ public class InputManager : MonoBehaviour
 
     /// <summary>
     /// Quick way of reseting game & modal states back to defaults
+    /// Automatically checks for modalLevel being 0 before resetting states
     /// </summary>
     public void ResetStates()
     {
-        GameState = GameState.Normal;
-        ModalState = ModalState.None;
+        //reset only if modalLevel is 0
+        if (GameManager.instance.modalGUIScropt.CheckModalLevel() == 0)
+        {
+            GameState = GameState.Normal;
+            ModalState = ModalState.None;
+        }
     }
 
     /// <summary>

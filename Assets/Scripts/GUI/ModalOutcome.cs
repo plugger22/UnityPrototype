@@ -169,8 +169,9 @@ public class ModalOutcome : MonoBehaviour
         screenPos.y = Screen.height / 2;
         //set position
         modalOutcomeWindow.transform.position = screenPos;
-        //set game state
-        GameManager.instance.inputScript.SetModalState(ModalState.Outcome);
+        //set game state (retain existing modal gamestate if modal level 2+)
+        if (details.modalLevel < 2)
+        { GameManager.instance.inputScript.SetModalState(ModalState.Outcome); }
         modalLevel = details.modalLevel;
         Debug.Log("UI: Open -> ModalOutcome window" + "\n");
     }
@@ -211,8 +212,7 @@ public class ModalOutcome : MonoBehaviour
         //set modal false
         GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
         //set game state
-        if (GameManager.instance.modalGUIScropt.CheckModalLevel() == 0)
-        { GameManager.instance.inputScript.ResetStates(); }
+        GameManager.instance.inputScript.ResetStates();
         //end of turn check
         if (isAction == true)
         { EventManager.instance.PostNotification(EventType.UseAction, this); }
