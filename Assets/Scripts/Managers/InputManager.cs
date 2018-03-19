@@ -50,16 +50,19 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Quick way of reseting game & modal states back to defaults
+    /// Quick way of reseting game & modal states back to defaults. If you input a modalState it will reset ModalState to this value, rather than the default 'None'
     /// Automatically checks for modalLevel being 0 before resetting states
     /// </summary>
-    public void ResetStates()
+    public void ResetStates(ModalState modal = ModalState.None)
     {
         //reset only if modalLevel is 0
         if (GameManager.instance.modalGUIScropt.CheckModalLevel() == 0)
         {
-            GameState = GameState.Normal;
-            ModalState = ModalState.None;
+            ModalState = modal;
+            //only reset back to normal if there is no longer a modal state
+            if (modal == ModalState.None)
+            { GameState = GameState.Normal; }
+
         }
     }
 
@@ -168,7 +171,7 @@ public class InputManager : MonoBehaviour
                     return;
                 }
                 break;
-                
+
             case GameState.ModalUI:
                 //Hotkeys for Modal UI windows
                 switch (_modalState)

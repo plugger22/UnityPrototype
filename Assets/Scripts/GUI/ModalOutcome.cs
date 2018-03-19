@@ -32,6 +32,7 @@ public class ModalOutcome : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int modalLevel;                              //modal level of menu, passed in by ModalOutcomeDetails in SetModalOutcome
+    private ModalState modalState;                       //modal state to return to once outcome window closed (handles modalLevel 2+ cases, ignored for rest)
 
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
 
@@ -169,10 +170,10 @@ public class ModalOutcome : MonoBehaviour
         screenPos.y = Screen.height / 2;
         //set position
         modalOutcomeWindow.transform.position = screenPos;
-        //set game state (retain existing modal gamestate if modal level 2+)
-        if (details.modalLevel < 2)
-        { GameManager.instance.inputScript.SetModalState(ModalState.Outcome); }
+        GameManager.instance.inputScript.SetModalState(ModalState.Outcome);
+        //pass through data for when the outcome window is closed
         modalLevel = details.modalLevel;
+        modalState = details.modalState;
         Debug.Log("UI: Open -> ModalOutcome window" + "\n");
     }
 
@@ -212,7 +213,7 @@ public class ModalOutcome : MonoBehaviour
         //set modal false
         GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.instance.inputScript.ResetStates(modalState);
         //end of turn check
         if (isAction == true)
         { EventManager.instance.PostNotification(EventType.UseAction, this); }

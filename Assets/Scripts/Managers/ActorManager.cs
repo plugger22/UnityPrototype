@@ -1178,6 +1178,7 @@ public class ActorManager : MonoBehaviour
                             gearActionDetails.actorSlotID = actor.actorSlotID;
                             gearActionDetails.gearID = gear.gearID;
                             gearActionDetails.modalLevel = 2;
+                            gearActionDetails.modalState = ModalState.Inventory;
                             //get actor's preferred gear
                             GearType preferredGear = actor.arc.preferredGear;
                             if (preferredGear != null)

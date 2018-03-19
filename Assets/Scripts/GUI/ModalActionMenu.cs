@@ -224,6 +224,7 @@ public class ModalActionMenu : MonoBehaviour
             outcomeDetails.textTop = "You have used up all your Actions for this turn";
             outcomeDetails.sprite = GameManager.instance.guiScript.infoSprite;
             outcomeDetails.modalLevel = details.modalLevel;
+            outcomeDetails.modalState = details.modalState;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }

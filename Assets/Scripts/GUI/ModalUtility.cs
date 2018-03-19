@@ -28,6 +28,7 @@ namespace modalAPI
         public string itemDetails;
         public int itemID;                                              //multipurpose datapoint, default -1
         public int modalLevel;                                          //what level modal masking do you want? default 1
+        public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
         public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
         public Vector3 itemPos;                                         //position of item in world units (transform)
         public ActionMenuType menuType;                                 //what type of action menu is it? (Node / Actor / Gear, etc.)
@@ -35,6 +36,7 @@ namespace modalAPI
         public ModalPanelDetails()
         {
             modalLevel = 1;
+            modalState = ModalState.None;
             itemID = -1;
         }
     }
@@ -49,7 +51,7 @@ namespace modalAPI
         public int actorSlotID;                                         //for standard actor based node actions, ignore otherwise
         public EventType eventType;                                     //event that is triggered (Only used for Recruit Actors, ignore otherwise)
         public int modalLevel;                                          //modal level that the outcome window will be on (same as current), default 1
-
+        public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
         public int gearID;                                              //Resistance only: special node gear actions
@@ -63,6 +65,7 @@ namespace modalAPI
             gearAction = null;
             gearID = -1;
             modalLevel = 1;
+            modalState = ModalState.None;
         }
     }
 
@@ -77,11 +80,13 @@ namespace modalAPI
         public string textBottom;
         public Sprite sprite;
         public int modalLevel;              //modal level of outcome window, default 1
+        public ModalState modalState;       //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
         public bool isAction;               //true if an action has been used
 
         public ModalOutcomeDetails()
         {
             modalLevel = 1;
+            modalState = ModalState.None;
             isAction = false;
         }
     }
