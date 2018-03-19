@@ -115,11 +115,8 @@ public class ModalOutcome : MonoBehaviour
     {
         Debug.Log(string.Format("Outcome: {0}{1}", details.textTop, "\n"));
         //set modal true
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
         //open panel at start, the modal window is already active on the panel
-
-        //modalOutcomeObject.SetActive(true);
-
         modalOutcomeWindow.SetActive(true);
         //register action status
         isAction = details.isAction;

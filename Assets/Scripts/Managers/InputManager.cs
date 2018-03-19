@@ -45,20 +45,23 @@ public class InputManager : MonoBehaviour
     /// <param name="modal"></param>
     public void SetModalState(ModalState modal)
     {
-        GameState = GameState.ModalUI;
+        if (modal != ModalState.None)
+        { GameState = GameState.ModalUI; }
         ModalState = modal;
     }
 
+
     /// <summary>
-    /// Quick way of reseting game & modal states back to defaults. If you input a modalState it will reset ModalState to this value, rather than the default 'None'
-    /// Automatically checks for modalLevel being 0 before resetting states
+    /// Quick way of reseting game and modal states back to defaults. If you input a modalState it will reset ModalState to this value, rather than the default 'None'
+    /// Will only reset gamestate back to Normal if modalLevel is '0' (internal check)
     /// </summary>
+    /// <param name="modal"></param>
     public void ResetStates(ModalState modal = ModalState.None)
     {
-        //reset only if modalLevel is 0
+        ModalState = modal;
+        //reset gamestate only if modalLevel is 0
         if (GameManager.instance.modalGUIScropt.CheckModalLevel() == 0)
         {
-            ModalState = modal;
             //only reset back to normal if there is no longer a modal state
             if (modal == ModalState.None)
             { GameState = GameState.Normal; }
@@ -243,11 +246,13 @@ public class InputManager : MonoBehaviour
     public string DisplayGameState()
     {
         StringBuilder builder = new StringBuilder();
+        int modalLevel = GameManager.instance.modalGUIScropt.CheckModalLevel();
         builder.Append(" Game States");
         builder.AppendLine(); builder.AppendLine();
         builder.Append(string.Format(" GameState -> {0}{1}", GameState, "\n"));
         builder.Append(string.Format(" ModalState -> {0}{1}", ModalState, "\n"));
-        builder.Append(string.Format(" ModalLevel -> {0}{1}", GameManager.instance.modalGUIScropt.CheckModalLevel(), "\n"));
+        builder.Append(string.Format(" ModalLevel -> {0}{1}", modalLevel, "\n"));
+        builder.Append(string.Format(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n"));
         return builder.ToString();
     }
     

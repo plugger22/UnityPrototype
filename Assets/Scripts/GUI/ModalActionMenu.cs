@@ -45,6 +45,7 @@ public class ModalActionMenu : MonoBehaviour
     private float fadeInTime;
     private int offset;
     private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetActionMenu
+    private ModalState modalState;                          //modal state to return to if action panel closed
 
     //colour palette
     /*private string colourEffects;
@@ -214,6 +215,7 @@ public class ModalActionMenu : MonoBehaviour
             //block raycasts to gameobjects
             GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
             modalLevel = details.modalLevel;
+            modalState = details.modalState;
             Debug.Log("UI: Open -> ModalActionMenu" + "\n");
         }
         else
@@ -237,12 +239,11 @@ public class ModalActionMenu : MonoBehaviour
     {
         //modalActionObject.SetActive(false);
         modalMenuObject.SetActive(false);
-
         GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.instance.inputScript.ResetStates(modalState);
         Debug.Log("UI: Close -> ModalActionMenu" + "\n");
     }
 }

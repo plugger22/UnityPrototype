@@ -59,7 +59,7 @@ public class GUIManager : MonoBehaviour
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                     //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
-                                                                    //array corresponds to modalLevel, one block setting for each level
+                                                                    //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
 
     /// <summary>
     /// Initialises GUI with all relevant data
@@ -124,7 +124,7 @@ public class GUIManager : MonoBehaviour
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
         //make sure blocking layers are all set to false
-        isBlocked = new bool[numOfModalLevels];
+        isBlocked = new bool[numOfModalLevels + 1];
         for (int i = 0; i < isBlocked.Length; i++)
         { isBlocked[i] = false; }
         //event listener
@@ -244,9 +244,9 @@ public class GUIManager : MonoBehaviour
     public void SetIsBlocked(bool isBlocked, int level = 1)
     {
         Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
-        this.isBlocked[level - 1] = isBlocked;
+        this.isBlocked[level] = isBlocked;
         Debug.Log(string.Format("GUIManager: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n"));
-        GameManager.instance.modalGUIScropt.SetBaseModal(isBlocked, level);
+        GameManager.instance.modalGUIScropt.SetModalMasks(isBlocked, level);
     }
 
     /// <summary>
@@ -257,7 +257,7 @@ public class GUIManager : MonoBehaviour
     public bool CheckIsBlocked(int level = 1)
     {
         Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
-        return isBlocked[level - 1];
+        return isBlocked[level];
     }
 
 

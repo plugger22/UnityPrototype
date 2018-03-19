@@ -52,6 +52,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                 itemID = gear.gearID,
                                 itemName = gear.name,
                                 modalLevel = 2,
+                                modalState = ModalState.Inventory,
                                 itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
                                 itemPos = position,
                                 listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.gearID),

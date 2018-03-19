@@ -35,10 +35,10 @@ public class ModalGUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets base modal level which is a combination of two masks to provide an all over greyed background and a partial blocking of mouse input to UI elements
+    /// Sets modal masks which are (for base level) a combination of two masks to provide an all over greyed background and a partial blocking of mouse input to UI elements
     /// level refers to modal level (can have multiple, like layers, separating UI components)
     /// </summary>
-    public void SetBaseModal(bool isBlocked, int level)
+    public void SetModalMasks(bool isBlocked, int level)
     {
         switch (level)
         {

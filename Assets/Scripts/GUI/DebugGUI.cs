@@ -113,7 +113,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "GameState"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Game State"))
             {
                 Debug.Log("Button -> Toggle Game State");
                 if (debugDisplay != 5)
