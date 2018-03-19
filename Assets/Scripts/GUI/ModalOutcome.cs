@@ -23,7 +23,7 @@ public class ModalOutcome : MonoBehaviour
     public Sprite buttonSpriteResistance;*/
     
 
-    public GameObject modalOutcomeObject;
+    //public GameObject modalOutcomeObject;
     public GameObject modalOutcomeWindow;
 
     private static ModalOutcome modalOutcome;
@@ -39,8 +39,12 @@ public class ModalOutcome : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        canvasGroup = modalOutcomeObject.GetComponent<CanvasGroup>();
-        rectTransform = modalOutcomeObject.GetComponent<RectTransform>();
+        /*canvasGroup = modalOutcomeObject.GetComponent<CanvasGroup>();
+        rectTransform = modalOutcomeObject.GetComponent<RectTransform>();*/
+
+        canvasGroup = modalOutcomeWindow.GetComponent<CanvasGroup>();
+        rectTransform = modalOutcomeWindow.GetComponent<RectTransform>();
+
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         ButtonInteraction buttonInteract = confirmButton.GetComponent<ButtonInteraction>();
         if (buttonInteract != null)
@@ -111,7 +115,9 @@ public class ModalOutcome : MonoBehaviour
         //set modal true
         GameManager.instance.guiScript.SetIsBlocked(true);
         //open panel at start, the modal window is already active on the panel
-        modalOutcomeObject.SetActive(true);
+
+        //modalOutcomeObject.SetActive(true);
+
         modalOutcomeWindow.SetActive(true);
         //register action status
         isAction = details.isAction;
@@ -187,7 +193,10 @@ public class ModalOutcome : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool CheckModalOutcomeActive()
-    { return modalOutcomeObject.activeSelf; }
+    {
+        //return modalOutcomeObject.activeSelf;
+        return modalOutcomeWindow.activeSelf;
+    }
 
     /// <summary>
     /// close window
@@ -195,7 +204,8 @@ public class ModalOutcome : MonoBehaviour
     public void CloseModalOutcome()
     {
         Debug.Log("UI: Close -> ModalOutcome window" + "\n");
-        modalOutcomeObject.SetActive(false);
+        //modalOutcomeObject.SetActive(false);
+        modalOutcomeWindow.SetActive(false);
         //set modal false
         GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state

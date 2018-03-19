@@ -24,7 +24,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Universal Info sprite")]
     public Sprite infoSprite;
 
-    private int modalLevel;             //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
+   
 
     //Actor display at bottom
     private GameObject Actor0;
@@ -231,12 +231,14 @@ public class GUIManager : MonoBehaviour
 
     /// <summary>
     /// set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+    /// NOTE: UI elements are blocked through modal panels masks (ModalGUI.cs) and node gameobjects through code (gamestate)
     /// </summary>
     /// <param name="isBlocked"></param>
-    public void SetIsBlocked(bool isBlocked)
+    public void SetIsBlocked(bool isBlocked, int level = 1)
     {
         this.isBlocked = isBlocked;
-        Debug.Log(string.Format("GM: Blocked -> {0}{1}", isBlocked, "\n"));
+        Debug.Log(string.Format("GM: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n"));
+        GameManager.instance.modalGUIScropt.SetBaseModal(isBlocked, level);
     }
 
     public bool CheckIsBlocked()

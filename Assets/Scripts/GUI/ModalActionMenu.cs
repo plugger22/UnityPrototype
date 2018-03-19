@@ -14,7 +14,7 @@ using gameAPI;
 /// </summary>
 public class ModalActionMenu : MonoBehaviour
 {
-    public GameObject modalActionObject;
+    //public GameObject modalActionObject;
     public GameObject modalMenuObject;
     public Image modalPanel;
     public Image background;
@@ -233,6 +233,8 @@ public class ModalActionMenu : MonoBehaviour
     public void CloseActionMenu()
     {
         //modalActionObject.SetActive(false);
+        modalMenuObject.SetActive(false);
+
         GameManager.instance.guiScript.SetIsBlocked(false);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
