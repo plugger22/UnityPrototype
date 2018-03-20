@@ -144,7 +144,7 @@ public class ActorManager : MonoBehaviour
                 ProcessRecruitChoiceAuthority(returnDataRecruitAuthority);
                 break;
             case EventType.InventorySetReserve:
-                InitialiseReservePoolDisplay();
+                InitialiseReservePoolInventory();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1289,6 +1289,20 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a list of all relevant actions an Actor in the Reserve Pool (right click actor sprite in inventory)
+    /// Both sides -> 1 x Active Duty, 1 x Let Go / Fire (unhappy), 1 x Reassure,  1 x Cancel
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public List<EventButtonDetails> GetReservePoolActions(int actorID)
+    {
+        //return list of button details
+        List<EventButtonDetails> eventList = new List<EventButtonDetails>();
+
+        return eventList;
+    }
+
+    /// <summary>
     /// call this to recruit an actor of a specified level (1 to 3) from a Decision
     /// </summary>
     /// <param name="level"></param>
@@ -1509,7 +1523,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// sets up all needed data for Reserve Actor pool and triggers ModalInventoryUI to display such
     /// </summary>
-    private void InitialiseReservePoolDisplay()
+    private void InitialiseReservePoolInventory()
     {
         int numOfActors;
         string colourTrait, unhappySituation;
@@ -1529,8 +1543,8 @@ public class ActorManager : MonoBehaviour
                 maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
             data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault, 
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
-
-            //Loop Gear list and populate arrays
+            data.handler = RefreshReservePool;
+            //Loop Actor list and populate arrays
             List<int> listOfActors = GameManager.instance.dataScript.GetActorList(data.side, ActorList.Reserve);
             if (listOfActors != null)
             {
@@ -1640,7 +1654,93 @@ public class ActorManager : MonoBehaviour
     }
 
 
- 
+    public InventoryInputData RefreshReservePool()
+    {
+        int numOfActors;
+        string colourTrait, unhappySituation;
+        InventoryInputData data = new InventoryInputData();
+        numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
+        data.side = GameManager.instance.sideScript.PlayerSide;
+        data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutralEffect, colourEnd,
+            colourDefault, numOfActors, colourEnd, colourNeutralEffect, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutralEffect,
+            maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
+        if (numOfActors > 0)
+        {
+            data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault,
+            colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
+        }
+        else { data.textBottom = ""; }
+        //Loop Actor list and populate arrays
+        List<int> listOfActors = GameManager.instance.dataScript.GetActorList(data.side, ActorList.Reserve);
+        if (listOfActors != null)
+        {
+            Condition conditionUnhappy = GameManager.instance.dataScript.GetCondition("UNHAPPY");
+            if (conditionUnhappy != null)
+            {
+                for (int i = 0; i < listOfActors.Count; i++)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                    if (actor != null)
+                    {
+                        InventoryOptionData optionData = new InventoryOptionData();
+                        optionData.sprite = actor.arc.baseSprite;
+                        optionData.textUpper = actor.arc.name;
+                        //colour code trait
+                        switch (actor.trait.typeOfTrait.name)
+                        {
+                            case "Good": colourTrait = colourGoodEffect; break;
+                            case "Neutral": colourTrait = colourNeutralEffect; break;
+                            case "Bad": colourTrait = colourBadEffect; break;
+                            default: colourTrait = colourDefault; break;
+                        }
+                        //unhappy situation
+                        if (actor.CheckConditionPresent(conditionUnhappy) == true)
+                        { unhappySituation = string.Format("{0}{1}{2}", colourBadEffect, conditionUnhappy.name, colourEnd); }
+                        else
+                        {
+                            unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
+                              actor.unhappyTimer != 1 ? "s" : "", colourEnd);
+                        }
+                        //combined text string
+                        optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);
+                        optionData.optionID = actor.actorID;
+                        //tooltip
+                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                        //arc type and name
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRecruit, actor.arc.name, colourEnd,
+                            "\n", colourNormal, actor.actorName, colourEnd);
+                        //stats
+                        string[] arrayOfQualities = GameManager.instance.dataScript.GetQualities(data.side);
+                        StringBuilder builder = new StringBuilder();
+                        if (arrayOfQualities.Length > 0)
+                        {
+                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
+                                actor.datapoint0, colourEnd, "\n"));
+                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
+                                actor.datapoint1, colourEnd, "\n"));
+                            builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
+                                actor.datapoint2, colourEnd));
+                            tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
+                        }
+                        //trait and action
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
+                            GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level),
+                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                        //add to arrays
+                        data.arrayOfOptions[i] = optionData;
+                        data.arrayOfTooltips[i] = tooltipDetails;
+                    }
+                    else
+                    { Debug.LogWarning(string.Format("Invalid Actor (Null) for actorID {0}", listOfActors[i])); }
+                }
+            }
+            else
+            { Debug.LogError("Invalid conditionUnhappy (Null)"); }
+        }
+        else
+        { Debug.LogError("Invalid listOfActors (Null)"); }
+        return data;
+    }
 
     /// <summary>
     /// Processes choice of Recruit Resistance Actor
