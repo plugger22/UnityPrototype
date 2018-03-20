@@ -1205,7 +1205,7 @@ public class ActionManager : MonoBehaviour
             //is there a delegate method that needs processing?
             if (details.handler != null)
             {
-
+                details.handler();
             }
         }
         //generate a create modal window event

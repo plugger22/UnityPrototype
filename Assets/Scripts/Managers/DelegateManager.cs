@@ -9,7 +9,7 @@ namespace delegateAPI
     public delegate void manageDelegate(ModalActionDetails d);
 
     //used for ModalInventoryUI.cs to pass the method needed to refresh the option line-up once an Action has been taken
-    public delegate InventoryInputData inventoryDelegate();
+    public delegate InventoryInputData InventoryDelegate();
 
     //used for ActionMenu's to pass a method to be run once that button is pressed, if null ignore
     public delegate void ActionButtonDelegate();

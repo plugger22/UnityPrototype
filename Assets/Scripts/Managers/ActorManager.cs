@@ -1179,6 +1179,7 @@ public class ActorManager : MonoBehaviour
                             gearActionDetails.gearID = gear.gearID;
                             gearActionDetails.modalLevel = 2;
                             gearActionDetails.modalState = ModalState.Inventory;
+                            gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
                             //get actor's preferred gear
                             GearType preferredGear = actor.arc.preferredGear;
                             if (preferredGear != null)
@@ -1218,7 +1219,7 @@ public class ActorManager : MonoBehaviour
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                 //use a Lambda to pass arguments to the action
                                 action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); },
-                                handler = GameManager.instance.inventoryScript.RefreshInventoryUI
+                                
                             };
                             //add Lie Low button to list
                             tempList.Add(gearDetails);

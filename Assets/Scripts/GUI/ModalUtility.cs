@@ -17,7 +17,6 @@ namespace modalAPI
         public string buttonTooltipMain;
         public string buttonTooltipDetail;
         public UnityAction action;
-        public ActionButtonDelegate handler;                            //method to call once button pressed, ignore if default null
     }
 
 
@@ -54,6 +53,7 @@ namespace modalAPI
         public EventType eventType;                                     //event that is triggered (Only used for Recruit Actors, ignore otherwise)
         public int modalLevel;                                          //modal level that the outcome window will be on (same as current), default 1
         public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
+        public ActionButtonDelegate handler;                            //method to call once button pressed, ignore if default null
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
         public int gearID;                                              //Resistance only: special node gear actions
@@ -218,7 +218,7 @@ namespace modalAPI
     {
         public EventType leftClickEvent;                                                        //type of event triggered when any option is left clicked
         public EventType rightClickEvent;                                                       //type of event triggered when any option is right clicked
-        public inventoryDelegate handler;                                                       //method to call for refreshing inventory options
+        public InventoryDelegate handler;                                                       //method to call for refreshing inventory options
         public string textHeader;
         public string textTop;
         public string textBottom;

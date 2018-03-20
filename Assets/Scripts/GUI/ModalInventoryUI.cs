@@ -33,7 +33,7 @@ public class ModalInventoryUI : MonoBehaviour
     private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
 
-    private inventoryDelegate handler;                          //method to be called for an option refresh (passed into SetInventoryUI)
+    private InventoryDelegate handler;                          //method to be called for an option refresh (passed into SetInventoryUI)
 
     private string colourEffect;
     private string colourSide;
@@ -301,10 +301,65 @@ public class ModalInventoryUI : MonoBehaviour
     {
         if (handler != null)
         {
-            InventoryInputData data = handler();
-            if (data != null)
+            Debug.Log("ModalInventoryUI: RefreshInventoryUI");
+            //call specific method to refresh data
+            InventoryInputData details = handler();
+            if (details != null)
             {
-
+                //process data
+                topText.text = details.textTop;
+                bottomText.text = details.textBottom;
+                //loop array and set options
+                for (int i = 0; i < details.arrayOfOptions.Length; i++)
+                {
+                    //valid option?
+                    if (arrayOfInventoryOptions[i] != null)
+                    {
+                        if (arrayOfInteractions[i] != null)
+                        {
+                            if (details.arrayOfOptions[i] != null)
+                            {
+                                //activate option
+                                arrayOfInventoryOptions[i].SetActive(true);
+                                //populate option data
+                                arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
+                                arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
+                                arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
+                                arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
+                                //tooltip data
+                                if (arrayOfTooltips[i] != null)
+                                {
+                                    if (details.arrayOfTooltips[i] != null)
+                                    {
+                                        arrayOfTooltips[i].toolTipHeader = details.arrayOfTooltips[i].textHeader;
+                                        arrayOfTooltips[i].toolTipMain = details.arrayOfTooltips[i].textMain;
+                                        arrayOfTooltips[i].toolTipEffect = details.arrayOfTooltips[i].textDetails;
+                                    }
+                                    else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                }
+                                else
+                                {
+                                    Debug.LogError(string.Format("Invalid GenericTooltipUI (Null) in arrayOfTooltips[{0}]", i));
+                                }
+                            }
+                            else
+                            {
+                                //invalid option, switch off
+                                arrayOfInventoryOptions[i].SetActive(false);
+                            }
+                        }
+                        else
+                        {
+                            //error -> Null Interaction data
+                            Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[\"{0}\"] optionInteraction (Null)", i));
+                        }
+                    }
+                    else
+                    {                        
+                        //error -> Null array
+                        Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[\"{0}\"] (Null)", i));
+                    }
+                }
             }
             else
             {

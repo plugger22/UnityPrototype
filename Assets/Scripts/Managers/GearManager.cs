@@ -548,8 +548,79 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public InventoryInputData RefreshGearInventory()
     {
+        int numOfGear;
+        string colourRarity;
         InventoryInputData data = new InventoryInputData();
+        //close node tooltip -> safety check
+        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        //only for Resistance
+        if (GameManager.instance.sideScript.PlayerSide == GameManager.instance.globalScript.sideResistance)
+        {
+            numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
+            //At least one item of gear is present
+            data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourEffectNeutral, colourEnd,
+                colourDefault, numOfGear, colourEnd, colourEffectNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourEffectNeutral,
+                maxNumOfGear != 1 ? "s" : "", colourEnd);
+            if (numOfGear > 0)
+            {
+                data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Gear Options{7}", colourAlert, colourEnd,
+                    colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
+            }
+            else { data.textBottom = ""; }
+            data.handler = RefreshGearInventory;
+            //Loop Gear list and populate arrays
+            List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+            if (listOfGear != null)
+            {
+                for (int i = 0; i < numOfGear; i++)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                    if (gear != null)
+                    {
+                        InventoryOptionData optionData = new InventoryOptionData();
+                        optionData.sprite = gear.sprite;
+                        optionData.textUpper = gear.name.ToUpper();
+                        //colour code Rarity
+                        switch (gear.rarity.name)
+                        {
+                            case "Common": colourRarity = colourEffectBad; break;
+                            case "Rare": colourRarity = colourEffectNeutral; break;
+                            case "Unique": colourRarity = colourEffectGood; break;
+                            default: colourRarity = colourDefault; break;
+                        }
+                        optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
+                            colourDefault, gear.type.name, colourEnd);
+                        optionData.optionID = gear.gearID;
 
+                        //tooltip 
+                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                        StringBuilder builderHeader = new StringBuilder();
+                        builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
+                        string colourGearEffect = colourEffectNeutral;
+                        if (gear.data == 3) { colourGearEffect = colourEffectGood; }
+                        else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
+                        //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
+                        switch (gear.type.name)
+                        {
+                            case "Movement":
+                                builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                                break;
+                        }
+                        tooltipDetails.textHeader = builderHeader.ToString();
+                        tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd,
+                            "\n", colourSide, gear.type.name, colourEnd);
+                        //add to array
+                        data.arrayOfOptions[i] = optionData;
+                        data.arrayOfTooltips[i] = tooltipDetails;
+                    }
+                    else
+                    { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+                }
+            }
+            else
+            { Debug.LogError("Invalid listOfGear (Null)"); }
+        }
         return data;
     }
 
