@@ -1217,7 +1217,8 @@ public class ActorManager : MonoBehaviour
                                 colourEnd, actor.arc.name, actor.actorName),
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                 //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); }
+                                action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); },
+                                handler = GameManager.instance.inventoryScript.RefreshInventoryUI
                             };
                             //add Lie Low button to list
                             tempList.Add(gearDetails);
@@ -1636,6 +1637,9 @@ public class ActorManager : MonoBehaviour
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
         }
     }
+
+
+ 
 
     /// <summary>
     /// Processes choice of Recruit Resistance Actor

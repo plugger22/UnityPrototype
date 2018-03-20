@@ -1,4 +1,5 @@
-﻿using gameAPI;
+﻿using delegateAPI;
+using gameAPI;
 using modalAPI;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,13 +33,7 @@ public class ModalInventoryUI : MonoBehaviour
     private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
 
-    /*private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
-    private string optionTextSelected;                        //used for nested Generic Picker windows, ignore otherwise
-    private int nodeIDSelected;
-    private int actorSlotIDSelected;
-    private EventType defaultReturnEvent;                          //event to trigger once confirmation button is clicked
-    private EventType backReturnEvent;                  //event triggered when back button clicked (dynamic -> SetBackButton)
-    private ModalActionDetails nestedDetails;           //used only if there are multiple, nested, option windows (dynamic -> InitialiseNestedOptions)*/
+    private inventoryDelegate handler;                          //method to be called for an option refresh (passed into SetInventoryUI)
 
     private string colourEffect;
     private string colourSide;
@@ -154,17 +149,14 @@ public class ModalInventoryUI : MonoBehaviour
     private void SetInventoryUI(InventoryInputData details)
     {
         bool errorFlag = false;
-        //CanvasGroup inventoryCanvasGroup;
-        //InventoryInteraction optionInteraction;
         //set modal status
         GameManager.instance.guiScript.SetIsBlocked(true);
         //activate main panel
         modalPanelObject.SetActive(true);
         modalInventoryObject.SetActive(true);
         modalHeaderObject.SetActive(true);
-
-        /*//close node tooltip (safety check)
-        GameManager.instance.tooltipNodeScript.CloseTooltip();*/
+        //delegate method to be called in the event of refresh
+        handler = details.handler;
         //populate dialogue
         if (details != null)
         {
@@ -299,6 +291,30 @@ public class ModalInventoryUI : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.Log(string.Format("UI: Close -> ModalInventoryUI{0}", "\n"));
+    }
+
+
+    /// <summary>
+    /// Updates options and redraws options after an action has been taken
+    /// </summary>
+    public void RefreshInventoryUI()
+    {
+        if (handler != null)
+        {
+            InventoryInputData data = handler();
+            if (data != null)
+            {
+
+            }
+            else
+            {
+                Debug.LogError("Invalid InventoryInputData (Null)");
+            }
+        }
+        else
+        {
+            Debug.LogError("Invalid handler (null)");
+        }
     }
 
     //place new methods above here

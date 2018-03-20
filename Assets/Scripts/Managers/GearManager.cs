@@ -439,6 +439,7 @@ public class GearManager : MonoBehaviour
                 data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Gear Options{7}", colourAlert, colourEnd, 
                     colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
                 data.side = GameManager.instance.sideScript.PlayerSide;
+                data.handler = RefreshGearInventory;
                 //Loop Gear list and populate arrays
                 List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                 if (listOfGear != null)
@@ -540,6 +541,16 @@ public class GearManager : MonoBehaviour
             };
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
         }
+    }
+
+    /// <summary>
+    /// Called as a delegate method -> Recalculates option data in InventoryUI after an action has been taken
+    /// </summary>
+    public InventoryInputData RefreshGearInventory()
+    {
+        InventoryInputData data = new InventoryInputData();
+
+        return data;
     }
 
     /// <summary>

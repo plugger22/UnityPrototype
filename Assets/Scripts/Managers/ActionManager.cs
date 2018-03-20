@@ -1200,7 +1200,14 @@ public class ActionManager : MonoBehaviour
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            //is there a delegate method that needs processing?
+            if (details.handler != null)
+            {
+
+            }
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }

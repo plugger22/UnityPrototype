@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using gameAPI;
+using delegateAPI;
 
 namespace modalAPI
 {
@@ -16,6 +17,7 @@ namespace modalAPI
         public string buttonTooltipMain;
         public string buttonTooltipDetail;
         public UnityAction action;
+        public ActionButtonDelegate handler;                            //method to call once button pressed, ignore if default null
     }
 
 
@@ -216,6 +218,7 @@ namespace modalAPI
     {
         public EventType leftClickEvent;                                                        //type of event triggered when any option is left clicked
         public EventType rightClickEvent;                                                       //type of event triggered when any option is right clicked
+        public inventoryDelegate handler;                                                       //method to call for refreshing inventory options
         public string textHeader;
         public string textTop;
         public string textBottom;
