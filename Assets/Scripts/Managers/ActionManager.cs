@@ -158,7 +158,7 @@ public class ActionManager : MonoBehaviour
         if (details != null)
         {
             //get Actor
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, GameManager.instance.sideScript.PlayerSide);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, GameManager.instance.sideScript.PlayerSide);
             if (actor != null)
             {
                 //get node
@@ -472,7 +472,7 @@ public class ActionManager : MonoBehaviour
         { colourSide = colourAuthority; isResistance = false; }
         else { colourSide = colourResistance; isResistance = true; }
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, playerSide);
         if (actor != null)
         {
             //ActorHandle
@@ -481,7 +481,7 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericHandleActor;
                 genericDetails.side = playerSide;
-                genericDetails.actorSlotID = details.actorSlotID;
+                genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
                 genericDetails.textTop = string.Format("{0}Manage{1} {2}{3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
@@ -503,7 +503,7 @@ public class ActionManager : MonoBehaviour
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
-                            optionID = details.actorSlotID,
+                            optionID = details.actorDataID,
                             optionText = manageAction.name,
                             sprite = manageAction.sprite,
                         };
@@ -557,7 +557,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -593,7 +593,7 @@ public class ActionManager : MonoBehaviour
         { colourSide = colourAuthority; isResistance = false; }
         else { colourSide = colourResistance; isResistance = true; }
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, playerSide);
         if (actor != null)
         {
             //ActorHandle
@@ -602,7 +602,7 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericReserveActor;
                 genericDetails.side = playerSide;
-                genericDetails.actorSlotID = details.actorSlotID;
+                genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
                 genericDetails.textTop = string.Format("{0}Send to the Reserve Pool{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
@@ -623,7 +623,7 @@ public class ActionManager : MonoBehaviour
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
-                            optionID = details.actorSlotID,
+                            optionID = details.actorDataID,
                             optionText = manageAction.name,
                             sprite = manageAction.sprite,
                         };
@@ -691,7 +691,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -727,7 +727,7 @@ public class ActionManager : MonoBehaviour
         { colourSide = colourAuthority; isResistance = false; }
         else { colourSide = colourResistance; isResistance = true; }
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, playerSide);
         if (actor != null)
         {
             //ActorHandle
@@ -736,7 +736,7 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericDismissActor;
                 genericDetails.side = playerSide;
-                genericDetails.actorSlotID = details.actorSlotID;
+                genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
                 genericDetails.textTop = string.Format("{0}Dismiss{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
@@ -757,7 +757,7 @@ public class ActionManager : MonoBehaviour
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
-                            optionID = details.actorSlotID,
+                            optionID = details.actorDataID,
                             optionText = manageAction.name,
                             sprite = manageAction.sprite,
                         };
@@ -826,7 +826,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -862,7 +862,7 @@ public class ActionManager : MonoBehaviour
         { colourSide = colourAuthority; isResistance = false; }
         else { colourSide = colourResistance; isResistance = true; }
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, playerSide);
+        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, playerSide);
         if (actor != null)
         {
             //ActorHandle
@@ -871,7 +871,7 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericDisposeActor;
                 genericDetails.side = playerSide;
-                genericDetails.actorSlotID = details.actorSlotID;
+                genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
                 genericDetails.textTop = string.Format("{0}Dispose of{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
@@ -891,7 +891,7 @@ public class ActionManager : MonoBehaviour
                         GenericOptionDetails option = new GenericOptionDetails()
                         {
                             text = manageAction.optionTitle,
-                            optionID = details.actorSlotID,
+                            optionID = details.actorDataID,
                             optionText = manageAction.name,
                             sprite = manageAction.sprite,
                         };
@@ -960,7 +960,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -996,7 +996,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
             if (actor != null)
             {
                 actor.Status = ActorStatus.Inactive;
@@ -1015,7 +1015,7 @@ public class ActionManager : MonoBehaviour
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID)); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1029,7 +1029,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             //change alpha of actor to indicate inactive status
-            GameManager.instance.guiScript.UpdateActorAlpha(details.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+            GameManager.instance.guiScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaInactive);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -1057,7 +1057,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
             if (actor != null)
             {
                 string title = "";
@@ -1073,7 +1073,7 @@ public class ActionManager : MonoBehaviour
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID)); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1087,7 +1087,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             //change alpha of actor to indicate inactive status
-            GameManager.instance.guiScript.UpdateActorAlpha(details.actorSlotID, GameManager.instance.guiScript.alphaActive);
+            GameManager.instance.guiScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -1117,7 +1117,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
-            actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, details.side);
+            actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
             if (actor != null)
             {
                 gear = GameManager.instance.dataScript.GetGear(details.gearID);
@@ -1161,7 +1161,7 @@ public class ActionManager : MonoBehaviour
                 }
                 else { Debug.LogError(string.Format("Invalid gear (Null) for details.gearID {0}", details.gearID)); errorFlag = true; }
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID)); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1903,7 +1903,7 @@ public class ActionManager : MonoBehaviour
         if (data != null)
         {
             //pass through data
-            details.actorSlotID = data.actorSlotID;
+            details.actorDataID = data.actorSlotID;
             details.side = playerSide;
             if (string.IsNullOrEmpty(data.optionText) == false)
             {

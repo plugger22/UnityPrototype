@@ -239,10 +239,10 @@ public class GearManager : MonoBehaviour
             int actorID = 999;
             if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                 if (actor != null)
                 { actorID = actor.actorID; }
-                else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorSlotID)); errorFlag = true; }
+                else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorDataID)); errorFlag = true; }
             }
             //check capture provided no errors
             if (errorFlag == false)
@@ -265,7 +265,7 @@ public class GearManager : MonoBehaviour
             genericDetails.returnEvent = EventType.GenericGearChoice;
             genericDetails.side = globalResistance;
             genericDetails.nodeID = details.nodeID;
-            genericDetails.actorSlotID = details.actorSlotID;
+            genericDetails.actorSlotID = details.actorDataID;
             //picker text
             genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffectNeutral, colourEnd, colourNormal, colourEnd);
             genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
@@ -303,7 +303,7 @@ public class GearManager : MonoBehaviour
                 {
                     //chance of rare gear -> base chance * actor ability (or 1 if player)
                     int chance = chanceOfRareGear;
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                     if (actor != null)
                     {
                         //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
@@ -313,7 +313,7 @@ public class GearManager : MonoBehaviour
                     else
                     {
                         chance = 0;
-                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorSlotID));
+                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID));
                     }
                     if (Random.Range(0, 100) < chance)
                     {
@@ -440,6 +440,7 @@ public class GearManager : MonoBehaviour
                     colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
                 data.side = GameManager.instance.sideScript.PlayerSide;
                 data.handler = RefreshGearInventory;
+                data.state = InventoryState.Gear;
                 //Loop Gear list and populate arrays
                 List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                 if (listOfGear != null)

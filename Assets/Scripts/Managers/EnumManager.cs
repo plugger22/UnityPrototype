@@ -24,6 +24,11 @@ namespace gameAPI
     public enum AuthorityActor { Superintendent, Minister, Secretary }              //different names for authority actors depending on MetaLevel
 
     //
+    //  - - - UI - - -
+    //
+    public enum InventoryState { None, Gear, ReservePool}
+
+    //
     // - - - Level Manager
     //
     public enum ConnectionType { None, HIGH, MEDIUM, LOW, Count }

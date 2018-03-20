@@ -49,7 +49,7 @@ namespace modalAPI
     {
         public GlobalSide side;
         public int nodeID;
-        public int actorSlotID;                                         //for standard actor based node actions, ignore otherwise
+        public int actorDataID;                                         //for standard actor based node actions, ignore otherwise, Could be actorSlotID or actorID
         public EventType eventType;                                     //event that is triggered (Only used for Recruit Actors, ignore otherwise)
         public int modalLevel;                                          //modal level that the outcome window will be on (same as current), default 1
         public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
@@ -62,7 +62,7 @@ namespace modalAPI
         public ModalActionDetails()
         {
             nodeID = -1;
-            actorSlotID = -1;
+            actorDataID = -1;
             level = -1;
             gearAction = null;
             gearID = -1;
@@ -219,6 +219,7 @@ namespace modalAPI
         public EventType leftClickEvent;                                                        //type of event triggered when any option is left clicked
         public EventType rightClickEvent;                                                       //type of event triggered when any option is right clicked
         public InventoryDelegate handler;                                                       //method to call for refreshing inventory options
+        public InventoryState state;                                                              //enum -> type of Inventory, eg. Gear / Reserve Pool
         public string textHeader;
         public string textTop;
         public string textBottom;

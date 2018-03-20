@@ -210,6 +210,7 @@ public class ModalInventoryUI : MonoBehaviour
                             arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
                             arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
                             arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
+                            arrayOfInteractions[i].type = details.state;
                             //tooltip data
                             if (arrayOfTooltips[i] != null)
                             {
@@ -370,6 +371,51 @@ public class ModalInventoryUI : MonoBehaviour
         {
             Debug.LogError("Invalid handler (null)");
         }
+    }
+
+
+    /// <summary>
+    /// Method to run when a gear option is right clicked (info display)
+    /// </summary>
+    /// <param name="optionID"></param>
+    public void GearRightClicked(int optionData)
+    {
+        Gear gear = GameManager.instance.dataScript.GetGear(optionData);
+        if (gear != null)
+        {
+            //adjust position prior to sending
+            Vector3 position = transform.position;
+            position.x += 25;
+            position.y -= 50;
+            position = Camera.main.ScreenToWorldPoint(position);
+            //gear
+            ModalPanelDetails details = new ModalPanelDetails()
+            {
+                itemID = gear.gearID,
+                itemName = gear.name,
+                modalLevel = 2,
+                modalState = ModalState.Inventory,
+                itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
+                itemPos = position,
+                listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.gearID),
+                menuType = ActionMenuType.Gear
+            };
+            //activate menu
+            GameManager.instance.actionMenuScript.SetActionMenu(details);
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Gear (Null) for gearID / optionData {0}", optionData));
+        }
+    }
+
+    /// <summary>
+    /// Method to run when a gear option is left clicked (action menu)
+    /// </summary>
+    /// <param name="optionData"></param>
+    public void GearLeftClicked(int optionData)
+    {
+
     }
 
     //place new methods above here

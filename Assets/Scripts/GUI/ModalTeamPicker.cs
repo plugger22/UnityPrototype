@@ -201,7 +201,7 @@ public class ModalTeamPicker : MonoBehaviour
         {
             //track core data needed to resolve Insert team action
             teamNode = node;
-            teamActorSlotID = details.actorSlotID;
+            teamActorSlotID = details.actorDataID;
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, GameManager.instance.globalScript.sideAuthority);
             int numTeams = node.CheckNumOfTeams();
             builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name, node.nodeName, numTeams, 

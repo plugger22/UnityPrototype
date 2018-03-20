@@ -563,7 +563,7 @@ public class ActorManager : MonoBehaviour
 
                                             actionDetails.side = globalResistance;
                                             actionDetails.nodeID = nodeID;
-                                            actionDetails.actorSlotID = actor.actorSlotID;
+                                            actionDetails.actorDataID = actor.actorSlotID;
                                             //pass all relevant details to ModalActionMenu via Node.OnClick()
                                             if (actor.arc.nodeAction.special == null)
                                             {
@@ -817,7 +817,7 @@ public class ActorManager : MonoBehaviour
                                     ModalActionDetails actionDetails = new ModalActionDetails() { };
                                     actionDetails.side = globalAuthority;
                                     actionDetails.nodeID = nodeID;
-                                    actionDetails.actorSlotID = actor.actorSlotID;
+                                    actionDetails.actorDataID = actor.actorSlotID;
                                     //Node action is standard but other actions are possible
                                     UnityAction clickAction = null;
                                     //Team action
@@ -930,7 +930,7 @@ public class ActorManager : MonoBehaviour
                     //
                     ModalActionDetails manageActionDetails = new ModalActionDetails() { };
                     manageActionDetails.side = playerSide;
-                    manageActionDetails.actorSlotID = actor.actorSlotID;
+                    manageActionDetails.actorDataID = actor.actorSlotID;
                     tooltipText = string.Format("Select to choose what to do with {0} (send to the Reserve Pool, Dismiss or Dispose Off)", actor.actorName);
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {
@@ -957,7 +957,7 @@ public class ActorManager : MonoBehaviour
                         {
                             ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                             lielowActionDetails.side = playerSide;
-                            lielowActionDetails.actorSlotID = actor.actorSlotID;
+                            lielowActionDetails.actorDataID = actor.actorSlotID;
                             int numOfTurns = 3 - actor.datapoint2;
                             tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1} turn{2}", actor.actorName, numOfTurns,
                                 numOfTurns != 1 ? "s" : "");
@@ -995,7 +995,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                         gearActionDetails.side = playerSide;
-                                        gearActionDetails.actorSlotID = actor.actorSlotID;
+                                        gearActionDetails.actorDataID = actor.actorSlotID;
                                         gearActionDetails.gearID = gear.gearID;
                                         //get actor's preferred gear
                                         GearType preferredGear = actor.arc.preferredGear;
@@ -1060,7 +1060,7 @@ public class ActorManager : MonoBehaviour
                         //
                         ModalActionDetails activateActionDetails = new ModalActionDetails() { };
                         activateActionDetails.side = playerSide;
-                        activateActionDetails.actorSlotID = actor.actorSlotID;
+                        activateActionDetails.actorDataID = actor.actorSlotID;
                         int numOfTurns = 3 - actor.datapoint2;
                         tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", actor.actorName, numOfTurns,
                             numOfTurns != 1 ? "s" : "");
@@ -1151,10 +1151,10 @@ public class ActorManager : MonoBehaviour
     public List<EventButtonDetails> GetGearInventoryActions(int gearID)
     {            
         //return list of button details
-        List<EventButtonDetails> tempList = new List<EventButtonDetails>();            
+        List<EventButtonDetails> eventList = new List<EventButtonDetails>();            
         //Cancel button tooltip (handles all no go cases)
         StringBuilder infoBuilder = new StringBuilder();
-        string tooltipText, title;
+        string tooltipText;
         string cancelText = null;
         int benefit;
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
@@ -1175,7 +1175,7 @@ public class ActorManager : MonoBehaviour
                         {
                             ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                             gearActionDetails.side = globalResistance;
-                            gearActionDetails.actorSlotID = actor.actorSlotID;
+                            gearActionDetails.actorDataID = actor.actorSlotID;
                             gearActionDetails.gearID = gear.gearID;
                             gearActionDetails.modalLevel = 2;
                             gearActionDetails.modalState = ModalState.Inventory;
@@ -1222,7 +1222,7 @@ public class ActorManager : MonoBehaviour
                                 
                             };
                             //add Lie Low button to list
-                            tempList.Add(gearDetails);
+                            eventList.Add(gearDetails);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid actor (Null) in arrayOfActors[{0}]", i)); }
@@ -1284,9 +1284,10 @@ public class ActorManager : MonoBehaviour
             };
         }
         //add Cancel button to list
-        tempList.Add(cancelDetails);
-        return tempList;
+        eventList.Add(cancelDetails);
+        return eventList;
     }
+
 
     /// <summary>
     /// Returns a list of all relevant actions an Actor in the Reserve Pool (right click actor sprite in inventory)
@@ -1298,9 +1299,110 @@ public class ActorManager : MonoBehaviour
     {
         //return list of button details
         List<EventButtonDetails> eventList = new List<EventButtonDetails>();
+        //Cancel button tooltip (handles all no go cases)
+        StringBuilder infoBuilder = new StringBuilder();
+        string tooltipText, sideColour;
+        string cancelText = null;
+        bool isResistance;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"ss
+        if (playerSide.level == globalAuthority.level)
+        { sideColour = colourAuthority; isResistance = false; }
+        else { sideColour = colourResistance; isResistance = true; }
+        Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+        if (actor != null)
+        {
+            cancelText = string.Format("{0} {1}", actor.arc.name, actor.actorName);
+            //
+            // - - - Reassure - - -
+            //
+            if (actor.unhappyTimer > 0)
+            {
+                ModalActionDetails actorActionDetails = new ModalActionDetails() { };
+                actorActionDetails.side = playerSide;
+                actorActionDetails.actorDataID = actorID;
+                actorActionDetails.modalLevel = 2;
+                actorActionDetails.modalState = ModalState.Inventory;
+                actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
 
+                tooltipText = string.Format("{0}'s Unhappy Timer +{1}", actor.actorName, "2");
+                EventButtonDetails actorDetails = new EventButtonDetails()
+                {
+                    buttonTitle = string.Format("Reassure {0}", actor.arc.name),
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourGoodEffect, tooltipText, colourEnd),
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.InventoryReassure, this, actorActionDetails); },
+
+                };
+                //add Lie Low button to list
+                eventList.Add(actorDetails);
+            }
+            else
+            {
+                //can't reassure somebody who is already unhappy
+                infoBuilder.Append("Can't Reassure if Unhappy");
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", actorID));
+        }
+        //Debug
+        if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
+        if (infoBuilder.Length == 0) { infoBuilder.Append("Test data"); }
+
+        //
+        // - - - Cancel - - - (both sides)
+        //
+        //Cancel button is added last
+        EventButtonDetails cancelDetails = null;
+        if (actor != null)
+        {
+            if (infoBuilder.Length > 0)
+            {
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = cancelText,
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                };
+            }
+            else
+            {
+                //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                cancelDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "CANCEL",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = cancelText,
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                };
+            }
+        }
+        else
+        {
+            //Null gear -> invalid menu creation
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                buttonTooltipMain = string.Format("{0}Invalid Actor{1}", colourBadEffect, colourEnd),
+                buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+            };
+        }
+        //add Cancel button to list
+        eventList.Add(cancelDetails);
         return eventList;
     }
+
 
     /// <summary>
     /// call this to recruit an actor of a specified level (1 to 3) from a Decision
@@ -1315,7 +1417,7 @@ public class ActorManager : MonoBehaviour
         details.side = side;
         details.level = level;
         details.nodeID = -1;
-        details.actorSlotID = -1;
+        details.actorDataID = -1;
         //get event
         switch (side.name)
         {
@@ -1351,12 +1453,12 @@ public class ActorManager : MonoBehaviour
                 int actorID = 999;
                 if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                     if (actor != null)
                     { actorID = actor.actorID; }
                     else
                     {
-                        Debug.LogError(string.Format("Invalid actor (Null) for details.ActorSlotID {0}", details.actorSlotID));
+                        Debug.LogError(string.Format("Invalid actor (Null) for details.ActorSlotID {0}", details.actorDataID));
                         errorFlag = true;
                     }
                 }
@@ -1388,7 +1490,7 @@ public class ActorManager : MonoBehaviour
             if (details.side.level == globalResistance.level)
             { genericDetails.nodeID = details.nodeID; }
             else { genericDetails.nodeID = -1; }
-            genericDetails.actorSlotID = details.actorSlotID;
+            genericDetails.actorSlotID = details.actorDataID;
             //picker text
             genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourNeutralEffect, colourEnd, colourNormal, colourEnd);
             genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
@@ -1544,6 +1646,7 @@ public class ActorManager : MonoBehaviour
             data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault, 
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
             data.handler = RefreshReservePool;
+            data.state = InventoryState.ReservePool;
             //Loop Actor list and populate arrays
             List<int> listOfActors = GameManager.instance.dataScript.GetActorList(data.side, ActorList.Reserve);
             if (listOfActors != null)

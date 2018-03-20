@@ -710,7 +710,7 @@ public class TeamManager : MonoBehaviour
                 genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
                 genericDetails.side = globalResistance;
                 genericDetails.nodeID = details.nodeID;
-                genericDetails.actorSlotID = details.actorSlotID;
+                genericDetails.actorSlotID = details.actorDataID;
                 //picker text
                 genericDetails.textTop = string.Format("{0}Neutralise{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                 genericDetails.textMiddle = string.Format("{0}Operatives are in place to Neutralise a team. The team will be forced to retire immediately{1}",
