@@ -1354,6 +1354,46 @@ public class ActorManager : MonoBehaviour
                 //can't reassure somebody who is already unhappy
                 infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy{1}", colourBad, colourEnd));
             }
+            //
+            // - - - Let go - - -
+            //
+            if (actor.unhappyTimer > 0)
+            {
+                if (actor.isNewRecruit == true)
+                {
+                    ModalActionDetails actorActionDetails = new ModalActionDetails() { };
+                    actorActionDetails.side = playerSide;
+                    actorActionDetails.actorDataID = actorID;
+                    actorActionDetails.modalLevel = 2;
+                    actorActionDetails.modalState = ModalState.Inventory;
+                    actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+
+                    tooltipText = string.Format("{0}{1}'s Motivation -1{2}{3}{4}Can be recruited again{5}", colourBad, actor.actorName,
+                        colourEnd, "\n", colourNeutral, colourEnd);
+                    EventButtonDetails actorDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = string.Format("Let Go {0}", actor.arc.name),
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                        buttonTooltipMain = string.Format(string.Format("You don't want to but unfortunately you're going to have to let {0} go", actor.actorName)),
+                        buttonTooltipDetail = tooltipText,
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.InventoryLetGo, this, actorActionDetails); },
+
+                    };
+                    //add Lie Low button to list
+                    eventList.Add(actorDetails);
+                }
+                else
+                {
+                    //can't let go somebody you've already sent to the reserves, only new recruits
+                    infoBuilder.Append(string.Format("{0}Can only Let Go new recruits{1}", colourCancel, colourEnd));
+                }
+            }
+            else
+            {
+                //can't reassure somebody who is already unhappy
+                infoBuilder.Append(string.Format("{0}Can't Let Go if Unhappy{1}", colourBad, colourEnd));
+            }
         }
         else
         {
