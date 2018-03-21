@@ -43,6 +43,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericReserveActor, OnEvent);
         EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent);
         EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent);
+        EventManager.instance.AddListener(EventType.InventoryReassure, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
@@ -87,6 +88,10 @@ public class ActionManager : MonoBehaviour
             case EventType.GiveGearAction:
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
                 ProcessGiveGearAction(detailsGiveGear);
+                break;
+            case EventType.InventoryReassure:
+                ModalActionDetails detailsReassure = Param as ModalActionDetails;
+                ProcessReassureActor(detailsReassure);
                 break;
             case EventType.GenericHandleActor:
                 GenericReturnData returnDataHandle = Param as GenericReturnData;
@@ -1212,6 +1217,64 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
+
+    /// <summary>
+    /// Reserve pool actor is reassured via the right click action menu
+    /// NOTE: calling method checks unhappyTimer > 0 & isReassured = false
+    /// </summary>
+    /// <param name="actorID"></param>
+    private void ProcessReassureActor(ModalActionDetails details)
+    {
+        int benefit = GameManager.instance.actorScript.unhappyReassureBoost;
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        Actor actor = null;
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}Goodness me, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        if (details != null)
+        {
+            actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
+            if (actor != null)
+            {
+                outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty", 
+                    actor.arc.name, actor.actorName);
+                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}", colourGood, actor.actorName, benefit, colourEnd);
+                outcomeDetails.sprite = actor.arc.baseSprite;
+                //Give boost to Unhappy timer
+                actor.unhappyTimer += benefit;
+                actor.isReassured = true;
+                /*//message
+string text = string.Format("{0} ({1}) given to {2} {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
+Message message = GameManager.instance.messageScript.GiveGear(text, actor.actorID, gear.gearID, renownGiven);
+GameManager.instance.dataScript.AddMessage(message);*/
+            }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+        //outcome
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        else
+        {
+            outcomeDetails.isAction = true;
+            //is there a delegate method that needs processing?
+            if (details.handler != null)
+            {
+                details.handler();
+            }
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
 
     /// <summary>
     /// Process node Target

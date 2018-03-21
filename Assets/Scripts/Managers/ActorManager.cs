@@ -58,6 +58,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 99)] public int unhappyLeaveChance = 25;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the third check made. An actor can only complain once")]
     [Range(1, 99)] public int unhappyComplainChance = 50;
+    [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
+    [Range(1, 10)] public int unhappyReassureBoost = 3;
 
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
@@ -1318,26 +1320,34 @@ public class ActorManager : MonoBehaviour
             //
             if (actor.unhappyTimer > 0)
             {
-                ModalActionDetails actorActionDetails = new ModalActionDetails() { };
-                actorActionDetails.side = playerSide;
-                actorActionDetails.actorDataID = actorID;
-                actorActionDetails.modalLevel = 2;
-                actorActionDetails.modalState = ModalState.Inventory;
-                actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
-
-                tooltipText = string.Format("{0}'s Unhappy Timer +{1}", actor.actorName, "2");
-                EventButtonDetails actorDetails = new EventButtonDetails()
+                if (actor.isReassured == false)
                 {
-                    buttonTitle = string.Format("Reassure {0}", actor.arc.name),
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                    buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
-                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourGoodEffect, tooltipText, colourEnd),
-                    //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.InventoryReassure, this, actorActionDetails); },
+                    ModalActionDetails actorActionDetails = new ModalActionDetails() { };
+                    actorActionDetails.side = playerSide;
+                    actorActionDetails.actorDataID = actorID;
+                    actorActionDetails.modalLevel = 2;
+                    actorActionDetails.modalState = ModalState.Inventory;
+                    actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
 
-                };
-                //add Lie Low button to list
-                eventList.Add(actorDetails);
+                    tooltipText = string.Format("{0}'s Unhappy Timer +{1}", actor.actorName, "2");
+                    EventButtonDetails actorDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = string.Format("Reassure {0}", actor.arc.name),
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                        buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourGoodEffect, tooltipText, colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.InventoryReassure, this, actorActionDetails); },
+
+                    };
+                    //add Lie Low button to list
+                    eventList.Add(actorDetails);
+                }
+                else
+                {
+                    //actor has already been reassured (once only effect)
+                    infoBuilder.Append("Can only Reassure Once");
+                }
             }
             else
             {
@@ -2311,6 +2321,7 @@ public class ActorManager : MonoBehaviour
 
 
     }
+
 
     //new methods above here
 }
