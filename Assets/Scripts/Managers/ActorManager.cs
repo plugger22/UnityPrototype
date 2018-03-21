@@ -1094,8 +1094,6 @@ public class ActorManager : MonoBehaviour
 
         //Debug
         if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
-        if (infoBuilder.Length == 0) { infoBuilder.Append("Test data"); }
-
         //
         // - - - Cancel - - - (both sides)
         //
@@ -1123,6 +1121,7 @@ public class ActorManager : MonoBehaviour
                     buttonTitle = "CANCEL",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = cancelText,
+                    buttonTooltipDetail = string.Format("{0}Press Cancel to exit{1}", colourCancel, colourEnd),
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
                 };
@@ -1239,8 +1238,6 @@ public class ActorManager : MonoBehaviour
         }
         //Debug
         if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
-        if (infoBuilder.Length == 0) { infoBuilder.Append("Test data"); }
-
         //
         // - - - Cancel - - - (both sides)
         //
@@ -1268,6 +1265,7 @@ public class ActorManager : MonoBehaviour
                     buttonTitle = "CANCEL",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
                     buttonTooltipMain = cancelText,
+                    buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
                 };
@@ -1329,7 +1327,7 @@ public class ActorManager : MonoBehaviour
                     actorActionDetails.modalState = ModalState.Inventory;
                     actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
 
-                    tooltipText = string.Format("{0}'s Unhappy Timer +{1}", actor.actorName, "2");
+                    tooltipText = string.Format("{0}'s Unhappy Timer +{1}", actor.actorName, unhappyReassureBoost);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
                         buttonTitle = string.Format("Reassure {0}", actor.arc.name),
@@ -1352,7 +1350,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //can't reassure somebody who is already unhappy
-                infoBuilder.Append("Can't Reassure if Unhappy");
+                infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy{1}", colourBadEffect, colourEnd));
             }
         }
         else
@@ -1361,7 +1359,6 @@ public class ActorManager : MonoBehaviour
         }
         //Debug
         if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
-        if (infoBuilder.Length == 0) { infoBuilder.Append("Test data"); }
 
         //
         // - - - Cancel - - - (both sides)
@@ -1390,6 +1387,7 @@ public class ActorManager : MonoBehaviour
                     buttonTitle = "CANCEL",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = cancelText,
+                    buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
                 };

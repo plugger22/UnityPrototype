@@ -1120,6 +1120,8 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        outcomeDetails.modalLevel = details.modalLevel;
+        outcomeDetails.modalState = details.modalState;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
@@ -1130,8 +1132,7 @@ public class ActionManager : MonoBehaviour
                 {
                     //Give Gear
                     outcomeDetails.textTop = string.Format("{0} {1} thanks you for the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
-                    outcomeDetails.modalLevel = details.modalLevel;
-                    outcomeDetails.modalState = details.modalState;
+
                     //get actor's preferred gear
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
@@ -1234,6 +1235,8 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.textTop = string.Format("{0}Goodness me, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        outcomeDetails.modalLevel = details.modalLevel;
+        outcomeDetails.modalState = details.modalState;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
@@ -1241,7 +1244,7 @@ public class ActionManager : MonoBehaviour
             {
                 outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty", 
                     actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}", colourGood, actor.actorName, benefit, colourEnd);
+                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}", colourGood, actor.actorName, benefit, "\n", "\n", colourEnd);
                 outcomeDetails.sprite = actor.arc.baseSprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
@@ -1268,9 +1271,7 @@ GameManager.instance.dataScript.AddMessage(message);*/
             outcomeDetails.isAction = true;
             //is there a delegate method that needs processing?
             if (details.handler != null)
-            {
-                details.handler();
-            }
+            { details.handler(); }
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
