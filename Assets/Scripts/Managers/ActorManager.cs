@@ -74,9 +74,9 @@ public class ActorManager : MonoBehaviour
     private string colourCancel;
     private string colourInvalid;
     private string colourAlert;
-    private string colourGoodEffect;
-    private string colourNeutralEffect;
-    private string colourBadEffect;
+    private string colourGood;
+    private string colourNeutral;
+    private string colourBad;
     private string colourDefault;
     private string colourNormal;
     private string colourRecruit;
@@ -181,9 +181,9 @@ public class ActorManager : MonoBehaviour
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
-        colourGoodEffect = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutralEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBadEffect = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
@@ -455,7 +455,7 @@ public class ActorManager : MonoBehaviour
                             //invalid target (Player not present, specified actor Arc not in line up)
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                             infoBuilder.Append(string.Format("{0}Target invalid{1}{2}{3}(No Player, No {4}){5}",
-                                colourInvalid, "\n", colourEnd, colourBadEffect, target.actorArc.name, colourEnd));
+                                colourInvalid, "\n", colourEnd, colourBad, target.actorArc.name, colourEnd));
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.targetID, "\n")); }
@@ -502,13 +502,13 @@ public class ActorManager : MonoBehaviour
                                                     switch (effect.typeOfEffect.name)
                                                     {
                                                         case "Good":
-                                                            colourEffect = colourGoodEffect;
+                                                            colourEffect = colourGood;
                                                             break;
                                                         case "Neutral":
-                                                            colourEffect = colourNeutralEffect;
+                                                            colourEffect = colourNeutral;
                                                             break;
                                                         case "Bad":
-                                                            colourEffect = colourBadEffect;
+                                                            colourEffect = colourBad;
                                                             break;
                                                     }
                                                 }
@@ -532,16 +532,16 @@ public class ActorManager : MonoBehaviour
                                                         {
                                                             //player affected (good for renown, bad for invisibility)
                                                             if (effect.outcome.name.Equals("Renown"))
-                                                            { builder.Append(string.Format("{0}Player {1}{2}", colourGoodEffect, effect.textTag, colourEnd)); }
+                                                            { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd)); }
                                                             else
                                                             {
-                                                                builder.Append(string.Format("{0}Player {1}{2}", colourBadEffect, effect.textTag, colourEnd));
+                                                                builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd));
                                                             }
                                                         }
                                                         else
                                                         {
                                                             //actor affected
-                                                            builder.Append(string.Format("{0}{1} {2}{3}", colourBadEffect, actor.arc.name, effect.textTag, colourEnd));
+                                                            builder.Append(string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd));
                                                         }
                                                     }
                                                 }
@@ -680,7 +680,7 @@ public class ActorManager : MonoBehaviour
                         foreach(Team team in listOfTeams)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutralEffect, team.arc.name, team.teamName, colourEnd));
+                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd));
                         }
                         //button details
                         EventButtonDetails recallDetails = new EventButtonDetails()
@@ -766,13 +766,13 @@ public class ActorManager : MonoBehaviour
                                                     switch (effect.typeOfEffect.name)
                                                     {
                                                         case "Good":
-                                                            builder.Append(string.Format("{0}{1}{2}", colourBadEffect, effect.textTag, colourEnd));
+                                                            builder.Append(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd));
                                                             break;
                                                         case "Neutral":
-                                                            builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, effect.textTag, colourEnd));
+                                                            builder.Append(string.Format("{0}{1}{2}", colourNeutral, effect.textTag, colourEnd));
                                                             break;
                                                         case "Bad":
-                                                            builder.Append(string.Format("{0}{1}{2}", colourGoodEffect, effect.textTag, colourEnd));
+                                                            builder.Append(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd));
                                                             break;
                                                         default:
                                                             builder.Append(string.Format("{0}{1}{2}", colourDefault, effect.textTag, colourEnd));
@@ -791,7 +791,7 @@ public class ActorManager : MonoBehaviour
                                                     foreach (string teamName in tempTeamList)
                                                     {
                                                         builder.AppendLine();
-                                                        builder.Append(string.Format("{0}{1}{2}", colourNeutralEffect, teamName, colourEnd));
+                                                        builder.Append(string.Format("{0}{1}{2}", colourNeutral, teamName, colourEnd));
                                                     }
                                                 }
                                             }
@@ -938,7 +938,7 @@ public class ActorManager : MonoBehaviour
                     {
                         buttonTitle = "MANAGE",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("Unfortunately {0}{1}{2} {3}{4}  isn't working out", colourNeutralEffect, actor.arc.name, colourEnd, 
+                        buttonTooltipMain = string.Format("Unfortunately {0}{1}{2} {3}{4}  isn't working out", colourNeutral, actor.arc.name, colourEnd, 
                         title, actor.actorName),
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
@@ -1015,10 +1015,10 @@ public class ActorManager : MonoBehaviour
                                             }
                                             if (preferredGear.name.Equals(gear.type.name) == true)
                                             { tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}", 
-                                                actor.arc.name, "\n", colourGoodEffect, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd); }
+                                                actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd); }
                                             else
-                                            { tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutralEffect, 
-                                                preferredGear.name, colourEnd, "\n", colourGoodEffect, actor.actorName, benefit, colourEnd); }
+                                            { tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral, 
+                                                preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd); }
                                         }
                                         else
                                         {
@@ -1029,7 +1029,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             buttonTitle = string.Format("Give {0}", gear.name),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutralEffect, gear.type.name, 
+                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name, 
                                             colourEnd, actor.arc.name, actor.actorName),
                                             buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                             //use a Lambda to pass arguments to the action
@@ -1085,7 +1085,7 @@ public class ActorManager : MonoBehaviour
                 // - - - Actor Captured or other - - -
                 //
                 default:
-                    cancelText = string.Format("{0}Actor is \"{1}\" and out of contact{2}", colourBadEffect, actor.Status, colourEnd);
+                    cancelText = string.Format("{0}Actor is \"{1}\" and out of contact{2}", colourBad, actor.Status, colourEnd);
                     break;
             }
 
@@ -1134,7 +1134,7 @@ public class ActorManager : MonoBehaviour
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                buttonTooltipMain = string.Format("{0}Invalid Actor{1}",colourBadEffect, colourEnd),
+                buttonTooltipMain = string.Format("{0}Invalid Actor{1}",colourBad, colourEnd),
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
             };
@@ -1198,12 +1198,12 @@ public class ActorManager : MonoBehaviour
                                 if (preferredGear.name.Equals(gear.type.name) == true)
                                 {
                                     tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}",
-                                      actor.arc.name, "\n", colourGoodEffect, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                      actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
                                 }
                                 else
                                 {
-                                    tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutralEffect,
-                                      preferredGear.name, colourEnd, "\n", colourGoodEffect, actor.actorName, benefit, colourEnd);
+                                    tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
+                                      preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd);
                                 }
                             }
                             else
@@ -1215,7 +1215,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 buttonTitle = string.Format("Give to {0}", actor.arc.name),
                                 buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                                buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutralEffect, gear.type.name,
+                                buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name,
                                 colourEnd, actor.arc.name, actor.actorName),
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                 //use a Lambda to pass arguments to the action
@@ -1278,7 +1278,7 @@ public class ActorManager : MonoBehaviour
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
-                buttonTooltipMain = string.Format("{0}Invalid Gear{1}", colourBadEffect, colourEnd),
+                buttonTooltipMain = string.Format("{0}Invalid Gear{1}", colourBad, colourEnd),
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
             };
@@ -1303,6 +1303,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder infoBuilder = new StringBuilder();
         string tooltipText, sideColour;
         string cancelText = null;
+        int playerRenown = GameManager.instance.playerScript.Renown;
         bool isResistance;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
@@ -1327,13 +1328,14 @@ public class ActorManager : MonoBehaviour
                     actorActionDetails.modalState = ModalState.Inventory;
                     actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
 
-                    tooltipText = string.Format("{0}'s Unhappy Timer +{1}", actor.actorName, unhappyReassureBoost);
+                    tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName, 
+                        unhappyReassureBoost, colourEnd, "\n",  colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
                         buttonTitle = string.Format("Reassure {0}", actor.arc.name),
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                         buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourGoodEffect, tooltipText, colourEnd),
+                        buttonTooltipDetail = tooltipText,
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.InventoryReassure, this, actorActionDetails); },
 
@@ -1350,7 +1352,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //can't reassure somebody who is already unhappy
-                infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy{1}", colourBadEffect, colourEnd));
+                infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy{1}", colourBad, colourEnd));
             }
         }
         else
@@ -1400,7 +1402,7 @@ public class ActorManager : MonoBehaviour
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                buttonTooltipMain = string.Format("{0}Invalid Actor{1}", colourBadEffect, colourEnd),
+                buttonTooltipMain = string.Format("{0}Invalid Actor{1}", colourBad, colourEnd),
                 buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
@@ -1477,7 +1479,7 @@ public class ActorManager : MonoBehaviour
                     if (aiDetails != null)
                     {
                         //capture happened, abort recruitment
-                        aiDetails.effects = string.Format("{0}The Recruiting mission was a wipe{1}", colourNeutralEffect, colourEnd);
+                        aiDetails.effects = string.Format("{0}The Recruiting mission was a wipe{1}", colourNeutral, colourEnd);
                         EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
                         return;
                     }
@@ -1500,7 +1502,7 @@ public class ActorManager : MonoBehaviour
             else { genericDetails.nodeID = -1; }
             genericDetails.actorSlotID = details.actorDataID;
             //picker text
-            genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourNeutralEffect, colourEnd, colourNormal, colourEnd);
+            genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
             genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
                 colourNormal, colourEnd);
             genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
@@ -1648,8 +1650,8 @@ public class ActorManager : MonoBehaviour
             InventoryInputData data = new InventoryInputData();
             data.side = GameManager.instance.sideScript.PlayerSide;
             data.textHeader = "Reserve Actor Pool";
-            data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutralEffect, colourEnd,
-                colourDefault, numOfActors, colourEnd, colourNeutralEffect, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutralEffect, 
+            data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutral, colourEnd,
+                colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral, 
                 maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
             data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault, 
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
@@ -1673,14 +1675,14 @@ public class ActorManager : MonoBehaviour
                             //colour code trait
                             switch (actor.trait.typeOfTrait.name)
                             {
-                                case "Good": colourTrait = colourGoodEffect; break;
-                                case "Neutral": colourTrait = colourNeutralEffect; break;
-                                case "Bad": colourTrait = colourBadEffect; break;
+                                case "Good": colourTrait = colourGood; break;
+                                case "Neutral": colourTrait = colourNeutral; break;
+                                case "Bad": colourTrait = colourBad; break;
                                 default: colourTrait = colourDefault; break;
                             }
                             //unhappy situation
                             if (actor.CheckConditionPresent(conditionUnhappy) == true)
-                            { unhappySituation = string.Format("{0}{1}{2}", colourBadEffect, conditionUnhappy.name, colourEnd); }
+                            { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
                             else
                             { unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer, 
                                 actor.unhappyTimer != 1 ? "s" : "", colourEnd); }
@@ -1772,8 +1774,8 @@ public class ActorManager : MonoBehaviour
         InventoryInputData data = new InventoryInputData();
         numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
         data.side = GameManager.instance.sideScript.PlayerSide;
-        data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutralEffect, colourEnd,
-            colourDefault, numOfActors, colourEnd, colourNeutralEffect, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutralEffect,
+        data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutral, colourEnd,
+            colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral,
             maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
         if (numOfActors > 0)
         {
@@ -1799,14 +1801,14 @@ public class ActorManager : MonoBehaviour
                         //colour code trait
                         switch (actor.trait.typeOfTrait.name)
                         {
-                            case "Good": colourTrait = colourGoodEffect; break;
-                            case "Neutral": colourTrait = colourNeutralEffect; break;
-                            case "Bad": colourTrait = colourBadEffect; break;
+                            case "Good": colourTrait = colourGood; break;
+                            case "Neutral": colourTrait = colourNeutral; break;
+                            case "Bad": colourTrait = colourBad; break;
                             default: colourTrait = colourDefault; break;
                         }
                         //unhappy situation
                         if (actor.CheckConditionPresent(conditionUnhappy) == true)
-                        { unhappySituation = string.Format("{0}{1}{2}", colourBadEffect, conditionUnhappy.name, colourEnd); }
+                        { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
                         else
                         {
                             unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,

@@ -1242,17 +1242,17 @@ public class ActionManager : MonoBehaviour
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
             if (actor != null)
             {
-                outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty", 
+                outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty",
                     actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}", colourGood, actor.actorName, benefit, "\n", "\n", colourEnd);
+                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}", colourGood, actor.actorName, benefit, colourEnd, "\n", "\n");
                 outcomeDetails.sprite = actor.arc.baseSprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
                 actor.isReassured = true;
-                /*//message
-string text = string.Format("{0} ({1}) given to {2} {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-Message message = GameManager.instance.messageScript.GiveGear(text, actor.actorID, gear.gearID, renownGiven);
-GameManager.instance.dataScript.AddMessage(message);*/
+                //message
+                string text = string.Format("{0} {1} has been Reassured (Reserve Pool)", actor.arc.name, actor.actorName);
+                Message message = GameManager.instance.messageScript.ActorReassured(text, actor.actorID, details.side);
+                GameManager.instance.dataScript.AddMessage(message);
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
         }

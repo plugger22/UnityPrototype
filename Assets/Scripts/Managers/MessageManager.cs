@@ -159,6 +159,31 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// Actor in Reserve Pool is reassured
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actorID"></param>
+    /// <param name="isPublic"></param>
+    /// <returns></returns>
+    public Message ActorReassured(string text, int actorID, GlobalSide side, bool isPublic = false)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Reassured;
+            message.side = side;
+            message.isPublic = isPublic;
+            message.data0 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Actor condition gained or removed, eg. 'Stressed'
     /// </summary>
     /// <param name="text"></param>
