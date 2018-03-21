@@ -1655,7 +1655,7 @@ public class DataManager : MonoBehaviour
             //admin depends on where actor is going
             switch(status)
             {
-                case ActorStatus.Reserve:
+                case ActorStatus.ReservePool:
                     if (AddActorToReserve(actor.actorID, side) == true)
                     {
                         //update actor arrays
@@ -1988,7 +1988,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    public List<int> GetActorPool(int level, GlobalSide side)
+    public List<int> GetActorRecruitPool(int level, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");

@@ -55,7 +55,7 @@ namespace gameAPI
     //
     // - - - Actors - - -
     //
-    public enum ActorStatus { Active, Inactive, Reserve, Pool, Captured, Dismissed, Promoted, Killed }
+    public enum ActorStatus { Active, Inactive, ReservePool, RecruitPool, Captured, Dismissed, Promoted, Killed }
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     //
     // - - - Action Menu - - -

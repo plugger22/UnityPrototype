@@ -26,10 +26,6 @@ public class ActorManager : MonoBehaviour
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
     [Range(2, 4)] public int minStatValue = 0;
-    [Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their unhappyTimer expires")]
-    [Range(1, 50)] public int chanceOfUnhappy = 20;
-    [Tooltip("Multiplier to the chanceOfUnhappy for an actor who has been promised that they will be recalled within a set time period")]
-    [Range(1, 5)] public int unhappyPromiseFactor = 3;
     [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int promiseReserveTimer = 10;
     [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their unhappy timer will be set to this number of turns.")]
@@ -46,6 +42,10 @@ public class ActorManager : MonoBehaviour
     [Range(1, 5)] public int manageDismissRenown = 2;
     [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
     [Range(1, 5)] public int manageDisposeRenown = 3;
+    [Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their unhappyTimer expires")]
+    [Range(1, 50)] public int chanceOfUnhappy = 20;
+    [Tooltip("Multiplier to the chanceOfUnhappy for an actor who has been promised that they will be recalled within a set time period")]
+    [Range(1, 5)] public int unhappyPromiseFactor = 3;
     [Tooltip("Once actor has taken action as a result of being unhappy this is the number of turns warning period you get before they carry out their action")]
     [Range(1, 5)] public int unhappyWarningPeriod = 2;
     [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
@@ -60,6 +60,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 99)] public int unhappyComplainChance = 50;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
     [Range(1, 10)] public int unhappyReassureBoost = 3;
+    [Tooltip("Amount of motivation lost when player let go from reserve pool")]
+    [Range(1, 10)] public int motivationLossLetGo = 1;
 
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
@@ -235,7 +237,7 @@ public class ActorManager : MonoBehaviour
             for (int i = 0; i < numOfArcs; i++)
             {
                 //level one actor
-                Actor actorOne = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
+                Actor actorOne = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 1, ActorStatus.RecruitPool);
                 if (actorOne != null)
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
@@ -244,7 +246,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level two actor
-                Actor actorTwo = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
+                Actor actorTwo = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 2, ActorStatus.RecruitPool);
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorTwo);
@@ -252,7 +254,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level three actor
-                Actor actorThree = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
+                Actor actorThree = CreateActor(globalAuthority, listOfArcs[i].ActorArcID, 3, ActorStatus.RecruitPool);
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorThree);
@@ -270,7 +272,7 @@ public class ActorManager : MonoBehaviour
             for (int i = 0; i < numOfArcs; i++)
             {
                 //level one actor
-                Actor actorOne = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 1, ActorStatus.Pool);
+                Actor actorOne = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 1, ActorStatus.RecruitPool);
                 if (actorOne != null)
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
@@ -279,7 +281,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level two actor
-                Actor actorTwo = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 2, ActorStatus.Pool);
+                Actor actorTwo = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 2, ActorStatus.RecruitPool);
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorTwo);
@@ -287,7 +289,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArcID \"{0}\"", listOfArcs[i].ActorArcID)); }
                 //level three actor
-                Actor actorThree = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 3, ActorStatus.Pool);
+                Actor actorThree = CreateActor(globalResistance, listOfArcs[i].ActorArcID, 3, ActorStatus.RecruitPool);
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActorToDict(actorThree);
@@ -1332,7 +1334,7 @@ public class ActorManager : MonoBehaviour
                         unhappyReassureBoost, colourEnd, "\n",  colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
-                        buttonTitle = string.Format("Reassure {0}", actor.arc.name),
+                        buttonTitle = "Reassure",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                         buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
                         buttonTooltipDetail = tooltipText,
@@ -1372,7 +1374,7 @@ public class ActorManager : MonoBehaviour
                         colourEnd, "\n", colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
-                        buttonTitle = string.Format("Let Go {0}", actor.arc.name),
+                        buttonTitle = "Let Go",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                         buttonTooltipMain = string.Format(string.Format("You don't want to but unfortunately you're going to have to let {0} go", actor.actorName)),
                         buttonTooltipDetail = tooltipText,
@@ -1559,7 +1561,7 @@ public class ActorManager : MonoBehaviour
                 if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
                     //player at node, select from 3 x level 1 options, different from current OnMap actor types
-                    listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(1, details.side));
+                    listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, details.side));
                     //loop backwards through pool of actors and remove any that match the curent OnMap types
                     for (int i = listOfPoolActors.Count - 1; i >= 0; i--)
                     {
@@ -1575,14 +1577,14 @@ public class ActorManager : MonoBehaviour
                 else
                 {
                     //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
-                    listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(2, details.side));
+                    listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, details.side));
                 }
             }
             //Authority
             else if (details.side.level == globalAuthority.level)
             {
                 //placeholder -> select from 3 x specified level options (random types, could be the same as currently OnMap)
-                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorPool(details.level, details.side));
+                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(details.level, details.side));
             }
             else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
             //
@@ -1921,7 +1923,7 @@ public class ActorManager : MonoBehaviour
                         if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, playerSide) == true)
                         {
                             //change actor's status
-                            actorRecruited.Status = ActorStatus.Reserve;
+                            actorRecruited.Status = ActorStatus.ReservePool;
                             //remove actor from appropriate pool list
                             GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, playerSide);
                             //sprite of recruited actor
@@ -2037,7 +2039,7 @@ public class ActorManager : MonoBehaviour
                     if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
                     {
                         //change actor's status
-                        actorRecruited.Status = ActorStatus.Reserve;
+                        actorRecruited.Status = ActorStatus.ReservePool;
                         //remove actor from appropriate pool list
                         GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
                         //sprite of recruited actor
@@ -2101,13 +2103,13 @@ public class ActorManager : MonoBehaviour
         List<int> listOfActors = new List<int>();
         StringBuilder builder = new StringBuilder();
         //Resistance
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, globalResistance), " ResistanceActorPoolLevelOne"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, globalResistance), " ResistanceActorPoolLevelTwo"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, globalResistance), " ResistanceActorPoolLevelThree"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance), " ResistanceActorPoolLevelOne"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance), " ResistanceActorPoolLevelTwo"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance), " ResistanceActorPoolLevelThree"));
         //Authority
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(1, globalAuthority), " AuthorityActorPoolLevelOne"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(2, globalAuthority), " AuthorityActorPoolLevelTwo"));
-        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorPool(3, globalAuthority), " AuthorityActorPoolLevelThree"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority), " AuthorityActorPoolLevelOne"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority), " AuthorityActorPoolLevelTwo"));
+        builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority), " AuthorityActorPoolLevelThree"));
         return builder.ToString();
     }
 
