@@ -1320,9 +1320,7 @@ public class ActionManager : MonoBehaviour
                 builder.Append(string.Format("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd));
                 //change actors status
                 actor.Status = ActorStatus.RecruitPool;
-                actor.isNewRecruit = false;
-                actor.isReassured = false;
-                actor.isPromised = false;
+                actor.ResetStates();
                 //place actor back in the appropriate recruit pool
                 List<int> recruitPoolList = GameManager.instance.dataScript.GetActorRecruitPool(actor.level, details.side);
                 if (recruitPoolList != null)

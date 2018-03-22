@@ -20,9 +20,10 @@ namespace gameAPI
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
-        [HideInInspector] public bool hasComplained;            //Action taken by actor in reserve pool. Can only complain once.
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
         [HideInInspector] public bool isReassured;              //true if actor has been reassured, false if not (can only be reassured once)
+        [HideInInspector] public bool isThreatening;            //true if actor has said they will be taking an action against player, eg. reveal secret, false otherwise
+        [HideInInspector] public bool isComplaining;            //Action taken by actor in reserve pool. Can only complain once.
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;
@@ -52,6 +53,17 @@ namespace gameAPI
             nodeCaptured = -1;
         }
 
+        /// <summary>
+        /// reset all state indicators back to their defaults of false
+        /// </summary>
+        public void ResetStates()
+        {
+            isPromised = false;
+            isNewRecruit = false;
+            isReassured = false;
+            isThreatening = false;
+            isComplaining = false;
+        }
 
         /// <summary>
         /// Authority method -> returns true if actors 'Ability' allows for the deployment of another team OnMap

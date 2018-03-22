@@ -75,6 +75,8 @@ public enum EventType
     InventoryCloseUI,
     InventoryReassure,
     InventoryLetGo,
+    InventoryFire,
+    InventoryActiveDuty,
     //dice UI
     OpenDiceUI,
     CloseDiceUI,

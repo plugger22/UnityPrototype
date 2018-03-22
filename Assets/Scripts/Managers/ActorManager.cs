@@ -60,8 +60,10 @@ public class ActorManager : MonoBehaviour
     [Range(1, 99)] public int unhappyComplainChance = 50;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
     [Range(1, 10)] public int unhappyReassureBoost = 3;
-    [Tooltip("Amount of motivation lost when player let go from reserve pool")]
-    [Range(1, 10)] public int motivationLossLetGo = 1;
+    [Tooltip("Amount of motivation lost when actor let go from reserve pool")]
+    [Range(1, 3)] public int motivationLossLetGo = 1;
+    [Tooltip("Amount of motivation lost when actor fired")]
+    [Range(1, 3)] public int motivationLossFire = 2;
 
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
@@ -1306,6 +1308,7 @@ public class ActorManager : MonoBehaviour
         string tooltipText, sideColour;
         string cancelText = null;
         int playerRenown = GameManager.instance.playerScript.Renown;
+        int renownCost = 0;
         bool isResistance;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
@@ -1330,8 +1333,8 @@ public class ActorManager : MonoBehaviour
                     actorActionDetails.modalState = ModalState.Inventory;
                     actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
 
-                    tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName, 
-                        unhappyReassureBoost, colourEnd, "\n",  colourNeutral, colourEnd);
+                    tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
+                        unhappyReassureBoost, colourEnd, "\n", colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
                         buttonTitle = "Reassure",
@@ -1348,12 +1351,14 @@ public class ActorManager : MonoBehaviour
                 else
                 {
                     //actor has already been reassured (once only effect)
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                     infoBuilder.Append("Can only Reassure Once");
                 }
             }
             else
             {
                 //can't reassure somebody who is already unhappy
+                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy{1}", colourBad, colourEnd));
             }
             //
@@ -1388,13 +1393,64 @@ public class ActorManager : MonoBehaviour
                 else
                 {
                     //can't let go somebody you've already sent to the reserves, only new recruits
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                     infoBuilder.Append(string.Format("{0}Can only Let Go new recruits{1}", colourCancel, colourEnd));
                 }
             }
             else
             {
                 //can't reassure somebody who is already unhappy
+                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.Append(string.Format("{0}Can't Let Go if Unhappy{1}", colourBad, colourEnd));
+            }
+            //
+            // - - - Fire - - -
+            //
+            ModalActionDetails fireActionDetails = new ModalActionDetails() { };
+            fireActionDetails.side = playerSide;
+            fireActionDetails.actorDataID = actorID;
+            fireActionDetails.modalLevel = 2;
+            fireActionDetails.modalState = ModalState.Inventory;
+            fireActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+            //generic tooltip (depends if actor is threatening or not)
+            StringBuilder builderTooltip = new StringBuilder();
+            builderTooltip.Append(string.Format("{0}{1}'s Motivation -{2}{3}", colourBad, actor.actorName, motivationLossFire, colourEnd));
+            builderTooltip.AppendLine();
+            builderTooltip.Append(string.Format("{0}Can be recruited again{1}", colourNeutral, colourEnd));
+            builderTooltip.AppendLine();
+            //double renown cost if actor threatening to take action against player
+            if (actor.isThreatening == false)
+            {
+                renownCost = manageDismissRenown;
+                builderTooltip.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+            }
+            else
+            {
+                renownCost = manageDismissRenown * 2;
+                builderTooltip.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+                builderTooltip.AppendLine();
+                builderTooltip.Append(string.Format("{0}Double Renown cost as {1} is Threatening you{2}", colourCancel, actor.actorName, colourEnd));
+            }
+            //only show button if player has enough renown to cover the cost of firing
+            if (playerRenown >= renownCost)
+            {
+                EventButtonDetails actorDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "FIRE",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = string.Format(string.Format("You inform {0} that they are out the door. NOW!", actor.actorName)),
+                    buttonTooltipDetail = builderTooltip.ToString(),
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.InventoryFire, this, fireActionDetails); },
+                };
+                //add Fire button to list
+                eventList.Add(actorDetails);
+            }
+            else
+            {
+                //not enough renown
+                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                infoBuilder.Append(string.Format("{0}Insufficient Renown to Fire (need {1}){2}", colourBad, renownCost, colourEnd));
             }
         }
         else
@@ -2327,7 +2383,7 @@ public class ActorManager : MonoBehaviour
             }
         }
         //Check for Leaving second
-        if (actor.hasComplained == false)
+        if (actor.isComplaining == false)
         {
             if (Random.Range(0, 100) < (unhappyLeaveChance))
             {
@@ -2349,14 +2405,14 @@ public class ActorManager : MonoBehaviour
             }
         }
         //Check for Complaint third (skip check if actor has already complained)
-        if (actor.hasComplained == false)
+        if (actor.isComplaining == false)
         {
             if (Random.Range(0, 100) < unhappyComplainChance)
             {
 
                 //TO DO
                 Debug.Log(string.Format("Unhappy Actor: {0} {1} Threatens to Complain{2}", actor.arc.name, actor.actorName, "\n"));
-                actor.hasComplained = true;
+                actor.isComplaining = true;
                 return;
             }
         }
