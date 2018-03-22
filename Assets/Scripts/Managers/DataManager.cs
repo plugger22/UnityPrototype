@@ -1621,7 +1621,7 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// add a currently active actor to the arrayOfActors
+    /// add a currently active actor to the arrayOfActors and update Actor status, states and actorSlotID. Also updates ActorUI
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actor"></param>
@@ -1635,6 +1635,12 @@ public class DataManager : MonoBehaviour
             arrayOfActors[side.level, slotID] = actor;
             //ensure position is set to 'Filled'
             arrayOfActorsPresent[side.level, slotID] = true;
+            //update actor
+            actor.actorSlotID = slotID;
+            actor.ResetStates();
+            actor.Status = ActorStatus.Active;
+            //update actor GUI display
+            GameManager.instance.guiScript.UpdateActorGUI();
         }
         else { Debug.LogError("Invalid actor (null)"); }
     }
@@ -2069,7 +2075,10 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         List<int> tempList = new List<int>();
         for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
-        { tempList.Add(arrayOfActors[side.level, i].arc.ActorArcID); }
+        {
+            if (CheckActorSlotStatus(i, side) == true)
+            { tempList.Add(arrayOfActors[side.level, i].arc.ActorArcID); }
+        }
         if (tempList.Count > 0) { return tempList; }
         return null;
     }
@@ -2159,6 +2168,26 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         return arrayOfActorsPresent[side.level, slotID];
+    }
+
+
+    /// <summary>
+    /// finds the first empty actor slot and returns actorSlotID, '-1' if none found
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public int CheckForSpareActorSlot(GlobalSide side)
+    {
+        int slotID = -1;
+        for (int i = 0; i < arrayOfActorsPresent.Length; i++)
+        {
+            if (arrayOfActorsPresent[side.level, i] == false)
+            {
+                slotID = i;
+                break;
+            }
+        }
+        return slotID;
     }
 
     /// <summary>

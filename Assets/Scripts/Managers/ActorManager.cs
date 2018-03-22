@@ -29,7 +29,7 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int promiseReserveTimer = 10;
     [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their unhappy timer will be set to this number of turns.")]
-    [Range(1, 10)] public int noPromiseReserveTimer = 5;
+    [Range(1, 10)] public int noPromiseReserveTimer = 10;
     [Tooltip("Actor sent to Reserves to Rest. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int restReserveTimer = 10;
     [Tooltip("Actor Recruited and placed in Reserves. Their unhappy timer will be set to this number of turns.")]
@@ -64,6 +64,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 3)] public int motivationLossLetGo = 1;
     [Tooltip("Amount of motivation lost when actor fired")]
     [Range(1, 3)] public int motivationLossFire = 2;
+    [Tooltip("Amount of motivation gained when recalled from Reserves to Active Duty")]
+    [Range(1, 3)] public int motivationGainActiveDuty = 2;
 
 
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
@@ -362,17 +364,10 @@ public class ActorManager : MonoBehaviour
                 //OnMap actor
                 if (slotID > -1)
                 {
-                    /*actor.isLive = true;*/
-
                     //add to data collections
                     GameManager.instance.dataScript.AddCurrentActor(side, actor, slotID);
                     GameManager.instance.dataScript.AddActorToDict(actor);
                 }
-                
-                /*//Reserve pool actor or perhaps an actor for a generic pick list
-                else
-                { actor.isLive = false; }*/
-
                 //return actor
                 return actor;
             }
@@ -1315,10 +1310,45 @@ public class ActorManager : MonoBehaviour
         if (playerSide.level == globalAuthority.level)
         { sideColour = colourAuthority; isResistance = false; }
         else { sideColour = colourResistance; isResistance = true; }
+        //data package for Action Menu
+        ModalActionDetails actorActionDetails = new ModalActionDetails() { };
+        actorActionDetails.side = playerSide;
+        actorActionDetails.actorDataID = actorID;
+        actorActionDetails.modalLevel = 2;
+        actorActionDetails.modalState = ModalState.Inventory;
+        actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+        //actor
         Actor actor = GameManager.instance.dataScript.GetActor(actorID);
         if (actor != null)
         {
             cancelText = string.Format("{0} {1}", actor.arc.name, actor.actorName);
+            //
+            // - - - Active Duty - - -
+            //
+            int actorSlotID = GameManager.instance.dataScript.CheckForSpareActorSlot(playerSide);
+            if (actorSlotID > -1)
+            {
+                tooltipText = string.Format("{0}{1} Motivation +{2}{3}{4}{5}{6} joins others On Map{7}{8}{9}Any Negative conditions removed{10}", colourGood,
+                    actor.actorName, motivationGainActiveDuty, colourEnd, "\n", colourNeutral, actor.actorName, colourEnd, "\n", colourGood, colourEnd);
+                EventButtonDetails actorDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "Active Duty",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                    buttonTooltipMain = string.Format(string.Format("Inform {0} that they are required immediately for Active Duty", actor.actorName)),
+                    buttonTooltipDetail = tooltipText,
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.InventoryActiveDuty, this, actorActionDetails); },
+
+                };
+                //add Lie Low button to list
+                eventList.Add(actorDetails);
+            }
+            else
+            {
+                //there are no spare OnMap positions availabel
+                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                infoBuilder.Append(string.Format("{0}Active Duty not possible as there are no vacancies{1}", colourCancel, colourEnd));
+            }
             //
             // - - - Reassure - - -
             //
@@ -1326,13 +1356,6 @@ public class ActorManager : MonoBehaviour
             {
                 if (actor.isReassured == false)
                 {
-                    ModalActionDetails actorActionDetails = new ModalActionDetails() { };
-                    actorActionDetails.side = playerSide;
-                    actorActionDetails.actorDataID = actorID;
-                    actorActionDetails.modalLevel = 2;
-                    actorActionDetails.modalState = ModalState.Inventory;
-                    actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
-
                     tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
                         unhappyReassureBoost, colourEnd, "\n", colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
@@ -1368,13 +1391,6 @@ public class ActorManager : MonoBehaviour
             {
                 if (actor.isNewRecruit == true)
                 {
-                    ModalActionDetails actorActionDetails = new ModalActionDetails() { };
-                    actorActionDetails.side = playerSide;
-                    actorActionDetails.actorDataID = actorID;
-                    actorActionDetails.modalLevel = 2;
-                    actorActionDetails.modalState = ModalState.Inventory;
-                    actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
-
                     tooltipText = string.Format("{0}{1}'s Motivation -1{2}{3}{4}Can be recruited again{5}", colourBad, actor.actorName,
                         colourEnd, "\n", colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
@@ -1406,12 +1422,6 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Fire - - -
             //
-            ModalActionDetails fireActionDetails = new ModalActionDetails() { };
-            fireActionDetails.side = playerSide;
-            fireActionDetails.actorDataID = actorID;
-            fireActionDetails.modalLevel = 2;
-            fireActionDetails.modalState = ModalState.Inventory;
-            fireActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
             //generic tooltip (depends if actor is threatening or not)
             StringBuilder builderTooltip = new StringBuilder();
             builderTooltip.Append(string.Format("{0}{1}'s Motivation -{2}{3}", colourBad, actor.actorName, motivationLossFire, colourEnd));
@@ -1438,10 +1448,10 @@ public class ActorManager : MonoBehaviour
                 {
                     buttonTitle = "FIRE",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                    buttonTooltipMain = string.Format(string.Format("You inform {0} that they are out the door. NOW!", actor.actorName)),
+                    buttonTooltipMain = string.Format(string.Format("You inform {0} that their services are no longer needed, or desired", actor.actorName)),
                     buttonTooltipDetail = builderTooltip.ToString(),
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.InventoryFire, this, fireActionDetails); },
+                    action = () => { EventManager.instance.PostNotification(EventType.InventoryFire, this, actorActionDetails); },
                 };
                 //add Fire button to list
                 eventList.Add(actorDetails);
@@ -1450,7 +1460,7 @@ public class ActorManager : MonoBehaviour
             {
                 //not enough renown
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Insufficient Renown to Fire (need {1}){2}", colourBad, renownCost, colourEnd));
+                infoBuilder.Append(string.Format("{0}Insufficient Renown to Fire (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd));
             }
         }
         else

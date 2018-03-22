@@ -44,7 +44,9 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent);
         EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent);
         EventManager.instance.AddListener(EventType.InventoryReassure, OnEvent);
+        EventManager.instance.AddListener(EventType.InventoryActiveDuty, OnEvent);
         EventManager.instance.AddListener(EventType.InventoryLetGo, OnEvent);
+        EventManager.instance.AddListener(EventType.InventoryFire, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
@@ -90,6 +92,10 @@ public class ActionManager : MonoBehaviour
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
                 ProcessGiveGearAction(detailsGiveGear);
                 break;
+            case EventType.InventoryActiveDuty:
+                ModalActionDetails detailsActive = Param as ModalActionDetails;
+                ProcessActiveDutyActor(detailsActive);
+                break;
             case EventType.InventoryReassure:
                 ModalActionDetails detailsReassure = Param as ModalActionDetails;
                 ProcessReassureActor(detailsReassure);
@@ -97,6 +103,10 @@ public class ActionManager : MonoBehaviour
             case EventType.InventoryLetGo:
                 ModalActionDetails detailsLetGo = Param as ModalActionDetails;
                 ProcessLetGoActor(detailsLetGo);
+                break;
+            case EventType.InventoryFire:
+                ModalActionDetails detailsFire = Param as ModalActionDetails;
+                ProcessFireActor(detailsFire);
                 break;
             case EventType.GenericHandleActor:
                 GenericReturnData returnDataHandle = Param as GenericReturnData;
@@ -1351,8 +1361,8 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.arc.baseSprite;
                 //message
-                string text = string.Format("{0} {1} has been Reassured (Reserve Pool)", actor.arc.name, actor.actorName);
-                Message message = GameManager.instance.messageScript.ActorReassured(text, actor.actorID, details.side);
+                string text = string.Format("{0} {1} has been Let Go (Reserve Pool)", actor.arc.name, actor.actorName);
+                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
 
             }
@@ -1372,6 +1382,199 @@ public class ActionManager : MonoBehaviour
         {
             outcomeDetails.isAction = true;
             
+            //is there a delegate method that needs processing?
+            if (details.handler != null)
+            { details.handler(); }
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
+
+    /// <summary>
+    /// Reserve pool actor is Fired via the right click action menu
+    /// NOTE: calling method checks that Player has enough renown
+    /// </summary>
+    /// <param name="actorID"></param>
+    private void ProcessFireActor(ModalActionDetails details)
+    {
+        int motivationLoss = GameManager.instance.actorScript.motivationLossFire;
+        bool errorFlag = false;
+        int numOfTeams = 0;
+        int renownCost = GameManager.instance.actorScript.manageDismissRenown;
+        StringBuilder builder = new StringBuilder();
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        Actor actor = null;
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}Hit me with your rythmn stick and tell me what happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        outcomeDetails.modalLevel = details.modalLevel;
+        outcomeDetails.modalState = details.modalState;
+        if (details != null)
+        {
+            actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
+            if (actor != null)
+            {
+                //authority actor?
+                if (details.side.level == GameManager.instance.globalScript.sideAuthority.level)
+                {
+                    //remove all active teams connected with this actor
+                    numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
+                }
+                //pay Player renown cost (doubled if actor threatening the player)
+                if (actor.isThreatening == true)
+                { renownCost *= 2; }
+                int playerRenown = GameManager.instance.playerScript.Renown;
+                playerRenown -= renownCost;
+                playerRenown = Mathf.Max(0, playerRenown);
+                GameManager.instance.playerScript.Renown = playerRenown;
+                builder.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+                if (actor.isThreatening == true)
+                {
+                    builder.Append(string.Format("{0} (Double Cost as {1} was Threatening Player{2}", colourAlert, actor.actorName, colourEnd));
+                    builder.AppendLine(); builder.AppendLine();
+                    builder.Append(string.Format("{0}{1} is no longer a threat{2}", colourGood, actor.actorName, colourEnd));
+                }
+                builder.AppendLine(); builder.AppendLine();
+                //lower actors motivation
+                actor.datapoint1 -= motivationLoss;
+                actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+                builder.Append(string.Format("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd));
+                //change actors status
+                actor.Status = ActorStatus.RecruitPool;
+                actor.ResetStates();
+                //place actor back in the appropriate recruit pool
+                List<int> recruitPoolList = GameManager.instance.dataScript.GetActorRecruitPool(actor.level, details.side);
+                if (recruitPoolList != null)
+                {
+                    recruitPoolList.Add(actor.actorID);
+                    builder.AppendLine(); builder.AppendLine();
+                    builder.Append(string.Format("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd));
+                }
+                else { Debug.LogError(string.Format("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side)); }
+                //remove actor from reserve list
+                List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
+                if (reservePoolList != null)
+                {
+                    if (reservePoolList.Remove(actor.actorID) == false)
+                    { Debug.LogWarning(string.Format("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID)); }
+                }
+                else { Debug.LogError(string.Format("Invalid reservePoolList (Null) for GlobalSide {0}", details.side)); }
+                //teams
+                if (numOfTeams > 0)
+                {
+                    if (builder.Length > 0)
+                    { builder.AppendLine(); builder.AppendLine(); }
+                    builder.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                    numOfTeams != 1 ? "s" : "", colourEnd));
+                }
+                outcomeDetails.textTop = string.Format("{0} {1} curses and spits at your feet before walking out the door", actor.arc.name,
+                    actor.actorName);
+                outcomeDetails.textBottom = builder.ToString();
+                outcomeDetails.sprite = actor.arc.baseSprite;
+                //message
+                string text = string.Format("{0} {1} has been Fired (Reserve Pool)", actor.arc.name, actor.actorName);
+                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                GameManager.instance.dataScript.AddMessage(message);
+
+            }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+        //outcome
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        else
+        {
+            outcomeDetails.isAction = true;
+
+            //is there a delegate method that needs processing?
+            if (details.handler != null)
+            { details.handler(); }
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
+
+    /// <summary>
+    /// Reserve pool actor is recalled for Active Duty via the right click action menu
+    /// NOTE: calling method checks unhappyTimer > 0 and isNewRecruit is true
+    /// </summary>
+    /// <param name="actorID"></param>
+    private void ProcessActiveDutyActor(ModalActionDetails details)
+    {
+        int motivationGain = GameManager.instance.actorScript.motivationGainActiveDuty;
+        bool errorFlag = false;
+        StringBuilder builder = new StringBuilder();
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        Actor actor = null;
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}Well bugger me, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        outcomeDetails.modalLevel = details.modalLevel;
+        outcomeDetails.modalState = details.modalState;
+        if (details != null)
+        {
+            actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
+            if (actor != null)
+            {
+                int actorSlotID = GameManager.instance.dataScript.CheckForSpareActorSlot(details.side);
+                if (actorSlotID > -1)
+                {
+                    //raise actors motivation
+                    actor.datapoint1 += motivationGain;
+                    actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+                    builder.Append(string.Format("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd));
+                    //place actor on Map
+                    GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);
+                    Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
+                    if (condition != null)
+                    { GameManager.instance.playerScript.RemoveCondition(condition); }
+                    else
+                    { Debug.LogError("Unhappy condition not found (Null)"); errorFlag = true; }
+                    //remove actor from reserve list
+                    List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
+                    if (reservePoolList != null)
+                    {
+                        if (reservePoolList.Remove(actor.actorID) == false)
+                        { Debug.LogWarning(string.Format("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID)); }
+                    }
+                    else { Debug.LogError(string.Format("Invalid reservePoolList (Null) for GlobalSide {0}", details.side)); errorFlag = true; }
+                    outcomeDetails.textTop = string.Format("{0} {1} bounds forward and enthusiastically shakes your hand", actor.arc.name,
+                        actor.actorName);
+                    outcomeDetails.textBottom = builder.ToString();
+                    outcomeDetails.sprite = actor.arc.baseSprite;
+                    //message
+                    string text = string.Format("{0} {1} called for Active Duty (Reserve Pool)", actor.arc.name, actor.actorName);
+                    Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                else { Debug.LogError("There are no vacancies on map for the actor to be recalled to Active Duty"); errorFlag = true; }
+            }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+        //outcome
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a nasty bug in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        else
+        {
+            outcomeDetails.isAction = true;
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
