@@ -1347,7 +1347,7 @@ public class ActorManager : MonoBehaviour
             {
                 //there are no spare OnMap positions availabel
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Active Duty not possible as there are no vacancies{1}", colourCancel, colourEnd));
+                infoBuilder.Append(string.Format("{0}Active Duty not possible as there are no vacancies.{1}", colourCancel, colourEnd));
             }
             //
             // - - - Reassure - - -
@@ -1375,14 +1375,14 @@ public class ActorManager : MonoBehaviour
                 {
                     //actor has already been reassured (once only effect)
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append("Can only Reassure Once");
+                    infoBuilder.Append("Can only Reassure Once.");
                 }
             }
             else
             {
                 //can't reassure somebody who is already unhappy
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy{1}", colourBad, colourEnd));
+                infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy.{1}", colourBad, colourEnd));
             }
             //
             // - - - Let go - - -
@@ -1410,14 +1410,14 @@ public class ActorManager : MonoBehaviour
                 {
                     //can't let go somebody you've already sent to the reserves, only new recruits
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append(string.Format("{0}Can only Let Go new recruits{1}", colourCancel, colourEnd));
+                    infoBuilder.Append(string.Format("{0}Can only Let Go new recruits.{1}", colourCancel, colourEnd));
                 }
             }
             else
             {
                 //can't reassure somebody who is already unhappy
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Can't Let Go if Unhappy{1}", colourBad, colourEnd));
+                infoBuilder.Append(string.Format("{0}Can't Let Go if Unhappy.{1}", colourBad, colourEnd));
             }
             //
             // - - - Fire - - -

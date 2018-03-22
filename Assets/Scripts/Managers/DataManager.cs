@@ -2179,7 +2179,7 @@ public class DataManager : MonoBehaviour
     public int CheckForSpareActorSlot(GlobalSide side)
     {
         int slotID = -1;
-        for (int i = 0; i < arrayOfActorsPresent.Length; i++)
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
         {
             if (arrayOfActorsPresent[side.level, i] == false)
             {

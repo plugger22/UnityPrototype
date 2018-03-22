@@ -1534,6 +1534,7 @@ public class ActionManager : MonoBehaviour
                     actor.datapoint1 += motivationGain;
                     actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
                     builder.Append(string.Format("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd));
+                    builder.AppendLine(); builder.AppendLine();
                     //place actor on Map
                     GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);
                     Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
