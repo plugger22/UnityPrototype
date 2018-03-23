@@ -159,13 +159,13 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
-    /// Actor in Reserve Pool is reassured
+    /// Actor in Reserve Pool is reassured or threatened
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorReassured(string text, int actorID, GlobalSide side, bool isPublic = false)
+    public Message ActorSpokenToo(string text, int actorID, GlobalSide side, bool isPublic = false)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)

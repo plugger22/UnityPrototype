@@ -36,6 +36,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int recruitedReserveTimer = 5;
     [Tooltip("Renown cost for negating a bad gear use roll")]
     [Range(1, 3)] public int renownCostGear = 1;
+    [Tooltip("Renown cost for threatening an actor in the Reserve Pool")]
+    [Range(1, 3)] public int renownCostThreaten = 1;
     [Tooltip("Base Renown cost for carrying out Manage Reserve Actor actions")]
     [Range(1, 5)] public int manageReserveRenown = 1;
     [Tooltip("Base Renown cost for carrying out Manage Dismiss Actor actions")]
@@ -59,7 +61,9 @@ public class ActorManager : MonoBehaviour
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the third check made. An actor can only complain once")]
     [Range(1, 99)] public int unhappyComplainChance = 50;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
-    [Range(1, 10)] public int unhappyReassureBoost = 3;
+    [Range(1, 10)] public int unhappyReassureBoost = 5;
+    [Tooltip("Increase to the actor's Unhappy Timer after they have been Threatened")]
+    [Range(1, 10)] public int unhappyThreatenBoost = 5;
     [Tooltip("Amount of motivation lost when actor let go from reserve pool")]
     [Range(1, 3)] public int motivationLossLetGo = 1;
     [Tooltip("Amount of motivation lost when actor fired")]
@@ -1328,8 +1332,9 @@ public class ActorManager : MonoBehaviour
             int actorSlotID = GameManager.instance.dataScript.CheckForSpareActorSlot(playerSide);
             if (actorSlotID > -1)
             {
-                tooltipText = string.Format("{0}{1} Motivation +{2}{3}{4}{5}{6} joins others On Map{7}{8}{9}Any Negative conditions removed{10}", colourGood,
-                    actor.actorName, motivationGainActiveDuty, colourEnd, "\n", colourNeutral, actor.actorName, colourEnd, "\n", colourGood, colourEnd);
+                tooltipText = string.Format("{0}{1} Motivation +{2}{3}{4}{5}{6} joins others On Map{7}{8}{9}{10} will no longer Threaten or be Unhappy{11}", 
+                    colourGood, actor.actorName, motivationGainActiveDuty, colourEnd, "\n", colourNeutral, actor.actorName, colourEnd, "\n", 
+                    colourGood, actor.actorName, colourEnd);
                 EventButtonDetails actorDetails = new EventButtonDetails()
                 {
                     buttonTitle = "Active Duty",
@@ -1375,7 +1380,7 @@ public class ActorManager : MonoBehaviour
                 {
                     //actor has already been reassured (once only effect)
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append("Can only Reassure Once.");
+                    infoBuilder.Append(string.Format("{0} has already been Reassured", actor.actorName));
                 }
             }
             else
@@ -1391,7 +1396,7 @@ public class ActorManager : MonoBehaviour
             {
                 if (actor.isNewRecruit == true)
                 {
-                    tooltipText = string.Format("{0}{1}'s Motivation -1{2}{3}{4}Can be recruited again{5}", colourBad, actor.actorName,
+                    tooltipText = string.Format("{0}{1}'s{2}Motivation -1{3}{4}{5}Can be recruited again{6}", colourBad, actor.actorName, "\n",
                         colourEnd, "\n", colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
@@ -1419,6 +1424,48 @@ public class ActorManager : MonoBehaviour
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.Append(string.Format("{0}Can't Let Go if Unhappy.{1}", colourBad, colourEnd));
             }
+            //
+            // - - - Threaten - - -
+            //
+            if (actor.unhappyTimer > 0)
+            {
+                renownCost = renownCostThreaten;
+                if (playerRenown >= renownCost)
+                {
+                    StringBuilder builder = new StringBuilder();
+                    builder.Append(string.Format("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyThreatenBoost, colourEnd));
+                    builder.AppendLine();
+                    builder.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCostThreaten, colourEnd));
+                    builder.AppendLine();
+                    builder.Append(string.Format("{0}Can be Threatened again provided not Unhappy{1}", colourNeutral, colourEnd));
+                    EventButtonDetails actorDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Threaten",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                        buttonTooltipMain = string.Format("You eyeball {0} and threaten that if they don't stop complaining you'll speak to HQ", actor.actorName),
+                        buttonTooltipDetail = builder.ToString(),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.InventoryThreaten, this, actorActionDetails); },
+
+                    };
+                    //add Lie Low button to list
+                    eventList.Add(actorDetails);
+                }
+                else
+                {
+                    //not enough renown
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                    infoBuilder.Append(string.Format("{0}Insufficient Renown to Threaten (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, 
+                        colourEnd));
+                }
+            }
+            else
+            {
+                //can't threaten somebody who is already unhappy
+                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                infoBuilder.Append(string.Format("{0}Can't Threaten if Unhappy.{1}", colourBad, colourEnd));
+            }
+
             //
             // - - - Fire - - -
             //

@@ -44,6 +44,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent);
         EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent);
         EventManager.instance.AddListener(EventType.InventoryReassure, OnEvent);
+        EventManager.instance.AddListener(EventType.InventoryThreaten, OnEvent);
         EventManager.instance.AddListener(EventType.InventoryActiveDuty, OnEvent);
         EventManager.instance.AddListener(EventType.InventoryLetGo, OnEvent);
         EventManager.instance.AddListener(EventType.InventoryFire, OnEvent);
@@ -99,6 +100,10 @@ public class ActionManager : MonoBehaviour
             case EventType.InventoryReassure:
                 ModalActionDetails detailsReassure = Param as ModalActionDetails;
                 ProcessReassureActor(detailsReassure);
+                break;
+            case EventType.InventoryThreaten:
+                ModalActionDetails detailsThreaten = Param as ModalActionDetails;
+                ProcessThreatenActor(detailsThreaten);
                 break;
             case EventType.InventoryLetGo:
                 ModalActionDetails detailsLetGo = Param as ModalActionDetails;
@@ -1259,14 +1264,15 @@ public class ActionManager : MonoBehaviour
             {
                 outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty",
                     actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}", colourGood, actor.actorName, benefit, colourEnd, "\n", "\n");
+                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7} can't be Reassured again{8}", colourGood, actor.actorName, 
+                    benefit, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
                 outcomeDetails.sprite = actor.arc.baseSprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
                 actor.isReassured = true;
                 //message
                 string text = string.Format("{0} {1} has been Reassured (Reserve Pool)", actor.arc.name, actor.actorName);
-                Message message = GameManager.instance.messageScript.ActorReassured(text, actor.actorID, details.side);
+                Message message = GameManager.instance.messageScript.ActorSpokenToo(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
@@ -1277,6 +1283,73 @@ public class ActionManager : MonoBehaviour
         {
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        else
+        {
+            outcomeDetails.isAction = true;
+            //is there a delegate method that needs processing?
+            if (details.handler != null)
+            { details.handler(); }
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+    }
+
+
+    /// <summary>
+    /// Reserve pool actor is Threatened via the right click action menu
+    /// NOTE: calling method checks unhappyTimer > 0 & that sufficient renown onhand
+    /// </summary>
+    /// <param name="actorID"></param>
+    private void ProcessThreatenActor(ModalActionDetails details)
+    {
+        int benefit = GameManager.instance.actorScript.unhappyThreatenBoost;
+        int renownCost = GameManager.instance.actorScript.renownCostThreaten;
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        Actor actor = null;
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}Wow, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        outcomeDetails.modalLevel = details.modalLevel;
+        outcomeDetails.modalState = details.modalState;
+        if (details != null)
+        {
+            actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
+            if (actor != null)
+            {
+                outcomeDetails.textTop = string.Format("{0} {1} has been pulled into line and told to smarten up their attitude",
+                    actor.arc.name, actor.actorName);
+                StringBuilder builder = new StringBuilder();
+                builder.Append(string.Format("{0}{1}'s Unhappy timer +{2}{3}", colourGood, actor.actorName, benefit, colourEnd));
+                builder.AppendLine(); builder.AppendLine();
+                builder.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+                builder.AppendLine(); builder.AppendLine();
+                builder.Append(string.Format("{0}{1} can be Threatened again (not if Unhappy){2}", colourNeutral, actor.actorName, colourEnd));
+                outcomeDetails.textBottom = builder.ToString();
+                outcomeDetails.sprite = actor.arc.baseSprite;
+                //Give boost to Unhappy timer
+                actor.unhappyTimer += benefit;
+                //Deduct Player renown
+                GameManager.instance.playerScript.Renown -= renownCost;
+                //message
+                string text = string.Format("{0} {1} has been Threatened (Reserve Pool)", actor.arc.name, actor.actorName);
+                Message message = GameManager.instance.messageScript.ActorSpokenToo(text, actor.actorID, details.side);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+        //outcome
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a spike in the circuit. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
             outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
@@ -1534,14 +1607,25 @@ public class ActionManager : MonoBehaviour
                     actor.datapoint1 += motivationGain;
                     actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
                     builder.Append(string.Format("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd));
-                    builder.AppendLine(); builder.AppendLine();
-                    //place actor on Map
-                    GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);
+                    //was actor threatening
+                    if (actor.isThreatening == true)
+                    {
+                        builder.AppendLine(); builder.AppendLine();
+                        builder.Append(string.Format("{0}{1} is no longer Threatening{2}", colourGood, actor.actorName, colourEnd));
+                    }
                     Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                     if (condition != null)
-                    { GameManager.instance.playerScript.RemoveCondition(condition); }
+                    {
+                        if (GameManager.instance.playerScript.RemoveCondition(condition) == true)
+                        {
+                            builder.AppendLine(); builder.AppendLine();
+                            builder.Append(string.Format("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd));
+                        }
+                    }
                     else
                     { Debug.LogError("Unhappy condition not found (Null)"); errorFlag = true; }
+                    //place actor on Map (reset states)
+                    GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);
                     //remove actor from reserve list
                     List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
                     if (reservePoolList != null)

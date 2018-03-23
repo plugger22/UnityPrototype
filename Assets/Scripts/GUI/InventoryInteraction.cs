@@ -90,7 +90,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                         itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
                                         itemPos = position,
                                         listOfButtonDetails = GameManager.instance.actorScript.GetReservePoolActions(actor.actorID),
-                                        menuType = ActionMenuType.Actor
+                                        menuType = ActionMenuType.Reserve
                                     };
                                     //activate menu
                                     GameManager.instance.actionMenuScript.SetActionMenu(details);

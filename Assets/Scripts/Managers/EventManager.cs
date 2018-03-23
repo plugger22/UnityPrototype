@@ -74,6 +74,7 @@ public enum EventType
     InventoryOpenUI,
     InventoryCloseUI,
     InventoryReassure,
+    InventoryThreaten,
     InventoryLetGo,
     InventoryFire,
     InventoryActiveDuty,
