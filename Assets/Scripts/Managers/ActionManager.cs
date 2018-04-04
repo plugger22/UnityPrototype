@@ -1251,94 +1251,98 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
-        Node node = null;
+        //two builders for top and bottom texts
+        StringBuilder builderTop = new StringBuilder();
+        StringBuilder builderBottom = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
-        //resolve action
-        if (details != null)
+        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        if (node != null)
         {
-            //Get Gear
-            Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
-            if (gear != null)
+            //resolve action
+            if (details != null)
             {
-                List<Effect> listOfEffects = gear.listOfPersonalEffects;
-                if (listOfEffects != null && listOfEffects.Count > 0)
+                //Get Gear
+                Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
+                if (gear != null)
                 {
-                    //return class
-                    EffectDataReturn effectReturn = new EffectDataReturn();
-                    //two builders for top and bottom texts
-                    StringBuilder builderTop = new StringBuilder();
-                    StringBuilder builderBottom = new StringBuilder();
-                    //pass through data package
-                    EffectDataInput dataInput = new EffectDataInput();
-                    //
-                    // - - - Process effects
-                    //
-                    foreach (Effect effect in listOfEffects)
+                    List<Effect> listOfEffects = gear.listOfPersonalEffects;
+                    if (listOfEffects != null && listOfEffects.Count > 0)
                     {
-                        //no ongoing effect allowed for use gear actions
-                        dataInput.ongoingID = -1;
-                        dataInput.ongoingText = "";
-                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
-                        if (effectReturn != null)
+                        //return class
+                        EffectDataReturn effectReturn = new EffectDataReturn();
+                        //pass through data package
+                        EffectDataInput dataInput = new EffectDataInput();
+                        //
+                        // - - - Process effects
+                        //
+                        foreach (Effect effect in listOfEffects)
                         {
-                            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-                            //update stringBuilder texts
-                            if (effectReturn.topText.Length > 0)
+                            //no ongoing effect allowed for use gear actions
+                            dataInput.ongoingID = -1;
+                            dataInput.ongoingText = "";
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                            if (effectReturn != null)
                             {
-                                builderTop.AppendLine(); builderTop.AppendLine();
-                                builderTop.Append(effectReturn.topText);
+                                outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+                                //update stringBuilder texts
+                                if (effectReturn.topText.Length > 0)
+                                {
+                                    builderTop.AppendLine(); builderTop.AppendLine();
+                                    builderTop.Append(effectReturn.topText);
+                                }
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(effectReturn.bottomText);
+                                //exit effect loop on error
+                                if (effectReturn.errorFlag == true) { break; }
+                                //valid action? -> only has to be true once for an action to be valid
+                                if (effectReturn.isAction == true) { isAction = true; }
                             }
-                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                            builderBottom.Append(effectReturn.bottomText);
-                            //exit effect loop on error
-                            if (effectReturn.errorFlag == true) { break; }
-                            //valid action? -> only has to be true once for an action to be valid
-                            if (effectReturn.isAction == true) { isAction = true; }
+                            else
+                            {
+                                builderTop.AppendLine();
+                                builderTop.Append("Error");
+                                builderBottom.AppendLine();
+                                builderBottom.Append("Error");
+                                effectReturn.errorFlag = true;
+                                break;
+                            }
                         }
-                        else
-                        {
-                            builderTop.AppendLine();
-                            builderTop.Append("Error");
-                            builderBottom.AppendLine();
-                            builderBottom.Append("Error");
-                            effectReturn.errorFlag = true;
-                            break;
-                        }
+                        //texts
+                        outcomeDetails.textTop = builderTop.ToString();
+                        outcomeDetails.textBottom = builderBottom.ToString();
                     }
-                    //texts
-                    outcomeDetails.textTop = builderTop.ToString();
-                    outcomeDetails.textBottom = builderBottom.ToString();
+                    else
+                    {
+                        Debug.LogError(string.Format("There are no USE Effects for this \"{0}\" gear", gear.name));
+                        errorFlag = true;
+                    }
                 }
                 else
                 {
-                    Debug.LogError(string.Format("There are no USE Effects for this \"{0}\" gear", gear.name));
+                    Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", details.gearID));
                     errorFlag = true;
                 }
             }
             else
             {
-                Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", details.gearID));
                 errorFlag = true;
+                Debug.LogError("Invalid ModalActionDetails (null) as argument");
             }
         }
         else
         {
             errorFlag = true;
-            Debug.LogError("Invalid ModalActionDetails (null) as argument");
+            Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer));
         }
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
+        //
+        // - - - Outcome - - -
+        //
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
         { outcomeDetails.isAction = true; }
-        //no error -> PROCEED to some form of dice outcome for gear use
+        //no error
         if (errorFlag == false)
         {
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
@@ -1367,7 +1371,12 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            //OUTCOME -> TO DO
+            //Gear Used
+            outcomeDetails.textTop = builderTop.ToString();
+            outcomeDetails.textBottom = builderBottom.ToString();
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+            //generate a create modal window event
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }
 
