@@ -685,8 +685,8 @@ public class GearManager : MonoBehaviour
                                                 {
                                                     builderTop.AppendLine();
                                                     builderTop.Append(effectReturn.topText);
-                                                    builderBottom.AppendLine();
-                                                    builderBottom.AppendLine();
+                                                    if (builderBottom.Length > 0)
+                                                    { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                                     builderBottom.Append(effectReturn.bottomText);
                                                 }
                                                 else { Debug.LogError("Invalid effectReturn (Null)"); }

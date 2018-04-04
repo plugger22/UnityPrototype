@@ -530,7 +530,7 @@ public class ActorManager : MonoBehaviour
                                                     { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
                                                     else
                                                     {
-                                                        //handle renown & invisibility situatiosn - players or actors?
+                                                        //handle renown & invisibility situations - players or actors?
                                                         if (nodeID == playerID)
                                                         {
                                                             //player affected (good for renown, bad for invisibility)
@@ -1158,12 +1158,106 @@ public class ActorManager : MonoBehaviour
         List<EventButtonDetails> eventList = new List<EventButtonDetails>();            
         //Cancel button tooltip (handles all no go cases)
         StringBuilder infoBuilder = new StringBuilder();
-        string tooltipText;
+        string tooltipText, effectCriteria, colourEffect;
         string cancelText = null;
+        bool proceedFlag = true;
         int benefit;
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
         if (gear != null)
         {
+            //
+            // - - - Use - - -
+            //
+            List<Effect> listOfEffects = gear.listOfPersonalEffects;
+            if (listOfEffects != null)
+            {
+                //effects
+                StringBuilder builder = new StringBuilder();
+                if (listOfEffects.Count > 0)
+                {
+                    for (int i = 0; i < listOfEffects.Count; i++)
+                    {
+                        proceedFlag = true;
+                        colourEffect = colourDefault;
+                        Effect effect = listOfEffects[i];
+                        //colour code effects according to type
+                        if (effect.typeOfEffect != null)
+                        {
+                            switch (effect.typeOfEffect.name)
+                            {
+                                case "Good":
+                                    colourEffect = colourGood;
+                                    break;
+                                case "Neutral":
+                                    colourEffect = colourNeutral;
+                                    break;
+                                case "Bad":
+                                    colourEffect = colourBad;
+                                    break;
+                            }
+                        }
+                        //check effect criteria is valid
+                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                        {
+                            listOfCriteria = effect.listOfCriteria
+                        };
+                        effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                        if (effectCriteria == null)
+                        {
+                            //Effect criteria O.K -> tool tip text
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                            { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
+                            else
+                            {
+                                //Renown & Invisibility -> player affected (good for renown, bad for invisibility)
+                                if (effect.outcome.name.Equals("Renown"))
+                                { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd)); }
+                                else
+                                {
+                                    builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //invalid effect criteria -> Action cancelled
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            infoBuilder.Append(string.Format("{0}USE action invalid{1}{2}{3}({4}){5}",
+                                colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd));
+                            proceedFlag = false;
+                        }
+                    }
+                }
+
+                //button 
+                if (proceedFlag == true)
+                {
+                    ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                    gearActionDetails.side = globalResistance;
+                    gearActionDetails.gearID = gear.gearID;
+                    gearActionDetails.modalLevel = 2;
+                    gearActionDetails.modalState = ModalState.Inventory;
+                    gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+                    EventButtonDetails gearDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Use",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                        buttonTooltipMain = string.Format("Use {0}", gear.name),
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails); },
+
+                    };
+                    //add USE to list
+                    eventList.Add(gearDetails);
+                }
+            }
+            else
+            { infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd)); }
+            //
+            // - - - Give to - - -
+            //
             cancelText = string.Format("{0} {1}", gear.type.name.ToUpper(), gear.name);
             //Loop current, onMap actors
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
@@ -1200,8 +1294,8 @@ public class ActorManager : MonoBehaviour
                                 }
                                 if (preferredGear.name.Equals(gear.type.name) == true)
                                 {
-                                    tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}",
-                                      actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                    tooltipText = string.Format("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}Transfer {8} renown to Player from {9}{10}",
+                                      colourNeutral, actor.arc.name, colourEnd, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
                                 }
                                 else
                                 {
@@ -1253,7 +1347,7 @@ public class ActorManager : MonoBehaviour
                 cancelDetails = new EventButtonDetails()
                 {
                     buttonTitle = "CANCEL",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
+                    buttonTooltipHeader = string.Format("{0}INFO{1}", colourResistance, colourEnd),
                     buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                     //use a Lambda to pass arguments to the action
@@ -1266,7 +1360,7 @@ public class ActorManager : MonoBehaviour
                 cancelDetails = new EventButtonDetails()
                 {
                     buttonTitle = "CANCEL",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
+                    buttonTooltipHeader = string.Format("{0}INFO{1}", colourResistance, colourEnd),
                     buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
                     //use a Lambda to pass arguments to the action

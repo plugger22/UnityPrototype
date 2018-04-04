@@ -804,8 +804,11 @@ public class EffectManager : MonoBehaviour
                                             if (Random.Range(0, 100) <= chance)
                                             {
                                                 //gear compromised
-                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (Compromised!){2}", colourEffect, gear.name,
-                                                    colourEnd);
+                                                string text = string.Format("{0} used to stay Invisible ", gear.name);
+                                                effectReturn.bottomText = string.Format("{0}{1}(Compromised!){2}", colourEffect, text, colourEnd);
+                                                Message message = GameManager.instance.messageScript.GearCompromised(string.Format("{0}(Obtain Gear)", text), 
+                                                    node.nodeID, gear.gearID);
+                                                GameManager.instance.dataScript.AddMessage(message);
                                                 //remove gear
                                                 GameManager.instance.playerScript.RemoveGear(gearID);
                                             }

@@ -19,6 +19,8 @@ public class Gear : ScriptableObject
     public GearType type;
 
     public int data;               //multipurpose datapoint that depends on gear category
+    [Tooltip("Any effects for when gear is Used by the player within Inventory. Ignore if none")]
+    public List<Effect> listOfPersonalEffects;  
 
     public Sprite sprite;
       

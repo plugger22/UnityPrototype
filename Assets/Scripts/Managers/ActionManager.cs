@@ -38,6 +38,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ActivateAction, OnEvent);
         EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent);
         EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent);
+        EventManager.instance.AddListener(EventType.UseGearAction, OnEvent);
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
         EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent);
         EventManager.instance.AddListener(EventType.GenericReserveActor, OnEvent);
@@ -92,6 +93,10 @@ public class ActionManager : MonoBehaviour
             case EventType.GiveGearAction:
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
                 ProcessGiveGearAction(detailsGiveGear);
+                break;
+            case EventType.UseGearAction:
+                ModalActionDetails detailsUseGear = Param as ModalActionDetails;
+                ProcessUseGearAction(detailsUseGear);
                 break;
             case EventType.InventoryActiveDuty:
                 ModalActionDetails detailsActive = Param as ModalActionDetails;
@@ -1238,13 +1243,141 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
-
     /// <summary>
-    /// Reserve pool actor is reassured via the right click action menu
-    /// NOTE: calling method checks unhappyTimer > 0 & isReassured is false
+    /// Process Use Gear Player action (Resistance only)
     /// </summary>
-    /// <param name="actorID"></param>
-    private void ProcessReassureActor(ModalActionDetails details)
+    /// <param name="details"></param>
+    public void ProcessUseGearAction(ModalActionDetails details)
+    {
+        bool errorFlag = false;
+        bool isAction = false;
+        Node node = null;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //default data 
+        outcomeDetails.side = details.side;
+        //resolve action
+        if (details != null)
+        {
+            //Get Gear
+            Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
+            if (gear != null)
+            {
+                List<Effect> listOfEffects = gear.listOfPersonalEffects;
+                if (listOfEffects != null && listOfEffects.Count > 0)
+                {
+                    //return class
+                    EffectDataReturn effectReturn = new EffectDataReturn();
+                    //two builders for top and bottom texts
+                    StringBuilder builderTop = new StringBuilder();
+                    StringBuilder builderBottom = new StringBuilder();
+                    //pass through data package
+                    EffectDataInput dataInput = new EffectDataInput();
+                    //
+                    // - - - Process effects
+                    //
+                    foreach (Effect effect in listOfEffects)
+                    {
+                        //no ongoing effect allowed for use gear actions
+                        dataInput.ongoingID = -1;
+                        dataInput.ongoingText = "";
+                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                        if (effectReturn != null)
+                        {
+                            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+                            //update stringBuilder texts
+                            if (effectReturn.topText.Length > 0)
+                            {
+                                builderTop.AppendLine(); builderTop.AppendLine();
+                                builderTop.Append(effectReturn.topText);
+                            }
+                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                            builderBottom.Append(effectReturn.bottomText);
+                            //exit effect loop on error
+                            if (effectReturn.errorFlag == true) { break; }
+                            //valid action? -> only has to be true once for an action to be valid
+                            if (effectReturn.isAction == true) { isAction = true; }
+                        }
+                        else
+                        {
+                            builderTop.AppendLine();
+                            builderTop.Append("Error");
+                            builderBottom.AppendLine();
+                            builderBottom.Append("Error");
+                            effectReturn.errorFlag = true;
+                            break;
+                        }
+                    }
+                    //texts
+                    outcomeDetails.textTop = builderTop.ToString();
+                    outcomeDetails.textBottom = builderBottom.ToString();
+                }
+                else
+                {
+                    Debug.LogError(string.Format("There are no USE Effects for this \"{0}\" gear", gear.name));
+                    errorFlag = true;
+                }
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", details.gearID));
+                errorFlag = true;
+            }
+        }
+        else
+        {
+            errorFlag = true;
+            Debug.LogError("Invalid ModalActionDetails (null) as argument");
+        }
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false && isAction == true)
+        { outcomeDetails.isAction = true; }
+        //no error -> PROCEED to some form of dice outcome for gear use
+        if (errorFlag == false)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
+
+            if (gear != null)
+            {
+
+                //chance of Gear being Compromised -> TO DO
+
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", gear.gearID));
+                errorFlag = true;
+            }
+        }
+        //ERROR ->  go straight to outcome window
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+            //generate a create modal window event
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            //OUTCOME -> TO DO
+        }
+    }
+
+
+        /// <summary>
+        /// Reserve pool actor is reassured via the right click action menu
+        /// NOTE: calling method checks unhappyTimer > 0 & isReassured is false
+        /// </summary>
+        /// <param name="actorID"></param>
+        private void ProcessReassureActor(ModalActionDetails details)
     {
         int benefit = GameManager.instance.actorScript.unhappyReassureBoost;
         bool errorFlag = false;
