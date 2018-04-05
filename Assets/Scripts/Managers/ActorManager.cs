@@ -1160,7 +1160,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder infoBuilder = new StringBuilder();
         string tooltipText, effectCriteria, colourEffect;
         string cancelText = null;
-        bool proceedFlag = true;
+        bool proceedFlag = false;
         int benefit;
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
         if (gear != null)
@@ -1218,17 +1218,26 @@ public class ActorManager : MonoBehaviour
                                     builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd));
                                 }
                             }
+                            //chance of compromise
+                            int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
+                            builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}%{3}", "\n", colourNeutral, compromiseChance, colourEnd));
                         }
                         else
                         {
+                            proceedFlag = false;
                             //invalid effect criteria -> Action cancelled
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                             infoBuilder.Append(string.Format("{0}USE action invalid{1}{2}{3}({4}){5}",
                                 colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd));
-                            proceedFlag = false;
                         }
                     }
                 }
+                else
+                {
+                    proceedFlag = false;
+                    infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd));
+                }
+
 
                 //button 
                 if (proceedFlag == true)
@@ -1243,7 +1252,7 @@ public class ActorManager : MonoBehaviour
                     {
                         buttonTitle = "Use",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("Use {0}", gear.name),
+                        buttonTooltipMain = string.Format("Use {0} (Player)", gear.name),
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails); },
@@ -1295,7 +1304,7 @@ public class ActorManager : MonoBehaviour
                                 if (preferredGear.name.Equals(gear.type.name) == true)
                                 {
                                     tooltipText = string.Format("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}Transfer {8} renown to Player from {9}{10}",
-                                      colourNeutral, actor.arc.name, colourEnd, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                      colourResistance, actor.arc.name, colourEnd, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
                                 }
                                 else
                                 {

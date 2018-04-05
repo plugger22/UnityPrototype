@@ -1235,9 +1235,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             //is there a delegate method that needs processing?
             if (details.handler != null)
-            {
-                details.handler();
-            }
+            { details.handler(); }
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
@@ -1255,6 +1253,8 @@ public class ActionManager : MonoBehaviour
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.modalLevel = details.modalLevel;
+        outcomeDetails.modalState = details.modalState;
         //default data 
         outcomeDetails.side = details.side;
         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
@@ -1287,7 +1287,7 @@ public class ActionManager : MonoBehaviour
                             {
                                 outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                                 //update stringBuilder texts
-                                if (effectReturn.topText.Length > 0)
+                                if (effectReturn.topText != null && effectReturn.topText.Length > 0)
                                 {
                                     builderTop.AppendLine(); builderTop.AppendLine();
                                     builderTop.Append(effectReturn.topText);
@@ -1339,27 +1339,6 @@ public class ActionManager : MonoBehaviour
         //
         // - - - Outcome - - -
         //
-        //action (if valid) expended -> must be BEFORE outcome window event
-        if (errorFlag == false && isAction == true)
-        { outcomeDetails.isAction = true; }
-        //no error
-        if (errorFlag == false)
-        {
-            Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
-
-            if (gear != null)
-            {
-
-                //chance of Gear being Compromised -> TO DO
-
-            }
-            else
-            {
-                Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", gear.gearID));
-                errorFlag = true;
-            }
-        }
-        //ERROR ->  go straight to outcome window
         if (errorFlag == true)
         {
             //fault, pass default data to Outcome window
@@ -1371,22 +1350,40 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            //Gear Used
+            //action (if valid) expended -> must be BEFORE outcome window event
+            if (isAction == true)
+            { outcomeDetails.isAction = true; }
+            //Gear Used            
+            Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
+            if (gear != null)
+            {
+
+                //chance of Gear being Compromised -> TO DO
+
+            }
+            else
+            {
+                Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", gear.gearID));
+                errorFlag = true;
+            }
             outcomeDetails.textTop = builderTop.ToString();
             outcomeDetails.textBottom = builderBottom.ToString();
             outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-            //generate a create modal window event
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-        }
+            //is there a delegate method that needs processing?
+            if (details.handler != null)
+            { details.handler(); }
+        }            
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
 
 
-        /// <summary>
-        /// Reserve pool actor is reassured via the right click action menu
-        /// NOTE: calling method checks unhappyTimer > 0 & isReassured is false
-        /// </summary>
-        /// <param name="actorID"></param>
-        private void ProcessReassureActor(ModalActionDetails details)
+    /// <summary>
+    /// Reserve pool actor is reassured via the right click action menu
+    /// NOTE: calling method checks unhappyTimer > 0 & isReassured is false
+    /// </summary>
+    /// <param name="actorID"></param>
+    private void ProcessReassureActor(ModalActionDetails details)
     {
         int benefit = GameManager.instance.actorScript.unhappyReassureBoost;
         bool errorFlag = false;
@@ -1406,7 +1403,7 @@ public class ActionManager : MonoBehaviour
             {
                 outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty",
                     actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7} can't be Reassured again{8}", colourGood, actor.actorName, 
+                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7} can't be Reassured again{8}", colourGood, actor.actorName,
                     benefit, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
                 outcomeDetails.sprite = actor.arc.baseSprite;
                 //Give boost to Unhappy timer

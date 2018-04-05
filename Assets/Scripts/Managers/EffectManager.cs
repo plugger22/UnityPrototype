@@ -615,18 +615,15 @@ public class EffectManager : MonoBehaviour
                     if (node != null)
                     {
 
-                        //if a null actor just ignore effect as null is the default for actors. No need for an error message
-                        if (actor != null)
+                        //it's OK to pass a null actor provided it's a player condition
+                        EffectDataResolve resolve = ResolveConditionData(effect, node, actor);
+                        if (resolve.isError == true)
+                        { effectReturn.errorFlag = true; }
+                        else
                         {
-                            EffectDataResolve resolve = ResolveConditionData(effect, actor, node);
-                            if (resolve.isError == true)
-                            { effectReturn.errorFlag = true; }
-                            else
-                            {
-                                effectReturn.topText = resolve.topText;
-                                effectReturn.bottomText = resolve.bottomText;
-                                effectReturn.isAction = true;
-                            }
+                            effectReturn.topText = resolve.topText;
+                            effectReturn.bottomText = resolve.bottomText;
+                            effectReturn.isAction = true;
                         }
 
                     }
@@ -1776,13 +1773,13 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sub method to process Actor Condition
-    /// Note: effect and actor checked for null by the calling method
+    /// Sub method to process Actor Condition. Can pass a Null actor (default) provided it is a Player condition
+    /// Note: effect and actor checked for null by the calling method.
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private EffectDataResolve ResolveConditionData(Effect effect, Actor actor, Node node)
+    private EffectDataResolve ResolveConditionData(Effect effect, Node node, Actor actor = null)
     {
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
@@ -1867,29 +1864,33 @@ public class EffectManager : MonoBehaviour
             }
             else
             {
-                //Actor Condition
-                switch (effect.operand.name)
+                if (actor != null)
                 {
-                    case "Add":
-                        //only add condition if NOT already present
-                        if (actor.CheckConditionPresent(condition) == false)
-                        {
-                            actor.AddCondition(condition);
-                            effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.name, colourEnd);
-                        }
-                        break;
-                    case "Subtract":
-                        //only remove  condition if present
-                        if (actor.CheckConditionPresent(condition) == true)
-                        {
-                            actor.RemoveCondition(condition);
-                            effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.name, colourEnd);
-                        }
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
-                        break;
+                    //Actor Condition
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            //only add condition if NOT already present
+                            if (actor.CheckConditionPresent(condition) == false)
+                            {
+                                actor.AddCondition(condition);
+                                effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.name, colourEnd);
+                            }
+                            break;
+                        case "Subtract":
+                            //only remove  condition if present
+                            if (actor.CheckConditionPresent(condition) == true)
+                            {
+                                actor.RemoveCondition(condition);
+                                effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.name, colourEnd);
+                            }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                            break;
+                    }
                 }
+                else { Debug.LogError("Invalid actor (Null)"); }
             }
         }
         else { Debug.LogError(string.Format("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name)); }
