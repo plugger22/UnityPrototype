@@ -964,8 +964,8 @@ public class ActorManager : MonoBehaviour
                             lielowActionDetails.side = playerSide;
                             lielowActionDetails.actorDataID = actor.actorSlotID;
                             int numOfTurns = 3 - actor.datapoint2;
-                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1} turn{2}", actor.actorName, numOfTurns,
-                                numOfTurns != 1 ? "s" : "");
+                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} turn{3}{4}", actor.actorName, 
+                                colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
                             EventButtonDetails lielowDetails = new EventButtonDetails()
                             {
                                 buttonTitle = "Lie Low",
@@ -1220,7 +1220,8 @@ public class ActorManager : MonoBehaviour
                             }
                             //chance of compromise
                             int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
-                            builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}%{3}", "\n", colourNeutral, compromiseChance, colourEnd));
+                            builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd, 
+                                colourNeutral, compromiseChance, colourEnd));
                         }
                         else
                         {

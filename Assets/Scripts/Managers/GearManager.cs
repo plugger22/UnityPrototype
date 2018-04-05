@@ -359,33 +359,40 @@ public class GearManager : MonoBehaviour
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(arrayOfGear[i]);
                     if (gear != null)
-                    {
-                        //option details
-                        GenericOptionDetails optionDetails = new GenericOptionDetails();
-                        optionDetails.optionID = gear.gearID;
-                        optionDetails.text = gear.name.ToUpper();
-                        optionDetails.sprite = gear.sprite;
+                    {                        
                         //tooltip 
-                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                        StringBuilder builderHeader = new StringBuilder();
-                        builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
-                        string colourGearEffect = colourEffectNeutral;
-                        if(gear.data == 3) { colourGearEffect = colourEffectGood; }
-                        else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
-                        //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
-                        switch(gear.type.name)
+                        GenericTooltipDetails tooltipDetails = GetGearTooltipDetails(gear);
+                        if (tooltipDetails != null)
                         {
-                            case "Movement":
-                                builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
-                                break;
+                            //option details
+                            GenericOptionDetails optionDetails = new GenericOptionDetails();
+                            optionDetails.optionID = gear.gearID;
+                            optionDetails.text = gear.name.ToUpper();
+                            optionDetails.sprite = gear.sprite;
+
+
+                            /*StringBuilder builderHeader = new StringBuilder();
+                            builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
+                            string colourGearEffect = colourEffectNeutral;
+                            if(gear.data == 3) { colourGearEffect = colourEffectGood; }
+                            else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
+                            //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
+                            switch(gear.type.name)
+                            {
+                                case "Movement":
+                                    builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                                    break;
+                            }
+                            tooltipDetails.textHeader = builderHeader.ToString();
+                            tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
+                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd, 
+                                "\n", colourSide, gear.type.name, colourEnd);*/
+
+                            //add to master arrays
+                            genericDetails.arrayOfOptions[i] = optionDetails;
+                            genericDetails.arrayOfTooltips[i] = tooltipDetails;
                         }
-                        tooltipDetails.textHeader = builderHeader.ToString();
-                        tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd, 
-                            "\n", colourSide, gear.type.name, colourEnd);
-                        //add to master arrays
-                        genericDetails.arrayOfOptions[i] = optionDetails;
-                        genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                        else { Debug.LogError(string.Format("Invalid tooltip Details (Null) for gearID {0}", arrayOfGear[i])); }
                     }
                     else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
                 }
@@ -759,7 +766,7 @@ public class GearManager : MonoBehaviour
 
 
     /// <summary>
-    /// submethod to handle gear comprised for ProcessPlayerMove (node and Gear not tested for null as already checked in calling method)
+    /// submethod to handle gear comprised for ProcessPlayerMove & others (node and Gear not tested for null as already checked in calling method)
     /// </summary>
     /// <param name="gear"></param>
     /// <returns></returns>
@@ -808,6 +815,36 @@ public class GearManager : MonoBehaviour
         return string.Format("{0}{1}{2}Gear saved, Renown -{3} (Now {4})", "\n", "\n", colourEffectBad, amount, renown, colourEnd);
     }
 
+    /// <summary>
+    /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem.
+    /// </summary>
+    /// <param name="gearID"></param>
+    /// <returns></returns>
+    public GenericTooltipDetails GetGearTooltipDetails(Gear gear)
+    {
+        GenericTooltipDetails details = null;
+        if (gear != null)
+        {
+            details = new GenericTooltipDetails();
+            StringBuilder builderHeader = new StringBuilder();
+            builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
+            string colourGearEffect = colourEffectNeutral;
+            if (gear.data == 3) { colourGearEffect = colourEffectGood; }
+            else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
+            //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
+            switch (gear.type.name)
+            {
+                case "Movement":
+                    builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                    break;
+            }
+            details.textHeader = builderHeader.ToString();
+            details.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
+            details.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd,
+                "\n", colourSide, gear.type.name, colourEnd);
+        }
+        return details;
+    }
 
     //new methods above here
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
 using packageAPI;
+using modalAPI;
 
 /// <summary>
 /// allows Node / Actor tooltip to show with mouseover of Modal Action Menu header
@@ -12,6 +13,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     //data needed for tooltips and passed by ModalActionMenu.cs -> SetActionMenu
     [HideInInspector] public int nodeID;
+    [HideInInspector] public int gearID;
     [HideInInspector] public int actorSlotID;
     [HideInInspector] public ActionMenuType menuType;
 
@@ -58,7 +60,12 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 { StartCoroutine(ShowTooltip()); }
                 break;
             case ActionMenuType.Actor:
-                StartCoroutine(ShowTooltip());
+                if (actorSlotID > -1)
+                { StartCoroutine(ShowTooltip()); }
+                break;
+            case ActionMenuType.Gear:
+                if (gearID > -1)
+                { StartCoroutine(ShowTooltip()); }
                 break;
         }
     }
@@ -78,6 +85,9 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 break;
             case ActionMenuType.Actor:
                 GameManager.instance.tooltipActorScript.CloseTooltip();
+                break;
+            case ActionMenuType.Gear:
+                GameManager.instance.tooltipGenericScript.CloseTooltip();
                 break;
         }
     }
@@ -118,7 +128,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         //adjust position prior to sending (rectTransform is in World units)
                         Vector3 positionNode = rectTransform.position;
                         positionNode.x += 150;
-                        positionNode.y -= 100;
+                        positionNode.y -= 125;
                         positionNode = Camera.main.ScreenToWorldPoint(positionNode);
 
                         NodeTooltipData nodeTooltip = new NodeTooltipData()
@@ -144,6 +154,32 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         yield return null;
                     }
                     break;
+                case ActionMenuType.Gear:
+                    Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                    if (gear != null)
+                    {
+                        GenericTooltipDetails details = GameManager.instance.gearScript.GetGearTooltipDetails(gear);
+                        if (details != null)
+                        {
+                            //do once
+                            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+                            {
+                                //adjust position prior to sending
+                                Vector3 positionGear = rectTransform.position;
+                                GameManager.instance.tooltipGenericScript.SetTooltip(details.textMain, positionGear, details.textHeader, details.textDetails);
+                                yield return null;
+                                //fade in
+                                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                                {
+                                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                                    alphaCurrent += Time.deltaTime / mouseOverFade;
+                                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                                    yield return null;
+                                }
+                            }
+                        }
+                    }
+                    break;
                 case ActionMenuType.Actor:
                     GlobalSide side = GameManager.instance.sideScript.PlayerSide;
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
@@ -154,7 +190,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         {
                             //adjust position prior to sending
                             Vector3 positionActor = rectTransform.position;
-                            positionActor.x += 50;
+                            positionActor.x += 70;
                             positionActor.y -= 100;
 
                             ActorTooltipData actorTooltip = new ActorTooltipData()

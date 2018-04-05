@@ -1249,12 +1249,14 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
+        string returnText;
         //two builders for top and bottom texts
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         outcomeDetails.modalLevel = details.modalLevel;
         outcomeDetails.modalState = details.modalState;
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         //default data 
         outcomeDetails.side = details.side;
         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
@@ -1285,7 +1287,8 @@ public class ActionManager : MonoBehaviour
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
-                                outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+                                outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
+                                builderTop.Append(string.Format("{0} has been used by the Player", gear.name));
                                 //update stringBuilder texts
                                 if (effectReturn.topText != null && effectReturn.topText.Length > 0)
                                 {
@@ -1344,7 +1347,6 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             //generate a create modal window event
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
@@ -1359,7 +1361,19 @@ public class ActionManager : MonoBehaviour
             {
 
                 //chance of Gear being Compromised -> TO DO
-
+                int rndNum = Random.Range(0, 100);
+                int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
+                if (rndNum < compromiseChance)
+                {
+                    //gear compromised -> remove gear from inventory
+                    returnText = GameManager.instance.gearScript.GearUsedAndCompromised(gear, node);
+                }
+                else
+                {
+                    //gear not compromised
+                    returnText = GameManager.instance.gearScript.GearUsed(gear, node);
+                }
+                builderBottom.Append(returnText);
             }
             else
             {
@@ -1368,7 +1382,6 @@ public class ActionManager : MonoBehaviour
             }
             outcomeDetails.textTop = builderTop.ToString();
             outcomeDetails.textBottom = builderBottom.ToString();
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
