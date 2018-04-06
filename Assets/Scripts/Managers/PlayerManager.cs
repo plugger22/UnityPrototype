@@ -28,6 +28,8 @@ public class PlayerManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
 
+    //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this
+
     public int Renown
     {
         get
@@ -55,12 +57,10 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this
 
-
-
-
-
+    /// <summary>
+    /// Initialisation
+    /// </summary>
     public void Initialise()
     {
         int nodeID = 0;
@@ -243,6 +243,7 @@ public class PlayerManager : MonoBehaviour
     //
     // - - - Conditions - - -
     //
+
     /// <summary>
     /// Add a new condition to list provided it isn't already present
     /// </summary>
