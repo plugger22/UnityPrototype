@@ -2822,6 +2822,26 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a dictionary (by value) of all conditions of the specified type, returns empty dictionary if none
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public Dictionary<string, Condition> GetDictOfConditionsByType(GlobalType type)
+    {
+        Dictionary<string, Condition> dictOfConditionsByType = new Dictionary<string, Condition>();
+        if (dictOfConditions != null)
+        {
+            foreach (var condition in dictOfConditions)
+            {
+                if (condition.Value.type.name.Equals(type.name) == true)
+                { dictOfConditionsByType.Add(condition.Key, condition.Value); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConditions (Null)"); }
+        return dictOfConditionsByType;
+    }
+
+    /// <summary>
     /// Returns ManageAction SO, Null if not found in dictionary
     /// </summary>
     /// <param name="actionName"></param>

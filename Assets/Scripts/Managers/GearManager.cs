@@ -42,6 +42,7 @@ public class GearManager : MonoBehaviour
     private string colourSide;
     private string colourGear;
     private string colourDefault;
+    private string colourGrey;
     private string colourNormal;
     private string colourGood;
     private string colourActor;
@@ -210,6 +211,7 @@ public class GearManager : MonoBehaviour
         colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
@@ -807,7 +809,7 @@ public class GearManager : MonoBehaviour
         string textMsg = string.Format("{0}, ID {1} has been used", gear.name, gear.gearID);
         Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
         if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
-        return string.Format("{0}{1}{2}Gear used and O.K{3}", "\n", "\n", colourGear, colourEnd);
+        return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd);
     }
 
     /// <summary>
@@ -841,6 +843,7 @@ public class GearManager : MonoBehaviour
         {
             details = new GenericTooltipDetails();
             StringBuilder builderHeader = new StringBuilder();
+            StringBuilder builderDetails = new StringBuilder();
             builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
             string colourGearEffect = colourEffectNeutral;
             if (gear.data == 3) { colourGearEffect = colourEffectGood; }
@@ -852,10 +855,37 @@ public class GearManager : MonoBehaviour
                     builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
                     break;
             }
+            //Node use
+            builderHeader.AppendLine(); builderHeader.AppendLine();
+            switch(gear.type.name)
+            {
+                case "Hacking":
+                case "Kinetic":
+                case "Persuasion":
+                    builderHeader.Append(string.Format("{0}<size=90%>Node use? Yes{1}", colourAlert, colourEnd));
+                    break;
+                default:
+                    builderHeader.Append(string.Format("{0}<size=80%>Node use? No{1}", colourGrey, colourEnd));
+                    break;
+            }
+            //gear use
+            builderHeader.AppendLine();
+            builderHeader.Append(string.Format("{0}Gift use? Yes{1}", colourAlert, colourEnd));
+            //personal use
+            builderHeader.AppendLine();
+            if (gear.listOfPersonalEffects != null)
+            { builderHeader.Append(string.Format("{0}Personal use? Yes{1}", colourAlert, colourEnd)); }
+            else
+            { builderHeader.Append(string.Format("{0}Personal use? No{1}", colourGrey, colourEnd)); }
+            //details
+            builderDetails.Append(string.Format("{0}{1}{2}", colourEffectGood, gear.rarity.name, colourEnd));
+            builderDetails.AppendLine();
+            builderDetails.Append(string.Format("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd));
+
+            //data package
             details.textHeader = builderHeader.ToString();
             details.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-            details.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd,
-                "\n", colourSide, gear.type.name, colourEnd);
+            details.textDetails = builderDetails.ToString();
         }
         return details;
     }
