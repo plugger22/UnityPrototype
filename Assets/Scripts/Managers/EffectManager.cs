@@ -612,8 +612,8 @@ public class EffectManager : MonoBehaviour
                 case "ConditionCorrupt":
                 case "ConditionQuestionable":
                 case "ConditionStar":
-                case "ConditionRandomBad":
-                case "ConditionRandomGood":
+                case "ConditionGroupBad":
+                case "ConditionGroupGood":
                     if (node != null)
                     {
 
@@ -1908,9 +1908,9 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogError(string.Format("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name)); }
                 break;
 
-            //add or subtract a random condition
-            case "ConditionRandomGood":
-            case "ConditionRandomBad":
+            //add or subtract a group condition
+            case "ConditionGroupGood":
+            case "ConditionGroupBad":
                 List<Condition> listOfConditions;
                 Condition conditionRandom;
                 string effectType = "Good";
@@ -1920,10 +1920,10 @@ public class EffectManager : MonoBehaviour
                 //get type
                 switch (effect.outcome.name)
                 {
-                    case "ConditionRandomGood":
+                    case "ConditionGroupGood":
                         //default condition, no need to reassign
                         break;
-                    case "ConditionRandomBad":
+                    case "ConditionGroupBad":
                         type = GameManager.instance.globalScript.typeBad;
                         effectType = "Bad";
                         colourConditionAdd = colourBad;
@@ -1939,38 +1939,82 @@ public class EffectManager : MonoBehaviour
                     if (GameManager.instance.playerScript.CheckNumOfConditions() > 0)
                     {
                         listOfConditions = GameManager.instance.playerScript.GetListOfConditions();
-                        switch (effect.operand.name)
+                        switch (effect.apply.name)
                         {
-                            case "Add":
-                                //add a new condition
-                                conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
-                                if (conditionRandom != null)
+                            case "ConditionRandom":
+                                switch (effect.operand.name)
                                 {
-                                    GameManager.instance.playerScript.AddCondition(conditionRandom);
-                                    effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
+                                    case "Add":
+                                        //add a new condition
+                                        conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
+                                        if (conditionRandom != null)
+                                        {
+                                            GameManager.instance.playerScript.AddCondition(conditionRandom);
+                                            effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
+                                        }
+                                        else
+                                        { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
+                                        break;
+                                    case "Subtract":
+                                        //remove an existing condition
+                                        conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
+                                        if (conditionRandom != null)
+                                        {
+                                            //remove condition
+                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom);
+                                            effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
+                                        }
+                                        else
+                                        { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
+                                        break;
+                                    default:
+                                        Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                                        break;
                                 }
-                                else
-                                { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
                                 break;
-                            case "Subtract":
-                                //remove an existing condition
-                                conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
-                                if (conditionRandom != null)
+                            case "ConditionAll":
+                                string typeCompare;
+                                int counter = 0;
+                                switch (effect.outcome.name)
                                 {
-                                    //remove condition
-                                    GameManager.instance.playerScript.RemoveCondition(conditionRandom);
-                                    effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
+                                    case "ConditionGroupGood":
+                                        //remove all good conditions
+                                        if (listOfConditions.Count > 0)
+                                        {
+                                            typeCompare = GameManager.instance.globalScript.typeGood.name;
+                                            for (int i = listOfConditions.Count - 1; i >= 0; i--)
+                                            {
+                                                if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                { listOfConditions.RemoveAt(i); counter++; }
+                                            }
+                                            effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBad, counter, colourEnd);
+                                        }
+                                        break;
+                                    case "ConditionGroupBad":
+                                        //remove all bad conditions
+                                        if (listOfConditions.Count > 0)
+                                        {
+                                            typeCompare = GameManager.instance.globalScript.typeBad.name;
+                                            for (int i = listOfConditions.Count - 1; i >= 0; i--)
+                                            {
+                                                if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                { listOfConditions.RemoveAt(i); counter++; }
+                                            }
+                                            effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGood, counter, colourEnd);
+                                        }
+                                        break;
+                                    default:
+                                        Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                                        break;
                                 }
-                                else
-                                { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
                                 break;
                             default:
-                                Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                                Debug.LogError(string.Format("Invalid effect.apply \"{0}\" for effect outcome \"{1}\"", effect.apply.name, effect.outcome.name));
                                 break;
                         }
                     }
                     else
-                    { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd);  }
+                    { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
                 }
                 //Actor
                 else
@@ -1980,33 +2024,44 @@ public class EffectManager : MonoBehaviour
                         if (actor.CheckNumOfConditions() > 0)
                         {
                             listOfConditions = actor.GetListOfConditions();
-                            switch (effect.operand.name)
+                            switch (effect.apply.name)
                             {
-                                case "Add":
-                                    //add a new condition
-                                    conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
-                                    if (conditionRandom != null)
+                                case "ConditionRandom":
+                                    switch (effect.operand.name)
                                     {
-                                        actor.AddCondition(conditionRandom);
-                                        effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
+                                        case "Add":
+                                            //add a new condition
+                                            conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
+                                            if (conditionRandom != null)
+                                            {
+                                                actor.AddCondition(conditionRandom);
+                                                effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
+                                            }
+                                            else
+                                            { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
+                                            break;
+                                        case "Subtract":
+                                            //remove an existing condition
+                                            conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
+                                            if (conditionRandom != null)
+                                            {
+                                                //remove condition
+                                                actor.RemoveCondition(conditionRandom);
+                                                effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
+                                            }
+                                            else
+                                            { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
+                                            break;
+                                        default:
+                                            Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                                            break;
                                     }
-                                    else
-                                    { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
                                     break;
-                                case "Subtract":
-                                    //remove an existing condition
-                                    conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
-                                    if (conditionRandom != null)
-                                    {
-                                        //remove condition
-                                        actor.RemoveCondition(conditionRandom);
-                                        effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
-                                    }
-                                    else
-                                    { effectResolve.bottomText = string.Format("{0}There are no {1} conditions present{2}", colourAlert, effectType, colourEnd); }
+                                case "ConditionAll":
+
                                     break;
                                 default:
-                                    Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                                    Debug.LogError(string.Format("Invalid effect.apply \"{0}\" for effect outcome \"{1}\"", effect.apply.name, effect.outcome.name));
                                     break;
                             }
                         }
@@ -2041,7 +2096,7 @@ public class EffectManager : MonoBehaviour
                 switch (operand)
                 {
                     case "Remove":
-                        //randomly select a condition to remove from the provided list
+                        //randomly select a condition of the required type to remove from the provided list
                         foreach (Condition condition in listOfConditions)
                         {
                             //add to list if the correct type
@@ -2054,7 +2109,7 @@ public class EffectManager : MonoBehaviour
                         { conditionSelected = tempList[Random.Range(0, numOfConditions)]; }
                         break;
                     case "Add":
-                        //randomly add a new condition that is NOT on the provided list
+                        //randomly select a new condition of the required type that is NOT on the provided list
                         Dictionary<string, Condition> dictOfConditionsByType = GameManager.instance.dataScript.GetDictOfConditionsByType(type);
                         if (dictOfConditionsByType.Count > 0)
                         {

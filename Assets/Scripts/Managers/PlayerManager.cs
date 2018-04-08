@@ -245,7 +245,7 @@ public class PlayerManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Add a new condition to list provided it isn't already present
+    /// Add a new condition to list provided it isn't already present, ignored if it is
     /// </summary>
     /// <param name="condition"></param>
     public void AddCondition(Condition condition)
@@ -288,7 +288,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes a specified condition if present
+    /// Removes a specified condition if present, ignored if it isn't
     /// </summary>
     /// <param name="condition"></param>
     /// <returns></returns>

@@ -30,6 +30,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
+
                 break;
             case PointerEventData.InputButton.Right:
                 if (GameManager.instance.guiScript.CheckIsBlocked(2) == false)
