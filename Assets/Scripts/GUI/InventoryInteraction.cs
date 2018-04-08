@@ -30,6 +30,8 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
+                
+                //display gear info -> TO DO
 
                 break;
             case PointerEventData.InputButton.Right:

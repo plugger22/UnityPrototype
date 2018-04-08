@@ -856,7 +856,7 @@ public class GearManager : MonoBehaviour
                     break;
             }
             //Node use
-            builderHeader.AppendLine(); builderHeader.AppendLine();
+            builderHeader.AppendLine();
             switch(gear.type.name)
             {
                 case "Hacking":

@@ -2058,7 +2058,40 @@ public class EffectManager : MonoBehaviour
                                     }
                                     break;
                                 case "ConditionAll":
-
+                                    string typeCompare;
+                                    int counter = 0;
+                                    switch (effect.outcome.name)
+                                    {
+                                        case "ConditionGroupGood":
+                                            //remove all good conditions
+                                            if (listOfConditions.Count > 0)
+                                            {
+                                                typeCompare = GameManager.instance.globalScript.typeGood.name;
+                                                for (int i = listOfConditions.Count - 1; i >= 0; i--)
+                                                {
+                                                    if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                    { listOfConditions.RemoveAt(i); counter++; }
+                                                }
+                                                effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBad, counter, colourEnd);
+                                            }
+                                            break;
+                                        case "ConditionGroupBad":
+                                            //remove all bad conditions
+                                            if (listOfConditions.Count > 0)
+                                            {
+                                                typeCompare = GameManager.instance.globalScript.typeBad.name;
+                                                for (int i = listOfConditions.Count - 1; i >= 0; i--)
+                                                {
+                                                    if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                    { listOfConditions.RemoveAt(i); counter++; }
+                                                }
+                                                effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGood, counter, colourEnd);
+                                            }
+                                            break;
+                                        default:
+                                            Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
+                                            break;
+                                    }
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effect.apply \"{0}\" for effect outcome \"{1}\"", effect.apply.name, effect.outcome.name));
