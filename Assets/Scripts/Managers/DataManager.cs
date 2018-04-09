@@ -2720,10 +2720,10 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Remove an effect from the dictionary and, if present, generate a message for the relevant side. NodeID could also be ConnID for connections
+    /// Remove an effect from the dictionary and, if present, generate a message for the relevant side. dataID could be NodeID or ConnID for connections
     /// </summary>
     /// <param name="ongoing"></param>
-    public void RemoveOngoingEffect(EffectDataOngoing ongoing, int nodeID)
+    public void RemoveOngoingEffect(EffectDataOngoing ongoing, int dataID)
     {
         if (ongoing != null)
         {
@@ -2734,7 +2734,7 @@ public class DataManager : MonoBehaviour
                 dictOfOngoingID.Remove(ongoing.ongoingID);
                 //generate message
                 string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);
-                Message message = GameManager.instance.messageScript.OngoingEffectExpired(text, ongoing.side, nodeID);
+                Message message = GameManager.instance.messageScript.OngoingEffectExpired(text, ongoing.side, dataID);
                 GameManager.instance.dataScript.AddMessage(message);
             }
         }

@@ -2325,14 +2325,14 @@ public class EffectManager : MonoBehaviour
                                 case "Add":
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player gains {1} extra action{2} {3}{4}NEXT TURN{5}", colourEffect, effect.value,
-                                        effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} {7}{8}NEXT TURN{9}", colourEffect, colourEnd,
+                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player loses {1} extra action{2} {3}{4}NEXT TURN{5}", colourEffect, effect.value,
-                                        effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} {7}{8}NEXT TURN{9}", colourEffect, colourEnd,
+                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name)); errorFlag = true;
@@ -2347,14 +2347,16 @@ public class EffectManager : MonoBehaviour
                                 case "Add":
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player gains {1} extra action{2} for {3} turns commencing {4}{5}NEXT TURN{6}", colourEffect, 
-                                        effect.value, effect.value != 1 ? "s" : "", actionAdjustment.timer - 1, colourEnd, colourNeutral, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}", 
+                                        colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
+                                        actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player loses {1} extra action{2} for {3} turns commencing {4}{5}NEXT TURN{6}", colourEffect,
-                                        effect.value, effect.value != 1 ? "s" : "", actionAdjustment.timer - 1, colourEnd, colourNeutral, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
+                                        colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
+                                        actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name)); errorFlag = true;
