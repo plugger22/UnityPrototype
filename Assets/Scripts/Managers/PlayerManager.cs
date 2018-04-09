@@ -406,6 +406,39 @@ public class PlayerManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Debug function to manually add gear to the player's inventory.Returns a message to display
+    /// </summary>
+    /// <param name="gearname"></param>
+    public string DebugAddGear(string gearName)
+    {
+        string text = string.Format("{0} has NOT been added to the Player's inventory", gearName);
+        int gearID = -1;
+        if (string.IsNullOrEmpty(gearName) == false)
+        {
+            //find gear in dictionary
+            Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
+            if (dictOfGear != null)
+            {
+                //loop dictionary looking for gear
+                foreach(var gear in dictOfGear)
+                {
+                    if (gear.Value.name.Equals(gearName) == true)
+                    {
+                        gearID = gear.Value.gearID;
+                        break;
+                    }
+                }
+                if (gearID > -1)
+                {
+                    //add gear to player's inventory
+                    if (AddGear(gearID) == true)
+                    { text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n"); }
+                }
+            }
+        }
+        return text;
+    }
 
     //place new methods above here
 }

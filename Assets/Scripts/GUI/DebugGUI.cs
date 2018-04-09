@@ -9,8 +9,11 @@ using modalAPI;
 /// </summary>
 public class DebugGUI : MonoBehaviour
 {
+    private enum GUIStatus { None, GearInput, Output}
+
     public GUIStyle customBackground;
 
+    private GUIStatus status = GUIStatus.None;
     private bool showGUI = false;
     private int debugDisplay = 0;
 
@@ -26,7 +29,8 @@ public class DebugGUI : MonoBehaviour
     public int gap_y;           //gap at start between header and first button
 
     private int button_width;
-
+    private string textFieldString = "input";
+    private string textOutput;
     private string optionAutoGear;
     private string optionFogOfWar;
 
@@ -41,17 +45,17 @@ public class DebugGUI : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
         //Toggle debug view on/off with 'D'
-		if (Input.GetKeyDown("d") == true)
+        if (Input.GetKeyDown("d") == true)
         {
             if (showGUI == false)
             { showGUI = true; }
             else { showGUI = false; }
         }
 
-	}
+    }
 
     private void OnGUI()
     {
@@ -61,12 +65,12 @@ public class DebugGUI : MonoBehaviour
             // - - - Left Hand side of Screen - - -
             //
 
-            
+
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Data)
             GUI.Box(new Rect(box_x, box_y, box_width, box_height), string.Format("Debug Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Action {1} of {2}", "\n", 
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Action {1} of {2}", "\n",
                 GameManager.instance.turnScript.GetActionsCurrent(), GameManager.instance.turnScript.GetActionsTotal()), customBackground);
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height), "Action Menu", customBackground);
@@ -100,7 +104,7 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 6)
                 { debugDisplay = 6; }
                 else { debugDisplay = 0; }
-                
+
             }
 
             //fourth button
@@ -141,7 +145,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eigth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 7+ button_height * 7, button_width, button_height), "Teams by Type"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Teams by Type"))
             {
                 Debug.Log("Button -> Toggle Teams");
                 if (debugDisplay != 3)
@@ -300,7 +304,7 @@ public class DebugGUI : MonoBehaviour
                 int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
                 if (GameManager.instance.actorScript.numOfActiveActors < numOfActors)
                 {
-                    for(int i = 0; i < numOfActors; i++)
+                    for (int i = 0; i < numOfActors; i++)
                     {
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, GameManager.instance.globalScript.sideResistance);
                         if (actor.Status == ActorStatus.Captured)
@@ -343,10 +347,21 @@ public class DebugGUI : MonoBehaviour
                 GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.HIGH);
             }
 
+            //tenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Give Gear"))
+            {
+                Debug.Log("Button -> Give Gear");
+                if (debugDisplay != 16)
+                { debugDisplay = 16; }
+                else { debugDisplay = 0; }
+
+            }
+
 
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
+
             if (debugDisplay > 0)
             {
                 string analysis;
@@ -453,10 +468,51 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DisplayActionsRegister();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
+                    //Give Gear
+                    case 16:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        textFieldString = GUI.TextField(new Rect(Screen.width / 2 - 50, 100, 100, 30), textFieldString);
+                        status = GUIStatus.GearInput;
+                        break;
+                    //Give Gear processing
+                    case 17:
+                        textOutput = GameManager.instance.playerScript.DebugAddGear(textFieldString);
+                        debugDisplay = 0;
+                        status = GUIStatus.Output;
+                        break;
+                        //Give Gear Ouput
+                    case 18:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
-            
+            else { status = GUIStatus.None; }
+
 
         }
+        //User input
+        Event e = Event.current;
+
+            switch (e.keyCode)
+            {
+                case KeyCode.Return:
+                    switch (status)
+                    {
+                        case GUIStatus.Output:
+                            debugDisplay = 18;
+                            break;
+                        case GUIStatus.GearInput:
+                            debugDisplay = 17;
+                            break;
+                    }
+                    break;
+                case KeyCode.Escape:
+                    debugDisplay = 0;
+                    break;
+        }
     }
+
+
 }
