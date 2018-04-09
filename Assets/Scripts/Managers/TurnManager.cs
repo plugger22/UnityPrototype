@@ -27,6 +27,8 @@ public class TurnManager : MonoBehaviour
     private int _turn;
     private int _actionsCurrent;                                                //cumulative actions taken by the player for the current turn
     private int _actionsLimit;                                                  //set to the actions cap for the player's current side
+    private int _actionsAdjust;                                                 //any temporary adjustments that apply to the actions Limit
+    private int _actionsTotal;                                                  //total number of actions available to the player this turn (adjustments + limit)
 
     private bool allowQuitting = false;
 
@@ -47,7 +49,6 @@ public class TurnManager : MonoBehaviour
     {
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
-        
         resistanceState = ResistanceState.Normal;
         authorityState = AuthorityState.Normal;
         //current side
@@ -120,6 +121,7 @@ public class TurnManager : MonoBehaviour
             while (finishedProcessing == false);
         }
     }
+
 
     /// <summary>
     /// all pre-start matters are handled here
@@ -205,8 +207,14 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     private void EndTurnFinal()
     {
+        //actions
         _actionsCurrent = 0;
+        _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
+        _actionsTotal = Mathf.Max(0, _actionsTotal);
+        //decrement any action adjustments
+        GameManager.instance.dataScript.UpdateActionAdjustments();
         Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}", "\n"));
+
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
     }
 
@@ -217,7 +225,7 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// sub-method to set up action limit based on player's current side
+    /// sub-method to set up action limit based on player's current side. Run at game start.
     /// </summary>
     /// <param name="side"></param>
     private void UpdateActionsLimit(GlobalSide side)
@@ -229,6 +237,9 @@ public class TurnManager : MonoBehaviour
             case "Resistance": _actionsLimit = actionsResistance; break;
             default: Debug.LogError(string.Format("Invalid side {0}", side.name)); break;
         }
+        //calculate total actions available
+        _actionsAdjust = GameManager.instance.dataScript.GetActionAdjustment(side);
+        _actionsTotal = _actionsLimit + _actionsAdjust;
     }
 
     /// <summary>
@@ -237,15 +248,10 @@ public class TurnManager : MonoBehaviour
     private void UseAction()
     {
         _actionsCurrent++;
-        Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}{2}", _actionsCurrent, _actionsLimit, "\n"));
+        Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}{2}", _actionsCurrent, _actionsTotal, "\n"));
         //exceed action limit?
-        if (_actionsCurrent > _actionsLimit)
-        { Debug.LogError("_actionsLimit exceeded by _actionsCurrent"); }
-        /*else if (_actionsCurrent == _actionsLimit)
-        {
-            //end of turn
-            ProcessNewTurn();
-        }*/
+        if (_actionsCurrent > _actionsTotal)
+        { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
     }
 
     /// <summary>
@@ -261,7 +267,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public bool CheckRemainingActions()
     {
-        if (_actionsCurrent < _actionsLimit)
+        if (_actionsCurrent < _actionsTotal)
         { return true; }
         return false;
     }

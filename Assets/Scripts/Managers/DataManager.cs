@@ -64,6 +64,7 @@ public class DataManager : MonoBehaviour
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
+    //NOTE: Public because data is added in Editor
     public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfTwoConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfThreeConnArcs = new List<NodeArc>();
@@ -71,17 +72,20 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
 
     //manage actor choices
-    public List<ManageAction> listOfActorHandle = new List<ManageAction>();
-    public List<ManageAction> listOfActorReserve = new List<ManageAction>();
-    public List<ManageAction> listOfActorDismiss = new List<ManageAction>();
-    public List<ManageAction> listOfActorDispose = new List<ManageAction>();
+    private List<ManageAction> listOfActorHandle = new List<ManageAction>();
+    private List<ManageAction> listOfActorReserve = new List<ManageAction>();
+    private List<ManageAction> listOfActorDismiss = new List<ManageAction>();
+    private List<ManageAction> listOfActorDispose = new List<ManageAction>();
 
     //gear lists (available gear for this level) -> gearID's
-    public List<GearRarity> listOfGearRarity = new List<GearRarity>();
-    public List<GearType> listOfGearType = new List<GearType>();
-    public List<int> listOfCommonGear = new List<int>();
-    public List<int> listOfRareGear = new List<int>();
-    public List<int> listOfUniqueGear = new List<int>();
+    private List<GearRarity> listOfGearRarity = new List<GearRarity>();
+    private List<GearType> listOfGearType = new List<GearType>();
+    private List<int> listOfCommonGear = new List<int>();
+    private List<int> listOfRareGear = new List<int>();
+    private List<int> listOfUniqueGear = new List<int>();
+
+    //Adjustments
+    private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
@@ -2902,6 +2906,81 @@ public class DataManager : MonoBehaviour
         }
         return factionReturn;
     }
+
+
+    //
+    // - - - Adjustments - - -
+    //
+
+    /// <summary>
+    /// add action adjustment to the list
+    /// </summary>
+    /// <param name="adjustment"></param>
+    public void AddActionAdjustment(ActionAdjustment adjustment)
+    {
+        if (adjustment != null)
+        { listOfActionAdjustments.Add(adjustment); }
+        else
+        { Debug.LogError("Invalid ActionAdjustment (Null)"); }
+    }
+
+
+    public List<ActionAdjustment> GetListOfActionAdjustments()
+    { return listOfActionAdjustments; }
+
+    /// <summary>
+    /// run at end of each turn (TurnManager.cs) to decrement timers and delete any adjustments that have timed out)
+    /// </summary>
+    public void UpdateActionAdjustments()
+    {
+        //loop backwards to enable deletion of timed out adjustments
+        if (listOfActionAdjustments.Count > 0)
+        {
+            for (int i = listOfActionAdjustments.Count - 1; i >= 0; i++)
+            {
+                ActionAdjustment actionAdjustment = listOfActionAdjustments[i];
+                if (actionAdjustment != null)
+                {
+                    actionAdjustment.adjustment--;
+                    if (actionAdjustment.adjustment <= 0)
+                    { listOfActionAdjustments.RemoveAt(i); }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// returns net action adjustment by talling all adjustments for the specified side
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public int GetActionAdjustment(GlobalSide side)
+    {
+        int netAdjustment = 0;
+        if (listOfActionAdjustments.Count > 0)
+        {
+            foreach(ActionAdjustment actionAdjustment in listOfActionAdjustments)
+            {
+                if (actionAdjustment.side.name.Equals(side.name) == true)
+                { netAdjustment += actionAdjustment.adjustment; }
+            }
+        }
+        return netAdjustment;
+    }
+
+    /// <summary>
+    /// Debug function to display Action Adjustments
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayActionsRegister()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" Action Adjustments Register{0}", "\n"));
+        foreach (ActionAdjustment actionAdjustment in listOfActionAdjustments)
+        { builder.Append(string.Format("{0} Side: {1} Adjust: {2} Timer: {3}", "\n", actionAdjustment.side.name, actionAdjustment.adjustment, actionAdjustment.timer)); }
+        return builder.ToString();
+    }
+
 
     //new methods above here
 }

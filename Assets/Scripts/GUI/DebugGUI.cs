@@ -168,7 +168,16 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eleventh button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Pending Messages"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Actions Register"))
+            {
+                Debug.Log("Button -> Toggle Actions Register");
+                if (debugDisplay != 15)
+                { debugDisplay = 15; }
+                else { debugDisplay = 0; }
+            }
+
+            //twelth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Pending Messages"))
             {
                 Debug.Log("Button -> Toggle Pending Messages");
                 if (debugDisplay != 9)
@@ -176,8 +185,8 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //twelth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Archive Messages"))
+            //thirteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Archive Messages"))
             {
                 Debug.Log("Button -> Toggle Archive Messages");
                 if (debugDisplay != 10)
@@ -185,8 +194,8 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //thirteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Current Messages"))
+            //fourteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Current Messages"))
             {
                 Debug.Log("Button -> Toggle Current Messages");
                 if (debugDisplay != 11)
@@ -313,26 +322,27 @@ public class DebugGUI : MonoBehaviour
                 GameManager.instance.dataScript.RemoveOngoingEffects();
             }
 
-            //sixth button
+            //seventh button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Connections LOW"))
             {
                 Debug.Log("Button -> Change Connections");
                 GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.LOW);
             }
 
-            //sixth button
+            //eighth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Connections MED"))
             {
                 Debug.Log("Button -> Change Connections");
                 GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.MEDIUM);
             }
 
-            //sixth button
+            //ninth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Connections HIGH"))
             {
                 Debug.Log("Button -> Change Connections");
                 GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.HIGH);
             }
+
 
             //
             // - - - Analysis at Right Hand side of Screen - - -
@@ -435,6 +445,12 @@ public class DebugGUI : MonoBehaviour
                     case 14:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DisplayOngoingRegister();
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
+                        break;
+                    //Actions Adjustment Register
+                    case 15:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplayActionsRegister();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
                 }

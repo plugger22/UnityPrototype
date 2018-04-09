@@ -156,4 +156,14 @@ namespace packageAPI
     }
 
 
+    /// <summary>
+    /// used to track adjustments to either sides per turn action allowance
+    /// </summary>
+    public class ActionAdjustment
+    {
+        public GlobalSide side;
+        public int adjustment;                                          //change in normal action allocation, eg. +1, -1
+        public int timer;                                               //number of turns that the effect lasts for (decremented down to zero)
+    }
+
 }

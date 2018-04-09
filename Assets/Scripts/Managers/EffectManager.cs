@@ -636,6 +636,20 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 //
+                // - - - Player Actions - - -
+                //
+                case "PlayerActions":
+                    EffectDataResolve resolvePlayer = ResolvePlayerData(effect);
+                    if (resolvePlayer.isError == true)
+                    { effectReturn.errorFlag = true; }
+                    else
+                    {
+                        effectReturn.topText = resolvePlayer.topText;
+                        effectReturn.bottomText = resolvePlayer.bottomText;
+                        effectReturn.isAction = true;
+                    }
+                    break;
+                //
                 // - - - Manage - - -
                 //
                 case "ActorDismissed":
@@ -2263,6 +2277,44 @@ public class EffectManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                 break;
         }
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// subMethod to process special player effects
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolvePlayerData(Effect effect)
+    {
+        int data;
+        //sort out colour based on type (which is effect benefit from POV of Resistance)
+        string colourEffect = colourDefault;
+        string colourText = colourDefault;
+        if (effect.typeOfEffect != null)
+        {
+            switch (effect.typeOfEffect.name)
+            {
+                case "Good":
+                    colourEffect = colourGood;
+                    break;
+                case "Neutral":
+                    colourEffect = colourNeutral;
+                    colourText = colourNeutral;
+                    break;
+                case "Bad":
+                    colourEffect = colourBad;
+                    colourText = colourAlert;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                    break;
+            }
+        }
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+
         return effectResolve;
     }
 
