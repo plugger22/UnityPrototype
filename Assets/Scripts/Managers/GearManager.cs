@@ -873,7 +873,7 @@ public class GearManager : MonoBehaviour
             builderHeader.Append(string.Format("{0}Gift use? Yes{1}", colourAlert, colourEnd));
             //personal use
             builderHeader.AppendLine();
-            if (gear.listOfPersonalEffects != null)
+            if (gear.listOfPersonalEffects != null && gear.listOfPersonalEffects.Count > 0)
             { builderHeader.Append(string.Format("{0}Personal use? Yes{1}", colourAlert, colourEnd)); }
             else
             { builderHeader.Append(string.Format("{0}Personal use? No{1}", colourGrey, colourEnd)); }

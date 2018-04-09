@@ -60,7 +60,7 @@ namespace gameAPI
     //
     // - - - Action Menu - - -
     //
-    public enum ActionMenuType { None, Node, Actor, Gear, Move, Reserve}
+    public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Move, Reserve}
 
     //
     // - - - Dice - - -

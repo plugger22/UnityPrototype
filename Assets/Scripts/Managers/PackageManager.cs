@@ -162,7 +162,7 @@ namespace packageAPI
     public class ActionAdjustment
     {
         public GlobalSide side;
-        public int adjustment;                                          //change in normal action allocation, eg. +1, -1
+        public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero)
     }
 

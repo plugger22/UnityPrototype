@@ -7,7 +7,7 @@ using packageAPI;
 using modalAPI;
 
 /// <summary>
-/// allows Node / Actor tooltip to show with mouseover of Modal Action Menu header
+/// allows Node / Actor / Gear tooltip to show with mouseover of Modal Action Menu header
 /// </summary>
 public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -56,6 +56,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         switch (menuType)
         {
             case ActionMenuType.Node:
+            case ActionMenuType.NodeGear:
                 if (nodeObject != null)
                 { StartCoroutine(ShowTooltip()); }
                 break;
@@ -81,6 +82,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         switch (menuType)
         {
             case ActionMenuType.Node:
+            case ActionMenuType.NodeGear:
                 GameManager.instance.tooltipNodeScript.CloseTooltip();
                 break;
             case ActionMenuType.Actor:
@@ -107,6 +109,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             switch (menuType)
             {
                 case ActionMenuType.Node:
+                case ActionMenuType.NodeGear:
                     //need to regularly update node details, rather than just at game start
                     nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
                     if (nodeObject != null)
@@ -114,7 +117,6 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     //do once
                     while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
                     {
-
                         List<string> activeList = node.GetNodeActors();
                         List<EffectDataTooltip> effectsList = node.GetOngoingEffects();
                         List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.targetID);

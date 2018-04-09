@@ -2200,7 +2200,6 @@ public class EffectManager : MonoBehaviour
         int data;
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
-        string colourText = colourDefault;
         if (effect.typeOfEffect != null)
         {
             switch (effect.typeOfEffect.name)
@@ -2210,11 +2209,9 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "Neutral":
                     colourEffect = colourNeutral;
-                    colourText = colourNeutral;
                     break;
                 case "Bad":
                     colourEffect = colourBad;
-                    colourText = colourAlert;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
@@ -2287,10 +2284,12 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private EffectDataResolve ResolvePlayerData(Effect effect)
     {
-        int data;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
-        string colourText = colourDefault;
+        bool errorFlag = false;            
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
         if (effect.typeOfEffect != null)
         {
             switch (effect.typeOfEffect.name)
@@ -2300,20 +2299,80 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "Neutral":
                     colourEffect = colourNeutral;
-                    colourText = colourNeutral;
                     break;
                 case "Bad":
                     colourEffect = colourBad;
-                    colourText = colourAlert;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
                     break;
             }
+
+            //get condition
+            switch (effect.outcome.name)
+            {
+                case "PlayerActions":
+                    //single or ongoing
+                    ActionAdjustment actionAdjustment = new ActionAdjustment();
+                    actionAdjustment.side = side;
+                    switch (effect.duration.name)
+                    {
+                        case "Single":
+                            //once off effect -> Note: timer is 2 because it will be immediately knocked down to 1 at the end of this turn
+                            actionAdjustment.timer = 2;
+                            switch (effect.operand.name)
+                            {
+                                case "Add":
+                                    actionAdjustment.value = effect.value;
+                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    effectResolve.bottomText = string.Format("{0}Player gains {1} extra action{2} {3}{4}NEXT TURN{5}", colourEffect, effect.value,
+                                        effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
+                                    break;
+                                case "Subtract":
+                                    actionAdjustment.value = effect.value * -1;
+                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    effectResolve.bottomText = string.Format("{0}Player loses {1} extra action{2} {3}{4}NEXT TURN{5}", colourEffect, effect.value,
+                                        effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name)); errorFlag = true;
+                                    break;
+                            }
+                            break;
+                        case "Ongoing":
+                            //NOTE: Ongoing effects are handled differently here than a standard ongoing effect (extra +1 due to decrement at end of turn)
+                            actionAdjustment.timer = GameManager.instance.effectScript.ongoingEffectTimer + 1;
+                            switch (effect.operand.name)
+                            {
+                                case "Add":
+                                    actionAdjustment.value = effect.value;
+                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    effectResolve.bottomText = string.Format("{0}Player gains {1} extra action{2} for {3} turns commencing {4}{5}NEXT TURN{6}", colourEffect, 
+                                        effect.value, effect.value != 1 ? "s" : "", actionAdjustment.timer - 1, colourEnd, colourNeutral, colourEnd);
+                                    break;
+                                case "Subtract":
+                                    actionAdjustment.value = effect.value * -1;
+                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    effectResolve.bottomText = string.Format("{0}Player loses {1} extra action{2} for {3} turns commencing {4}{5}NEXT TURN{6}", colourEffect,
+                                        effect.value, effect.value != 1 ? "s" : "", actionAdjustment.timer - 1, colourEnd, colourNeutral, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name)); errorFlag = true;
+                                    break;
+                            }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effect.duration \"{0}\"", effect.duration.name)); errorFlag = true;
+                            break;
+                    }
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name)); errorFlag = true;
+                    break;
+            }
         }
-        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
-        //data package to return to the calling methods
-        EffectDataResolve effectResolve = new EffectDataResolve();
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); errorFlag = true; }
+
 
         return effectResolve;
     }

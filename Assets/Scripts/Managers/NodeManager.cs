@@ -1305,7 +1305,7 @@ public class NodeManager : MonoBehaviour
             itemDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
             itemPos = node.transform.position,
             listOfButtonDetails = tempList,
-            menuType = ActionMenuType.Gear
+            menuType = ActionMenuType.NodeGear
         };
         //activate menu
         GameManager.instance.actionMenuScript.SetActionMenu(details);

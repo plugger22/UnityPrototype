@@ -2936,13 +2936,13 @@ public class DataManager : MonoBehaviour
         //loop backwards to enable deletion of timed out adjustments
         if (listOfActionAdjustments.Count > 0)
         {
-            for (int i = listOfActionAdjustments.Count - 1; i >= 0; i++)
+            for (int i = listOfActionAdjustments.Count - 1; i >= 0; i--)
             {
                 ActionAdjustment actionAdjustment = listOfActionAdjustments[i];
                 if (actionAdjustment != null)
                 {
-                    actionAdjustment.adjustment--;
-                    if (actionAdjustment.adjustment <= 0)
+                    actionAdjustment.timer--;
+                    if (actionAdjustment.timer <= 0)
                     { listOfActionAdjustments.RemoveAt(i); }
                 }
             }
@@ -2962,7 +2962,7 @@ public class DataManager : MonoBehaviour
             foreach(ActionAdjustment actionAdjustment in listOfActionAdjustments)
             {
                 if (actionAdjustment.side.name.Equals(side.name) == true)
-                { netAdjustment += actionAdjustment.adjustment; }
+                { netAdjustment += actionAdjustment.value; }
             }
         }
         return netAdjustment;
@@ -2977,7 +2977,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Action Adjustments Register{0}", "\n"));
         foreach (ActionAdjustment actionAdjustment in listOfActionAdjustments)
-        { builder.Append(string.Format("{0} Side: {1} Adjust: {2} Timer: {3}", "\n", actionAdjustment.side.name, actionAdjustment.adjustment, actionAdjustment.timer)); }
+        { builder.Append(string.Format("{0} Side: {1} Adjust: {2} Timer: {3}", "\n", actionAdjustment.side.name, actionAdjustment.value, actionAdjustment.timer)); }
         return builder.ToString();
     }
 

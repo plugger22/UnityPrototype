@@ -127,6 +127,7 @@ public class ModalActionMenu : MonoBehaviour
             switch (details.menuType)
             {
                 case ActionMenuType.Node:
+                case ActionMenuType.NodeGear:
                     modal.nodeID = details.itemID;
                     break;
                 case ActionMenuType.Actor:

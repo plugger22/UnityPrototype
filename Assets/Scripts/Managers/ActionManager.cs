@@ -1359,8 +1359,11 @@ public class ActionManager : MonoBehaviour
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
             if (gear != null)
             {
-
-                //chance of Gear being Compromised -> TO DO
+                //message
+                string text = string.Format("{0} used (Personal)", gear.name);
+                Message message = GameManager.instance.messageScript.GearUsed(text, node.nodeID, gear.gearID);
+                GameManager.instance.dataScript.AddMessage(message);
+                //chance of Gear being Compromised
                 int rndNum = Random.Range(0, 100);
                 int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                 if (rndNum < compromiseChance)

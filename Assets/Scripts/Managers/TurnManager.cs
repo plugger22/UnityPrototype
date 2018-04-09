@@ -32,6 +32,8 @@ public class TurnManager : MonoBehaviour
 
     private bool allowQuitting = false;
 
+    //public bool updatePlayerActions = false;                                    //if set true then action limits are updated at turn start
+
     public int Turn
     {
         get { return _turn; }
@@ -206,13 +208,13 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     private void EndTurnFinal()
-    {
+    {        
+        //decrement any action adjustments
+        GameManager.instance.dataScript.UpdateActionAdjustments();
         //actions
         _actionsCurrent = 0;
         _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
         _actionsTotal = Mathf.Max(0, _actionsTotal);
-        //decrement any action adjustments
-        GameManager.instance.dataScript.UpdateActionAdjustments();
         Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}", "\n"));
 
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
@@ -225,12 +227,13 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// sub-method to set up action limit based on player's current side. Run at game start.
+    /// sub-method to set up action limit based on player's current side. Run at game start and whenever change sides or action effect applied.
+    /// To force and update and retain current actions value, input the current action value, otherwise leave as default zero
     /// </summary>
     /// <param name="side"></param>
-    private void UpdateActionsLimit(GlobalSide side)
+    public void UpdateActionsLimit(GlobalSide side, int currentActions = 0)
     {
-        _actionsCurrent = 0;
+        _actionsCurrent = currentActions;
         switch (side.name)
         {
             case "Authority": _actionsLimit = actionsAuthority; break;
@@ -260,6 +263,9 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public int GetActionsCurrent()
     { return _actionsCurrent; }
+
+    public int GetActionsTotal()
+    { return _actionsTotal; }
 
     /// <summary>
     /// Returns true if the player has at least one remaining action, otherwise false
