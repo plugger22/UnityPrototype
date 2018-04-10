@@ -119,6 +119,10 @@ public class GUIManager : MonoBehaviour
         type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
         type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
         type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
+        picture0.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 0;
+        picture1.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 1;
+        picture2.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 2;
+        picture3.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 3;
         //Player
         typePlayer.text = "PLAYER";
         if (GameManager.instance.playerScript.sprite != null)

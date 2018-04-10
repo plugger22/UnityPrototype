@@ -186,9 +186,9 @@ public class ModalActionMenu : MonoBehaviour
                     title.text = buttonDetails.buttonTitle;
                     tempButton.gameObject.SetActive(true);
                     GenericTooltipUI generic = tempButton.GetComponent<GenericTooltipUI>();
-                    generic.toolTipHeader = buttonDetails.buttonTooltipHeader;
-                    generic.toolTipMain = buttonDetails.buttonTooltipMain;
-                    generic.toolTipEffect = buttonDetails.buttonTooltipDetail;
+                    generic.tooltipHeader = buttonDetails.buttonTooltipHeader;
+                    generic.tooltipMain = buttonDetails.buttonTooltipMain;
+                    generic.tooltipEffect = buttonDetails.buttonTooltipDetail;
                 }
             }
 

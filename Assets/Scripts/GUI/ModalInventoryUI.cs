@@ -216,9 +216,9 @@ public class ModalInventoryUI : MonoBehaviour
                             {
                                 if (details.arrayOfTooltips[i] != null)
                                 {
-                                    arrayOfTooltips[i].toolTipHeader = details.arrayOfTooltips[i].textHeader;
-                                    arrayOfTooltips[i].toolTipMain = details.arrayOfTooltips[i].textMain;
-                                    arrayOfTooltips[i].toolTipEffect = details.arrayOfTooltips[i].textDetails;
+                                    arrayOfTooltips[i].tooltipHeader = details.arrayOfTooltips[i].textHeader;
+                                    arrayOfTooltips[i].tooltipMain = details.arrayOfTooltips[i].textMain;
+                                    arrayOfTooltips[i].tooltipEffect = details.arrayOfTooltips[i].textDetails;
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                             }
@@ -332,9 +332,9 @@ public class ModalInventoryUI : MonoBehaviour
                                 {
                                     if (details.arrayOfTooltips[i] != null)
                                     {
-                                        arrayOfTooltips[i].toolTipHeader = details.arrayOfTooltips[i].textHeader;
-                                        arrayOfTooltips[i].toolTipMain = details.arrayOfTooltips[i].textMain;
-                                        arrayOfTooltips[i].toolTipEffect = details.arrayOfTooltips[i].textDetails;
+                                        arrayOfTooltips[i].tooltipHeader = details.arrayOfTooltips[i].textHeader;
+                                        arrayOfTooltips[i].tooltipMain = details.arrayOfTooltips[i].textMain;
+                                        arrayOfTooltips[i].tooltipEffect = details.arrayOfTooltips[i].textDetails;
                                     }
                                     else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                                 }

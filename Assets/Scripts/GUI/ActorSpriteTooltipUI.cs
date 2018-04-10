@@ -1,30 +1,37 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 /// <summary>
-/// handles Generic tooltips. Text only. Attach to required GameObject
+/// handles selective tooltip (Generic) for the actor sprites. Only shows in certain cases (Actor.tooltipStatus > ActorTooltip.None)
 /// </summary>
-public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipEffect;
+
+    [HideInInspector] public int actorSlotID;
 
     private int offset;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
     private RectTransform rectTransform;
+    private GameObject parent;
+    //data derived whenever parent sprite moused over (OnPointerEnter)
+    private Actor actor;
+    private GlobalSide side;
+
 
 
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        //parent = transform.parent.gameObject;
+        parent = transform.parent.gameObject;
     }
 
     /// <summary>
@@ -34,20 +41,26 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
-        //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
-        //mouseOverFade /= 2;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
     }
 
     /// <summary>
-    /// Mouse Over event
+    /// Mouse Over event -> show tooltip if actor present in slot and their tooltipStatus > ActorTooltip.None
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        if (string.IsNullOrEmpty(tooltipMain) == false)
-        { StartCoroutine(ShowGenericTooltip()); }
+        side = GameManager.instance.sideScript.PlayerSide;
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
+        {
+            actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+            if (actor != null)
+            {
+                if (actor.tooltipStatus > ActorTooltip.None)
+                StartCoroutine(ShowGenericTooltip());
+            }
+        }
     }
 
     /// <summary>
@@ -84,7 +97,25 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                GameManager.instance.tooltipGenericScript.SetTooltip (tooltipMain, transform.position, tooltipHeader, tooltipEffect );
+                switch(actor.tooltipStatus)
+                {
+                    case ActorTooltip.Breakdown:
+
+                        break;
+                    case ActorTooltip.LieLow:
+                        tooltipHeader = string.Format("{0}{1}{2}", actor.actorName, "\n", actor.arc.name);
+                        tooltipMain = string.Format("Currently Lying Low and unavailable");
+                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or your could ACTIVATE them before this", 
+                            actor.arc.name);
+                        break;
+                    case ActorTooltip.Talk:
+
+                        break;
+                    default:
+                        tooltipMain = "Unknown"; tooltipHeader = "Unknown"; tooltipEffect = "Unknown";
+                        break;
+                }
+                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, transform.position, tooltipHeader, tooltipEffect);
                 yield return null;
             }
             //fade in
@@ -98,6 +129,4 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             }
         }
     }
-
-
 }
