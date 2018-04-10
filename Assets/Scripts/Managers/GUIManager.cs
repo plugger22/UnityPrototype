@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using gameAPI;
 using TMPro;
+using modalAPI;
 
 /// <summary>
 /// Customises and Manages the main GUI
@@ -267,5 +268,35 @@ public class GUIManager : MonoBehaviour
         return isBlocked[level];
     }
 
-
+    /// <summary>
+    /// call when player is inactive to generate an outcome dialogue that explains why an action can't be done
+    /// </summary>
+    public void SetPlayerNotActiveErrorOutcome()
+    {
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.sprite = infoSprite;
+        details.side = GameManager.instance.sideScript.PlayerSide;
+        switch (GameManager.instance.playerScript.status)
+        {
+            case ActorStatus.Captured:
+                details.textTop = "This action can't be taken because the Player has been Captured";
+                break;
+            case ActorStatus.Inactive:
+                switch (GameManager.instance.playerScript.inactiveStatus)
+                {
+                    case ActorInactive.Breakdown:
+                        details.textTop = "This action can't be taken because the Player is undergoing a Breakdown (Stress)";
+                        details.textBottom = "The Breakdown only lasts for a turn";
+                        break;
+                    default:
+                        details.textTop = "This action can't be taken because the Player is indisposed";
+                        break;
+                }
+                break;
+            default:
+                details.textTop = "This action can't be taken because the Player is indisposed";
+                break;
+        }
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+    }
 }

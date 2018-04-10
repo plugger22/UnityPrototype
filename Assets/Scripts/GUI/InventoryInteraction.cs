@@ -38,7 +38,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                 if (GameManager.instance.guiScript.CheckIsBlocked(2) == false)
                 {
                     //Action Menu -> not valid if Resistance Plyr and player captured, etc.
-                    if (GameManager.instance.turnScript.resistanceState != ResistanceState.Normal)
+                    if (GameManager.instance.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; }
                     if (proceedFlag == true)
                     {

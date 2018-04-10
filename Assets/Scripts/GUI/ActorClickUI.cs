@@ -38,7 +38,8 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                         //Action Menu -> not valid if Resistance Plyr and player captured, etc.
                         if (side.level == GameManager.instance.globalScript.sideResistance.level)
                         {
-                            if (GameManager.instance.turnScript.resistanceState != ResistanceState.Normal)
+                            //states must be normal
+                            if (GameManager.instance.playerScript.status != ActorStatus.Active)
                             { proceedFlag = false; }
                         }
                         if (proceedFlag == true)
@@ -66,6 +67,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             }
                             else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
                         }
+                        else { GameManager.instance.guiScript.SetPlayerNotActiveErrorOutcome(); }
                     }
                     break;
                 default:

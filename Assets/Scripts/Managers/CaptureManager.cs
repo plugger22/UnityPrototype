@@ -125,7 +125,8 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.nodeScript.nodePlayer = -1;
         GameManager.instance.nodeScript.nodeCaptured = details.node.nodeID;
         //change player state
-        GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;
+        /*GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;*/
+        GameManager.instance.playerScript.status = ActorStatus.Captured;
         //add renown to authority actor who owns the team (only if they are still OnMap
         if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
         {
@@ -230,7 +231,8 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.nodeScript.nodePlayer = nodeID;
         GameManager.instance.nodeScript.nodeCaptured = -1;
         //reset state
-        GameManager.instance.turnScript.resistanceState = ResistanceState.Normal;
+        /*GameManager.instance.turnScript.resistanceState = ResistanceState.Normal;*/
+        GameManager.instance.playerScript.status = ActorStatus.Active;
         //increase resistance Cause
         int cause = GameManager.instance.rebelScript.resistanceCause;
         cause += actorReleased;
@@ -331,7 +333,7 @@ public class CaptureManager : MonoBehaviour
         if (node != null)
         {
             //correct state
-            if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+            if (GameManager.instance.playerScript.status == ActorStatus.Active)
             {
                 //Player
                 if (actorID == 999)

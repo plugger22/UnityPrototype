@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
 
-    //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this
+    //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
     public int Renown
     {

@@ -292,7 +292,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Release Player"))
             {
                 Debug.Log("Button -> Release Player");
-                if (GameManager.instance.turnScript.resistanceState == ResistanceState.Captured)
+                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
                 { GameManager.instance.captureScript.ReleasePlayer(); }
             }
 

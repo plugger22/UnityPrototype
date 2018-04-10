@@ -149,8 +149,6 @@ public class Node : MonoBehaviour
         bool proceedFlag = true;
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
-            //highlight current node
-            GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
             //exit any tooltip
             if (onMouseFlag == true)
             {
@@ -161,11 +159,15 @@ public class Node : MonoBehaviour
             //Action Menu -> not valid if Resistance Plyr and Captured, etc.
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
             {
-                if (GameManager.instance.turnScript.resistanceState != ResistanceState.Normal)
+                //states must be normal
+                if (GameManager.instance.playerScript.status != ActorStatus.Active)
                 { proceedFlag = false; }
             }
             if (proceedFlag == true)
             {
+                //highlight current node
+                GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
+                //Action menu data package
                 ModalPanelDetails details = new ModalPanelDetails()
                 {
                     itemID = nodeID,
@@ -178,6 +180,7 @@ public class Node : MonoBehaviour
                 //activate menu
                 GameManager.instance.actionMenuScript.SetActionMenu(details);
             }
+            else { GameManager.instance.guiScript.SetPlayerNotActiveErrorOutcome(); }
         }
     }
 
@@ -211,7 +214,8 @@ public class Node : MonoBehaviour
                 //move action invalid if resistance player is captured, etc.
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
-                    if (GameManager.instance.turnScript.resistanceState == ResistanceState.Normal)
+                    //normal states
+                    if (GameManager.instance.playerScript.status == ActorStatus.Active)
                     {
                         //exit any tooltip
                         StopCoroutine("ShowTooltip");
@@ -228,6 +232,7 @@ public class Node : MonoBehaviour
                             { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID); }
                         }
                     }
+                    else { GameManager.instance.guiScript.SetPlayerNotActiveErrorOutcome(); }
                 }
             }
             //Tool tip
