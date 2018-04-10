@@ -236,6 +236,13 @@ public class GUIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// changes the alpha of the player sprite and text
+    /// </summary>
+    /// <param name="alpha"></param>
+    public void UpdatePlayerAlpha(float alpha)
+    { canvasPlayer.alpha = alpha; }
+
+    /// <summary>
     /// set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
     /// NOTE: UI elements are blocked through modal panels masks (ModalGUI.cs) and node gameobjects through code (gamestate)
     /// level is default 1, only use 2 if you require a UI element to open/close ontop of another, retained, UI element. Eg menu ontop of InventoryUI

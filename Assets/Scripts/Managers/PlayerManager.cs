@@ -16,6 +16,9 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int invisibility;
     [HideInInspector] public int actorID = 999;
     [HideInInspector] public ActorStatus status;
+    [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
+    [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
+    [HideInInspector] public bool isBreakdown;              //enforces a minimum one turn gap between successive breakdowns
 
     private List<int> listOfGear = new List<int>();                     //gearID's of all gear items in inventory
     private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor

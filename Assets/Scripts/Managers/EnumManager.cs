@@ -56,9 +56,9 @@ namespace gameAPI
     // - - - Actors - - -
     //
     public enum ActorStatus { Active, Inactive, ReservePool, RecruitPool, Captured, Dismissed, Promoted, Killed }
-    public enum ActorInactive { None, LieLow, Stressed}                             //reason actor is inactive
+    public enum ActorInactive { None, LieLow, Breakdown}                             //reason actor is inactive
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
-    public enum ActorTooltip { None, Stressed, LieLow, Talk}                        //actor sprite shows a relevant tooltip if other than 'None'
+    public enum ActorTooltip { None, Breakdown, LieLow, Talk}                        //actor sprite shows a relevant tooltip if other than 'None'
     //
     // - - - Action Menu - - -
     //

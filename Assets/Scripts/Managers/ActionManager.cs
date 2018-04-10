@@ -1036,12 +1036,13 @@ public class ActionManager : MonoBehaviour
                 actor.tooltipStatus = ActorTooltip.LieLow;
                 int numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
-                builder.Append(string.Format("{0}{1} will be Inactive for {2} turn{3} or until Activated{4}", colourNeutral, actor.actorName,
-                    numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd));
+                builder.Append(string.Format("{0}{1} will be Inactive for {2}{3}{4} FULL{5}{6} turn{7} or until Activated{8}", colourNeutral, actor.actorName,
+                    colourEnd, colourAlert, numOfTurns, colourEnd, colourNeutral, numOfTurns != 1 ? "s" : "", colourEnd));
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append(string.Format("{0}Invisibility +1 each turn Inactive{1}", colourGood, colourEnd));
+                builder.Append(string.Format("{0}Invisibility {1}{2}+1{3}{4} each turn Inactive{5}", colourGood, colourEnd, colourAlert, colourEnd, colourGood, colourEnd));
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append(string.Format("{0}Any Stress will be removed once Invisibility recovered{1}", colourGood, colourEnd));
+                builder.Append(string.Format("{0}Any {1}{2}Stress{3}{4} will be removed once Invisibility is fully recovered{5}", colourGood, colourEnd, 
+                    colourAlert, colourEnd, colourGood, colourEnd));
                 builder.AppendLine(); builder.AppendLine();
                 builder.Append(string.Format("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd));
                 //message

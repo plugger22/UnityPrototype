@@ -60,6 +60,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 99)] public int unhappyLeaveChance = 25;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the third check made. An actor can only complain once")]
     [Range(1, 99)] public int unhappyComplainChance = 50;
+    [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
+    [Range(1, 99)] public int breakdownChance = 5;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
     [Range(1, 10)] public int unhappyReassureBoost = 5;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Threatened")]
@@ -72,11 +74,13 @@ public class ActorManager : MonoBehaviour
     [Range(1, 3)] public int motivationGainActiveDuty = 2;
 
 
+
     private static int actorIDCounter = 0;              //used to sequentially number actorID's
 
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
+    private Condition conditionStressed;
 
     //colour palette for Generic tool tip
     private string colourResistance;
@@ -107,6 +111,9 @@ public class ActorManager : MonoBehaviour
         //fast acess fields
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        if (conditionStressed == null)
+        { Debug.LogError("Invalid conditionStressed (Null)"); }
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
@@ -169,7 +176,9 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        CheckInactiveActors();
+        CheckPlayerStartLate();
+        CheckInactiveResistanceActors();
+        CheckActiveResistanceActors();    //needs to be AFTER CheckInactiveActors
         UpdateReserveActors();
     }
 
@@ -964,7 +973,7 @@ public class ActorManager : MonoBehaviour
                             lielowActionDetails.side = playerSide;
                             lielowActionDetails.actorDataID = actor.actorSlotID;
                             int numOfTurns = 3 - actor.datapoint2;
-                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} turn{3}{4}", actor.actorName, 
+                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName, 
                                 colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
                             EventButtonDetails lielowDetails = new EventButtonDetails()
                             {
@@ -2358,7 +2367,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Checks all OnMap Inactive Resistance actors, increments invisibility and returns any at max value back to Active status
     /// </summary>
-    private void CheckInactiveActors()
+    private void CheckInactiveResistanceActors()
     {
         // Resistance actors only
         Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
@@ -2385,9 +2394,21 @@ public class ActorManager : MonoBehaviour
                                         actor.inactiveStatus = ActorInactive.None;
                                         actor.tooltipStatus = ActorTooltip.None;
                                         GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        //message -> status change
                                         string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
-                                        Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, GameManager.instance.sideScript.PlayerSide, true);
+                                        Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, globalResistance, true);
                                         GameManager.instance.dataScript.AddMessage(message);
+                                        //check if actor has stressed condition
+                                        if (actor.CheckConditionPresent(conditionStressed) == true)
+                                        {
+                                            if (actor.RemoveCondition(conditionStressed) == true)
+                                            {
+                                                //message -> condition change
+                                                text = string.Format("{0}, {1}, is no longer Stressed (Lie Low)", actor.arc.name, actor.actorName);
+                                                message = GameManager.instance.messageScript.ActorCondition(text, actor.actorID, globalResistance, true);
+                                                GameManager.instance.dataScript.AddMessage(message);
+                                            }
+                                        }
                                     }
                                     else
                                     {
@@ -2395,11 +2416,15 @@ public class ActorManager : MonoBehaviour
                                         actor.datapoint2++;
                                     }
                                     break;
-                                case ActorInactive.Stressed:
+                                case ActorInactive.Breakdown:
                                     //restore actor (one stress turn only)
                                     actor.Status = ActorStatus.Active;
                                     actor.inactiveStatus = ActorInactive.None;
                                     actor.tooltipStatus = ActorTooltip.None;
+                                    GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                    string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
+                                    Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalResistance, true);
+                                    GameManager.instance.dataScript.AddMessage(messageBreakdown);
                                     break;
                             }
                         }
@@ -2411,6 +2436,125 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
     }
 
+    /// <summary>
+    /// Checks all active resistance actors (run AFTER checkInactiveResistanceActors)
+    /// </summary>
+    private void CheckActiveResistanceActors()
+    {
+        Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActorsResistance != null)
+        {
+            int chance = breakdownChance;
+            for (int i = 0; i < arrayOfActorsResistance.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActorsResistance[i];
+                    if (actor != null)
+                    {
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            //check any actors with the stressed condition for a breakdown
+                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            {
+                                //enforces a minimu one turn gap between successive breakdowns
+                                if (actor.isBreakdown == false)
+                                {
+                                    //double chance of a breakdown if actor is sensitive
+                                    if (actor.trait.name.Equals("Sensitive") == true)
+                                    { chance *= 2; }
+                                    if (Random.Range(0, 100) <= chance)
+                                    {
+                                        //actor suffers a breakdown
+                                        ActorBreakdown(actor, globalResistance);
+                                    }
+                                }
+                                else { actor.isBreakdown = false; }
+                            }
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
+    }
+
+    /// <summary>
+    /// handles all admin for an Actor having a breakdown as a result of having the Stressed condition
+    /// </summary>
+    /// <param name="actor"></param>
+    private void ActorBreakdown(Actor actor, GlobalSide side)
+    {
+        if (actor != null)
+        {
+            actor.Status = ActorStatus.Inactive;
+            actor.inactiveStatus = ActorInactive.Breakdown;
+            actor.tooltipStatus = ActorTooltip.Breakdown;
+            actor.isBreakdown = true;
+            //change alpha of actor to indicate inactive status
+            GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+            //message (public)
+            string text = string.Format("{0}, {1}, has suffered a Breakdown (Stressed)", actor.actorName, actor.arc.name);
+            Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, side, true);
+            GameManager.instance.dataScript.AddMessage(message);
+        }
+        else { Debug.LogError("Invalid actor (Null)"); }
+    }
+
+    /// <summary>
+    /// runs all start late turn player checks
+    /// </summary>
+    private void CheckPlayerStartLate()
+    {
+        //check for breakdown -> both sides
+        switch (GameManager.instance.playerScript.status)
+        {
+            case ActorStatus.Inactive:
+                switch (GameManager.instance.playerScript.inactiveStatus)
+                {
+                    case ActorInactive.Breakdown:
+                        //restore player (one stress turn only)
+                        GameManager.instance.playerScript.status = ActorStatus.Active;
+                        GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+                        GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                        GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+                        string textBreakdown = "Player has recovered from their Breakdown";
+                        Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
+                        GameManager.instance.dataScript.AddMessage(messageBreakdown);
+                        break;
+                }
+                break;
+            case ActorStatus.Active:
+                {
+                    //check any actors with the stressed condition for a breakdown
+                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
+                    {
+                        //enforces a minimu one turn gap between successive breakdowns
+                        if (GameManager.instance.playerScript.isBreakdown == false)
+                        {
+                            if (Random.Range(0, 100) <= breakdownChance)
+                            {
+                                //player Breakdown
+                                GameManager.instance.playerScript.status = ActorStatus.Inactive;
+                                GameManager.instance.playerScript.inactiveStatus = ActorInactive.Breakdown;
+                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
+                                GameManager.instance.playerScript.isBreakdown = true;
+                                //change alpha of actor to indicate inactive status
+                                GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                                //message (public)
+                                string text = "Player has suffered a Breakdown (Stressed)";
+                                Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
+                                GameManager.instance.dataScript.AddMessage(message);
+                            }
+                        }
+                    }
+                    else { GameManager.instance.playerScript.isBreakdown = false; }
+                }
+                break;
+        }
+    }
 
     /// <summary>
     /// Checks all reserve pool actors (both sides), decrements unhappy timers and takes appropriate action if any have reached zero

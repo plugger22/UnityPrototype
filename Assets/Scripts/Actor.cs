@@ -24,6 +24,7 @@ namespace gameAPI
         [HideInInspector] public bool isReassured;              //true if actor has been reassured, false if not (can only be reassured once)
         [HideInInspector] public bool isThreatening;            //true if actor has said they will be taking an action against player, eg. reveal secret, false otherwise
         [HideInInspector] public bool isComplaining;            //Action taken by actor in reserve pool. Can only complain once.
+        [HideInInspector] public bool isBreakdown;              //set true when breakdown so that there is at least a one turn gap between successive breakdowns
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;
