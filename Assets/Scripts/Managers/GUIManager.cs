@@ -286,7 +286,6 @@ public class GUIManager : MonoBehaviour
                 {
                     case ActorInactive.Breakdown:
                         details.textTop = "This action can't be taken because the Player is undergoing a Breakdown (Stress)";
-                        details.textBottom = "The Breakdown only lasts for a turn";
                         break;
                     default:
                         details.textTop = "This action can't be taken because the Player is indisposed";

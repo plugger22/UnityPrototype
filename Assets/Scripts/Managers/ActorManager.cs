@@ -2549,8 +2549,9 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.dataScript.AddMessage(message);
                             }
                         }
+                        else { GameManager.instance.playerScript.isBreakdown = false; }
                     }
-                    else { GameManager.instance.playerScript.isBreakdown = false; }
+                    
                 }
                 break;
         }

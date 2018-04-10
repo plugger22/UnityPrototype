@@ -404,7 +404,6 @@ public class CaptureManager : MonoBehaviour
                     else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", actorID)); }
                 }
             }
-            else { Debug.LogWarning("Resistance state NOT Normal, can't check for Capture"); }
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
         //return AIDetails
