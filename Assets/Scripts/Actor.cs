@@ -27,6 +27,8 @@ namespace gameAPI
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public Trait trait;
+        [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
+        [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
         
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
         private List<int> listOfSecrets = new List<int>();

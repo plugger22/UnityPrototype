@@ -705,7 +705,7 @@ public class EffectManager : MonoBehaviour
                     {
                         case "Add":
                             actor.datapoint1 += effect.value;
-                            actor.datapoint1 = Mathf.Min(3, actor.datapoint1);
+                            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
                             effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.actorName, effect.textTag, colourEnd);
                             break;
                         case "Subtract":
@@ -800,8 +800,14 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Add":
-                                    if (GameManager.instance.playerScript.invisibility < 3)
-                                    { GameManager.instance.playerScript.invisibility++; }
+                                    if (GameManager.instance.playerScript.invisibility < GameManager.instance.actorScript.maxStatValue)
+                                    {
+                                        //adds a variable amount
+                                        int invis = GameManager.instance.playerScript.invisibility;
+                                        invis += effect.value;
+                                        invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
+                                        GameManager.instance.playerScript.invisibility = invis;
+                                    }
                                     effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
                                 case "Subtract":
@@ -836,7 +842,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 case 1:
                                                     //negates invisibility and increases it by +1 at the same time
-                                                    if (GameManager.instance.playerScript.invisibility < 3)
+                                                    if (GameManager.instance.playerScript.invisibility < GameManager.instance.actorScript.maxStatValue)
                                                     { GameManager.instance.playerScript.invisibility++; }
                                                     effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText,
                                                         "\n", "\n", colourEffect, gear.name, colourEnd);
@@ -879,8 +885,12 @@ public class EffectManager : MonoBehaviour
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
-                                        if (actor.datapoint2 < 3)
-                                        { actor.datapoint2++; }
+                                        if (actor.datapoint2 < GameManager.instance.actorScript.maxStatValue)
+                                        {
+                                            //adds a variable amount
+                                            actor.datapoint2 += effect.value;
+                                            actor.datapoint2 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint2);
+                                        }
                                         effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.textTag,
                                             actor.datapoint2, colourEnd);
                                         break;
@@ -2340,7 +2350,7 @@ public class EffectManager : MonoBehaviour
                             }
                             break;
                         case "Ongoing":
-                            //NOTE: Ongoing effects are handled differently here than a standard ongoing effect (extra +1 due to decrement at end of turn)
+                            //NOTE: Ongoing effects are handled differently here than a standard ongoing effect (there is also an extra +1 due to decrement at end of turn)
                             actionAdjustment.timer = GameManager.instance.effectScript.ongoingEffectTimer + 1;
                             switch (effect.operand.name)
                             {

@@ -1206,7 +1206,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //Effect criteria O.K -> tool tip text
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                            /*if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
                             { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
                             else
                             {
@@ -1217,7 +1217,10 @@ public class ActorManager : MonoBehaviour
                                 {
                                     builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd));
                                 }
-                            }
+                            }*/
+
+                            builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd));
+
                             //chance of compromise
                             int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                             builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd, 
@@ -1254,7 +1257,8 @@ public class ActorManager : MonoBehaviour
                         buttonTitle = "Use",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
                         buttonTooltipMain = string.Format("Use {0} (Player)", gear.name),
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),
+                        /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
+                        buttonTooltipDetail = builder.ToString(),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails); },
 
@@ -2370,20 +2374,33 @@ public class ActorManager : MonoBehaviour
                     {
                         if (actor.Status == ActorStatus.Inactive)
                         {
-                            if (actor.datapoint2 >= maxStatValue)
+                            switch (actor.inactiveStatus)
                             {
-                                //actor has recovered from lying low, needs to be activated
-                                actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
-                                actor.Status = ActorStatus.Active;
-                                GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-                                string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
-                                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, GameManager.instance.sideScript.PlayerSide, true);
-                                GameManager.instance.dataScript.AddMessage(message);
-                            }
-                            else
-                            {
-                                //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
-                                actor.datapoint2++;
+                                case ActorInactive.LieLow:
+                                    if (actor.datapoint2 >= maxStatValue)
+                                    {
+                                        //actor has recovered from lying low, needs to be activated
+                                        actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
+                                        actor.Status = ActorStatus.Active;
+                                        actor.inactiveStatus = ActorInactive.None;
+                                        actor.tooltipStatus = ActorTooltip.None;
+                                        GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
+                                        Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, GameManager.instance.sideScript.PlayerSide, true);
+                                        GameManager.instance.dataScript.AddMessage(message);
+                                    }
+                                    else
+                                    {
+                                        //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
+                                        actor.datapoint2++;
+                                    }
+                                    break;
+                                case ActorInactive.Stressed:
+                                    //restore actor (one stress turn only)
+                                    actor.Status = ActorStatus.Active;
+                                    actor.inactiveStatus = ActorInactive.None;
+                                    actor.tooltipStatus = ActorTooltip.None;
+                                    break;
                             }
                         }
                     }

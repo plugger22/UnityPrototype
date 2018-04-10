@@ -199,7 +199,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError(string.Format("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID));
+                Debug.LogWarning(string.Format("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID));
                 return false;
             }
         }
@@ -412,7 +412,7 @@ public class PlayerManager : MonoBehaviour
     /// <param name="gearname"></param>
     public string DebugAddGear(string gearName)
     {
-        string text = string.Format("{0} has NOT been added to the Player's inventory", gearName);
+        string text = string.Format("{0} has NOT been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
         int gearID = -1;
         if (string.IsNullOrEmpty(gearName) == false)
         {
@@ -433,7 +433,12 @@ public class PlayerManager : MonoBehaviour
                 {
                     //add gear to player's inventory
                     if (AddGear(gearID) == true)
-                    { text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n"); }
+                    {
+                        text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
+                        //message
+                        Message message = GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), GameManager.instance.nodeScript.nodePlayer, gearID);
+                        GameManager.instance.dataScript.AddMessage(message);
+                    }
                 }
             }
         }

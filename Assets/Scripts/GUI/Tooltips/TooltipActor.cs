@@ -144,12 +144,17 @@ public class TooltipActor : MonoBehaviour
                 //activate UI components
                 actorStatus.gameObject.SetActive(true);
                 dividerMiddleUpper.gameObject.SetActive(true);
-                switch(data.actor.Status)
+                switch (data.actor.Status)
                 {
                     case ActorStatus.Inactive:
-                        int numOfTurns = 3 - data.actor.datapoint2;
-                        actorStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
-                            numOfTurns != 1 ? "s" : "");
+                        switch (data.actor.inactiveStatus)
+                        {
+                            case ActorInactive.LieLow:
+                                int numOfTurns = 3 - data.actor.datapoint2;
+                                actorStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
+                                    numOfTurns != 1 ? "s" : "");
+                                break;
+                        }
                         break;
                     case ActorStatus.Captured:
                         actorStatus.text = string.Format("{0}<b>CAPTURED</b>{1}{2}Whereabouts unknown", colourBad, colourEnd, "\n");

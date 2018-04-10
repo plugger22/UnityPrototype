@@ -805,10 +805,10 @@ public class GearManager : MonoBehaviour
     /// <param name="node"></param>
     public string GearUsed(Gear gear, Node node)
     {
-        //message
+        /*//message -> redundant
         string textMsg = string.Format("{0}, ID {1} has been used", gear.name, gear.gearID);
         Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
-        if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
+        if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }*/
         return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd);
     }
 

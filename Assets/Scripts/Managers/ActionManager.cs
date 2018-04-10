@@ -429,9 +429,11 @@ public class ActionManager : MonoBehaviour
         if (errorFlag == false)
         {
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
-
             if (gear != null)
             {
+                //message
+                Message message = GameManager.instance.messageScript.GearUsed(string.Format("{0} used at {1}", gear.name, node.nodeName), node.nodeID, gear.gearID);
+                GameManager.instance.dataScript.AddMessage(message);
                 //chance of Gear being Compromised
                 ModalDiceDetails diceDetails = new ModalDiceDetails();
                 diceDetails.chance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
@@ -1030,6 +1032,8 @@ public class ActionManager : MonoBehaviour
             if (actor != null)
             {
                 actor.Status = ActorStatus.Inactive;
+                actor.inactiveStatus = ActorInactive.LieLow;
+                actor.tooltipStatus = ActorTooltip.LieLow;
                 int numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
                 builder.Append(string.Format("{0}{1} will be Inactive for {2} turn{3} or until Activated{4}", colourNeutral, actor.actorName,
@@ -1096,6 +1100,8 @@ public class ActionManager : MonoBehaviour
 
                 //Reactivate actor
                 actor.Status = ActorStatus.Active;
+                actor.inactiveStatus = ActorInactive.None;
+                actor.tooltipStatus = ActorTooltip.None;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been Recalled", actor.arc.name, actor.actorName);
                 outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
                 //message
