@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 920e2e2400cfafe42b69fbe1fa7f203d
-timeCreated: 1505988161
+guid: 209d04b0445835a45a8c6de26dba724a
+timeCreated: 1523411994
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: tooltip_panel_red_0
-    21300002: tooltip_panel_red_1
+    21300000: tooltip_actor_rebel_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -80,29 +79,16 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tooltip_panel_red_0
+      name: tooltip_actor_rebel_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 3
-        width: 201
-        height: 200
+        x: 0
+        y: 0
+        width: 205
+        height: 206
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 15, y: 15, z: 15, w: 15}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tooltip_panel_red_1
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 3
-        width: 201
-        height: 200
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0, y: 0}
+      border: {x: 6, y: 6, z: 6, w: 6}
       outline: []
       tessellationDetail: 0
     outline: []

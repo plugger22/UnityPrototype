@@ -1036,6 +1036,7 @@ public class ActionManager : MonoBehaviour
                 actor.tooltipStatus = ActorTooltip.LieLow;
                 int numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
+                outcomeDetails.sprite = actor.arc.baseSprite;
                 builder.Append(string.Format("{0}{1} will be Inactive for {2}{3}{4} FULL{5}{6} turn{7} or until Activated{8}", colourNeutral, actor.actorName,
                     colourEnd, colourAlert, numOfTurns, colourEnd, colourNeutral, numOfTurns != 1 ? "s" : "", colourEnd));
                 builder.AppendLine(); builder.AppendLine();
@@ -1059,7 +1060,6 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         else
         {
@@ -1105,6 +1105,7 @@ public class ActionManager : MonoBehaviour
                 actor.tooltipStatus = ActorTooltip.None;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been Recalled", actor.arc.name, actor.actorName);
                 outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
+                outcomeDetails.sprite = actor.arc.baseSprite;
                 //message
                 string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -1119,7 +1120,6 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         else
         {
@@ -1208,13 +1208,13 @@ public class ActionManager : MonoBehaviour
             //fault, pass default data to Outcome window
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         else
         {
             //Remove Gear
             if (gear != null)
             { GameManager.instance.playerScript.RemoveGear(gear.gearID); }
+            outcomeDetails.sprite = actor.arc.baseSprite;
             //give actor motivation boost
             actor.datapoint1 += benefit;
             actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);

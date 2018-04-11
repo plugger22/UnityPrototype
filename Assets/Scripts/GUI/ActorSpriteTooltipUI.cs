@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /// <summary>
 /// handles selective tooltip (Generic) for the actor sprites. Only shows in certain cases (Actor.tooltipStatus > ActorTooltip.None)
@@ -20,18 +21,14 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     private float mouseOverFade;
     private bool onMouseFlag;
     private RectTransform rectTransform;
-    private GameObject parent;
     //data derived whenever parent sprite moused over (OnPointerEnter)
     private Actor actor;
     private GlobalSide side;
 
 
-
-
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        parent = transform.parent.gameObject;
     }
 
     /// <summary>
@@ -94,19 +91,19 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         if (onMouseFlag == true)
         {
             //do once
-
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 switch(actor.tooltipStatus)
                 {
                     case ActorTooltip.Breakdown:
-
+                        tooltipHeader = string.Format("{0}{1}{2}", actor.arc.name, "\n", actor.actorName);
+                        tooltipMain = "<size=120%>Currently having a BREAKDOWN (Stress) and unavailable</size>";
+                        tooltipEffect = string.Format("{0} is expected to have recovered next turn", actor.actorName);
                         break;
                     case ActorTooltip.LieLow:
-                        tooltipHeader = string.Format("{0}{1}{2}", actor.actorName, "\n", actor.arc.name);
-                        tooltipMain = string.Format("Currently Lying Low and unavailable");
-                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or your could ACTIVATE them before this", 
-                            actor.arc.name);
+                        tooltipHeader = string.Format("{0}{1}{2}", actor.arc.name, "\n", actor.actorName);
+                        tooltipMain = "<size=120%>Currently LYING LOW and unavailable</size>";
+                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you ACTIVATE them", actor.actorName);
                         break;
                     case ActorTooltip.Talk:
 

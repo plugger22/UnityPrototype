@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f94c1f8dd55928a48b4dcb91708b8840
-timeCreated: 1506831690
+timeCreated: 1523410842
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -82,13 +82,13 @@ TextureImporter:
       name: tooltip_generic_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 203
-        height: 204
+        x: 0
+        y: 0
+        width: 205
+        height: 206
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 15, y: 15, z: 15, w: 15}
+      border: {x: 6, y: 6, z: 6, w: 6}
       outline: []
       tessellationDetail: 0
     outline: []

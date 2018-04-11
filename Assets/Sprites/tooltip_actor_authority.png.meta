@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 5b8b1651e94071840adacf892fc8ce13
-timeCreated: 1505818944
+guid: 3a9f27f37ccec3146a792f281b6a25f6
+timeCreated: 1523411935
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: tooltip_blue_0
-    21300002: tooltip_blue_1
+    21300000: tooltip_actor_authority_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -80,29 +79,16 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tooltip_blue_0
+      name: tooltip_actor_authority_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 2
-        width: 201
-        height: 201
+        x: 0
+        y: 0
+        width: 205
+        height: 206
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 16, y: 16, z: 16, w: 16}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tooltip_blue_1
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 1
-        width: 203
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 18}
+      border: {x: 6, y: 6, z: 6, w: 6}
       outline: []
       tessellationDetail: 0
     outline: []
