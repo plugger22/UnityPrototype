@@ -156,13 +156,10 @@ public class Node : MonoBehaviour
                 StopCoroutine("ShowTooltip");
                 GameManager.instance.tooltipNodeScript.CloseTooltip();
             }
-            //Action Menu -> not valid if Resistance Plyr and Captured, etc.
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-            {
-                //states must be normal
-                if (GameManager.instance.playerScript.status != ActorStatus.Active)
-                { proceedFlag = false; }
-            }
+            //Action Menu -> not valid if Plyr Inactive.
+            if (GameManager.instance.playerScript.status != ActorStatus.Active)
+            { proceedFlag = false; }
+
             if (proceedFlag == true)
             {
                 //highlight current node

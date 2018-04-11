@@ -35,13 +35,9 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                 case PointerEventData.InputButton.Right:
                     if (GameManager.instance.guiScript.CheckIsBlocked() == false)
                     {
-                        //Action Menu -> not valid if Resistance Plyr and player captured, etc.
-                        if (side.level == GameManager.instance.globalScript.sideResistance.level)
-                        {
-                            //states must be normal
-                            if (GameManager.instance.playerScript.status != ActorStatus.Active)
-                            { proceedFlag = false; }
-                        }
+                        //Action Menu -> not valid if  Player inactive
+                        if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                        { proceedFlag = false; }
                         if (proceedFlag == true)
                         {
                             Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);

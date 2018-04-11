@@ -1,16 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using packageAPI;
-using gameAPI;
+
 
 /// <summary>
-/// Actor based tooltip, reference static instance in GameManager
+/// Player based tooltip, static reference instance in GameManager
 /// </summary>
-public class TooltipActor : MonoBehaviour
+public class TooltipPlayer : MonoBehaviour
 {
     public TextMeshProUGUI actorName;
     public TextMeshProUGUI actorStatus;
@@ -26,7 +22,7 @@ public class TooltipActor : MonoBehaviour
     public GameObject tooltipActorObject;
 
     private Image background;
-    private static TooltipActor tooltipActor;
+    private static TooltipPlayer tooltipPlayer;
     RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private float fadeInTime;
@@ -58,18 +54,18 @@ public class TooltipActor : MonoBehaviour
     }
 
     /// <summary>
-    /// provide a static reference to tooltipActor that can be accessed from any script
+    /// provide a static reference to tooltipPlayer that can be accessed from any script
     /// </summary>
     /// <returns></returns>
-    public static TooltipActor Instance()
+    public static TooltipPlayer Instance()
     {
-        if (!tooltipActor)
+        if (!tooltipPlayer)
         {
-            tooltipActor = FindObjectOfType(typeof(TooltipActor)) as TooltipActor;
-            if (!tooltipActor)
-            { Debug.LogError("There needs to be one active TooltipActor script on a GameObject in your scene"); }
+            tooltipPlayer = FindObjectOfType(typeof(TooltipPlayer)) as TooltipPlayer;
+            if (!tooltipPlayer)
+            { Debug.LogError("There needs to be one active TooltipPlayer script on a GameObject in your scene"); }
         }
-        return tooltipActor;
+        return tooltipPlayer;
     }
 
 
@@ -176,10 +172,10 @@ public class TooltipActor : MonoBehaviour
                     dividerMiddleLower.gameObject.SetActive(true);
                     actorConditions.gameObject.SetActive(true);
                     StringBuilder builderCondition = new StringBuilder();
-                    foreach(Condition condition in listOfConditions)
+                    foreach (Condition condition in listOfConditions)
                     {
                         if (builderCondition.Length > 0) { builderCondition.AppendLine(); }
-                        switch(condition.type.name)
+                        switch (condition.type.name)
                         {
                             case "Good":
                                 builderCondition.Append(string.Format("{0}{1}{2}", colourGood, condition.name, colourEnd));
@@ -260,7 +256,7 @@ public class TooltipActor : MonoBehaviour
         float height = rectTransform.rect.height;
         float width = rectTransform.rect.width;
         //base y pos at zero (bottom of screen). Adjust up from there.
-        worldPos.y +=  height + offset;
+        worldPos.y += height + offset;
         worldPos.x -= width / 10;
         //width
         if (worldPos.x + width / 2 >= Screen.width)
@@ -341,5 +337,6 @@ public class TooltipActor : MonoBehaviour
                 break;
         }
     }
+
 
 }

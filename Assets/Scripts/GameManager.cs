@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;         //actor tool tip static instance
+    [HideInInspector] public TooltipPlayer tooltipPlayerScript;       //player tool tip static instance
     [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tool tip static instance
     [HideInInspector] public TickerTextScroller tickerScript;         //Ticker Text Scroller
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
@@ -118,6 +119,7 @@ public class GameManager : MonoBehaviour
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipActorScript = TooltipActor.Instance();
+        tooltipPlayerScript = TooltipPlayer.Instance();
         tooltipGenericScript = TooltipGeneric.Instance();
         tickerScript = TickerTextScroller.Instance();
         actionMenuScript = ModalActionMenu.Instance();
