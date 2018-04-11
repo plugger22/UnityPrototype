@@ -2509,14 +2509,13 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string colourSide;
-        bool isResistance = true;
         manageDelegate handler = null;
         ModalActionDetails details = new ModalActionDetails();
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-        { colourSide = colourAuthority; isResistance = false; }
-        else { colourSide = colourResistance; isResistance = true; }
+        { colourSide = colourAuthority; }
+        else { colourSide = colourResistance; }
         if (data != null)
         {
             //pass through data

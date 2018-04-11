@@ -177,8 +177,18 @@ public class ActorManager : MonoBehaviour
     private void StartTurnLate()
     {
         CheckPlayerStartLate();
-        CheckInactiveResistanceActors();
-        CheckActiveResistanceActors();    //needs to be AFTER CheckInactiveActors
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+        {
+            //run for Resistance Player
+            CheckInactiveResistanceActors();
+            CheckActiveResistanceActors();    //needs to be AFTER CheckInactiveActors
+        }
+        else
+        {
+            //run for Authority Player
+            CheckInactiveAuthorityActors();
+            CheckActiveAuthorityActors();    //needs to be AFTER CheckInactiveActors
+        }
         UpdateReserveActors();
     }
 
@@ -1425,12 +1435,11 @@ public class ActorManager : MonoBehaviour
         string cancelText = null;
         int playerRenown = GameManager.instance.playerScript.Renown;
         int renownCost = 0;
-        bool isResistance;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if (playerSide.level == globalAuthority.level)
-        { sideColour = colourAuthority; isResistance = false; }
-        else { sideColour = colourResistance; isResistance = true; }
+        { sideColour = colourAuthority; }
+        else { sideColour = colourResistance; }
         //data package for Action Menu
         ModalActionDetails actorActionDetails = new ModalActionDetails() { };
         actorActionDetails.side = playerSide;
@@ -2365,6 +2374,93 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Debug method to add a condition to an actor (debug input). Both sides.
+    /// </summary>
+    /// <param name="what"></param>
+    /// <param name="who"></param>
+    /// <returns></returns>
+    public string DebugAddCondition(string what, string who)
+    {
+        Debug.Assert(String.IsNullOrEmpty(what) == false && String.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
+        string text = "";
+        //Condition
+        Condition condition = GameManager.instance.dataScript.GetCondition(what.ToUpper());
+        if (condition != null)
+        {
+            //Who to? (0 to 3 actorSlotID's and 'p' or 'P' for Player
+            switch (who)
+            {
+                case "0":
+                case "1":
+                case "2":
+                case "3":
+                    text = DebugAddConditionToActor(Convert.ToInt32(who), condition);
+                    break;
+                case "p":
+                case "P":
+                    text = DebugAddConditionToPlayer(condition);
+                    break;
+            }
+        }
+        else { text = "Input Condition is INVALID and is NOT added"; }
+        return text;
+    }
+
+    /// <summary>
+    /// subMethod for DebugAddCondition to add a condition to an actor and return a string indicating success, or otherwise
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    private string DebugAddConditionToActor(int actorSlotID, Condition condition)
+    {
+        Debug.Assert(actorSlotID > -1 && actorSlotID < maxNumOfOnMapActors, string.Format("Invalid actorSlotID {0}", actorSlotID));
+        Debug.Assert(condition != null, "Invalid Condition (Null)");
+        string text = "Unknown";
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //Get actor
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+            if (actor != null)
+            {
+                //does actor already have the condition?
+                if (actor.CheckConditionPresent(condition) == false)
+                {
+                    //add condition
+                    actor.AddCondition(condition);
+                    text = string.Format("Condition {0} added to {1}, {2}", condition.name, actor.arc.name, actor.actorName);
+                }
+                else { text = string.Format("{0} already has Condition {1}", actor.arc.name, condition.name); }
+            }
+            else { text = string.Format("There is no valid Actor (Null) in Slot {0}", actorSlotID); }
+        }
+        else { text = string.Format("There is no Actor Present in Slot {0}", actorSlotID); }
+        return string.Format("{0}{1}Press ESC to Exit", text, "\n");
+    }
+
+    /// <summary>
+    /// subMethod for DebugAddCondition to add a condition to the player. Returns a string indicating success, or otherwise
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    private string DebugAddConditionToPlayer(Condition condition)
+    {
+        Debug.Assert(condition != null, "Invalid Condition (Null)");
+        string text = "Unknown";
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //does actor already have the condition?
+        if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
+        {
+            //add condition
+            GameManager.instance.playerScript.AddCondition(condition);
+            text = string.Format("Condition {0} added to Player", condition.name);
+        }
+        else { text = string.Format("Player already has Condition {0}", condition.name); }
+        return string.Format("{0}{1}Press ESC to Exit", text, "\n");
+    }
+
+    /// <summary>
     /// Checks all OnMap Inactive Resistance actors, increments invisibility and returns any at max value back to Active status
     /// </summary>
     private void CheckInactiveResistanceActors()
@@ -2479,6 +2575,92 @@ public class ActorManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
+    }
+
+    /// <summary>
+    /// Checks all active authority actors (run AFTER checkInactiveAuthorityActors)
+    /// </summary>
+    private void CheckActiveAuthorityActors()
+    {
+        Actor[] arrayOfActorsAuthority = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+        if (arrayOfActorsAuthority != null)
+        {
+            int chance = breakdownChance;
+            for (int i = 0; i < arrayOfActorsAuthority.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                {
+                    Actor actor = arrayOfActorsAuthority[i];
+                    if (actor != null)
+                    {
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            //check any actors with the stressed condition for a breakdown
+                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            {
+                                //enforces a minimu one turn gap between successive breakdowns
+                                if (actor.isBreakdown == false)
+                                {
+                                    //double chance of a breakdown if actor is sensitive
+                                    if (actor.trait.name.Equals("Sensitive") == true)
+                                    { chance *= 2; }
+                                    if (Random.Range(0, 100) <= chance)
+                                    {
+                                        //actor suffers a breakdown
+                                        ActorBreakdown(actor, globalAuthority);
+                                    }
+                                }
+                                else { actor.isBreakdown = false; }
+                            }
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsAuthority (Null)"); }
+    }
+
+    /// <summary>
+    /// Checks all OnMap Inactive Authority actors, increments invisibility and returns any at max value back to Active status
+    /// </summary>
+    private void CheckInactiveAuthorityActors()
+    {
+        // Authority actors only
+        Actor[] arrayOfActorsAuthority = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+        if (arrayOfActorsAuthority != null)
+        {
+            for (int i = 0; i < arrayOfActorsAuthority.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                {
+                    Actor actor = arrayOfActorsAuthority[i];
+                    if (actor != null)
+                    {
+                        if (actor.Status == ActorStatus.Inactive)
+                        {
+                            switch (actor.inactiveStatus)
+                            {
+                                case ActorInactive.Breakdown:
+                                    //restore actor (one stress turn only)
+                                    actor.Status = ActorStatus.Active;
+                                    actor.inactiveStatus = ActorInactive.None;
+                                    actor.tooltipStatus = ActorTooltip.None;
+                                    GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                    string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
+                                    Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalAuthority, true);
+                                    GameManager.instance.dataScript.AddMessage(messageBreakdown);
+                                    break;
+                            }
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsAuthority (Null)"); }
     }
 
     /// <summary>

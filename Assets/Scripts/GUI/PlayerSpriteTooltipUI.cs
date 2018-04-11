@@ -4,24 +4,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
 
-/// <summary>
-/// handles selective tooltip (Generic) for the actor sprites. Only shows in certain cases (Actor.tooltipStatus > ActorTooltip.None)
-/// </summary>
-public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipEffect;
-
-    [HideInInspector] public int actorSlotID;
 
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
     private RectTransform rectTransform;
     //data derived whenever parent sprite moused over (OnPointerEnter)
-    private Actor actor;
     private GlobalSide side;
+    private string playerName;
 
     private string colourSide;
     private string colourRebel;
@@ -80,22 +75,20 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     }
 
     /// <summary>
-    /// Mouse Over event -> show tooltip if actor present in slot and their tooltipStatus > ActorTooltip.None
+    /// Mouse Over event -> show tooltip if Player tooltipStatus > ActorTooltip.None
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
+        //update dynamic data (changes whenever you 'Change Side')
         side = GameManager.instance.sideScript.PlayerSide;
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
-        {
-            actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
-            if (actor != null)
-            {
-                if (actor.tooltipStatus > ActorTooltip.None)
-                { StartCoroutine(ShowGenericTooltip()); }
-            }
-        }
+        if (side.level == GameManager.instance.globalScript.sideResistance.level)
+        { playerName = GameManager.instance.playerScript.playerNameResistance; }
+        else { playerName = GameManager.instance.playerScript.playerNameAuthority; }
+        //activate tooltip if there is a valid reason
+        if (GameManager.instance.playerScript.tooltipStatus > ActorTooltip.None)
+        { StartCoroutine(ShowGenericTooltip()); }
     }
 
     /// <summary>
@@ -108,6 +101,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         StopCoroutine(ShowGenericTooltip());
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
+
 
 
     IEnumerator ShowGenericTooltip()
@@ -123,23 +117,20 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                 colourSide = colourRebel;
                 if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { colourSide = colourAuthority; }
-                switch(actor.tooltipStatus)
+                switch (GameManager.instance.playerScript.tooltipStatus)
                 {
                     case ActorTooltip.Breakdown:
-                        tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
-                        tooltipMain = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd, 
+                        tooltipHeader = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                        tooltipMain = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} is expected to recover next turn", actor.actorName);
+                        tooltipEffect = string.Format("{0} is expected to recover next turn", playerName);
                         break;
                     case ActorTooltip.LieLow:
-                        tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
-                        tooltipMain = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd, 
+                        tooltipHeader = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                        tooltipMain = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them", 
-                            actor.actorName, colourNeutral, colourEnd);
-                        break;
-                    case ActorTooltip.Talk:
-
+                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
+                            playerName, colourNeutral, colourEnd);
                         break;
                     default:
                         tooltipMain = "Unknown"; tooltipHeader = "Unknown"; tooltipEffect = "Unknown";
@@ -159,4 +150,5 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             }
         }
     }
+
 }

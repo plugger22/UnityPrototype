@@ -9,7 +9,7 @@ using modalAPI;
 /// </summary>
 public class DebugGUI : MonoBehaviour
 {
-    private enum GUIStatus { None, GearInput, Output}
+    private enum GUIStatus { None, GiveGear, GiveCondition}
 
     public GUIStyle customBackground;
 
@@ -29,7 +29,8 @@ public class DebugGUI : MonoBehaviour
     public int gap_y;           //gap at start between header and first button
 
     private int button_width;
-    private string textFieldString = "input";
+    private string textInput_0 = "what";
+    private string textInput_1 = "who";
     private string textOutput;
     private string optionAutoGear;
     private string optionFogOfWar;
@@ -350,11 +351,22 @@ public class DebugGUI : MonoBehaviour
             //tenth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Give Gear"))
             {
-                Debug.Log("Button -> Give Gear");
-                if (debugDisplay != 16)
-                { debugDisplay = 16; }
+                //Resistance player only
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                {
+                    Debug.Log("Button -> Give Gear");
+                    if (debugDisplay != 16)
+                    { debugDisplay = 16; }
+                    else { debugDisplay = 0; }
+                }
+            }
+            //eleventh button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Give Condition"))
+            {
+                Debug.Log("Button -> Give Condition");
+                if (debugDisplay != 18)
+                { debugDisplay = 18; }
                 else { debugDisplay = 0; }
-
             }
 
 
@@ -468,20 +480,38 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DisplayActionsRegister();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
-                    //Give Gear
+                    //Give Gear Input
                     case 16:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        textFieldString = GUI.TextField(new Rect(Screen.width / 2 - 50, 100, 100, 30), textFieldString);
-                        status = GUIStatus.GearInput;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 55, 150, 30), "Input Gear name (exact)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 90, 100, 30), textInput_0);
+                        status = GUIStatus.GiveGear;
+                        textOutput = null;
                         break;
-                    //Give Gear processing
+                    //Give Gear processing & Output
                     case 17:
-                        textOutput = GameManager.instance.playerScript.DebugAddGear(textFieldString);
-                        debugDisplay = 0;
-                        status = GUIStatus.Output;
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.playerScript.DebugAddGear(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
                         break;
-                        //Give Gear Ouput
+                    //Give Condition
                     case 18:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 95, 55, 190, 20), "Input Condition name (lwr case)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 100, 150, 20), "Input Actor (0 - 3 or p)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 50, 120, 100, 20), textInput_1);
+                        status = GUIStatus.GiveCondition;
+                        textOutput = null;
+                        break;
+                    //Give Condition processing and Output
+                    case 19:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.actorScript.DebugAddCondition(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -498,15 +528,15 @@ public class DebugGUI : MonoBehaviour
             switch (e.keyCode)
             {
                 case KeyCode.Return:
-                    switch (status)
-                    {
-                        case GUIStatus.Output:
-                            debugDisplay = 18;
-                            break;
-                        case GUIStatus.GearInput:
-                            debugDisplay = 17;
-                            break;
-                    }
+                switch (status)
+                {
+                    case GUIStatus.GiveGear:
+                        debugDisplay = 17;
+                        break;
+                    case GUIStatus.GiveCondition:
+                        debugDisplay = 19;
+                        break;
+                }
                     break;
                 case KeyCode.Escape:
                     debugDisplay = 0;
