@@ -36,6 +36,21 @@ public class PlayerManager : MonoBehaviour
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
+    public string PlayerName
+    {
+        get
+        {
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { return playerNameResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { return playerNameAuthority; }
+            else
+            {
+                //AI control of both side
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return _renownResistance; }
+                else { return _renownAuthority; }
+            }
+        }
+    }
+
     public int Renown
     {
         get

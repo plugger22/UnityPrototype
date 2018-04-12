@@ -1,20 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 /// <summary>
 /// Player based tooltip, static reference instance in GameManager
 /// </summary>
 public class TooltipPlayer : MonoBehaviour
 {
-    public TextMeshProUGUI actorName;
-    public TextMeshProUGUI actorStatus;
-    public TextMeshProUGUI actorQualities;
-    public TextMeshProUGUI actorConditions;
-    public TextMeshProUGUI actorStats;
-    public TextMeshProUGUI actorTrait;
-    public TextMeshProUGUI actorAction;
+    public TextMeshProUGUI playerName;
+    public TextMeshProUGUI playerStatus;
+    public TextMeshProUGUI playerQualities;
+    public TextMeshProUGUI playerConditions;
+    public TextMeshProUGUI playerStats;
+    public TextMeshProUGUI playerGear;
     public Image dividerTop;                   //Side specific sprites for tooltips
     public Image dividerMiddleUpper;
     public Image dividerMiddleLower;
@@ -111,21 +111,19 @@ public class TooltipPlayer : MonoBehaviour
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
     /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    public void SetTooltip(ActorTooltipData data)
+    public void SetTooltip()
     {
-
         //open panel at start
         tooltipActorObject.SetActive(true);
         //set opacity to zero (invisible)
         SetOpacity(0f);
         //set state of all items in tooltip window
-        actorName.gameObject.SetActive(true);
-        actorStatus.gameObject.SetActive(false);
-        actorConditions.gameObject.SetActive(false);
-        actorStats.gameObject.SetActive(true);
-        actorQualities.gameObject.SetActive(true);
-        actorTrait.gameObject.SetActive(true);
-        actorAction.gameObject.SetActive(true);
+        playerName.gameObject.SetActive(true);
+        playerStatus.gameObject.SetActive(false);
+        playerConditions.gameObject.SetActive(false);
+        playerStats.gameObject.SetActive(true);
+        playerQualities.gameObject.SetActive(true);
+        playerGear.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerMiddleUpper.gameObject.SetActive(false);
         dividerMiddleLower.gameObject.SetActive(false);
@@ -133,12 +131,12 @@ public class TooltipPlayer : MonoBehaviour
         if (data.actor != null)
         {
             //Header
-            actorName.text = string.Format("{0}<b>{1}</b>{2}{3}{4}{5}{6}", colourArc, data.actor.arc.name, colourEnd, "\n", colourName, data.actor.actorName, colourEnd);
+            playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}{4}{5}", colourArc, colourEnd, "\n", colourName, data.actor.actorName, colourEnd);
             //Status (ignore for the default 'Active' Condition)
             if (data.actor.Status != ActorStatus.Active)
             {
                 //activate UI components
-                actorStatus.gameObject.SetActive(true);
+                playerStatus.gameObject.SetActive(true);
                 dividerMiddleUpper.gameObject.SetActive(true);
                 switch (data.actor.Status)
                 {
@@ -147,19 +145,19 @@ public class TooltipPlayer : MonoBehaviour
                         {
                             case ActorInactive.LieLow:
                                 int numOfTurns = GameManager.instance.actorScript.maxStatValue + 1 - data.actor.datapoint2;
-                                actorStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
+                                playerStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
                                     numOfTurns != 1 ? "s" : "");
                                 break;
                             case ActorInactive.Breakdown:
-                                actorStatus.text = string.Format("{0}<b>BREAKDOWN (Stress)</b>{1}{2}Back next turn", colourNeutral, colourEnd, "\n");
+                                playerStatus.text = string.Format("{0}<b>BREAKDOWN (Stress)</b>{1}{2}Back next turn", colourNeutral, colourEnd, "\n");
                                 break;
                         }
                         break;
                     case ActorStatus.Captured:
-                        actorStatus.text = string.Format("{0}<b>CAPTURED</b>{1}{2}Whereabouts unknown", colourBad, colourEnd, "\n");
+                        playerStatus.text = string.Format("{0}<b>CAPTURED</b>{1}{2}Whereabouts unknown", colourBad, colourEnd, "\n");
                         break;
                     default:
-                        actorStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, data.actor.Status.ToString().ToUpper(), colourEnd);
+                        playerStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, data.actor.Status.ToString().ToUpper(), colourEnd);
                         break;
                 }
             }
@@ -170,7 +168,7 @@ public class TooltipPlayer : MonoBehaviour
                 if (listOfConditions != null)
                 {
                     dividerMiddleLower.gameObject.SetActive(true);
-                    actorConditions.gameObject.SetActive(true);
+                    playerConditions.gameObject.SetActive(true);
                     StringBuilder builderCondition = new StringBuilder();
                     foreach (Condition condition in listOfConditions)
                     {
@@ -191,34 +189,18 @@ public class TooltipPlayer : MonoBehaviour
                                 break;
                         }
                     }
-                    actorConditions.text = builderCondition.ToString();
+                    playerConditions.text = builderCondition.ToString();
                 }
                 else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
             }
 
-            //Trait
-            string colourTrait = colourQuality;
-            if (data.actor.trait.typeOfTrait != null)
-            {
-                switch (data.actor.trait.typeOfTrait.name)
-                {
-                    case "Good": colourTrait = colourGood; break;
-                    case "Neutral": colourTrait = colourNeutral; break;
-                    case "Bad": colourTrait = colourBad; break;
-                }
-            }
-            else
-            {
-                colourTrait = colourDefault;
-                Debug.LogWarning("Invalid actor.trait.typeOfTrait (Null)");
-            }
-            actorTrait.text = string.Format("{0}{1}{2}", colourTrait, data.actor.trait.name, colourEnd);
+            
 
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
         //action
         if (data.action != null)
-        { actorAction.text = string.Format("{0}{1}{2}", colourAction, data.action.name, colourEnd); }
+        { playerGear.text = string.Format("{0}{1}{2}", colourAction, data.action.name, colourEnd); }
         else { Debug.LogWarning(string.Format("Actor \"{0}\" has an invalid Action (Null)", data.actor.actorName)); }
 
         //qualities
@@ -231,7 +213,7 @@ public class TooltipPlayer : MonoBehaviour
                 if (i > 0) { builder.AppendLine(); }
                 builder.Append(string.Format("{0}{1}{2}", colourQuality, data.arrayOfQualities[i], colourEnd));
             }
-            actorQualities.text = builder.ToString();
+            playerQualities.text = builder.ToString();
         }
 
         //Stats -> only takes the first three Qualities, eg. "Connections, Motivation, Invisibility"
@@ -246,7 +228,7 @@ public class TooltipPlayer : MonoBehaviour
 
                 builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(dataStats), dataStats, colourEnd));
             }
-            actorStats.text = builder.ToString();
+            playerStats.text = builder.ToString();
         }
         //Coordinates -> You need to send World (object.transform) coordinates
         Vector3 worldPos = data.tooltipPos;
