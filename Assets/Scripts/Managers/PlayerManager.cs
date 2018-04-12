@@ -24,7 +24,8 @@ public class PlayerManager : MonoBehaviour
     
 
     private List<int> listOfGear = new List<int>();                     //gearID's of all gear items in inventory
-    private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
+    private List<Condition> listOfConditionsResistance = new List<Condition>();   //list of all conditions currently affecting the Resistance player
+    private List<Condition> listOfConditionsAuthority = new List<Condition>();    //list of all conditions currently affecting the Authority player
 
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
@@ -273,6 +274,17 @@ public class PlayerManager : MonoBehaviour
     {
         if (condition != null)
         {
+            //use correct list for the player side
+            List<Condition> listOfConditions;
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+            else
+            {
+                //AI control of both side
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+                else { listOfConditions = listOfConditionsAuthority; }
+            }
+
             //check that condition isn't already present
             if (CheckConditionPresent(condition) == false)
             {
@@ -295,6 +307,16 @@ public class PlayerManager : MonoBehaviour
     {
         if (condition != null)
         {
+            //use correct list for the player side
+            List<Condition> listOfConditions;
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+            else
+            {
+                //AI control of both side
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+                else { listOfConditions = listOfConditionsAuthority; }
+            }
             if (listOfConditions.Count > 0)
             {
                 foreach (Condition checkCondition in listOfConditions)
@@ -317,6 +339,16 @@ public class PlayerManager : MonoBehaviour
     {
         if (condition != null)
         {
+            //use correct list for the player side
+            List<Condition> listOfConditions;
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+            else
+            {
+                //AI control of both side
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+                else { listOfConditions = listOfConditionsAuthority; }
+            }
             if (listOfConditions.Count > 0)
             {
                 //reverse loop -> delete and return if found
@@ -339,10 +371,34 @@ public class PlayerManager : MonoBehaviour
     }
 
     public List<Condition> GetListOfConditions()
-    { return listOfConditions; }
+    {
+        //use correct list for the player side
+        List<Condition> listOfConditions;
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+        else
+        {
+            //AI control of both side
+            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else { listOfConditions = listOfConditionsAuthority; }
+        }
+        return listOfConditions;
+    }
 
     public int CheckNumOfConditions()
-    { return listOfConditions.Count; }
+    {
+        //use correct list for the player side
+        List<Condition> listOfConditions;
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+        else
+        {
+            //AI control of both side
+            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else { listOfConditions = listOfConditionsAuthority; }
+        }
+        return listOfConditions.Count;
+    }
 
     //
     // - - - Debug
@@ -354,6 +410,16 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public string DisplayPlayerStats()
     {
+        //use correct list for the player side
+        List<Condition> listOfConditions;
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+        else
+        {
+            //AI control of both side
+            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else { listOfConditions = listOfConditionsAuthority; }
+        }
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
         builder.Append(string.Format("- Stats{0}", "\n"));

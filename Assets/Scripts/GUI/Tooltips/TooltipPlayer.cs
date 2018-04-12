@@ -14,8 +14,9 @@ public class TooltipPlayer : MonoBehaviour
     public TextMeshProUGUI playerName;
     public TextMeshProUGUI playerStatus;
     public TextMeshProUGUI playerConditions;
+    public TextMeshProUGUI playerQualities;
     public TextMeshProUGUI playerStats;
-    public TextMeshProUGUI playerGear;
+    public TextMeshProUGUI playerBottom;       //gear for rebels
     public Image dividerTop;                   //Side specific sprites for tooltips
     public Image dividerMiddleUpper;
     public Image dividerMiddleLower;
@@ -120,7 +121,8 @@ public class TooltipPlayer : MonoBehaviour
         playerStatus.gameObject.SetActive(false);
         playerConditions.gameObject.SetActive(false);
         playerStats.gameObject.SetActive(true);
-        playerGear.gameObject.SetActive(true);
+        playerQualities.gameObject.SetActive(true);
+        playerBottom.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerMiddleUpper.gameObject.SetActive(false);
         dividerMiddleLower.gameObject.SetActive(false);
@@ -189,11 +191,21 @@ public class TooltipPlayer : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
         }
         //context sensitive at bottom
+        StringBuilder builderStats = new StringBuilder();
+        int renown = GameManager.instance.playerScript.Renown;
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                //Authority
-                break;
+                //Authority Stats and Qualities
+                playerQualities.text = string.Format("{0}OnMap{1}{2}Intransit{3}{4}Reserve{5}", colourNeutral, colourEnd, "\n", "\n", colourNeutral, colourEnd);
+                int teamsOnMap = GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap);
+                int teamsInTransit = GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit);
+                int teamsReserve = GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve);
+                playerStats.text = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", colourNeutral, teamsOnMap, colourEnd, "\n", teamsInTransit, "\n", colourNeutral, 
+                    teamsReserve, colourEnd);
+                //Authority Bottom
+                playerBottom.text = string.Format("Renown  {0}{1}{2}", GameManager.instance.colourScript.GetValueColour(renown), renown, colourEnd);
+                break;               
             case 2:
                 //Resistance gear
                 List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
@@ -208,24 +220,21 @@ public class TooltipPlayer : MonoBehaviour
                         if (gear != null)
                         { builderGear.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourNeutral, gear.name, colourEnd); }
                     }
-                    playerGear.text = builderGear.ToString();
+                    playerBottom.text = builderGear.ToString();
                 }
-                else { playerGear.text = string.Format("{0}<size=90%>No Gear in Inventory</size>{1}", colourArc, colourEnd); }
+                else { playerBottom.text = string.Format("{0}<size=90%>No Gear in Inventory</size>{1}", colourArc, colourEnd); }
+                //Resistance Stats and Qualities -> Renown / Secrets / Invisibility
+                
+                builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(renown), renown, colourEnd, "\n");
+                builderStats.Append("0");
+                builderStats.AppendLine();
+                int invisibility = GameManager.instance.playerScript.invisibility;
+                builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
+                playerStats.text = builderStats.ToString();
+                //Resistance Qualities
+                playerQualities.text = string.Format("Renown{0}Secrets{1}Invisibility", "\n", "\n");
                 break;
         }
-
-
-        //Stats -> only takes the first three Qualities, eg. "Renown, Secrets, Invisibility"
-        StringBuilder builderStats = new StringBuilder();
-        //renown
-        int renown = GameManager.instance.playerScript.Renown;
-        builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(renown), renown, colourEnd, "\n");
-        builderStats.Append("0");
-        builderStats.AppendLine();
-        int invisibility = GameManager.instance.playerScript.invisibility;
-        builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
-        playerStats.text = builderStats.ToString();
-
         //Coordinates -> You need to send World (object.transform) coordinates
         Vector3 worldPos = pos;
         //update required to get dimensions as tooltip is dynamic
