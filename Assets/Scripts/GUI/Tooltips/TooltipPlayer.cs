@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +13,6 @@ public class TooltipPlayer : MonoBehaviour
 {
     public TextMeshProUGUI playerName;
     public TextMeshProUGUI playerStatus;
-    public TextMeshProUGUI playerQualities;
     public TextMeshProUGUI playerConditions;
     public TextMeshProUGUI playerStats;
     public TextMeshProUGUI playerGear;
@@ -19,7 +20,7 @@ public class TooltipPlayer : MonoBehaviour
     public Image dividerMiddleUpper;
     public Image dividerMiddleLower;
     public Image dividerBottom;
-    public GameObject tooltipActorObject;
+    public GameObject tooltipPlayerObject;
 
     private Image background;
     private static TooltipPlayer tooltipPlayer;
@@ -44,8 +45,8 @@ public class TooltipPlayer : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        canvasGroup = tooltipActorObject.GetComponent<CanvasGroup>();
-        rectTransform = tooltipActorObject.GetComponent<RectTransform>();
+        canvasGroup = tooltipPlayerObject.GetComponent<CanvasGroup>();
+        rectTransform = tooltipPlayerObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         //event listener
@@ -105,16 +106,13 @@ public class TooltipPlayer : MonoBehaviour
 
 
     /// <summary>
-    /// Initialise actor Tool tip
+    /// Initialise Player Tool tip
     /// </summary>
-    /// <param name="name">Name of Node, eg. 'Downtown Manhattan'</param>
-    /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
-    /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    public void SetTooltip()
+    public void SetTooltip(Vector3 pos)
     {
         //open panel at start
-        tooltipActorObject.SetActive(true);
+        tooltipPlayerObject.SetActive(true);
         //set opacity to zero (invisible)
         SetOpacity(0f);
         //set state of all items in tooltip window
@@ -122,119 +120,117 @@ public class TooltipPlayer : MonoBehaviour
         playerStatus.gameObject.SetActive(false);
         playerConditions.gameObject.SetActive(false);
         playerStats.gameObject.SetActive(true);
-        playerQualities.gameObject.SetActive(true);
         playerGear.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerMiddleUpper.gameObject.SetActive(false);
         dividerMiddleLower.gameObject.SetActive(false);
         dividerBottom.gameObject.SetActive(true);
-        if (data.actor != null)
+        //Header
+        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}{4}{5}", colourArc, colourEnd, "\n", colourName, GameManager.instance.playerScript.PlayerName, colourEnd);
+        //Status (ignore for the default 'Active' Condition)
+        if (GameManager.instance.playerScript.status != ActorStatus.Active)
         {
-            //Header
-            playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}{4}{5}", colourArc, colourEnd, "\n", colourName, data.actor.actorName, colourEnd);
-            //Status (ignore for the default 'Active' Condition)
-            if (data.actor.Status != ActorStatus.Active)
+            //activate UI components
+            playerStatus.gameObject.SetActive(true);
+            dividerMiddleUpper.gameObject.SetActive(true);
+            switch (GameManager.instance.playerScript.status)
             {
-                //activate UI components
-                playerStatus.gameObject.SetActive(true);
-                dividerMiddleUpper.gameObject.SetActive(true);
-                switch (data.actor.Status)
-                {
-                    case ActorStatus.Inactive:
-                        switch (data.actor.inactiveStatus)
-                        {
-                            case ActorInactive.LieLow:
-                                int numOfTurns = GameManager.instance.actorScript.maxStatValue + 1 - data.actor.datapoint2;
-                                playerStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
-                                    numOfTurns != 1 ? "s" : "");
-                                break;
-                            case ActorInactive.Breakdown:
-                                playerStatus.text = string.Format("{0}<b>BREAKDOWN (Stress)</b>{1}{2}Back next turn", colourNeutral, colourEnd, "\n");
-                                break;
-                        }
-                        break;
-                    case ActorStatus.Captured:
-                        playerStatus.text = string.Format("{0}<b>CAPTURED</b>{1}{2}Whereabouts unknown", colourBad, colourEnd, "\n");
-                        break;
-                    default:
-                        playerStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, data.actor.Status.ToString().ToUpper(), colourEnd);
-                        break;
-                }
-            }
-            //Conditions
-            if (data.actor.CheckNumOfConditions() > 0)
-            {
-                List<Condition> listOfConditions = data.actor.GetListOfConditions();
-                if (listOfConditions != null)
-                {
-                    dividerMiddleLower.gameObject.SetActive(true);
-                    playerConditions.gameObject.SetActive(true);
-                    StringBuilder builderCondition = new StringBuilder();
-                    foreach (Condition condition in listOfConditions)
+                case ActorStatus.Inactive:
+                    switch (GameManager.instance.playerScript.inactiveStatus)
                     {
-                        if (builderCondition.Length > 0) { builderCondition.AppendLine(); }
-                        switch (condition.type.name)
-                        {
-                            case "Good":
-                                builderCondition.Append(string.Format("{0}{1}{2}", colourGood, condition.name, colourEnd));
-                                break;
-                            case "Bad":
-                                builderCondition.Append(string.Format("{0}{1}{2}", colourBad, condition.name, colourEnd));
-                                break;
-                            case "Neutral":
-                                builderCondition.Append(string.Format("{0}{1}{2}", colourNeutral, condition.name, colourEnd));
-                                break;
-                            default:
-                                Debug.LogError(string.Format("Invalid condition.type.name \"{0}\"", condition.type.name));
-                                break;
-                        }
+                        case ActorInactive.LieLow:
+                            int numOfTurns = GameManager.instance.actorScript.maxStatValue + 1 - GameManager.instance.playerScript.invisibility;
+                            playerStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
+                                numOfTurns != 1 ? "s" : "");
+                            break;
+                        case ActorInactive.Breakdown:
+                            playerStatus.text = string.Format("{0}<b>BREAKDOWN (Stress)</b>{1}{2}Back next turn", colourNeutral, colourEnd, "\n");
+                            break;
                     }
-                    playerConditions.text = builderCondition.ToString();
+                    break;
+                case ActorStatus.Captured:
+                    playerStatus.text = string.Format("{0}<b>CAPTURED</b>{1}{2}Whereabouts unknown", colourBad, colourEnd, "\n");
+                    break;
+                default:
+                    playerStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, GameManager.instance.playerScript.status.ToString().ToUpper(), colourEnd);
+                    break;
+            }
+        }
+        //Conditions
+        if (GameManager.instance.playerScript.CheckNumOfConditions() > 0)
+        {
+            List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions();
+            if (listOfConditions != null)
+            {
+                dividerMiddleLower.gameObject.SetActive(true);
+                playerConditions.gameObject.SetActive(true);
+                StringBuilder builderCondition = new StringBuilder();
+                foreach (Condition condition in listOfConditions)
+                {
+                    if (builderCondition.Length > 0) { builderCondition.AppendLine(); }
+                    switch (condition.type.name)
+                    {
+                        case "Good":
+                            builderCondition.Append(string.Format("{0}{1}{2}", colourGood, condition.name, colourEnd));
+                            break;
+                        case "Bad":
+                            builderCondition.Append(string.Format("{0}{1}{2}", colourBad, condition.name, colourEnd));
+                            break;
+                        case "Neutral":
+                            builderCondition.Append(string.Format("{0}{1}{2}", colourNeutral, condition.name, colourEnd));
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid condition.type.name \"{0}\"", condition.type.name));
+                            break;
+                    }
                 }
-                else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
+                playerConditions.text = builderCondition.ToString();
             }
-
-            
-
+            else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
         }
-        else { Debug.LogWarning("Invalid Actor (Null)"); }
-        //action
-        if (data.action != null)
-        { playerGear.text = string.Format("{0}{1}{2}", colourAction, data.action.name, colourEnd); }
-        else { Debug.LogWarning(string.Format("Actor \"{0}\" has an invalid Action (Null)", data.actor.actorName)); }
-
-        //qualities
-        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
-        if (data.arrayOfQualities.Length > 0)
+        //context sensitive at bottom
+        switch (GameManager.instance.sideScript.PlayerSide.level)
         {
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < numOfQualities; i++)
-            {
-                if (i > 0) { builder.AppendLine(); }
-                builder.Append(string.Format("{0}{1}{2}", colourQuality, data.arrayOfQualities[i], colourEnd));
-            }
-            playerQualities.text = builder.ToString();
+            case 1:
+                //Authority
+                break;
+            case 2:
+                //Resistance gear
+                List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                if (listOfGear != null && listOfGear.Count > 0)
+                {
+                    StringBuilder builderGear = new StringBuilder();
+                    builderGear.Append("Gear");
+                    //gear in inventory
+                    foreach (int gearID in listOfGear)
+                    {
+                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                        if (gear != null)
+                        { builderGear.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourNeutral, gear.name, colourEnd); }
+                    }
+                    playerGear.text = builderGear.ToString();
+                }
+                else { playerGear.text = string.Format("{0}<size=90%>No Gear in Inventory</size>{1}", colourArc, colourEnd); }
+                break;
         }
 
-        //Stats -> only takes the first three Qualities, eg. "Connections, Motivation, Invisibility"
-        int dataStats;
-        if (data.arrayOfStats.Length > 0 || data.arrayOfStats.Length < numOfQualities)
-        {
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < numOfQualities; i++)
-            {
-                dataStats = data.arrayOfStats[i];
-                if (i > 0) { builder.AppendLine(); }
 
-                builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(dataStats), dataStats, colourEnd));
-            }
-            playerStats.text = builder.ToString();
-        }
+        //Stats -> only takes the first three Qualities, eg. "Renown, Secrets, Invisibility"
+        StringBuilder builderStats = new StringBuilder();
+        //renown
+        int renown = GameManager.instance.playerScript.Renown;
+        builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(renown), renown, colourEnd, "\n");
+        builderStats.Append("0");
+        builderStats.AppendLine();
+        int invisibility = GameManager.instance.playerScript.invisibility;
+        builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
+        playerStats.text = builderStats.ToString();
+
         //Coordinates -> You need to send World (object.transform) coordinates
-        Vector3 worldPos = data.tooltipPos;
+        Vector3 worldPos = pos;
         //update required to get dimensions as tooltip is dynamic
         Canvas.ForceUpdateCanvases();
-        rectTransform = tooltipActorObject.GetComponent<RectTransform>();
+        rectTransform = tooltipPlayerObject.GetComponent<RectTransform>();
         float height = rectTransform.rect.height;
         float width = rectTransform.rect.width;
         //base y pos at zero (bottom of screen). Adjust up from there.
@@ -247,7 +243,7 @@ public class TooltipPlayer : MonoBehaviour
         { worldPos.x += width / 2 - worldPos.x; }
 
         //set new position
-        tooltipActorObject.transform.position = worldPos;
+        tooltipPlayerObject.transform.position = worldPos;
         Debug.Log("UI: Open -> TooltipActor" + "\n");
     }
 
@@ -276,7 +272,7 @@ public class TooltipPlayer : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool CheckTooltipActive()
-    { return tooltipActorObject.activeSelf; }
+    { return tooltipPlayerObject.activeSelf; }
 
     /// <summary>
     /// close tool tip
@@ -284,7 +280,7 @@ public class TooltipPlayer : MonoBehaviour
     public void CloseTooltip()
     {
         Debug.Log("UI: Close -> TooltipActor" + "\n");
-        tooltipActorObject.SetActive(false);
+        tooltipPlayerObject.SetActive(false);
     }
 
 
@@ -296,7 +292,7 @@ public class TooltipPlayer : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
-        background = tooltipActorObject.GetComponent<Image>();
+        background = tooltipPlayerObject.GetComponent<Image>();
         //assign side specific sprites
         switch (side.name)
         {

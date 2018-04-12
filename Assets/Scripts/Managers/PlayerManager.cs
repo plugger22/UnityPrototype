@@ -45,8 +45,8 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return _renownResistance; }
-                else { return _renownAuthority; }
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return playerNameResistance; }
+                else { return playerNameAuthority; }
             }
         }
     }

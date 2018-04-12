@@ -157,7 +157,7 @@ public class ColourManager : MonoBehaviour
             case 1: colourReturn = dataBad[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
             case 2: colourReturn = dataNeutral[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
             case 3: colourReturn = dataGood[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
-            default: colourReturn = defaultText[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
+            default: colourReturn = dataGood[(int)GameManager.instance.optionScript.ColourOption].hexCode; break; //default is > 3 (all good)
         }
         return string.Format("{0}{1}{2}", "<color=", colourReturn, ">");
     }

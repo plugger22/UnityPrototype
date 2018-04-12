@@ -72,7 +72,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
