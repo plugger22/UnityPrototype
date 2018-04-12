@@ -196,15 +196,15 @@ public class TooltipNode : MonoBehaviour
                     for (int i = 0; i < data.listOfActive.Count; i++)
                     {
                         if (i > 0) { builderActor.AppendLine(); }
-                        builderActor.Append(string.Format("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd));
+                        builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd);
                     }
                 }
                 else if (playerSide.level == globalAuthority.level)
-                { builderActor.Append(string.Format("{0}Resistance Contacts present{1}", colourNeutral, colourEnd)); }
+                { builderActor.AppendFormat("{0}Resistance Contacts present{1}", colourNeutral, colourEnd); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
             else
-            { builderActor.Append(string.Format("{0}Resistance Contacts unknown{1}", colourBad, colourEnd)); }
+            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourBad, colourEnd); }
         }
         else
         {
@@ -212,13 +212,13 @@ public class TooltipNode : MonoBehaviour
             if (proceedFlag == true)
             {
                 if (playerSide.level == globalResistance.level)
-                { builderActor.Append(string.Format("{0}<size=90%>No Actors have Contacts</size>{1}", colourDefault, colourEnd)); }
+                { builderActor.AppendFormat("{0}<size=90%>No Actors have Contacts</size>{1}", colourDefault, colourEnd); }
                 else if (playerSide.level == globalAuthority.level)
-                { builderActor.Append(string.Format("{0}<size=90%>No Resistance Contacts present</size>{1}", colourDefault, colourEnd)); }
+                { builderActor.AppendFormat("{0}<size=90%>No Resistance Contacts present</size>{1}", colourDefault, colourEnd); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
             else
-            { builderActor.Append(string.Format("{0}Resistance Contacts unknown{1}", colourBad, colourEnd)); }
+            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourBad, colourEnd); }
         }
         nodeActive.text = builderActor.ToString();
         //
@@ -230,7 +230,7 @@ public class TooltipNode : MonoBehaviour
             ongoingEffects.gameObject.SetActive(true);
             dividerStats.gameObject.SetActive(true);
             StringBuilder effectBuilder = new StringBuilder();
-            effectBuilder.Append(string.Format("{0}Ongoing Effects{1}", colourDefault, colourEnd));
+            effectBuilder.AppendFormat("{0}Ongoing Effects{1}", colourDefault, colourEnd);
             for (int i = 0; i < data.listOfEffects.Count; i++)
             {
                 switch(data.listOfEffects[i].type.name)
@@ -278,7 +278,7 @@ public class TooltipNode : MonoBehaviour
                 foreach (String teamText in data.listOfTeams)
                 {
                     if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
-                    teamBuilder.Append(string.Format("{0}{1}{2}", colourTeam, teamText, colourEnd));
+                    teamBuilder.AppendFormat("{0}{1}{2}", colourTeam, teamText, colourEnd);
                 }
                 nodeTeams.text = teamBuilder.ToString();
             }
@@ -315,7 +315,7 @@ public class TooltipNode : MonoBehaviour
             {
                 statData = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-                builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(statData), statData, colourEnd));
+                builder.AppendFormat("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(statData), statData, colourEnd);
                 //idiot check to handle case of being too many stats
                 checkCounter++;
                 if (checkCounter >= 3) { break; }

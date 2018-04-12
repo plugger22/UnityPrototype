@@ -204,8 +204,8 @@ public class ModalTeamPicker : MonoBehaviour
             teamActorSlotID = details.actorDataID;
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, GameManager.instance.globalScript.sideAuthority);
             int numTeams = node.CheckNumOfTeams();
-            builder.Append(string.Format("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name, node.nodeName, numTeams, 
-                numTeams != 1 ? "s" : "", colourEnd));
+            builder.AppendFormat("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name, node.nodeName, numTeams, 
+                numTeams != 1 ? "s" : "", colourEnd);
             //teams at node
             if (numTeams > 0)
             {
@@ -214,7 +214,7 @@ public class ModalTeamPicker : MonoBehaviour
                 {
                     if (listOfTeams.Count > 0)
                     {
-                        builder.Append(string.Format("{0} ({1}{2}", colourNormal, colourEnd, colourTeam));
+                        builder.AppendFormat("{0} ({1}{2}", colourNormal, colourEnd, colourTeam);
                         int counter = 0;
                         foreach (Team team in listOfTeams)
                         {
@@ -223,7 +223,7 @@ public class ModalTeamPicker : MonoBehaviour
                             if (counter < listOfTeams.Count)
                             { builder.Append(", "); }
                         }
-                        builder.Append(string.Format("{0}{1}){2}", colourEnd, colourNormal, colourEnd));
+                        builder.AppendFormat("{0}{1}){2}", colourEnd, colourNormal, colourEnd);
                     }
                 }
                 else { Debug.LogError("Invalid listOfTeams (Null)"); }
@@ -235,9 +235,9 @@ public class ModalTeamPicker : MonoBehaviour
                 string colourNumbers = colourGood;
                 if (actor.CheckNumOfTeams() == actor.datapoint2)
                 { colourNumbers = colourBad; }
-                builder.Append(string.Format("{0}, {1} of {2}{3}{4} has deployed {5}{6}{7} of {8}{9}{10} teams",
+                builder.AppendFormat("{0}, {1} of {2}{3}{4} has deployed {5}{6}{7} of {8}{9}{10} teams",
                     actor.actorName, GameManager.instance.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
-                    colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd));
+                    colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd);
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) from ActorSlotID {0}", teamActorSlotID)); }
         }
@@ -300,17 +300,17 @@ public class ModalTeamPicker : MonoBehaviour
                     //details tooltip text
                     numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Total);
                     StringBuilder builderDetails = new StringBuilder();
-                    builderDetails.Append(string.Format("{0}{1} {2} team{3}{4}", colourEffect, numOfTeams, teamType,
-                        numOfTeams != 1 ? "s" : "", colourEnd));
+                    builderDetails.AppendFormat("{0}{1} {2} team{3}{4}", colourEffect, numOfTeams, teamType,
+                        numOfTeams != 1 ? "s" : "", colourEnd);
                     builderDetails.AppendLine();
                     numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Reserve);
-                    builderDetails.Append(string.Format("{0}{1} in Reserve{2}", colourEffect, numOfTeams, colourEnd));
+                    builderDetails.AppendFormat("{0}{1} in Reserve{2}", colourEffect, numOfTeams, colourEnd);
                     builderDetails.AppendLine();
                     numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.OnMap);
-                    builderDetails.Append(string.Format("{0}{1} Deployed{2}", colourEffect, numOfTeams, colourEnd));
+                    builderDetails.AppendFormat("{0}{1} Deployed{2}", colourEffect, numOfTeams, colourEnd);
                     builderDetails.AppendLine();
                     numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.InTransit);
-                    builderDetails.Append(string.Format("{0}{1} in Transit{2}", colourEffect, numOfTeams, colourEnd));
+                    builderDetails.AppendFormat("{0}{1} in Transit{2}", colourEffect, numOfTeams, colourEnd);
                     listOfTeamTooltipsDetails.Add(builderDetails.ToString());
                 }
 

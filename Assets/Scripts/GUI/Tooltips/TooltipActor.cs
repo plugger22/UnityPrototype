@@ -182,13 +182,13 @@ public class TooltipActor : MonoBehaviour
                         switch(condition.type.name)
                         {
                             case "Good":
-                                builderCondition.Append(string.Format("{0}{1}{2}", colourGood, condition.name, colourEnd));
+                                builderCondition.AppendFormat("{0}{1}{2}", colourGood, condition.name, colourEnd);
                                 break;
                             case "Bad":
-                                builderCondition.Append(string.Format("{0}{1}{2}", colourBad, condition.name, colourEnd));
+                                builderCondition.AppendFormat("{0}{1}{2}", colourBad, condition.name, colourEnd);
                                 break;
                             case "Neutral":
-                                builderCondition.Append(string.Format("{0}{1}{2}", colourNeutral, condition.name, colourEnd));
+                                builderCondition.AppendFormat("{0}{1}{2}", colourNeutral, condition.name, colourEnd);
                                 break;
                             default:
                                 Debug.LogError(string.Format("Invalid condition.type.name \"{0}\"", condition.type.name));
@@ -233,7 +233,7 @@ public class TooltipActor : MonoBehaviour
             for (int i = 0; i < numOfQualities; i++)
             {
                 if (i > 0) { builder.AppendLine(); }
-                builder.Append(string.Format("{0}{1}{2}", colourQuality, data.arrayOfQualities[i], colourEnd));
+                builder.AppendFormat("{0}{1}{2}", colourQuality, data.arrayOfQualities[i], colourEnd);
             }
             actorQualities.text = builder.ToString();
         }
@@ -248,7 +248,7 @@ public class TooltipActor : MonoBehaviour
                 dataStats = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
 
-                builder.Append(string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(dataStats), dataStats, colourEnd));
+                builder.AppendFormat("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(dataStats), dataStats, colourEnd);
             }
             actorStats.text = builder.ToString();
         }

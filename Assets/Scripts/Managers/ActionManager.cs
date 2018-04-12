@@ -1037,15 +1037,15 @@ public class ActionManager : MonoBehaviour
                 int numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
                 outcomeDetails.sprite = actor.arc.baseSprite;
-                builder.Append(string.Format("{0}{1} will be Inactive for {2}{3}{4} FULL{5}{6} turn{7} or until Activated{8}", colourNeutral, actor.actorName,
-                    colourEnd, colourAlert, numOfTurns, colourEnd, colourNeutral, numOfTurns != 1 ? "s" : "", colourEnd));
+                builder.AppendFormat("{0}{1} will be Inactive for {2}{3}{4} FULL{5}{6} turn{7} or until Activated{8}", colourNeutral, actor.actorName,
+                    colourEnd, colourAlert, numOfTurns, colourEnd, colourNeutral, numOfTurns != 1 ? "s" : "", colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append(string.Format("{0}Invisibility {1}{2}+1{3}{4} each turn Inactive{5}", colourGood, colourEnd, colourAlert, colourEnd, colourGood, colourEnd));
+                builder.AppendFormat("{0}Invisibility {1}{2}+1{3}{4} each turn Inactive{5}", colourGood, colourEnd, colourAlert, colourEnd, colourGood, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append(string.Format("{0}Any {1}{2}Stress{3}{4} will be removed once Invisibility is fully recovered{5}", colourGood, colourEnd, 
-                    colourAlert, colourEnd, colourGood, colourEnd));
+                builder.AppendFormat("{0}Any {1}{2}Stress{3}{4} will be removed once Invisibility is fully recovered{5}", colourGood, colourEnd, 
+                    colourAlert, colourEnd, colourGood, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append(string.Format("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd));
+                builder.AppendFormat("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd);
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -1295,7 +1295,7 @@ public class ActionManager : MonoBehaviour
                             if (effectReturn != null)
                             {
                                 outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
-                                builderTop.Append(string.Format("{0} has been used by the Player", gear.name));
+                                builderTop.AppendFormat("{0} has been used by the Player", gear.name);
                                 //update stringBuilder texts
                                 if (effectReturn.topText != null && effectReturn.topText.Length > 0)
                                 {
@@ -1488,11 +1488,11 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textTop = string.Format("{0} {1} has been pulled into line and told to smarten up their attitude",
                     actor.arc.name, actor.actorName);
                 StringBuilder builder = new StringBuilder();
-                builder.Append(string.Format("{0}{1}'s Unhappy timer +{2}{3}", colourGood, actor.actorName, benefit, colourEnd));
+                builder.AppendFormat("{0}{1}'s Unhappy timer +{2}{3}", colourGood, actor.actorName, benefit, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append(string.Format("{0}{1} can be Threatened again (not if Unhappy){2}", colourNeutral, actor.actorName, colourEnd));
+                builder.AppendFormat("{0}{1} can be Threatened again (not if Unhappy){2}", colourNeutral, actor.actorName, colourEnd);
                 outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.arc.baseSprite;
                 //Give boost to Unhappy timer
@@ -1562,7 +1562,7 @@ public class ActionManager : MonoBehaviour
                 //lower actors motivation
                 actor.datapoint1 -= motivationLoss;
                 actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                builder.Append(string.Format("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd));
+                builder.AppendFormat("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd);
                 //change actors status
                 actor.Status = ActorStatus.RecruitPool;
                 actor.ResetStates();
@@ -1572,7 +1572,7 @@ public class ActionManager : MonoBehaviour
                 {
                     recruitPoolList.Add(actor.actorID);
                     builder.AppendLine(); builder.AppendLine();
-                    builder.Append(string.Format("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd));
+                    builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
                 else { Debug.LogError(string.Format("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side)); }
                 //remove actor from reserve list
@@ -1588,8 +1588,8 @@ public class ActionManager : MonoBehaviour
                 {
                     if (builder.Length > 0)
                     { builder.AppendLine(); builder.AppendLine(); }
-                    builder.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
-                    numOfTeams != 1 ? "s" : "", colourEnd));
+                    builder.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                    numOfTeams != 1 ? "s" : "", colourEnd);
                 }
                 outcomeDetails.textTop = string.Format("{0} {1} reluctantly returns to the recruitment pool and asks that you keep them in mind", actor.arc.name,
                     actor.actorName);
@@ -1664,18 +1664,18 @@ public class ActionManager : MonoBehaviour
                 playerRenown -= renownCost;
                 playerRenown = Mathf.Max(0, playerRenown);
                 GameManager.instance.playerScript.Renown = playerRenown;
-                builder.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 if (actor.isThreatening == true)
                 {
-                    builder.Append(string.Format("{0} (Double Cost as {1} was Threatening Player{2}", colourAlert, actor.actorName, colourEnd));
+                    builder.AppendFormat("{0} (Double Cost as {1} was Threatening Player{2}", colourAlert, actor.actorName, colourEnd);
                     builder.AppendLine(); builder.AppendLine();
-                    builder.Append(string.Format("{0}{1} is no longer a threat{2}", colourGood, actor.actorName, colourEnd));
+                    builder.AppendFormat("{0}{1} is no longer a threat{2}", colourGood, actor.actorName, colourEnd);
                 }
                 builder.AppendLine(); builder.AppendLine();
                 //lower actors motivation
                 actor.datapoint1 -= motivationLoss;
                 actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                builder.Append(string.Format("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd));
+                builder.AppendFormat("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd);
                 //change actors status
                 actor.Status = ActorStatus.RecruitPool;
                 actor.ResetStates();
@@ -1685,7 +1685,7 @@ public class ActionManager : MonoBehaviour
                 {
                     recruitPoolList.Add(actor.actorID);
                     builder.AppendLine(); builder.AppendLine();
-                    builder.Append(string.Format("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd));
+                    builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
                 else { Debug.LogError(string.Format("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side)); }
                 //remove actor from reserve list
@@ -1701,8 +1701,8 @@ public class ActionManager : MonoBehaviour
                 {
                     if (builder.Length > 0)
                     { builder.AppendLine(); builder.AppendLine(); }
-                    builder.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
-                    numOfTeams != 1 ? "s" : "", colourEnd));
+                    builder.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                    numOfTeams != 1 ? "s" : "", colourEnd);
                 }
                 outcomeDetails.textTop = string.Format("{0} {1} curses and spits at your feet before walking out the door", actor.arc.name,
                     actor.actorName);
@@ -1768,12 +1768,12 @@ public class ActionManager : MonoBehaviour
                     //raise actors motivation
                     actor.datapoint1 += motivationGain;
                     actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
-                    builder.Append(string.Format("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd));
+                    builder.AppendFormat("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd);
                     //was actor threatening
                     if (actor.isThreatening == true)
                     {
                         builder.AppendLine(); builder.AppendLine();
-                        builder.Append(string.Format("{0}{1} is no longer Threatening{2}", colourGood, actor.actorName, colourEnd));
+                        builder.AppendFormat("{0}{1} is no longer Threatening{2}", colourGood, actor.actorName, colourEnd);
                     }
                     Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                     if (condition != null)
@@ -1781,7 +1781,7 @@ public class ActionManager : MonoBehaviour
                         if (GameManager.instance.playerScript.RemoveCondition(condition) == true)
                         {
                             builder.AppendLine(); builder.AppendLine();
-                            builder.Append(string.Format("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd));
+                            builder.AppendFormat("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd);
                         }
                     }
                     else
@@ -1942,7 +1942,7 @@ public class ActionManager : MonoBehaviour
                     EffectDataReturn effectReturn = new EffectDataReturn();
 
                     //target success
-                    builderTop.Append(string.Format("Target {0} successfully attempted", target.name));
+                    builderTop.AppendFormat("Target {0} successfully attempted", target.name);
 
                     //combine all effects into one list for processing
                     listOfEffects.AddRange(target.listOfGoodEffects);
@@ -1998,7 +1998,7 @@ public class ActionManager : MonoBehaviour
                 else
                 {
                     //target attempt UNSUCCESSFUL
-                    builderTop.Append(string.Format("Failed attempt at Target {0}", target.name));
+                    builderTop.AppendFormat("Failed attempt at Target {0}", target.name);
                     text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
@@ -2070,18 +2070,18 @@ public class ActionManager : MonoBehaviour
                             switch (data.optionText)
                             {
                                 case "ReserveRest":
-                                    builderTop.Append(string.Format("{0}{1} {2} understands the need for Rest{3}", colourNormal, actor.arc.name,
-                                        actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} understands the need for Rest{3}", colourNormal, actor.arc.name,
+                                        actor.actorName, colourEnd);
                                     msgText = "Resting";
                                     break;
                                 case "ReservePromise":
-                                    builderTop.Append(string.Format("{0}{1} {2} accepts your word that they will be recalled within a reasonable time period{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} accepts your word that they will be recalled within a reasonable time period{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgText = "Promised";
                                     break;
                                 case "ReserveNoPromise":
-                                    builderTop.Append(string.Format("{0}{1} {2} is confused and doesn't understand why they are being cast aside{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} is confused and doesn't understand why they are being cast aside{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgText = "No Promise";
                                     break;
                                 default:
@@ -2093,15 +2093,15 @@ public class ActionManager : MonoBehaviour
                             {
                                 if (builderBottom.Length > 0)
                                 { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                builderBottom.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
-                                numOfTeams != 1 ? "s" : "", colourEnd));
+                                builderBottom.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                                numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                         }
                         else
                         {
                             //default data for missing outcome
                             Debug.LogWarning(string.Format("Invalid optionText (Null or empty) for {0} {1}", actor.actorName, actor.arc.name));
-                            builderTop.Append(string.Format("{0} {1} is sent to the Reserves", actor.arc.name, actor.actorName));
+                            builderTop.AppendFormat("{0} {1} is sent to the Reserves", actor.arc.name, actor.actorName);
                         }
                         //message
                         string text = string.Format("{0} {1} moved to the Reserves ({2})", actor.arc.name, actor.actorName, msgText);
@@ -2227,21 +2227,21 @@ public class ActionManager : MonoBehaviour
                             switch (data.optionText)
                             {
                                 case "DismissPromote":
-                                    builderTop.Append(string.Format("{0}{1} {2} shakes your hand and heads off to bigger things{3}", colourNormal, actor.arc.name,
-                                        actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} shakes your hand and heads off to bigger things{3}", colourNormal, actor.arc.name,
+                                        actor.actorName, colourEnd);
                                     msgTextStatus = "Promoted";
                                     msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName, 
                                         GameManager.instance.factionScript.GetCurrentFaction().name);
                                     break;
                                 case "DismissIncompetent":
-                                    builderTop.Append(string.Format("{0}{1} {2} scowls and curses before stomping off{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} scowls and curses before stomping off{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Incompetent";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 case "DismissUnsuited":
-                                    builderTop.Append(string.Format("{0}{1} {2} lets you know that they won't forget this{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} lets you know that they won't forget this{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Unsuited";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
@@ -2254,8 +2254,8 @@ public class ActionManager : MonoBehaviour
                             {
                                 if (builderBottom.Length > 0)
                                 { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                builderBottom.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
-                                numOfTeams != 1 ? "s" : "", colourEnd));
+                                builderBottom.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                                numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                             //message
                             Message message = GameManager.instance.messageScript.ActorStatus(msgTextMain, actor.actorID, playerSide);
@@ -2379,20 +2379,20 @@ public class ActionManager : MonoBehaviour
                             switch (data.optionText)
                             {
                                 case "DisposeLoyalty":
-                                    builderTop.Append(string.Format("{0}{1} {2} vehemently denies being disployal but nobody is listening{3}", colourNormal, actor.arc.name,
-                                        actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} vehemently denies being disployal but nobody is listening{3}", colourNormal, actor.arc.name,
+                                        actor.actorName, colourEnd);
                                     msgTextStatus = "Loyalty";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 case "DisposeCorrupt":
-                                    builderTop.Append(string.Format("{0}{1} {2} protests their innocence but don't they all?{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} protests their innocence but don't they all?{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Corrupt";
                                     msgTextMain = string.Format("{0} {1} has been killed({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 case "DisposeHabit":
-                                    builderTop.Append(string.Format("{0}{1} {2} smiles and says that they will be waiting for you in hell{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd));
+                                    builderTop.AppendFormat("{0}{1} {2} smiles and says that they will be waiting for you in hell{3}",
+                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Habit";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
@@ -2405,8 +2405,8 @@ public class ActionManager : MonoBehaviour
                             {
                                 if (builderBottom.Length > 0)
                                 { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                builderBottom.Append(string.Format("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
-                                numOfTeams != 1 ? "s" : "", colourEnd));
+                                builderBottom.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                                numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                             //message
                             Message message = GameManager.instance.messageScript.ActorStatus(msgTextMain, actor.actorID, playerSide);

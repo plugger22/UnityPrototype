@@ -476,8 +476,8 @@ public class ActorManager : MonoBehaviour
                         {
                             //invalid target (Player not present, specified actor Arc not in line up)
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0}Target invalid{1}{2}{3}(No Player, No {4}){5}",
-                                colourInvalid, "\n", colourEnd, colourBad, target.actorArc.name, colourEnd));
+                            infoBuilder.AppendFormat("{0}Target invalid{1}{2}{3}(No Player, No {4}){5}",
+                                colourInvalid, "\n", colourEnd, colourBad, target.actorArc.name, colourEnd);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.targetID, "\n")); }
@@ -546,7 +546,7 @@ public class ActorManager : MonoBehaviour
                                                     //Effect criteria O.K -> tool tip text
                                                     if (builder.Length > 0) { builder.AppendLine(); }
                                                     if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
-                                                    { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
+                                                    { builder.AppendFormat("{0}{1}{2}", colourEffect, effect.textTag, colourEnd); }
                                                     else
                                                     {
                                                         //handle renown & invisibility situations - players or actors?
@@ -554,16 +554,16 @@ public class ActorManager : MonoBehaviour
                                                         {
                                                             //player affected (good for renown, bad for invisibility)
                                                             if (effect.outcome.name.Equals("Renown"))
-                                                            { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd)); }
+                                                            { builder.AppendFormat("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd); }
                                                             else
                                                             {
-                                                                builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd));
+                                                                builder.AppendFormat("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd);
                                                             }
                                                         }
                                                         else
                                                         {
                                                             //actor affected
-                                                            builder.Append(string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd));
+                                                            builder.AppendFormat("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd);
                                                         }
                                                     }
                                                 }
@@ -571,9 +571,9 @@ public class ActorManager : MonoBehaviour
                                                 {
                                                     //invalid effect criteria -> Action cancelled
                                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                    infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                    infoBuilder.AppendFormat("{0}{1} action invalid{2}{3}{4}({5}){6}",
                                                         colourInvalid, actor.arc.name, "\n", colourEnd,
-                                                        colourAuthority, effectCriteria, colourEnd));
+                                                        colourAuthority, effectCriteria, colourEnd);
                                                     proceedFlag = false;
                                                 }
                                             }
@@ -648,7 +648,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //actor has no connections at node
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.Append(string.Format("{0} has no connections", actor.arc.name));
+                                    infoBuilder.AppendFormat("{0} has no connections", actor.arc.name);
                                 }
                             }
                             else
@@ -658,13 +658,13 @@ public class ActorManager : MonoBehaviour
                                 switch (actor.Status)
                                 {
                                     case ActorStatus.Inactive:
-                                        infoBuilder.Append(string.Format("{0} is lying low and unavailable", actor.arc.name));
+                                        infoBuilder.AppendFormat("{0} is lying low and unavailable", actor.arc.name);
                                         break;
                                     case ActorStatus.Captured:
-                                        infoBuilder.Append(string.Format("{0} has been captured", actor.arc.name));
+                                        infoBuilder.AppendFormat("{0} has been captured", actor.arc.name);
                                         break;
                                     default:
-                                        infoBuilder.Append(string.Format("{0} is unavailable", actor.arc.name));
+                                        infoBuilder.AppendFormat("{0} is unavailable", actor.arc.name);
                                         break;
                                 }
                             }
@@ -702,7 +702,7 @@ public class ActorManager : MonoBehaviour
                         foreach(Team team in listOfTeams)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(string.Format("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd));
+                            builder.AppendFormat("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd);
                         }
                         //button details
                         EventButtonDetails recallDetails = new EventButtonDetails()
@@ -2796,7 +2796,7 @@ public class ActorManager : MonoBehaviour
                             { chance *= 2; }
                             if (Random.Range(0, 100) < chance)
                             {
-                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {3}", actor.arc.name, actor.actorName, "\n"));
+                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {2}", actor.arc.name, actor.actorName, "\n"));
                                 TakeAction(actor);
                             }
                         }
@@ -2856,7 +2856,7 @@ public class ActorManager : MonoBehaviour
                             { chance *= 2; }
                             if (Random.Range(0, 100) < chance)
                             {
-                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION, chance {3}{4}", actor.arc.name, actor.actorName, 
+                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION, chance {2}{3}", actor.arc.name, actor.actorName, 
                                     chance, "\n"));
                                 TakeAction(actor);
                             }

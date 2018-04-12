@@ -1434,7 +1434,7 @@ public class DataManager : MonoBehaviour
                 teamPoolInTransit.Add(teamID);
                 break;
             default:
-                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                Debug.LogError(string.Format("Invalid team pool \"{0}\"", pool));
                 break;
         }
 
@@ -1459,7 +1459,7 @@ public class DataManager : MonoBehaviour
                 teamPoolInTransit.Remove(teamID);
                 break;
             default:
-                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                Debug.LogError(string.Format("Invalid team pool \"{0}\"", pool));
                 break;
         }
     }
@@ -1484,7 +1484,7 @@ public class DataManager : MonoBehaviour
                 tempList = teamPoolInTransit;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                Debug.LogError(string.Format("Invalid team pool \"{0}\"", pool));
                 break;
         }
         return tempList;
@@ -1511,7 +1511,7 @@ public class DataManager : MonoBehaviour
                 tempList.AddRange(teamPoolInTransit);
                 break;
             default:
-                Debug.LogError(string.Format("Invalid team pool \"{ 0}\"", pool));
+                Debug.LogError(string.Format("Invalid team pool \"{0}\"", pool));
                 break;
         }
         if (tempList.Count > 0)

@@ -83,9 +83,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         onMouseFlag = true;
         //update dynamic data (changes whenever you 'Change Side')
         side = GameManager.instance.sideScript.PlayerSide;
-        if (side.level == GameManager.instance.globalScript.sideResistance.level)
-        { playerName = GameManager.instance.playerScript.playerNameResistance; }
-        else { playerName = GameManager.instance.playerScript.playerNameAuthority; }
+        playerName = GameManager.instance.playerScript.PlayerName;
         //activate tooltip if there is a valid reason
         if (GameManager.instance.playerScript.tooltipStatus > ActorTooltip.None)
         { StartCoroutine(ShowGenericTooltip()); }
