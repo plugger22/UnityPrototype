@@ -12,6 +12,7 @@ public class Connection : MonoBehaviour {
     private int v2;
 
     private int _securityLevel;                             //private backing field (int vs. enum)
+    private int securityLevelSave;                          //stores existing security level prior to temporary changes
 
     private List<EffectDataOngoing> listOfOngoingEffects;   //list of temporary (ongoing) effects impacting on the node
 
@@ -204,6 +205,38 @@ public class Connection : MonoBehaviour {
             if (originalLevel != SecurityLevel)
             { SetConnectionMaterial(SecurityLevel); }
         }
+    }
+
+    /// <summary>
+    /// saves level to a field so it can be restored back to the same state later
+    /// </summary>
+    public void SaveSecurityLevel()
+    { securityLevelSave = _securityLevel; }
+
+    /// <summary>
+    /// restores previously saved security level and updates connection material
+    /// </summary>
+    public void RestoreSecurityLevel()
+    {
+        _securityLevel = securityLevelSave;
+        ConnectionType connType;
+        switch(_securityLevel)
+        {
+            case 3:
+                connType = ConnectionType.HIGH;
+                break;
+            case 2:
+                connType = ConnectionType.MEDIUM;
+                break;
+            case 1:
+                connType = ConnectionType.LOW;
+                break;
+            case 0:
+            default:
+                connType = ConnectionType.None;
+                break;
+        }
+        SetConnectionMaterial(connType);
     }
 
     /// <summary>

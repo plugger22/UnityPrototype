@@ -21,6 +21,7 @@ public enum EventType
     //CloseTeamPicker,
     ShowTargetNodes,
     NodeDisplay,
+    ActivityDisplay,
     //Actions
     NodeAction,
     NodeGearAction,

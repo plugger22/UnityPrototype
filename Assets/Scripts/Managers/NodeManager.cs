@@ -160,6 +160,7 @@ public class NodeManager : MonoBehaviour
         DebugRandomActivityValues();
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
+        EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
         EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent);
@@ -207,8 +208,6 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.NodeArc5:
                     case NodeUI.NodeArc6:
                     case NodeUI.NodeArc7:
-                    case NodeUI.NodeArc8:
-                    case NodeUI.NodeArc9:
                         if (NodeShowFlag > 0)
                         { GameManager.instance.alertScript.CloseAlertUI(true); }
                         else { ShowNodes(nodeUI); }
@@ -216,6 +215,21 @@ public class NodeManager : MonoBehaviour
 
                     default:
                         Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", Param.ToString(), "\n"));
+                        break;
+                }
+                break;
+            case EventType.ActivityDisplay:
+                ActivityUI activityUI = (ActivityUI)Param;
+                switch (activityUI)
+                {
+                    case ActivityUI.KnownTime:
+                    case ActivityUI.PossibleTime:
+                    case ActivityUI.KnownCount:
+                    case ActivityUI.PossibleCount:
+                        ShowActivity(activityUI);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
                         break;
                 }
                 break;
@@ -549,8 +563,6 @@ public class NodeManager : MonoBehaviour
             case NodeUI.NodeArc5: data = 5; nodeTypeFlag = true; break;
             case NodeUI.NodeArc6: data = 6; nodeTypeFlag = true; break;
             case NodeUI.NodeArc7: data = 7; nodeTypeFlag = true; break;
-            case NodeUI.NodeArc8: data = 8; nodeTypeFlag = true; break;
-            case NodeUI.NodeArc9: data = 9; nodeTypeFlag = true; break;
             default:
                 Debug.LogError(string.Format("Invalid NodeUI parameter \"{0}\"{1}", nodeUI, "\n"));
                 successFlag = false;
@@ -591,7 +603,7 @@ public class NodeManager : MonoBehaviour
             //set show node flag on success
             NodeShowFlag = 1;
             //active AlertUI
-            if (string.IsNullOrEmpty(displayText) != true)
+            if (string.IsNullOrEmpty(displayText) == false)
             { GameManager.instance.alertScript.SetAlertUI(displayText); }
         }
     }
@@ -705,6 +717,68 @@ public class NodeManager : MonoBehaviour
             NodeRedraw = true;
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) returned from dataManager in ResetNodes"); }
+    }
+
+    /// <summary>
+    /// shows resistance activity in various forms (nodes and connections)
+    /// </summary>
+    /// <param name="activtyUI"></param>
+    private void ShowActivity(ActivityUI activityUI)
+    {
+        bool isSuccess = true;
+        switch (activityUI)
+        {
+            case ActivityUI.KnownCount:
+            case ActivityUI.KnownTime:
+            case ActivityUI.PossibleCount:
+            case ActivityUI.PossibleTime:
+                //Connections
+                if (GameManager.instance.connScript.resetNeeded == true)
+                {
+                    //return to previously saved state prior to any changes
+                    GameManager.instance.connScript.RestoreConnections();
+                    GameManager.instance.connScript.resetNeeded = false;
+                }
+                else
+                {
+                    //change connections to reflect activity (also sets resetNeeded to True)
+                    GameManager.instance.connScript.ShowConnectionActivity(activityUI);
+                }
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
+                isSuccess = false;
+                break;
+        }
+        if (isSuccess == true)
+        {
+            if (NodeShowFlag > 0)
+            { GameManager.instance.alertScript.CloseAlertUI(); }
+            else
+            {
+                //set show node flag on success
+                NodeShowFlag = 1;
+                string displayText = "Unknown";
+                switch (activityUI)
+                {
+                    case ActivityUI.KnownCount:
+                        displayText = string.Format("{0}Activity Count Known{1}", colourEffectNeutral, colourEnd);
+                        break;
+                    case ActivityUI.KnownTime:
+                        displayText = string.Format("{0}Activity Time Known{1}", colourEffectNeutral, colourEnd);
+                        break;
+                    case ActivityUI.PossibleCount:
+                        displayText = string.Format("{0}Activity Count Possible{1}", colourEffectNeutral, colourEnd);
+                        break;
+                    case ActivityUI.PossibleTime:
+                        displayText = string.Format("{0}Activity Time Possible{1}", colourEffectNeutral, colourEnd);
+                        break;
+                }
+                //active AlertUI
+                if (string.IsNullOrEmpty(displayText) == false)
+                { GameManager.instance.alertScript.SetAlertUI(displayText); }
+            }
+        }
     }
 
     /// <summary>
@@ -1536,24 +1610,53 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void DebugRandomActivityValues()
     {
+        int baseChance = 20;
+        int counter = 0;
         //Nodes
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
         if (dictOfNodes != null)
         {
             foreach (var node in dictOfNodes)
             {
-                if (Random.Range(0, 100) < 20)
+                if (Random.Range(0, 100) < baseChance)
                 {
                     node.Value.activityCountKnown = Random.Range(1, 5);
-                    node.Value.activityTurnKnown = Random.Range(0, 4);
+                    node.Value.activityTurnKnown = 0;
+                    counter++;
                 }
-                if (Random.Range(0, 100) < 20)
+                if (Random.Range(0, 100) < baseChance)
                 {
                     node.Value.activityCountPossible = Random.Range(1, 5);
-                    node.Value.activityTurnPossible = Random.Range(0, 4);
+                    node.Value.activityTurnPossible = 0;
+                    counter++;
                 }
             }
+            Debug.Log(string.Format("DebugRandomActivity: {0} Nodes initiated{1}", counter, "\n"));
         }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        //Connections
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        if (dictOfConnections != null)
+        {
+            counter = 0;
+            foreach (var conn in dictOfConnections)
+            {
+                if (Random.Range(0, 100) < baseChance)
+                {
+                    conn.Value.activityCountKnown = Random.Range(1, 5);
+                    conn.Value.activityTurnKnown = 0;
+                    counter++;
+                }
+                if (Random.Range(0, 100) < baseChance)
+                {
+                    conn.Value.activityCountPossible = Random.Range(1, 5);
+                    conn.Value.activityTurnPossible = 0;
+                    counter++;
+                }
+            }
+            Debug.Log(string.Format("DebugRandomActivity: {0} Connections initiated{1}", counter, "\n"));
+        }
+        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
     }
 
     //new methods above here

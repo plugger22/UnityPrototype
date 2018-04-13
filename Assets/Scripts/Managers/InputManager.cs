@@ -163,14 +163,24 @@ public class InputManager : MonoBehaviour
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc7);
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc8") == true)
+                if (Input.GetButtonDown("ActivityKnownTime") == true)
                 {
-                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc8);
+                    EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.KnownTime);
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc9") == true)
+                if (Input.GetButtonDown("ActivityPossibleTime") == true)
                 {
-                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc9);
+                    EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.PossibleTime);
+                    return;
+                }
+                if (Input.GetButtonDown("ActivityKnownCount") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.KnownCount);
+                    return;
+                }
+                if (Input.GetButtonDown("ActivityPossibleCount") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.PossibleCount);
                     return;
                 }
                 break;

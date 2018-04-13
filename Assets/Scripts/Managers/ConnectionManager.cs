@@ -10,7 +10,7 @@ using gameAPI;
 public class ConnectionManager : MonoBehaviour
 {
     public int connectionSecurityChance = 25;                       //chance of connection having a higher security level at game start (than default)
-
+    [HideInInspector] public bool resetNeeded;                      //used for temp changes in connection states, if true run RestoreConnections
     public Material[] arrayOfConnectionTypes;
 
     /// <summary>
@@ -50,6 +50,108 @@ public class ConnectionManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfConnections (Null)"); }
     }
 
+    /// <summary>
+    /// Colour codes connections according to activity (if within 0 or 1 turns ago -> red, 2 turns ago -> yellow, 3+ turns ago -> green, None -> grey)
+    /// for counts it's 3+ red, 2 yellow, 1 green, 0 grey. Sets resetNeeded to true
+    /// </summary>
+    public void ShowConnectionActivity(ActivityUI activityUI)
+    {
+        int activityTurn = -1;
+        int currentTurn = GameManager.instance.turnScript.Turn;
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        if (dictOfConnections != null)
+        {
+            resetNeeded = true;
+            //loop all connections regardless
+            foreach (var conn in dictOfConnections)
+            {
+                //save existing security level
+                conn.Value.SaveSecurityLevel();
+                //action depends on type of activity display required
+                switch (activityUI)
+                {
+                    //Time (# of turns ago)
+                    case ActivityUI.KnownTime:
+                    case ActivityUI.PossibleTime:
+                        switch (activityUI)
+                        {
+                            case ActivityUI.KnownTime: activityTurn = conn.Value.activityTurnKnown; break;
+                            case ActivityUI.PossibleTime: activityTurn = conn.Value.activityTurnPossible; break;
+                        }
+                        if (activityTurn > -1)
+                        {
+                            switch (currentTurn - activityTurn)
+                            {
+                                case 0:
+                                case 1:
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
+                                    break;
+                                case 2:
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.MEDIUM);
+                                    break;
+                                case 3:
+                                default:
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
+                                    break;
+                            }
+                        }
+                        else
+                        { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                        break;
+                    //Count
+                    case ActivityUI.KnownCount:
+                    case ActivityUI.PossibleCount:
+                        switch (activityUI)
+                        {
+                            case ActivityUI.KnownCount: activityTurn = conn.Value.activityCountKnown; break;
+                            case ActivityUI.PossibleCount: activityTurn = conn.Value.activityCountPossible; break;
+                        }
+                        if (activityTurn > -1)
+                        {
+                            switch (currentTurn - activityTurn)
+                            {
+                                
+                                case 3:
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
+                                    break;
+                                case 2:
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.MEDIUM);
+                                    break;
+                                case 1:
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
+                                    break;
+                                case 0:
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.None);
+                                    break;
+                                default:
+                                    //more than 3
+                                    conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
+                                    break;
+                            }
+                        }
+                        else
+                        { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                        break;
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+    }
 
-
+    /// <summary>
+    /// restores all connections back to their previously saved security levels (materials auto updated).
+    /// </summary>
+    public void RestoreConnections()
+    {
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        if (dictOfConnections != null)
+        {
+            foreach (var conn in dictOfConnections)
+            {
+                //save existing security level
+                conn.Value.RestoreSecurityLevel();
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+    }
 }
