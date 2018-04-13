@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text;
 using gameAPI;
 using modalAPI;
+using packageAPI;
 
 /// <summary>
 /// handles all resistance capture and release matters
@@ -54,14 +55,14 @@ public class CaptureManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.Capture:
-                AIDetails details = Param as AIDetails;
+                CaptureDetails details = Param as CaptureDetails;
                 CaptureSomebody(details);
                 break;
             case EventType.ReleasePlayer:
                 ReleasePlayer();
                 break;
             case EventType.ReleaseActor:
-                AIDetails detailsRelease = Param as AIDetails;
+                CaptureDetails detailsRelease = Param as CaptureDetails;
                 ReleaseActor(detailsRelease);
                 break;
             case EventType.StartTurnEarly:
@@ -89,7 +90,7 @@ public class CaptureManager : MonoBehaviour
     // - - - Capture and Release
     //
 
-    public void CaptureSomebody(AIDetails details)
+    public void CaptureSomebody(CaptureDetails details)
     {
         if (details != null)
         {
@@ -98,7 +99,7 @@ public class CaptureManager : MonoBehaviour
             else
             { CaptureActor(details); }
         }
-        else { Debug.LogError("Invalid AIDetails (Null)"); }
+        else { Debug.LogError("Invalid CaptureDetails (Null)"); }
     }
 
 
@@ -108,7 +109,7 @@ public class CaptureManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <param name="team"></param>
-    private void CapturePlayer(AIDetails details)
+    private void CapturePlayer(CaptureDetails details)
     {
         //PLAYER CAPTURED
         string text = string.Format("Player Captured at \"{0}\", {1}", details.node.nodeName, details.node.Arc.name);
@@ -179,7 +180,7 @@ public class CaptureManager : MonoBehaviour
     /// <param name="node"></param>
     /// <param name="team"></param>
     /// <param name="actor"></param>
-    private void CaptureActor(AIDetails details)
+    private void CaptureActor(CaptureDetails details)
     {
         //effects builder
         StringBuilder builder = new StringBuilder();
@@ -268,10 +269,10 @@ public class CaptureManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Release actor from captitivty, only Actor is needed from AIDetails
+    /// Release actor from captitivty, only Actor is needed from CaptureDetails
     /// </summary>
     /// <param name="actorID"></param>
-    public void ReleaseActor(AIDetails details)
+    public void ReleaseActor(CaptureDetails details)
     {
         if (details.actor != null)
         {
@@ -326,9 +327,9 @@ public class CaptureManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public AIDetails CheckCaptured(int nodeID, int actorID = 999)
+    public CaptureDetails CheckCaptured(int nodeID, int actorID = 999)
     {
-        AIDetails details = null;
+        CaptureDetails details = null;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
@@ -354,7 +355,7 @@ public class CaptureManager : MonoBehaviour
                                     if (team != null)
                                     {
                                         //Player Captured
-                                        details = new AIDetails
+                                        details = new CaptureDetails
                                         {
                                             node = node,
                                             team = team,
@@ -388,7 +389,7 @@ public class CaptureManager : MonoBehaviour
                                     if (team != null)
                                     {
                                         //Actor Captured
-                                        details = new AIDetails
+                                        details = new CaptureDetails
                                         {
                                             node = node,
                                             team = team,
@@ -406,7 +407,7 @@ public class CaptureManager : MonoBehaviour
             }
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
-        //return AIDetails
+        //return CaptureDetails
         return details;
     }
 
@@ -415,7 +416,7 @@ public class CaptureManager : MonoBehaviour
     /// </summary>
     private void CheckStartTurnCapture()
     {
-        AIDetails details = CheckCaptured(GameManager.instance.nodeScript.nodePlayer);
+        CaptureDetails details = CheckCaptured(GameManager.instance.nodeScript.nodePlayer);
         if (details != null)
         {
             //Player captured

@@ -156,6 +156,8 @@ public class NodeManager : MonoBehaviour
             if (actionPersuasion == null) { Debug.LogError("Invalid actionPersuasion (Null)"); }
         }
         else { Debug.LogError("Invalid gearPersuasion actionID (not found)"); }
+        //DEBUG
+        DebugRandomActivityValues();
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
@@ -1427,12 +1429,12 @@ public class NodeManager : MonoBehaviour
     {
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //Erasure team picks up player immediately if invisibility 0
-        AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(data.node.nodeID, 999);
-        if (aiDetails != null)
+        CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(data.node.nodeID, 999);
+        if (captureDetails != null)
         {
             //Player captured!
-            aiDetails.effects = string.Format("{0}The move went bad{1}", colourEffectNeutral, colourEnd);
-            EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
+            captureDetails.effects = string.Format("{0}The move went bad{1}", colourEffectNeutral, colourEnd);
+            EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
         }
         //Normal Move  Outcome
         else
@@ -1529,6 +1531,30 @@ public class NodeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Debug method that randomly assigns activity data to nodes and connection for development purposes
+    /// </summary>
+    private void DebugRandomActivityValues()
+    {
+        //Nodes
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            foreach (var node in dictOfNodes)
+            {
+                if (Random.Range(0, 100) < 20)
+                {
+                    node.Value.activityCountKnown = Random.Range(1, 5);
+                    node.Value.activityTurnKnown = Random.Range(0, 4);
+                }
+                if (Random.Range(0, 100) < 20)
+                {
+                    node.Value.activityCountPossible = Random.Range(1, 5);
+                    node.Value.activityTurnPossible = Random.Range(0, 4);
+                }
+            }
+        }
+    }
 
     //new methods above here
 }

@@ -20,6 +20,11 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isContact;              //true if any ActorStatus.Active actor has a connection at the node
     [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
+    [HideInInspector] public int activityCountKnown = -1;       //# times known rebel activity occurred (invis-1)
+    [HideInInspector] public int activityCountPossible = -1;    //# times suspected rebel activity occured (negative drop in node stats for unexplained reasons)
+    [HideInInspector] public int activityTurnKnown = -1;        //most recent turn when known rebel activity occurred
+    [HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
+
     public Material _Material { get; private set; }     //material renderer uses to draw node
 
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to

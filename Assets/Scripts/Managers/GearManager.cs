@@ -249,12 +249,12 @@ public class GearManager : MonoBehaviour
             //check capture provided no errors
             if (errorFlag == false)
             {
-                AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
-                if (aiDetails != null)
+                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                if (captureDetails != null)
                 {
                     //capture happened, abort recruitment
-                    aiDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
-                    EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
+                    captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
+                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
                     return;
                 }
             }

@@ -1756,12 +1756,12 @@ public class ActorManager : MonoBehaviour
                 //check capture provided no errors
                 if (errorFlag == false)
                 {
-                    AIDetails aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
-                    if (aiDetails != null)
+                    CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                    if (captureDetails != null)
                     {
                         //capture happened, abort recruitment
-                        aiDetails.effects = string.Format("{0}The Recruiting mission was a wipe{1}", colourNeutral, colourEnd);
-                        EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
+                        captureDetails.effects = string.Format("{0}The Recruiting mission was a wipe{1}", colourNeutral, colourEnd);
+                        EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
                         return;
                     }
                 }

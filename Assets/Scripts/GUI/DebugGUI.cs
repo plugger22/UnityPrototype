@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
-using modalAPI;
+using packageAPI;
 
 /// <summary>
 /// debug GUI, on demand (HotKey 'D' -> On, HotKey 'H' -> Off)
@@ -310,7 +310,7 @@ public class DebugGUI : MonoBehaviour
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, GameManager.instance.globalScript.sideResistance);
                         if (actor.Status == ActorStatus.Captured)
                         {
-                            AIDetails details = new AIDetails();
+                            CaptureDetails details = new CaptureDetails();
                             details.actor = actor;
                             GameManager.instance.captureScript.ReleaseActor(details);
                             break;

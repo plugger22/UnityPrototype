@@ -15,11 +15,16 @@ public class Connection : MonoBehaviour {
 
     private List<EffectDataOngoing> listOfOngoingEffects;   //list of temporary (ongoing) effects impacting on the node
 
-    public int connID;                                      //unique connectionID 
-    public bool isDone;                                     //flag used to prevent connection being changed more than once for an effect
+    [HideInInspector] public int connID;                                      //unique connectionID 
+    [HideInInspector] public bool isDone;                                     //flag used to prevent connection being changed more than once for an effect
 
-    public int VerticeOne { get { return v1; } }
-    public int VerticeTwo { get { return v2; } }
+    [HideInInspector] public int VerticeOne { get { return v1; } }
+    [HideInInspector] public int VerticeTwo { get { return v2; } }
+
+    [HideInInspector] public int activityCountKnown = -1;       //# times known rebel activity occurred (invis-1, player movement)
+    [HideInInspector] public int activityCountPossible = -1;    //# times suspected rebel activity occured (negative drop in conn security level for unexplained reasons)
+    [HideInInspector] public int activityTurnKnown = -1;        //most recent turn when known rebel activity occurred
+    [HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
 
     //Security property -> a bit tricky but needed to handle the difference between the enum (None/High/Med/Low) and the int backing field.
     public ConnectionType SecurityLevel

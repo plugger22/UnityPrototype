@@ -177,7 +177,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
-        AIDetails aiDetails = null;
+        CaptureDetails captureDetails = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
@@ -203,13 +203,13 @@ public class ActionManager : MonoBehaviour
                         {
                             int actorID = actor.actorID;
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { actorID = 999; }
-                            aiDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                            captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
                         }
-                        if (aiDetails != null)
+                        if (captureDetails != null)
                         {
                             //Captured. Mission a wipe.
-                            aiDetails.effects = string.Format("{0}Mission at \"{1}\" aborted{2}", colourNeutral, node.nodeName, colourEnd);
-                            EventManager.instance.PostNotification(EventType.Capture, this, aiDetails);
+                            captureDetails.effects = string.Format("{0}Mission at \"{1}\" aborted{2}", colourNeutral, node.nodeName, colourEnd);
+                            EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
                             return;
                         }
 
@@ -1843,7 +1843,7 @@ public class ActionManager : MonoBehaviour
         int actorID = 999;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
-        AIDetails details = new AIDetails();
+        CaptureDetails details = new CaptureDetails();
         Actor actor = null;
         if (node != null)
         {

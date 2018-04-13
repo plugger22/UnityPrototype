@@ -239,19 +239,6 @@ namespace modalAPI
         public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
     }
 
-    //
-    // - - - AI return
-    //
 
-    /// <summary>
-    /// General Purpose data container to send to AI functions, eg. CaptureActor
-    /// </summary>
-    public class AIDetails
-    {
-        public Node node;
-        public Team team;
-        public Actor actor;
-        public string effects;                  //carry over effects for a combined outcome window, eg insert tracer and then get captured
-    }
 }
 

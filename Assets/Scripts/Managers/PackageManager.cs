@@ -166,4 +166,15 @@ namespace packageAPI
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero)
     }
 
+
+    /// <summary>
+    /// Used to pass data for Capturing Resistance actors & player
+    /// </summary>
+    public class CaptureDetails
+    {
+        public Node node;
+        public Team team;
+        public Actor actor;
+        public string effects;                  //carry over effects for a combined outcome window, eg insert tracer and then get captured
+    }
 }
