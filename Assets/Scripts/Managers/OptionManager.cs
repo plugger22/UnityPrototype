@@ -12,6 +12,7 @@ public class OptionManager : MonoBehaviour
     //game options
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
     [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
+    [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
 
     //Backing fields (use underscore)
     

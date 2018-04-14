@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
+using System.Text;
+using packageAPI;
+using System;
 
-/// <summary>
-/// handles selective tooltip (Generic) for the actor sprites. Only shows in certain cases (Actor.tooltipStatus > ActorTooltip.None)
-/// </summary>
-public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ConnectionTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
-    [HideInInspector] public string tooltipEffect;
-
-    [HideInInspector] public int actorSlotID;               //initialised in GUIManager.cs
+    [HideInInspector] public string tooltipDetails;
+    //[HideInInspector] public int connID;
+    [HideInInspector] public Connection connection;             //initialised in LevelManager.cs -> PlaceConnection
 
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
     private RectTransform rectTransform;
+    //private GameObject parent;
     //data derived whenever parent sprite moused over (OnPointerEnter)
-    private Actor actor;
+    
     private GlobalSide side;
 
     private string colourSide;
     private string colourRebel;
     private string colourAuthority;
+    private string colourGood;
     private string colourNeutral;
+    private string colourBad;
     private string colourNormal;
     private string colourEnd;
 
@@ -43,6 +46,8 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        /*connection = GameManager.instance.dataScript.GetConnection(connID);*/
+        if (connection == null) { Debug.LogError("Invalid connection (Null)"); }
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
@@ -72,7 +77,9 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// </summary>
     public void SetColours()
     {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -87,15 +94,9 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         onMouseFlag = true;
         side = GameManager.instance.sideScript.PlayerSide;
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
-        {
-            actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
-            if (actor != null)
-            {
-                if (actor.tooltipStatus > ActorTooltip.None)
-                { StartCoroutine(ShowGenericTooltip()); }
-            }
-        }
+        //show tooltip if connectorTooltip option is ON
+        if (GameManager.instance.optionScript.connectorTooltips == true && connection != null)
+        { StartCoroutine(ShowConnectionTooltip()); }
     }
 
     /// <summary>
@@ -105,12 +106,12 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowGenericTooltip());
+        StopCoroutine(ShowConnectionTooltip());
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 
 
-    IEnumerator ShowGenericTooltip()
+    IEnumerator ShowConnectionTooltip()
     {
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
@@ -123,29 +124,53 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                 colourSide = colourRebel;
                 if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { colourSide = colourAuthority; }
-                switch(actor.tooltipStatus)
+                //security level
+                string connText;
+                switch(connection.SecurityLevel)
                 {
-                    case ActorTooltip.Breakdown:
-                        tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
-                        tooltipMain = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd, 
-                            colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} is expected to recover next turn", actor.actorName);
+                    case ConnectionType.HIGH:
+                        connText = string.Format("{0}<b>HIGH</b>{1}", colourBad, colourEnd);
                         break;
-                    case ActorTooltip.LieLow:
-                        tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
-                        tooltipMain = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd, 
-                            colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them", 
-                            actor.actorName, colourNeutral, colourEnd);
+                    case ConnectionType.MEDIUM:
+                        connText = string.Format("{0}<b>MEDIUM</b>{1}", colourNeutral, colourEnd);
                         break;
-                    case ActorTooltip.Talk:
-
+                    case ConnectionType.LOW:
+                        connText = string.Format("{0}<b>LOW</b>{1}", colourGood, colourEnd);
+                        break;
+                    case ConnectionType.None:
+                        connText = string.Format("<b>NONE</b>");
                         break;
                     default:
-                        tooltipMain = "Unknown"; tooltipHeader = "Unknown"; tooltipEffect = "Unknown";
+                        connText = string.Format("<b>Unknown</b>");
                         break;
                 }
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, transform.position, tooltipHeader, tooltipEffect);
+                //debug data
+                StringBuilder builderData = new StringBuilder();
+                builderData.AppendFormat("{0}activityTimeKnown      {1}{2}{3}", colourNormal, connection.activityTurnKnown, colourEnd, "\n");
+                builderData.AppendFormat("{0}activityTimePossible   {1}{2}{3}", colourNormal, connection.activityTurnPossible, colourEnd, "\n");
+                builderData.AppendFormat("{0}activityCountKnown     {1}{2}{3}", colourNormal, connection.activityCountKnown, colourEnd, "\n");
+                builderData.AppendFormat("{0}activityCountPossible  {1}{2}{3}", colourNormal, connection.activityCountPossible, colourEnd);
+                //ongoing effects
+                StringBuilder builderOngoing = new StringBuilder();
+                /*List<EffectDataOngoing> listOfOngoingEffects = connection.GetAllOngoingEffects();
+                if (listOfOngoingEffects != null & listOfOngoingEffects.Count > 0)
+                {
+                    foreach (EffectDataOngoing effect in listOfOngoingEffects)
+                    {
+                        if (builderOngoing.Length > 0) { builderOngoing.AppendLine(); }
+                        if (String.IsNullOrEmpty(effect.text) == false)
+                        { builderOngoing.AppendFormat("{0}effect.text{1}{2}", colourNeutral, colourEnd, "\n"); }
+                        builderOngoing.AppendFormat("Security {0}{1}{2}{3}{4}", effect.value > 0 ? colourGood : colourBad, effect.value > 0 ? "+" : "", effect.value,
+                            colourEnd, "\n");
+                        builderOngoing.AppendFormat("For {0}{1}{2} more turns", colourNeutral, effect.timer, colourEnd);
+                    }
+                }
+                else { builderOngoing.Append("No Ongoing effects present"); }*/
+                //tooltip data
+                tooltipHeader = string.Format("{0}Connection{1}{2}Security Level {3}", colourSide, colourEnd, "\n", connText);
+                tooltipMain = builderData.ToString();
+                tooltipDetails = builderOngoing.ToString();
+                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, transform.position, tooltipHeader, tooltipDetails);
                 yield return null;
             }
             //fade in
@@ -159,4 +184,5 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             }
         }
     }
+
 }

@@ -190,7 +190,7 @@ public class NodeManager : MonoBehaviour
                 switch (nodeUI)
                 {
                     case NodeUI.Reset:
-                        ResetNodes();
+                        ResetAll();
                         break;
                     case NodeUI.Redraw:
                         RedrawNodes();
@@ -659,6 +659,7 @@ public class NodeManager : MonoBehaviour
     public void RedrawNodes()
     {
         Renderer nodeRenderer;
+        bool proceedFlag = true;
         Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetAllNodes();
         if (tempDict != null)
         {
@@ -683,9 +684,14 @@ public class NodeManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid Node (null) returned from dictOfNodes"); }
             }
-            //player's current node (Resistance side only)
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+            //player's current node (Resistance side only if FOW ON)
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
             {
+                if (GameManager.instance.optionScript.fogOfWar == true)
+                { proceedFlag = false; }
+            }
+                if (proceedFlag == true)
+                { 
                 if (nodePlayer > -1)
                 {
                     Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
