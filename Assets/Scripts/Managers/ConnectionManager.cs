@@ -52,7 +52,7 @@ public class ConnectionManager : MonoBehaviour
 
     /// <summary>
     /// Colour codes connections according to activity (if within 0 or 1 turns ago -> red, 2 turns ago -> yellow, 3+ turns ago -> green, None -> grey)
-    /// for counts it's 3+ red, 2 yellow, 1 green, 0 grey. Sets resetNeeded to true
+    /// for counts it's 3+ red, 2 yellow, 1 green, 0 grey. Saves original connection state and sets resetNeeded to true
     /// </summary>
     public void ShowConnectionActivity(ActivityUI activityUI)
     {

@@ -64,7 +64,7 @@ public class NodeManager : MonoBehaviour
     public int NodeShowFlag
     {
         get { return _nodeShowFlag; }
-        set { _nodeShowFlag = value; Debug.Log(string.Format("NodeShowFlag -> {0}{1}", value, "\n")); }
+        set { _nodeShowFlag = value; /*Debug.Log(string.Format("NodeShowFlag -> {0}{1}", value, "\n"));*/ }
     }
 
     public bool NodeRedraw
@@ -209,7 +209,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.NodeArc6:
                     case NodeUI.NodeArc7:
                         if (NodeShowFlag > 0)
-                        { GameManager.instance.alertScript.CloseAlertUI(true); }
+                        { ResetAll(); }
                         else { ShowNodes(nodeUI); }
                         break;
 
@@ -226,7 +226,9 @@ public class NodeManager : MonoBehaviour
                     case ActivityUI.PossibleTime:
                     case ActivityUI.KnownCount:
                     case ActivityUI.PossibleCount:
-                        ShowActivity(activityUI);
+                        if (NodeShowFlag > 0)
+                        { ResetAll(); }
+                        else { ShowActivity(activityUI); }
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
@@ -322,6 +324,12 @@ public class NodeManager : MonoBehaviour
         string displayText = null;
         //set all nodes to default colour first
         ResetNodes();
+        if (GameManager.instance.connScript.resetNeeded == true)
+        {
+            //return to previously saved state prior to any changes
+            GameManager.instance.connScript.RestoreConnections();
+            GameManager.instance.connScript.resetNeeded = false;
+        }
         //set nodes depending on critera
         switch (nodeUI)
         {
@@ -675,27 +683,25 @@ public class NodeManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid Node (null) returned from dictOfNodes"); }
             }
-            //player's current node
-            if (nodePlayer > -1)
+            //player's current node (Resistance side only)
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
             {
-                Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
-                if (node != null)
+                if (nodePlayer > -1)
                 {
-                    //only do so if it's a normal node, otherwise ignore
-                    if (node.GetMaterial() == GetNodeMaterial(NodeType.Normal))
+                    Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
+                    if (node != null)
                     {
-                        nodeRenderer = node.GetComponent<Renderer>();
-                        nodeRenderer.material = GetNodeMaterial(NodeType.Player);
+                        //only do so if it's a normal node, otherwise ignore
+                        if (node.GetMaterial() == GetNodeMaterial(NodeType.Normal))
+                        {
+                            nodeRenderer = node.GetComponent<Renderer>();
+                            nodeRenderer.material = GetNodeMaterial(NodeType.Player);
+                        }
                     }
                 }
             }
             //reset flag to prevent constant redraws
             NodeRedraw = false;
-            //switch off flag to turn off Alert UI text next time around
-            if (NodeShowFlag > 1)
-            { GameManager.instance.alertScript.CloseAlertUI(); }
-            if (NodeShowFlag > 0) { NodeShowFlag++; }
-
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) returned from dataManager in RedrawNodes"); }
     }
@@ -725,59 +731,61 @@ public class NodeManager : MonoBehaviour
     /// <param name="activtyUI"></param>
     private void ShowActivity(ActivityUI activityUI)
     {
-        bool isSuccess = true;
+        //show activity
         switch (activityUI)
         {
             case ActivityUI.KnownCount:
             case ActivityUI.KnownTime:
             case ActivityUI.PossibleCount:
             case ActivityUI.PossibleTime:
-                //Connections
-                if (GameManager.instance.connScript.resetNeeded == true)
-                {
-                    //return to previously saved state prior to any changes
-                    GameManager.instance.connScript.RestoreConnections();
-                    GameManager.instance.connScript.resetNeeded = false;
-                }
-                else
-                {
-                    //change connections to reflect activity (also sets resetNeeded to True)
-                    GameManager.instance.connScript.ShowConnectionActivity(activityUI);
-                }
+                //change connections to reflect activity (also sets resetNeeded to True)
+                GameManager.instance.connScript.ShowConnectionActivity(activityUI);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
-                isSuccess = false;
                 break;
         }
-        if (isSuccess == true)
+        //set show node flag on success
+        NodeShowFlag = 1;
+        string displayText = "Unknown";
+        switch (activityUI)
         {
-            if (NodeShowFlag > 0)
-            { GameManager.instance.alertScript.CloseAlertUI(); }
-            else
+            case ActivityUI.KnownCount:
+                displayText = string.Format("{0}Activity Count Known{1}", colourEffectNeutral, colourEnd);
+                break;
+            case ActivityUI.KnownTime:
+                displayText = string.Format("{0}Activity Time Known{1}", colourEffectNeutral, colourEnd);
+                break;
+            case ActivityUI.PossibleCount:
+                displayText = string.Format("{0}Activity Count Possible{1}", colourEffectNeutral, colourEnd);
+                break;
+            case ActivityUI.PossibleTime:
+                displayText = string.Format("{0}Activity Time Possible{1}", colourEffectNeutral, colourEnd);
+                break;
+        }
+        //active AlertUI
+        if (string.IsNullOrEmpty(displayText) == false)
+        { GameManager.instance.alertScript.SetAlertUI(displayText); }
+    }
+
+    /// <summary>
+    /// resets all nodes and connections back to their default (nodes) or previously saved (connections) states
+    /// </summary>
+    public void ResetAll()
+    {
+        //set all nodes to default colour first
+        ResetNodes();
+        //Connections
+        if (NodeShowFlag > 0)
+        {
+            GameManager.instance.alertScript.CloseAlertUI();
+            if (GameManager.instance.connScript.resetNeeded == true)
             {
-                //set show node flag on success
-                NodeShowFlag = 1;
-                string displayText = "Unknown";
-                switch (activityUI)
-                {
-                    case ActivityUI.KnownCount:
-                        displayText = string.Format("{0}Activity Count Known{1}", colourEffectNeutral, colourEnd);
-                        break;
-                    case ActivityUI.KnownTime:
-                        displayText = string.Format("{0}Activity Time Known{1}", colourEffectNeutral, colourEnd);
-                        break;
-                    case ActivityUI.PossibleCount:
-                        displayText = string.Format("{0}Activity Count Possible{1}", colourEffectNeutral, colourEnd);
-                        break;
-                    case ActivityUI.PossibleTime:
-                        displayText = string.Format("{0}Activity Time Possible{1}", colourEffectNeutral, colourEnd);
-                        break;
-                }
-                //active AlertUI
-                if (string.IsNullOrEmpty(displayText) == false)
-                { GameManager.instance.alertScript.SetAlertUI(displayText); }
+                //return Connections to previously saved state prior to any changes
+                GameManager.instance.connScript.RestoreConnections();
+                GameManager.instance.connScript.resetNeeded = false;
             }
+            NodeShowFlag = 0;
         }
     }
 

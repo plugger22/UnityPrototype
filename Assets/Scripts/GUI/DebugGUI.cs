@@ -267,6 +267,8 @@ public class DebugGUI : MonoBehaviour
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                     { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideAuthority; }
                     else { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideResistance; }
+                    //redraw nodes (player node shown/not shown depending on side)
+                    GameManager.instance.nodeScript.RedrawNodes();
                 }
             }
 
