@@ -496,9 +496,11 @@ public class Connection : MonoBehaviour
                     }
                 }
                 else { builderOngoing.Append("No Ongoing effects present"); }
+                //position
+                Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
                 //tooltip data
                 string tooltipHeader = string.Format("{0}Connection{1}{2}Security Level {3}", colourSide, colourEnd, "\n", connText);
-                GameManager.instance.tooltipGenericScript.SetTooltip(builderData.ToString(), transform.position, tooltipHeader, builderOngoing.ToString());
+                GameManager.instance.tooltipGenericScript.SetTooltip(builderData.ToString(), screenPos, tooltipHeader, builderOngoing.ToString());
                 yield return null;
             }
             //fade in

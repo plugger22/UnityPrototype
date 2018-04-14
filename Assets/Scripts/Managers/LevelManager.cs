@@ -290,11 +290,6 @@ public class LevelManager : MonoBehaviour
         graph.AddEdge(node1, node2);
         //tweak Security Level & color
         connectionTemp.ChangeSecurityLevel(secLvl);
-
-        /*//initialise connection in tooltip component
-        ConnectionTooltipUI tooltipUI = instanceConnection.GetComponent<ConnectionTooltipUI>();
-        tooltipUI.connection = connectionTemp;*/
-
         //set parent
         instanceConnection.transform.SetParent(connectionHolder);
         //add to collections
