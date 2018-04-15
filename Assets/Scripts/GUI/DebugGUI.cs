@@ -35,6 +35,7 @@ public class DebugGUI : MonoBehaviour
     private string optionAutoGear;
     private string optionFogOfWar;
     private string optionConnectorTooltips;
+    private string optionDebugData;
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class DebugGUI : MonoBehaviour
         optionAutoGear = "Auto Gear ON";
         optionFogOfWar = "Fog Of War ON";
         optionConnectorTooltips = "Conn tooltips ON";
+        optionDebugData = "Debug Data ON";
     }
 
     // Update is called once per frame
@@ -269,6 +271,22 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.optionScript.connectorTooltips = true;
                     optionConnectorTooltips = "Conn Tooltips OFF";
+                }
+            }
+
+            //fifth button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), optionDebugData))
+            {
+                Debug.Log("Button -> Toggle Debug Data");
+                if (GameManager.instance.optionScript.debugData == true)
+                {
+                    GameManager.instance.optionScript.debugData = false;
+                    optionDebugData = "Debug Data ON";
+                }
+                else
+                {
+                    GameManager.instance.optionScript.debugData = true;
+                    optionDebugData = "Debug Data OFF";
                 }
             }
 

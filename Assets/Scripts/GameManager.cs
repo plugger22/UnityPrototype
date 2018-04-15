@@ -46,10 +46,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MessageManager messageScript;            //Message Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
-    [HideInInspector] public TooltipNode tooltipNodeScript;           //node Tool tip static instance
-    [HideInInspector] public TooltipActor tooltipActorScript;         //actor tool tip static instance
-    [HideInInspector] public TooltipPlayer tooltipPlayerScript;       //player tool tip static instance
-    [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tool tip static instance
+    [HideInInspector] public TooltipNode tooltipNodeScript;           //node tooltip static instance
+    [HideInInspector] public TooltipConnection tooltipConnScript;     //connection tooltip static instance
+    [HideInInspector] public TooltipActor tooltipActorScript;         //actor tooltip static instance
+    [HideInInspector] public TooltipPlayer tooltipPlayerScript;       //player tooltip static instance
+    [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tooltip static instance
     [HideInInspector] public TickerTextScroller tickerScript;         //Ticker Text Scroller
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
     [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
@@ -118,6 +119,7 @@ public class GameManager : MonoBehaviour
         authorityScript = GetComponent<AuthorityManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
+        tooltipConnScript = TooltipConnection.Instance();
         tooltipActorScript = TooltipActor.Instance();
         tooltipPlayerScript = TooltipPlayer.Instance();
         tooltipGenericScript = TooltipGeneric.Instance();

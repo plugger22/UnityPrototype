@@ -501,6 +501,10 @@ public class Connection : MonoBehaviour
                 //tooltip data
                 string tooltipHeader = string.Format("{0}Connection{1}{2}Security Level {3}", colourSide, colourEnd, "\n", connText);
                 GameManager.instance.tooltipGenericScript.SetTooltip(builderData.ToString(), screenPos, tooltipHeader, builderOngoing.ToString());
+
+
+                GameManager.instance.tooltipConnScript.SetTooltip(transform.position, connID, SecurityLevel, listOfOngoingEffects, builderData.ToString());
+
                 yield return null;
             }
             //fade in
