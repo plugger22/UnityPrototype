@@ -4,7 +4,6 @@ using UnityEngine;
 using gameAPI;
 using packageAPI;
 using System.Text;
-using System;
 
 public class Connection : MonoBehaviour
 {
@@ -15,12 +14,12 @@ public class Connection : MonoBehaviour
     private int v2;
 
     private int _securityLevel;                             //private backing field (int vs. enum)
-    private int securityLevelSave;                          //stores existing security level prior to temporary changes
+    private ConnectionType securityLevelSave;               //stores existing security level prior to temporary changes
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     private float mouseOverFade;                        //tooltip
-    private float fadeInTime;                           //tooltip
+    /*private float fadeInTime;                           //tooltip*/
     private GlobalSide side;                            //tooltip
 
     private List<EffectDataOngoing> listOfOngoingEffects;   //list of temporary (ongoing) effects impacting on the node
@@ -36,14 +35,13 @@ public class Connection : MonoBehaviour
     [HideInInspector] public int activityTurnKnown = -1;        //most recent turn when known rebel activity occurred
     [HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
 
-    private string colourSide;
-    private string colourRebel;
+    /*private string colourRebel;
     private string colourAuthority;
     private string colourGood;
     private string colourNeutral;
     private string colourBad;
     private string colourNormal;
-    private string colourEnd;
+    private string colourEnd;*/
 
     //Security property -> a bit tricky but needed to handle the difference between the enum (None/High/Med/Low) and the int backing field.
     public ConnectionType SecurityLevel
@@ -119,11 +117,11 @@ public class Connection : MonoBehaviour
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
-        //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        /*//register listener
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);*/
     }
 
-    /// <summary>
+   /* /// <summary>
     /// Event Handler
     /// </summary>
     /// <param name="eventType"></param>
@@ -155,7 +153,7 @@ public class Connection : MonoBehaviour
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
-    }
+    }*/
 
 
     public void InitialiseConnection(int v1, int v2)
@@ -271,16 +269,16 @@ public class Connection : MonoBehaviour
     /// saves level to a field so it can be restored back to the same state later
     /// </summary>
     public void SaveSecurityLevel()
-    { securityLevelSave = _securityLevel; }
+    { securityLevelSave = SecurityLevel; }
 
     /// <summary>
     /// restores previously saved security level and updates connection material
     /// </summary>
     public void RestoreSecurityLevel()
     {
-        _securityLevel = securityLevelSave;
-        ConnectionType connType;
-        switch (_securityLevel)
+        SecurityLevel = securityLevelSave;
+        /*ConnectionType connType;
+        switch (SecurityLevel)
         {
             case 3:
                 connType = ConnectionType.HIGH;
@@ -295,8 +293,8 @@ public class Connection : MonoBehaviour
             default:
                 connType = ConnectionType.None;
                 break;
-        }
-        SetConnectionMaterial(connType);
+        }*/
+        SetConnectionMaterial(SecurityLevel);
     }
 
     /// <summary>
@@ -434,7 +432,7 @@ public class Connection : MonoBehaviour
         {
             onMouseFlag = false;
             StopCoroutine("ShowTooltip");
-            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipConnScript.CloseTooltip();
         }
     }
 
@@ -450,70 +448,27 @@ public class Connection : MonoBehaviour
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.instance.tooltipConnScript.CheckTooltipActive() == false)
             {
-                colourSide = colourRebel;
-                if (side.level == GameManager.instance.globalScript.sideAuthority.level)
-                { colourSide = colourAuthority; }
-                //security level
-                string connText;
-                switch (SecurityLevel)
-                {
-                    case ConnectionType.HIGH:
-                        connText = string.Format("{0}<b>HIGH</b>{1}", colourBad, colourEnd);
-                        break;
-                    case ConnectionType.MEDIUM:
-                        connText = string.Format("{0}<b>MEDIUM</b>{1}", colourNeutral, colourEnd);
-                        break;
-                    case ConnectionType.LOW:
-                        connText = string.Format("{0}<b>LOW</b>{1}", colourGood, colourEnd);
-                        break;
-                    case ConnectionType.None:
-                        connText = string.Format("<b>NONE</b>");
-                        break;
-                    default:
-                        connText = string.Format("<b>Unknown</b>");
-                        break;
-                }
                 //debug data
                 StringBuilder builderData = new StringBuilder();
-                builderData.AppendFormat("{0}activityTimeKnown      {1}{2}{3}", colourNormal, activityTurnKnown, colourEnd, "\n");
-                builderData.AppendFormat("{0}activityTimePossible   {1}{2}{3}", colourNormal, activityTurnPossible, colourEnd, "\n");
-                builderData.AppendFormat("{0}activityCountKnown     {1}{2}{3}", colourNormal, activityCountKnown, colourEnd, "\n");
-                builderData.AppendFormat("{0}activityCountPossible  {1}{2}", colourNormal, activityCountPossible, colourEnd);
-                //ongoing effects
-                StringBuilder builderOngoing = new StringBuilder();
-                if (listOfOngoingEffects != null & listOfOngoingEffects.Count > 0)
+                if (GameManager.instance.optionScript.debugData == true)
                 {
-                    foreach (EffectDataOngoing effect in listOfOngoingEffects)
-                    {
-                        if (builderOngoing.Length > 0) { builderOngoing.AppendLine(); }
-                        if (String.IsNullOrEmpty(effect.text) == false)
-                        { builderOngoing.AppendFormat("{0}effect.text{1}{2}", colourNeutral, colourEnd, "\n"); }
-                        builderOngoing.AppendFormat("Security {0}{1}{2}{3}{4}", effect.value > 0 ? colourGood : colourBad, effect.value > 0 ? "+" : "", effect.value,
-                            colourEnd, "\n");
-                        builderOngoing.AppendFormat("For {0}{1}{2} more turns", colourNeutral, effect.timer, colourEnd);
-                    }
+                    builderData.AppendFormat("activityTimeKnown      {0}{1}", activityTurnKnown, "\n");
+                    builderData.AppendFormat("activityTimePossible   {0}{1}", activityTurnPossible, "\n");
+                    builderData.AppendFormat("activityCountKnown     {0}{1}", activityCountKnown, "\n");
+                    builderData.AppendFormat("activityCountPossible  {0}", activityCountPossible);
                 }
-                else { builderOngoing.Append("No Ongoing effects present"); }
-                //position
-                Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-                //tooltip data
-                string tooltipHeader = string.Format("{0}Connection{1}{2}Security Level {3}", colourSide, colourEnd, "\n", connText);
-                GameManager.instance.tooltipGenericScript.SetTooltip(builderData.ToString(), screenPos, tooltipHeader, builderOngoing.ToString());
-
-
                 GameManager.instance.tooltipConnScript.SetTooltip(transform.position, connID, SecurityLevel, listOfOngoingEffects, builderData.ToString());
-
                 yield return null;
             }
             //fade in
             float alphaCurrent;
-            while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+            while (GameManager.instance.tooltipConnScript.GetOpacity() < 1.0)
             {
-                alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                alphaCurrent = GameManager.instance.tooltipConnScript.GetOpacity();
                 alphaCurrent += Time.deltaTime / mouseOverFade;
-                GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                GameManager.instance.tooltipConnScript.SetOpacity(alphaCurrent);
                 yield return null;
             }
         }

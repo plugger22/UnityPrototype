@@ -42,6 +42,8 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public Action actionKinetic;
     [HideInInspector] public Action actionHacking;
     [HideInInspector] public Action actionPersuasion;
+    //activity
+    [HideInInspector] public ActivityUI activityState;
 
     string colourDefault;
     string colourAlert;
@@ -737,6 +739,8 @@ public class NodeManager : MonoBehaviour
     /// <param name="activtyUI"></param>
     private void ShowActivity(ActivityUI activityUI)
     {
+        //set state
+        activityState = activityUI;
         //show activity
         switch (activityUI)
         {
@@ -792,6 +796,8 @@ public class NodeManager : MonoBehaviour
                 GameManager.instance.connScript.resetNeeded = false;
             }
             NodeShowFlag = 0;
+            //reset state
+            activityState = ActivityUI.None;
         }
     }
 

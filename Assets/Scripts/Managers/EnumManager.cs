@@ -29,12 +29,13 @@ namespace gameAPI
     public enum InventoryState { None, Gear, ReservePool}
 
     //
-    // - - - Level Manager
+    // - - - Connections - - - 
     //
     public enum ConnectionType { None, HIGH, MEDIUM, LOW, Count }
+    
 
     //
-    // - - - Node Manager - - 
+    // - - - Nodes - - -
     // 
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count }    //DataManager arrayOfNodes index
     public enum NodeType { Normal, Highlight, Active, Player, Count }

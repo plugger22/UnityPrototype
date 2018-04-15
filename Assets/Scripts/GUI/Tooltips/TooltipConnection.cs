@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using gameAPI;
 using packageAPI;
+using System.Text;
+using System;
 
 /// <summary>
 /// Connection tooltips, static reference in GameManager
@@ -29,7 +31,7 @@ public class TooltipConnection : MonoBehaviour
     private string colourNeutral;
     private string colourBad;
     private string colourArc;
-    private string colourDefault;
+    private string colourNormal;
     private string colourEnd;
 
 
@@ -90,7 +92,7 @@ public class TooltipConnection : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -110,7 +112,7 @@ public class TooltipConnection : MonoBehaviour
         SetOpacity(0f);
         //set state of all items in tooltip window
         textTop.gameObject.SetActive(true);
-        textBottom.gameObject.SetActive(false);
+        textBottom.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         //display main text only if present
         if (string.IsNullOrEmpty(textMain) == false)
@@ -124,29 +126,98 @@ public class TooltipConnection : MonoBehaviour
             textMiddle.gameObject.SetActive(false);
         }
         //security level
-        string connText;
-        switch (securityLevel)
+        string fullItem;
+        //top text
+        string debugID = "";
+        //show connID if debug data on
+        if (GameManager.instance.optionScript.debugData == true)
+        { debugID = string.Format(" ID{0}", connID); }
+        //context sensitive depending on ActivityUI
+        switch (GameManager.instance.nodeScript.activityState)
         {
-            case ConnectionType.HIGH:
-                connText = string.Format("{0}<b>HIGH</b>{1}", colourBad, colourEnd);
+            case ActivityUI.None:
+                switch (securityLevel)
+                {
+                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>Security {1}</b>{2}", colourBad, securityLevel, colourEnd); break;
+                    case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>Security {1}</b>{2}", colourNeutral, securityLevel, colourEnd); break;
+                    case ConnectionType.LOW: fullItem = string.Format("{0}<b>Security {1}</b>{2}", colourGood, securityLevel, colourEnd); break;
+                    case ConnectionType.None: fullItem = string.Format("Security None"); break;
+                    default: fullItem = string.Format("<b>Unknown</b>"); break;
+                }
+                textTop.text = string.Format("{0}Connection{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
                 break;
-            case ConnectionType.MEDIUM:
-                connText = string.Format("{0}<b>MEDIUM</b>{1}", colourNeutral, colourEnd);
+            case ActivityUI.KnownTime:
+                switch (securityLevel)
+                {
+                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>ONE Turn Ago</b>{1}", colourBad, colourEnd); break;
+                    case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>TWO Turns Ago</b>{1}", colourNeutral, colourEnd); break;
+                    case ConnectionType.LOW: fullItem = string.Format("{0}<b>THREE OR MORE Turns Ago</b>{1}", colourGood, colourEnd); break;
+                    case ConnectionType.None: fullItem = "No Activity"; break;
+                    default: fullItem = string.Format("<b>NONE</b>"); break;
+                }
+                textTop.text = string.Format("{0}Known Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
                 break;
-            case ConnectionType.LOW:
-                connText = string.Format("{0}<b>LOW</b>{1}", colourGood, colourEnd);
+            case ActivityUI.PossibleTime:
+                switch (securityLevel)
+                {
+                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>ONE Turn Ago</b>{1}", colourBad, colourEnd); break;
+                    case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>TWO Turns Ago</b>{1}", colourNeutral, colourEnd); break;
+                    case ConnectionType.LOW: fullItem = string.Format("{0}<b>THREE OR MORE Turns Ago</b>{1}", colourGood, colourEnd); break;
+                    case ConnectionType.None: fullItem = "No Activity"; break;
+                    default: fullItem = string.Format("<b>NONE</b>"); break;
+                }
+                textTop.text = string.Format("{0}Possible Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
                 break;
-            case ConnectionType.None:
-                connText = string.Format("<b>NONE</b>");
+            case ActivityUI.KnownCount:
+                switch (securityLevel)
+                {
+                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>THREE OR MORE Incidents</b>{1}", colourBad, colourEnd); break;
+                    case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>TWO Incidents</b>{1}", colourNeutral, colourEnd); break;
+                    case ConnectionType.LOW: fullItem = string.Format("{0}<b>ONE Incident</b>{1}", colourGood, colourEnd); break;
+                    case ConnectionType.None: fullItem = "No Activity"; break;
+                    default: fullItem = string.Format("<b>NONE</b>"); break;
+                }
+                textTop.text = string.Format("{0}Known Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
+                break;
+            case ActivityUI.PossibleCount:
+                switch (securityLevel)
+                {
+                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>THREE OR MORE Incidents</b>{1}", colourBad, colourEnd); break;
+                    case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>TWO Incidents</b>{1}", colourNeutral, colourEnd); break;
+                    case ConnectionType.LOW: fullItem = string.Format("{0}<b>ONE Incident</b>{1}", colourGood, colourEnd); break;
+                    case ConnectionType.None: fullItem = "No Activity"; break;
+                    default: fullItem = string.Format("<b>NONE</b>"); break;
+                }
+                textTop.text = string.Format("{0}Possible Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
                 break;
             default:
-                connText = string.Format("<b>Unknown</b>");
+                textTop.text = "Unknown";
                 break;
         }
-        textTop.text = string.Format("{0}Connection{1}{2}{3}{4} Security{5}", colourArc, colourEnd, "\n", connText, securityLevel, colourEnd);
 
+        
+        //ongoing effects
+        StringBuilder builderOngoing = new StringBuilder();
+        if (listOfOngoingEffects != null & listOfOngoingEffects.Count > 0)
+        {
+            foreach (EffectDataOngoing effect in listOfOngoingEffects)
+            {
+                if (builderOngoing.Length > 0) { builderOngoing.AppendLine(); }
+                if (String.IsNullOrEmpty(effect.text) == false)
+                { builderOngoing.AppendFormat("{0}effect.text{1}{2}", colourNeutral, colourEnd, "\n"); }
+                builderOngoing.AppendFormat("Security {0}{1}{2}{3}{4}", effect.value > 0 ? colourGood : colourBad, effect.value > 0 ? "+" : "", effect.value,
+                    colourEnd, "\n");
+                builderOngoing.AppendFormat("For {0}{1}{2} more turns", colourNeutral, effect.timer, colourEnd);
+            }
+        }
+        else { builderOngoing.Append("<size=90%>No Ongoing effects present</size>"); }
+        textBottom.text = builderOngoing.ToString();
+        //debug data (middle text)
+        textMiddle.text = string.Format("{0}{1}{2}", colourNormal, textMain, colourEnd);
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(tooltipPos);
+        screenPos.x += 25;
+        screenPos.y -= 100;
         Canvas.ForceUpdateCanvases();
         rectTransform = tooltipConnectionObject.GetComponent<RectTransform>();
         //get dimensions of dynamic tooltip
@@ -163,7 +234,6 @@ public class TooltipConnection : MonoBehaviour
         { screenPos.x += width / 2 - screenPos.x; }
         //set new position
         tooltipConnectionObject.transform.position = screenPos;
-        Debug.Log(string.Format("UI: Open -> TooltipConnection connID {0}{1}", connID, "\n"));
     }
 
 
@@ -198,13 +268,13 @@ public class TooltipConnection : MonoBehaviour
     /// </summary>
     public void CloseTooltip()
     {
-        Debug.Log("UI: Close -> TooltipActor" + "\n");
+        Debug.Log("UI: Close -> TooltipConnection" + "\n");
         tooltipConnectionObject.SetActive(false);
     }
 
 
     /// <summary>
-    /// set up sprites on actor tooltip for the appropriate side
+    /// set up sprites on Connection tooltip for the appropriate side
     /// </summary>
     /// <param name="side"></param>
     public void InitialiseTooltip(GlobalSide side)
