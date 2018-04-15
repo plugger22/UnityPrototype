@@ -56,7 +56,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void ShowConnectionActivity(ActivityUI activityUI)
     {
-        int activityTurn = -1;
+        int activityData = -1;
         int currentTurn = GameManager.instance.turnScript.Turn;
         Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
         if (dictOfConnections != null)
@@ -73,14 +73,16 @@ public class ConnectionManager : MonoBehaviour
                     //Time (# of turns ago)
                     case ActivityUI.KnownTime:
                     case ActivityUI.PossibleTime:
+                        int limit = GameManager.instance.aiScript.connActivityTimeLimit;
                         switch (activityUI)
                         {
-                            case ActivityUI.KnownTime: activityTurn = conn.Value.activityTurnKnown; break;
-                            case ActivityUI.PossibleTime: activityTurn = conn.Value.activityTurnPossible; break;
+                            case ActivityUI.KnownTime: activityData = conn.Value.activityTurnKnown; break;
+                            case ActivityUI.PossibleTime: activityData = conn.Value.activityTurnPossible; break;
                         }
-                        if (activityTurn > -1)
+                        if (activityData > -1)
                         {
-                            switch (currentTurn - activityTurn)
+                            int timeElapsed = currentTurn - activityData;
+                            switch (timeElapsed)
                             {
                                 case 0:
                                 case 1:
@@ -91,7 +93,13 @@ public class ConnectionManager : MonoBehaviour
                                     break;
                                 case 3:
                                 default:
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
+                                    if (timeElapsed > limit)
+                                    { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                                    else
+                                    {
+                                        //within time elapsed allowance
+                                        conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
+                                    }
                                     break;
                             }
                         }
@@ -103,12 +111,12 @@ public class ConnectionManager : MonoBehaviour
                     case ActivityUI.PossibleCount:
                         switch (activityUI)
                         {
-                            case ActivityUI.KnownCount: activityTurn = conn.Value.activityCountKnown; break;
-                            case ActivityUI.PossibleCount: activityTurn = conn.Value.activityCountPossible; break;
+                            case ActivityUI.KnownCount: activityData = conn.Value.activityCountKnown; break;
+                            case ActivityUI.PossibleCount: activityData = conn.Value.activityCountPossible; break;
                         }
-                        if (activityTurn > -1)
+                        if (activityData > -1)
                         {
-                            switch (currentTurn - activityTurn)
+                            switch (activityData)
                             {
                                 
                                 case 3:

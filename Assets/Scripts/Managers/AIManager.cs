@@ -8,6 +8,8 @@ using gameAPI;
 /// </summary>
 public class AIManager : MonoBehaviour
 {
+    [Tooltip("How many turns, after the event, that the AI will track Connection activity before ignoring it")]
+    [Range(5, 15)] public int connActivityTimeLimit = 10;
 
     /// <summary>
     /// Runs Resistance turn on behalf of AI

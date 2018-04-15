@@ -131,7 +131,7 @@ public class TooltipConnection : MonoBehaviour
         string debugID = "";
         //show connID if debug data on
         if (GameManager.instance.optionScript.debugData == true)
-        { debugID = string.Format(" ID{0}", connID); }
+        { debugID = string.Format("<font=\"LiberationSans SDF\"> ID {0}</font>", connID); }
         //context sensitive depending on ActivityUI
         switch (GameManager.instance.nodeScript.activityState)
         {

@@ -277,23 +277,6 @@ public class Connection : MonoBehaviour
     public void RestoreSecurityLevel()
     {
         SecurityLevel = securityLevelSave;
-        /*ConnectionType connType;
-        switch (SecurityLevel)
-        {
-            case 3:
-                connType = ConnectionType.HIGH;
-                break;
-            case 2:
-                connType = ConnectionType.MEDIUM;
-                break;
-            case 1:
-                connType = ConnectionType.LOW;
-                break;
-            case 0:
-            default:
-                connType = ConnectionType.None;
-                break;
-        }*/
         SetConnectionMaterial(SecurityLevel);
     }
 
@@ -451,15 +434,66 @@ public class Connection : MonoBehaviour
             while (GameManager.instance.tooltipConnScript.CheckTooltipActive() == false)
             {
                 //debug data
-                StringBuilder builderData = new StringBuilder();
+                StringBuilder builder = new StringBuilder();
                 if (GameManager.instance.optionScript.debugData == true)
                 {
-                    builderData.AppendFormat("activityTimeKnown      {0}{1}", activityTurnKnown, "\n");
-                    builderData.AppendFormat("activityTimePossible   {0}{1}", activityTurnPossible, "\n");
-                    builderData.AppendFormat("activityCountKnown     {0}{1}", activityCountKnown, "\n");
-                    builderData.AppendFormat("activityCountPossible  {0}", activityCountPossible);
+                    builder.AppendFormat("activityTimeKnown      {0}{1}", activityTurnKnown, "\n");
+                    builder.AppendFormat("activityTimePossible   {0}{1}", activityTurnPossible, "\n");
+                    builder.AppendFormat("activityCountKnown     {0}{1}", activityCountKnown, "\n");
+                    builder.AppendFormat("activityCountPossible  {0}", activityCountPossible);
                 }
-                GameManager.instance.tooltipConnScript.SetTooltip(transform.position, connID, SecurityLevel, listOfOngoingEffects, builderData.ToString());
+                else
+                {
+                    //Info details
+                    switch(GameManager.instance.nodeScript.activityState)
+                    {
+                        case ActivityUI.None:
+                            switch(SecurityLevel)
+                            {
+                                case ConnectionType.HIGH:
+                                    builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">1 turn</font>", "\n");
+                                    break;
+                                case ConnectionType.MEDIUM:
+                                    builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">2 turns</font>", "\n");
+                                    break;
+                                case ConnectionType.LOW:
+                                    builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">3 turns</font>", "\n");
+                                    break;
+                                case ConnectionType.None:
+                                    builder.AppendFormat("If used Authority will be{0}<font=\"Roboto-Bold SDF\">Unaware</font>", "\n");
+                                    break;
+                            }
+                            break;
+                        case ActivityUI.KnownTime:
+                        case ActivityUI.PossibleTime:
+                            int limit = GameManager.instance.aiScript.connActivityTimeLimit;
+                            int turnCurrent = GameManager.instance.turnScript.Turn;
+                            int elapsedTime;
+                            switch (GameManager.instance.nodeScript.activityState)
+                            {
+                                case ActivityUI.KnownTime:
+                                    elapsedTime = turnCurrent - activityTurnKnown;
+                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn</font>{1} ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "" , limit);
+                                    break;
+                                case ActivityUI.PossibleTime:
+                                    elapsedTime = turnCurrent - activityTurnPossible;
+                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn</font>{1} ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "", limit);
+                                    break;
+                            }
+                            break;
+                        case ActivityUI.KnownCount:
+                            if (activityCountKnown > 0)
+                            { builder.AppendFormat("There have been <font=\"Roboto-Bold SDF\">{0} Known</font> incident{1} (total)", activityCountKnown, activityCountKnown != 1 ? "s" : ""); }
+                            else { builder.Append("There have been <font=\"Roboto-Bold SDF\">No Known</font> incidents"); }
+                            break;
+                        case ActivityUI.PossibleCount:
+                            if (activityCountPossible > 0)
+                            { builder.AppendFormat("There have been <font=\"Roboto-Bold SDF\">{0} Possible</font> incident{1} (total)", activityCountPossible, activityCountPossible != 1 ? "s" : ""); }
+                            else { builder.Append("There have been <font=\"Roboto-Bold SDF\">No Possible</font> incidents"); }
+                            break;
+                    }
+                }
+                GameManager.instance.tooltipConnScript.SetTooltip(transform.position, connID, SecurityLevel, listOfOngoingEffects, builder.ToString());
                 yield return null;
             }
             //fade in

@@ -1641,13 +1641,13 @@ public class NodeManager : MonoBehaviour
                 if (Random.Range(0, 100) < baseChance)
                 {
                     node.Value.activityCountKnown = Random.Range(1, 5);
-                    node.Value.activityTurnKnown = 0;
+                    node.Value.activityTurnKnown = 1;
                     counter++;
                 }
                 if (Random.Range(0, 100) < baseChance)
                 {
                     node.Value.activityCountPossible = Random.Range(1, 5);
-                    node.Value.activityTurnPossible = 0;
+                    node.Value.activityTurnPossible = 1;
                     counter++;
                 }
             }
@@ -1664,13 +1664,13 @@ public class NodeManager : MonoBehaviour
                 if (Random.Range(0, 100) < baseChance)
                 {
                     conn.Value.activityCountKnown = Random.Range(1, 5);
-                    conn.Value.activityTurnKnown = 0;
+                    conn.Value.activityTurnKnown = 1;
                     counter++;
                 }
                 if (Random.Range(0, 100) < baseChance)
                 {
                     conn.Value.activityCountPossible = Random.Range(1, 5);
-                    conn.Value.activityTurnPossible = 0;
+                    conn.Value.activityTurnPossible = 1;
                     counter++;
                 }
             }

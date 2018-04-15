@@ -134,6 +134,9 @@ public class TurnManager : MonoBehaviour
         _turn++;
         Debug.Log(string.Format("TurnManager: - - - StartTurnEarly - - - turn {0}", "\n"));
         EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
+        //reset nodes and connections if not in normal state
+        if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
+        { GameManager.instance.nodeScript.ResetAll(); }
     }
 
     /// <summary>
