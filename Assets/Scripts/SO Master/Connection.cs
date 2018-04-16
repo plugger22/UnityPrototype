@@ -459,7 +459,7 @@ public class Connection : MonoBehaviour
                                         delay != 1 ? "s" : "");
                                     break;
                                 case ConnectionType.None:
-                                    builder.AppendFormat("If used Authority will be{0}<font=\"Roboto-Bold SDF\">Unaware</font>", "\n");
+                                    builder.AppendFormat("If used Authority will be{0}<font=\"Roboto-Bold SDF\">UNAWARE</font>", "\n");
                                     break;
                             }
                             break;

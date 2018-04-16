@@ -26,6 +26,9 @@ public class Node : MonoBehaviour
     [HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
 
     public Material _Material { get; private set; }     //material renderer uses to draw node
+    public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
+
+    private TextMesh faceText;                         //textmesh component of faceObject (cached in Awake)
 
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
     private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
@@ -142,6 +145,34 @@ public class Node : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;
+        //get text component
+        faceText = faceObject.GetComponent<TextMesh>();
+        //debug
+        int number = Random.Range(0, 9);
+        faceText.text = number.ToString();
+        switch (number)
+        {
+            case 0:
+                faceText.color = Color.green;
+                break;
+            case 1:
+            case 2:
+                faceText.color = Color.black;
+                break;
+            case 3:
+            case 4:
+            case 5:
+                faceText.color = Color.red;
+                break;
+            case 6:
+            case 7:
+            case 8:
+                faceText.color = Color.yellow;
+                break;
+            case 9:
+                faceText.color = Color.white;
+                break;
+        }
 	}
 
 
