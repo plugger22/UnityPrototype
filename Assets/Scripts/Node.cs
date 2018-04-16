@@ -17,7 +17,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracer;             //has resistance tracer?
     [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;             //has authority spider?
-    [HideInInspector] public bool isContact;              //true if any ActorStatus.Active actor has a connection at the node
+    [HideInInspector] public bool isContact;            //true if any ActorStatus.Active actor has a connection at the node
     [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
     [HideInInspector] public int activityCountKnown = -1;       //# times known rebel activity occurred (invis-1)
@@ -25,10 +25,10 @@ public class Node : MonoBehaviour
     [HideInInspector] public int activityTurnKnown = -1;        //most recent turn when known rebel activity occurred
     [HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
 
-    public Material _Material { get; private set; }     //material renderer uses to draw node
+    public Material _Material { get; private set; }    //material renderer uses to draw node
     public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
 
-    private TextMesh faceText;                         //textmesh component of faceObject (cached in Awake)
+    [HideInInspector] public TextMesh faceText;        //textmesh component of faceObject (cached in Awake)
 
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
     private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
@@ -146,8 +146,13 @@ public class Node : MonoBehaviour
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;
         //get text component
-        faceText = faceObject.GetComponent<TextMesh>();
-        //debug
+        if (faceObject != null)
+        {
+            faceText = faceObject.GetComponent<TextMesh>();
+            faceText.text = "";
+        }
+        else { Debug.LogError("Invalid faceObject (Null)"); }
+        /*//debug
         int number = Random.Range(0, 9);
         faceText.text = number.ToString();
         switch (number)
@@ -172,7 +177,7 @@ public class Node : MonoBehaviour
             case 9:
                 faceText.color = Color.white;
                 break;
-        }
+        }*/
 	}
 
 
@@ -890,6 +895,36 @@ public class Node : MonoBehaviour
         }
 
         return arrayOfStats;
+    }
+
+    /// <summary>
+    /// returns activity level (count or time elapsed). Returns -1 if none or a problem
+    /// </summary>
+    /// <param name="activityUI"></param>
+    /// <returns></returns>
+    public int GetNodeActivity(ActivityUI activityUI)
+    {
+        int activityLevel = -1;
+        switch (activityUI)
+        {
+            case ActivityUI.KnownCount:
+                activityLevel = activityCountKnown;
+                break;
+            case ActivityUI.PossibleCount:
+                activityLevel = activityCountPossible;
+                break;
+            case ActivityUI.KnownTime:
+                activityLevel = GameManager.instance.turnScript.Turn - activityTurnKnown;
+                break;
+            case ActivityUI.PossibleTime:
+                activityLevel = GameManager.instance.turnScript.Turn - activityTurnPossible;
+                break;
+            default:
+                Debug.LogWarning(string.Format("Invalid activityUI \"{0}\"", activityUI));
+                break;
+        }
+
+        return activityLevel;
     }
 
     //place methods above here

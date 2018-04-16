@@ -728,7 +728,10 @@ public class NodeManager : MonoBehaviour
         if (tempDict != null)
         {
             foreach (var node in tempDict)
-            { node.Value.SetMaterial(nodeMaterial); }
+            {
+                node.Value.SetMaterial(nodeMaterial);
+                node.Value.faceText.text = "";
+            }
             //trigger an automatic redraw
             NodeRedraw = true;
         }
@@ -752,6 +755,8 @@ public class NodeManager : MonoBehaviour
             case ActivityUI.PossibleTime:
                 //change connections to reflect activity (also sets resetNeeded to True)
                 GameManager.instance.connScript.ShowConnectionActivity(activityUI);
+                //activate face text on nodes to reflect activity levels
+                ShowNodeActivity(activityUI);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
@@ -778,6 +783,100 @@ public class NodeManager : MonoBehaviour
         //active AlertUI
         if (string.IsNullOrEmpty(displayText) == false)
         { GameManager.instance.alertScript.SetAlertUI(displayText); }
+    }
+
+    /// <summary>
+    /// Highlight activity levels on node faces
+    /// </summary>
+    /// <param name="activityUI"></param>
+    private void ShowNodeActivity(ActivityUI activityUI)
+    {
+        if (activityUI != ActivityUI.None)
+        {
+            int data;
+            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+            if (dictOfNodes != null)
+            {
+                //loop nodes
+                bool errorFlag = false;
+                foreach(var node in dictOfNodes)
+                {
+                    if (node.Value != null)
+                    {
+                        if (node.Value.faceObject != null)
+                        {
+                            switch(activityUI)
+                            {
+                                case ActivityUI.KnownCount:
+                                case ActivityUI.PossibleCount:
+                                case ActivityUI.KnownTime:
+                                case ActivityUI.PossibleTime:
+                                    data = node.Value.GetNodeActivity(activityUI);
+                                    if (data > -1)
+                                    {
+                                        node.Value.faceText.text = data.ToString();
+                                        node.Value.faceText.color = GetActivityColour(activityUI, data);
+                                    }
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
+                                    errorFlag = true;
+                                    break;
+                            }
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.Key)); }
+
+                        if (errorFlag == true)
+                        { break; }
+                    }
+                    else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.Key)); }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        }
+    }
+
+    /// <summary>
+    /// returns a colour to display face Text on a node depending on value (which varies depending on activityUI)
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private Color GetActivityColour(ActivityUI activityUI, int data)
+    {
+        Color color = Color.clear;
+        switch (activityUI)
+        {
+            case ActivityUI.KnownCount:
+            case ActivityUI.PossibleCount:
+                //0 -> clear, 1 -> Green, 2 -> Yellow, 3+ -> Red
+                switch (data)
+                {
+                    case 0: color = Color.clear; break;
+                    case 1: color = Color.green; break;
+                    case 2: color = Color.yellow; break;
+                    default:
+                    case 3: color = Color.red; break;
+                }
+                break;
+            case ActivityUI.KnownTime:
+            case ActivityUI.PossibleTime:
+                //0 -> clear, 1 -> Red, 2 -> Yellow, 3+ -> Green (if past limit then Grey)
+                switch (data)
+                {
+                    case 0: color = Color.clear; break;
+                    case 1: color = Color.red; break;
+                    case 2: color = Color.yellow; break;
+                    case 3: color = Color.green; break;
+                    default:
+                        //only display elapsed time data if it's not too old to be of use
+                        if (data > GameManager.instance.aiScript.activityTimeLimit)
+                        { color = Color.clear; }
+                        else { color = Color.black; }
+                        break;
+                }
+                break;
+        }
+        return color;
     }
 
     /// <summary>

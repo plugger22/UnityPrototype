@@ -465,7 +465,7 @@ public class Connection : MonoBehaviour
                             break;
                         case ActivityUI.KnownTime:
                         case ActivityUI.PossibleTime:
-                            int limit = GameManager.instance.aiScript.connActivityTimeLimit;
+                            int limit = GameManager.instance.aiScript.activityTimeLimit;
                             int turnCurrent = GameManager.instance.turnScript.Turn;
                             int elapsedTime;
                             switch (GameManager.instance.nodeScript.activityState)

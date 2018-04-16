@@ -73,7 +73,7 @@ public class ConnectionManager : MonoBehaviour
                     //Time (# of turns ago)
                     case ActivityUI.KnownTime:
                     case ActivityUI.PossibleTime:
-                        int limit = GameManager.instance.aiScript.connActivityTimeLimit;
+                        int limit = GameManager.instance.aiScript.activityTimeLimit;
                         switch (activityUI)
                         {
                             case ActivityUI.KnownTime: activityData = conn.Value.activityTurnKnown; break;
