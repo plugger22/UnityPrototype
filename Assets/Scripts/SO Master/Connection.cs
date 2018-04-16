@@ -445,19 +445,18 @@ public class Connection : MonoBehaviour
                 else
                 {
                     //Info details
+
                     switch(GameManager.instance.nodeScript.activityState)
                     {
                         case ActivityUI.None:
                             switch(SecurityLevel)
                             {
                                 case ConnectionType.HIGH:
-                                    builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">1 turn</font>", "\n");
-                                    break;
                                 case ConnectionType.MEDIUM:
-                                    builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">2 turns</font>", "\n");
-                                    break;
                                 case ConnectionType.LOW:
-                                    builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">3 turns</font>", "\n");
+                                    int delay = GameManager.instance.nodeScript.GetAIDelayForMove(SecurityLevel);
+                                    builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">{1} turn{2}</font>", "\n", delay,
+                                        delay != 1 ? "s" : "");
                                     break;
                                 case ConnectionType.None:
                                     builder.AppendFormat("If used Authority will be{0}<font=\"Roboto-Bold SDF\">Unaware</font>", "\n");
@@ -473,11 +472,11 @@ public class Connection : MonoBehaviour
                             {
                                 case ActivityUI.KnownTime:
                                     elapsedTime = turnCurrent - activityTurnKnown;
-                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn</font>{1} ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "" , limit);
+                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "" , limit);
                                     break;
                                 case ActivityUI.PossibleTime:
                                     elapsedTime = turnCurrent - activityTurnPossible;
-                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn</font>{1} ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "", limit);
+                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "", limit);
                                     break;
                             }
                             break;

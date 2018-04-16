@@ -18,6 +18,8 @@ public class NodeManager : MonoBehaviour
     [Range(0,4)] public int nodeActiveMinimum = 3;
     [Tooltip("Node Colour Types")]
     public Material[] arrayOfNodeTypes;
+    [Tooltip("The base factor used for calculating ('factor - (gear - seclvl [High is 3, Low is 1])') the delay in notifying the Authority player that move activity has occurred ")]
+    [Range(0,10)]public int moveInvisibilityDelay = 4;
 
     [Tooltip("Maximum value of a node datapoint")]
     [Range(2,4)] public int maxNodeValue = 3;
@@ -870,7 +872,9 @@ public class NodeManager : MonoBehaviour
                                         else
                                         {
                                             //invisibility reduces, still above zero
-                                            moveGearDetails.ai_Delay = 4 - Mathf.Abs(gear.data - secLevel);
+                                            int delay = moveInvisibilityDelay - Mathf.Abs(gear.data - secLevel);
+                                            delay = Mathf.Max(0, delay);
+                                            moveGearDetails.ai_Delay = delay; 
                                             builderDetail.Append(string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
                                               moveGearDetails.ai_Delay, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd));
 
@@ -1679,5 +1683,26 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfConnections (Null)"); }
     }
 
+    /// <summary>
+    /// returns AI delay, in turns, for being notified of rebel player moving through a connection where they lost invisibility doing so.
+    /// </summary>
+    /// <param name="secLvl"></param>
+    /// <returns></returns>
+    public int GetAIDelayForMove(ConnectionType secLvl)
+    {
+        int securityLevel;
+        switch(secLvl)
+        {
+            case ConnectionType.HIGH: securityLevel = 3; break;
+            case ConnectionType.MEDIUM: securityLevel = 2; break;
+            case ConnectionType.LOW: securityLevel = 1; break;
+            case ConnectionType.None:
+            default:
+                securityLevel = moveInvisibilityDelay; break;
+        }
+        int delay = moveInvisibilityDelay - securityLevel;
+        delay = Mathf.Max(0, delay);
+        return delay;
+    }
     //new methods above here
 }

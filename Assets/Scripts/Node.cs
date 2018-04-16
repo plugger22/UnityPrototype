@@ -275,10 +275,15 @@ public class Node : MonoBehaviour
                     List<string> targetList = new List<string>();
                     if (targetID > -1)
                     { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
+                    //show node ID only if debug data option is true
+                    string textType;
+                    if (GameManager.instance.optionScript.debugData == true)
+                    { textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID); }
+                    else { textType = string.Format("{0}", Arc.name); }
                     NodeTooltipData dataTooltip = new NodeTooltipData()
                     {
                         nodeName = nodeName,
-                        type = string.Format("{0} ID {1}", Arc.name, nodeID),
+                        type = textType,
                         isTracerActive = isTracerActive,
                         isActor = isContact,
                         isActorKnown = isActorKnown,
