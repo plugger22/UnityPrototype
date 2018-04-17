@@ -28,6 +28,8 @@ public class TooltipNode : MonoBehaviour
     public Image dividerLowerMiddle;
     public Image dividerStats;
     public Image dividerBottom;
+    public Image spider;
+    public Image tracer;
 
     public GameObject tooltipNodeObject;
 
@@ -37,8 +39,9 @@ public class TooltipNode : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;
-
-
+    //fast access fields
+    private GlobalSide globalResistance;
+    private GlobalSide globalAuthority;
 
     //colour Palette
     private string colourGood;
@@ -62,6 +65,15 @@ public class TooltipNode : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, this.OnEvent);
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+    }
+
+    /// <summary>
+    /// needed for sequencing issues
+    /// </summary>
+    public void Initialise()
+    {
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
     }
 
     /// <summary>
@@ -141,8 +153,6 @@ public class TooltipNode : MonoBehaviour
     public void SetTooltip(NodeTooltipData data)
     {
         bool proceedFlag;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
-        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //open panel at start
         tooltipNodeObject.SetActive(true);
@@ -160,6 +170,15 @@ public class TooltipNode : MonoBehaviour
         dividerUpperMiddle.gameObject.SetActive(false);
         dividerLowerMiddle.gameObject.SetActive(true);
         dividerStats.gameObject.SetActive(false);
+        //show spider only if present and known
+        if (data.isSpiderKnown == true)
+        { spider.gameObject.SetActive(true); }
+        else
+        { spider.gameObject.SetActive(false); }
+        //show tracer if present and Resistance
+        if (data.isTracerActive == true && playerSide.level == globalResistance.level)
+        { tracer.gameObject.SetActive(true); }
+        else { tracer.gameObject.SetActive(false); }
         //show only if node has a target
         nodeTarget.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);

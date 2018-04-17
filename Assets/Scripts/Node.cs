@@ -323,6 +323,21 @@ public class Node : MonoBehaviour
                     if (GameManager.instance.optionScript.debugData == true)
                     { textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID); }
                     else { textType = string.Format("{0}", Arc.name); }
+                    //spider
+                    bool showSpider = false;
+                    if (isSpider == true)
+                    {
+                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                        {
+                            if (GameManager.instance.optionScript.fogOfWar == true)
+                            {
+                                if (_isSpiderKnown == true) { showSpider = true; }
+                            }
+                            else { showSpider = true; }
+                        }
+                        else { showSpider = true; }
+                    }
+                    //data package
                     NodeTooltipData dataTooltip = new NodeTooltipData()
                     {
                         nodeName = nodeName,
@@ -331,6 +346,7 @@ public class Node : MonoBehaviour
                         isActor = isContact,
                         isActorKnown = isActorKnown,
                         isTeamKnown = isTeamKnown,
+                        isSpiderKnown = showSpider,
                         arrayOfStats = GetStats(),
                         listOfActive = activeList,
                         listOfEffects = effectsList,

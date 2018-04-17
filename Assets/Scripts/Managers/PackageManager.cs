@@ -26,6 +26,7 @@ namespace packageAPI
         public bool isActorKnown;
         public bool isTracerActive;
         public bool isTeamKnown;
+        public bool isSpiderKnown;                                      //displays Spider images at tooltip top if spider present in node and known
         public int[] arrayOfStats;
         public List<string> listOfActive;
         public List<EffectDataTooltip> listOfEffects;
