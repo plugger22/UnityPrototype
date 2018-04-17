@@ -433,19 +433,18 @@ public class Connection : MonoBehaviour
             //do once
             while (GameManager.instance.tooltipConnScript.CheckTooltipActive() == false)
             {
-                //debug data
+                //debug activity data
                 StringBuilder builder = new StringBuilder();
                 if (GameManager.instance.optionScript.debugData == true)
                 {
-                    builder.AppendFormat("activityTimeKnown      {0}{1}", activityTurnKnown, "\n");
-                    builder.AppendFormat("activityTimePossible   {0}{1}", activityTurnPossible, "\n");
-                    builder.AppendFormat("activityCountKnown     {0}{1}", activityCountKnown, "\n");
-                    builder.AppendFormat("activityCountPossible  {0}", activityCountPossible);
+                    builder.AppendFormat("activityTimeKnown      {0}{1}{2}", activityTurnKnown > 0 ? "+" : "", activityTurnKnown, "\n");
+                    builder.AppendFormat("activityTimePossible   {0}{1}{2}", activityTurnPossible > 0 ? "+" : "", activityTurnPossible, "\n");
+                    builder.AppendFormat("activityCountKnown     {0}{1}{2}", activityCountKnown > 0 ? "+" : "", activityCountKnown, "\n");
+                    builder.AppendFormat("activityCountPossible  {0}{1}", activityCountPossible > 0 ? "+" : "", activityCountPossible);
                 }
                 else
                 {
-                    //Info details
-
+                    //Activity info details
                     switch(GameManager.instance.nodeScript.activityState)
                     {
                         case ActivityUI.None:

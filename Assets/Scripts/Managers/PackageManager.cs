@@ -31,6 +31,7 @@ namespace packageAPI
         public List<EffectDataTooltip> listOfEffects;
         public List<string> listOfTeams;
         public List<string> listOfTargets;
+        public List<string> listOfActivity;                             //used to display activity data when NodeManager.cs -> activityState > 'None'. Ignore otherwise
         public Vector3 tooltipPos;
     }
 

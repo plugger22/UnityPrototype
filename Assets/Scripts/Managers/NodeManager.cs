@@ -20,6 +20,10 @@ public class NodeManager : MonoBehaviour
     public Material[] arrayOfNodeTypes;
     [Tooltip("The base factor used for calculating ('factor - (gear - seclvl [High is 3, Low is 1])') the delay in notifying the Authority player that move activity has occurred ")]
     [Range(0,10)]public int moveInvisibilityDelay = 4;
+    [Tooltip("The standard time delay, in turns, before Authority notification for any node activity that results in a loss of invisibility with no spider present")]
+    [Range(0, 10)] public int nodeNoSpiderDelay = 2;
+    [Tooltip("The standard time delay before Authority notification for any node activity that results in a loss of invisibility with a spider present. Make sure that this is less than the NoSpider delay")]
+    [Range(0, 10)] public int nodeYesSpiderDelay = 1;
 
     [Tooltip("Maximum value of a node datapoint")]
     [Range(2,4)] public int maxNodeValue = 3;

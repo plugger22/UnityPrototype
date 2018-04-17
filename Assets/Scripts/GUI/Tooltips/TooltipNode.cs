@@ -46,6 +46,7 @@ public class TooltipNode : MonoBehaviour
     private string colourBad;
     private string colourActive;
     private string colourDefault;
+    private string colourNormal;
     private string colourEnd;
     private string colourTeam;
 
@@ -121,6 +122,7 @@ public class TooltipNode : MonoBehaviour
         //colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -286,23 +288,50 @@ public class TooltipNode : MonoBehaviour
         }
         else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=90%>requires Tracer or Actor</size>{4}", colourBad, colourEnd, "\n", colourDefault, colourEnd); }
         //
-        // - - Target - - -
+        // - - Target (multipurpose, shows activity data if NodeManager.cs -> activityState > 'None') - - -
         //
-        if (data.listOfTargets.Count > 0)
+        StringBuilder builder = new StringBuilder();
+        //NO Activity
+        if (GameManager.instance.nodeScript.activityState == ActivityUI.None)
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(colourDefault);
-            //foreach (string target in listOfTarget)
-            for (int i = 0; i < data.listOfTargets.Count; i++)
+            if (data.listOfTargets.Count > 0)
             {
-                if (i > 0) { builder.AppendLine(); }
-                builder.Append(data.listOfTargets[i]);
+                //normal target info
+                builder.Append(colourDefault);
+                //foreach (string target in listOfTarget)
+                for (int i = 0; i < data.listOfTargets.Count; i++)
+                {
+                    if (i > 0) { builder.AppendLine(); }
+                    builder.Append(data.listOfTargets[i]);
+                }
+                builder.Append(colourEnd);
             }
-            builder.Append(colourEnd);
+            else { builder.AppendFormat("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
             nodeTarget.text = builder.ToString();
         }
+        //Activity
         else
-        { nodeTarget.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
+        {
+            //show one line at top for target/no target and activity data for the rest
+            if (data.listOfTargets.Count > 0)
+            { builder.Append(data.listOfTargets[0]); }
+            else { builder.AppendFormat("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
+            builder.AppendLine(); builder.AppendLine();
+            //Activity information
+            if (data.listOfActivity != null && data.listOfActivity.Count > 0)
+            {
+                //activity info
+                builder.Append(colourNormal);
+                for (int i = 0; i < data.listOfActivity.Count; i++)
+                {
+                    if (i > 0) { builder.AppendLine(); }
+                    builder.Append(data.listOfActivity[i]);
+                }
+                builder.Append(colourEnd);
+            }
+            else { builder.AppendFormat("{0}<b>Unknown Activity Info</b>{1}", colourBad, colourEnd); }
+            nodeTarget.text = builder.ToString();
+        }
         //
         // - - - Stats - - - 
         //
@@ -310,17 +339,17 @@ public class TooltipNode : MonoBehaviour
         int statData;
         if (data.arrayOfStats.Length > 0)
         {
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builderStats = new StringBuilder();
             for (int i = 0; i < data.arrayOfStats.Length; i++)
             {
                 statData = data.arrayOfStats[i];
-                if (i > 0) { builder.AppendLine(); }
-                builder.AppendFormat("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(statData), statData, colourEnd);
+                if (i > 0) { builderStats.AppendLine(); }
+                builderStats.AppendFormat("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(statData), statData, colourEnd);
                 //idiot check to handle case of being too many stats
                 checkCounter++;
                 if (checkCounter >= 3) { break; }
             }
-            nodeStatsVar.text = builder.ToString();
+            nodeStatsVar.text = builderStats.ToString();
             nodeStatsFixed.text = string.Format("{0}{1}\n{2}\n{3}{4}", colourDefault, "Stability", "Support", "Security", colourEnd);
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using modalAPI;
 using gameAPI;
 using packageAPI;
+using System.Text;
 
 public class Node : MonoBehaviour
 {
@@ -308,9 +309,14 @@ public class Node : MonoBehaviour
                         foreach (Team team in listOfTeams)
                         { teamList.Add(team.arc.name); }
                     }
+                    //target info
                     List<string> targetList = new List<string>();
                     if (targetID > -1)
                     { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
+                    //activity info
+                    List<string> activityList = null;
+                    if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
+                    { activityList = GetActivityInfo(); }
                     //show node ID only if debug data option is true
                     string textType;
                     if (GameManager.instance.optionScript.debugData == true)
@@ -329,6 +335,7 @@ public class Node : MonoBehaviour
                         listOfEffects = effectsList,
                         listOfTeams = teamList,
                         listOfTargets = targetList,
+                        listOfActivity = activityList,
                         tooltipPos = transform.position
                     };
 
@@ -897,6 +904,10 @@ public class Node : MonoBehaviour
         return arrayOfStats;
     }
 
+    //
+    // - - - Activity - - -
+    //
+
     /// <summary>
     /// returns activity level (count or time elapsed). Returns -1 if none or a problem
     /// </summary>
@@ -925,6 +936,70 @@ public class Node : MonoBehaviour
         }
 
         return activityLevel;
+    }
+
+    /// <summary>
+    /// returns activity info for node tooltip in cases where NodeManager.cs -> activityState > 'None'
+    /// </summary>
+    /// <returns></returns>
+    private List<string> GetActivityInfo()
+    {
+        List<string> listOfActivity = new List<string>();
+        //debug activity data
+        if (GameManager.instance.optionScript.debugData == true)
+        {
+            listOfActivity.Add(string.Format("activityTimeKnown      {0}{1}", activityTurnKnown > 0 ? "+" : "", activityTurnKnown));
+            listOfActivity.Add(string.Format("activityTimePossible   {0}{1}", activityTurnPossible > 0 ? "+" : "", activityTurnPossible));
+            listOfActivity.Add(string.Format("activityCountKnown     {0}{1}", activityCountKnown > 0 ? "+" : "", activityCountKnown));
+            listOfActivity.Add(string.Format("activityCountPossible  {0}{1}", activityCountPossible > 0 ? "+" : "", activityCountPossible));
+        }
+        else
+        {
+            //Activity info details
+            switch (GameManager.instance.nodeScript.activityState)
+            {
+                /*case ActivityUI.None:
+
+                    int delay = GameManager.instance.nodeScript.nodeNoSpiderDelay;
+                    listOfActivity.Add(string.Format("Authority aware of actions where Invisibility is lost in <font=\"Roboto-Bold SDF\">{0} turn{1}</font>", "\n", delay,
+                        delay != 1 ? "s" : "");
+                    break;*/
+
+                case ActivityUI.KnownTime:
+                case ActivityUI.PossibleTime:
+                    int limit = GameManager.instance.aiScript.activityTimeLimit;
+                    int turnCurrent = GameManager.instance.turnScript.Turn;
+                    int elapsedTime;
+                    switch (GameManager.instance.nodeScript.activityState)
+                    {
+                        case ActivityUI.KnownTime:
+                            elapsedTime = turnCurrent - activityTurnKnown;
+                            listOfActivity.Add(string.Format("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, 
+                                elapsedTime != 1 ? "s" : "", limit));
+                            break;
+                        case ActivityUI.PossibleTime:
+                            elapsedTime = turnCurrent - activityTurnPossible;
+                            listOfActivity.Add(string.Format("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, 
+                                elapsedTime != 1 ? "s" : "", limit));
+                            break;
+                    }
+                    break;
+                case ActivityUI.KnownCount:
+                    if (activityCountKnown > 0)
+                    { listOfActivity.Add(string.Format("There {0} been{1}<font=\"Roboto-Bold SDF\">{2} Known</font>{3}incident{4} (in total)", 
+                        activityCountKnown != 1 ? "have" : "has", "\n", activityCountKnown, "\n", activityCountKnown != 1 ? "s" : "")); }
+                    else { listOfActivity.Add(string.Format("There have been{0}<font=\"Roboto-Bold SDF\">No Known</font>{1}incidents here", "\n", "\n")); }
+                    break;
+                case ActivityUI.PossibleCount:
+                    if (activityCountPossible > 0)
+                    { listOfActivity.Add(string.Format("There {0} been{1}<font=\"Roboto-Bold SDF\">{2} Possible</font>{3}incident{4} (in total)",
+                          activityCountPossible != 1 ? "have" : "has", "\n", activityCountPossible, "\n", activityCountPossible != 1 ? "s" : "")); }
+                    else { listOfActivity.Add(string.Format("There have been{0}<font=\"Roboto-Bold SDF\">No Possible</font>{1}incidents here", "\n", "\n")); }
+                    break;
+            }
+        }
+
+        return listOfActivity;
     }
 
     //place methods above here
