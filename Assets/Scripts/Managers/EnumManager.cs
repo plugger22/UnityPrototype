@@ -50,7 +50,7 @@ namespace gameAPI
     //
     // - - - Activity - - -
     //
-    public enum ActivityUI { None, KnownTime, PossibleTime, KnownCount, PossibleCount }
+    public enum ActivityUI { None, Time, Count}
 
     //
     // - - - Decisions and Targets - - -

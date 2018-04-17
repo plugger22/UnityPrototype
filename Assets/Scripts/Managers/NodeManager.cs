@@ -230,10 +230,8 @@ public class NodeManager : MonoBehaviour
                 ActivityUI activityUI = (ActivityUI)Param;
                 switch (activityUI)
                 {
-                    case ActivityUI.KnownTime:
-                    case ActivityUI.PossibleTime:
-                    case ActivityUI.KnownCount:
-                    case ActivityUI.PossibleCount:
+                    case ActivityUI.Time:
+                    case ActivityUI.Count:
                         if (NodeShowFlag > 0)
                         { ResetAll(); }
                         else { ShowActivity(activityUI); }
@@ -753,10 +751,8 @@ public class NodeManager : MonoBehaviour
         //show activity
         switch (activityUI)
         {
-            case ActivityUI.KnownCount:
-            case ActivityUI.KnownTime:
-            case ActivityUI.PossibleCount:
-            case ActivityUI.PossibleTime:
+            case ActivityUI.Count:
+            case ActivityUI.Time:
                 //change connections to reflect activity (also sets resetNeeded to True)
                 GameManager.instance.connScript.ShowConnectionActivity(activityUI);
                 //activate face text on nodes to reflect activity levels
@@ -771,17 +767,11 @@ public class NodeManager : MonoBehaviour
         string displayText = "Unknown";
         switch (activityUI)
         {
-            case ActivityUI.KnownCount:
-                displayText = string.Format("{0}Activity Count Known{1}", colourEffectNeutral, colourEnd);
+            case ActivityUI.Count:
+                displayText = string.Format("{0}Resistance Activity by Count{1}", colourEffectNeutral, colourEnd);
                 break;
-            case ActivityUI.KnownTime:
-                displayText = string.Format("{0}Activity Time Known{1}", colourEffectNeutral, colourEnd);
-                break;
-            case ActivityUI.PossibleCount:
-                displayText = string.Format("{0}Activity Count Possible{1}", colourEffectNeutral, colourEnd);
-                break;
-            case ActivityUI.PossibleTime:
-                displayText = string.Format("{0}Activity Time Possible{1}", colourEffectNeutral, colourEnd);
+            case ActivityUI.Time:
+                displayText = string.Format("{0}Resistance Activity by Time{1}", colourEffectNeutral, colourEnd);
                 break;
         }
         //active AlertUI
@@ -811,10 +801,8 @@ public class NodeManager : MonoBehaviour
                         {
                             switch(activityUI)
                             {
-                                case ActivityUI.KnownCount:
-                                case ActivityUI.PossibleCount:
-                                case ActivityUI.KnownTime:
-                                case ActivityUI.PossibleTime:
+                                case ActivityUI.Count:
+                                case ActivityUI.Time:
                                     data = node.Value.GetNodeActivity(activityUI);
                                     if (data > -1)
                                     {
@@ -850,8 +838,7 @@ public class NodeManager : MonoBehaviour
         Color color = Color.clear;
         switch (activityUI)
         {
-            case ActivityUI.KnownCount:
-            case ActivityUI.PossibleCount:
+            case ActivityUI.Count:
                 //0 -> clear, 1 -> Green, 2 -> Yellow, 3+ -> Red
                 switch (data)
                 {
@@ -862,8 +849,7 @@ public class NodeManager : MonoBehaviour
                     case 3: color = Color.red; break;
                 }
                 break;
-            case ActivityUI.KnownTime:
-            case ActivityUI.PossibleTime:
+            case ActivityUI.Time:
                 //0 -> clear, 1 -> Red, 2 -> Yellow, 3+ -> Green (if past limit then Grey)
                 switch (data)
                 {
@@ -1747,14 +1733,8 @@ public class NodeManager : MonoBehaviour
             {
                 if (Random.Range(0, 100) < baseChance)
                 {
-                    node.Value.activityCountKnown = Random.Range(1, 5);
-                    node.Value.activityTurnKnown = 1;
-                    counter++;
-                }
-                if (Random.Range(0, 100) < baseChance)
-                {
-                    node.Value.activityCountPossible = Random.Range(1, 5);
-                    node.Value.activityTurnPossible = 1;
+                    node.Value.activityCount = Random.Range(1, 5);
+                    node.Value.activityTime = Random.Range(0, 3);
                     counter++;
                 }
             }
@@ -1770,14 +1750,8 @@ public class NodeManager : MonoBehaviour
             {
                 if (Random.Range(0, 100) < baseChance)
                 {
-                    conn.Value.activityCountKnown = Random.Range(1, 5);
-                    conn.Value.activityTurnKnown = 1;
-                    counter++;
-                }
-                if (Random.Range(0, 100) < baseChance)
-                {
-                    conn.Value.activityCountPossible = Random.Range(1, 5);
-                    conn.Value.activityTurnPossible = 1;
+                    conn.Value.activityCount = Random.Range(1, 5);
+                    conn.Value.activityTime = Random.Range(0, 3);
                     counter++;
                 }
             }

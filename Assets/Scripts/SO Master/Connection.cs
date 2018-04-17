@@ -30,10 +30,10 @@ public class Connection : MonoBehaviour
     [HideInInspector] public int VerticeOne { get { return v1; } }
     [HideInInspector] public int VerticeTwo { get { return v2; } }
 
-    [HideInInspector] public int activityCountKnown = -1;       //# times known rebel activity occurred (invis-1, player movement)
-    [HideInInspector] public int activityCountPossible = -1;    //# times suspected rebel activity occured (negative drop in conn security level for unexplained reasons)
-    [HideInInspector] public int activityTurnKnown = -1;        //most recent turn when known rebel activity occurred
-    [HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
+    [HideInInspector] public int activityCount = -1;       //# times known rebel activity occurred (invis-1, player movement)
+    //[HideInInspector] public int activityCountPossible = -1;    //# times suspected rebel activity occured (negative drop in conn security level for unexplained reasons)
+    [HideInInspector] public int activityTime = -1;        //most recent turn when known rebel activity occurred
+    //[HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
 
     /*private string colourRebel;
     private string colourAuthority;
@@ -437,10 +437,8 @@ public class Connection : MonoBehaviour
                 StringBuilder builder = new StringBuilder();
                 if (GameManager.instance.optionScript.debugData == true)
                 {
-                    builder.AppendFormat("activityTimeKnown      {0}{1}{2}", activityTurnKnown > 0 ? "T" : "", activityTurnKnown, "\n");
-                    builder.AppendFormat("activityTimePossible   {0}{1}{2}", activityTurnPossible > 0 ? "T" : "", activityTurnPossible, "\n");
-                    builder.AppendFormat("activityCountKnown     {0}{1}{2}", activityCountKnown > 0 ? "+" : "", activityCountKnown, "\n");
-                    builder.AppendFormat("activityCountPossible  {0}{1}", activityCountPossible > 0 ? "+" : "", activityCountPossible);
+                    builder.AppendFormat("activityTimeKnown      {0}{1}{2}", activityTime > 0 ? "T" : "", activityTime, "\n");
+                    builder.AppendFormat("activityCountKnown     {0}{1}{2}", activityCount > 0 ? "+" : "", activityCount, "\n");
                 }
                 else
                 {
@@ -462,32 +460,23 @@ public class Connection : MonoBehaviour
                                     break;
                             }
                             break;
-                        case ActivityUI.KnownTime:
-                        case ActivityUI.PossibleTime:
+                        case ActivityUI.Time:
                             int limit = GameManager.instance.aiScript.activityTimeLimit;
                             int turnCurrent = GameManager.instance.turnScript.Turn;
                             int elapsedTime;
-                            switch (GameManager.instance.nodeScript.activityState)
+                            if (activityTime > -1)
                             {
-                                case ActivityUI.KnownTime:
-                                    elapsedTime = turnCurrent - activityTurnKnown;
-                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "" , limit);
-                                    break;
-                                case ActivityUI.PossibleTime:
-                                    elapsedTime = turnCurrent - activityTurnPossible;
-                                    builder.AppendFormat("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, elapsedTime != 1 ? "s" : "", limit);
-                                    break;
+                                elapsedTime = turnCurrent - activityTime;
+                                builder.AppendFormat("Last activity{0}<font=\"Roboto-Bold SDF\">{1} turn{2} ago</font>{3}(ignored after {4} turns)",
+                                    "\n", elapsedTime, elapsedTime != 1 ? "s" : "", "\n", limit);
                             }
-                            break;
-                        case ActivityUI.KnownCount:
-                            if (activityCountKnown > 0)
-                            { builder.AppendFormat("There have been <font=\"Roboto-Bold SDF\">{0} Known</font> incident{1} (total)", activityCountKnown, activityCountKnown != 1 ? "s" : ""); }
-                            else { builder.Append("There have been <font=\"Roboto-Bold SDF\">No Known</font> incidents"); }
-                            break;
-                        case ActivityUI.PossibleCount:
-                            if (activityCountPossible > 0)
-                            { builder.AppendFormat("There have been <font=\"Roboto-Bold SDF\">{0} Possible</font> incident{1} (total)", activityCountPossible, activityCountPossible != 1 ? "s" : ""); }
-                            else { builder.Append("There have been <font=\"Roboto-Bold SDF\">No Possible</font> incidents"); }
+                            else { builder.AppendFormat("There has been{0}<font=\"Roboto-Bold SDF\">No Known Activity</font>", "\n"); }
+                                    break;
+                        case ActivityUI.Count:
+                            if (activityCount > 0)
+                            { builder.AppendFormat("There {0} been{1}<font=\"Roboto-Bold SDF\">{2} Known</font>{3} incident{4} (total)", 
+                                activityCount != 1 ? "have" : "has", "\n", activityCount, "\n", activityCount != 1 ? "s" : ""); }
+                            else { builder.AppendFormat("There have been{0}<font=\"Roboto-Bold SDF\">No Known</font>{1}incidents", "\n", "\n"); }
                             break;
                     }
                 }

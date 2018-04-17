@@ -146,29 +146,18 @@ public class TooltipConnection : MonoBehaviour
                 }
                 textTop.text = string.Format("{0}Connection{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
                 break;
-            case ActivityUI.KnownTime:
+            case ActivityUI.Time:
                 switch (securityLevel)
                 {
-                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>ONE Turn Ago</b>{1}", colourBad, colourEnd); break;
+                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>RECENT</b>{1}", colourBad, colourEnd); break;
                     case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>TWO Turns Ago</b>{1}", colourNeutral, colourEnd); break;
                     case ConnectionType.LOW: fullItem = string.Format("{0}<b>THREE OR MORE Turns Ago</b>{1}", colourGood, colourEnd); break;
                     case ConnectionType.None: fullItem = "No Activity"; break;
                     default: fullItem = string.Format("<b>NONE</b>"); break;
                 }
-                textTop.text = string.Format("{0}Known Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
+                textTop.text = string.Format("{0}Resistance Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
                 break;
-            case ActivityUI.PossibleTime:
-                switch (securityLevel)
-                {
-                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>ONE Turn Ago</b>{1}", colourBad, colourEnd); break;
-                    case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>TWO Turns Ago</b>{1}", colourNeutral, colourEnd); break;
-                    case ConnectionType.LOW: fullItem = string.Format("{0}<b>THREE OR MORE Turns Ago</b>{1}", colourGood, colourEnd); break;
-                    case ConnectionType.None: fullItem = "No Activity"; break;
-                    default: fullItem = string.Format("<b>NONE</b>"); break;
-                }
-                textTop.text = string.Format("{0}Possible Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
-                break;
-            case ActivityUI.KnownCount:
+            case ActivityUI.Count:
                 switch (securityLevel)
                 {
                     case ConnectionType.HIGH: fullItem = string.Format("{0}<b>THREE OR MORE Incidents</b>{1}", colourBad, colourEnd); break;
@@ -177,18 +166,7 @@ public class TooltipConnection : MonoBehaviour
                     case ConnectionType.None: fullItem = "No Activity"; break;
                     default: fullItem = string.Format("<b>NONE</b>"); break;
                 }
-                textTop.text = string.Format("{0}Known Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
-                break;
-            case ActivityUI.PossibleCount:
-                switch (securityLevel)
-                {
-                    case ConnectionType.HIGH: fullItem = string.Format("{0}<b>THREE OR MORE Incidents</b>{1}", colourBad, colourEnd); break;
-                    case ConnectionType.MEDIUM: fullItem = string.Format("{0}<b>TWO Incidents</b>{1}", colourNeutral, colourEnd); break;
-                    case ConnectionType.LOW: fullItem = string.Format("{0}<b>ONE Incident</b>{1}", colourGood, colourEnd); break;
-                    case ConnectionType.None: fullItem = "No Activity"; break;
-                    default: fullItem = string.Format("<b>NONE</b>"); break;
-                }
-                textTop.text = string.Format("{0}Possible Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
+                textTop.text = string.Format("{0}Resistance Activity{1}{2}{3}{4}", colourArc, colourEnd, debugID, "\n", fullItem);
                 break;
             default:
                 textTop.text = "Unknown";

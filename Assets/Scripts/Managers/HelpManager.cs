@@ -32,10 +32,8 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat(" Sprawl Nodes -> F6{0}", "\n");
         builder.AppendFormat(" Utility Nodes -> F7{0}{1}", "\n", "\n");
         builder.AppendFormat(" Debug Show -> D{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Activity Known Time -> F9{0}", "\n");
-        builder.AppendFormat(" Activity Possible Time -> F10{0}", "\n");
-        builder.AppendFormat(" Activity Known Count -> F11{0}", "\n");
-        builder.AppendFormat(" Activity Possible Count -> F12{0}", "\n");
+        builder.AppendFormat(" Activity Time -> F9{0}", "\n");
+        builder.AppendFormat(" Activity Count -> F10{0}", "\n");
         return builder.ToString();
     }
 
