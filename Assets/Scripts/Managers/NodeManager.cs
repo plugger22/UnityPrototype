@@ -867,7 +867,7 @@ public class NodeManager : MonoBehaviour
                 //0 -> clear, 1 -> Red, 2 -> Yellow, 3+ -> Green (if past limit then Grey)
                 switch (data)
                 {
-                    case 0: color = Color.clear; break;
+                    case 0: color = Color.red; break;
                     case 1: color = Color.red; break;
                     case 2: color = Color.yellow; break;
                     case 3: color = Color.green; break;

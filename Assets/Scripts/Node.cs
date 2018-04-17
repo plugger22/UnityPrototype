@@ -925,10 +925,12 @@ public class Node : MonoBehaviour
                 activityLevel = activityCountPossible;
                 break;
             case ActivityUI.KnownTime:
-                activityLevel = GameManager.instance.turnScript.Turn - activityTurnKnown;
+                if (activityTurnKnown > -1)
+                { activityLevel = GameManager.instance.turnScript.Turn - activityTurnKnown; }
                 break;
             case ActivityUI.PossibleTime:
-                activityLevel = GameManager.instance.turnScript.Turn - activityTurnPossible;
+                if (activityTurnPossible > -1)
+                { activityLevel = GameManager.instance.turnScript.Turn - activityTurnPossible; }
                 break;
             default:
                 Debug.LogWarning(string.Format("Invalid activityUI \"{0}\"", activityUI));
@@ -948,8 +950,8 @@ public class Node : MonoBehaviour
         //debug activity data
         if (GameManager.instance.optionScript.debugData == true)
         {
-            listOfActivity.Add(string.Format("activityTimeKnown      {0}{1}", activityTurnKnown > 0 ? "+" : "", activityTurnKnown));
-            listOfActivity.Add(string.Format("activityTimePossible   {0}{1}", activityTurnPossible > 0 ? "+" : "", activityTurnPossible));
+            listOfActivity.Add(string.Format("activityTimeKnown      {0}{1}", activityTurnKnown > 0 ? "T" : "", activityTurnKnown));
+            listOfActivity.Add(string.Format("activityTimePossible   {0}{1}", activityTurnPossible > 0 ? "T" : "", activityTurnPossible));
             listOfActivity.Add(string.Format("activityCountKnown     {0}{1}", activityCountKnown > 0 ? "+" : "", activityCountKnown));
             listOfActivity.Add(string.Format("activityCountPossible  {0}{1}", activityCountPossible > 0 ? "+" : "", activityCountPossible));
         }
@@ -958,29 +960,34 @@ public class Node : MonoBehaviour
             //Activity info details
             switch (GameManager.instance.nodeScript.activityState)
             {
-                /*case ActivityUI.None:
-
-                    int delay = GameManager.instance.nodeScript.nodeNoSpiderDelay;
-                    listOfActivity.Add(string.Format("Authority aware of actions where Invisibility is lost in <font=\"Roboto-Bold SDF\">{0} turn{1}</font>", "\n", delay,
-                        delay != 1 ? "s" : "");
-                    break;*/
-
                 case ActivityUI.KnownTime:
                 case ActivityUI.PossibleTime:
                     int limit = GameManager.instance.aiScript.activityTimeLimit;
                     int turnCurrent = GameManager.instance.turnScript.Turn;
-                    int elapsedTime;
+                    int elapsedTime = -1;
                     switch (GameManager.instance.nodeScript.activityState)
                     {
                         case ActivityUI.KnownTime:
-                            elapsedTime = turnCurrent - activityTurnKnown;
-                            listOfActivity.Add(string.Format("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, 
-                                elapsedTime != 1 ? "s" : "", limit));
+                            if (activityTurnKnown > -1)
+                            { elapsedTime = turnCurrent - activityTurnKnown; }
+                            if (elapsedTime > -1)
+                            {
+                                listOfActivity.Add(string.Format("Last Known activity{0}<font=\"Roboto-Bold SDF\">{1} turn{2} ago</font>{3}(ignored after {4} turns)", "\n",
+                                    elapsedTime, elapsedTime != 1 ? "s" : "", "\n", limit));
+                            }
+                            else
+                            { listOfActivity.Add(string.Format("There has been{0}<font=\"Roboto-Bold SDF\">No Known Activity</font>{1}here", "\n", "\n")); }
                             break;
                         case ActivityUI.PossibleTime:
-                            elapsedTime = turnCurrent - activityTurnPossible;
-                            listOfActivity.Add(string.Format("Last activity <font=\"Roboto-Bold SDF\">{0} turn{1}</font> ago (ignored after {2} turns)", elapsedTime, 
-                                elapsedTime != 1 ? "s" : "", limit));
+                            if (activityTurnPossible > -1)
+                            { elapsedTime = turnCurrent - activityTurnPossible; }
+                            if (elapsedTime > -1)
+                            {
+                                listOfActivity.Add(string.Format("Last Possible activity{0}<font=\"Roboto-Bold SDF\">{1} turn{2} ago</font>{3}(ignored after {4} turns)", "\n",
+                                  elapsedTime, elapsedTime != 1 ? "s" : "", "\n", limit));
+                            }
+                            else
+                            { listOfActivity.Add(string.Format("There has been{0}<font=\"Roboto-Bold SDF\">No Possible Activity</font>{1}here", "\n", "\n")); }
                             break;
                     }
                     break;
