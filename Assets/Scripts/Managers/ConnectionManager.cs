@@ -51,8 +51,9 @@ public class ConnectionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Colour codes connections according to activity (if within 0 or 1 turns ago -> red, 2 turns ago -> yellow, 3+ turns ago -> green, None -> grey)
-    /// for counts it's 3+ red, 2 yellow, 1 green, 0 grey. Saves original connection state and sets resetNeeded to true
+    /// Colour codes connections according to activity 
+    /// Time: if within 0 or 1 turns ago -> red, 2 turns ago -> yellow, 3+ turns ago -> green, None -> grey
+    /// Count: it's 3+ red, 2 yellow, 1 green, 0 grey. Saves original connection state and sets resetNeeded to true
     /// </summary>
     public void ShowConnectionActivity(ActivityUI activityUI)
     {
@@ -77,26 +78,31 @@ public class ConnectionManager : MonoBehaviour
                         if (activityData > -1)
                         {
                             int timeElapsed = currentTurn - activityData;
-                            switch (timeElapsed)
+                            if (timeElapsed > -1)
                             {
-                                case 0:
-                                case 1:
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
-                                    break;
-                                case 2:
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.MEDIUM);
-                                    break;
-                                case 3:
-                                default:
-                                    if (timeElapsed > limit)
-                                    { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
-                                    else
-                                    {
-                                        //within time elapsed allowance
-                                        conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
-                                    }
-                                    break;
+                                switch (timeElapsed)
+                                {
+                                    case 0:
+                                    case 1:
+                                        conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
+                                        break;
+                                    case 2:
+                                        conn.Value.ChangeSecurityLevel(ConnectionType.MEDIUM);
+                                        break;
+                                    case 3:
+                                    default:
+                                        if (timeElapsed > limit)
+                                        { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                                        else
+                                        {
+                                            //within time elapsed allowance
+                                            conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
+                                        }
+                                        break;
+                                }
                             }
+                            else
+                            { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
                         }
                         else
                         { conn.Value.ChangeSecurityLevel(ConnectionType.None); }

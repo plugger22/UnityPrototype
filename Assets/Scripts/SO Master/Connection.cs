@@ -35,13 +35,6 @@ public class Connection : MonoBehaviour
     [HideInInspector] public int activityTime = -1;        //most recent turn when known rebel activity occurred
     //[HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
 
-    /*private string colourRebel;
-    private string colourAuthority;
-    private string colourGood;
-    private string colourNeutral;
-    private string colourBad;
-    private string colourNormal;
-    private string colourEnd;*/
 
     //Security property -> a bit tricky but needed to handle the difference between the enum (None/High/Med/Low) and the int backing field.
     public ConnectionType SecurityLevel
@@ -120,41 +113,6 @@ public class Connection : MonoBehaviour
         /*//register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);*/
     }
-
-   /* /// <summary>
-    /// Event Handler
-    /// </summary>
-    /// <param name="eventType"></param>
-    /// <param name="Sender"></param>
-    /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object Param = null)
-    {
-        //select event type
-        switch (eventType)
-        {
-            case EventType.ChangeColour:
-                SetColours();
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
-                break;
-        }
-    }
-
-    /// <summary>
-    /// set colour palette for modal Outcome Window
-    /// </summary>
-    public void SetColours()
-    {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
-    }*/
-
 
     public void InitialiseConnection(int v1, int v2)
     {
@@ -399,6 +357,10 @@ public class Connection : MonoBehaviour
                 onMouseFlag = true;
                 if (GameManager.instance.optionScript.connectorTooltips == true)
                 {
+                    //exit any node tooltip that might be open
+                    StopCoroutine("ShowTooltip");
+                    GameManager.instance.tooltipNodeScript.CloseTooltip();
+                    //start tooltip routine
                     side = GameManager.instance.sideScript.PlayerSide;
                     StartCoroutine(ShowTooltip());
                 }
@@ -463,15 +425,18 @@ public class Connection : MonoBehaviour
                         case ActivityUI.Time:
                             int limit = GameManager.instance.aiScript.activityTimeLimit;
                             int turnCurrent = GameManager.instance.turnScript.Turn;
-                            int elapsedTime;
+                            int elapsedTime = -1;
+
                             if (activityTime > -1)
+                            { elapsedTime = turnCurrent - activityTime; }
+                            if (elapsedTime > -1)
                             {
-                                elapsedTime = turnCurrent - activityTime;
-                                builder.AppendFormat("Last activity{0}<font=\"Roboto-Bold SDF\">{1} turn{2} ago</font>{3}(ignored after {4} turns)",
-                                    "\n", elapsedTime, elapsedTime != 1 ? "s" : "", "\n", limit);
+                                builder.AppendFormat("Last known activity{0}<font=\"Roboto-Bold SDF\">{1} turn{2} ago</font>{3}(ignored after {4} turns)", "\n",
+                                    elapsedTime, elapsedTime != 1 ? "s" : "", "\n", limit);
                             }
-                            else { builder.AppendFormat("There has been{0}<font=\"Roboto-Bold SDF\">No Known Activity</font>", "\n"); }
-                                    break;
+                            else
+                            { builder.AppendFormat("There has been{0}<font=\"Roboto-Bold SDF\">No Known Activity</font>", "\n"); }
+                            break;
                         case ActivityUI.Count:
                             if (activityCount > 0)
                             { builder.AppendFormat("There {0} been{1}<font=\"Roboto-Bold SDF\">{2} Known</font>{3} incident{4} (total)", 

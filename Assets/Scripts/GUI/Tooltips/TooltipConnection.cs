@@ -174,7 +174,7 @@ public class TooltipConnection : MonoBehaviour
         }
 
         
-        //ongoing effects
+        //Ongoing effects -> Bottom text
         StringBuilder builderOngoing = new StringBuilder();
         if (listOfOngoingEffects != null & listOfOngoingEffects.Count > 0)
         {
@@ -189,8 +189,9 @@ public class TooltipConnection : MonoBehaviour
             }
         }
         else { builderOngoing.Append("<size=90%>No Ongoing effects present</size>"); }
+        
         textBottom.text = builderOngoing.ToString();
-        //debug data (middle text)
+        //debug or Activity data -> Middle text
         textMiddle.text = string.Format("{0}{1}{2}", colourNormal, textMain, colourEnd);
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(tooltipPos);
