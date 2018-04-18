@@ -13,7 +13,8 @@ public class DebugGUI : MonoBehaviour
 
     public GUIStyle customBackground;
 
-    private GUIStatus status = GUIStatus.None;
+    private GUIStatus status;
+    private MessageCategory msgStatus;
     private bool showGUI = false;
     private int debugDisplay = 0;
 
@@ -186,15 +187,23 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twelth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Pending Messages"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Toggle Messages"))
             {
-                Debug.Log("Button -> Toggle Pending Messages");
-                if (debugDisplay != 9)
-                { debugDisplay = 9; }
-                else { debugDisplay = 0; }
+                Debug.Log("Button -> Toggle Messages");
+                //toggles sequentially through message dictionaries and then switches off
+                switch(msgStatus)
+                {
+                    case MessageCategory.None: debugDisplay = 9; msgStatus = MessageCategory.Pending;  break;
+                    case MessageCategory.Pending: debugDisplay = 9; msgStatus = MessageCategory.Current; break;
+                    case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
+                    case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
+                    case MessageCategory.AI: debugDisplay = 0; msgStatus = MessageCategory.None; break;
+
+                }
+                
             }
 
-            //thirteenth button
+            /*//thirteenth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Archive Messages"))
             {
                 Debug.Log("Button -> Toggle Archive Messages");
@@ -210,7 +219,7 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 11)
                 { debugDisplay = 11; }
                 else { debugDisplay = 0; }
-            }
+            }*/
 
 
             //
@@ -479,10 +488,25 @@ public class DebugGUI : MonoBehaviour
                     //Pending Messages
                     case 9:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Pending);
+                        analysis = "Unknown";
+                        switch(msgStatus)
+                        {
+                            case MessageCategory.Pending:
+                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Pending);
+                                break;
+                            case MessageCategory.Current:
+                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
+                                break;
+                            case MessageCategory.Archive:
+                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Archive);
+                                break;
+                            case MessageCategory.AI:
+                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.AI);
+                                break;
+                        }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;
-                    //Archive Messages
+                    /*//Archive Messages
                     case 10:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Archive);
@@ -493,7 +517,7 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysis, customBackground);
-                        break;
+                        break;*/
                     //Show Options
                     case 12:
                         customBackground.alignment = TextAnchor.UpperLeft;
@@ -563,9 +587,9 @@ public class DebugGUI : MonoBehaviour
         //User input
         Event e = Event.current;
 
-            switch (e.keyCode)
-            {
-                case KeyCode.Return:
+        switch (e.keyCode)
+        {
+            case KeyCode.Return:
                 switch (status)
                 {
                     case GUIStatus.GiveGear:
@@ -575,11 +599,12 @@ public class DebugGUI : MonoBehaviour
                         debugDisplay = 19;
                         break;
                 }
-                    break;
-                case KeyCode.Escape:
-                    debugDisplay = 0;
-                    break;
+                break;
+            case KeyCode.Escape:
+                debugDisplay = 0;
+                break;
         }
+        e.keyCode = KeyCode.None;
     }
 
 

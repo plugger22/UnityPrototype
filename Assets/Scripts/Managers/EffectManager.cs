@@ -15,6 +15,10 @@ public class EffectManager : MonoBehaviour
     [Tooltip("How long do ongoing effects last for? Global setting")]
     [Range(3,20)] public int ongoingEffectTimer = 3;
 
+    //fast access
+    private int delayNoSpider;
+    private int delayYesSpider;
+
     //colour palette for Modal Outcome
     private string colourGood; //good effect Rebel / bad effect Authority
     private string colourBad; //bad effect Authority / bad effect Rebel
@@ -29,7 +33,8 @@ public class EffectManager : MonoBehaviour
 
     public void Initialise()
     {
-        
+        delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
+        delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
@@ -825,9 +830,9 @@ public class EffectManager : MonoBehaviour
                                                 //gear compromised
                                                 string text = string.Format("{0} used to stay Invisible ", gear.name);
                                                 effectReturn.bottomText = string.Format("{0}{1}(Compromised!){2}", colourEffect, text, colourEnd);
-                                                Message message = GameManager.instance.messageScript.GearCompromised(string.Format("{0}(Obtain Gear)", text), 
+                                                Message messageGear = GameManager.instance.messageScript.GearCompromised(string.Format("{0}(Obtain Gear)", text), 
                                                     node.nodeID, gear.gearID);
-                                                GameManager.instance.dataScript.AddMessage(message);
+                                                GameManager.instance.dataScript.AddMessage(messageGear);
                                                 //remove gear
                                                 GameManager.instance.playerScript.RemoveGear(gearID);
                                             }
@@ -872,6 +877,12 @@ public class EffectManager : MonoBehaviour
                                         invisibility = Mathf.Max(0, invisibility);
                                         GameManager.instance.playerScript.invisibility = invisibility;
                                     }
+                                    //AI activity message
+                                    int delay;
+                                    if (node.isSpider == true) { delay = delayYesSpider; }
+                                    else { delay = delayNoSpider; }
+                                    Message messageAI = GameManager.instance.messageScript.AINodeActivity("Resistance Activity (Player)" ,node.nodeID, 999, delay);
+                                    GameManager.instance.dataScript.AddMessage(messageAI);
                                     break;
                             }
                         }
@@ -912,6 +923,13 @@ public class EffectManager : MonoBehaviour
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
                                         actor.datapoint2 = invisibility;
+                                        //AI activity message
+                                        int delay;
+                                        if (node.isSpider == true) { delay = delayYesSpider; }
+                                        else { delay = delayNoSpider; }
+                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity ({0})", actor.arc.name), 
+                                            node.nodeID, actor.actorID, delay);
+                                        GameManager.instance.dataScript.AddMessage(messageAI);
                                         break;
                                 }
                             }

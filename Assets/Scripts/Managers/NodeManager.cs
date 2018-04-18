@@ -165,7 +165,7 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid gearPersuasion actionID (not found)"); }
         //DEBUG
-        DebugRandomActivityValues();
+        /*DebugRandomActivityValues();*/
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
         EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent);
@@ -1544,7 +1544,7 @@ public class NodeManager : MonoBehaviour
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
                             node.nodeName, node.Arc.name, moveDetails.nodeID);
-                        Message messageAI = GameManager.instance.messageScript.AISpotMove(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
+                        Message messageAI = GameManager.instance.messageScript.AIConnectionActivity(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
                         if (messageAI != null) { GameManager.instance.dataScript.AddMessage(messageAI); }
                     }
                     else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }

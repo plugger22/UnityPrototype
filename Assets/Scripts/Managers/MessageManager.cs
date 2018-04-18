@@ -10,11 +10,17 @@ using gameAPI;
 public class MessageManager : MonoBehaviour
 {
 
+    //fast access
+    GlobalSide globalResistance;
+    GlobalSide globalAuthority;
+
     /// <summary>
     /// Set up at start
     /// </summary>
     public void Initialise()
     {
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
         //event Listeners
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
         EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
@@ -54,23 +60,33 @@ public class MessageManager : MonoBehaviour
         {
             List<int> listOfMessagesToMove = new List<int>();
             //loop through all messages
-            foreach(var record in dictOfPendingMessages)
+            foreach(var message in dictOfPendingMessages)
             {
                 //look for messages that need to be displayed this turn
-                if (record.Value.displayDelay <= 0)
+                if (message.Value.displayDelay <= 0)
                 {
                     //add to list
-                    listOfMessagesToMove.Add(record.Key);
+                    listOfMessagesToMove.Add(message.Key);
+                    //AI message
+                    if (message.Value.type == gameAPI.MessageType.AI)
+                    {
+                        //Add a copy of the message to AI Message dictionary 
+                        GameManager.instance.dataScript.AddMessageExisting(message.Value, MessageCategory.AI);
+                        //Extract AI data
+                        GameManager.instance.aiScript.GetAIData(message.Value);
+                    }
                 }
                 else
                 {
                     //decrement delay timer
-                    record.Value.displayDelay--;
+                    message.Value.displayDelay--;
                 }
             }
             //loop list and move all specified messages to the Current dictionary for display
             for (int i = 0; i < listOfMessagesToMove.Count; i++)
-            { GameManager.instance.dataScript.MoveMessage(listOfMessagesToMove[i], MessageCategory.Pending, MessageCategory.Current); }
+            {
+                GameManager.instance.dataScript.MoveMessage(listOfMessagesToMove[i], MessageCategory.Pending, MessageCategory.Current);
+            }
         }
         else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
     }
@@ -120,7 +136,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Move;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = false;
             message.data0 = nodeID;
             return message;
@@ -227,7 +243,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Gear_Given;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = false;
             message.data0 = actorID;
             message.data1 = gearID;
@@ -250,7 +266,7 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="connectionID"></param>
     /// <param name="delay"></param>
     /// <returns></returns>
-    public Message AISpotMove(string text, int destinationNodeID, int connectionID, int delay)
+    public Message AIConnectionActivity(string text, int destinationNodeID, int connectionID, int delay)
     {
         Debug.Assert(destinationNodeID >= 0, string.Format("Invalid destinationNodeID {0}", destinationNodeID));
         Debug.Assert(connectionID >= 0, string.Format("Invalid connectionID {0}", connectionID));
@@ -260,12 +276,35 @@ public Message PlayerMove(string text, int nodeID)
             Message message = new Message();
             message.text = text;
             message.type = MessageType.AI;
-            message.subType = MessageSubType.AI_SpotMove;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.subType = MessageSubType.AI_Connection;
+            message.side = globalAuthority;
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = destinationNodeID;
             message.data1 = connectionID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+    public Message AINodeActivity(string text, int nodeID, int actorID, int delay)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid NodeID {0}", nodeID));
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(delay >= 0, string.Format("Invalid delay {0}", delay));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Node;
+            message.side = globalAuthority;
+            message.isPublic = true;
+            message.displayDelay = delay;
+            message.data0 = nodeID;
+            message.data1 = actorID;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -291,7 +330,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Capture;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.side = globalAuthority;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -319,7 +358,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Capture;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = actorID;
@@ -351,7 +390,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Deploy;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.side = globalAuthority;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -381,7 +420,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_AutoRecall;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.side = globalAuthority;
             message.isPublic = true;
             message.displayDelay = 0;
             message.data0 = nodeID;
@@ -411,7 +450,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Withdraw;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.side = globalAuthority;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -440,7 +479,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Effect;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.side = globalAuthority;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -469,7 +508,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Neutralise;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.side = globalAuthority;
             message.isPublic = true;
             message.displayDelay = 0;
             message.data0 = nodeID;
@@ -499,7 +538,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Comprised;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
@@ -526,7 +565,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Used;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
@@ -553,7 +592,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Obtained;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
@@ -580,7 +619,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Renown;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = dataID;
@@ -602,7 +641,7 @@ public Message PlayerMove(string text, int nodeID)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
-        if (side.level == GameManager.instance.globalScript.sideResistance.level)
+        if (side.level == globalResistance.level)
         { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -643,7 +682,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Attempt;
-            message.side = GameManager.instance.globalScript.sideResistance;
+            message.side = globalResistance;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = actorID;
@@ -673,7 +712,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Contained;
-            message.side = GameManager.instance.globalScript.sideAuthority;
+            message.side = globalAuthority;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;

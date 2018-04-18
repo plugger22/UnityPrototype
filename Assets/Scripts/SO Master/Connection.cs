@@ -30,10 +30,8 @@ public class Connection : MonoBehaviour
     [HideInInspector] public int VerticeOne { get { return v1; } }
     [HideInInspector] public int VerticeTwo { get { return v2; } }
 
-    [HideInInspector] public int activityCount = -1;       //# times known rebel activity occurred (invis-1, player movement)
-    //[HideInInspector] public int activityCountPossible = -1;    //# times suspected rebel activity occured (negative drop in conn security level for unexplained reasons)
-    [HideInInspector] public int activityTime = -1;        //most recent turn when known rebel activity occurred
-    //[HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
+    [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1, player movement)
+    [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
 
 
     //Security property -> a bit tricky but needed to handle the difference between the enum (None/High/Med/Low) and the int backing field.
@@ -253,6 +251,24 @@ public class Connection : MonoBehaviour
 
     public int GetNode2()
     { return v2; }
+
+    //
+    // - - - AI - - -
+    //
+
+    /// <summary>
+    /// add a new set of activity data (time and count)
+    /// </summary>
+    /// <param name="turn"></param>
+    public void AddActivityData(int turn)
+    {
+        activityCount++;
+        //default value -1 so first data point needs to be '1's
+        if (activityCount == 0) { activityCount++; }
+        //update for the most recent activity (highest turn #)
+        if (activityTime < turn)
+        { activityTime = turn; }
+    }
 
 
     //

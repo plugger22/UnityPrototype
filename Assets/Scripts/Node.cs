@@ -21,10 +21,8 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isContact;            //true if any ActorStatus.Active actor has a connection at the node
     [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
-    [HideInInspector] public int activityCount = -1;       //# times known rebel activity occurred (invis-1)
-    //[HideInInspector] public int activityCountPossible = -1;    //# times suspected rebel activity occured (negative drop in node stats for unexplained reasons)
-    [HideInInspector] public int activityTime = -1;        //most recent turn when known rebel activity occurred
-    //[HideInInspector] public int activityTurnPossible = -1;     //most recent turn when suspected rebel activity occurred
+    [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1)
+    [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
 
 
     public Material _Material { get; private set; }    //material renderer uses to draw node
@@ -154,32 +152,6 @@ public class Node : MonoBehaviour
             faceText.text = "";
         }
         else { Debug.LogError("Invalid faceObject (Null)"); }
-        /*//debug
-        int number = Random.Range(0, 9);
-        faceText.text = number.ToString();
-        switch (number)
-        {
-            case 0:
-                faceText.color = Color.green;
-                break;
-            case 1:
-            case 2:
-                faceText.color = Color.black;
-                break;
-            case 3:
-            case 4:
-            case 5:
-                faceText.color = Color.red;
-                break;
-            case 6:
-            case 7:
-            case 8:
-                faceText.color = Color.yellow;
-                break;
-            case 9:
-                faceText.color = Color.white;
-                break;
-        }*/
 	}
 
 
@@ -922,8 +894,22 @@ public class Node : MonoBehaviour
     }
 
     //
-    // - - - Activity - - -
+    // - - - AI - - -
     //
+
+    /// <summary>
+    /// add a new set of activity data (time and count)
+    /// </summary>
+    /// <param name="turn"></param>
+    public void AddActivityData(int turn)
+    {
+        activityCount++;
+        //default value -1 so first data point needs to be '1's
+        if (activityCount == 0) { activityCount++; }
+        //update for the most recent activity (highest turn #)
+        if (activityTime < turn)
+        { activityTime = turn; }
+    }
 
     /// <summary>
     /// returns activity level (count or time elapsed). Returns -1 if none or a problem

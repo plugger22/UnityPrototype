@@ -108,6 +108,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfArchiveMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();             //Key -> msgID, Value -> Message
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
     private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
 
@@ -2425,17 +2426,27 @@ public class DataManager : MonoBehaviour
             {
                 case true:
                     //if isPublic True then store in Pending dictionary
-                    try
+                    AddMessageExisting(message, MessageCategory.Pending);
+                    /*try
                     { dictOfPendingMessages.Add(message.msgID, message); }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Pending Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }
+                    { Debug.LogError(string.Format("Invalid Pending Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }*/
                     break;
                 case false:
                     //if isPublic False then store in Archive dictionary
-                    try
+                    AddMessageExisting(message, MessageCategory.Archive);
+                    /*try
                     { dictOfArchiveMessages.Add(message.msgID, message); }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Archive Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }
+                    { Debug.LogError(string.Format("Invalid Archive Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }*/
+                    //AI messages
+                    if (message.type == gameAPI.MessageType.AI)
+                    {
+                        //Add a copy of the message to AI Message dictionary 
+                        AddMessageExisting(message, MessageCategory.AI);
+                        //Extract AI data
+                        GameManager.instance.aiScript.GetAIData(message);
+                    }
                     break;
             }
         }
@@ -2447,7 +2458,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="message"></param>
     /// <param name="category"></param>
-    private bool AddMessageExisting(Message message, MessageCategory category)
+    public bool AddMessageExisting(Message message, MessageCategory category)
     {
         bool successFlag = true;
         Dictionary<int, Message> dictOfMessages = null;
@@ -2462,6 +2473,9 @@ public class DataManager : MonoBehaviour
                 break;
             case MessageCategory.Current:
                 dictOfMessages = dictOfCurrentMessages;
+                break;
+            case MessageCategory.AI:
+                dictOfMessages = dictOfAIMessages;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
@@ -2636,6 +2650,10 @@ public class DataManager : MonoBehaviour
                 tempDict = new Dictionary<int, Message>(dictOfCurrentMessages);
                 builderOverall.Append(string.Format(" CURRENT Messages{0}{1}", "\n", "\n"));
                 break;
+            case MessageCategory.AI:
+                tempDict = new Dictionary<int, Message>(dictOfAIMessages);
+                builderOverall.Append(string.Format(" AI Messages{0}{1}", "\n", "\n"));
+                break;
             default:
                 builderOverall.Append(string.Format(" UNKNOWN Messages{0}{1}", "\n", "\n"));
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
@@ -2653,13 +2671,13 @@ public class DataManager : MonoBehaviour
                     {
                         case "Resistance":
                             builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                            builderResistance.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
+                            builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
                                 record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
                                 record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
                             break;
                         case "Authority":
                             builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                            builderAuthority.Append(string.Format(" id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
+                            builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
                                 record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
                                 record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
                             break;

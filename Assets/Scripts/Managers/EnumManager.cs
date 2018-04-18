@@ -79,7 +79,7 @@ namespace gameAPI
     //
     // - - - Messages - - -
     //
-    public enum MessageCategory { None, Current, Pending, Archive }
+    public enum MessageCategory { None, Current, Pending, Archive, AI }
     public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT }
     public enum MessageSubType
     {
@@ -94,7 +94,8 @@ namespace gameAPI
         Team_Neutralise,
         Team_Effect,
         //AI
-        AI_SpotMove,
+        AI_Connection,
+        AI_Node,
         AI_Capture,
         AI_Release,
         //Gear

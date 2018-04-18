@@ -152,6 +152,7 @@ public class GameManager : MonoBehaviour
     {
         dataScript.InitialiseStart();   //must be first
         globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly  
+        messageScript.Initialise();     //must be after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
         tooltipNodeScript.Initialise();
         sideScript.Initialise();
         actorScript.PreInitialiseActors();
@@ -166,16 +167,16 @@ public class GameManager : MonoBehaviour
         metaScript.Initialise();
         dataScript.InitialiseFinal();   //must be after metaScript.Initialise
         actionScript.Initialise();
-        effectScript.Initialise();
         targetScript.Initialise();
         playerScript.Initialise();
         nodeScript.Initialise();
+        effectScript.Initialise();      //after nodeScript
         teamScript.Initialise();
         turnScript.Initialise();
         gearScript.Initialise();
         teamPickerScript.Initialise();
         diceScript.Initialise();
-        messageScript.Initialise();
+        
         captureScript.Initialise();
         rebelScript.Initialise();
         authorityScript.Initialise();
