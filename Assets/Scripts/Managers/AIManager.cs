@@ -11,17 +11,71 @@ public class AIManager : MonoBehaviour
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
 
+
+
+    /*public void Initialise()
+    {
+        //register listeners
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
+    }
+
+
+    /// <summary>
+    /// event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //detect event type
+        switch (eventType)
+        {
+            case EventType.StartTurnLate:
+                StartTurnLate();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Start Turn Late AI processing
+    /// </summary>
+    private void StartTurnLate()
+    {
+        switch(GameManager.instance.sideScript.PlayerSide.name)
+        {
+            case "Resistance":
+                ProcessAISideAuthority();
+                break;
+            case "Authority":
+                ProcessAISideResistance();
+                break;
+            case "AI":
+                ProcessAISideAuthority();
+                ProcessAISideResistance();
+                break;
+        }
+        
+    }*/
+
     /// <summary>
     /// Runs Resistance turn on behalf of AI
     /// </summary>
     public void ProcessAISideResistance()
-    { }
+    {
+        Debug.Log("AIManager: ProcessAISideResistance - - -");
+    }
 
     /// <summary>
     /// Runs Authority turn on behalf of AI
     /// </summary>
     public void ProcessAISideAuthority()
-    { }
+    {
+        Debug.Log("AIManager: ProcessAISideAuthority - - - ");
+    }
 
     /// <summary>
     /// Extracts all relevant AI data from an AI related message
@@ -29,7 +83,6 @@ public class AIManager : MonoBehaviour
     /// <param name="message"></param>
     public void GetAIData(Message message)
     {
-        int data;
         if (message != null)
         {
             if (message.type == MessageType.AI)

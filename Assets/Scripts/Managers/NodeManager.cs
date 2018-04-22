@@ -174,7 +174,6 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent);
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
         EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent);
-        //EventManager.instance.AddListener(EventType.DiceReturn, OnEvent);
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
     }
 

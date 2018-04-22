@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
         gearScript.Initialise();
         teamPickerScript.Initialise();
         diceScript.Initialise();
-        
+        //aiScript.Initialise();
         captureScript.Initialise();
         rebelScript.Initialise();
         authorityScript.Initialise();

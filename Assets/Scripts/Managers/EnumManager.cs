@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-
-
-namespace gameAPI
+﻿namespace gameAPI
 {
     /// <summary>
     /// Enums -> only for use in code, anything that is in an SO requires an SO enum approach
@@ -39,6 +31,7 @@ namespace gameAPI
     // 
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count }    //DataManager arrayOfNodes index
     public enum NodeType { Normal, Highlight, Active, Player, Count }
+    public enum NodeData { Support, Stability, Security};
     public enum NodeUI
     {                                                            //parameter for NodeDisplay event
         None,

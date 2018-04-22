@@ -47,6 +47,9 @@ public class Node : MonoBehaviour
     private int _stability;
     private int _support;
     private int _security;
+    private int _stabilityStart;                        //values at game start (base line)
+    private int _supportStart;
+    private int _securityStart;
     private bool _isTracerKnown;                        //true if Authority knows of tracer coverage for this node
     private bool _isSpiderKnown;                        //does Resistance know of spider?
     private bool _isContactKnown;                         //true if Authority knows of Actor contacts
@@ -145,6 +148,10 @@ public class Node : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;
+        //base line values
+        _stabilityStart = _stability;
+        _supportStart = _support;
+        _securityStart = _security;
         //get text component
         if (faceObject != null)
         {
@@ -980,8 +987,33 @@ public class Node : MonoBehaviour
                     break;
             }
         }
-
         return listOfActivity;
+    }
+
+    /// <summary>
+    /// returns difference (+/-) between current value of a node datapoint and it's original, starting value. '0' for no change, or for default if a problem.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public int GetNodeChange(NodeData type)
+    {
+        int difference = 0;
+        switch(type)
+        {
+            case NodeData.Support:
+                difference = Support - _supportStart;
+                break;
+            case NodeData.Stability:
+                difference = Stability - _stabilityStart;
+                break;
+            case NodeData.Security:
+                difference = Security - _securityStart; 
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid NodeData type \"{0}\"", type));
+                break;
+        }
+        return difference;
     }
 
     //place methods above here
