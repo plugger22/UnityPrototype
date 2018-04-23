@@ -198,20 +198,20 @@ public class DebugGUI : MonoBehaviour
                     case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
                     case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
                     case MessageCategory.AI: debugDisplay = 0; msgStatus = MessageCategory.None; break;
-
                 }
-                
             }
+        
 
-            /*//thirteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Archive Messages"))
+            //thirteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "AI Data"))
             {
-                Debug.Log("Button -> Toggle Archive Messages");
+                Debug.Log("Button -> AI Data");
                 if (debugDisplay != 10)
                 { debugDisplay = 10; }
                 else { debugDisplay = 0; }
             }
 
+            /*
             //fourteenth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Current Messages"))
             {
@@ -506,12 +506,13 @@ public class DebugGUI : MonoBehaviour
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;
-                    /*//Archive Messages
+                    //AI Data
                     case 10:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Archive);
-                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
+                        analysis = GameManager.instance.aiScript.DisplayNodeData();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
+                    /*
                     //Current Messages
                     case 11:
                         customBackground.alignment = TextAnchor.UpperLeft;

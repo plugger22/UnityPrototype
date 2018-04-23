@@ -148,10 +148,7 @@ public class Node : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;
-        //base line values
-        _stabilityStart = _stability;
-        _supportStart = _support;
-        _securityStart = _security;
+
         //get text component
         if (faceObject != null)
         {
@@ -161,6 +158,13 @@ public class Node : MonoBehaviour
         else { Debug.LogError("Invalid faceObject (Null)"); }
 	}
 
+    private void Start()
+    {
+        //base line values
+        _stabilityStart = _stability;
+        _supportStart = _support;
+        _securityStart = _security;
+    }
 
 
     /// <summary>

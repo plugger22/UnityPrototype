@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using System.Text;
 
 /// <summary>
 /// AI data package used to collate all node info where a node has degraded in some form
@@ -10,6 +11,7 @@ public class AINodeData
 {
     public int nodeID;
     public NodeData type;
+    public NodeArc arc;
     public int difference;                  //shows difference between current and start values
     public int current;                     //shows current value
 }
@@ -119,6 +121,7 @@ public class AIManager : MonoBehaviour
                         dataPackage = new AINodeData();
                         dataPackage.nodeID = node.Value.nodeID;
                         dataPackage.type = NodeData.Stability;
+                        dataPackage.arc = node.Value.Arc;
                         dataPackage.difference = Mathf.Abs(data);
                         dataPackage.current = node.Value.Stability;
                         listNodeMaster.Add(dataPackage);
@@ -131,6 +134,7 @@ public class AIManager : MonoBehaviour
                         dataPackage = new AINodeData();
                         dataPackage.nodeID = node.Value.nodeID;
                         dataPackage.type = NodeData.Security;
+                        dataPackage.arc = node.Value.Arc;
                         dataPackage.difference = Mathf.Abs(data);
                         dataPackage.current = node.Value.Security;
                         listNodeMaster.Add(dataPackage);
@@ -161,5 +165,29 @@ public class AIManager : MonoBehaviour
     {
 
     }
+
+
+
+    //
+    // - - - Debug - - -
+    //
+
+    /// <summary>
+    /// Debug display method for AI relevant data
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayNodeData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- listNodeMaster{0}", "\n");
+        if (listNodeMaster.Count > 0)
+        {
+            foreach(AINodeData data in listNodeMaster)
+            { builder.AppendFormat("ID {0}, {1}, {2}, difference: {3}, current: {4}{5}", data.nodeID, data.arc.name, data.type, data.difference, data.current, "\n"); }
+        }
+        else { builder.AppendFormat("No records{0}{1}", "\n", "\n"); }
+        return builder.ToString();
+    }
+
     //new methods above here
 }
