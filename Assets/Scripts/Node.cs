@@ -24,6 +24,14 @@ public class Node : MonoBehaviour
     [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1)
     [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
 
+    [HideInInspector] private bool isStabilityTeam;     //Civil team present at node
+    [HideInInspector] private bool isSecurityTeam;      //Control team present at node
+    [HideInInspector] private bool isSupportTeam;       //Media team present at node
+
+    //fast access fields
+    private int stabilityTeamEffect;
+    private int securityTeamEffect;
+    private int supportTeamEffect;
 
     public Material _Material { get; private set; }    //material renderer uses to draw node
     public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
@@ -58,19 +66,20 @@ public class Node : MonoBehaviour
     //Properties for backing fields
     public int Security
     {
-        get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSecurity), minValue, maxValue); }
+        get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSecurity) + GetTeamEffect(NodeData.Security), minValue, maxValue); }
         set { _security = value; Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
-        get { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeStability), minValue, maxValue); }
+        get
+        { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeStability) + GetTeamEffect(NodeData.Stability), minValue, maxValue); }
         set { _stability = value; Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
-        get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSupport), minValue, maxValue); }
+        get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSupport) + GetTeamEffect(NodeData.Support), minValue, maxValue); }
         set { _support = value; Mathf.Clamp(_support, 0, 3); }
     }
 
@@ -164,6 +173,10 @@ public class Node : MonoBehaviour
         _stabilityStart = _stability;
         _supportStart = _support;
         _securityStart = _security;
+        //fast access
+        stabilityTeamEffect = GameManager.instance.teamScript.civilNodeEffect;
+        securityTeamEffect = GameManager.instance.teamScript.controlNodeEffect;
+        supportTeamEffect = GameManager.instance.teamScript.mediaNodeEffect * -1;
     }
 
 
@@ -302,10 +315,17 @@ public class Node : MonoBehaviour
                     if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
                     { activityList = GetActivityInfo(); }
                     //show node ID only if debug data option is true
-                    string textType;
+                    string textType, textName;
                     if (GameManager.instance.optionScript.debugData == true)
-                    { textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID); }
-                    else { textType = string.Format("{0}", Arc.name); }
+                    {
+                        textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
+                        textName = string.Format("{0} / {1} / {2}", isStabilityTeam, isSupportTeam, isSecurityTeam);
+                    }
+                    else
+                    {
+                        textType = string.Format("{0}", Arc.name);
+                        textName = nodeName;
+                    }
                     //spider
                     bool showSpider = false;
                     if (isSpider == true)
@@ -323,7 +343,7 @@ public class Node : MonoBehaviour
                     //data package
                     NodeTooltipData dataTooltip = new NodeTooltipData()
                     {
-                        nodeName = nodeName,
+                        nodeName = textName,
                         type = textType,
                         isTracerActive = isTracerActive,
                         isActor = isContact,
@@ -609,6 +629,13 @@ public class Node : MonoBehaviour
                 }
                 //Add team
                 listOfTeams.Add(team);
+                //set appropriate team flags
+                switch (team.arc.name)
+                {
+                    case "CIVIL": isStabilityTeam = true; break;
+                    case "CONTROL": isSecurityTeam = true; break;
+                    case "MEDIA": isSupportTeam = true; break;
+                }
                 //initialise Team data
                 team.nodeID = nodeID;
                 team.actorSlotID = actorID;
@@ -633,6 +660,14 @@ public class Node : MonoBehaviour
         {
             if (listOfTeams[i].teamID == teamID)
             {
+                //set appropriate team flags
+                switch (listOfTeams[i].arc.name)
+                {
+                    case "CIVIL": isStabilityTeam = false; break;
+                    case "CONTROL": isSecurityTeam = false; break;
+                    case "MEDIA": isSupportTeam = false; break;
+                }
+                //remove team
                 listOfTeams.RemoveAt(i);
                 Debug.Log(string.Format("TeamID {0} removed from Node ID {1}{2}", teamID, nodeID, "\n"));
                 return true;
@@ -676,6 +711,23 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<Team> GetTeams()
     { return listOfTeams; }
+
+    /// <summary>
+    /// returns the effect of the relevant team (Civil/Control/Media) for the node Datapoints (Stability/Security/Support)
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private int GetTeamEffect(NodeData type)
+    {
+        int teamEffect = 0;
+        switch(type)
+        {
+            case NodeData.Stability: if (isStabilityTeam == true) { teamEffect = stabilityTeamEffect; } break;
+            case NodeData.Security: if (isSecurityTeam == true) { teamEffect = securityTeamEffect; } break;
+            case NodeData.Support: if (isSupportTeam == true) { teamEffect = supportTeamEffect; } break;
+        }
+        return teamEffect;
+    }
 
 
     /// <summary>

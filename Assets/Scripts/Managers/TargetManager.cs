@@ -541,8 +541,8 @@ public class TargetManager : MonoBehaviour
                             tempList.Add(string.Format("{0}Target Level {1}{2}{3}", colourBad, target.targetLevel > 0 ? "-" : "", target.targetLevel, colourEnd));
                             break;
                         case TargetFactors.Teams:
-                            if (node.CheckTeamPresent(GameManager.instance.dataScript.GetTeamArcID("Control")) > -1)
-                            { tempList.Add(string.Format("{0}Control Team -{1}{2}", colourBad, GameManager.instance.teamScript.securityTeamEffect, colourEnd)); }
+                            if (node.CheckTeamPresent(GameManager.instance.dataScript.GetTeamArcID("CONTROL")) > -1)
+                            { tempList.Add(string.Format("{0}Control Team -{1}{2}", colourBad, GameManager.instance.teamScript.controlNodeEffect, colourEnd)); }
                             break;
                         default:
                             Debug.LogError(string.Format("Unknown TargetFactor \"{0}\"{1}", factor, "\n"));
@@ -652,8 +652,8 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.Teams:
                             //Teams
-                            if (node.CheckTeamPresent(GameManager.instance.dataScript.GetTeamArcID("Control")) > -1)
-                            { tally -= GameManager.instance.teamScript.securityTeamEffect; }
+                            if (node.CheckTeamPresent(GameManager.instance.dataScript.GetTeamArcID("CONTROL")) > -1)
+                            { tally -= GameManager.instance.teamScript.controlNodeEffect; }
                             break;
                         default:
                             Debug.LogError(string.Format("Unknown TargetFactor \"{0}\"{1}", factor, "\n"));

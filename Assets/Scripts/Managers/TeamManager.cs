@@ -11,16 +11,18 @@ using System.Text;
 /// </summary>
 public class TeamManager : MonoBehaviour
 {
-    [Range(1, 4)]
+    
     [Tooltip("The maximum number of teams that may be present at a node at any one time")]
-    public int maxTeamsAtNode = 3;
+    [Range(1, 4)] public int maxTeamsAtNode = 3;
     [HideInInspector] public int minTeamsAtNode = 0;
-    [Range(1, 4)]
     [Tooltip("How long a team is deployed for before automatically being recalled")]
-    public int deployTime = 3;
-    [Range(1, 4)]
-    [Tooltip("The increase to node security due to the presence of a SecurityTeam")]
-    public int securityTeamEffect = 2;
+    [Range(1, 4)] public int deployTime = 3;
+    [Tooltip("The increase to node security due to the presence of a Control Team")]
+    [Range(1, 4)] public int controlNodeEffect = 2;
+    [Tooltip("The increase to node stability due to the presence of a Civil Team")]
+    [Range(1, 4)] public int civilNodeEffect = 2;
+    [Tooltip("The decrease to node support due to the presence of a Media Team. Note that this is converted to a negative number by Node.cs")]
+    [Range(1, 4)] public int mediaNodeEffect = 2;
 
     //fast access fields
     private GlobalSide globalAuthority;
