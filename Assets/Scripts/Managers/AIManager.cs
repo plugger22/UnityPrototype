@@ -4,6 +4,17 @@ using UnityEngine;
 using gameAPI;
 
 /// <summary>
+/// AI data package used to collate all node info where a node has degraded in some form
+/// </summary>
+public class AINodeData
+{
+    public int nodeID;
+    public NodeData type;
+    public int difference;                  //shows difference between current and start values
+    public int current;                     //shows current value
+}
+
+/// <summary>
 /// Handles AI management of both sides
 /// </summary>
 public class AIManager : MonoBehaviour
@@ -11,62 +22,16 @@ public class AIManager : MonoBehaviour
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
 
-
-
-    /*public void Initialise()
-    {
-        //register listeners
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
-    }
-
-
-    /// <summary>
-    /// event handler
-    /// </summary>
-    /// <param name="eventType"></param>
-    /// <param name="Sender"></param>
-    /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object Param = null)
-    {
-        //detect event type
-        switch (eventType)
-        {
-            case EventType.StartTurnLate:
-                StartTurnLate();
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Start Turn Late AI processing
-    /// </summary>
-    private void StartTurnLate()
-    {
-        switch(GameManager.instance.sideScript.PlayerSide.name)
-        {
-            case "Resistance":
-                ProcessAISideAuthority();
-                break;
-            case "Authority":
-                ProcessAISideResistance();
-                break;
-            case "AI":
-                ProcessAISideAuthority();
-                ProcessAISideResistance();
-                break;
-        }
-        
-    }*/
+    //info gathering lists (collated every turn)
+    List<AINodeData> listNodeMaster = new List<AINodeData>();
 
     /// <summary>
     /// Runs Resistance turn on behalf of AI
     /// </summary>
     public void ProcessAISideResistance()
     {
-        Debug.Log("AIManager: ProcessAISideResistance - - -");
+        Debug.Log(string.Format("AIManager: ProcessAISideResistance{0}", "\n"));
+        ClearAICollections();
     }
 
     /// <summary>
@@ -74,7 +39,19 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessAISideAuthority()
     {
-        Debug.Log("AIManager: ProcessAISideAuthority - - - ");
+        Debug.Log(string.Format("AIManager: ProcessAISideAuthority{0}", "\n"));
+        ClearAICollections();
+        //Nodes        
+        GetAINodeData();
+        ProcessAINodeData();
+    }
+
+    /// <summary>
+    /// run prior to any info gathering each turn to empty out all data collections
+    /// </summary>
+    private void ClearAICollections()
+    {
+        listNodeMaster.Clear();
     }
 
     /// <summary>
@@ -120,4 +97,69 @@ public class AIManager : MonoBehaviour
         else { Debug.LogWarning("Invalid message (Null)"); }
     }
 
+    /// <summary>
+    /// gathers data on all nodes that have degraded in some from (from their starting values)
+    /// </summary>
+    private void GetAINodeData()
+    {
+        int data;
+        AINodeData dataPackage;
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            foreach(var node in dictOfNodes)
+            {
+                if (node.Value != null)
+                {
+                    //Stability
+                    data = node.Value.GetNodeChange(NodeData.Stability);
+                    if (data < 0)
+                    {
+                        //node stability has degraded
+                        dataPackage = new AINodeData();
+                        dataPackage.nodeID = node.Value.nodeID;
+                        dataPackage.type = NodeData.Stability;
+                        dataPackage.difference = Mathf.Abs(data);
+                        dataPackage.current = node.Value.Stability;
+                        listNodeMaster.Add(dataPackage);
+                    }
+                    //Security
+                    data = node.Value.GetNodeChange(NodeData.Security);
+                    if (data < 0)
+                    {
+                        //node stability has degraded
+                        dataPackage = new AINodeData();
+                        dataPackage.nodeID = node.Value.nodeID;
+                        dataPackage.type = NodeData.Security;
+                        dataPackage.difference = Mathf.Abs(data);
+                        dataPackage.current = node.Value.Security;
+                        listNodeMaster.Add(dataPackage);
+                    }
+                    //Support (positive value indicates a problem, eg. growing support for resistance)
+                    data = node.Value.GetNodeChange(NodeData.Support);
+                    if (data > 0)
+                    {
+                        //node stability has degraded
+                        dataPackage = new AINodeData();
+                        dataPackage.nodeID = node.Value.nodeID;
+                        dataPackage.type = NodeData.Support;
+                        dataPackage.difference = data;
+                        dataPackage.current = node.Value.Support;
+                        listNodeMaster.Add(dataPackage);
+                    }
+                }
+                else { Debug.LogWarning(string.Format("Invalid node (Null) in dictOfNodes for nodeID {0}", node.Key)); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// Processes raw node data into useable data
+    /// </summary>
+    private void ProcessAINodeData()
+    {
+
+    }
+    //new methods above here
 }

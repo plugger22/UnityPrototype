@@ -97,6 +97,8 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void ProcessNewTurn()
     {
+        Debug.Log(string.Format("TurnManager -> ProcessNewTurn -> Player side: {0}, Current side: {1}{2}", 
+            GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n"));
         bool finishedProcessing = false;
         int safetyCircuit = 0;
         //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
@@ -115,7 +117,11 @@ public class TurnManager : MonoBehaviour
                 {
                     //safety switch to prevent endless loop -> debug only
                     safetyCircuit++;
-                    if (safetyCircuit > 10) { finishedProcessing = true; Quit(); }
+                    if (safetyCircuit > 10)
+                    {
+                        finishedProcessing = true;
+                        Debug.LogError("TurnManagers.cs -> ProcessNewTurn -> SafetyCircuit triggered");
+                        Quit(); }
                 }
                 else
                 { finishedProcessing = true; }

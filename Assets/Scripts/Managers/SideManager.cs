@@ -43,7 +43,7 @@ public class SideManager : MonoBehaviour
             //Post notification - Player side has been changed, update colours as well
             EventManager.instance.PostNotification(EventType.ChangeSide, this, _playerSide);
             EventManager.instance.PostNotification(EventType.ChangeColour, this);
-            Debug.Log("OptionManager -> Player Side now " + _playerSide + "\n");
+            Debug.Log(string.Format("OptionManager -> Player Side now {0}{1}", _playerSide, "\n"));
         }
     }
 
