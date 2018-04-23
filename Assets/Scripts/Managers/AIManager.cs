@@ -129,40 +129,52 @@ public class AIManager : MonoBehaviour
                     data = node.Value.GetNodeChange(NodeData.Stability);
                     if (data < 0)
                     {
-                        //node stability has degraded
-                        dataPackage = new AINodeData();
-                        dataPackage.nodeID = node.Value.nodeID;
-                        dataPackage.type = NodeData.Stability;
-                        dataPackage.arc = node.Value.Arc;
-                        dataPackage.difference = Mathf.Abs(data);
-                        dataPackage.current = node.Value.Stability;
-                        listNodeMaster.Add(dataPackage);
+                        //ignore if civil team already present
+                        if (node.Value.isStabilityTeam == false)
+                        {
+                            //node stability has degraded
+                            dataPackage = new AINodeData();
+                            dataPackage.nodeID = node.Value.nodeID;
+                            dataPackage.type = NodeData.Stability;
+                            dataPackage.arc = node.Value.Arc;
+                            dataPackage.difference = Mathf.Abs(data);
+                            dataPackage.current = node.Value.Stability;
+                            listNodeMaster.Add(dataPackage);
+                        }
                     }
                     //Security
                     data = node.Value.GetNodeChange(NodeData.Security);
                     if (data < 0)
                     {
-                        //node stability has degraded
-                        dataPackage = new AINodeData();
-                        dataPackage.nodeID = node.Value.nodeID;
-                        dataPackage.type = NodeData.Security;
-                        dataPackage.arc = node.Value.Arc;
-                        dataPackage.difference = Mathf.Abs(data);
-                        dataPackage.current = node.Value.Security;
-                        listNodeMaster.Add(dataPackage);
+                        //ignore if control team already present
+                        if (node.Value.isSecurityTeam == false)
+                        {
+                            //node stability has degraded
+                            dataPackage = new AINodeData();
+                            dataPackage.nodeID = node.Value.nodeID;
+                            dataPackage.type = NodeData.Security;
+                            dataPackage.arc = node.Value.Arc;
+                            dataPackage.difference = Mathf.Abs(data);
+                            dataPackage.current = node.Value.Security;
+                            listNodeMaster.Add(dataPackage);
+                        }
                     }
                     //Support (positive value indicates a problem, eg. growing support for resistance)
                     data = node.Value.GetNodeChange(NodeData.Support);
                     if (data > 0)
                     {
-                        //node stability has degraded
-                        dataPackage = new AINodeData();
-                        dataPackage.nodeID = node.Value.nodeID;
-                        dataPackage.type = NodeData.Support;
-                        dataPackage.arc = node.Value.Arc;
-                        dataPackage.difference = data;
-                        dataPackage.current = node.Value.Support;
-                        listNodeMaster.Add(dataPackage);
+                        //ignore if media team already present
+                        if (node.Value.isSupportTeam == false)
+                        {
+                            //node stability has degraded
+                            dataPackage = new AINodeData();
+                            dataPackage.nodeID = node.Value.nodeID;
+                            dataPackage.type = NodeData.Support;
+                            dataPackage.arc = node.Value.Arc;
+                            dataPackage.difference = data;
+                            dataPackage.current = node.Value.Support;
+                            listNodeMaster.Add(dataPackage);
+                        }
                     }
                 }
                 else { Debug.LogWarning(string.Format("Invalid node (Null) in dictOfNodes for nodeID {0}", node.Key)); }

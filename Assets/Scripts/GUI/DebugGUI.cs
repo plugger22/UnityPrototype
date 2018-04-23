@@ -485,7 +485,7 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.playerScript.DisplayPlayerStats();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 400), analysis, customBackground);
                         break;
-                    //Pending Messages
+                    //Toggle Messages
                     case 9:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = "Unknown";

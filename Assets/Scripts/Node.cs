@@ -24,9 +24,9 @@ public class Node : MonoBehaviour
     [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1)
     [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
 
-    [HideInInspector] private bool isStabilityTeam;     //Civil team present at node
-    [HideInInspector] private bool isSecurityTeam;      //Control team present at node
-    [HideInInspector] private bool isSupportTeam;       //Media team present at node
+    [HideInInspector] public bool isStabilityTeam;     //Civil team present at node
+    [HideInInspector] public bool isSecurityTeam;      //Control team present at node
+    [HideInInspector] public bool isSupportTeam;       //Media team present at node
 
     //fast access fields
     private int stabilityTeamEffect;
@@ -933,7 +933,7 @@ public class Node : MonoBehaviour
 
 
     /// <summary>
-    /// //stats are reversed for Authority FOR DISPLAY ONLY (a stat of 0 for resistance is very bad but it shows as a stat of 3, very good, for the authority side)
+    /// //stats are the same for both sides, colours change though in the tooltips
     /// </summary>
     /// <returns></returns>
     private int[] GetStats()
@@ -942,11 +942,12 @@ public class Node : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
+            case "Authority":
                 arrayOfStats = new int[] { Stability, Support, Security };
                 break;
-            case "Authority":
+            /*case "Authority":
                 arrayOfStats = new int[] { 3 - Stability, 3 - Support, 3 - Security };
-                break;
+                break;*/
             default:
                 arrayOfStats = new int[] { Stability, Support, Security };
                 Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));

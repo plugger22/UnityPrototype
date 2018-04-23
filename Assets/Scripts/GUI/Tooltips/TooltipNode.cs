@@ -363,7 +363,7 @@ public class TooltipNode : MonoBehaviour
             {
                 statData = data.arrayOfStats[i];
                 if (i > 0) { builderStats.AppendLine(); }
-                builderStats.AppendFormat("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(statData), statData, colourEnd);
+                builderStats.AppendFormat("{0}{1}{2}", GetStatColour(statData, (NodeData)i), statData, colourEnd);
                 //idiot check to handle case of being too many stats
                 checkCounter++;
                 if (checkCounter >= 3) { break; }
@@ -404,6 +404,35 @@ public class TooltipNode : MonoBehaviour
             canvasGroup.alpha += Time.deltaTime / fadeInTime;
             yield return null;
         }
+    }
+
+    private string GetStatColour(int data, NodeData type)
+    {
+        string colour = colourDefault;
+        //authority
+        switch (type)
+        {
+            case NodeData.Stability:
+            case NodeData.Security:
+                switch (data)
+                {
+                    case 3: colour = colourBad; break;
+                    case 2: colour = colourNeutral; break;
+                    case 1: colour = colourGood; break;
+                    case 0: colour = colourGood; break;
+                }
+                break;
+            case NodeData.Support:
+                switch (data)
+                {
+                    case 3: colour = colourGood; break;
+                    case 2: colour = colourNeutral; break;
+                    case 1: colour = colourBad; break;
+                    case 0: colour = colourBad; break;
+                }
+                break;
+        }
+        return colour;
     }
 
     /// <summary>
