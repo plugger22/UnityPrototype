@@ -496,7 +496,7 @@ public class ActionManager : MonoBehaviour
         string criteriaText;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        //Initialise nested option windows & sisable back button as you are on the top level of the nested options
+        //Initialise nested option windows & disable back button as you are on the top level of the nested options
         GameManager.instance.genericPickerScript.InitialiseNestedOptions(details);
         GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
         //color code for button tooltip header text, eg. "Operator"ss

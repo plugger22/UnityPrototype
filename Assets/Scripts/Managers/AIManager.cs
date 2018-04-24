@@ -37,6 +37,12 @@ public class AIManager : MonoBehaviour
     [Range(5, 15)] public int activityTimeLimit = 10;
     [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
     [Range(0, 10)] public int playerAIRenownCost = 1;
+    [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to High Priority tasks")]
+    [Range(1, 10)] public int priorityHighWeight = 3;
+    [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Medium Priority tasks")]
+    [Range(1, 10)] public int priorityMediumWeight = 2;
+    [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Low Priority tasks")]
+    [Range(1, 10)] public int priorityLowWeight = 1;
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -344,15 +350,17 @@ public class AIManager : MonoBehaviour
             if (numTasksSelected < maxTasksPerTurn)
             {
                 numTasks = listOfTasksNonCritical.Count;
-                int remainingTasks = maxTasksPerTurn - numTasksSelected;
-                baseOdds = ((float)remainingTasks / (float)maxTasksPerTurn) * 100f;
+                int remainingChoices = maxTasksPerTurn - numTasksSelected;
                 //Non-Critical tasks next
-                if (remainingTasks <= numTasks)
+                if (remainingChoices >= numTasks)
                 {
                     //do all -> assign odds first
-                    odds = (int)(baseOdds / (float)numTasks);
+
+                    /*if (remainingChoices == numTasks) { odds = (int)baseOdds; }
+                    else { odds = (int)((baseOdds / (float)numTasks) * remainingChoices); }*/
+
                     foreach (AITask task in listOfTasksNonCritical)
-                    { task.chance = odds; }
+                    { task.chance = (int)baseOdds; }
                     //select tasks
                     foreach (AITask task in listOfTasksNonCritical)
                     {
@@ -372,13 +380,16 @@ public class AIManager : MonoBehaviour
                         switch(task.priority)
                         {
                             case Priority.High:
-                                tempList.Add(task); tempList.Add(task); tempList.Add(task);
+                                for (int i = 0; i < priorityHighWeight; i++)
+                                { tempList.Add(task); }
                                 break;
                             case Priority.Medium:
-                                tempList.Add(task); tempList.Add(task);
+                                for (int i = 0; i < priorityMediumWeight; i++)
+                                { tempList.Add(task); }
                                 break;
                             case Priority.Low:
-                                tempList.Add(task);
+                                for (int i = 0; i < priorityLowWeight; i++)
+                                { tempList.Add(task); }
                                 break;
                             default:
                                 Debug.LogWarning(string.Format("Invalid task.priority \"{0}\" for nodeID {1}, team {2}", task.priority, task.nodeID, task.teamArc));
@@ -392,13 +403,13 @@ public class AIManager : MonoBehaviour
                         switch(task.priority)
                         {
                             case Priority.High:
-                                task.chance = (int)((3 / (float)numTasks) * 100);
+                                task.chance = (int)(((float)priorityHighWeight / (float)numTasks) * 100 * remainingChoices);
                                 break;
                             case Priority.Medium:
-                                task.chance = (int)((2 / (float)numTasks) * 100);
+                                task.chance = (int)(((float)priorityMediumWeight / (float)numTasks) * 100 * remainingChoices);
                                 break;
                             case Priority.Low:
-                                task.chance = (int)((1 / (float)numTasks) * 100);
+                                task.chance = (int)(((float)priorityLowWeight / (float)numTasks) * 100 * remainingChoices);
                                 break;
                         }
                     }
