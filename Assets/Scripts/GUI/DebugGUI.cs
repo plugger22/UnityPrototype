@@ -211,15 +211,15 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            /*
+            
             //fourteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Current Messages"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Factions"))
             {
-                Debug.Log("Button -> Toggle Current Messages");
+                Debug.Log("Button -> Toggle Factions");
                 if (debugDisplay != 11)
                 { debugDisplay = 11; }
                 else { debugDisplay = 0; }
-            }*/
+            }
 
 
             //
@@ -512,13 +512,12 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.aiScript.DisplayNodeData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
-                    /*
-                    //Current Messages
+                    //Factions
                     case 11:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
-                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 500), analysis, customBackground);
-                        break;*/
+                        analysis = GameManager.instance.factionScript.DisplayFactions();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
+                        break;
                     //Show Options
                     case 12:
                         customBackground.alignment = TextAnchor.UpperLeft;

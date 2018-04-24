@@ -390,7 +390,6 @@ public class Node : MonoBehaviour
     {
         if (pos != null)
         { listOfNeighbourPositions.Add(pos); }
-        //Debug.Log("Neighbour added: " + pos);
         else { Debug.LogError("Invalid pos (Null)"); }
     }
 

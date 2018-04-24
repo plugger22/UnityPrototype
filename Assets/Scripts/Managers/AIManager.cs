@@ -17,12 +17,27 @@ public class AINodeData
 }
 
 /// <summary>
+/// AI data package detailing an Authority task that is ready to be executed next turn
+/// </summary>
+public class AITask
+{
+    public int nodeID;
+    public NodeArc nodeArc;
+    public string teamArc;                  //team arc name, eg. 'CIVIL'
+    public Priority priority;
+}
+
+/// <summary>
 /// Handles AI management of both sides
 /// </summary>
 public class AIManager : MonoBehaviour
 {
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
+
+    private Faction factionAuthority;
+    private Faction factionResistance;
+    private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -32,6 +47,19 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listSecurityNonCritical = new List<AINodeData>();
     List<AINodeData> listSupportCritical = new List<AINodeData>();
     List<AINodeData> listSupportNonCritical = new List<AINodeData>();
+    //possible tasks to execute
+    List<AITask> listOfTasks = new List<AITask>();
+
+
+    public void Initialise()
+    {
+        factionAuthority = GameManager.instance.factionScript.factionAuthority;
+        factionResistance = GameManager.instance.factionScript.factionResistance;
+        Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
+        Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
+        //get names of node arcs (name or null, if none)
+        if (factionAuthority.preferredArc != null) { authorityPreferredArc = factionAuthority.preferredArc.name; }
+    }
 
     /// <summary>
     /// Runs Resistance turn on behalf of AI
@@ -52,6 +80,7 @@ public class AIManager : MonoBehaviour
         //Nodes        
         GetAINodeData();
         ProcessAINodeData();
+        ProcessNodeTasks();
     }
 
     /// <summary>
@@ -59,6 +88,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ClearAICollections()
     {
+        listOfTasks.Clear();
         listNodeMaster.Clear();
         listStabilityCritical.Clear();
         listStabilityNonCritical.Clear();
@@ -219,6 +249,120 @@ public class AIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// master method that determines up to 3 separate tasks, one for each node datapoint and the relevant team (Control/Civil/Media)
+    /// </summary>
+    private void ProcessNodeTasks()
+    {
+        //Stability
+        AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL");
+        if (taskStability != null) { listOfTasks.Add(taskStability); }
+        //Security
+        AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL");
+        if (taskSecurity != null) { listOfTasks.Add(taskSecurity); }
+        //Support
+        AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA");
+        if (taskSupport != null) { listOfTasks.Add(taskSupport); }
+
+    }
+
+
+    /// <summary>
+    /// sub method (ProcessNodeTasks) that taks two node datapoint lists (must be the same datapoint, eg. security) and determines a task (Null if none) based on AI rules
+    /// </summary>
+    /// <param name="listCritical"></param>
+    /// <param name="listNonCritical"></param>
+    /// <returns></returns>
+    private AITask SelectNodeTask(List<AINodeData> listCritical, List<AINodeData> listNonCritical, string name)
+    {
+        AITask task = null;
+        int index;
+        List<AINodeData> tempList = new List<AINodeData>();
+        //check for Critical tasks first
+        int listCount = listCritical.Count;
+        if (listCount > 0)
+        {
+            index = 0;
+            if (listCount > 1) 
+            {
+                //scan for any nodes of the preferred faction type
+                if (authorityPreferredArc != null)
+                {
+                    foreach (AINodeData data in listCritical)
+                    {
+                        if (data.arc.name.Equals(authorityPreferredArc) == true)
+                        { tempList.Add(data); }
+                    }
+                }
+                if (tempList.Count > 0)
+                {
+                    //randomly select a preferred faction option
+                    index = Random.Range(0, tempList.Count);
+                }
+                else
+                {
+                    //otherwise randomly select any option
+                    index = Random.Range(0, listCount);
+                }
+            }
+            //generate task
+            task = new AITask() { nodeID = listCritical[index].nodeID, nodeArc = listCritical[index].arc, teamArc = name, priority = Priority.Critical };
+        }
+        else
+        {
+            //otherwise Non Critical
+            listCount = listNonCritical.Count;
+            if (listCount > 0)
+            {
+                index = 0;
+                Priority priority = Priority.Low;
+                if (listCount > 1)
+                {
+                    tempList.Clear();
+                    //scan for any nodes of the preferred faction type
+                    if (authorityPreferredArc != null)
+                    {
+                        foreach (AINodeData data in listNonCritical)
+                        {
+                            if (data.arc.name.Equals(authorityPreferredArc) == true)
+                            { tempList.Add(data); }
+
+                        }
+                        if (tempList.Count > 0)
+                        {
+                            //randomly select a preferred faction option
+                            index = Random.Range(0, tempList.Count);
+                            //determine priority (one notch higher than normal due to being a preferred faction node arc)
+                            switch (listNonCritical[index].difference)
+                            {
+                                case 1: priority = Priority.Medium; break;
+                                case 2: priority = Priority.High; break;
+                                default: Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", listNonCritical[0].difference, 
+                                    listNonCritical[0].nodeID)); break;
+                            }
+                        }
+                        else
+                        {
+                            //otherwise randomly select any option
+                            index = Random.Range(0, listCount);
+                            //determine priority
+                            switch (listNonCritical[index].difference)
+                            {
+                                case 1: priority = Priority.Low; break;
+                                case 2: priority = Priority.Medium; break;
+                                default: Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", listNonCritical[0].difference, 
+                                    listNonCritical[0].nodeID)); break;
+                            }
+                        }
+                    }
+                }
+                //generate task
+                task = new AITask() { nodeID = listNonCritical[index].nodeID, nodeArc = listNonCritical[index].arc, teamArc = name, priority = priority };
+            }
+        }
+        return task;
+    }
+
 
     //
     // - - - Debug - - -
@@ -231,8 +375,16 @@ public class AIManager : MonoBehaviour
     public string DisplayNodeData()
     {
         StringBuilder builder = new StringBuilder();
+        //Task list
+        builder.AppendFormat("- listOfTasks{0}", "\n");
+        if (listOfTasks.Count > 0)
+        {
+            foreach (AITask task in listOfTasks)
+            { builder.AppendFormat("ID {0} {1}, {2} team, {3} priority{4}", task.nodeID, task.nodeArc.name, task.teamArc, task.priority, "\n"); }
+        }
+        else { builder.AppendFormat("No records{0}", "\n"); }
         //Master list
-        builder.AppendFormat("- listNodeMaster{0}", "\n");
+        builder.AppendFormat("{0}- listNodeMaster{1}", "\n", "\n");
         builder.Append(DebugDisplayList(listNodeMaster));
         //Sub lists
         builder.AppendFormat("{0}- listStabilityCritical{1}", "\n", "\n");
