@@ -510,7 +510,7 @@ public class DebugGUI : MonoBehaviour
                     case 10:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.aiScript.DisplayNodeData();
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 600), analysis, customBackground);
                         break;
                     //Factions
                     case 11:

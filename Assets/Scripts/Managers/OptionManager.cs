@@ -55,10 +55,12 @@ public class OptionManager : MonoBehaviour
     public string DisplayOptions()
     {
         StringBuilder builder = new StringBuilder();
-        builder.Append(string.Format(" Current Option Settings{0}{1}", "\n", "\n"));
-        builder.Append(string.Format(" Side -> {0}{1}{2}", GameManager.instance.sideScript.PlayerSide, "\n", "\n"));
-        builder.Append(string.Format(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n"));
-        builder.Append(string.Format(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n"));
+        builder.AppendFormat(" Current Option Settings{0}{1}", "\n", "\n");
+        builder.AppendFormat(" Side -> {0}{1}{2}", GameManager.instance.sideScript.PlayerSide, "\n", "\n");
+        builder.AppendFormat(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n");
+        builder.AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n");
+        builder.AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n");
+        builder.AppendFormat(" Debug Data -> {0}{1}", debugData, "\n");
         return builder.ToString();
     }
 
