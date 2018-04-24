@@ -25,6 +25,7 @@ public class AITask
     public NodeArc nodeArc;
     public string teamArc;                  //team arc name, eg. 'CIVIL'
     public Priority priority;
+    public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
 }
 
 /// <summary>
@@ -34,6 +35,8 @@ public class AIManager : MonoBehaviour
 {
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
+    [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
+    [Range(0, 10)] public int playerAIRenownCost = 1;
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -51,8 +54,8 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listSupportCritical = new List<AINodeData>();
     List<AINodeData> listSupportNonCritical = new List<AINodeData>();
     //tasks
-    List<AITask> listTasksPotential = new List<AITask>();
-    List<AITask> listTasksFinal = new List<AITask>();
+    List<AITask> listOfTasksPotential = new List<AITask>();
+    List<AITask> listOfTasksFinal = new List<AITask>();
 
 
     public void Initialise()
@@ -74,6 +77,7 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideResistance()
     {
         Debug.Log(string.Format("AIManager: ProcessAISideResistance{0}", "\n"));
+        ExecuteTasks();
         ClearAICollections();
     }
 
@@ -83,6 +87,7 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideAuthority()
     {
         Debug.Log(string.Format("AIManager: ProcessAISideAuthority{0}", "\n"));
+        ExecuteTasks();
         ClearAICollections();
         //Nodes        
         GetAINodeData();
@@ -97,8 +102,8 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ClearAICollections()
     {
-        listTasksFinal.Clear();
-        listTasksPotential.Clear();
+        listOfTasksFinal.Clear();
+        listOfTasksPotential.Clear();
         listNodeMaster.Clear();
         listStabilityCritical.Clear();
         listStabilityNonCritical.Clear();
@@ -266,13 +271,13 @@ public class AIManager : MonoBehaviour
     {
         //Stability
         AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL");
-        if (taskStability != null) { listTasksPotential.Add(taskStability); }
+        if (taskStability != null) { listOfTasksPotential.Add(taskStability); }
         //Security
         AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL");
-        if (taskSecurity != null) { listTasksPotential.Add(taskSecurity); }
+        if (taskSecurity != null) { listOfTasksPotential.Add(taskSecurity); }
         //Support
         AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA");
-        if (taskSupport != null) { listTasksPotential.Add(taskSupport); }
+        if (taskSupport != null) { listOfTasksPotential.Add(taskSupport); }
 
     }
 
@@ -282,49 +287,55 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessTasksFinal(int maxTasksPerTurn)
     {
-        int numTasks = listTasksPotential.Count;
-        int index;
+        int numTasks = listOfTasksPotential.Count;
+        int index, odds;
+        float baseOdds = 100f;
         int numTasksSelected = 0;
         if (numTasks > 0)
         {
-            List<AITask> listTasksCritical = new List<AITask>();
-            List<AITask> listTasksNonCritical = new List<AITask>();
+            List<AITask> listOfTasksCritical = new List<AITask>();
+            List<AITask> listOfTasksNonCritical = new List<AITask>();
             //loop listOfTasksPotential and split tasks into Critical and non critical
-            foreach (AITask task in listTasksPotential)
+            foreach (AITask task in listOfTasksPotential)
             {
                 switch (task.priority)
                 {
                     case Priority.Critical:
-                        listTasksCritical.Add(task);
+                        listOfTasksCritical.Add(task);
                         break;
                     default:
-                        listTasksNonCritical.Add(task);
+                        listOfTasksNonCritical.Add(task);
                         break;
                 }
             }
             //Critical tasks first
-            numTasks = listTasksCritical.Count;
+            numTasks = listOfTasksCritical.Count;
             if (numTasks > 0)
             {
                 if (numTasks <= maxTasksPerTurn)
                 {
                     //enough available tasks to do all
-                    foreach (AITask task in listTasksCritical)
+                    foreach (AITask task in listOfTasksCritical)
                     {
-                        listTasksFinal.Add(task);
+                        listOfTasksFinal.Add(task);
+                        task.chance = (int)baseOdds;
                         numTasksSelected++;
                     }
                 }
                 else
                 {
-                    //insufficient tasks, need to randomly choose
+                    //insufficient tasks -> work out odds first
+                    odds = (int)(baseOdds / numTasks);
+                    foreach(AITask task in listOfTasksCritical)
+                    { task.chance = odds; }
+                    //randomly choose
                     do
                     {
                         index = Random.Range(0, numTasks);
-                        listTasksFinal.Add(listTasksCritical[index]);
+                        listOfTasksFinal.Add(listOfTasksCritical[index]);
                         numTasksSelected++;
                         //remove entry from list to prevent future selection
-                        listTasksFinal.RemoveAt(index);
+                        listOfTasksCritical.RemoveAt(index);
                     }
                     while (numTasksSelected < maxTasksPerTurn);
                 }
@@ -332,15 +343,20 @@ public class AIManager : MonoBehaviour
             //still room 
             if (numTasksSelected < maxTasksPerTurn)
             {
-                numTasks = listTasksNonCritical.Count;
+                numTasks = listOfTasksNonCritical.Count;
                 int remainingTasks = maxTasksPerTurn - numTasksSelected;
+                baseOdds = ((float)remainingTasks / (float)maxTasksPerTurn) * 100f;
                 //Non-Critical tasks next
                 if (remainingTasks <= numTasks)
                 {
-                    //do all
-                    foreach (AITask task in listTasksNonCritical)
+                    //do all -> assign odds first
+                    odds = (int)(baseOdds / (float)numTasks);
+                    foreach (AITask task in listOfTasksNonCritical)
+                    { task.chance = odds; }
+                    //select tasks
+                    foreach (AITask task in listOfTasksNonCritical)
                     {
-                        listTasksFinal.Add(task);
+                        listOfTasksFinal.Add(task);
                         numTasksSelected++;
                         if (numTasksSelected >= maxTasksPerTurn)
                         { break; }
@@ -351,7 +367,7 @@ public class AIManager : MonoBehaviour
                     //need to randomly select from pool of tasks based on priority probabilities
                     List<AITask> tempList = new List<AITask>();
                     //populate tempList with copies of NonCritical tasks depending on priority (low -> 1 copy, medium -> 2 copies, high -> 3 copies)
-                    foreach (AITask task in listTasksNonCritical)
+                    foreach (AITask task in listOfTasksNonCritical)
                     {
                         switch(task.priority)
                         {
@@ -369,6 +385,23 @@ public class AIManager : MonoBehaviour
                                 break;
                         }
                     }
+                    //work out and assign odds first
+                    numTasks = tempList.Count;
+                    foreach(AITask task in listOfTasksNonCritical)
+                    {
+                        switch(task.priority)
+                        {
+                            case Priority.High:
+                                task.chance = (int)((3 / (float)numTasks) * 100);
+                                break;
+                            case Priority.Medium:
+                                task.chance = (int)((2 / (float)numTasks) * 100);
+                                break;
+                            case Priority.Low:
+                                task.chance = (int)((1 / (float)numTasks) * 100);
+                                break;
+                        }
+                    }
                     //randomly draw from pool
                     string selectedTeamArc;
                     do
@@ -377,7 +410,7 @@ public class AIManager : MonoBehaviour
                         if (numTasks > 0)
                         {
                             index = Random.Range(0, numTasks);
-                            listTasksFinal.Add(tempList[index]);
+                            listOfTasksFinal.Add(tempList[index]);
                             selectedTeamArc = tempList[index].teamArc;
                             numTasksSelected++;
                             //don't bother unless further selections are needed
@@ -506,6 +539,14 @@ public class AIManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// carry out all tasks in listOfTasksFinal 
+    /// </summary>
+    private void ExecuteTasks()
+    {
+
+    }
+
     //
     // - - - Debug - - -
     //
@@ -519,9 +560,9 @@ public class AIManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         //Task lists
         builder.AppendFormat("- listOfTasksFinal{0}", "\n");
-        builder.Append(DebugTaskList(listTasksFinal));
+        builder.Append(DebugTaskList(listOfTasksFinal));
         builder.AppendFormat("{0}- listOfTasksPotential{1}", "\n", "\n");
-        builder.Append(DebugTaskList(listTasksPotential));
+        builder.Append(DebugTaskList(listOfTasksPotential));
         //Master Node list
         builder.AppendFormat("{0}- listNodeMaster{1}", "\n", "\n");
         builder.Append(DebugDisplayList(listNodeMaster));
@@ -575,7 +616,8 @@ public class AIManager : MonoBehaviour
             if (listOfTasks.Count > 0)
             {
                 foreach (AITask task in listOfTasks)
-                { builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority{4}", task.nodeID, task.nodeArc.name, task.teamArc, task.priority, "\n"); }
+                { builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.nodeID, task.nodeArc.name, task.teamArc, task.priority,
+                    task.chance, "\n"); }
             }
             else { builderList.AppendFormat("No records{0}", "\n"); }
         }
