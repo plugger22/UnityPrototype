@@ -38,6 +38,9 @@ public class AIManager : MonoBehaviour
     private Faction factionAuthority;
     private Faction factionResistance;
     private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
+    private string resistancePreferredArc;
+    private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
+    private int resistanceMaxTasksPerTurn;
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -60,6 +63,9 @@ public class AIManager : MonoBehaviour
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
         //get names of node arcs (name or null, if none)
         if (factionAuthority.preferredArc != null) { authorityPreferredArc = factionAuthority.preferredArc.name; }
+        if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
+        authorityMaxTasksPerTurn = factionAuthority.maxTaskPerTurn;
+        resistanceMaxTasksPerTurn = factionResistance.maxTaskPerTurn;
     }
 
     /// <summary>
@@ -83,7 +89,7 @@ public class AIManager : MonoBehaviour
         ProcessAINodeData();
         ProcessNodeTasks();
         //choose tasks for the turn
-        ProcessTasksFinal();
+        ProcessTasksFinal(authorityMaxTasksPerTurn);
     }
 
     /// <summary>
@@ -274,18 +280,19 @@ public class AIManager : MonoBehaviour
     /// <summary>
     /// Selects tasks from pool of potential tasks for this turn
     /// </summary>
-    private void ProcessTasksFinal()
+    private void ProcessTasksFinal(int maxTasksPerTurn)
     {
         int numTasks = listTasksPotential.Count;
+        int index;
         int numTasksSelected = 0;
-        if (numTasks> 0)
+        if (numTasks > 0)
         {
             List<AITask> listTasksCritical = new List<AITask>();
             List<AITask> listTasksNonCritical = new List<AITask>();
             //loop listOfTasksPotential and split tasks into Critical and non critical
-            foreach(AITask task in listTasksPotential)
+            foreach (AITask task in listTasksPotential)
             {
-                switch(task.priority)
+                switch (task.priority)
                 {
                     case Priority.Critical:
                         listTasksCritical.Add(task);
@@ -295,14 +302,101 @@ public class AIManager : MonoBehaviour
                         break;
                 }
             }
-            //select tasks
-            bool continueFlag = true;
-            
-            do
+            //Critical tasks first
+            numTasks = listTasksCritical.Count;
+            if (numTasks > 0)
             {
-                numTasksSelected++;
+                if (numTasks <= maxTasksPerTurn)
+                {
+                    //enough available tasks to do all
+                    foreach (AITask task in listTasksCritical)
+                    {
+                        listTasksFinal.Add(task);
+                        numTasksSelected++;
+                    }
+                }
+                else
+                {
+                    //insufficient tasks, need to randomly choose
+                    do
+                    {
+                        index = Random.Range(0, numTasks);
+                        listTasksFinal.Add(listTasksCritical[index]);
+                        numTasksSelected++;
+                        //remove entry from list to prevent future selection
+                        listTasksFinal.RemoveAt(index);
+                    }
+                    while (numTasksSelected < maxTasksPerTurn);
+                }
             }
-            while (continueFlag == true);
+            //still room 
+            if (numTasksSelected < maxTasksPerTurn)
+            {
+                numTasks = listTasksNonCritical.Count;
+                int remainingTasks = maxTasksPerTurn - numTasksSelected;
+                //Non-Critical tasks next
+                if (remainingTasks <= numTasks)
+                {
+                    //do all
+                    foreach (AITask task in listTasksNonCritical)
+                    {
+                        listTasksFinal.Add(task);
+                        numTasksSelected++;
+                        if (numTasksSelected >= maxTasksPerTurn)
+                        { break; }
+                    }
+                }
+                else
+                {
+                    //need to randomly select from pool of tasks based on priority probabilities
+                    List<AITask> tempList = new List<AITask>();
+                    //populate tempList with copies of NonCritical tasks depending on priority (low -> 1 copy, medium -> 2 copies, high -> 3 copies)
+                    foreach (AITask task in listTasksNonCritical)
+                    {
+                        switch(task.priority)
+                        {
+                            case Priority.High:
+                                tempList.Add(task); tempList.Add(task); tempList.Add(task);
+                                break;
+                            case Priority.Medium:
+                                tempList.Add(task); tempList.Add(task);
+                                break;
+                            case Priority.Low:
+                                tempList.Add(task);
+                                break;
+                            default:
+                                Debug.LogWarning(string.Format("Invalid task.priority \"{0}\" for nodeID {1}, team {2}", task.priority, task.nodeID, task.teamArc));
+                                break;
+                        }
+                    }
+                    //randomly draw from pool
+                    string selectedTeamArc;
+                    do
+                    {
+                        numTasks = tempList.Count;
+                        if (numTasks > 0)
+                        {
+                            index = Random.Range(0, numTasks);
+                            listTasksFinal.Add(tempList[index]);
+                            selectedTeamArc = tempList[index].teamArc;
+                            numTasksSelected++;
+                            //don't bother unless further selections are needed
+                            if (numTasksSelected < maxTasksPerTurn)
+                            {
+                                //reverse loop and remove all instances of task from tempList to prevent duplicate selections
+                                for (int i = numTasks - 1; i >= 0; i--)
+                                {
+                                    if (tempList[i].teamArc.Equals(selectedTeamArc) == true)
+                                    { tempList.RemoveAt(i); }
+                                }
+                            }
+                        }
+                        else { numTasksSelected++; }
+                    }
+                    while (numTasksSelected < maxTasksPerTurn);
+                }
+            }
+
         }
         else { Debug.LogWarning("AIManager.cs -> ProcessTasksFinal: No tasks this turn"); }
     }
@@ -350,6 +444,11 @@ public class AIManager : MonoBehaviour
                     task = new AITask() { nodeID = listCritical[index].nodeID, nodeArc = listCritical[index].arc, teamArc = name, priority = Priority.Critical };
                 }
             }
+            else
+            {
+                //single record only
+                task = new AITask() { nodeID = listCritical[0].nodeID, nodeArc = listCritical[0].arc, teamArc = name, priority = Priority.Critical };
+            }
         }
         else
         {
@@ -359,53 +458,48 @@ public class AIManager : MonoBehaviour
             {
                 index = 0;
                 Priority priority = Priority.Low;
-                if (listCount > 1)
+                tempList.Clear();
+                //scan for any nodes of the preferred faction type
+                if (authorityPreferredArc != null)
                 {
-                    tempList.Clear();
-                    //scan for any nodes of the preferred faction type
-                    if (authorityPreferredArc != null)
+                    foreach (AINodeData data in listNonCritical)
                     {
-                        foreach (AINodeData data in listNonCritical)
+                        if (data.arc.name.Equals(authorityPreferredArc) == true)
+                        { tempList.Add(data); }
+                    }
+                    if (tempList.Count > 0)
+                    {
+                        //randomly select a preferred faction option
+                        index = Random.Range(0, tempList.Count);
+                        //determine priority (one notch higher than normal due to being a preferred faction node arc)
+                        switch (tempList[index].difference)
                         {
-                            if (data.arc.name.Equals(authorityPreferredArc) == true)
-                            { tempList.Add(data); }
-
+                            case 1: priority = Priority.Medium; break;
+                            case 2: priority = Priority.High; break;
+                            default:
+                                Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", tempList[0].difference,
+                           tempList[0].nodeID)); break;
                         }
-                        if (tempList.Count > 0)
+                        //generate task
+                        task = new AITask() { nodeID = tempList[index].nodeID, nodeArc = tempList[index].arc, teamArc = name, priority = priority };
+                    }
+                    else
+                    {
+                        //otherwise randomly select any option
+                        index = Random.Range(0, listCount);
+                        //determine priority
+                        switch (listNonCritical[index].difference)
                         {
-                            //randomly select a preferred faction option
-                            index = Random.Range(0, tempList.Count);
-                            //determine priority (one notch higher than normal due to being a preferred faction node arc)
-                            switch (tempList[index].difference)
-                            {
-                                case 1: priority = Priority.Medium; break;
-                                case 2: priority = Priority.High; break;
-                                default:
-                                    Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", tempList[0].difference,
-                               tempList[0].nodeID)); break;
-                            }
-                            //generate task
-                            task = new AITask() { nodeID = tempList[index].nodeID, nodeArc = tempList[index].arc, teamArc = name, priority = priority };
+                            case 1: priority = Priority.Low; break;
+                            case 2: priority = Priority.Medium; break;
+                            default:
+                                Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", listNonCritical[0].difference,
+                           listNonCritical[0].nodeID)); break;
                         }
-                        else
-                        {
-                            //otherwise randomly select any option
-                            index = Random.Range(0, listCount);
-                            //determine priority
-                            switch (listNonCritical[index].difference)
-                            {
-                                case 1: priority = Priority.Low; break;
-                                case 2: priority = Priority.Medium; break;
-                                default:
-                                    Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", listNonCritical[0].difference,
-                               listNonCritical[0].nodeID)); break;
-                            }
-                            //generate task
-                            task = new AITask() { nodeID = listNonCritical[index].nodeID, nodeArc = listNonCritical[index].arc, teamArc = name, priority = priority };
-                        }
+                        //generate task
+                        task = new AITask() { nodeID = listNonCritical[index].nodeID, nodeArc = listNonCritical[index].arc, teamArc = name, priority = priority };
                     }
                 }
-
             }
         }
         return task;

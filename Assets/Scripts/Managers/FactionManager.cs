@@ -58,6 +58,7 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" Preferred Nodes: {0},  Hostile Nodes: {1}{2}",
             factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None",
             factionAuthority.hostileArc != null ? factionAuthority.hostileArc.name : "None", "\n");
+        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}", factionAuthority.maxTaskPerTurn, "\n");
         //resistance
         builder.AppendFormat("{0} RESISTANCE{1}", "\n", "\n");
         builder.AppendFormat(" {0} faction{1}", factionResistance.name, "\n");
@@ -65,6 +66,7 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" Preferred Nodes: {0}, Hostile Nodes: {1}{2}",
             factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None",
             factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n");
+        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}", factionResistance.maxTaskPerTurn, "\n");
         return builder.ToString();
     }
 }

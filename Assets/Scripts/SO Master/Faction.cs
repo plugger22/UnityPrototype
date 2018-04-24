@@ -14,6 +14,8 @@ public class Faction : ScriptableObject
     public NodeArc preferredArc; 
     [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
     public NodeArc hostileArc;
+    [Tooltip("How many AI Tasks can the faction undertake in any given turn")]
+    [Range(1,5)] public int maxTaskPerTurn = 3;
 
     [HideInInspector] public int factionID;         //dynamically assigned by DataManager.cs on import
 }
