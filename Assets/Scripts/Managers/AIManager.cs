@@ -686,8 +686,19 @@ public class AIManager : MonoBehaviour
             if (listOfTasks.Count > 0)
             {
                 foreach (AITask task in listOfTasks)
-                { builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
-                    task.chance, "\n"); }
+                {
+                    switch (task.type)
+                    {
+                        case AIType.Team:
+                            builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
+                            task.chance, "\n");
+                            break;
+                        default:
+                            builderList.AppendFormat("Unknown task type \"{0}\"{1}", task.type, "\n");
+                            break;
+                    }
+                    
+                }
             }
             else { builderList.AppendFormat("No records{0}", "\n"); }
         }
