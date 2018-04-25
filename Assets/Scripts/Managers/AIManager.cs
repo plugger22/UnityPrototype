@@ -22,8 +22,9 @@ public class AINodeData
 public class AITask
 {
     public int data0;                      //could be node or connection ID
-    public NodeArc nodeArc;
-    public string name0;                   //could be team arc name, eg. 'CIVIL'
+    public int data1;                      //teamArcID
+    public string name0;                   //node arc name
+    public string name1;                   //could be team arc name, eg. 'CIVIL'
     public Priority priority;
     public AIType type;                     //what type of task
     public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
@@ -303,21 +304,21 @@ public class AIManager : MonoBehaviour
         numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcCivil, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
-            AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL");
+            AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL", teamArcCivil);
             if (taskStability != null) { listOfTasksPotential.Add(taskStability); }
         }
         //Security
         numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcControl, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
-            AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL");
+            AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL", teamArcControl);
             if (taskSecurity != null) { listOfTasksPotential.Add(taskSecurity); }
         }
         //Support
         numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcMedia, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
-            AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA");
+            AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA", teamArcMedia);
             if (taskSupport != null) { listOfTasksPotential.Add(taskSupport); }
         }
 
@@ -428,7 +429,7 @@ public class AIManager : MonoBehaviour
                                 { tempList.Add(task); }
                                 break;
                             default:
-                                Debug.LogWarning(string.Format("Invalid task.priority \"{0}\" for nodeID {1}, team {2}", task.priority, task.data0, task.name0));
+                                Debug.LogWarning(string.Format("Invalid task.priority \"{0}\" for nodeID {1}, team {2}", task.priority, task.data0, task.name1));
                                 break;
                         }
                     }
@@ -458,7 +459,7 @@ public class AIManager : MonoBehaviour
                         {
                             index = Random.Range(0, numTasks);
                             listOfTasksFinal.Add(tempList[index]);
-                            selectedTeamArc = tempList[index].name0;
+                            selectedTeamArc = tempList[index].name1;
                             numTasksSelected++;
                             //don't bother unless further selections are needed
                             if (numTasksSelected < maxTasksPerTurn)
@@ -466,7 +467,7 @@ public class AIManager : MonoBehaviour
                                 //reverse loop and remove all instances of task from tempList to prevent duplicate selections
                                 for (int i = numTasks - 1; i >= 0; i--)
                                 {
-                                    if (tempList[i].name0.Equals(selectedTeamArc) == true)
+                                    if (tempList[i].name1.Equals(selectedTeamArc) == true)
                                     { tempList.RemoveAt(i); }
                                 }
                             }
@@ -488,7 +489,7 @@ public class AIManager : MonoBehaviour
     /// <param name="listCritical"></param>
     /// <param name="listNonCritical"></param>
     /// <returns></returns>
-    private AITask SelectNodeTask(List<AINodeData> listCritical, List<AINodeData> listNonCritical, string name)
+    private AITask SelectNodeTask(List<AINodeData> listCritical, List<AINodeData> listNonCritical, string name, int teamArcID)
     {
         AITask task = null;
         int index;
@@ -514,20 +515,20 @@ public class AIManager : MonoBehaviour
                     //randomly select a preferred faction option
                     index = Random.Range(0, tempList.Count);
                     //generate task
-                    task = new AITask() { data0 = tempList[index].nodeID, nodeArc = tempList[index].arc, name0 = name, priority = Priority.Critical };
+                    task = new AITask() { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = Priority.Critical };
                 }
                 else
                 {
                     //otherwise randomly select any option
                     index = Random.Range(0, listCount);
                     //generate task
-                    task = new AITask() { data0 = listCritical[index].nodeID, nodeArc = listCritical[index].arc, name0 = name, priority = Priority.Critical };
+                    task = new AITask() { data0 = listCritical[index].nodeID, name0 = listCritical[index].arc.name, name1 = name, priority = Priority.Critical };
                 }
             }
             else
             {
                 //single record only
-                task = new AITask() { data0 = listCritical[0].nodeID, nodeArc = listCritical[0].arc, name0 = name, priority = Priority.Critical };
+                task = new AITask() { data0 = listCritical[0].nodeID, name0 = listCritical[0].arc.name, name1 = name, priority = Priority.Critical };
             }
         }
         else
@@ -561,7 +562,7 @@ public class AIManager : MonoBehaviour
                            tempList[0].nodeID)); break;
                         }
                         //generate task
-                        task = new AITask() { data0 = tempList[index].nodeID, nodeArc = tempList[index].arc, name0 = name, priority = priority };
+                        task = new AITask() { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = priority };
                     }
                     else
                     {
@@ -577,13 +578,17 @@ public class AIManager : MonoBehaviour
                            listNonCritical[0].nodeID)); break;
                         }
                         //generate task
-                        task = new AITask() { data0 = listNonCritical[index].nodeID, nodeArc = listNonCritical[index].arc, name0 = name, priority = priority };
+                        task = new AITask() { data0 = listNonCritical[index].nodeID, name0 = listNonCritical[index].arc.name, name1 = name, priority = priority };
                     }
                 }
             }
         }
-        //team task
-        if (task != null) { task.type = AIType.Team; }
+        //add final data
+        if (task != null)
+        {
+            task.type = AIType.Team;
+            task.data1 = teamArcID;
+        }
         return task;
     }
 
@@ -593,7 +598,23 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ExecuteTasks()
     {
-
+        int dataID;
+        foreach(AITask task in listOfTasksFinal)
+        {
+            switch (task.type)
+            {
+                case AIType.Team:
+                    dataID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
+                    Node node = GameManager.instance.dataScript.GetNode(task.data0);
+                    if (node != null)
+                    { GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
+                    else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
+                    break;
+            }
+        }
     }
 
     //
@@ -665,7 +686,7 @@ public class AIManager : MonoBehaviour
             if (listOfTasks.Count > 0)
             {
                 foreach (AITask task in listOfTasks)
-                { builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.nodeArc.name, task.name0, task.priority,
+                { builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
                     task.chance, "\n"); }
             }
             else { builderList.AppendFormat("No records{0}", "\n"); }

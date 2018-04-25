@@ -383,7 +383,8 @@ public Message PlayerMove(string text, int nodeID)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (GameManager.instance.sideScript.authorityPlayer == SideState.Player)
+        { Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID)); }
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -413,7 +414,8 @@ public Message PlayerMove(string text, int nodeID)
     { 
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (GameManager.instance.sideScript.authorityPlayer == SideState.Player)
+        { Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID)); }
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();

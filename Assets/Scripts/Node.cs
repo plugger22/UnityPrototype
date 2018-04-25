@@ -601,7 +601,7 @@ public class Node : MonoBehaviour
     /// <summary>
     /// add an authority team to the node. Returns true if placement successful.
     /// Max one instance of each type of team at node
-    /// Max cap on number of teams at node
+    /// Max cap on number of teams at node.
     /// </summary>
     /// <param name="team"></param>
     public bool AddTeam(Team team, int actorID)

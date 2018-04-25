@@ -249,10 +249,13 @@ public class InputManager : MonoBehaviour
         int modalLevel = GameManager.instance.modalGUIScropt.CheckModalLevel();
         builder.Append(" Game States");
         builder.AppendLine(); builder.AppendLine();
-        builder.Append(string.Format(" GameState -> {0}{1}", GameState, "\n"));
-        builder.Append(string.Format(" ModalState -> {0}{1}", ModalState, "\n"));
-        builder.Append(string.Format(" ModalLevel -> {0}{1}", modalLevel, "\n"));
-        builder.Append(string.Format(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n"));
+        builder.AppendFormat(" GameState -> {0}{1}", GameState, "\n");
+        builder.AppendFormat(" ModalState -> {0}{1}", ModalState, "\n");
+        builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");
+        builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n");
+        builder.AppendFormat("{0} PlayerSide -> {1}{2}", "\n", GameManager.instance.sideScript.PlayerSide.name, "\n");
+        builder.AppendFormat(" AuthorityPlayer -> {0}{1}", GameManager.instance.sideScript.authorityPlayer, "\n");
+        builder.AppendFormat(" ResistancePlayer -> {0}{1}", GameManager.instance.sideScript.resistancePlayer, "\n");
         return builder.ToString();
     }
     
