@@ -21,10 +21,11 @@ public class AINodeData
 /// </summary>
 public class AITask
 {
-    public int nodeID;
+    public int data0;                      //could be node or connection ID
     public NodeArc nodeArc;
-    public string teamArc;                  //team arc name, eg. 'CIVIL'
+    public string name0;                   //could be team arc name, eg. 'CIVIL'
     public Priority priority;
+    public AIType type;                     //what type of task
     public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
 }
 
@@ -44,12 +45,19 @@ public class AIManager : MonoBehaviour
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Low Priority tasks")]
     [Range(1, 10)] public int priorityLowWeight = 1;
 
+
     private Faction factionAuthority;
     private Faction factionResistance;
     private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
+
+    //fast access
+    private int teamArcCivil = -1;
+    private int teamArcControl = -1;
+    private int teamArcMedia = -1;
+    private int maxTeamsAtNode = -1;
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -59,6 +67,7 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listSecurityNonCritical = new List<AINodeData>();
     List<AINodeData> listSupportCritical = new List<AINodeData>();
     List<AINodeData> listSupportNonCritical = new List<AINodeData>();
+
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
     List<AITask> listOfTasksFinal = new List<AITask>();
@@ -75,6 +84,16 @@ public class AIManager : MonoBehaviour
         if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
         authorityMaxTasksPerTurn = factionAuthority.maxTaskPerTurn;
         resistanceMaxTasksPerTurn = factionResistance.maxTaskPerTurn;
+        //fast access
+        teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
+        teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
+        teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
+        
+        Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
+        Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
+        Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
+        maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
+        Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
     }
 
     /// <summary>
@@ -176,55 +195,59 @@ public class AIManager : MonoBehaviour
             {
                 if (node.Value != null)
                 {
-                    //Stability
-                    data = node.Value.GetNodeChange(NodeData.Stability);
-                    if (data < 0)
+                    //check that node isn't already maxxed out on teams
+                    if (node.Value.CheckNumOfTeams() < maxTeamsAtNode)
                     {
-                        //ignore if civil team already present
-                        if (node.Value.isStabilityTeam == false)
+                        //Stability
+                        data = node.Value.GetNodeChange(NodeData.Stability);
+                        if (data < 0)
                         {
-                            //node stability has degraded
-                            dataPackage = new AINodeData();
-                            dataPackage.nodeID = node.Value.nodeID;
-                            dataPackage.type = NodeData.Stability;
-                            dataPackage.arc = node.Value.Arc;
-                            dataPackage.difference = Mathf.Abs(data);
-                            dataPackage.current = node.Value.Stability;
-                            listNodeMaster.Add(dataPackage);
+                            //ignore if civil team already present
+                            if (node.Value.isStabilityTeam == false)
+                            {
+                                //node stability has degraded
+                                dataPackage = new AINodeData();
+                                dataPackage.nodeID = node.Value.nodeID;
+                                dataPackage.type = NodeData.Stability;
+                                dataPackage.arc = node.Value.Arc;
+                                dataPackage.difference = Mathf.Abs(data);
+                                dataPackage.current = node.Value.Stability;
+                                listNodeMaster.Add(dataPackage);
+                            }
                         }
-                    }
-                    //Security
-                    data = node.Value.GetNodeChange(NodeData.Security);
-                    if (data < 0)
-                    {
-                        //ignore if control team already present
-                        if (node.Value.isSecurityTeam == false)
+                        //Security
+                        data = node.Value.GetNodeChange(NodeData.Security);
+                        if (data < 0)
                         {
-                            //node stability has degraded
-                            dataPackage = new AINodeData();
-                            dataPackage.nodeID = node.Value.nodeID;
-                            dataPackage.type = NodeData.Security;
-                            dataPackage.arc = node.Value.Arc;
-                            dataPackage.difference = Mathf.Abs(data);
-                            dataPackage.current = node.Value.Security;
-                            listNodeMaster.Add(dataPackage);
+                            //ignore if control team already present
+                            if (node.Value.isSecurityTeam == false)
+                            {
+                                //node stability has degraded
+                                dataPackage = new AINodeData();
+                                dataPackage.nodeID = node.Value.nodeID;
+                                dataPackage.type = NodeData.Security;
+                                dataPackage.arc = node.Value.Arc;
+                                dataPackage.difference = Mathf.Abs(data);
+                                dataPackage.current = node.Value.Security;
+                                listNodeMaster.Add(dataPackage);
+                            }
                         }
-                    }
-                    //Support (positive value indicates a problem, eg. growing support for resistance)
-                    data = node.Value.GetNodeChange(NodeData.Support);
-                    if (data > 0)
-                    {
-                        //ignore if media team already present
-                        if (node.Value.isSupportTeam == false)
+                        //Support (positive value indicates a problem, eg. growing support for resistance)
+                        data = node.Value.GetNodeChange(NodeData.Support);
+                        if (data > 0)
                         {
-                            //node stability has degraded
-                            dataPackage = new AINodeData();
-                            dataPackage.nodeID = node.Value.nodeID;
-                            dataPackage.type = NodeData.Support;
-                            dataPackage.arc = node.Value.Arc;
-                            dataPackage.difference = data;
-                            dataPackage.current = node.Value.Support;
-                            listNodeMaster.Add(dataPackage);
+                            //ignore if media team already present
+                            if (node.Value.isSupportTeam == false)
+                            {
+                                //node stability has degraded
+                                dataPackage = new AINodeData();
+                                dataPackage.nodeID = node.Value.nodeID;
+                                dataPackage.type = NodeData.Support;
+                                dataPackage.arc = node.Value.Arc;
+                                dataPackage.difference = data;
+                                dataPackage.current = node.Value.Support;
+                                listNodeMaster.Add(dataPackage);
+                            }
                         }
                     }
                 }
@@ -275,15 +298,28 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessNodeTasks()
     {
+        int numOfTeams;
         //Stability
-        AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL");
-        if (taskStability != null) { listOfTasksPotential.Add(taskStability); }
+        numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcCivil, TeamInfo.Reserve);
+        if (numOfTeams > 0)
+        {
+            AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL");
+            if (taskStability != null) { listOfTasksPotential.Add(taskStability); }
+        }
         //Security
-        AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL");
-        if (taskSecurity != null) { listOfTasksPotential.Add(taskSecurity); }
+        numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcControl, TeamInfo.Reserve);
+        if (numOfTeams > 0)
+        {
+            AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL");
+            if (taskSecurity != null) { listOfTasksPotential.Add(taskSecurity); }
+        }
         //Support
-        AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA");
-        if (taskSupport != null) { listOfTasksPotential.Add(taskSupport); }
+        numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcMedia, TeamInfo.Reserve);
+        if (numOfTeams > 0)
+        {
+            AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA");
+            if (taskSupport != null) { listOfTasksPotential.Add(taskSupport); }
+        }
 
     }
 
@@ -392,7 +428,7 @@ public class AIManager : MonoBehaviour
                                 { tempList.Add(task); }
                                 break;
                             default:
-                                Debug.LogWarning(string.Format("Invalid task.priority \"{0}\" for nodeID {1}, team {2}", task.priority, task.nodeID, task.teamArc));
+                                Debug.LogWarning(string.Format("Invalid task.priority \"{0}\" for nodeID {1}, team {2}", task.priority, task.data0, task.name0));
                                 break;
                         }
                     }
@@ -422,7 +458,7 @@ public class AIManager : MonoBehaviour
                         {
                             index = Random.Range(0, numTasks);
                             listOfTasksFinal.Add(tempList[index]);
-                            selectedTeamArc = tempList[index].teamArc;
+                            selectedTeamArc = tempList[index].name0;
                             numTasksSelected++;
                             //don't bother unless further selections are needed
                             if (numTasksSelected < maxTasksPerTurn)
@@ -430,7 +466,7 @@ public class AIManager : MonoBehaviour
                                 //reverse loop and remove all instances of task from tempList to prevent duplicate selections
                                 for (int i = numTasks - 1; i >= 0; i--)
                                 {
-                                    if (tempList[i].teamArc.Equals(selectedTeamArc) == true)
+                                    if (tempList[i].name0.Equals(selectedTeamArc) == true)
                                     { tempList.RemoveAt(i); }
                                 }
                             }
@@ -447,7 +483,7 @@ public class AIManager : MonoBehaviour
 
 
     /// <summary>
-    /// sub method (ProcessNodeTasks) that taks two node datapoint lists (must be the same datapoint, eg. security) and determines a task (Null if none) based on AI rules
+    /// sub method (ProcessNodeTasks) that takes two node datapoint lists (must be the same datapoint, eg. security) and determines a task (Null if none) based on AI rules
     /// </summary>
     /// <param name="listCritical"></param>
     /// <param name="listNonCritical"></param>
@@ -478,20 +514,20 @@ public class AIManager : MonoBehaviour
                     //randomly select a preferred faction option
                     index = Random.Range(0, tempList.Count);
                     //generate task
-                    task = new AITask() { nodeID = tempList[index].nodeID, nodeArc = tempList[index].arc, teamArc = name, priority = Priority.Critical };
+                    task = new AITask() { data0 = tempList[index].nodeID, nodeArc = tempList[index].arc, name0 = name, priority = Priority.Critical };
                 }
                 else
                 {
                     //otherwise randomly select any option
                     index = Random.Range(0, listCount);
                     //generate task
-                    task = new AITask() { nodeID = listCritical[index].nodeID, nodeArc = listCritical[index].arc, teamArc = name, priority = Priority.Critical };
+                    task = new AITask() { data0 = listCritical[index].nodeID, nodeArc = listCritical[index].arc, name0 = name, priority = Priority.Critical };
                 }
             }
             else
             {
                 //single record only
-                task = new AITask() { nodeID = listCritical[0].nodeID, nodeArc = listCritical[0].arc, teamArc = name, priority = Priority.Critical };
+                task = new AITask() { data0 = listCritical[0].nodeID, nodeArc = listCritical[0].arc, name0 = name, priority = Priority.Critical };
             }
         }
         else
@@ -525,7 +561,7 @@ public class AIManager : MonoBehaviour
                            tempList[0].nodeID)); break;
                         }
                         //generate task
-                        task = new AITask() { nodeID = tempList[index].nodeID, nodeArc = tempList[index].arc, teamArc = name, priority = priority };
+                        task = new AITask() { data0 = tempList[index].nodeID, nodeArc = tempList[index].arc, name0 = name, priority = priority };
                     }
                     else
                     {
@@ -541,11 +577,13 @@ public class AIManager : MonoBehaviour
                            listNonCritical[0].nodeID)); break;
                         }
                         //generate task
-                        task = new AITask() { nodeID = listNonCritical[index].nodeID, nodeArc = listNonCritical[index].arc, teamArc = name, priority = priority };
+                        task = new AITask() { data0 = listNonCritical[index].nodeID, nodeArc = listNonCritical[index].arc, name0 = name, priority = priority };
                     }
                 }
             }
         }
+        //team task
+        if (task != null) { task.type = AIType.Team; }
         return task;
     }
 
@@ -627,7 +665,7 @@ public class AIManager : MonoBehaviour
             if (listOfTasks.Count > 0)
             {
                 foreach (AITask task in listOfTasks)
-                { builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.nodeID, task.nodeArc.name, task.teamArc, task.priority,
+                { builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.nodeArc.name, task.name0, task.priority,
                     task.chance, "\n"); }
             }
             else { builderList.AppendFormat("No records{0}", "\n"); }

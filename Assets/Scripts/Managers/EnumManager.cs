@@ -12,6 +12,7 @@
     public enum ModalState { None, Outcome, GenericPicker, ActionMenu, Inventory, TeamPicker, DiceRoller} //ModalUI sub game states
     public enum ResistanceState { Normal }                                              //player as Resistance (not used at present)
     public enum AuthorityState { Normal }                                               //player as Authority (not used at present)
+    public enum SideState { None, AI, Player }                                          //who's running the side
     public enum MetaLevel { None, City, State, Nation }
     public enum AuthorityActor { Superintendent, Minister, Secretary }              //different names for authority actors depending on MetaLevel
 
@@ -67,6 +68,7 @@
     // - - - AI - - -
     //
     public enum Priority { Low, Medium, High, Critical }
+    public enum AIType { None, Team, Connection, Decision }
 
     //
     // - - - Dice - - -

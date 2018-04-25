@@ -1318,10 +1318,10 @@ public class DataManager : MonoBehaviour
     // - - - Teams & TeamArcs & TeamPools - - -
     //
 
-        /// <summary>
-        /// number of TeamArcs in dictOfTeamArcs
-        /// </summary>
-        /// <returns></returns>
+    /// <summary>
+    /// number of TeamArcs in dictOfTeamArcs
+    /// </summary>
+    /// <returns></returns>
     public int CheckNumOfTeamArcs()
     { return dictOfTeamArcs.Count; }
 
