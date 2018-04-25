@@ -2425,32 +2425,31 @@ public class DataManager : MonoBehaviour
             switch (message.isPublic)
             {
                 case true:
-                    //if isPublic True then store in Pending dictionary
+                    //if isPublic true then store in Pending dictionary
                     AddMessageExisting(message, MessageCategory.Pending);
-                    /*try
-                    { dictOfPendingMessages.Add(message.msgID, message); }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Pending Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }*/
                     break;
                 case false:
                     //if isPublic False then store in Archive dictionary
                     AddMessageExisting(message, MessageCategory.Archive);
-                    /*try
-                    { dictOfArchiveMessages.Add(message.msgID, message); }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Archive Message (duplicate) msgID \"{0}\" for \"{1}\"", message.msgID, message.text)); }*/
-                    //AI messages
                     if (message.type == gameAPI.MessageType.AI)
-                    {
-                        //Add a copy of the message to AI Message dictionary 
-                        AddMessageExisting(message, MessageCategory.AI);
-                        //Extract AI data
-                        GameManager.instance.aiScript.GetAIData(message);
-                    }
+                    { AIMessage(message); }
                     break;
             }
         }
         else { Debug.LogError("Invalid Pending Message (Null)"); }
+    }
+
+    /// <summary>
+    /// subMethod for AddMessage to place copy of message in AI dictionary and to extract AI data
+    /// message checked for type = MessageType.AI by the calling procedure & that message is being sent to the Archives
+    /// </summary>
+    /// <param name=""></param>
+    public void AIMessage(Message message)
+    {
+        //Add a copy of the message to AI Message dictionary 
+        AddMessageExisting(message, MessageCategory.AI);
+        //Extract AI data
+        GameManager.instance.aiScript.GetAIData(message);
     }
 
     /// <summary>
@@ -2520,6 +2519,9 @@ public class DataManager : MonoBehaviour
             case MessageCategory.Current:
                 dictOfMessages = dictOfCurrentMessages;
                 break;
+            case MessageCategory.AI:
+                dictOfMessages = dictOfAIMessages;
+                break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
                 successFlag = false;
@@ -2556,6 +2558,9 @@ public class DataManager : MonoBehaviour
             case MessageCategory.Current:
                 dictOfMessages = new Dictionary<int, Message>(dictOfCurrentMessages);
                 break;
+            case MessageCategory.AI:
+                dictOfMessages = new Dictionary<int, Message>(dictOfAIMessages);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
                 break;
@@ -2589,6 +2594,9 @@ public class DataManager : MonoBehaviour
                 break;
             case MessageCategory.Current:
                 dictOfMessages = dictOfCurrentMessages;
+                break;
+            case MessageCategory.AI:
+                dictOfMessages = dictOfAIMessages;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
@@ -2690,7 +2698,6 @@ public class DataManager : MonoBehaviour
             }
         }
         //combine two lists
-        
         builderOverall.Append(builderResistance.ToString());
         builderOverall.Append(builderAuthority.ToString());
         return builderOverall.ToString();

@@ -69,12 +69,7 @@ public class MessageManager : MonoBehaviour
                     listOfMessagesToMove.Add(message.Key);
                     //AI message
                     if (message.Value.type == gameAPI.MessageType.AI)
-                    {
-                        //Add a copy of the message to AI Message dictionary 
-                        GameManager.instance.dataScript.AddMessageExisting(message.Value, MessageCategory.AI);
-                        //Extract AI data
-                        GameManager.instance.aiScript.GetAIData(message.Value);
-                    }
+                    { GameManager.instance.dataScript.AIMessage(message.Value); }
                 }
                 else
                 {

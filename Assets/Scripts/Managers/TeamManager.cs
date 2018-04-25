@@ -188,8 +188,9 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
                         if (node != null)
                         {
-                            if (GameManager.instance.sideScript.resistancePlayer == SideState.Player)
+                            if (GameManager.instance.sideScript.authorityPlayer == SideState.Player)
                             {
+                                //Human Authority Player
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
                                 MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node);
                                 if (actor != null)
@@ -209,7 +210,16 @@ public class TeamManager : MonoBehaviour
                                 }
                             }
                             else
-                            { MoveTeamAI(TeamPool.InTransit, team.teamID, node); }
+                            {
+                                //AI Authority player
+                                MoveTeamAI(TeamPool.InTransit, team.teamID, node);
+                                //Permanent Team effect activated for node
+                                ProcessTeamEffect(team, node, null);
+                                //message
+                                string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, node.nodeName, node.nodeID);
+                                Message message = GameManager.instance.messageScript.TeamAutoRecall(text, node.nodeID, team.teamID, -1);
+                                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                            }
                         }
                         else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.nodeID)); }
                     }
@@ -1062,6 +1072,7 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// Implements PERMANENT team effects on nodes at completion of teams OnMap Timer.
     /// Node and Team are assumed to be checked for Null by the parent method
+    /// Actor is 'null' for an AI operation
     /// </summary>
     /// <param name="team"></param>
     /// <param name="node"></param>
@@ -1139,7 +1150,7 @@ public class TeamManager : MonoBehaviour
                 break;
         }
         //assign renown to originating actor if all O.K
-        if (isError == false)
+        if (isError == false && actor != null)
         { actor.renown++; }
     }
 
