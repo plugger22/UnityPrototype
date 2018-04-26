@@ -16,6 +16,8 @@ public class TooltipNode : MonoBehaviour
 {
     public TextMeshProUGUI nodeName;
     public TextMeshProUGUI nodeType;
+    public TextMeshProUGUI spiderTimer;
+    public TextMeshProUGUI tracerTimer;
     public TextMeshProUGUI nodeActive;
     public TextMeshProUGUI nodeStatsFixed;
     public TextMeshProUGUI nodeStatsVar;
@@ -172,13 +174,30 @@ public class TooltipNode : MonoBehaviour
         dividerStats.gameObject.SetActive(false);
         //show spider only if present and known
         if (data.isSpiderKnown == true)
-        { spider.gameObject.SetActive(true); }
+        {
+            spider.gameObject.SetActive(true);
+            spiderTimer.gameObject.SetActive(true);
+            spiderTimer.text = Convert.ToString(data.spiderTimer);
+        }
         else
-        { spider.gameObject.SetActive(false); }
+        {
+            spider.gameObject.SetActive(false);
+            spiderTimer.gameObject.SetActive(false);
+            spiderTimer.text = "";
+        }
         //show tracer if present and Resistance
         if (data.isTracerActive == true && playerSide.level == globalResistance.level)
-        { tracer.gameObject.SetActive(true); }
-        else { tracer.gameObject.SetActive(false); }
+        {
+            tracer.gameObject.SetActive(true);
+            tracerTimer.gameObject.SetActive(true);
+            tracerTimer.text = Convert.ToString(data.tracerTimer);
+        }
+        else
+        {
+            tracer.gameObject.SetActive(false);
+            tracer.gameObject.SetActive(false);
+            tracerTimer.text = "";
+        }
         //show only if node has a target
         nodeTarget.gameObject.SetActive(true);
         dividerBottom.gameObject.SetActive(true);
@@ -201,7 +220,7 @@ public class TooltipNode : MonoBehaviour
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
-                if (data.isActorKnown == true)
+                if (data.isContactKnown == true)
                 { proceedFlag = true; }
             }
             else { proceedFlag = true; }

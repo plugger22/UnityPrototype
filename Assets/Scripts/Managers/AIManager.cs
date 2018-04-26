@@ -58,6 +58,7 @@ public class AIManager : MonoBehaviour
     private int teamArcCivil = -1;
     private int teamArcControl = -1;
     private int teamArcMedia = -1;
+    private int teamArcProbe = -1;
     private int maxTeamsAtNode = -1;
 
     //info gathering lists (collated every turn)
@@ -89,7 +90,7 @@ public class AIManager : MonoBehaviour
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
         teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
-        
+        teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
@@ -115,10 +116,12 @@ public class AIManager : MonoBehaviour
         Debug.Log(string.Format("AIManager: ProcessAISideAuthority{0}", "\n"));
         ExecuteTasks();
         ClearAICollections();
-        //Nodes        
+        //Node Teams (Civil / Control / Media)       
         GetAINodeData();
         ProcessAINodeData();
         ProcessNodeTasks();
+        //Probe Team
+        ProcessProbeTask();
         //choose tasks for the turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
     }
@@ -322,6 +325,53 @@ public class AIManager : MonoBehaviour
             if (taskSupport != null) { listOfTasksPotential.Add(taskSupport); }
         }
 
+    }
+
+    //selects a probe team task if a team is available
+    private void ProcessProbeTask()
+    {
+        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcProbe, TeamInfo.Reserve) > 0)
+        {
+            
+            //chose a random node that doesn't currently have a probe team
+            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+            if (dictOfNodes != null)
+            {
+                List<int> keyList = new List<int>(dictOfNodes.Keys);
+                int nodeID = 0;
+                int safetyCircuit = 0;
+                Node node;
+                //brute force random as there are unlikely to be many probes on the map. Safety circuit -> 5 or less attempts.
+                do
+                {
+                    nodeID = keyList[Random.Range(0, keyList.Count)];
+                    node = dictOfNodes[nodeID];
+                    //check a probe team not already present at node
+                    if (node.CheckTeamPresent(teamArcProbe) > -1)
+                    {
+                        nodeID = 0;
+                        safetyCircuit++;
+                    }
+                }
+                while (nodeID == 0 && safetyCircuit < 5);
+                if (nodeID > -1)
+                {
+                    //create a task
+                    AITask taskProbe = new AITask()
+                    {
+                        data0 = nodeID,
+                        data1 = teamArcProbe,
+                        name0 = node.Arc.name,
+                        name1 = "PROBE",
+                        type = AIType.Team,
+                        priority = Priority.Low
+                    };
+                    //add to list of potentials
+                    listOfTasksPotential.Add(taskProbe);
+                }
+            }
+            else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        }
     }
 
 

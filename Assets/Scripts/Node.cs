@@ -29,6 +29,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isStabilityTeam;     //Civil team present at node
     [HideInInspector] public bool isSecurityTeam;      //Control team present at node
     [HideInInspector] public bool isSupportTeam;       //Media team present at node
+    [HideInInspector] public bool isProbeTeam;         //Probe team present at node
 
     //fast access fields
     private int stabilityTeamEffect;
@@ -111,11 +112,11 @@ public class Node : MonoBehaviour
         set { _isSpiderKnown = value; }
     }
 
-    public bool isActorKnown
+    public bool isContactKnown
     {
         get
         {
-            //any Ongoing effect overides current setting
+            //any Ongoing effect & presence of a Probe team overides current setting
             int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusContacts);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
@@ -321,7 +322,7 @@ public class Node : MonoBehaviour
                     if (GameManager.instance.optionScript.debugData == true)
                     {
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
-                        textName = string.Format("{0} / {1} / {2}", isStabilityTeam, isSupportTeam, isSecurityTeam);
+                        textName = string.Format("{0}/{1}/{2}/{3}", isStabilityTeam, isSupportTeam, isSecurityTeam, isProbeTeam);
                     }
                     else
                     {
@@ -349,9 +350,11 @@ public class Node : MonoBehaviour
                         type = textType,
                         isTracerActive = isTracerActive,
                         isActor = isContact,
-                        isActorKnown = isActorKnown,
+                        isContactKnown = isContactKnown,
                         isTeamKnown = isTeamKnown,
                         isSpiderKnown = showSpider,
+                        spiderTimer = spiderTimer,
+                        tracerTimer = tracerTimer,
                         arrayOfStats = GetStats(),
                         listOfActive = activeList,
                         listOfEffects = effectsList,
@@ -543,7 +546,7 @@ public class Node : MonoBehaviour
     { return _Material; }
 
     /// <summary>
-    /// remove Tracer from node and tidy up bool fields
+    /// remove Tracer from node and tidy up bool fields for tracer coverage
     /// </summary>
     public void RemoveTracer()
     {
@@ -636,6 +639,7 @@ public class Node : MonoBehaviour
                     case "CIVIL": isStabilityTeam = true; break;
                     case "CONTROL": isSecurityTeam = true; break;
                     case "MEDIA": isSupportTeam = true; break;
+                    case "PROBE": isProbeTeam = true; break;
                 }
                 //initialise Team data
                 team.nodeID = nodeID;
@@ -667,6 +671,7 @@ public class Node : MonoBehaviour
                     case "CIVIL": isStabilityTeam = false; break;
                     case "CONTROL": isSecurityTeam = false; break;
                     case "MEDIA": isSupportTeam = false; break;
+                    case "PROBE": isProbeTeam = false; break;
                 }
                 //remove team
                 listOfTeams.RemoveAt(i);
@@ -898,8 +903,8 @@ public class Node : MonoBehaviour
                         else { isTeamKnown = true; }
                         break;
                     case "StatusContacts":
-                        if (process.value <= 0) { isActorKnown = false; }
-                        else { isActorKnown = true; }
+                        if (process.value <= 0) { isContactKnown = false; }
+                        else { isContactKnown = true; }
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome.name));

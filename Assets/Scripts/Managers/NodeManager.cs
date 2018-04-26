@@ -549,7 +549,7 @@ public class NodeManager : MonoBehaviour
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
                                 else
                                 {
-                                    if (node.Value.isTeamKnown || node.Value.isTracerActive || node.Value.isActorKnown)
+                                    if (node.Value.isTeamKnown || node.Value.isTracerActive || node.Value.isContactKnown)
                                     {
                                         node.Value.SetMaterial(nodeMaterial);
                                         count++;
@@ -1638,7 +1638,7 @@ public class NodeManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sets the node.isActor flag (true if any actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
+    /// Sets the node.isContact flag (true if any actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
     /// </summary>
     public void SetNodeActorFlags()
     {

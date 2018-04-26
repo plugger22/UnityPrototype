@@ -1100,9 +1100,15 @@ public class TeamManager : MonoBehaviour
                 }
                 break;
             case "PROBE":
-
-                //TO DO
-
+                //destroy tracer at node if present
+                if (node.isTracer == true)
+                {
+                    node.RemoveTracer();
+                    //message
+                    string text = string.Format("{0} {1}: Tracer destroyed at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
+                    Message message = GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team.teamID);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
                 break;
             case "SPIDER":
                 if (node.isSpider == false)
