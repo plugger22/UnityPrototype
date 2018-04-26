@@ -21,6 +21,8 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isContact;            //true if any ActorStatus.Active actor has a connection at the node
     [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
+    [HideInInspector] public int spiderTimer;           //countdown timer before removed
+    [HideInInspector] public int tracerTimer;           //countdown timer before removed
     [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1)
     [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
 
@@ -821,6 +823,35 @@ public class Node : MonoBehaviour
                 }
             }
             
+        }
+    }
+
+    /// <summary>
+    /// decrements spider and tracer (observers, if present) timers and auto removes them at zero
+    /// </summary>
+    public void ProcessObserverTimers()
+    {
+        //spider
+        if (spiderTimer > 0)
+        {
+            if (isSpider == true)
+            {
+                spiderTimer--;
+                if (spiderTimer == 0)
+                { RemoveSpider(); }
+            }
+            else { spiderTimer = 0; }
+        }
+        //tracer
+        if (tracerTimer > 0)
+        {
+            if (isTracer == true)
+            {
+                tracerTimer--;
+                if (tracerTimer == 0)
+                { RemoveTracer(); }
+            }
+            else { tracerTimer = 0; }
         }
     }
 

@@ -759,6 +759,7 @@ public class EffectManager : MonoBehaviour
                     if (node != null)
                     {
                         node.isTracer = true;
+                        node.tracerTimer = GameManager.instance.nodeScript.observerTimer;
                         node.isTracerActive = true;
                         //neighbouring nodes made active
                         List<Node> listOfNeighbours = node.GetNeighbouringNodes();

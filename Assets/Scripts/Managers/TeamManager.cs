@@ -1109,6 +1109,7 @@ public class TeamManager : MonoBehaviour
                 {
                     //add spider
                     node.isSpider = true;
+                    node.spiderTimer = GameManager.instance.nodeScript.observerTimer;
                     //check if within tracer coverage
                     if(node.isTracerActive == true)
                     { node.isSpiderKnown = true; }

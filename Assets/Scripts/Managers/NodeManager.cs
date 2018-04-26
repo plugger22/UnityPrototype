@@ -24,6 +24,8 @@ public class NodeManager : MonoBehaviour
     [Range(0, 10)] public int nodeNoSpiderDelay = 2;
     [Tooltip("The standard time delay before Authority notification for any node activity that results in a loss of invisibility with a spider present. Make sure that this is less than the NoSpider delay")]
     [Range(0, 10)] public int nodeYesSpiderDelay = 1;
+    [Tooltip("The amount of turns that a Spider or Tracer stay onMap for, once placed, before being automatically removed")]
+    [Range(0, 10)] public int observerTimer = 3;
 
     [Tooltip("Maximum value of a node datapoint")]
     [Range(2,4)] public int maxNodeValue = 3;
@@ -1713,7 +1715,10 @@ public class NodeManager : MonoBehaviour
         if (dictOfNodes != null)
         {
             foreach (var node in dictOfNodes)
-            { node.Value.ProcessOngoingEffectTimers(); }
+            {
+                node.Value.ProcessOngoingEffectTimers();
+                node.Value.ProcessObserverTimers();
+            }
         }
     }
 
