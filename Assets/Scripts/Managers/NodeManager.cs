@@ -344,20 +344,38 @@ public class NodeManager : MonoBehaviour
             case NodeUI.ShowTargets:
                 //change material for selected nodes (Live and Completed targets)
                 List<Target> tempList = new List<Target>();
-                tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
-                tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Completed));
+                if (GameManager.instance.optionScript.fogOfWar == false)
+                {
+                    //FOW Off
+                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Active));
+                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
+                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Completed));
+                }
+                else
+                {
+                    //FOW On
+                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
+                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Completed));
+                }
                 GameObject nodeObject = null;
                 if (tempList.Count > 0)
                 {
                     foreach (Target target in tempList)
                     {
-                        nodeObject = GameManager.instance.dataScript.GetNodeObject(target.nodeID);
+                        /*nodeObject = GameManager.instance.dataScript.GetNodeObject(target.nodeID);
                         if (nodeObject != null)
                         {
                             Node nodeTemp = nodeObject.GetComponent<Node>();
                             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
                             nodeTemp.SetMaterial(nodeMaterial);
+                        }*/
+                        Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
+                        if (nodeTemp != null)
+                        {
+                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                            nodeTemp.SetMaterial(nodeMaterial);
                         }
+                        else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                     }
                     displayText = string.Format("{0}{1}{2}{3} Target{4}{5} node{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
                         colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);

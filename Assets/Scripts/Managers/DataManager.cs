@@ -985,9 +985,7 @@ public class DataManager : MonoBehaviour
     {
         GameObject obj = null;
         if (dictOfNodeObjects.TryGetValue(nodeID, out obj))
-        {
-            return obj;
-        }
+        { return obj; }
         return null;
     }
 

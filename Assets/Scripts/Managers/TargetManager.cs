@@ -32,10 +32,10 @@ public class TargetManager : MonoBehaviour
     [Tooltip("Maximum amount of target info that can be acquired on a specific target")]
     public int maxTargetInfo = 3;
 
-    public int StartTargets { get; private set; }
-    public int ActiveTargets { get; private set; }
-    public int LiveTargets { get; private set; }
-    public int MaxTargets { get; private set; }
+    [HideInInspector] public int StartTargets;
+    [HideInInspector] public int ActiveTargets;
+    [HideInInspector] public int LiveTargets;
+    [HideInInspector] public int MaxTargets;
 
     private List<TargetFactors> listOfFactors = new List<TargetFactors>();              //used to ensure target calculations are consistent across methods
 
@@ -66,6 +66,7 @@ public class TargetManager : MonoBehaviour
         ActiveTargets = MaxTargets - StartTargets;
         ActiveTargets = Mathf.Max(0, ActiveTargets);
         //Set initialise targets on map
+        SetRandomTargets(1, Status.Active);
         SetRandomTargets(StartTargets, Status.Live);
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach(var factor in Enum.GetValues(typeof(TargetFactors)))
@@ -200,12 +201,13 @@ public class TargetManager : MonoBehaviour
                                         totalActive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsActive) + 1;
                                         GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsActive, totalActive);
                                         GameManager.instance.dataScript.AddTargetToPool(target, Status.Active);
+                                        //assign nodeID to target
+                                        target.nodeID = node.nodeID;
                                         break;
                                     case Status.Live:
                                         totalLive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsLive) + 1;
                                         GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsLive, totalLive);
                                         GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
-                                        //assign nodeID to target
                                         target.nodeID = node.nodeID;
                                         break;
                                     default:
@@ -356,7 +358,29 @@ public class TargetManager : MonoBehaviour
                         break;
                     case 2:
                         //Resistance -> target LIVE & Completed
-                        tempList.AddRange(GetTargetDetails(target));
+                        if (GameManager.instance.optionScript.fogOfWar == true)
+                        {
+                            //FOW On, only show Live and Completed
+                            switch (target.targetStatus)
+                            {
+                                case Status.Live:
+                                case Status.Completed:
+                                    tempList.AddRange(GetTargetDetails(target));
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            //FOW Off -> Show all, even Active ones
+                            switch (target.targetStatus)
+                            {
+                                case Status.Active:
+                                case Status.Live:
+                                case Status.Completed:
+                                    tempList.AddRange(GetTargetDetails(target));
+                                    break;
+                            }
+                        }
                         break;
                 }
             }
@@ -375,53 +399,34 @@ public class TargetManager : MonoBehaviour
     private List<string> GetTargetDetails(Target target)
     {
         List<string> tempList = new List<string>();
-        if (target.targetStatus == Status.Live)
+        switch (target.targetStatus)
         {
-            //put tooltip together
-            tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
-            tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
-            //good effects
-            Effect effect = null;
-            for (int i = 0; i < target.listOfGoodEffects.Count; i++)
-            {
-                effect = target.listOfGoodEffects[i];
-                if (effect != null)
-                { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
-                else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-            }
-            //bad effects
-            for (int i = 0; i < target.listOfBadEffects.Count; i++)
-            {
-                effect = target.listOfBadEffects[i];
-                if (effect != null)
-                { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd)); }
-                else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-            }
-            //ongoing effects
-            for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
-            {
-                effect = target.listOfOngoingEffects[i];
-                if (effect != null)
-                { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
-                else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-            }
-
-            //info level data colour graded
-            tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd,
-                GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
-            tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gear.name, colourEnd));
-            tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
-        }
-        //target COMPLETED
-        else if (target.targetStatus == Status.Completed)
-        {
-            //put tooltip together
-            tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.name, colourEnd));
-            //ongoing effects
-            if (target.listOfOngoingEffects.Count > 0)
-            {
-                tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDefault, colourEnd));
+            case Status.Active:
+                tempList.Add(string.Format("{0}<b>{1} Target Lvl {2}</b>{3}", colourNormal, target.targetStatus, target.targetLevel, colourEnd));
+                tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+                break;
+            case Status.Live:
+                tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+                //good effects
                 Effect effect = null;
+                for (int i = 0; i < target.listOfGoodEffects.Count; i++)
+                {
+                    effect = target.listOfGoodEffects[i];
+                    if (effect != null)
+                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
+                    else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+                }
+                //bad effects
+                for (int i = 0; i < target.listOfBadEffects.Count; i++)
+                {
+                    effect = target.listOfBadEffects[i];
+                    if (effect != null)
+                    { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd)); }
+                    else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+                }
+                //ongoing effects
                 for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
                 {
                     effect = target.listOfOngoingEffects[i];
@@ -429,7 +434,29 @@ public class TargetManager : MonoBehaviour
                     { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
                     else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
-            }
+                //info level data colour graded
+                tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd,
+                    GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
+                tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gear.name, colourEnd));
+                tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
+                break;
+            case Status.Completed:
+                //put tooltip together
+                tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.name, colourEnd));
+                //ongoing effects
+                if (target.listOfOngoingEffects.Count > 0)
+                {
+                    tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDefault, colourEnd));
+                    Effect effectCompleted = null;
+                    for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
+                    {
+                        effectCompleted = target.listOfOngoingEffects[i];
+                        if (effectCompleted != null)
+                        { tempList.Add(string.Format("{0}{1}{2}", colourGood, effectCompleted.textTag, colourEnd)); }
+                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+                    }
+                }
+                break;
         }
         return tempList;
     }
