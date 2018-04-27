@@ -14,6 +14,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
     [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
     [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen
+    [HideInInspector] public bool noAI = false;                                   //if true AI is switched off for both sides (debug purposes)
 
     //Backing fields (use underscore)
     
@@ -61,6 +62,7 @@ public class OptionManager : MonoBehaviour
         builder.AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n");
         builder.AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n");
         builder.AppendFormat(" Debug Data -> {0}{1}", debugData, "\n");
+        builder.AppendFormat(" NO AI -> {0}{1}", noAI, "\n");
         return builder.ToString();
     }
 

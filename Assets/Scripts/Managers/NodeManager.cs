@@ -1638,7 +1638,7 @@ public class NodeManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sets the node.isContact flag (true if any actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
+    /// Sets the node.isContact flag (true if any Resistance actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
     /// </summary>
     public void SetNodeActorFlags()
     {

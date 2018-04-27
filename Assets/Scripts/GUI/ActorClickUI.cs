@@ -38,6 +38,10 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                         //Action Menu -> not valid if  Player inactive
                         if (GameManager.instance.playerScript.status != ActorStatus.Active)
                         { proceedFlag = false; }
+                        //Action Menu -> not valid if AI is active for side
+                        if (GameManager.instance.sideScript.CheckInteraction() == false)
+                        { proceedFlag = false; }
+                        //proceed
                         if (proceedFlag == true)
                         {
                             Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);

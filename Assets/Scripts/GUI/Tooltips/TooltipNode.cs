@@ -50,6 +50,7 @@ public class TooltipNode : MonoBehaviour
     private string colourNeutral;
     private string colourBad;
     private string colourActive;
+    private string colourAlert;
     private string colourDefault;
     private string colourNormal;
     private string colourEnd;
@@ -133,6 +134,7 @@ public class TooltipNode : MonoBehaviour
         }
         //colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         //colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
@@ -155,6 +157,7 @@ public class TooltipNode : MonoBehaviour
     public void SetTooltip(NodeTooltipData data)
     {
         bool proceedFlag;
+        int numRecords;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //open panel at start
         tooltipNodeObject.SetActive(true);
@@ -185,12 +188,32 @@ public class TooltipNode : MonoBehaviour
             spiderTimer.gameObject.SetActive(false);
             spiderTimer.text = "";
         }
-        //show tracer if present and Resistance
-        if (data.isTracerActive == true && playerSide.level == globalResistance.level)
+        //show tracer if present and known
+        proceedFlag = false;
+        if (data.isTracerActive == true)
+        {
+            switch(playerSide.level)
+            {
+                case 1: 
+                    //authority
+                    if (data.isTracerKnown == true) { proceedFlag = true; }
+                    break;
+                case 2:
+                    //resistance
+                    proceedFlag = true;
+                    break;
+            }
+        }
+        if (proceedFlag == true)
         {
             tracer.gameObject.SetActive(true);
             tracerTimer.gameObject.SetActive(true);
-            tracerTimer.text = Convert.ToString(data.tracerTimer);
+            if (data.isTracer)
+            {
+                //show Yellow Timer if tracer in node, otherise ignore timer
+                tracerTimer.text = string.Format("{0}{1}{2}", colourNeutral, data.tracerTimer, colourEnd);
+            }
+            else { tracerTimer.text = ""; }
         }
         else
         {
@@ -215,9 +238,20 @@ public class TooltipNode : MonoBehaviour
         builderActor.Append(colourActive);
         //ascertain whether actors shown or not
         proceedFlag = false;
+        numRecords = data.listOfActive.Count;
         if (playerSide.level == globalResistance.level) { proceedFlag = true; }
         else if (playerSide.level == globalAuthority.level)
         {
+            //authority contacts displayed, prior to resistance contact status
+            if (numRecords > 0)
+            {
+                for (int i = 0; i < numRecords; i++)
+                {
+                    if (i > 0) { builderActor.AppendLine(); }
+                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd);
+                }
+                builderActor.AppendLine();
+            }
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
                 if (data.isContactKnown == true)
@@ -225,26 +259,26 @@ public class TooltipNode : MonoBehaviour
             }
             else { proceedFlag = true; }
         }
-        //contacts are present
-        if (data.listOfActive.Count > 0)
+        //Resistance contacts are present
+        if (data.isContact == true)
         {
             //FOW off or Resistance side
             if (proceedFlag == true)
             {
                 if (playerSide.level == globalResistance.level)
                 {
-                    for (int i = 0; i < data.listOfActive.Count; i++)
+                    for (int i = 0; i < numRecords; i++)
                     {
                         if (i > 0) { builderActor.AppendLine(); }
                         builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd);
                     }
                 }
                 else if (playerSide.level == globalAuthority.level)
-                { builderActor.AppendFormat("{0}Resistance Contacts present{1}", colourNeutral, colourEnd); }
+                { builderActor.AppendFormat("{0}Resistance Contacts present{1}", colourBad, colourEnd); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
             else
-            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourBad, colourEnd); }
+            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd); }
         }
         else
         {
@@ -258,7 +292,7 @@ public class TooltipNode : MonoBehaviour
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
             else
-            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourBad, colourEnd); }
+            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd); }
         }
         nodeActive.text = builderActor.ToString();
         //
@@ -304,7 +338,7 @@ public class TooltipNode : MonoBehaviour
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
-                if (data.isTracerActive == true || data.isActor == true || data.isTeamKnown == true)
+                if (data.isTracerActive == true || data.isContact == true || data.isTeamKnown == true)
                 { proceedFlag = true; }
             }
             else { proceedFlag = true; }

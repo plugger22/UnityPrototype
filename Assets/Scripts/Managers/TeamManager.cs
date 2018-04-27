@@ -162,7 +162,7 @@ public class TeamManager : MonoBehaviour
                 if (team != null)
                 {
                     //Automatically move any teams to reserve (they spend in turn in transit and are unavailable for deployment)
-                    if (GameManager.instance.sideScript.resistancePlayer == SideState.Player)
+                    if (GameManager.instance.sideScript.resistanceCurrent == SideState.Player)
                     { MoveTeam(TeamPool.Reserve, team.teamID, team.actorSlotID); }
                     else { MoveTeamAI(TeamPool.Reserve, team.teamID); }
                 }
@@ -188,7 +188,7 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
                         if (node != null)
                         {
-                            if (GameManager.instance.sideScript.authorityPlayer == SideState.Player)
+                            if (GameManager.instance.sideScript.authorityCurrent == SideState.Player)
                             {
                                 //Human Authority Player
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
@@ -1000,7 +1000,7 @@ public class TeamManager : MonoBehaviour
                             StringBuilder builderBottom = new StringBuilder();
                             bool proceedFlag = false;
                             //move team
-                            if (GameManager.instance.sideScript.authorityPlayer == SideState.AI)
+                            if (GameManager.instance.sideScript.authorityCurrent == SideState.AI)
                             { proceedFlag = MoveTeamAI(TeamPool.InTransit, team.teamID, node); }
                             else
                             { proceedFlag = MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node); }

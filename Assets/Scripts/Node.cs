@@ -18,7 +18,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracer;             //has resistance tracer?
     [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;             //has authority spider?
-    [HideInInspector] public bool isContact;            //true if any ActorStatus.Active actor has a connection at the node
+    [HideInInspector] public bool isContact;            //true if any Resistance ActorStatus.Active actor has a connection at the node
     [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
     [HideInInspector] public int spiderTimer;           //countdown timer before removed
@@ -92,8 +92,8 @@ public class Node : MonoBehaviour
         {
             //any Ongoing effect overides current setting
             int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusTracers);
-            if (value < 0) { return false; }
-            else if (value > 0) { return true; }
+            if (value < 0 && isProbeTeam == false) { return false; }
+            else if (value > 0 || isProbeTeam == true) { return true; }
             else { return _isTracerKnown; }
         }
         set { _isTracerKnown = value; }
@@ -118,8 +118,8 @@ public class Node : MonoBehaviour
         {
             //any Ongoing effect & presence of a Probe team overides current setting
             int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusContacts);
-            if (value < 0) { return false; }
-            else if (value > 0) { return true; }
+            if (value < 0 && isProbeTeam == false) { return false; }
+            else if (value > 0 || isProbeTeam == true) { return true; }
             else { return _isContactKnown; }
         }
         set { _isContactKnown = value; }
@@ -201,7 +201,10 @@ public class Node : MonoBehaviour
             //Action Menu -> not valid if Plyr Inactive.
             if (GameManager.instance.playerScript.status != ActorStatus.Active)
             { proceedFlag = false; }
-
+            //Action Menu not valid if AI is active for side
+            if (GameManager.instance.sideScript.CheckInteraction() == false)
+            { proceedFlag = false; }
+            //Proceed
             if (proceedFlag == true)
             {
                 //highlight current node
@@ -348,8 +351,10 @@ public class Node : MonoBehaviour
                     {
                         nodeName = textName,
                         type = textType,
+                        isTracer = isTracer,
                         isTracerActive = isTracerActive,
-                        isActor = isContact,
+                        isTracerKnown = isTracerKnown,
+                        isContact = isContact,
                         isContactKnown = isContactKnown,
                         isTeamKnown = isTeamKnown,
                         isSpiderKnown = showSpider,

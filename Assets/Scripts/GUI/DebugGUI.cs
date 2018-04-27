@@ -37,6 +37,7 @@ public class DebugGUI : MonoBehaviour
     private string optionFogOfWar;
     private string optionConnectorTooltips;
     private string optionDebugData;
+    private string optionNoAI;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class DebugGUI : MonoBehaviour
         optionFogOfWar = "Fog Of War ON";
         optionConnectorTooltips = "Conn tooltips ON";
         optionDebugData = "Debug Data ON";
+        optionNoAI = "NO AI ON";
     }
 
     // Update is called once per frame
@@ -299,6 +301,26 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+            //sixth button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), optionNoAI))
+            {
+                Debug.Log("Button -> Toggle NO AI");
+                if (GameManager.instance.optionScript.noAI == true)
+                {
+                    optionNoAI = "NO AI ON";
+                    GameManager.instance.optionScript.noAI = false;
+                    GameManager.instance.sideScript.authorityCurrent = GameManager.instance.sideScript.authorityOverall;
+                    GameManager.instance.sideScript.resistanceCurrent = GameManager.instance.sideScript.resistanceOverall;
+                }
+                else
+                {
+                    optionNoAI = "NO AI OFF";
+                    GameManager.instance.optionScript.noAI = true;
+                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                }
+            }
+
             //
             // - - - Actions (third box)
             //
@@ -461,7 +483,7 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.teamScript.DisplayTeamActorAnalysis();
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);
                         break;
-                    //player's gear
+                    //Game state
                     case 5:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.inputScript.DisplayGameState();

@@ -30,8 +30,10 @@ public class SideManager : MonoBehaviour
     public Sprite button_highlight_Rebel;
     public Sprite button_Click;
 
-    [HideInInspector] public SideState resistancePlayer;                //who's in charge, AI or player?
-    [HideInInspector] public SideState authorityPlayer;
+    [HideInInspector] public SideState resistanceCurrent;               //who's currently in charge, AI or player?
+    [HideInInspector] public SideState authorityCurrent;
+    [HideInInspector] public SideState resistanceOverall;                 //who's in charge overall (flows through throughout, constant)
+    [HideInInspector] public SideState authorityOverall;
 
 
     //backing field
@@ -48,18 +50,36 @@ public class SideManager : MonoBehaviour
             {
                 case 0:
                     //AI
-                    resistancePlayer = SideState.AI;
-                    authorityPlayer = SideState.AI;
+                    resistanceCurrent = SideState.AI;
+                    authorityCurrent = SideState.AI;
                     break;
                 case 1:
                     //Authority
-                    resistancePlayer = SideState.AI;
-                    authorityPlayer = SideState.Player;
+                    if (GameManager.instance.optionScript.noAI == false)
+                    {
+                        resistanceCurrent = SideState.AI;
+                        authorityCurrent = SideState.Player;
+                    }
+                    else
+                    {
+                        //no AI debug mode
+                        resistanceCurrent = SideState.Player;
+                        authorityCurrent = SideState.Player;
+                    }
                     break;
                 case 2:
                     //Resistance
-                    resistancePlayer = SideState.Player;
-                    authorityPlayer = SideState.AI;
+                    if (GameManager.instance.optionScript.noAI == false)
+                    {
+                        resistanceCurrent = SideState.Player;
+                        authorityCurrent = SideState.AI;
+                    }
+                    else
+                    {
+                        //no AI debug mode
+                        resistanceCurrent = SideState.Player;
+                        authorityCurrent = SideState.Player;
+                    }
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid side.level \"{0}\"", value.level));
@@ -76,6 +96,42 @@ public class SideManager : MonoBehaviour
     {
         //set default player as Resistance
         PlayerSide = GameManager.instance.globalScript.sideResistance;
+        resistanceOverall = SideState.Player;
+        authorityOverall = SideState.AI;
+    }
+
+    /// <summary>
+    /// Returns true if interaction is possible for the current Player side given the overall & noAI settings.
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public bool CheckInteraction()
+    {
+        bool isPossible = true;
+        if (GameManager.instance.optionScript.noAI == false)
+        {
+            switch(_playerSide.level)
+            {
+                case 0:
+                    //AI
+                    isPossible = false;
+                    break;
+                case 1:
+                    //Authority
+                    if (authorityOverall == SideState.AI)
+                    { isPossible = false; }
+                    break;
+                case 2:
+                    //Resistance
+                    if (resistanceOverall == SideState.AI)
+                    { isPossible = false; }
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid _playerSide.level \"{0}\"", _playerSide.level));
+                    break;
+            }
+        }
+        return isPossible;
     }
 
 }

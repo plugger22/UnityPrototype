@@ -22,9 +22,11 @@ namespace packageAPI
     {
         public string nodeName;
         public string type;
-        public bool isActor;
+        public bool isContact;
         public bool isContactKnown;
+        public bool isTracer;
         public bool isTracerActive;
+        public bool isTracerKnown;
         public bool isTeamKnown;
         public bool isSpiderKnown;                                      //displays Spider images at tooltip top if spider present in node and known
         public int spiderTimer;                                         //ignore timers if spider or tracer aren't present

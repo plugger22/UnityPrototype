@@ -253,9 +253,11 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" ModalState -> {0}{1}", ModalState, "\n");
         builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");
         builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n");
-        builder.AppendFormat("{0} PlayerSide -> {1}{2}", "\n", GameManager.instance.sideScript.PlayerSide.name, "\n");
-        builder.AppendFormat(" AuthorityPlayer -> {0}{1}", GameManager.instance.sideScript.authorityPlayer, "\n");
-        builder.AppendFormat(" ResistancePlayer -> {0}{1}", GameManager.instance.sideScript.resistancePlayer, "\n");
+        builder.AppendFormat("{0} PlayerSide -> {1}{2}{3}", "\n", GameManager.instance.sideScript.PlayerSide.name, "\n", "\n");
+        builder.AppendFormat(" AuthorityCurrent -> {0}{1}", GameManager.instance.sideScript.authorityCurrent, "\n");
+        builder.AppendFormat(" ResistanceCurrent -> {0}{1}{2}", GameManager.instance.sideScript.resistanceCurrent, "\n", "\n");
+        builder.AppendFormat(" AuthorityOverall -> {0}{1}", GameManager.instance.sideScript.authorityOverall, "\n");
+        builder.AppendFormat(" ResistanceOverall -> {0}{1}{2}", GameManager.instance.sideScript.resistanceOverall, "\n", "\n");
         return builder.ToString();
     }
     
