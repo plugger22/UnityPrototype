@@ -22,6 +22,7 @@ namespace packageAPI
     {
         public string nodeName;
         public string type;
+        public bool isTargetKnown;
         public bool isContact;
         public bool isContactKnown;
         public bool isTracer;

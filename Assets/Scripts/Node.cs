@@ -65,6 +65,7 @@ public class Node : MonoBehaviour
     private bool _isSpiderKnown;                        //does Resistance know of spider?
     private bool _isContactKnown;                         //true if Authority knows of Actor contacts
     private bool _isTeamKnown;                          //true if Resistance knows of teams (additional means other than tracer coverage or connections)
+    private bool _isTargetKnown;                        //true if Authority knows of Active or Live target (if present)
 
     //Properties for backing fields
     public int Security
@@ -138,6 +139,12 @@ public class Node : MonoBehaviour
         set { _isTeamKnown = value; }
     }
 
+    public bool isTargetKnown
+    {
+        get { return _isTargetKnown; }
+        set { _isTargetKnown = value; }
+    }
+
     /// <summary>
     /// Initialise SO's for Nodes
     /// </summary>
@@ -189,6 +196,7 @@ public class Node : MonoBehaviour
     private void OnMouseDown()
     {
         bool proceedFlag = true;
+        AlertType alertType = AlertType.None;
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             //exit any tooltip
@@ -198,12 +206,12 @@ public class Node : MonoBehaviour
                 StopCoroutine("ShowTooltip");
                 GameManager.instance.tooltipNodeScript.CloseTooltip();
             }
-            //Action Menu -> not valid if Plyr Inactive.
-            if (GameManager.instance.playerScript.status != ActorStatus.Active)
-            { proceedFlag = false; }
-            //Action Menu not valid if AI is active for side
+            //Action Menu -> not valid if AI is active for side
             if (GameManager.instance.sideScript.CheckInteraction() == false)
-            { proceedFlag = false; }
+            { proceedFlag = false; alertType = AlertType.SideStatus; }
+            //Action Menu -> not valid if  Player inactive
+            else if (GameManager.instance.playerScript.status != ActorStatus.Active)
+            { proceedFlag = false; alertType = AlertType.PlayerSatus; }
             //Proceed
             if (proceedFlag == true)
             {
@@ -222,7 +230,12 @@ public class Node : MonoBehaviour
                 //activate menu
                 GameManager.instance.actionMenuScript.SetActionMenu(details);
             }
-            else { GameManager.instance.guiScript.SetPlayerNotActiveErrorOutcome(); }
+            else
+            {
+                //explanatory message
+                if (alertType != AlertType.None)
+                { GameManager.instance.guiScript.SetAlertMessage(alertType); }
+            }
         }
     }
 
@@ -244,6 +257,8 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseOver()
     {
+        bool proceedFlag = true;
+        AlertType alertType = AlertType.None;
         //check modal block isn't in place
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
@@ -256,8 +271,14 @@ public class Node : MonoBehaviour
                 //move action invalid if resistance player is captured, etc.
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
-                    //normal states
-                    if (GameManager.instance.playerScript.status == ActorStatus.Active)
+                    //Action Menu -> not valid if AI is active for side
+                    if (GameManager.instance.sideScript.CheckInteraction() == false)
+                    { proceedFlag = false; alertType = AlertType.SideStatus; }
+                    //Action Menu -> not valid if  Player inactive
+                    else if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                    { proceedFlag = false; alertType = AlertType.PlayerSatus; }
+                    //proceed
+                    if (proceedFlag == true)
                     {
                         //exit any tooltip
                         StopCoroutine("ShowTooltip");
@@ -274,7 +295,12 @@ public class Node : MonoBehaviour
                             { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID); }
                         }
                     }
-                    else { GameManager.instance.guiScript.SetPlayerNotActiveErrorOutcome(); }
+                    else
+                    {
+                        //explanatory message
+                        if (alertType != AlertType.None)
+                        { GameManager.instance.guiScript.SetAlertMessage(alertType); }
+                    }
                 }
             }
             //Tool tip
@@ -312,10 +338,10 @@ public class Node : MonoBehaviour
                         foreach (Team team in listOfTeams)
                         { teamList.Add(team.arc.name); }
                     }
-                    //target info
+                    //target info (TargetManager method handles FOW and sides)
                     List<string> targetList = new List<string>();
                     if (targetID > -1)
-                    { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID); }
+                    { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID, isTargetKnown); }
                     //activity info
                     List<string> activityList = null;
                     if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
@@ -351,6 +377,7 @@ public class Node : MonoBehaviour
                     {
                         nodeName = textName,
                         type = textType,
+                        isTargetKnown = isTargetKnown,
                         isTracer = isTracer,
                         isTracerActive = isTracerActive,
                         isTracerKnown = isTracerKnown,

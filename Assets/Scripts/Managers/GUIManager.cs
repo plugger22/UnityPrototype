@@ -272,32 +272,45 @@ public class GUIManager : MonoBehaviour
         return isBlocked[level];
     }
 
+
     /// <summary>
-    /// call when player is inactive to generate an outcome dialogue that explains why an action can't be done
+    /// generates an Alert messsage (generic UI) of a particular type (extend by adding to enum and providing relevant code to handle below)
     /// </summary>
-    public void SetPlayerNotActiveErrorOutcome()
+    /// <param name="type"></param>
+    public void SetAlertMessage(AlertType type)
     {
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.sprite = infoSprite;
         details.side = GameManager.instance.sideScript.PlayerSide;
-        switch (GameManager.instance.playerScript.status)
+        switch (type)
         {
-            case ActorStatus.Captured:
-                details.textTop = "This action can't be taken because the Player has been Captured";
-                break;
-            case ActorStatus.Inactive:
-                switch (GameManager.instance.playerScript.inactiveStatus)
+            case AlertType.PlayerSatus:
+                switch (GameManager.instance.playerScript.status)
                 {
-                    case ActorInactive.Breakdown:
-                        details.textTop = "This action can't be taken because the Player is undergoing a Breakdown (Stress)";
+                    case ActorStatus.Captured:
+                        details.textTop = "This action can't be taken because the Player has been Captured";
+                        break;
+                    case ActorStatus.Inactive:
+                        switch (GameManager.instance.playerScript.inactiveStatus)
+                        {
+                            case ActorInactive.Breakdown:
+                                details.textTop = "This action can't be taken because the Player is undergoing a Breakdown (Stress)";
+                                break;
+                            default:
+                                details.textTop = "This action can't be taken because the Player is indisposed";
+                                break;
+                        }
                         break;
                     default:
                         details.textTop = "This action can't be taken because the Player is indisposed";
                         break;
                 }
                 break;
+            case AlertType.SideStatus:
+                details.textTop = "This action is unavailable as the AI controls this side";
+                break;
             default:
-                details.textTop = "This action can't be taken because the Player is indisposed";
+                details.textTop = "This action is unavailable";
                 break;
         }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);

@@ -175,6 +175,9 @@ public class TooltipNode : MonoBehaviour
         dividerUpperMiddle.gameObject.SetActive(false);
         dividerLowerMiddle.gameObject.SetActive(true);
         dividerStats.gameObject.SetActive(false);
+        //target
+        nodeTarget.gameObject.SetActive(true);
+        dividerBottom.gameObject.SetActive(true);
         //show spider only if present and known
         if (data.isSpiderKnown == true)
         {
@@ -221,9 +224,6 @@ public class TooltipNode : MonoBehaviour
             tracer.gameObject.SetActive(false);
             tracerTimer.text = "";
         }
-        //show only if node has a target
-        nodeTarget.gameObject.SetActive(true);
-        dividerBottom.gameObject.SetActive(true);
         //set up tooltipNode object
         nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd);
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);

@@ -303,11 +303,11 @@ public class TargetManager : MonoBehaviour
 
 
     /// <summary>
-    /// returns a list of formatted and coloured strings ready for a node Tooltip (Side.Resistance), returns an empty list if none
+    /// returns a list of formatted and coloured strings ready for a node Tooltip (Resistance), abbreviate for Authority (if target known), returns an empty list if none
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public List<string> GetTargetTooltip(int targetID)
+    public List<string> GetTargetTooltip(int targetID, bool isTargetKnown)
     {
         List<string> tempList = new List<string>();
         if (targetID > -1)
@@ -316,70 +316,120 @@ public class TargetManager : MonoBehaviour
             Target target = GameManager.instance.dataScript.GetTarget(targetID);
             if (target != null)
             {
-                //target LIVE
-                if (target.targetStatus == Status.Live)
+                switch (GameManager.instance.sideScript.PlayerSide.level)
                 {
-                    //put tooltip together
-                    tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
-                    tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
-                    //good effects
-                    Effect effect = null;
-                    for (int i = 0; i < target.listOfGoodEffects.Count; i++)
-                    {
-                        effect = target.listOfGoodEffects[i];
-                        if (effect != null)
-                        { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
-                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-                    }
-                    //bad effects
-                    for (int i = 0; i < target.listOfBadEffects.Count; i++)
-                    {
-                        effect = target.listOfBadEffects[i];
-                        if (effect != null)
-                        { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd)); }
-                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-                    }
-                    //ongoing effects
-                    for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
-                    {
-                        effect = target.listOfOngoingEffects[i];
-                        if (effect != null)
-                        { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
-                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-                    }
-
-                    //info level data colour graded
-
-                    /*if (target.InfoLevel == 3) { infoColour = colourDataGood; }
-                    else if (target.InfoLevel == 1) { infoColour = colourDataBad; }*/
-
-                    tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd, 
-                        GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
-                    tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gear.name, colourEnd));
-                    tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
-                }
-                //target COMPLETED
-                else if (target.targetStatus == Status.Completed)
-                {
-                    //put tooltip together
-                    tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.name, colourEnd));
-                    //ongoing effects
-                    if (target.listOfOngoingEffects.Count > 0)
-                    {
-                        tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDefault, colourEnd));
-                        Effect effect = null;
-                        for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
+                    case 1:
+                        //Authority
+                        if (GameManager.instance.optionScript.fogOfWar == true)
                         {
-                            effect = target.listOfOngoingEffects[i];
-                            if (effect != null)
-                            { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
-                            else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+                            //only show if FOW on and target is known
+                            if (isTargetKnown == true)
+                            {
+                                switch (target.targetStatus)
+                                {
+                                    case Status.Active:
+                                    case Status.Live:
+                                        tempList.Add(string.Format("{0} Target", target.targetStatus));
+                                        tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                                        tempList.Add(string.Format("Level {0}", target.targetLevel));
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                switch (target.targetStatus)
+                                {
+                                    case Status.Completed:
+                                    case Status.Contained:
+                                        tempList.Add(string.Format("{0} Target", target.targetStatus));
+                                        tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                                        tempList.Add(string.Format("Level {0}", target.targetLevel));
+                                        break;
+                                }
+                            }
                         }
-                    }
+                        else
+                        {
+                            //show target details regardless, FOW is Off (Active and Completed only)
+                            tempList.AddRange(GetTargetDetails(target));
+                        }
+                        break;
+                    case 2:
+                        //Resistance -> target LIVE & Completed
+                        tempList.AddRange(GetTargetDetails(target));
+                        break;
                 }
             }
             else
             { Debug.LogError(string.Format("Invalid Target (null) for ID {0}{1}", targetID, "\n")); }
+        }
+        return tempList;
+    }
+
+    /// <summary>
+    /// private subMethod for GetTargetTooltip to collate full target details.
+    /// Target tested for null by parent method
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    private List<string> GetTargetDetails(Target target)
+    {
+        List<string> tempList = new List<string>();
+        if (target.targetStatus == Status.Live)
+        {
+            //put tooltip together
+            tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+            tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+            //good effects
+            Effect effect = null;
+            for (int i = 0; i < target.listOfGoodEffects.Count; i++)
+            {
+                effect = target.listOfGoodEffects[i];
+                if (effect != null)
+                { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
+                else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+            }
+            //bad effects
+            for (int i = 0; i < target.listOfBadEffects.Count; i++)
+            {
+                effect = target.listOfBadEffects[i];
+                if (effect != null)
+                { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd)); }
+                else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+            }
+            //ongoing effects
+            for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
+            {
+                effect = target.listOfOngoingEffects[i];
+                if (effect != null)
+                { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
+                else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+            }
+
+            //info level data colour graded
+            tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd,
+                GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
+            tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gear.name, colourEnd));
+            tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
+        }
+        //target COMPLETED
+        else if (target.targetStatus == Status.Completed)
+        {
+            //put tooltip together
+            tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.name, colourEnd));
+            //ongoing effects
+            if (target.listOfOngoingEffects.Count > 0)
+            {
+                tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDefault, colourEnd));
+                Effect effect = null;
+                for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
+                {
+                    effect = target.listOfOngoingEffects[i];
+                    if (effect != null)
+                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
+                    else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
+                }
+            }
         }
         return tempList;
     }

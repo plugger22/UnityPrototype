@@ -25,6 +25,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
     {
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         bool proceedFlag = true;
+        AlertType alertType = AlertType.None;
         //is there an actor in this slot?
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
         {
@@ -34,13 +35,13 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                     break;
                 case PointerEventData.InputButton.Right:
                     if (GameManager.instance.guiScript.CheckIsBlocked() == false)
-                    {
-                        //Action Menu -> not valid if  Player inactive
-                        if (GameManager.instance.playerScript.status != ActorStatus.Active)
-                        { proceedFlag = false; }
+                    {                        
                         //Action Menu -> not valid if AI is active for side
                         if (GameManager.instance.sideScript.CheckInteraction() == false)
-                        { proceedFlag = false; }
+                        { proceedFlag = false; alertType = AlertType.SideStatus; }
+                        //Action Menu -> not valid if  Player inactive
+                        else if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                        { proceedFlag = false; alertType = AlertType.PlayerSatus; }
                         //proceed
                         if (proceedFlag == true)
                         {
@@ -67,7 +68,12 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             }
                             else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
                         }
-                        else { GameManager.instance.guiScript.SetPlayerNotActiveErrorOutcome(); }
+                        else
+                        {
+                            //explanatory message
+                            if (alertType != AlertType.None)
+                            { GameManager.instance.guiScript.SetAlertMessage(alertType); }
+                        }
                     }
                     break;
                 default:
