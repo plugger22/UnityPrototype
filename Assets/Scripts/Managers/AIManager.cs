@@ -71,6 +71,7 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listSupportNonCritical = new List<AINodeData>();
     List<AINodeData> listOfTargetsKnown = new List<AINodeData>();
     List<AINodeData> listOfTargetsDamaged = new List<AINodeData>();
+    List<AINodeData> listOfProbeNodes = new List<AINodeData>();
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -146,6 +147,7 @@ public class AIManager : MonoBehaviour
         listSupportNonCritical.Clear();
         listOfTargetsKnown.Clear();
         listOfTargetsDamaged.Clear();
+        listOfProbeNodes.Clear();
     }
 
     /// <summary>
@@ -278,7 +280,7 @@ public class AIManager : MonoBehaviour
                             {
                                 case Status.Active:
                                 case Status.Live:
-                                    //spider/erasure team task (good ambush situation as targets will lure in resistance player)
+                                    //spider/erasure team node data package (good ambush situation as targets will lure in resistance player)
                                     dataPackage = new AINodeData();
                                     dataPackage.nodeID = node.Value.nodeID;
                                     dataPackage.type = NodeData.Target;
@@ -286,7 +288,7 @@ public class AIManager : MonoBehaviour
                                     listOfTargetsKnown.Add(dataPackage);
                                     break;
                                 case Status.Completed:
-                                    //Damage team task (good ambush situation as targets will lure in resistance player)
+                                    //Damage team node data package (good ambush situation as targets will lure in resistance player)
                                     dataPackage = new AINodeData();
                                     dataPackage.nodeID = node.Value.nodeID;
                                     dataPackage.type = NodeData.Target;
@@ -296,6 +298,21 @@ public class AIManager : MonoBehaviour
                             }
                         }
                         else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", node.Value.targetID)); }
+                    }
+                    //
+                    // - - - Probe nodes - - -
+                    //
+                    if (node.Value.isProbeTeam == false)
+                    {
+                        if (node.Value.isTargetKnown == false)
+                        {
+                            //probe team suitable node data package
+                            dataPackage = new AINodeData();
+                            dataPackage.nodeID = node.Value.nodeID;
+                            dataPackage.type = NodeData.Probe;
+                            dataPackage.arc = node.Value.Arc;
+                            listOfProbeNodes.Add(dataPackage);
+                        }
                     }
                 }
                 else { Debug.LogWarning(string.Format("Invalid node (Null) in dictOfNodes for nodeID {0}", node.Key)); }
@@ -375,36 +392,18 @@ public class AIManager : MonoBehaviour
     {
         if (GameManager.instance.dataScript.CheckTeamInfo(teamArcProbe, TeamInfo.Reserve) > 0)
         {
-            
-            //chose a random node that doesn't currently have a probe team
-            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
-            if (dictOfNodes != null)
+            int numOfRecords = listOfProbeNodes.Count;
+            if (numOfRecords > 0)
             {
-                List<int> keyList = new List<int>(dictOfNodes.Keys);
-                int nodeID = 0;
-                int safetyCircuit = 0;
-                Node node;
-                //brute force random as there are unlikely to be many probes on the map. Safety circuit -> 5 or less attempts.
-                do
-                {
-                    nodeID = keyList[Random.Range(0, keyList.Count)];
-                    node = dictOfNodes[nodeID];
-                    //check a probe team not already present at node
-                    if (node.CheckTeamPresent(teamArcProbe) > -1)
-                    {
-                        nodeID = 0;
-                        safetyCircuit++;
-                    }
-                }
-                while (nodeID == 0 && safetyCircuit < 5);
-                if (nodeID > -1)
+                AINodeData data = listOfProbeNodes[Random.Range(0, numOfRecords)];
+                if (data != null)
                 {
                     //create a task
                     AITask taskProbe = new AITask()
                     {
-                        data0 = nodeID,
+                        data0 = data.nodeID,
                         data1 = teamArcProbe,
-                        name0 = node.Arc.name,
+                        name0 = data.arc.name,
                         name1 = "PROBE",
                         type = AIType.Team,
                         priority = Priority.Low
@@ -412,8 +411,9 @@ public class AIManager : MonoBehaviour
                     //add to list of potentials
                     listOfTasksPotential.Add(taskProbe);
                 }
+                else { Debug.LogWarning("Invalid record from listOfProbeNodes (Null)"); }
             }
-            else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+            else { Debug.LogWarning("No nodes in listOfProbeNodes (Count 0)"); }
         }
     }
 

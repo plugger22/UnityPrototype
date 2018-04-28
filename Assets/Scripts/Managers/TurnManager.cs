@@ -127,6 +127,8 @@ public class TurnManager : MonoBehaviour
                 { finishedProcessing = true; }
             }
             while (finishedProcessing == false);
+            //switch off any node Alerts
+            GameManager.instance.alertScript.CloseAlertUI(true);
         }
     }
 
@@ -192,11 +194,16 @@ public class TurnManager : MonoBehaviour
             case "Resistance":
                 //process Authority AI
                 currentSide = GameManager.instance.globalScript.sideAuthority;
+                /*//only run AI if AI currently in charge of side
+                if (GameManager.instance.sideScript.authorityCurrent == SideState.AI)
+                { GameManager.instance.aiScript.ProcessAISideAuthority(); }*/
                 GameManager.instance.aiScript.ProcessAISideAuthority();
                 break;
             case "Authority":
                 //process Resistance AI
                 currentSide = GameManager.instance.globalScript.sideResistance;
+                /*if (GameManager.instance.sideScript.resistanceCurrent == SideState.AI)
+                { GameManager.instance.aiScript.ProcessAISideResistance(); }*/
                 GameManager.instance.aiScript.ProcessAISideResistance();
                 break;
             case "AI":

@@ -188,7 +188,7 @@ public class TeamManager : MonoBehaviour
                         Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
                         if (node != null)
                         {
-                            if (GameManager.instance.sideScript.authorityCurrent == SideState.Player)
+                            if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
                             {
                                 //Human Authority Player
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
@@ -1000,7 +1000,7 @@ public class TeamManager : MonoBehaviour
                             StringBuilder builderBottom = new StringBuilder();
                             bool proceedFlag = false;
                             //move team
-                            if (GameManager.instance.sideScript.authorityCurrent == SideState.AI)
+                            if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
                             { proceedFlag = MoveTeamAI(TeamPool.InTransit, team.teamID, node); }
                             else
                             { proceedFlag = MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node); }

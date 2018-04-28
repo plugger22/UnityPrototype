@@ -208,6 +208,15 @@ public class TargetManager : MonoBehaviour
                 {
                     //get a random node
                     List<Node> tempNodes = new List<Node>(GameManager.instance.dataScript.GetListOfNodesByType(nodeArcID));
+                    //clean out any nodes with prior targets prior to pruning
+                    if (totalOfTypewithTargets > 0)
+                    {
+                        for(int j = tempNodes.Count - 1; j >= 0; j--)
+                        {
+                            if (tempNodes[j].targetID > -1)
+                            { tempNodes.RemoveAt(j); }
+                        }
+                    }
                     if (tempNodes.Count > 0)
                     {
                         //remove all duplicate nodes from list that already have targets assigned to them
@@ -385,7 +394,7 @@ public class TargetManager : MonoBehaviour
                                 {
                                     case Status.Active:
                                     case Status.Live:
-                                        tempList.Add(string.Format("{0} Target", target.targetStatus));
+                                        tempList.Add(string.Format("<b>{0} Target</b>", target.targetStatus));
                                         tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
                                         tempList.Add(string.Format("Level {0}", target.targetLevel));
                                         break;
@@ -397,7 +406,7 @@ public class TargetManager : MonoBehaviour
                                 {
                                     case Status.Completed:
                                     case Status.Contained:
-                                        tempList.Add(string.Format("{0} Target", target.targetStatus));
+                                        tempList.Add(string.Format("<b>{0} Target</b>", target.targetStatus));
                                         tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
                                         tempList.Add(string.Format("Level {0}", target.targetLevel));
                                         break;
@@ -456,9 +465,9 @@ public class TargetManager : MonoBehaviour
         switch (target.targetStatus)
         {
             case Status.Active:
-                tempList.Add(string.Format("{0}<b>{1} Target Lvl {2}</b>{3}", colourNormal, target.targetStatus, target.targetLevel, colourEnd));
+                tempList.Add(string.Format("{0}<b>{1} Target</b>{2}", colourNormal, target.targetStatus, colourEnd));
                 tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
-                tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+                tempList.Add(string.Format("{0}Level {1}{2}", colourDefault, target.targetLevel, colourEnd));
                 break;
             case Status.Live:
                 tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
