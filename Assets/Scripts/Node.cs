@@ -338,7 +338,7 @@ public class Node : MonoBehaviour
                         foreach (Team team in listOfTeams)
                         { teamList.Add(team.arc.name); }
                     }
-                    //target info (TargetManager method handles FOW and sides)
+                    //target info (TargetManager method handles FOW, isTargetKnown and sides logic)
                     List<string> targetList = new List<string>();
                     if (targetID > -1)
                     { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID, isTargetKnown); }

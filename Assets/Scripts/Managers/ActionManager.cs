@@ -1930,6 +1930,8 @@ public class ActionManager : MonoBehaviour
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
                 }
+                //set isTargetKnown regardless of success or failure
+                node.isTargetKnown = true;
                 Debug.Log(string.Format("Target Resolution: chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n"));
 
                 //
@@ -1957,10 +1959,6 @@ public class ActionManager : MonoBehaviour
                         dataInput.ongoingText = "Target";
                         //add to target so it can link to effects
                         target.ongoingID = dataInput.ongoingID;
-                        /*// add to register
-                        string registerDetails = string.Format("Target \"{0}\", ID {1}, at {2}, ID {3}, t{4}",  target.name, target.targetID, node.Arc.name, 
-                            node.nodeID, GameManager.instance.turnScript.Turn);
-                        GameManager.instance.dataScript.AddOngoingEffectToDict(target.ongoingID, registerDetails);*/
                     }
                     //any effects to process?
                     if (listOfEffects.Count > 0)

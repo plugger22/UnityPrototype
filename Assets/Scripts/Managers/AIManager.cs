@@ -69,6 +69,8 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listSecurityNonCritical = new List<AINodeData>();
     List<AINodeData> listSupportCritical = new List<AINodeData>();
     List<AINodeData> listSupportNonCritical = new List<AINodeData>();
+    List<AINodeData> listOfTargetsKnown = new List<AINodeData>();
+    List<AINodeData> listOfTargetsDamaged = new List<AINodeData>();
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -100,6 +102,7 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// Runs Resistance turn on behalf of AI
+    /// TurnManager.cs -> ProcessNewTurn -> EndTurnFinalAI
     /// </summary>
     public void ProcessAISideResistance()
     {
@@ -110,17 +113,18 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// Runs Authority turn on behalf of AI
+    /// TurnManager.cs -> ProcessNewTurn -> EndTurnFinalAI
     /// </summary>
     public void ProcessAISideAuthority()
     {
         Debug.Log(string.Format("AIManager: ProcessAISideAuthority{0}", "\n"));
         ExecuteTasks();
         ClearAICollections();
-        //Node Teams (Civil / Control / Media)       
+        //Info Gathering      
         GetAINodeData();
         ProcessAINodeData();
+        //AI Rulesets
         ProcessNodeTasks();
-        //Probe Team
         ProcessProbeTask();
         //choose tasks for the turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
@@ -140,6 +144,8 @@ public class AIManager : MonoBehaviour
         listSecurityNonCritical.Clear();
         listSupportCritical.Clear();
         listSupportNonCritical.Clear();
+        listOfTargetsKnown.Clear();
+        listOfTargetsDamaged.Clear();
     }
 
     /// <summary>
@@ -185,8 +191,11 @@ public class AIManager : MonoBehaviour
         else { Debug.LogWarning("Invalid message (Null)"); }
     }
 
+
+
     /// <summary>
     /// gathers data on all nodes that have degraded in some from (from their starting values) and adds to listNodeMaster (from scratch each turn)
+    /// also gathers data on known, but uncompleted, targets as well as Damaged targets that need to be contained
     /// </summary>
     private void GetAINodeData()
     {
@@ -199,6 +208,9 @@ public class AIManager : MonoBehaviour
             {
                 if (node.Value != null)
                 {
+                    //
+                    // - - - Node datapoints - - -
+                    //
                     //check that node isn't already maxxed out on teams
                     if (node.Value.CheckNumOfTeams() < maxTeamsAtNode)
                     {
@@ -253,6 +265,37 @@ public class AIManager : MonoBehaviour
                                 listNodeMaster.Add(dataPackage);
                             }
                         }
+                    }
+                    //
+                    // - - - Targets (known and uncompleted) - - -
+                    //
+                    if (node.Value.isTargetKnown == true)
+                    {
+                        Target target = GameManager.instance.dataScript.GetTarget(node.Value.targetID);
+                        if (target != null)
+                        {
+                            switch (target.targetStatus)
+                            {
+                                case Status.Active:
+                                case Status.Live:
+                                    //spider/erasure team task (good ambush situation as targets will lure in resistance player)
+                                    dataPackage = new AINodeData();
+                                    dataPackage.nodeID = node.Value.nodeID;
+                                    dataPackage.type = NodeData.Target;
+                                    dataPackage.arc = node.Value.Arc;
+                                    listOfTargetsKnown.Add(dataPackage);
+                                    break;
+                                case Status.Completed:
+                                    //Damage team task (good ambush situation as targets will lure in resistance player)
+                                    dataPackage = new AINodeData();
+                                    dataPackage.nodeID = node.Value.nodeID;
+                                    dataPackage.type = NodeData.Target;
+                                    dataPackage.arc = node.Value.Arc;
+                                    listOfTargetsDamaged.Add(dataPackage);
+                                    break;
+                            }
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", node.Value.targetID)); }
                     }
                 }
                 else { Debug.LogWarning(string.Format("Invalid node (Null) in dictOfNodes for nodeID {0}", node.Key)); }

@@ -73,6 +73,7 @@ public class TargetManager : MonoBehaviour
         { listOfFactors.Add((TargetFactors)factor); }
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, this.OnEvent);
+        EventManager.instance.AddListener(EventType.StartTurnLate, this.OnEvent);
     }
 
 
@@ -89,6 +90,9 @@ public class TargetManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.StartTurnLate:
+                StartTurnLate();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -114,6 +118,56 @@ public class TargetManager : MonoBehaviour
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourTarget = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
+    /// <summary>
+    /// loops nodes, checks all targets and updates isTargetKnown status
+    /// </summary>
+    private void StartTurnLate()
+    {
+        int targetID;
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            foreach(var node in dictOfNodes)
+            {
+                targetID = node.Value.targetID;
+                if (targetID > -1)
+                {
+                    //target present
+                    if (node.Value.isTargetKnown == false)
+                    {
+                        //probe team present -> target known
+                        if (node.Value.isProbeTeam == true)
+                        { node.Value.isTargetKnown = true; }
+                        else
+                        {
+                            //get target status
+                            Target target = GameManager.instance.dataScript.GetTarget(targetID);
+                            if (target != null)
+                            {
+                                //target automatically known regardless if completed or contained
+                                switch(target.targetStatus)
+                                {
+                                    case Status.Completed:
+                                    case Status.Contained:
+                                        node.Value.isTargetKnown = true;
+                                        break;
+                                }
+                            }
+                            else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", targetID)); }
+                        }
+                    }
+                }
+                else
+                {
+                    //No target -> reset target known flag if true
+                    if (node.Value.isTargetKnown == true)
+                    { node.Value.isTargetKnown = false; }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
 
     /// <summary>
