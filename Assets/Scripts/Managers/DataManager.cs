@@ -21,6 +21,7 @@ public class DataManager : MonoBehaviour
     private bool[,] arrayOfActorsPresent;                                                       //array determining if an actorSlot is filled (True) or vacant (False)
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
+    private List<Node> listOfMostConnectedNodes = new List<Node>();                             //top connected nodes (3+ connections), used by AI for ProcessSpiderTeam
 
     //actor quality input arrays (used to populate arrayOfQualities)
     public Quality[] authorityQualities = new Quality[3];
@@ -1162,6 +1163,23 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, Connection> GetAllConnections()
     { return dictOfConnections; }
+
+    /// <summary>
+    /// pass the top most connected nodes (those with 3+ connections) to the list. Used by AI
+    /// </summary>
+    /// <param name="listOfConnected"></param>
+    public void SetConnectedNodes(List<Node> listOfConnected)
+    {
+        if (listOfConnected != null)
+        {
+            listOfMostConnectedNodes.Clear();
+            listOfMostConnectedNodes.AddRange(listOfConnected);
+        }
+        else { Debug.LogWarning("Invalid listOfConnected (Null)"); }
+    }
+
+    public List<Node> GetMostConnectedNodes()
+    { return listOfMostConnectedNodes; }
     
 
     //
@@ -2447,7 +2465,7 @@ public class DataManager : MonoBehaviour
         //Add a copy of the message to AI Message dictionary 
         AddMessageExisting(message, MessageCategory.AI);
         //Extract AI data
-        GameManager.instance.aiScript.GetAIData(message);
+        GameManager.instance.aiScript.GetAIMessageData(message);
     }
 
     /// <summary>
@@ -3004,6 +3022,8 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+   
 
     //new methods above here
 }

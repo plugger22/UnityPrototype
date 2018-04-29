@@ -397,10 +397,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //seventh button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Connections LOW"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Most Connected"))
             {
-                Debug.Log("Button -> Change Connections");
-                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.LOW);
+                Debug.Log("Button -> Show Most Connected Nodes");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected);
             }
 
             //eighth button

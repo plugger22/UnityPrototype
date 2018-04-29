@@ -31,6 +31,10 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isSupportTeam;       //Media team present at node
     [HideInInspector] public bool isProbeTeam;         //Probe team present at node
 
+    [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
+    [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
+    [HideInInspector] public bool isCentreNode;              //true if node is in the geographic centre region of the map (used by AI)
+
     //fast access fields
     private int stabilityTeamEffect;
     private int securityTeamEffect;

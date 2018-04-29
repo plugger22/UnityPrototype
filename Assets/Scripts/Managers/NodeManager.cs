@@ -209,6 +209,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.ShowSpiders:
                     case NodeUI.ShowTracers:
                     case NodeUI.ShowTeams:
+                    case NodeUI.MostConnected:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -357,18 +358,10 @@ public class NodeManager : MonoBehaviour
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Completed));
                 }
-                GameObject nodeObject = null;
                 if (tempList.Count > 0)
                 {
                     foreach (Target target in tempList)
                     {
-                        /*nodeObject = GameManager.instance.dataScript.GetNodeObject(target.nodeID);
-                        if (nodeObject != null)
-                        {
-                            Node nodeTemp = nodeObject.GetComponent<Node>();
-                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
-                            nodeTemp.SetMaterial(nodeMaterial);
-                        }*/
                         Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
                         if (nodeTemp != null)
                         {
@@ -584,6 +577,32 @@ public class NodeManager : MonoBehaviour
                     }
                     else
                     { displayText = string.Format("{0}There are no Teams present{1}", colourError, colourEnd); }
+                }
+                break;
+            case NodeUI.MostConnected:
+                List<Node> connectedList = GameManager.instance.dataScript.GetMostConnectedNodes();
+                if (connectedList != null)
+                {
+                    if (connectedList.Count > 0)
+                    {
+                        foreach (Node node in connectedList)
+                        {
+                            if (node != null)
+                            {
+                                Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                node.SetMaterial(nodeMaterial);
+                            }
+                            else { Debug.LogWarning("Invalid node (Null)"); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Most Connected Node{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
+                            connectedList.Count != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid connectedList (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null listOfMostConnected", colourEnd);
                 }
                 break;
 

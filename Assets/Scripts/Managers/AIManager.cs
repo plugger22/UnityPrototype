@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
 using System.Text;
+using System;
+using System.Linq;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// AI data package used to collate all node info where a node has degraded in some form
@@ -14,6 +17,7 @@ public class AINodeData
     public NodeArc arc;
     public int difference;                  //shows difference between current and start values
     public int current;                     //shows current value
+    public bool isPreferred;                //true if preferred type of node for that side's faction
 }
 
 /// <summary>
@@ -45,6 +49,8 @@ public class AIManager : MonoBehaviour
     [Range(1, 10)] public int priorityMediumWeight = 2;
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Low Priority tasks")]
     [Range(1, 10)] public int priorityLowWeight = 1;
+    [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections")]
+    [Range(1, 5)] public int nodeConnectionFactor = 3;
 
 
     private Faction factionAuthority;
@@ -99,6 +105,9 @@ public class AIManager : MonoBehaviour
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
         maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
+        //set up list of most connected Nodes
+        SetConnectedNodes();
+        SetPreferredNodes();
     }
 
     /// <summary>
@@ -151,10 +160,124 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// initialises list of most connected nodes (game start)
+    /// </summary>
+    private void SetConnectedNodes()
+    {
+        int numOfConnections, counter;
+        //temp dictionary, key -> nodeID, value -> # of connections
+        Dictionary<int, int> dictOfConnected = new Dictionary<int, int>();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        List<Node> listOfMostConnectedNodes = new List<Node>();
+        if (dictOfNodes != null)
+        {
+            //loop nodes and set up dictionary of nodes and their # of connections (Neighbours are used but same thing)
+            foreach(var node in dictOfNodes)
+            {
+                if (node.Value != null)
+                {
+                    numOfConnections = node.Value.GetNumOfNeighbours();
+                    //only select nodes that have 'x' number of connections
+                    if (numOfConnections >= nodeConnectionFactor)
+                    {
+                        try
+                        { dictOfConnected.Add(node.Value.nodeID, numOfConnections); }
+                        catch (ArgumentException)
+                        { Debug.LogWarning(string.Format("Invalid connection entry (duplicate) for nodeID {0}", node.Value.nodeID)); }
+                    }
+
+                }
+                else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.Key)); }
+            }
+            //check that there are at least 3 nodes in dict
+            if (dictOfConnected.Count < 3)
+            {
+                //Not enough nodes -> loop again and add nodes with 1 - factor connections
+                int numSpecific = nodeConnectionFactor - 1;
+                if (numSpecific > 0)
+                {
+
+                    foreach(var node in dictOfNodes)
+                    {
+                        if (node.Value != null)
+                        {
+                            numOfConnections = node.Value.GetNumOfNeighbours();
+                            //only select nodes that have 'x' number of connections
+                            if (numOfConnections == numSpecific)
+                            {
+                                try
+                                { dictOfConnected.Add(node.Value.nodeID, numOfConnections); }
+                                catch (ArgumentException)
+                                { Debug.LogWarning(string.Format("Invalid connection entry (duplicate) for nodeID {0}", node.Value.nodeID)); }
+                            }
+
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.Key)); }
+                    }
+                    Debug.Log(string.Format("A!Manager.cs -> SetConnectedNodes: Extra nodes ({0} connections) have been added to the listOfMostConnectedNodes{1}", 
+                        numSpecific, "\n"));
+                }
+                else { Debug.LogWarning("Insufficient records for SetConnectedNodes"); }
+            }
+            //Final check for a viable number of records
+            if (dictOfConnected.Count > 0)
+            {
+                if (dictOfConnected.Count >= 3)
+                {
+                    //Sort by # of connections
+                    var sorted = from record in dictOfConnected orderby record.Value descending select record.Key;
+                    counter = 0;
+                    //select all nodes with 'x' connections
+                    foreach (var record in sorted)
+                    {
+                        Node nodeConnected = GameManager.instance.dataScript.GetNode(record);
+                        if (nodeConnected != null)
+                        {
+                            listOfMostConnectedNodes.Add(nodeConnected);
+                            counter++;
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", record)); }
+                    }
+                    //Pass data to the main reference list
+                    GameManager.instance.dataScript.SetConnectedNodes(listOfMostConnectedNodes);
+                    Debug.Log(string.Format("A!Manager.cs -> SetConnectedNodes: {0} nodes have been added to the listOfMostConnectedNodes{1}", counter, "\n"));
+                }
+                else { Debug.LogWarning("Insufficient number of records ( < 3) for SetConnectedNodes"); }
+            }
+            else { Debug.LogError("Insufficient records (None) for SetConnectedNodes"); }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// loops nodes and sets '.isPreferredNode' flag depending on node type and current faction preference
+    /// </summary>
+    private void SetPreferredNodes()
+    {
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            if (authorityPreferredArc != null)
+            {
+                foreach (var node in dictOfNodes)
+                {
+                    if (node.Value.Arc.name.Equals(authorityPreferredArc) == true)
+                    { node.Value.isPreferredAuthority = true; }
+                    else { node.Value.isPreferredAuthority = false; }
+                }
+            }
+            else { Debug.LogWarning("Invalid authorityPreferredArc (Null)"); }
+
+            //Resistance preferred -> TO DO
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+    /// <summary>
     /// Extracts all relevant AI data from an AI related message
     /// </summary>
     /// <param name="message"></param>
-    public void GetAIData(Message message)
+    public void GetAIMessageData(Message message)
     {
         if (message != null)
         {
@@ -178,7 +301,7 @@ public class AIManager : MonoBehaviour
                         break;
                     case MessageSubType.AI_Capture:
                     case MessageSubType.AI_Release:
-                        
+
                         //- - - TO DO - - - 
 
                         break;
@@ -230,6 +353,7 @@ public class AIManager : MonoBehaviour
                                 dataPackage.arc = node.Value.Arc;
                                 dataPackage.difference = Mathf.Abs(data);
                                 dataPackage.current = node.Value.Stability;
+                                dataPackage.isPreferred = node.Value.isPreferredAuthority;
                                 listNodeMaster.Add(dataPackage);
                             }
                         }
@@ -247,6 +371,7 @@ public class AIManager : MonoBehaviour
                                 dataPackage.arc = node.Value.Arc;
                                 dataPackage.difference = Mathf.Abs(data);
                                 dataPackage.current = node.Value.Security;
+                                dataPackage.isPreferred = node.Value.isPreferredAuthority;
                                 listNodeMaster.Add(dataPackage);
                             }
                         }
@@ -264,6 +389,7 @@ public class AIManager : MonoBehaviour
                                 dataPackage.arc = node.Value.Arc;
                                 dataPackage.difference = data;
                                 dataPackage.current = node.Value.Support;
+                                dataPackage.isPreferred = node.Value.isPreferredAuthority;
                                 listNodeMaster.Add(dataPackage);
                             }
                         }
@@ -285,6 +411,7 @@ public class AIManager : MonoBehaviour
                                     dataPackage.nodeID = node.Value.nodeID;
                                     dataPackage.type = NodeData.Target;
                                     dataPackage.arc = node.Value.Arc;
+                                    dataPackage.isPreferred = node.Value.isPreferredAuthority;
                                     listOfTargetsKnown.Add(dataPackage);
                                     break;
                                 case Status.Completed:
@@ -294,6 +421,7 @@ public class AIManager : MonoBehaviour
                                     dataPackage.type = NodeData.Target;
                                     dataPackage.arc = node.Value.Arc;
                                     listOfTargetsDamaged.Add(dataPackage);
+                                    dataPackage.isPreferred = node.Value.isPreferredAuthority;
                                     break;
                             }
                         }
@@ -311,6 +439,7 @@ public class AIManager : MonoBehaviour
                             dataPackage.nodeID = node.Value.nodeID;
                             dataPackage.type = NodeData.Probe;
                             dataPackage.arc = node.Value.Arc;
+                            dataPackage.isPreferred = node.Value.isPreferredAuthority;
                             listOfProbeNodes.Add(dataPackage);
                         }
                     }
@@ -595,13 +724,10 @@ public class AIManager : MonoBehaviour
             if (listCount > 1)
             {
                 //scan for any nodes of the preferred faction type
-                if (authorityPreferredArc != null)
+                foreach (AINodeData data in listCritical)
                 {
-                    foreach (AINodeData data in listCritical)
-                    {
-                        if (data.arc.name.Equals(authorityPreferredArc) == true)
-                        { tempList.Add(data); }
-                    }
+                    if (data.isPreferred == true)
+                    { tempList.Add(data); }
                 }
                 if (tempList.Count > 0)
                 {
@@ -634,45 +760,42 @@ public class AIManager : MonoBehaviour
                 Priority priority = Priority.Low;
                 tempList.Clear();
                 //scan for any nodes of the preferred faction type
-                if (authorityPreferredArc != null)
+                foreach (AINodeData data in listNonCritical)
                 {
-                    foreach (AINodeData data in listNonCritical)
+                    if (data.isPreferred == true)
+                    { tempList.Add(data); }
+                }
+                if (tempList.Count > 0)
+                {
+                    //randomly select a preferred faction option
+                    index = Random.Range(0, tempList.Count);
+                    //determine priority (one notch higher than normal due to being a preferred faction node arc)
+                    switch (tempList[index].difference)
                     {
-                        if (data.arc.name.Equals(authorityPreferredArc) == true)
-                        { tempList.Add(data); }
+                        case 1: priority = Priority.Medium; break;
+                        case 2: priority = Priority.High; break;
+                        default:
+                            Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", tempList[0].difference,
+                       tempList[0].nodeID)); break;
                     }
-                    if (tempList.Count > 0)
+                    //generate task
+                    task = new AITask() { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = priority };
+                }
+                else
+                {
+                    //otherwise randomly select any option
+                    index = Random.Range(0, listCount);
+                    //determine priority
+                    switch (listNonCritical[index].difference)
                     {
-                        //randomly select a preferred faction option
-                        index = Random.Range(0, tempList.Count);
-                        //determine priority (one notch higher than normal due to being a preferred faction node arc)
-                        switch (tempList[index].difference)
-                        {
-                            case 1: priority = Priority.Medium; break;
-                            case 2: priority = Priority.High; break;
-                            default:
-                                Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", tempList[0].difference,
-                           tempList[0].nodeID)); break;
-                        }
-                        //generate task
-                        task = new AITask() { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = priority };
+                        case 1: priority = Priority.Low; break;
+                        case 2: priority = Priority.Medium; break;
+                        default:
+                            Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", listNonCritical[0].difference,
+                       listNonCritical[0].nodeID)); break;
                     }
-                    else
-                    {
-                        //otherwise randomly select any option
-                        index = Random.Range(0, listCount);
-                        //determine priority
-                        switch (listNonCritical[index].difference)
-                        {
-                            case 1: priority = Priority.Low; break;
-                            case 2: priority = Priority.Medium; break;
-                            default:
-                                Debug.LogWarning(string.Format("Invalid difference \"{0}\" for nodeID {1}", listNonCritical[0].difference,
-                           listNonCritical[0].nodeID)); break;
-                        }
-                        //generate task
-                        task = new AITask() { data0 = listNonCritical[index].nodeID, name0 = listNonCritical[index].arc.name, name1 = name, priority = priority };
-                    }
+                    //generate task
+                    task = new AITask() { data0 = listNonCritical[index].nodeID, name0 = listNonCritical[index].arc.name, name1 = name, priority = priority };
                 }
             }
         }
@@ -798,6 +921,8 @@ public class AIManager : MonoBehaviour
         else { builderList.AppendFormat("No records{0}", "\n"); }
         return builderList.ToString();
     }
+
+
 
     //new methods above here
 }

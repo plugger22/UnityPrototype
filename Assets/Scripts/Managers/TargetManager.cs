@@ -311,7 +311,7 @@ public class TargetManager : MonoBehaviour
         }
         //check tally
         if (counter == 0)
-        { Debug.LogError(string.Format("No nodes were assigned Targets{0}", "\n")); }
+        { Debug.LogWarning(string.Format("No nodes were assigned Targets{0}", "\n")); }
         else if (counter < StartTargets)
         { Debug.LogWarning(string.Format("TargetManager: Less than the required number of starting nodes assigned targets{0}", "\n")); }
     }
