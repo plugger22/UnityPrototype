@@ -404,10 +404,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eighth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Connections MED"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Centre Nodes"))
             {
-                Debug.Log("Button -> Change Connections");
-                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.MEDIUM);
+                Debug.Log("Button -> Centre Nodes");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre);
             }
 
             //ninth button

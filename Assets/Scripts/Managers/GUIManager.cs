@@ -24,6 +24,8 @@ public class GUIManager : MonoBehaviour
     public Sprite errorSprite;
     [Tooltip("Universal Info sprite")]
     public Sprite infoSprite;
+    [Tooltip("Debug plane to show central region as specified by AIManager.cs -> nodeGeographicCentre")]
+    public GameObject centrePlane;
 
     [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]
     [Range(1,2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'

@@ -40,7 +40,7 @@ public class AITask
 public class AIManager : MonoBehaviour
 {
     [Tooltip("The % of the total map, from the centre outwards, that encompasses the geographic centre where any node in the area is node.isCentreNode true")]
-    [Range(1, 10)] public int nodeGeographicCentre = 3;
+    [Range(0, 100)] public float nodeGeographicCentre = 30f;
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
     [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
@@ -293,7 +293,28 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void SetCentreNodes()
     {
-
+        //calculate limits of central area of map
+        float centreNum = 10 * nodeGeographicCentre / 100;
+        float limit = centreNum / 2f;
+        float upper = limit;
+        float lower = limit * -1;
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            foreach (var node in dictOfNodes)
+            {
+                //check each node to determine if it's inside or outside central area
+                if (node.Value.nodePosition.x <= upper && node.Value.nodePosition.x >= lower)
+                {
+                    if (node.Value.nodePosition.z <= upper && node.Value.nodePosition.z >= lower)
+                    { node.Value.isCentreNode = true; }
+                    else
+                    { node.Value.isCentreNode = false; }
+                }
+                else { node.Value.isCentreNode = false; }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
 
     /// <summary>

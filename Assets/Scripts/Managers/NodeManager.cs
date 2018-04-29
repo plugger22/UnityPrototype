@@ -210,6 +210,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.ShowTracers:
                     case NodeUI.ShowTeams:
                     case NodeUI.MostConnected:
+                    case NodeUI.Centre:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -605,6 +606,39 @@ public class NodeManager : MonoBehaviour
                     displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null listOfMostConnected", colourEnd);
                 }
                 break;
+            case NodeUI.Centre:
+                //display all nodes with AI designated central area (node.isCentreNode true)
+                Dictionary<int, Node> dictOfCentreNodes = GameManager.instance.dataScript.GetAllNodes();
+                if (dictOfCentreNodes != null)
+                {
+                    if (dictOfCentreNodes.Count > 0)
+                    {
+                        int counter = 0;
+                        foreach (var node in dictOfCentreNodes)
+                        {
+                            if (node.Value != null)
+                            {
+                                if (node.Value.isCentreNode == true)
+                                {
+                                    Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                    node.Value.SetMaterial(nodeMaterial);
+                                    counter++;
+                                }
+                            }
+                            else { Debug.LogWarning("Invalid node (Null)"); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Centred Node{4}{5}", colourDefault, counter, colourEnd, colourHighlight,
+                            dictOfCentreNodes.Count != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid dictOfCentreNodes (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null dictOfCentreNodes", colourEnd);
+                }
+                break;
+
 
             //show specific NodeArcTypes
             case NodeUI.NodeArc0: data = 0; nodeTypeFlag = true; break;
