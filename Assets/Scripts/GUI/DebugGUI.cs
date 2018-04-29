@@ -407,6 +407,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Centre Nodes"))
             {
                 Debug.Log("Button -> Centre Nodes");
+                GameManager.instance.debugGraphicsScript.SetCentrePane(true);
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre);
             }
 

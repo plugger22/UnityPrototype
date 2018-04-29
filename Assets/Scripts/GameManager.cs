@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window
     [HideInInspector] public ModalGUI modalGUIScropt;                 //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
+    [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
 
                                                                    
     [Tooltip("Leave as default 0 for random")]
@@ -132,6 +133,7 @@ public class GameManager : MonoBehaviour
         diceScript = ModalDiceUI.Instance();
         modalGUIScropt = ModalGUI.Instance();
         alertScript = AlertUI.Instance();
+        debugGraphicsScript = DebugGraphics.Instance();
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
     }
@@ -180,6 +182,7 @@ public class GameManager : MonoBehaviour
         captureScript.Initialise();
         rebelScript.Initialise();
         authorityScript.Initialise();
+        debugGraphicsScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
 

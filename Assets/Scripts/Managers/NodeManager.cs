@@ -810,6 +810,7 @@ public class NodeManager : MonoBehaviour
             NodeRedraw = true;
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) returned from dataManager in ResetNodes"); }
+
     }
 
     /// <summary>
