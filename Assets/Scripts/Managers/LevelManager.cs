@@ -668,6 +668,8 @@ public class LevelManager : MonoBehaviour
             Mathf.Clamp(node.Stability, 0, maxNodeValue);
             Mathf.Clamp(node.Security, 0, maxNodeValue);
             Mathf.Clamp(node.Support, 0, maxNodeValue);
+            //position
+            node.nodePosition = obj.transform.position;
             //target -> none
             node.targetID = -1;
             //keep a tally of how many of each type have been generated

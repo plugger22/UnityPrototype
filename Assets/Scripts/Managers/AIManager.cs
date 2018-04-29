@@ -39,6 +39,8 @@ public class AITask
 /// </summary>
 public class AIManager : MonoBehaviour
 {
+    [Tooltip("The % of the total map, from the centre outwards, that encompasses the geographic centre where any node in the area is node.isCentreNode true")]
+    [Range(1, 10)] public int nodeGeographicCentre = 3;
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
     [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
@@ -51,6 +53,8 @@ public class AIManager : MonoBehaviour
     [Range(1, 10)] public int priorityLowWeight = 1;
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections")]
     [Range(1, 5)] public int nodeConnectionFactor = 3;
+
+    
 
 
     private Faction factionAuthority;
@@ -108,6 +112,7 @@ public class AIManager : MonoBehaviour
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
+        SetCentreNodes();
     }
 
     /// <summary>
@@ -164,13 +169,14 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void SetConnectedNodes()
     {
-        int numOfConnections, counter;
+        int numOfConnections, numNodesHalf, counter, limit;
         //temp dictionary, key -> nodeID, value -> # of connections
         Dictionary<int, int> dictOfConnected = new Dictionary<int, int>();
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
         List<Node> listOfMostConnectedNodes = new List<Node>();
         if (dictOfNodes != null)
         {
+            numNodesHalf = dictOfNodes.Count / 2;
             //loop nodes and set up dictionary of nodes and their # of connections (Neighbours are used but same thing)
             foreach(var node in dictOfNodes)
             {
@@ -219,6 +225,10 @@ public class AIManager : MonoBehaviour
                 }
                 else { Debug.LogWarning("Insufficient records for SetConnectedNodes"); }
             }
+            //ensure that their is a maximum of total Nodes on Map / 2 in the list -> take the top half
+            limit = 999;
+            if (dictOfConnected.Count > numNodesHalf == true)
+            { limit = numNodesHalf; }
             //Final check for a viable number of records
             if (dictOfConnected.Count > 0)
             {
@@ -235,6 +245,9 @@ public class AIManager : MonoBehaviour
                         {
                             listOfMostConnectedNodes.Add(nodeConnected);
                             counter++;
+                            //ensure that a max of half the total nodes on the map are in the list (top half)
+                            if (counter == limit)
+                            { break; }
                         }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", record)); }
                     }
@@ -250,13 +263,14 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// loops nodes and sets '.isPreferredNode' flag depending on node type and current faction preference
+    /// loops nodes and sets '.isPreferredNode'flag
     /// </summary>
     private void SetPreferredNodes()
     {
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
         if (dictOfNodes != null)
         {
+            //isPreferred
             if (authorityPreferredArc != null)
             {
                 foreach (var node in dictOfNodes)
@@ -269,8 +283,17 @@ public class AIManager : MonoBehaviour
             else { Debug.LogWarning("Invalid authorityPreferredArc (Null)"); }
 
             //Resistance preferred -> TO DO
+
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// loops nodes and sets '.isCentreNode' flag 
+    /// </summary>
+    private void SetCentreNodes()
+    {
+
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ public class Node : MonoBehaviour
     //NOTE -> LevelManager.arrayOfActiveNodes stores access data, eg. which nodes are active for which actor?
 
     [HideInInspector] public int nodeID;                //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
-    
+    [HideInInspector] public Vector3 nodePosition;      //position
     [HideInInspector] public string nodeName;           //name of node, eg. "Downtown Bronx"
     [HideInInspector] public NodeArc Arc;               //archetype type
 
