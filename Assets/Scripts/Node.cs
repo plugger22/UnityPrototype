@@ -23,13 +23,15 @@ public class Node : MonoBehaviour
 
     [HideInInspector] public int spiderTimer;           //countdown timer before removed
     [HideInInspector] public int tracerTimer;           //countdown timer before removed
-    [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1)
-    [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
+    [HideInInspector] public int activityCount = -1;    //# times rebel activity occurred (invis-1)
+    [HideInInspector] public int activityTime = -1;     //most recent turn when rebel activity occurred
 
     [HideInInspector] public bool isStabilityTeam;     //Civil team present at node
     [HideInInspector] public bool isSecurityTeam;      //Control team present at node
     [HideInInspector] public bool isSupportTeam;       //Media team present at node
     [HideInInspector] public bool isProbeTeam;         //Probe team present at node
+    [HideInInspector] public bool isSpiderTeam;        //Spider team present at node
+    [HideInInspector] public bool isDamageTeam;        //Damage team present at node
 
     [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
     [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
@@ -676,6 +678,8 @@ public class Node : MonoBehaviour
                     case "CONTROL": isSecurityTeam = true; break;
                     case "MEDIA": isSupportTeam = true; break;
                     case "PROBE": isProbeTeam = true; break;
+                    case "SPIDER": isSpiderTeam = true; break;
+                    case "DAMAGE": isDamageTeam = true; break;
                 }
                 //initialise Team data
                 team.nodeID = nodeID;
@@ -708,6 +712,8 @@ public class Node : MonoBehaviour
                     case "CONTROL": isSecurityTeam = false; break;
                     case "MEDIA": isSupportTeam = false; break;
                     case "PROBE": isProbeTeam = false; break;
+                    case "SPIDER": isSpiderTeam = false; break;
+                    case "DAMAGE": isDamageTeam = false; break;
                 }
                 //remove team
                 listOfTeams.RemoveAt(i);
@@ -1002,6 +1008,9 @@ public class Node : MonoBehaviour
         { Debug.LogError("Invalid effectProcess (Null)"); }
     }
 
+
+    public List<Connection> GetAllConnections()
+    { return listOfConnections; }
 
     /// <summary>
     /// //stats are the same for both sides, colours change though in the tooltips

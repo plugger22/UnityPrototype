@@ -962,6 +962,8 @@ public class NodeManager : MonoBehaviour
             NodeShowFlag = 0;
             //reset state
             activityState = ActivityUI.None;
+            //DEBUG
+            GameManager.instance.debugGraphicsScript.SetCentrePane(false);
         }
     }
 

@@ -34,13 +34,8 @@ public class DebugGraphics : MonoBehaviour
     {
         //adjust scale of centre Plane
         float scaleFactor = GameManager.instance.aiScript.nodeGeographicCentre;
-        Transform centreTransform = centrePlane.GetComponent<Transform>();
-        if (centreTransform != null)
-        {
-            float newScale = 1.1f * scaleFactor / 100f;
-            centreTransform.localScale = new Vector3(newScale, 1.15f, newScale);
-        }
-        Debug.LogWarning("Invalid centreTransform (Null)");
+        float newScale = 1.1f * scaleFactor / 100f;
+        centrePlane.transform.localScale = new Vector3(newScale, 1.15f, newScale);
     }
 
     /// <summary>
