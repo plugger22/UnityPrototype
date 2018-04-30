@@ -2687,30 +2687,61 @@ public class DataManager : MonoBehaviour
         {
             builderResistance.Append(string.Format(" Messages -> Resistance{0}", "\n"));
             builderAuthority.Append(string.Format("{0}{1} Messages -> Authority{2}", "\n", "\n", "\n"));
-            foreach (var record in tempDict)
+            //max # of records per side
+            int numOfRecordsPerSide = 20;
+            int counterResistance = 0;
+            int counterAuthority = 0;
+            int limitResistance = numOfRecordsPerSide;
+            int limitAuthority = numOfRecordsPerSide;
+            bool isSingleLine = false;
+            int numRecords = tempDict.Count;
+            //if more than half the display, switch to single line display instead of double lines per record
+            if (numRecords > numOfRecordsPerSide) { isSingleLine = true; limitResistance *= 2; limitAuthority *= 2; }
+            //sort records in descending turn order
+            List<Message> listOfMessages = new List<Message>();
+            IEnumerable<Message> allMessages =
+                from rec in tempDict
+                orderby rec.Value.turnCreated descending
+                select rec.Value;
+            listOfMessages = allMessages.ToList<Message>();
+            foreach (Message msg in listOfMessages)
             {
-                if (record.Value.side != null)
+                if (msg.side != null)
                 {
-                    switch (record.Value.side.name)
+                    switch (msg.side.name)
                     {
                         case "Resistance":
-                            builderResistance.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                            builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
-                                record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
-                                record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
+                            if (counterResistance < limitResistance)
+                            {
+                                builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                                if (!isSingleLine)
+                                {
+                                    builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
+                                }
+                                counterResistance++;
+                            }
                             break;
                         case "Authority":
-                            builderAuthority.Append(string.Format(" t{0}: {1}{2}", record.Value.turnCreated, record.Value.text, "\n"));
-                            builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", record.Key, record.Value.type,
-                                record.Value.subType, record.Value.data0, record.Value.data1, record.Value.data2, record.Value.isPublic == true ? "del" : "",
-                                record.Value.isPublic == true ? record.Value.displayDelay.ToString() : "", "\n"));
+                            if (counterAuthority < limitAuthority)
+                            {
+                                builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                                if (!isSingleLine)
+                                {
+                                    builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
+                                }
+                                counterAuthority++;
+                            }
                             break;
                         default:
-                            builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", record.Value.side.name, record.Key, "\n"));
+                            builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", msg.side.name, msg.msgID, "\n"));
                             break;
                     }
                 }
-                else { Debug.LogError(string.Format("Invalid record.Value.side (Null), \"{0}\"", record.Value.text)); }
+                else { Debug.LogError(string.Format("Invalid record.Value.side (Null), \"{0}\"", msg.text)); }
             }
         }
         //combine two lists

@@ -310,6 +310,9 @@ public class GUIManager : MonoBehaviour
             case AlertType.SideStatus:
                 details.textTop = "This action is unavailable as the AI controls this side";
                 break;
+            case AlertType.DebugAI:
+                details.textTop = "The AI has been switched OFF and the Player now has <b>Manual control</b> of both sides";
+                break;
             default:
                 details.textTop = "This action is unavailable";
                 break;

@@ -20,7 +20,7 @@
     //  - - - UI - - -
     //
     public enum InventoryState { None, Gear, ReservePool}
-    public enum AlertType { None, PlayerSatus, SideStatus }
+    public enum AlertType { None, PlayerSatus, SideStatus, DebugAI }
 
     //
     // - - - Connections - - - 

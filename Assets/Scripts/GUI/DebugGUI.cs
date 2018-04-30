@@ -318,22 +318,15 @@ public class DebugGUI : MonoBehaviour
                     //option only available on first turn
                     if (GameManager.instance.turnScript.Turn == 0)
                     {
-                        if (GameManager.instance.optionScript.noAI == true)
-                        {
-                            optionNoAI = "NO AI ON";
-                            GameManager.instance.optionScript.noAI = false;
-                            GameManager.instance.sideScript.authorityCurrent = GameManager.instance.sideScript.authorityOverall;
-                            GameManager.instance.sideScript.resistanceCurrent = GameManager.instance.sideScript.resistanceOverall;
-                        }
-                        else
-                        {
-                            optionNoAI = "NO AI OFF";
-                            GameManager.instance.optionScript.noAI = true;
-                            GameManager.instance.sideScript.authorityCurrent = SideState.Player;
-                            GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
-                            GameManager.instance.sideScript.authorityOverall = SideState.Player;
-                            GameManager.instance.sideScript.resistanceOverall = SideState.Player;
-                        }
+                        //switch AI Off -> Manual player control for both sides
+                        optionNoAI = "NO AI OFF";
+                        GameManager.instance.optionScript.noAI = true;
+                        GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                        GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                        GameManager.instance.sideScript.authorityOverall = SideState.Player;
+                        GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                        //notification
+                        GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
                     }
                 }
             }

@@ -358,8 +358,8 @@ public class Node : MonoBehaviour
                     if (GameManager.instance.optionScript.debugData == true)
                     {
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
-                        textName = string.Format("St: {0} Su: {1} Se: {2} P: {3}", Convert.ToInt32(isStabilityTeam), Convert.ToInt32(isSupportTeam)
-                            , Convert.ToInt32(isSecurityTeam), Convert.ToInt32(isProbeTeam));
+                        textName = string.Format("St{0} Su{1} Se{2} P{3} D{4}", Convert.ToInt32(isStabilityTeam), Convert.ToInt32(isSupportTeam)
+                            , Convert.ToInt32(isSecurityTeam), Convert.ToInt32(isProbeTeam), Convert.ToInt32(isDamageTeam));
                     }
                     else
                     {
