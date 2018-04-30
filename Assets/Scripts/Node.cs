@@ -5,6 +5,7 @@ using modalAPI;
 using gameAPI;
 using packageAPI;
 using System.Text;
+using System;
 
 public class Node : MonoBehaviour
 {
@@ -357,7 +358,8 @@ public class Node : MonoBehaviour
                     if (GameManager.instance.optionScript.debugData == true)
                     {
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
-                        textName = string.Format("{0}/{1}/{2}/{3}", isStabilityTeam, isSupportTeam, isSecurityTeam, isProbeTeam);
+                        textName = string.Format("St: {0} Su: {1} Se: {2} P: {3}", Convert.ToInt32(isStabilityTeam), Convert.ToInt32(isSupportTeam)
+                            , Convert.ToInt32(isSecurityTeam), Convert.ToInt32(isProbeTeam));
                     }
                     else
                     {
@@ -829,7 +831,7 @@ public class Node : MonoBehaviour
 
 
     /// <summary>
-    /// Returns tally of ongoing effects for the specified field, '0' if none
+    /// Returns tally of ongoing effects for the specified node datapoint, '0' if none
     /// </summary>
     /// <param name="outcome"></param>
     /// <returns></returns>
@@ -1035,6 +1037,16 @@ public class Node : MonoBehaviour
         }
 
         return arrayOfStats;
+    }
+
+    /// <summary>
+    /// returns true if there are ongoing target effects, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckForOngoingEffects()
+    {
+        if (listOfOngoingEffects.Count > 0) { return true; }
+        return false;
     }
 
     //

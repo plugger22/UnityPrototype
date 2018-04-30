@@ -71,6 +71,7 @@
     //
     public enum Priority { Low, Medium, High, Critical }
     public enum AIType { None, Team, Connection, Decision }
+    public enum AIDebugData { None, Task, Node, Spider}                             //used for toggling debugGUI.cs  AI data
 
     //
     // - - - Dice - - -

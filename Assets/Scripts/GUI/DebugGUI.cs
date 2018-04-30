@@ -15,6 +15,7 @@ public class DebugGUI : MonoBehaviour
 
     private GUIStatus status;
     private MessageCategory msgStatus;
+    private AIDebugData aiStatus;
     private bool showGUI = false;
     private int debugDisplay = 0;
 
@@ -205,12 +206,19 @@ public class DebugGUI : MonoBehaviour
         
 
             //thirteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "AI Data"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Toggle AI Data"))
             {
                 Debug.Log("Button -> AI Data");
-                if (debugDisplay != 10)
+                /*if (debugDisplay != 10)
                 { debugDisplay = 10; }
-                else { debugDisplay = 0; }
+                else { debugDisplay = 0; }*/
+                switch(aiStatus)
+                {
+                    case AIDebugData.None: debugDisplay = 10; aiStatus = AIDebugData.Task; break;
+                    case AIDebugData.Task: debugDisplay = 10; aiStatus = AIDebugData.Node; break;
+                    case AIDebugData.Node: debugDisplay = 10; aiStatus = AIDebugData.Spider; break;
+                    case AIDebugData.Spider: debugDisplay = 0; aiStatus = AIDebugData.None; break;
+                }
             }
 
             
@@ -302,22 +310,31 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sixth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), optionNoAI))
+            if (GameManager.instance.turnScript.Turn > 0) { optionNoAI = "Unavailable"; }
             {
-                Debug.Log("Button -> Toggle NO AI");
-                if (GameManager.instance.optionScript.noAI == true)
+                if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), optionNoAI))
                 {
-                    optionNoAI = "NO AI ON";
-                    GameManager.instance.optionScript.noAI = false;
-                    GameManager.instance.sideScript.authorityCurrent = GameManager.instance.sideScript.authorityOverall;
-                    GameManager.instance.sideScript.resistanceCurrent = GameManager.instance.sideScript.resistanceOverall;
-                }
-                else
-                {
-                    optionNoAI = "NO AI OFF";
-                    GameManager.instance.optionScript.noAI = true;
-                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
-                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                    Debug.Log("Button -> Toggle NO AI");
+                    //option only available on first turn
+                    if (GameManager.instance.turnScript.Turn == 0)
+                    {
+                        if (GameManager.instance.optionScript.noAI == true)
+                        {
+                            optionNoAI = "NO AI ON";
+                            GameManager.instance.optionScript.noAI = false;
+                            GameManager.instance.sideScript.authorityCurrent = GameManager.instance.sideScript.authorityOverall;
+                            GameManager.instance.sideScript.resistanceCurrent = GameManager.instance.sideScript.resistanceOverall;
+                        }
+                        else
+                        {
+                            optionNoAI = "NO AI OFF";
+                            GameManager.instance.optionScript.noAI = true;
+                            GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                            GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                            GameManager.instance.sideScript.authorityOverall = SideState.Player;
+                            GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                        }
+                    }
                 }
             }
 
@@ -529,11 +546,23 @@ public class DebugGUI : MonoBehaviour
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;
-                    //AI Data
+                    //Toggle AI Data
                     case 10:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.aiScript.DisplayNodeData();
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 600), analysis, customBackground);
+                        analysis = "Unknown";
+                        switch(aiStatus)
+                        {
+                            case AIDebugData.Task:
+                                analysis = GameManager.instance.aiScript.DisplayTaskData();
+                                break;
+                            case AIDebugData.Node:
+                                analysis = GameManager.instance.aiScript.DisplayNodeData();
+                                break;
+                            case AIDebugData.Spider:
+                                analysis = GameManager.instance.aiScript.DisplaySpiderData();
+                                break;
+                        }
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                     //Factions
                     case 11:

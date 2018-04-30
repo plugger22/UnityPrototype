@@ -68,6 +68,14 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int securityMediumFactor = 1;
     [Tooltip("Spider Team node score -> This is added to the score for ever High security connection the node has")]
     [Range(0, 5)] public int securityHighFactor = 0;
+    [Tooltip("Pool of tasks for Spider team -> number of entries a Known target")]
+    [Range(0, 5)] public int spiderPoolTargetFactor = 3;
+    [Tooltip("Pool of tasks for Spider team -> number of entries for the top scored node")]
+    [Range(0, 5)] public int spiderPoolFirstFactor = 3;
+    [Tooltip("Pool of tasks for Spider team -> number of entries for the second top scored node")]
+    [Range(0, 5)] public int spiderPoolSecondFactor = 2;
+    [Tooltip("Pool of tasks for Spider team -> number of entries for the third top scored node")]
+    [Range(0, 5)] public int spiderPoolThirdFactor = 1;
 
 
     private Faction factionAuthority;
@@ -83,6 +91,7 @@ public class AIManager : MonoBehaviour
     private int teamArcMedia = -1;
     private int teamArcProbe = -1;
     private int teamArcSpider = -1;
+    private int teamArcDamage = -1;
     private int maxTeamsAtNode = -1;
 
     //info gathering lists (collated every turn)
@@ -120,11 +129,13 @@ public class AIManager : MonoBehaviour
         teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
         teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
         teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
+        teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
         Debug.Assert(teamArcProbe > -1, "Invalid teamArcProbe");
         Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider");
+        Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
         maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
         //set up list of most connected Nodes
@@ -161,6 +172,7 @@ public class AIManager : MonoBehaviour
         ProcessNodeTasks();
         ProcessProbeTask();
         ProcessSpiderTask();
+        ProcessDamageTask();
         //choose tasks for the turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
     }
@@ -480,13 +492,16 @@ public class AIManager : MonoBehaviour
                                     listOfTargetsKnown.Add(dataPackage);
                                     break;
                                 case Status.Completed:
-                                    //Damage team node data package (good ambush situation as targets will lure in resistance player)
-                                    dataPackage = new AINodeData();
-                                    dataPackage.nodeID = node.Value.nodeID;
-                                    dataPackage.type = NodeData.Target;
-                                    dataPackage.arc = node.Value.Arc;
-                                    listOfTargetsDamaged.Add(dataPackage);
-                                    dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                    //Damage team node data package (only for completed targets with ongoing effects that require containing)
+                                    if (node.Value.CheckForOngoingEffects() == true)
+                                    {
+                                        dataPackage = new AINodeData();
+                                        dataPackage.nodeID = node.Value.nodeID;
+                                        dataPackage.type = NodeData.Target;
+                                        dataPackage.arc = node.Value.Arc;
+                                        dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                        listOfTargetsDamaged.Add(dataPackage);
+                                    }
                                     break;
                             }
                         }
@@ -565,54 +580,58 @@ public class AIManager : MonoBehaviour
                 int score;
                 foreach (Node node in listOfMostConnected)
                 {
-                    //ignore nodes with existing spider teams
-                    if (node.isSpiderTeam == false)
+                    //ignore nodes with existing spider teams & spiders
+                    if (node.isSpiderTeam == false && node.isSpider == false)
                     {
-                        AINodeData dataPackage = new AINodeData();
-                        dataPackage.nodeID = node.nodeID;
-                        dataPackage.type = NodeData.Spider;
-                        dataPackage.arc = node.Arc;
-                        //calculate score 
-                        score = 0;
-                        //preferred type
-                        if (node.isPreferredAuthority == true)
-                        { score += nodePreferredFactor; }
-                        //central region
-                        if (node.isCentreNode == true)
-                        { score += nodeCentreFactor; }
-                        //resistance activity at node
-                        if (node.activityCount > 0)
-                        { score += node.activityCount * nodeActivityFactor; }
-                        //connections
-                        List<Connection> listOfConnections = node.GetAllConnections();
-                        if (listOfConnections != null)
+                        //check that node isn't already maxxed out on teams
+                        if (node.CheckNumOfTeams() < maxTeamsAtNode)
                         {
-                            foreach(Connection conn in listOfConnections)
+                            AINodeData dataPackage = new AINodeData();
+                            dataPackage.nodeID = node.nodeID;
+                            dataPackage.type = NodeData.Spider;
+                            dataPackage.arc = node.Arc;
+                            //calculate score 
+                            score = 0;
+                            //preferred type
+                            if (node.isPreferredAuthority == true)
+                            { score += nodePreferredFactor; }
+                            //central region
+                            if (node.isCentreNode == true)
+                            { score += nodeCentreFactor; }
+                            //resistance activity at node
+                            if (node.activityCount > 0)
+                            { score += node.activityCount * nodeActivityFactor; }
+                            //connections
+                            List<Connection> listOfConnections = node.GetAllConnections();
+                            if (listOfConnections != null)
                             {
-                                switch(conn.SecurityLevel)
+                                foreach (Connection conn in listOfConnections)
                                 {
-                                    case ConnectionType.HIGH:
-                                        score += securityHighFactor;
-                                        break;
-                                    case ConnectionType.MEDIUM:
-                                        score += securityMediumFactor;
-                                        break;
-                                    case ConnectionType.LOW:
-                                        score += securityLowFactor;
-                                        break;
-                                    case ConnectionType.None:
-                                        score += securityNoneFactor;
-                                        break;
-                                    default:
-                                        Debug.LogWarning(string.Format("Invalid connecion Security Level \"{0}\"", conn.SecurityLevel));
-                                        break;
+                                    switch (conn.SecurityLevel)
+                                    {
+                                        case ConnectionType.HIGH:
+                                            score += securityHighFactor;
+                                            break;
+                                        case ConnectionType.MEDIUM:
+                                            score += securityMediumFactor;
+                                            break;
+                                        case ConnectionType.LOW:
+                                            score += securityLowFactor;
+                                            break;
+                                        case ConnectionType.None:
+                                            score += securityNoneFactor;
+                                            break;
+                                        default:
+                                            Debug.LogWarning(string.Format("Invalid connecion Security Level \"{0}\"", conn.SecurityLevel));
+                                            break;
+                                    }
                                 }
                             }
+                            else { Debug.LogWarning(string.Format("Invalid listOfConnections (Null) for nodeID {0}", node.nodeID)); }
+                            dataPackage.score = score;
+                            //add data to list
+                            listOfSpiderNodes.Add(dataPackage);
                         }
-                        else { Debug.LogWarning(string.Format("Invalid listOfConnections (Null) for nodeID {0}", node.nodeID)); }
-                        dataPackage.score = score;
-                        //add data to list
-                        listOfSpiderNodes.Add(dataPackage);
                     }
                 }
             }
@@ -653,7 +672,7 @@ public class AIManager : MonoBehaviour
             if (taskSupport != null) { listOfTasksPotential.Add(taskSupport); }
             else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No available Support Node tasks{0}", "\n")); }
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No Reserve teams available in reserves{0}", "\n")); }
+        else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No Media teams available in reserves{0}", "\n")); }
 
     }
 
@@ -685,7 +704,7 @@ public class AIManager : MonoBehaviour
                 }
                 else { Debug.LogWarning("Invalid record from listOfProbeNodes (Null)"); }
             }
-            else { Debug.LogWarning("No nodes in listOfProbeNodes (Count 0)"); }
+            else { Debug.Log("No available nodes for a Probe Team"); }
         }
         else { Debug.Log(string.Format("AIManager.cs -> ProcessProbeTasks: No Probe teams available in reserves{0}", "\n")); }
     }
@@ -695,44 +714,111 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessSpiderTask()
     {
-        List<AITask> poolOfTasks = new List<AITask>();
-        if (listOfSpiderNodes.Count > 0)
+        //only bother proceeding if there are spider teams available to deploy
+        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcSpider, TeamInfo.Reserve) > 0)
         {
-            int counter = 0;
-            //sort list by score (highest at top)
-            var sorted = from record in listOfSpiderNodes orderby record.score descending select record;
-            //take top three records and create a task
-            foreach(var record in listOfSpiderNodes)
+            List<AITask> poolOfTasks = new List<AITask>();
+            if (listOfSpiderNodes.Count > 0)
             {
-                counter++;
-                AITask task = new AITask()
+                int counter = 0;
+                //sort Node list by score (highest at top)
+                var sorted = from record in listOfSpiderNodes orderby record.score descending select record;
+                //take top three records and create a task
+                foreach (var record in listOfSpiderNodes)
                 {
-                    data0 = record.nodeID,
-                    data1 = teamArcSpider,
-                    name0 = record.arc.name,
-                    name1 = "SPIDER",
-                    type = AIType.Team,
-                    priority = Priority.Low
-                };
-                switch(counter)
-                {
-                    case 1:
-                        //highest ranked score -> add three entries to pool
-                        poolOfTasks.Add(task); poolOfTasks.Add(task); poolOfTasks.Add(task);
-                        break;
-                    case 2:
-                        //second highest ranked score -> add two entries to pool
-                        poolOfTasks.Add(task); poolOfTasks.Add(task);
-                        break;
-                    case 3:
-                        //third highest ranked score -> add one entry to pool
-                        poolOfTasks.Add(task);
-                        break;
+                    if (record != null)
+                    {
+                        counter++;
+                        AITask task = new AITask()
+                        {
+                            data0 = record.nodeID,
+                            data1 = teamArcSpider,
+                            name0 = record.arc.name,
+                            name1 = "SPIDER",
+                            type = AIType.Team,
+                        };
+                        switch (counter)
+                        {
+                            case 1:
+                                //highest ranked score -> add three entries to pool
+                                task.priority = Priority.High;
+                                for (int i = 0; i < spiderPoolFirstFactor; i++)
+                                { poolOfTasks.Add(task); }
+                                break;
+                            case 2:
+                                //second highest ranked score -> add two entries to pool
+                                task.priority = Priority.Medium;
+                                for (int i = 0; i < spiderPoolSecondFactor; i++)
+                                { poolOfTasks.Add(task); }
+                                break;
+                            case 3:
+                                //third highest ranked score -> add one entry to pool
+                                task.priority = Priority.Low;
+                                for (int i = 0; i < spiderPoolThirdFactor; i++)
+                                { poolOfTasks.Add(task); }
+                                break;
+                        }
+                        if (counter == 3) { break; }
+                    }
+                    else { Debug.LogWarning("Invalid record (Null) in listOfSpiderNodes"); }
                 }
-                if (counter == 3) { break; }
             }
+            //Add Known, but uncompleted, targets to the pool
+            if (listOfTargetsKnown.Count > 0)
+            {
+                foreach (AINodeData record in listOfTargetsKnown)
+                {
+                    if (record != null)
+                    {
+                        AITask task = new AITask()
+                        {
+                            data0 = record.nodeID,
+                            data1 = teamArcSpider,
+                            name0 = record.arc.name,
+                            name1 = "SPIDER",
+                            type = AIType.Team,
+                            priority = Priority.High
+                        };
+                        //Preferred node type -> Priority Critical and one extra task added to pool
+                        if (record.isPreferred == true)
+                        {
+                            poolOfTasks.Add(task);
+                            task.priority = Priority.Critical;
+                        }
+                        //add target task to pool
+                        for (int i = 0; i < spiderPoolTargetFactor; i++)
+                        { poolOfTasks.Add(task); }
+                    }
+                    else { Debug.LogWarning("Invalid record (Null) in listOfTargetsKnown"); }
+                }
+            }
+            //Select random task from pool
+            if (poolOfTasks.Count > 0)
+            {
+                AITask taskSpider = new AITask();
+                taskSpider = poolOfTasks[Random.Range(0, poolOfTasks.Count)];
+                //add to list of potentials
+                listOfTasksPotential.Add(taskSpider);
+            }
+            else { Debug.Log(string.Format("AIManager.cs -> ProcessSpiderTask: No available Spider Team tasks{0}", "\n")); }
         }
+    }
 
+    /// <summary>
+    /// selects a damage team if one available
+    /// </summary>
+    private void ProcessDamageTask()
+    {
+        //only bother proceeding if there are spider teams available to deploy
+        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcDamage, TeamInfo.Reserve) > 0)
+        {
+            if (listOfTargetsDamaged.Count > 0)
+            {
+
+            }
+            else { Debug.Log(string.Format("AIManager.cs -> ProcessDamageTask: No available Damaged Targets{0}", "\n")); }
+        }
+        else { Debug.Log(string.Format("AIManager.cs -> ProcessDamageTask: No Damage teams available in reserves{0}", "\n")); }
     }
 
     /// <summary>
@@ -889,7 +975,7 @@ public class AIManager : MonoBehaviour
             }
 
         }
-        else { Debug.LogWarning("AIManager.cs -> ProcessTasksFinal: No tasks this turn"); }
+        else { Debug.Log("AIManager.cs -> ProcessTasksFinal: No tasks this turn"); }
     }
 
 
@@ -1009,10 +1095,14 @@ public class AIManager : MonoBehaviour
             {
                 case AIType.Team:
                     dataID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
-                    Node node = GameManager.instance.dataScript.GetNode(task.data0);
-                    if (node != null)
-                    { GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
-                    else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
+                    if (dataID > -1)
+                    {
+                        Node node = GameManager.instance.dataScript.GetNode(task.data0);
+                        if (node != null)
+                        { GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
+                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
+                    }
+                    else { Debug.LogWarning(string.Format("Invalid teamID (-1) for teamArcID {0}", task.data1)); }
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
@@ -1026,22 +1116,32 @@ public class AIManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Debug display method for AI relevant data
+    /// Debug display of all Task related data
     /// </summary>
     /// <returns></returns>
-    public string DisplayNodeData()
+    public string DisplayTaskData()
     {
         StringBuilder builder = new StringBuilder();
         //Task lists
         builder.AppendFormat("- listOfTasksFinal{0}", "\n");
         builder.Append(DebugTaskList(listOfTasksFinal));
-        builder.AppendFormat("{0}- listOfTasksPotential{1}", "\n", "\n");
+        builder.AppendFormat("{0}{1}- listOfTasksPotential{2}", "\n", "\n", "\n");
         builder.Append(DebugTaskList(listOfTasksPotential));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display method for AI Node data
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayNodeData()
+    {
+        StringBuilder builder = new StringBuilder();
         //Master Node list
-        builder.AppendFormat("{0}- listNodeMaster{1}", "\n", "\n");
+        builder.AppendFormat("- listNodeMaster{0}", "\n");
         builder.Append(DebugDisplayList(listNodeMaster));
         //Sub Node lists
-        builder.AppendFormat("{0}- listStabilityCritical{1}", "\n", "\n");
+        builder.AppendFormat("{0}{1}- listStabilityCritical{2}", "\n", "\n", "\n");
         builder.Append(DebugDisplayList(listStabilityCritical));
         builder.AppendFormat("{0}- listStabilityNonCritical{1}", "\n", "\n");
         builder.Append(DebugDisplayList(listStabilityNonCritical));
@@ -1069,9 +1169,9 @@ public class AIManager : MonoBehaviour
             if (list.Count > 0)
             {
                 foreach (AINodeData data in list)
-                { builderList.AppendFormat("ID {0}, {1}, {2}, difference: {3}, current: {4}{5}", data.nodeID, data.arc.name, data.type, data.difference, data.current, "\n"); }
+                { builderList.AppendFormat(" ID {0}, {1}, {2}, difference: {3}, current: {4}{5}", data.nodeID, data.arc.name, data.type, data.difference, data.current, "\n"); }
             }
-            else { builderList.AppendFormat("No records{0}", "\n"); }
+            else { builderList.AppendFormat(" No records{0}", "\n"); }
         }
         else { Debug.LogWarning(string.Format("Invalid list \"{0}\" (Null)", list)); }
         return builderList.ToString();
@@ -1094,11 +1194,11 @@ public class AIManager : MonoBehaviour
                     switch (task.type)
                     {
                         case AIType.Team:
-                            builderList.AppendFormat("ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
+                            builderList.AppendFormat(" ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
                             task.chance, "\n");
                             break;
                         default:
-                            builderList.AppendFormat("Unknown task type \"{0}\"{1}", task.type, "\n");
+                            builderList.AppendFormat(" Unknown task type \"{0}\"{1}", task.type, "\n");
                             break;
                     }
                     
@@ -1108,6 +1208,40 @@ public class AIManager : MonoBehaviour
         }
         else { builderList.AppendFormat("No records{0}", "\n"); }
         return builderList.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of all relevant spider AI related data
+    /// </summary>
+    /// <returns></returns>
+    public string DisplaySpiderData()
+    {
+        StringBuilder builder = new StringBuilder();
+        //Task lists
+        builder.AppendFormat("- listOfSpiderNodes{0}", "\n");
+        if (listOfSpiderNodes.Count > 0)
+        {
+            foreach (AINodeData data in listOfSpiderNodes)
+            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}, Score: {3}{4}", data.nodeID, data.arc.name, data.isPreferred, data.score, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        //Known Targets
+        builder.AppendFormat("{0}{1}- listOfTargetsKnown{2}", "\n", "\n", "\n");
+        if (listOfTargetsKnown.Count > 0)
+        {
+            foreach (AINodeData data in listOfTargetsKnown)
+            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}{3}", data.nodeID, data.arc.name, data.isPreferred, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        //Damaged Targets
+        builder.AppendFormat("{0}{1}- listOfTargetsDamaged{2}", "\n", "\n", "\n");
+        if (listOfTargetsDamaged.Count > 0)
+        {
+            foreach (AINodeData data in listOfTargetsDamaged)
+            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}{3}", data.nodeID, data.arc.name, data.isPreferred, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        return builder.ToString();
     }
 
 

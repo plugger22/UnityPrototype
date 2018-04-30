@@ -194,17 +194,18 @@ public class TurnManager : MonoBehaviour
             case "Resistance":
                 //process Authority AI
                 currentSide = GameManager.instance.globalScript.sideAuthority;
-                /*//only run AI if AI currently in charge of side
-                if (GameManager.instance.sideScript.authorityCurrent == SideState.AI)
-                { GameManager.instance.aiScript.ProcessAISideAuthority(); }*/
-                GameManager.instance.aiScript.ProcessAISideAuthority();
+                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                { GameManager.instance.aiScript.ProcessAISideAuthority(); }
+                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
+                { GameManager.instance.aiScript.ProcessAISideResistance(); }
                 break;
             case "Authority":
                 //process Resistance AI
                 currentSide = GameManager.instance.globalScript.sideResistance;
-                /*if (GameManager.instance.sideScript.resistanceCurrent == SideState.AI)
-                { GameManager.instance.aiScript.ProcessAISideResistance(); }*/
-                GameManager.instance.aiScript.ProcessAISideResistance();
+                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                { GameManager.instance.aiScript.ProcessAISideAuthority(); }
+                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
+                { GameManager.instance.aiScript.ProcessAISideResistance(); }
                 break;
             case "AI":
                 //Process both sides AI, resistance first
@@ -217,6 +218,7 @@ public class TurnManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
+
     }
 
     /// <summary>
