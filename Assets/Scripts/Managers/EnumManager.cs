@@ -32,7 +32,7 @@
     // 
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count }    //DataManager arrayOfNodes index
     public enum NodeType { Normal, Highlight, Active, Player, Count }
-    public enum NodeData { Stability, Support, Security, Target, Probe, Spider};    //NOTE: keep first 3 in order as they are used in tooltipNode.cs -> GetStatColour (matches node tooltip stat display seq)
+    public enum NodeData { Stability, Support, Security, Target, Probe, Spider, Erasure};    //NOTE: keep first 3 in order as they are used in tooltipNode.cs -> GetStatColour (matches node tooltip stat display seq)
     public enum NodeUI
     {                                                            //parameter for NodeDisplay event
         None,

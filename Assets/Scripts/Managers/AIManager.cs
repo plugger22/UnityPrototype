@@ -125,6 +125,7 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listOfTargetsDamaged = new List<AINodeData>();
     List<AINodeData> listOfProbeNodes = new List<AINodeData>();
     List<AINodeData> listOfSpiderNodes = new List<AINodeData>();
+    List<AINodeData> listOfErasureNodes = new List<AINodeData>();
     List<string> listOfErasureAILog = new List<string>();
 
 
@@ -206,7 +207,8 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// run prior to any info gathering each turn to empty out all data collections
+    /// run prior to any info gathering each turn to empty out all data collections 
+    /// All AIManager collections are for turn based data. Longer term data kept at DataManager.cs
     /// </summary>
     private void ClearAICollections()
     {
@@ -226,6 +228,8 @@ public class AIManager : MonoBehaviour
         listOfTargetsDamaged.Clear();
         listOfProbeNodes.Clear();
         listOfSpiderNodes.Clear();
+        listOfErasureNodes.Clear();
+        //other
         listOfErasureAILog.Clear();
     }
 
@@ -822,6 +826,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessErasureData()
     {
+        int score;
         //only bother proceeding if there are spider teams available to deploy
         if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
         {
@@ -829,7 +834,49 @@ public class AIManager : MonoBehaviour
             int targetNodeID = ProcessErasureTarget();
             if (targetNodeID > -1)
             {
+                //get near neighbours as potential node targets
+                Node node = GameManager.instance.dataScript.GetNode(targetNodeID);
+                if (node != null)
+                {
+                    if (node.CheckNumOfTeams() < maxTeamsAtNode)
+                    {
+                        List<Node> listOfNearNeighbours = node.GetNearNeighbours();
+                        if (listOfNearNeighbours != null)
+                        {
+                            foreach(Node nodeNear in listOfNearNeighbours)
+                            {
+                                score = 0;
+                                //activity count
+                                score += node.activityCount;
+                                //activity time
 
+                                //spider (not known)
+                                if (node.isSpider == true)
+                                {
+                                    if (node.isSpiderKnown == false)
+                                    { }
+                                }
+                                //in list of most connected
+
+                                //chokepoint node
+
+                                //add to list of possible target nodes
+                                AINodeData data = new AINodeData()
+                                {
+                                    nodeID = nodeNear.nodeID,
+                                    arc = nodeNear.Arc,
+                                    type = NodeData.Erasure,
+                                    isPreferred = node.isPreferredAuthority,
+                                    score = score
+                                };
+                                listOfErasureNodes.Add(data);
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid listOfNearNeighbours for nodeID {0}", node.nodeID); }
+                    }
+                    else { Debug.Log("AIManager.cs -> ProcessErasureData: No space available for Erasure team at Node"); }
+                }
+                else { Debug.LogWarningFormat("Invalid target node (Null) for nodeID {0}", targetNodeID); }
             }
             else
             {
