@@ -422,10 +422,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //ninth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Connections HIGH"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Near Neighbours"))
             {
-                Debug.Log("Button -> Change Connections");
-                GameManager.instance.levelScript.ChangeAllConnections(ConnectionType.HIGH);
+                Debug.Log("Button -> NearNeighbours");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours);
             }
 
             //tenth button

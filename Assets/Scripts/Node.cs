@@ -50,6 +50,7 @@ public class Node : MonoBehaviour
 
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
     private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
+    private List<Node> listOfNearNeighbours;            //list of all nodes within a 2 connection radius (includes immediate neighbours)
     private List<Connection> listOfConnections;         //list of neighbouring connections
     private List<Team> listOfTeams;                     //Authority teams present at the node
     private List <EffectDataOngoing> listOfOngoingEffects; //list of temporary (ongoing) effects impacting on the node
@@ -165,6 +166,7 @@ public class Node : MonoBehaviour
     {
         listOfNeighbourPositions = new List<Vector3>();
         listOfNeighbourNodes = new List<Node>();
+        listOfNearNeighbours = new List<Node>();
         //listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
         listOfConnections = new List<Connection>();
@@ -473,6 +475,28 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<Node> GetNeighbouringNodes()
     { return listOfNeighbourNodes; }
+
+    /// <summary>
+    /// Get list of all nodes within a 2 connection radius
+    /// </summary>
+    /// <returns></returns>
+    public List<Node> GetNearNeighbours()
+    { return listOfNearNeighbours; }
+
+
+    /// <summary>
+    /// pass a list of near neighbouring nodes
+    /// </summary>
+    /// <param name="listOfNodes"></param>
+    public void SetNearNeighbours(List<Node> listOfNodes)
+    {
+        if (listOfNodes != null)
+        {
+            listOfNearNeighbours.Clear();
+            listOfNearNeighbours.AddRange(listOfNodes);
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
+    }
 
     //
     // --- Other ---

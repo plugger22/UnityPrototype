@@ -211,6 +211,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.ShowTeams:
                     case NodeUI.MostConnected:
                     case NodeUI.Centre:
+                    case NodeUI.NearNeighbours:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -603,7 +604,42 @@ public class NodeManager : MonoBehaviour
                 else
                 {
                     Debug.LogWarning("Invalid connectedList (Null)");
-                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null listOfMostConnected", colourEnd);
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Connected Nodes", colourEnd);
+                }
+                break;
+            case NodeUI.NearNeighbours:
+                Node nodeNear = GameManager.instance.dataScript.GetNode(nodePlayer);
+                if (nodeNear != null)
+                {
+                    List<Node> listOfNearNeighbours = nodeNear.GetNearNeighbours();
+                    if (listOfNearNeighbours != null)
+                    {
+                        if (listOfNearNeighbours.Count > 0)
+                        {
+                            foreach (Node nodeTemp in listOfNearNeighbours)
+                            {
+                                if (nodeTemp != null)
+                                {
+                                    Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                    nodeTemp.SetMaterial(nodeMaterial);
+                                }
+                                else { Debug.LogWarning("Invalid nodeTemp (Null)"); }
+                            }
+                            displayText = string.Format("{0}{1}{2}{3} Near Neighbouring Node{4}{5}", colourDefault, listOfNearNeighbours.Count, colourEnd, colourHighlight,
+                                listOfNearNeighbours.Count != 1 ? "s" : "", colourEnd);
+                        }
+                        else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Invalid listOfNearNeighbours (Null)");
+                        displayText = string.Format("{0}ERROR: Can't find Neighbouring Nodes{1}", colourError, colourEnd);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid playerNode (Null)");
+                    displayText = string.Format("{0}ERROR: Player Node not found{1}", colourError, colourEnd);
                 }
                 break;
             case NodeUI.Centre:

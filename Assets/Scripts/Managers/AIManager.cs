@@ -5,6 +5,7 @@ using gameAPI;
 using System.Text;
 using System;
 using System.Linq;
+using Priority_Queue;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -35,6 +36,7 @@ public class AITask
     public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
 }
 
+
 /// <summary>
 /// Handles AI management of both sides
 /// </summary>
@@ -47,11 +49,13 @@ public class AIManager : MonoBehaviour
     [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
     [Range(0, 10)] public int playerAIRenownCost = 1;
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to High Priority tasks")]
-    [Range(1, 10)] public int priorityHighWeight = 3;
+    [Range(0, 10)] public int priorityHighWeight = 3;
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Medium Priority tasks")]
-    [Range(1, 10)] public int priorityMediumWeight = 2;
+    [Range(0, 10)] public int priorityMediumWeight = 2;
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Low Priority tasks")]
-    [Range(1, 10)] public int priorityLowWeight = 1;
+    [Range(0, 10)] public int priorityLowWeight = 1;
+    [Tooltip("How many of the most recent AI activities are tracked (keeps this number of most recent in a priorityQueue)")]
+    [Range(0, 10)] public int numOfActivitiesTracked = 5;
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections. If < 3 nodes then the next set down are added. Max capped at total nodes/2")]
     [Range(0, 5)] public int nodeConnectionFactor = 3;
     [Tooltip("Spider Team node score -> Each resistance activity point is multiplied by this factor")]
@@ -78,6 +82,7 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int spiderPoolThirdFactor = 1;
 
 
+
     private Faction factionAuthority;
     private Faction factionResistance;
     private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
@@ -92,6 +97,7 @@ public class AIManager : MonoBehaviour
     private int teamArcProbe = -1;
     private int teamArcSpider = -1;
     private int teamArcDamage = -1;
+    private int teamArcErasure = -1;
     private int maxTeamsAtNode = -1;
 
     //info gathering lists (collated every turn)
@@ -106,6 +112,10 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listOfTargetsDamaged = new List<AINodeData>();
     List<AINodeData> listOfProbeNodes = new List<AINodeData>();
     List<AINodeData> listOfSpiderNodes = new List<AINodeData>();
+
+    //AI persistant data
+    private SimplePriorityQueue<int> queueRecentNodes = new SimplePriorityQueue<int>();
+    private SimplePriorityQueue<int> queueRecentConnections = new SimplePriorityQueue<int>();
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -131,18 +141,21 @@ public class AIManager : MonoBehaviour
         teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
         teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
         teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
+        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
         Debug.Assert(teamArcProbe > -1, "Invalid teamArcProbe");
         Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider");
         Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
+        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
         maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
         SetCentreNodes();
+        SetNearNeighbours();
     }
 
     /// <summary>
@@ -169,11 +182,13 @@ public class AIManager : MonoBehaviour
         GetAINodeData();
         ProcessNodeData();
         ProcessSpiderData();
+        ProcessErasureData();
         //AI Rulesets
         ProcessNodeTasks();
         ProcessProbeTask();
         ProcessSpiderTask();
         ProcessDamageTask();
+        ProcessErasureTask();
         //choose tasks for the turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
     }
@@ -200,6 +215,10 @@ public class AIManager : MonoBehaviour
         listOfProbeNodes.Clear();
         listOfSpiderNodes.Clear();
     }
+
+    //
+    // - - - Game Start Setup - - -
+    //
 
     /// <summary>
     /// initialises list of most connected nodes (Game start)
@@ -355,6 +374,67 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// For each node finds all nodes within 2 connections radius
+    /// </summary>
+    private void SetNearNeighbours()
+    {
+        List<Node> listOfNearNeighbours = new List<Node>();
+        List<int> listLookup = new List<int>();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        if (dictOfNodes != null)
+        {
+            foreach(var node in dictOfNodes)
+            {
+                List<Node> listOfImmediateNeighbours = node.Value.GetNeighbouringNodes();
+                if (listOfImmediateNeighbours != null)
+                {
+                    //immediate neighbours
+                    foreach(Node nodeimmediate in listOfImmediateNeighbours)
+                    {
+                        //use lookup list to check that node isn't already in system
+                        if (listLookup.Exists(id => id == nodeimmediate.nodeID) == false)
+                        {
+                            //new node -> add to lookup and main lists
+                            listLookup.Add(nodeimmediate.nodeID);
+                            listOfNearNeighbours.Add(nodeimmediate);
+                        }
+                        //Neighbours of immediate neighbour (may not have any)
+                        List<Node> listOfNeighbours = nodeimmediate.GetNeighbouringNodes();
+                        if (listOfNeighbours != null)
+                        {
+                            if (listOfNeighbours.Count > 0)
+                            {
+                                foreach(Node nodeNear in listOfNeighbours)
+                                {
+                                    //use lookup list to check that node isn't already in system
+                                    if (listLookup.Exists(id => id == nodeNear.nodeID) == false)
+                                    {
+                                        //new node -> add to lookup and main lists
+                                        listLookup.Add(nodeNear.nodeID);
+                                        listOfNearNeighbours.Add(nodeNear);
+                                    }
+                                }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid listOfNeighbours for nodeID {0}", nodeimmediate.nodeID); }
+                    }
+                }
+                //Pass data to Node
+                if (listOfNearNeighbours.Count > 0)
+                { node.Value.SetNearNeighbours(listOfNearNeighbours); }
+                //clear lists ready for next pass
+                listOfNearNeighbours.Clear();
+                listLookup.Clear();
+            }
+        }
+    }
+
+
+    //
+    // - - - Miscellaneous - - -
+    //
+
+    /// <summary>
     /// Extracts all relevant AI data from an AI related message
     /// </summary>
     /// <param name="message"></param>
@@ -370,14 +450,26 @@ public class AIManager : MonoBehaviour
                         //Get Connection and add Activity data
                         Connection connection = GameManager.instance.dataScript.GetConnection(message.data1);
                         if (connection != null)
-                        { connection.AddActivityData(message.turnCreated); }
+                        {
+                            connection.AddActivityData(message.turnCreated);
+                            //add to queue of most recent activity -> destination nodeID and turn created
+                            queueRecentConnections.Enqueue(message.data0, message.turnCreated);
+                            if (queueRecentConnections.Count > numOfActivitiesTracked)
+                            { queueRecentConnections.Dequeue(); }
+                        }
                         else { Debug.LogWarning(string.Format("Invalid connection (Null) for connID {0} -> AI data NOT extracted", message.data1)); }
                         break;
                     case MessageSubType.AI_Node:
                         //Get Node and add Activity data
                         Node node = GameManager.instance.dataScript.GetNode(message.data0);
                         if (node != null)
-                        { node.AddActivityData(message.turnCreated); }
+                        {
+                            node.AddActivityData(message.turnCreated);
+                            //add to queue of most recent activity -> nodeID and turn created
+                            queueRecentNodes.Enqueue(message.data0, message.turnCreated);
+                            if (queueRecentNodes.Count > numOfActivitiesTracked)
+                            { queueRecentNodes.Dequeue(); }
+                        }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0} -> AI data NOT extracted", message.data0)); }
                         break;
                     case MessageSubType.AI_Capture:
@@ -397,7 +489,9 @@ public class AIManager : MonoBehaviour
         else { Debug.LogWarning("Invalid message (Null)"); }
     }
 
-
+    //
+    // - - - Turn based AI - - -
+    //
 
     /// <summary>
     /// gathers data on all nodes that have degraded in some from (from their starting values) and adds to listNodeMaster (from scratch each turn)
@@ -643,6 +737,50 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.Log(string.Format("AIManager.cs -> ProcessSpiderData: No Spider teams available in reserves{0}", "\n")); }
     }
+
+    /// <summary>
+    /// Determines the target node to be used as a focal point for Erasure AI calculations. Returns -1 if none found. Called by ProcessErasureData
+    /// </summary>
+    private int ProcessErasureTarget()
+    {
+        int nodeID = -1;
+
+        //PlaceHolder -> select a random node
+
+        return nodeID;
+    }
+
+    /// <summary>
+    /// Processes the potential nodes based on a specified target node -> Note: there may be no target node as nothing notable has happened
+    /// </summary>
+    private void ProcessErasureData()
+    {
+        //only bother proceeding if there are spider teams available to deploy
+        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
+        {
+            //get target node
+            int targetNodeID = ProcessErasureTarget();
+            if (targetNodeID > -1)
+            {
+
+            }
+            else { Debug.Log("AIManager.cs -> ProcessErasureData: No suitable target node found"); }
+        }
+        else { Debug.LogFormat("AIManager.cs -> ProcessSpiderData: No Erasure teams available in reserves{0}", "\n"); }
+    }
+
+    /// <summary>
+    /// Determines the Erasure task 
+    /// </summary>
+    private void ProcessErasureTask()
+    {
+        //only bother proceeding if there are spider teams available to deploy
+        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
+        {
+
+        }
+    }
+
 
     /// <summary>
     /// master method that determines up to 3 separate tasks, one for each node datapoint and the relevant team (Control/Civil/Media)
@@ -1281,6 +1419,8 @@ public class AIManager : MonoBehaviour
         else { builder.AppendFormat(" No records{0}", "\n"); }
         return builder.ToString();
     }
+
+
 
 
 

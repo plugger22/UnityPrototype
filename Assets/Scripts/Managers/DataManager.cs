@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 using System.Text;
 using packageAPI;
 
+
 /// <summary>
 /// Data repositry class
 /// </summary>
@@ -84,6 +85,7 @@ public class DataManager : MonoBehaviour
     private List<int> listOfCommonGear = new List<int>();
     private List<int> listOfRareGear = new List<int>();
     private List<int> listOfUniqueGear = new List<int>();
+
 
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
