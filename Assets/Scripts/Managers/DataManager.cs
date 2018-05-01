@@ -86,6 +86,9 @@ public class DataManager : MonoBehaviour
     private List<int> listOfRareGear = new List<int>();
     private List<int> listOfUniqueGear = new List<int>();
 
+    //AI persistant data
+    private Queue<AITracker> queueRecentNodes = new Queue<AITracker>();
+    private Queue<AITracker> queueRecentConnections = new Queue<AITracker>();
 
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
@@ -2752,6 +2755,10 @@ public class DataManager : MonoBehaviour
         return builderOverall.ToString();
     }
 
+    //
+    // - - - Ongoing Effects - - - 
+    //
+
     /// <summary>
     /// Add an ongoingID to the register (dict). No programming necessity for this other than tracking and debugging
     /// </summary>
@@ -2829,6 +2836,49 @@ public class DataManager : MonoBehaviour
             }
         }
     }
+
+    //
+    // - - - AI - - -
+    //
+
+    /// <summary>
+    /// Add an AITracker entry to queue
+    /// </summary>
+    /// <param name="tracker"></param>
+    public void AddToRecentNodeQueue(AITracker tracker)
+    {
+        if (tracker != null)
+        {
+            queueRecentNodes.Enqueue(tracker);
+            //keep queue within defined size
+            if (queueRecentNodes.Count > GameManager.instance.aiScript.numOfActivitiesTracked)
+            { queueRecentNodes.Dequeue(); }
+        }
+        else { Debug.LogWarning("Invalid tracker (Null)"); }
+    }
+
+    /// <summary>
+    /// Add an AITracker entry to queue
+    /// </summary>
+    /// <param name="tracker"></param>
+    public void AddToRecentConnectionQueue(AITracker tracker)
+    {
+        if (tracker != null)
+        {
+            queueRecentConnections.Enqueue(tracker);
+            //keep queue within defined size
+            if (queueRecentConnections.Count > GameManager.instance.aiScript.numOfActivitiesTracked)
+            { queueRecentConnections.Dequeue(); }
+        }
+        else { Debug.LogWarning("Invalid tracker (Null)"); }
+    }
+
+
+    public Queue<AITracker> GetRecentNodesQueue()
+    { return queueRecentNodes; }
+
+    public Queue<AITracker> GetRecentConnectionsQueue()
+    { return queueRecentConnections; }
 
     //
     // - - - Manage - - -

@@ -217,7 +217,8 @@ public class DebugGUI : MonoBehaviour
                     case AIDebugData.None: debugDisplay = 10; aiStatus = AIDebugData.Task; break;
                     case AIDebugData.Task: debugDisplay = 10; aiStatus = AIDebugData.Node; break;
                     case AIDebugData.Node: debugDisplay = 10; aiStatus = AIDebugData.Spider; break;
-                    case AIDebugData.Spider: debugDisplay = 0; aiStatus = AIDebugData.None; break;
+                    case AIDebugData.Spider: debugDisplay = 10; aiStatus = AIDebugData.Erasure; break;
+                    case AIDebugData.Erasure: debugDisplay = 0; aiStatus = AIDebugData.None; break;
                 }
             }
 
@@ -553,6 +554,9 @@ public class DebugGUI : MonoBehaviour
                                 break;
                             case AIDebugData.Spider:
                                 analysis = GameManager.instance.aiScript.DisplaySpiderData();
+                                break;
+                            case AIDebugData.Erasure:
+                                analysis = GameManager.instance.aiScript.DisplayErasureData();
                                 break;
                         }
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);

@@ -5,7 +5,6 @@ using gameAPI;
 using System.Text;
 using System;
 using System.Linq;
-using Priority_Queue;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -36,6 +35,18 @@ public class AITask
     public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
 }
 
+/// <summary>
+/// extracted data from AI messages (at time of AI becoming aware of them)
+/// </summary>
+public class AITracker
+{
+    public int data0;                       //node or connectionID
+    public int turn;                        //turn occurred
+
+    public AITracker(int data, int turn)
+    { data0 = data; this.turn = turn; }
+}
+
 
 /// <summary>
 /// Handles AI management of both sides
@@ -56,6 +67,8 @@ public class AIManager : MonoBehaviour
     [Range(0, 10)] public int priorityLowWeight = 1;
     [Tooltip("How many of the most recent AI activities are tracked (keeps this number of most recent in a priorityQueue)")]
     [Range(0, 10)] public int numOfActivitiesTracked = 5;
+    [Tooltip("How many turns ago (activity wise) will the AI use to select a target node for Erasure team AI processing")]
+    [Range(0, 5)] public int trackerNumOfTurnsAgo = 2;
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections. If < 3 nodes then the next set down are added. Max capped at total nodes/2")]
     [Range(0, 5)] public int nodeConnectionFactor = 3;
     [Tooltip("Spider Team node score -> Each resistance activity point is multiplied by this factor")]
@@ -112,10 +125,9 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listOfTargetsDamaged = new List<AINodeData>();
     List<AINodeData> listOfProbeNodes = new List<AINodeData>();
     List<AINodeData> listOfSpiderNodes = new List<AINodeData>();
+    List<string> listOfErasureAILog = new List<string>();
 
-    //AI persistant data
-    private SimplePriorityQueue<int> queueRecentNodes = new SimplePriorityQueue<int>();
-    private SimplePriorityQueue<int> queueRecentConnections = new SimplePriorityQueue<int>();
+
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -214,6 +226,7 @@ public class AIManager : MonoBehaviour
         listOfTargetsDamaged.Clear();
         listOfProbeNodes.Clear();
         listOfSpiderNodes.Clear();
+        listOfErasureAILog.Clear();
     }
 
     //
@@ -453,9 +466,7 @@ public class AIManager : MonoBehaviour
                         {
                             connection.AddActivityData(message.turnCreated);
                             //add to queue of most recent activity -> destination nodeID and turn created
-                            queueRecentConnections.Enqueue(message.data0, message.turnCreated);
-                            if (queueRecentConnections.Count > numOfActivitiesTracked)
-                            { queueRecentConnections.Dequeue(); }
+                            GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
                         }
                         else { Debug.LogWarning(string.Format("Invalid connection (Null) for connID {0} -> AI data NOT extracted", message.data1)); }
                         break;
@@ -466,9 +477,7 @@ public class AIManager : MonoBehaviour
                         {
                             node.AddActivityData(message.turnCreated);
                             //add to queue of most recent activity -> nodeID and turn created
-                            queueRecentNodes.Enqueue(message.data0, message.turnCreated);
-                            if (queueRecentNodes.Count > numOfActivitiesTracked)
-                            { queueRecentNodes.Dequeue(); }
+                            GameManager.instance.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated));
                         }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0} -> AI data NOT extracted", message.data0)); }
                         break;
@@ -743,11 +752,69 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private int ProcessErasureTarget()
     {
-        int nodeID = -1;
-
-        //PlaceHolder -> select a random node
-
-        return nodeID;
+        int nodeReturnID = -1;
+        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        if (queueRecentConnections != null && queueRecentNodes != null)
+        {
+            int currentTurn = GameManager.instance.turnScript.Turn;
+            int connID = -1;
+            int turnConn = 0;
+            //if there isn't any confirmed player activity within the specified time frame then there is no target node
+            if (queueRecentConnections.Count > 0)
+            {
+                //examine connection activity queue and find the most recent
+                foreach (AITracker data in queueRecentConnections)
+                {
+                    if (data.turn > turnConn)
+                    {
+                        turnConn = data.turn;
+                        connID = data.data0;
+                    }
+                }
+                //if was within previous 2 turns then this is the target node (definite player activity)
+                if (currentTurn - turnConn <= trackerNumOfTurnsAgo)
+                {
+                    nodeReturnID = connID;
+                    if (connID > -1)
+                    { listOfErasureAILog.Add(string.Format("Target: Recent Connection nodeID {0}, turn {1}", nodeReturnID, turnConn)); }
+                }
+                else
+                {
+                    int nodeID = -1;
+                    int turnNode = -1;
+                    //check for most recent turn activity (could be player or actor)
+                    foreach (AITracker data in queueRecentNodes)
+                    {
+                        if (data.turn > turnNode)
+                        {
+                            turnNode = data.turn;
+                            nodeID = data.data0;
+                        }
+                    }
+                    if (currentTurn - turnNode <= trackerNumOfTurnsAgo)
+                    {
+                        listOfErasureAILog.Add(string.Format("Target: Recent Node nodeID {0}, turn {1}", nodeID, turnNode));
+                        //check if matches any recent connection activity
+                        foreach (AITracker data in queueRecentConnections)
+                        {
+                            if (data.data0 == nodeID)
+                            {
+                                //a match -> Player was confirmed as being at this node
+                                nodeReturnID = nodeID;
+                                listOfErasureAILog.Add(string.Format("Target: Confirmed Conn Activity for ID {0}, turn {1}", nodeID, turnNode));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        if (nodeReturnID > 0)
+        { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
+        else { listOfErasureAILog.Add("No viable target node found"); }
+        }
+        else { Debug.LogWarning("Invalid queue (Null)"); }
+        return nodeReturnID;
     }
 
     /// <summary>
@@ -764,7 +831,13 @@ public class AIManager : MonoBehaviour
             {
 
             }
-            else { Debug.Log("AIManager.cs -> ProcessErasureData: No suitable target node found"); }
+            else
+            {
+                Debug.Log("AIManager.cs -> ProcessErasureData: No suitable target node found");
+
+                //if a minimum number of erasure teams in reserve then place one at a likely place
+
+            }
         }
         else { Debug.LogFormat("AIManager.cs -> ProcessSpiderData: No Erasure teams available in reserves{0}", "\n"); }
     }
@@ -1415,6 +1488,49 @@ public class AIManager : MonoBehaviour
         {
             foreach (AINodeData data in listOfTargetsDamaged)
             { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}{3}", data.nodeID, data.arc.name, data.isPreferred, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of all relevant erasure AI related data
+    /// </summary>
+    /// <returns></returns>
+    public String DisplayErasureData()
+    {
+        StringBuilder builder = new StringBuilder();
+        Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        if (queueRecentNodes != null)
+        {
+            builder.AppendFormat("- queueRecentNodes{0}", "\n");
+            if (queueRecentNodes.Count > 0)
+            {
+                //you can enumerate the queue without distrubing it's contents
+                foreach (AITracker data in queueRecentNodes)
+                { builder.AppendFormat("nodeID {0}, turn {1}{2}", data.data0, data.turn, "\n"); }
+            }
+            else { builder.AppendFormat(" No records{0}", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid queueRecentNodes (Null)"); }
+        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        if (queueRecentConnections != null)
+        {
+            builder.AppendFormat("{0}- queueRecentConnections{1}", "\n", "\n");
+            if (queueRecentConnections.Count > 0)
+            {
+                //you can enumerate the queue without distrubing it's contents
+                foreach (AITracker data in queueRecentConnections)
+                { builder.AppendFormat("connID {0}, turn {1}{2}", data.data0, data.turn, "\n"); }
+            }
+            else { builder.AppendFormat(" No records{0}", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid queueRecentConnections (Null)"); }
+        builder.AppendFormat("{0}- listOfErasureAILog{1}", "\n", "\n");
+        if (listOfErasureAILog.Count > 0)
+        {
+            foreach (string data in listOfErasureAILog)
+            { builder.AppendFormat("{0}{1}", data, "\n"); }
         }
         else { builder.AppendFormat(" No records{0}", "\n"); }
         return builder.ToString();
