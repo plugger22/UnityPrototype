@@ -764,6 +764,7 @@ public class AIManager : MonoBehaviour
                         }
                     }
                 }
+                Debug.LogFormat("AIManager.cs -> ProcessSpiderData: {0} possible nodes added{1}", listOfSpiderNodes.Count, "\n");
             }
             else { Debug.LogError("Invalid listOfMostConnected (Null)"); }
         }
@@ -835,7 +836,7 @@ public class AIManager : MonoBehaviour
             if (nodeReturnID > 0)
             { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
             else { listOfErasureAILog.Add("No viable target node found"); }
-            Debug.LogFormat("AIManager.cs -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID);
+            Debug.LogFormat("AIManager.cs -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID, "\n");
         }
         else { Debug.LogWarning("Invalid queue (Null)"); }
         return nodeReturnID;
@@ -942,10 +943,9 @@ public class AIManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("AIManager.cs -> ProcessErasureData: No suitable target node found");
+                Debug.LogFormat("AIManager.cs -> ProcessErasureData: No target node identified, checking other possibilities{0}", "\n");
 
                 //if a minimum number of erasure teams in reserve then place one at a likely place
-                
                 if (numOfTeams > 1)
                 {
                     List<Node> listOfMostConnected = GameManager.instance.dataScript.GetMostConnectedNodes();
@@ -968,6 +968,7 @@ public class AIManager : MonoBehaviour
                                 listOfErasureNodes.Add(data);
                             }
                         }
+                        Debug.LogFormat("AIManager.cs -> ProcessErasureData: {0} possible nodes added (Connected and Unknown Spiders{1}", listOfErasureNodes.Count, "\n");
                     }
                     else { Debug.LogWarning("Invalid lisOfMostConnected (Null)"); }
                 }

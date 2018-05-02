@@ -311,7 +311,12 @@ public class GUIManager : MonoBehaviour
                 details.textTop = "This action is unavailable as the AI controls this side";
                 break;
             case AlertType.DebugAI:
-                details.textTop = "The AI has been switched OFF and the Player now has <b>Manual control</b> of both sides";
+                details.textTop = "The AI has been switched OFF" ;
+                details.textBottom = "The Player now has <b>Manual control</b> of both sides";
+                break;
+            case AlertType.DebugPlayer:
+                details.textTop = "The AI has been switched back ON (Authority)";
+                details.textBottom = "The Player has <b>Manual control</b> of the Resistance side only";
                 break;
             default:
                 details.textTop = "This action is unavailable";

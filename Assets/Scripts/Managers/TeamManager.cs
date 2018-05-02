@@ -49,7 +49,6 @@ public class TeamManager : MonoBehaviour
         //Teams
         InitialiseTeams();
         /*SeedTeamsOnMap();     //DEBUG*/
-
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
         EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
@@ -248,24 +247,42 @@ public class TeamManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
 
-        //Add extra teams equal to each Authority actors ability level and off their preferred type
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
-        if (arrayOfActors.Length > 0)
+        //add teams depending on who is in charge of the authority side
+        switch (GameManager.instance.sideScript.authorityOverall)
         {
-            int ability, arcID;
-            foreach (Actor actor in arrayOfActors)
-            {
-                //get actors Ability
-                ability = actor.datapoint2;
-                //get preferred team
-                arcID = actor.arc.preferredTeam.TeamArcID;
-                //add the ability number of teams to the reserve
-                GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, ability);
-                GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, ability);
-            }
+            case SideState.Player:
+                //Add extra teams equal to each Authority actors ability level and off their preferred type
+                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+                if (arrayOfActors.Length > 0)
+                {
+                    int ability, arcID;
+                    foreach (Actor actor in arrayOfActors)
+                    {
+                        //get actors Ability
+                        ability = actor.datapoint2;
+                        //get preferred team
+                        arcID = actor.arc.preferredTeam.TeamArcID;
+                        //add the ability number of teams to the reserve
+                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, ability);
+                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, ability);
+                    }
+                }
+                else { Debug.LogError("Invalid arrayOfActors (Empty)"); }
+                break;
+            case SideState.AI:
+                //Add one extra team of each type (so AI starts with 2 teams of each type overall)
+                if (listOfTeamArcIDs != null && listOfTeamArcIDs.Count > 0)
+                {
+                    //loop list and add one team of each type to teamReserve pool
+                    foreach (int arcID in listOfTeamArcIDs)
+                    {
+                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
+                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                    }
+                }
+                else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
+                break;
         }
-        else { Debug.LogError("Invalid arrayOfActors (Empty)"); }
-
         //create actual teams and fill the reserve pool based on the number of teams decided upon above
         int numToCreate;
         foreach (int teamArcID in listOfTeamArcIDs)

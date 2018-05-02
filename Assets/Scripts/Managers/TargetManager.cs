@@ -681,7 +681,7 @@ public class TargetManager : MonoBehaviour
                             tempList.Add(string.Format("{0}Target Level {1}{2}{3}", colourBad, target.targetLevel > 0 ? "-" : "", target.targetLevel, colourEnd));
                             break;
                         case TargetFactors.Teams:
-                            if (node.CheckTeamPresent(GameManager.instance.dataScript.GetTeamArcID("CONTROL")) > -1)
+                            if (node.isSecurityTeam == true)
                             { tempList.Add(string.Format("{0}Control Team -{1}{2}", colourBad, GameManager.instance.teamScript.controlNodeEffect, colourEnd)); }
                             break;
                         default:
@@ -792,7 +792,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.Teams:
                             //Teams
-                            if (node.CheckTeamPresent(GameManager.instance.dataScript.GetTeamArcID("CONTROL")) > -1)
+                            if (node.isSecurityTeam == true)
                             { tally -= GameManager.instance.teamScript.controlNodeEffect; }
                             break;
                         default:

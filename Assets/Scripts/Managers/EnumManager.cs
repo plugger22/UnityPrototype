@@ -20,7 +20,7 @@
     //  - - - UI - - -
     //
     public enum InventoryState { None, Gear, ReservePool}
-    public enum AlertType { None, PlayerSatus, SideStatus, DebugAI }
+    public enum AlertType { None, PlayerSatus, SideStatus, DebugAI, DebugPlayer }
 
     //
     // - - - Connections - - - 
@@ -126,6 +126,7 @@
     //
     public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count }           //DataManager arrayOfTeams  index
     public enum TeamPool { Reserve, OnMap, InTransit, Count }                  //Different pools that teams move between
+    public enum TeamDebug { None, Pools, Roster, Actors}
     public enum NATO
     {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
         Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike,

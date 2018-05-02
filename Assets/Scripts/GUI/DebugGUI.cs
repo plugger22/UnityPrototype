@@ -16,6 +16,7 @@ public class DebugGUI : MonoBehaviour
     private GUIStatus status;
     private MessageCategory msgStatus;
     private AIDebugData aiStatus;
+    private TeamDebug teamStatus;
     private bool showGUI = false;
     private int debugDisplay = 0;
 
@@ -145,34 +146,16 @@ public class DebugGUI : MonoBehaviour
             }
 
             //seventh button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Team Pools"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Actions Register"))
             {
-                Debug.Log("Button -> Toggle Team Pool Analysis");
-                if (debugDisplay != 2)
-                { debugDisplay = 2; }
+                Debug.Log("Button -> Toggle Actions Register");
+                if (debugDisplay != 15)
+                { debugDisplay = 15; }
                 else { debugDisplay = 0; }
             }
 
             //eigth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Teams by Type"))
-            {
-                Debug.Log("Button -> Toggle Teams");
-                if (debugDisplay != 3)
-                { debugDisplay = 3; }
-                else { debugDisplay = 0; }
-            }
-
-            //ninth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Teams by Actor"))
-            {
-                Debug.Log("Button -> Toggle Actor Teams");
-                if (debugDisplay != 4)
-                { debugDisplay = 4; }
-                else { debugDisplay = 0; }
-            }
-
-            //tenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Ongoing Register"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Ongoing Register"))
             {
                 Debug.Log("Button -> Toggle OngoingID Register");
                 if (debugDisplay != 14)
@@ -180,13 +163,37 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //eleventh button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Actions Register"))
+            //ninth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Factions"))
             {
-                Debug.Log("Button -> Toggle Actions Register");
-                if (debugDisplay != 15)
-                { debugDisplay = 15; }
+                Debug.Log("Button -> Toggle Factions");
+                if (debugDisplay != 11)
+                { debugDisplay = 11; }
                 else { debugDisplay = 0; }
+            }
+
+            //tenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
+            {
+
+            }
+
+            //eleventh button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Toggle Teams"))
+            {
+                Debug.Log("Button -> Toggle Team Data");
+                //toggles sequentially through team data displays and then switches off
+                switch (teamStatus)
+                {
+                    case TeamDebug.None: debugDisplay = 2; teamStatus = TeamDebug.Pools; break;
+                    case TeamDebug.Pools: debugDisplay = 2; teamStatus = TeamDebug.Roster; break;
+                    case TeamDebug.Roster:
+                        if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+                        { debugDisplay = 2; teamStatus = TeamDebug.Actors; }
+                        else { debugDisplay = 0; teamStatus = TeamDebug.None; }
+                        break;
+                    case TeamDebug.Actors: debugDisplay = 0; teamStatus = TeamDebug.None; break;
+                }
             }
 
             //twelth button
@@ -224,12 +231,9 @@ public class DebugGUI : MonoBehaviour
 
             
             //fourteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Factions"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), ""))
             {
-                Debug.Log("Button -> Toggle Factions");
-                if (debugDisplay != 11)
-                { debugDisplay = 11; }
-                else { debugDisplay = 0; }
+
             }
 
 
@@ -320,14 +324,29 @@ public class DebugGUI : MonoBehaviour
                     if (GameManager.instance.turnScript.Turn == 0)
                     {
                         //switch AI Off -> Manual player control for both sides
-                        optionNoAI = "NO AI OFF";
-                        GameManager.instance.optionScript.noAI = true;
-                        GameManager.instance.sideScript.authorityCurrent = SideState.Player;
-                        GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
-                        GameManager.instance.sideScript.authorityOverall = SideState.Player;
-                        GameManager.instance.sideScript.resistanceOverall = SideState.Player;
-                        //notification
-                        GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
+                        if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                        {
+                            optionNoAI = "NO AI OFF";
+                            GameManager.instance.optionScript.noAI = true;
+                            GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                            GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                            GameManager.instance.sideScript.authorityOverall = SideState.Player;
+                            GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                            //notification
+                            GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
+                        }
+                        //reverts back to Resistance Player, Authority AI
+                        else if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+                        {
+                            optionNoAI = "NO AI ON";
+                            GameManager.instance.optionScript.noAI = false;
+                            GameManager.instance.sideScript.authorityCurrent = SideState.AI;
+                            GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                            GameManager.instance.sideScript.authorityOverall = SideState.AI;
+                            GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                            //notification
+                            GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                        }
                     }
                 }
             }
@@ -477,23 +496,38 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.levelScript.GetNodeAnalysis();
                         GUI.Box(new Rect(Screen.width - 485, 10, 150, 200), analysis, customBackground);
                         break;
-                    //team pool analysis
+                    //toggle team data
                     case 2:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.teamScript.DisplayTeamAnalysis();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
+                        /*analysis = GameManager.instance.teamScript.DisplayTeamAnalysis();
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);*/
+                        switch (teamStatus)
+                        {
+                            case TeamDebug.Pools:
+                                analysis = GameManager.instance.teamScript.DisplayTeamAnalysis();
+                                GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
+                                break;
+                            case TeamDebug.Roster:
+                                analysis = GameManager.instance.teamScript.DisplayIndividualTeams();
+                                GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);
+                                break;
+                            case TeamDebug.Actors:
+                                analysis = GameManager.instance.teamScript.DisplayTeamActorAnalysis();
+                                GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);
+                                break;
+                        }
                         break;
                     //teams
                     case 3:
-                        customBackground.alignment = TextAnchor.UpperLeft;
+                        /*customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.teamScript.DisplayIndividualTeams();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);*/
                         break;
                     //actor Teams
                     case 4:
-                        customBackground.alignment = TextAnchor.UpperLeft;
+                        /*customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.teamScript.DisplayTeamActorAnalysis();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);*/
                         break;
                     //Game state
                     case 5:
