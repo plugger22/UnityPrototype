@@ -1647,8 +1647,10 @@ public class NodeManager : MonoBehaviour
                     GameManager.instance.playerScript.invisibility = invisibility;
                     //display
                     builder.AppendLine();
-                    builder.Append(string.Format("{0}Invisibility {1}{2}{3}", colourEffectBad, moveDetails.changeInvisibility > 0 ? "+" : "",
-                        moveDetails.changeInvisibility, colourEnd));
+                    builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourEffectBad, moveDetails.changeInvisibility > 0 ? "+" : "",
+                        moveDetails.changeInvisibility, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}Authority will know in {3} turn{4}{5}", "\n", "\n", colourAlert, 
+                        moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
                     //message
                     Connection connection = GameManager.instance.dataScript.GetConnection(moveDetails.connectionID);
                     if (connection != null)
@@ -1739,7 +1741,7 @@ public class NodeManager : MonoBehaviour
         {
             outcomeDetails.textTop = "Player has moved";
             outcomeDetails.textBottom = data.text;
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.instance.guiScript.alarmSprite;
             outcomeDetails.isAction = true;
             outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
