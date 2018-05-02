@@ -70,11 +70,21 @@ public class AIManager : MonoBehaviour
     [Tooltip("How many turns ago (activity wise) will the AI use to select a target node for Erasure team AI processing")]
     [Range(0, 5)] public int trackerNumOfTurnsAgo = 2;
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections. If < 3 nodes then the next set down are added. Max capped at total nodes/2")]
-    [Range(0, 5)] public int nodeConnectionFactor = 3;
-    [Tooltip("Spider Team node score -> Each resistance activity point is multiplied by this factor")]
-    [Range(0, 5)] public int nodeActivityFactor = 1;
-    [Tooltip("Spider Team node score -> If node is preferred type of current level authority faction this is added to the score")]
+    [Range(0, 5)] public int nodeConnectionThreshold = 3;
+    [Tooltip("Spider/Erasure Team node score -> Each resistance activity point is multiplied by this factor")]
+    [Range(0, 5)] public int nodeActivityCountFactor = 1;
+    [Tooltip("Spider/Erasure Team node score -> Factor - (Current turn - Activity last Turn)")]
+    [Range(0, 5)] public int nodeActivityTimeFactor = 4;
+    [Tooltip("Spider/Erasure Team node score -> added to score if node is a chokepoint ('isChokepointNode' true)")]
+    [Range(0, 5)] public int nodeChokepointFactor = 5;
+    [Tooltip("Erasure Team node score -> added if an uncompleted target, subtracted if a completed target")]
+    [Range(0, 5)] public int nodeTargetFactor = 3;
+    [Tooltip("Erasure Team node score -> Added to score if a spider is present and Not know. If known then effect is halved")]
+    [Range(0, 5)] public int nodeSpiderFactor = 5;
+    [Tooltip("Spider/Erasure Team node score -> If node is preferred type of current level authority faction this is added to the score")]
     [Range(0, 5)] public int nodePreferredFactor = 3;
+    [Tooltip("Erasure Team node score -> added to score if node is in list of most connected nodes")]
+    [Range(0, 5)] public int nodeConnectedFactor = 3;
     [Tooltip("Spider Team node score -> If node is in the designated central region of the map (see 'nodeGeographicCentre') this is added to the score")]
     [Range(0, 5)] public int nodeCentreFactor = 3;
     [Tooltip("Spider Team node score -> This is added to the score for ever 'None' security connection the node has")]
@@ -85,14 +95,14 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int securityMediumFactor = 1;
     [Tooltip("Spider Team node score -> This is added to the score for ever High security connection the node has")]
     [Range(0, 5)] public int securityHighFactor = 0;
-    [Tooltip("Pool of tasks for Spider team -> number of entries a Known target")]
-    [Range(0, 5)] public int spiderPoolTargetFactor = 3;
-    [Tooltip("Pool of tasks for Spider team -> number of entries for the top scored node")]
-    [Range(0, 5)] public int spiderPoolFirstFactor = 3;
-    [Tooltip("Pool of tasks for Spider team -> number of entries for the second top scored node")]
-    [Range(0, 5)] public int spiderPoolSecondFactor = 2;
-    [Tooltip("Pool of tasks for Spider team -> number of entries for the third top scored node")]
-    [Range(0, 5)] public int spiderPoolThirdFactor = 1;
+    [Tooltip("Pool of tasks for Spider team -> number of entries for a Known target")]
+    [Range(0, 5)] public int teamPoolTargetFactor = 3;
+    [Tooltip("Pool of tasks for Spider/Erasure team -> number of entries for the top scored node")]
+    [Range(0, 5)] public int teamPoolFirstFactor = 3;
+    [Tooltip("Pool of tasks for Spider/Erasure team -> number of entries for the second top scored node")]
+    [Range(0, 5)] public int teamPoolSecondFactor = 2;
+    [Tooltip("Pool of tasks for Spider/Erasure team -> number of entries for the third top scored node")]
+    [Range(0, 5)] public int teamPoolThirdFactor = 1;
 
 
 
@@ -126,14 +136,13 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listOfProbeNodes = new List<AINodeData>();
     List<AINodeData> listOfSpiderNodes = new List<AINodeData>();
     List<AINodeData> listOfErasureNodes = new List<AINodeData>();
+    //other
     List<string> listOfErasureAILog = new List<string>();
-
-
-
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
     List<AITask> listOfTasksFinal = new List<AITask>();
     List<AITask> listOfSpiderTasks = new List<AITask>();
+    List<AITask> listOfErasureTasks = new List<AITask>();
 
 
     public void Initialise()
@@ -212,10 +221,6 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ClearAICollections()
     {
-        //AITasks
-        listOfTasksFinal.Clear();
-        listOfTasksPotential.Clear();
-        listOfSpiderTasks.Clear();
         //AINodeData
         listNodeMaster.Clear();
         listStabilityCritical.Clear();
@@ -231,6 +236,11 @@ public class AIManager : MonoBehaviour
         listOfErasureNodes.Clear();
         //other
         listOfErasureAILog.Clear();
+        //AITasks
+        listOfTasksFinal.Clear();
+        listOfTasksPotential.Clear();
+        listOfSpiderTasks.Clear();
+        listOfErasureTasks.Clear();
     }
 
     //
@@ -257,7 +267,7 @@ public class AIManager : MonoBehaviour
                 {
                     numOfConnections = node.Value.GetNumOfNeighbours();
                     //only select nodes that have 'x' number of connections
-                    if (numOfConnections >= nodeConnectionFactor)
+                    if (numOfConnections >= nodeConnectionThreshold)
                     {
                         try
                         { dictOfConnected.Add(node.Value.nodeID, numOfConnections); }
@@ -272,10 +282,9 @@ public class AIManager : MonoBehaviour
             if (dictOfConnected.Count < 3)
             {
                 //Not enough nodes -> loop again and add nodes with 1 - factor connections
-                int numSpecific = nodeConnectionFactor - 1;
+                int numSpecific = nodeConnectionThreshold - 1;
                 if (numSpecific > 0)
                 {
-
                     foreach(var node in dictOfNodes)
                     {
                         if (node.Value != null)
@@ -317,6 +326,8 @@ public class AIManager : MonoBehaviour
                         if (nodeConnected != null)
                         {
                             listOfMostConnectedNodes.Add(nodeConnected);
+                            //set node field
+                            nodeConnected.isConnectedNode = true;
                             counter++;
                             //ensure that a max of half the total nodes on the map are in the list (top half)
                             if (counter == limit)
@@ -688,7 +699,8 @@ public class AIManager : MonoBehaviour
             List<Node> listOfMostConnected = GameManager.instance.dataScript.GetMostConnectedNodes();
             if (listOfMostConnected != null)
             {
-                int score;
+                int score, tally;
+                int currentTurn = GameManager.instance.turnScript.Turn;
                 foreach (Node node in listOfMostConnected)
                 {
                     //ignore nodes with existing spider teams & spiders
@@ -711,7 +723,14 @@ public class AIManager : MonoBehaviour
                             { score += nodeCentreFactor; }
                             //resistance activity at node
                             if (node.activityCount > 0)
-                            { score += node.activityCount * nodeActivityFactor; }
+                            { score += node.activityCount * nodeActivityCountFactor; }
+                            //resistance activity time, eg. how recent? (min capped at 0)
+                            if (node.activityTime > -1)
+                            {
+                                tally = nodeActivityTimeFactor - (currentTurn - node.activityTime);
+                                if (tally > 0)
+                                { score += tally; }
+                            }
                             //connections
                             List<Connection> listOfConnections = node.GetAllConnections();
                             if (listOfConnections != null)
@@ -813,9 +832,10 @@ public class AIManager : MonoBehaviour
                     }
                 }
             }
-        if (nodeReturnID > 0)
-        { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
-        else { listOfErasureAILog.Add("No viable target node found"); }
+            if (nodeReturnID > 0)
+            { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
+            else { listOfErasureAILog.Add("No viable target node found"); }
+            Debug.LogFormat("AIManager.cs -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID);
         }
         else { Debug.LogWarning("Invalid queue (Null)"); }
         return nodeReturnID;
@@ -826,9 +846,11 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessErasureData()
     {
-        int score;
+        int score, tally;
+        int numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve);
+        int currentTurn = GameManager.instance.turnScript.Turn;
         //only bother proceeding if there are spider teams available to deploy
-        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
+        if (numOfTeams > 0)
         {
             //get target node
             int targetNodeID = ProcessErasureTarget();
@@ -838,43 +860,83 @@ public class AIManager : MonoBehaviour
                 Node node = GameManager.instance.dataScript.GetNode(targetNodeID);
                 if (node != null)
                 {
-                    if (node.CheckNumOfTeams() < maxTeamsAtNode)
+                    List<Node> listOfNearNeighbours = node.GetNearNeighbours();
+                    if (listOfNearNeighbours != null)
                     {
-                        List<Node> listOfNearNeighbours = node.GetNearNeighbours();
-                        if (listOfNearNeighbours != null)
+                        foreach (Node nodeNear in listOfNearNeighbours)
                         {
-                            foreach(Node nodeNear in listOfNearNeighbours)
+                            if (nodeNear.CheckNumOfTeams() < maxTeamsAtNode)
                             {
-                                score = 0;
-                                //activity count
-                                score += node.activityCount;
-                                //activity time
-
-                                //spider (not known)
-                                if (node.isSpider == true)
+                                //Erasure team not already present
+                                if (nodeNear.isErasureTeam == false)
                                 {
-                                    if (node.isSpiderKnown == false)
-                                    { }
+                                    score = 0;
+                                    //activity count
+                                    if (nodeNear.activityCount > -1)
+                                    { score += nodeNear.activityCount * nodeActivityCountFactor; }
+                                    //activity time (min capped at 0)
+                                    if (nodeNear.activityTime > -1)
+                                    {
+                                        tally = nodeActivityTimeFactor - (currentTurn - nodeNear.activityTime);
+                                        if (tally > 0)
+                                        { score += tally; }
+                                    }
+                                    //spider (not known)
+                                    if (nodeNear.isSpider == true)
+                                    {
+                                        //full effect if spider not known, halved otherwise
+                                        if (nodeNear.isSpiderKnown == false)
+                                        { score += nodeSpiderFactor; }
+                                        else { score += nodeSpiderFactor / 2; }
+                                    }
+                                    //in list of most connected
+                                    if (nodeNear.isConnectedNode == true)
+                                    { score += nodeConnectedFactor; }
+                                    //chokepoint node
+                                    if (nodeNear.isChokepointNode == true)
+                                    { score += nodeChokepointFactor; }
+                                    //preferred target
+                                    if (nodeNear.isPreferredAuthority == true)
+                                    { score += nodePreferredFactor; }
+                                    //target
+                                    if (nodeNear.targetID > -1)
+                                    {
+                                        Target target = GameManager.instance.dataScript.GetTarget(nodeNear.targetID);
+                                        {
+                                            //positive effect if target known by AI and uncompleted, reversed negative effect otherwise
+                                            if (target != null)
+                                            {
+                                                switch (target.targetStatus)
+                                                {
+                                                    case Status.Active:
+                                                    case Status.Live:
+                                                        if (target.isKnownByAI)
+                                                        { score += nodeTargetFactor; }
+                                                        break;
+                                                    case Status.Completed:
+                                                    case Status.Contained:
+                                                        score -= nodeTargetFactor;
+                                                        break;
+                                                }
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid target (Null) for targetID {0}", nodeNear.targetID); }
+                                        }
+                                    }
+                                    //add to list of possible target nodes
+                                    AINodeData data = new AINodeData()
+                                    {
+                                        nodeID = nodeNear.nodeID,
+                                        arc = nodeNear.Arc,
+                                        type = NodeData.Erasure,
+                                        isPreferred = nodeNear.isPreferredAuthority,
+                                        score = score
+                                    };
+                                    listOfErasureNodes.Add(data);
                                 }
-                                //in list of most connected
-
-                                //chokepoint node
-
-                                //add to list of possible target nodes
-                                AINodeData data = new AINodeData()
-                                {
-                                    nodeID = nodeNear.nodeID,
-                                    arc = nodeNear.Arc,
-                                    type = NodeData.Erasure,
-                                    isPreferred = node.isPreferredAuthority,
-                                    score = score
-                                };
-                                listOfErasureNodes.Add(data);
                             }
                         }
-                        else { Debug.LogWarningFormat("Invalid listOfNearNeighbours for nodeID {0}", node.nodeID); }
                     }
-                    else { Debug.Log("AIManager.cs -> ProcessErasureData: No space available for Erasure team at Node"); }
+                    else { Debug.LogWarningFormat("Invalid listOfNearNeighbours for nodeID {0}", node.nodeID); }
                 }
                 else { Debug.LogWarningFormat("Invalid target node (Null) for nodeID {0}", targetNodeID); }
             }
@@ -883,22 +945,35 @@ public class AIManager : MonoBehaviour
                 Debug.Log("AIManager.cs -> ProcessErasureData: No suitable target node found");
 
                 //if a minimum number of erasure teams in reserve then place one at a likely place
-
+                
+                if (numOfTeams > 1)
+                {
+                    List<Node> listOfMostConnected = GameManager.instance.dataScript.GetMostConnectedNodes();
+                    if (listOfMostConnected != null)
+                    {
+                        foreach (Node nodeConnected in listOfMostConnected)
+                        {
+                            //most connected -> Unknown Spider (incorporates activity time and count)
+                            if (nodeConnected.isSpider == true && nodeConnected.isSpiderKnown == false)
+                            {
+                                //add to list of possible target nodes -> all are scored equally (spiderAI ensures high scoring node)
+                                AINodeData data = new AINodeData()
+                                {
+                                    nodeID = nodeConnected.nodeID,
+                                    arc = nodeConnected.Arc,
+                                    type = NodeData.Erasure,
+                                    isPreferred = nodeConnected.isPreferredAuthority,
+                                    score = 0
+                                };
+                                listOfErasureNodes.Add(data);
+                            }
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid lisOfMostConnected (Null)"); }
+                }
             }
         }
         else { Debug.LogFormat("AIManager.cs -> ProcessSpiderData: No Erasure teams available in reserves{0}", "\n"); }
-    }
-
-    /// <summary>
-    /// Determines the Erasure task 
-    /// </summary>
-    private void ProcessErasureTask()
-    {
-        //only bother proceeding if there are spider teams available to deploy
-        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
-        {
-
-        }
     }
 
 
@@ -985,7 +1060,7 @@ public class AIManager : MonoBehaviour
                 //sort Node list by score (highest at top)
                 var sorted = from record in listOfSpiderNodes orderby record.score descending select record;
                 //take top three records and create a task
-                foreach (var record in listOfSpiderNodes)
+                foreach (var record in sorted)
                 {
                     if (record != null)
                     {
@@ -1003,19 +1078,19 @@ public class AIManager : MonoBehaviour
                             case 1:
                                 //highest ranked score -> add three entries to pool
                                 task.priority = Priority.High;
-                                for (int i = 0; i < spiderPoolFirstFactor; i++)
+                                for (int i = 0; i < teamPoolFirstFactor; i++)
                                 { listOfSpiderTasks.Add(task); }
                                 break;
                             case 2:
                                 //second highest ranked score -> add two entries to pool
                                 task.priority = Priority.Medium;
-                                for (int i = 0; i < spiderPoolSecondFactor; i++)
+                                for (int i = 0; i < teamPoolSecondFactor; i++)
                                 { listOfSpiderTasks.Add(task); }
                                 break;
                             case 3:
                                 //third highest ranked score -> add one entry to pool
                                 task.priority = Priority.Low;
-                                for (int i = 0; i < spiderPoolThirdFactor; i++)
+                                for (int i = 0; i < teamPoolThirdFactor; i++)
                                 { listOfSpiderTasks.Add(task); }
                                 break;
                         }
@@ -1047,7 +1122,7 @@ public class AIManager : MonoBehaviour
                             task.priority = Priority.Critical;
                         }
                         //add target task to pool
-                        for (int i = 0; i < spiderPoolTargetFactor; i++)
+                        for (int i = 0; i < teamPoolTargetFactor; i++)
                         { listOfSpiderTasks.Add(task); }
                     }
                     else { Debug.LogWarning("Invalid record (Null) in listOfTargetsKnown"); }
@@ -1062,6 +1137,70 @@ public class AIManager : MonoBehaviour
                 listOfTasksPotential.Add(taskSpider);
             }
             else { Debug.Log(string.Format("AIManager.cs -> ProcessSpiderTask: No available Spider Team tasks{0}", "\n")); }
+        }
+    }
+
+
+    /// <summary>
+    /// Determines the Erasure task 
+    /// </summary>
+    private void ProcessErasureTask()
+    {
+        //only bother proceeding if there are erasure teams available to deploy
+        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
+        {
+            if (listOfErasureNodes.Count > 0)
+            {
+                int counter = 0;
+                //sort Node list by score (highest at top)
+                var sorted = from record in listOfErasureNodes orderby record.score descending select record;
+                //take top three records and create a task
+                foreach (var record in sorted)
+                {
+                    if (record != null)
+                    {
+                        counter++;
+                        AITask task = new AITask()
+                        {
+                            data0 = record.nodeID,
+                            data1 = teamArcErasure,
+                            name0 = record.arc.name,
+                            name1 = "ERASURE",
+                            type = AIType.Team,
+                            priority = Priority.Critical
+                        };
+                        switch (counter)
+                        {
+                            case 1:
+                                //highest ranked score -> add three entries to pool
+                                for (int i = 0; i < teamPoolFirstFactor; i++)
+                                { listOfErasureTasks.Add(task); }
+                                break;
+                            case 2:
+                                //second highest ranked score -> add two entries to pool
+                                for (int i = 0; i < teamPoolSecondFactor; i++)
+                                { listOfErasureTasks.Add(task); }
+                                break;
+                            case 3:
+                                //third highest ranked score -> add one entry to pool
+                                for (int i = 0; i < teamPoolThirdFactor; i++)
+                                { listOfErasureTasks.Add(task); }
+                                break;
+                        }
+                        if (counter == 3) { break; }
+                    }
+                    else { Debug.LogWarning("Invalid record (Null) in listOfErasureNodes"); }
+                }
+                //Select random task from pool
+                if (listOfErasureTasks.Count > 0)
+                {
+                    AITask taskErasure = new AITask();
+                    taskErasure = listOfErasureTasks[Random.Range(0, listOfErasureTasks.Count)];
+                    //add to list of potentials
+                    listOfTasksPotential.Add(taskErasure);
+                }
+                else { Debug.Log(string.Format("AIManager.cs -> ProcessErasureTask: No available Erasure Team tasks{0}", "\n")); }
+            }
         }
     }
 
@@ -1451,6 +1590,94 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Debug display of all relevant spider AI related data
+    /// </summary>
+    /// <returns></returns>
+    public string DisplaySpiderData()
+    {
+        StringBuilder builder = new StringBuilder();
+        //Task lists
+        builder.AppendFormat("- listOfSpiderTask{0}", "\n");
+        builder.Append(DebugTaskList(listOfSpiderTasks));
+        builder.AppendFormat("{0}- listOfSpiderNodes{1}", "\n", "\n");
+        if (listOfSpiderNodes.Count > 0)
+        {
+            foreach (AINodeData data in listOfSpiderNodes)
+            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}, Score: {3}{4}", data.nodeID, data.arc.name, data.isPreferred, data.score, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        //Known Targets
+        builder.AppendFormat("{0}- listOfTargetsKnown{1}", "\n", "\n");
+        if (listOfTargetsKnown.Count > 0)
+        {
+            foreach (AINodeData data in listOfTargetsKnown)
+            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}{3}", data.nodeID, data.arc.name, data.isPreferred, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        //Damaged Targets
+        builder.AppendFormat("{0}- listOfTargetsDamaged{1}", "\n", "\n");
+        if (listOfTargetsDamaged.Count > 0)
+        {
+            foreach (AINodeData data in listOfTargetsDamaged)
+            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}{3}", data.nodeID, data.arc.name, data.isPreferred, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of all relevant erasure AI related data
+    /// </summary>
+    /// <returns></returns>
+    public String DisplayErasureData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- listOfErasureTasks{0}", "\n");
+        builder.Append(DebugTaskList(listOfErasureTasks));
+        builder.AppendFormat("{0}- listOfErasureNodes{1}", "\n", "\n");
+        if (listOfErasureNodes.Count > 0)
+        {
+            foreach (AINodeData data in listOfErasureNodes)
+            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}, Score: {3}{4}", data.nodeID, data.arc.name, data.isPreferred, data.score, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        if (queueRecentNodes != null)
+        {
+            builder.AppendFormat("{0}- queueRecentNodes{1}", "\n", "\n");
+            if (queueRecentNodes.Count > 0)
+            {
+                //you can enumerate the queue without distrubing it's contents
+                foreach (AITracker data in queueRecentNodes)
+                { builder.AppendFormat("nodeID {0}, turn {1}{2}", data.data0, data.turn, "\n"); }
+            }
+            else { builder.AppendFormat(" No records{0}", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid queueRecentNodes (Null)"); }
+        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        if (queueRecentConnections != null)
+        {
+            builder.AppendFormat("{0}- queueRecentConnections{1}", "\n", "\n");
+            if (queueRecentConnections.Count > 0)
+            {
+                //you can enumerate the queue without distrubing it's contents
+                foreach (AITracker data in queueRecentConnections)
+                { builder.AppendFormat("connID {0}, turn {1}{2}", data.data0, data.turn, "\n"); }
+            }
+            else { builder.AppendFormat(" No records{0}", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid queueRecentConnections (Null)"); }
+        builder.AppendFormat("{0}- listOfErasureAILog{1}", "\n", "\n");
+        if (listOfErasureAILog.Count > 0)
+        {
+            foreach (string data in listOfErasureAILog)
+            { builder.AppendFormat("{0}{1}", data, "\n"); }
+        }
+        else { builder.AppendFormat(" No records{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// debug submethod to display AI Node list data, used by AIManager.cs -> DisplayNodeData
     /// </summary>
     /// <param name="list"></param>
@@ -1495,7 +1722,6 @@ public class AIManager : MonoBehaviour
                             builderList.AppendFormat(" Unknown task type \"{0}\"{1}", task.type, "\n");
                             break;
                     }
-                    
                 }
             }
             else { builderList.AppendFormat("No records{0}", "\n"); }
@@ -1503,87 +1729,6 @@ public class AIManager : MonoBehaviour
         else { builderList.AppendFormat("No records{0}", "\n"); }
         return builderList.ToString();
     }
-
-    /// <summary>
-    /// Debug display of all relevant spider AI related data
-    /// </summary>
-    /// <returns></returns>
-    public string DisplaySpiderData()
-    {
-        StringBuilder builder = new StringBuilder();
-        //Task lists
-        builder.AppendFormat("- listOfSpiderTask{0}", "\n");
-        builder.Append(DebugTaskList(listOfSpiderTasks));
-        builder.AppendFormat("{0}- listOfSpiderNodes{1}", "\n", "\n");
-        if (listOfSpiderNodes.Count > 0)
-        {
-            foreach (AINodeData data in listOfSpiderNodes)
-            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}, Score: {3}{4}", data.nodeID, data.arc.name, data.isPreferred, data.score, "\n"); }
-        }
-        else { builder.AppendFormat(" No records{0}", "\n"); }
-        //Known Targets
-        builder.AppendFormat("{0}- listOfTargetsKnown{1}", "\n", "\n");
-        if (listOfTargetsKnown.Count > 0)
-        {
-            foreach (AINodeData data in listOfTargetsKnown)
-            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}{3}", data.nodeID, data.arc.name, data.isPreferred, "\n"); }
-        }
-        else { builder.AppendFormat(" No records{0}", "\n"); }
-        //Damaged Targets
-        builder.AppendFormat("{0}- listOfTargetsDamaged{1}", "\n", "\n");
-        if (listOfTargetsDamaged.Count > 0)
-        {
-            foreach (AINodeData data in listOfTargetsDamaged)
-            { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}{3}", data.nodeID, data.arc.name, data.isPreferred, "\n"); }
-        }
-        else { builder.AppendFormat(" No records{0}", "\n"); }
-        return builder.ToString();
-    }
-
-    /// <summary>
-    /// Debug display of all relevant erasure AI related data
-    /// </summary>
-    /// <returns></returns>
-    public String DisplayErasureData()
-    {
-        StringBuilder builder = new StringBuilder();
-        Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
-        if (queueRecentNodes != null)
-        {
-            builder.AppendFormat("- queueRecentNodes{0}", "\n");
-            if (queueRecentNodes.Count > 0)
-            {
-                //you can enumerate the queue without distrubing it's contents
-                foreach (AITracker data in queueRecentNodes)
-                { builder.AppendFormat("nodeID {0}, turn {1}{2}", data.data0, data.turn, "\n"); }
-            }
-            else { builder.AppendFormat(" No records{0}", "\n"); }
-        }
-        else { Debug.LogWarning("Invalid queueRecentNodes (Null)"); }
-        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
-        if (queueRecentConnections != null)
-        {
-            builder.AppendFormat("{0}- queueRecentConnections{1}", "\n", "\n");
-            if (queueRecentConnections.Count > 0)
-            {
-                //you can enumerate the queue without distrubing it's contents
-                foreach (AITracker data in queueRecentConnections)
-                { builder.AppendFormat("connID {0}, turn {1}{2}", data.data0, data.turn, "\n"); }
-            }
-            else { builder.AppendFormat(" No records{0}", "\n"); }
-        }
-        else { Debug.LogWarning("Invalid queueRecentConnections (Null)"); }
-        builder.AppendFormat("{0}- listOfErasureAILog{1}", "\n", "\n");
-        if (listOfErasureAILog.Count > 0)
-        {
-            foreach (string data in listOfErasureAILog)
-            { builder.AppendFormat("{0}{1}", data, "\n"); }
-        }
-        else { builder.AppendFormat(" No records{0}", "\n"); }
-        return builder.ToString();
-    }
-
-
 
 
 

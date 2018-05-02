@@ -20,6 +20,12 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;             //has authority spider?
     [HideInInspector] public bool isContact;            //true if any Resistance ActorStatus.Active actor has a connection at the node
+    [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
+    [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
+    [HideInInspector] public bool isCentreNode;              //true if node is in the geographic centre region of the map (used by AI)
+    [HideInInspector] public bool isConnectedNode;           //true if node is in the listMostConnectedNodes
+    [HideInInspector] public bool isChokepointNode;          //true if node is a chokepoint (one connection between it and another subgraph)
+
     [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
 
     [HideInInspector] public int spiderTimer;           //countdown timer before removed
@@ -33,10 +39,9 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isProbeTeam;         //Probe team present at node
     [HideInInspector] public bool isSpiderTeam;        //Spider team present at node
     [HideInInspector] public bool isDamageTeam;        //Damage team present at node
+    [HideInInspector] public bool isErasureTeam;       //Erasure team present at node
 
-    [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
-    [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
-    [HideInInspector] public bool isCentreNode;              //true if node is in the geographic centre region of the map (used by AI)
+
 
     //fast access fields
     private int stabilityTeamEffect;
@@ -360,8 +365,8 @@ public class Node : MonoBehaviour
                     if (GameManager.instance.optionScript.debugData == true)
                     {
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
-                        textName = string.Format("St {0} Su {1} Se {2}", Convert.ToInt32(isStabilityTeam), Convert.ToInt32(isSupportTeam), 
-                            Convert.ToInt32(isSecurityTeam));
+                        textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
+                            Convert.ToInt32(isChokepointNode));
                     }
                     else
                     {
@@ -706,6 +711,7 @@ public class Node : MonoBehaviour
                     case "PROBE": isProbeTeam = true; break;
                     case "SPIDER": isSpiderTeam = true; break;
                     case "DAMAGE": isDamageTeam = true; break;
+                    case "ERASURE": isErasureTeam = true; break;
                 }
                 //initialise Team data
                 team.nodeID = nodeID;
@@ -740,6 +746,7 @@ public class Node : MonoBehaviour
                     case "PROBE": isProbeTeam = false; break;
                     case "SPIDER": isSpiderTeam = false; break;
                     case "DAMAGE": isDamageTeam = false; break;
+                    case "ERASURE": isErasureTeam = false; break;
                 }
                 //remove team
                 listOfTeams.RemoveAt(i);
