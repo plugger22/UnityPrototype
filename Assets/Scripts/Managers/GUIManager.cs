@@ -32,6 +32,8 @@ public class GUIManager : MonoBehaviour
     public Sprite targetSuccessSprite;
     [Tooltip("Used for Target attempts that fail")]
     public Sprite targetFailSprite;
+    [Tooltip("Used for Player or Actor having been captured")]
+    public Sprite capturedSprite;
 
 
     //Actor display at bottom

@@ -129,12 +129,15 @@ public class CaptureManager : MonoBehaviour
         /*GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;*/
         GameManager.instance.playerScript.status = ActorStatus.Captured;
         //add renown to authority actor who owns the team (only if they are still OnMap
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
+        if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
         {
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority);
-            if (actor != null)
-            { actor.renown++; }
-            else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
+            if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
+            {
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority);
+                if (actor != null)
+                { actor.renown++; }
+                else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
+            }
         }
         //lower resistance Cause
         int cause = GameManager.instance.rebelScript.resistanceCause;
@@ -165,7 +168,7 @@ public class CaptureManager : MonoBehaviour
         {
             textTop = text,
             textBottom = builder.ToString(),
-            sprite = GameManager.instance.guiScript.errorSprite,
+            sprite = GameManager.instance.guiScript.capturedSprite,
             isAction = false,
             side = GameManager.instance.globalScript.sideResistance
         };
