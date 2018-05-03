@@ -24,6 +24,8 @@ public enum EventType
     ActivityDisplay,
     //Top Widget
     ChangeActionPoints,
+    ChangeCityBar,
+    ChangeFactionBar,
     //Actions
     NodeAction,
     NodeGearAction,

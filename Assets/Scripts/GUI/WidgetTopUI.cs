@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// top screen centre widget
@@ -11,16 +12,26 @@ public class WidgetTopUI : MonoBehaviour
 {
 
     public Sprite widgetTopSprite;
+    public Image barCity;
+    public Image barFaction;
     public TextMeshProUGUI actionPoints;
 
-
+    private RectTransform transformCity;
+    private RectTransform transformFaction;
     private static WidgetTopUI widgetTopUI;
 
 
     public void Start()
     {
+        //cache components
+        transformCity = barCity.GetComponent<RectTransform>();
+        transformFaction = barFaction.GetComponent<RectTransform>();
+        Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
+        Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent);
     }
 
 
@@ -54,6 +65,12 @@ public class WidgetTopUI : MonoBehaviour
             case EventType.ChangeActionPoints:
                 UpdateActionPoints((int)Param);
                 break;
+            case EventType.ChangeCityBar:
+                SetCityBar((int)Param);
+                break;
+            case EventType.ChangeFactionBar:
+                SetFactionBar((int)Param);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -68,6 +85,26 @@ public class WidgetTopUI : MonoBehaviour
     {
         Debug.Assert(points > -1 && points < 5, "Invalid action points");
         actionPoints.text = Convert.ToString(points);
+    }
+
+    /// <summary>
+    /// Sets length and colour of city bar based on size (%)
+    /// </summary>
+    /// <param name="size"></param>
+    private void SetCityBar(int size)
+    {
+        Debug.Assert(size > -1 && size < 101, string.Format("Invalid size {0}", size));
+        transformCity.sizeDelta = new Vector2(size, transformCity.sizeDelta.y);
+    }
+
+    /// <summary>
+    /// Sets length and colour of faction bar based on size (%)
+    /// </summary>
+    /// <param name="size"></param>
+    private void SetFactionBar(int size)
+    {
+        Debug.Assert(size > -1 && size < 101, string.Format("Invalid size {0}", size));
+        transformFaction.sizeDelta = new Vector2(size, transformFaction.sizeDelta.y);
     }
 
 
