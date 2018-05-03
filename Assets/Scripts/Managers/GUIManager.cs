@@ -15,6 +15,8 @@ public class GUIManager : MonoBehaviour
     [Range(0f,1f)] public float alphaActive = 1.0f;
     [Tooltip("Alpha of Actor portraits when ActorStatus is 'InActive'")]
     [Range(0f, 1f)] public float alphaInactive = 0.45f;
+    [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]
+    [Range(1,2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'
 
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantAuthorityActor;
@@ -26,14 +28,11 @@ public class GUIManager : MonoBehaviour
     public Sprite infoSprite;
     [Tooltip("Alarm (spotted) sprite")]
     public Sprite alarmSprite;
-    [Tooltip("Used for Targets")]
-    public Sprite targetSprite;
+    [Tooltip("Used for Target attempts that succeed")]
+    public Sprite targetSuccessSprite;
+    [Tooltip("Used for Target attempts that fail")]
+    public Sprite targetFailSprite;
 
-
-    [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]
-    [Range(1,2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'
-
-   
 
     //Actor display at bottom
     private GameObject Actor0;

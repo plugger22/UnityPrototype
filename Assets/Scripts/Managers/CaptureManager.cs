@@ -141,8 +141,7 @@ public class CaptureManager : MonoBehaviour
         cause -= playerCaptured;
         cause = Mathf.Max(0, cause);
         GameManager.instance.rebelScript.resistanceCause = cause;
-        builder.Append(string.Format("{0}Resistance Cause -{1} (Now {2}){3}{4}{5}", colourBad, playerCaptured,
-            cause, colourEnd, "\n", "\n"));
+        builder.AppendFormat("{0}Resistance Cause -{1}{2}{3}{4}", colourBad, playerCaptured, colourEnd, "\n", "\n");
         //Gear confiscated
         int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
         if (numOfGear > 0)
@@ -197,8 +196,7 @@ public class CaptureManager : MonoBehaviour
         cause -= playerCaptured;
         cause = Mathf.Max(0, cause);
         GameManager.instance.rebelScript.resistanceCause = cause;
-        builder.Append(string.Format("{0}Resistance Cause -{1} (Now {2}){3}{4}{5}", colourBad, playerCaptured,
-            cause, colourEnd, "\n", "\n"));
+        builder.AppendFormat("{0}Resistance Cause -{1}{2}{3}{4}", colourBad, playerCaptured, colourEnd, "\n", "\n");
         //invisibility set to zero (most likely already is)
         details.actor.datapoint2 = 0;
         //update map
@@ -239,12 +237,11 @@ public class CaptureManager : MonoBehaviour
         cause += actorReleased;
         cause = Mathf.Min(cause, GameManager.instance.rebelScript.resistanceCauseMax);
         GameManager.instance.rebelScript.resistanceCause = cause;
-        builder.Append(string.Format("{0}Resistance Cause +{1} (Now {2}){3}{4}{5}", colourGood, actorReleased,
-            cause, colourEnd, "\n", "\n"));
+        builder.AppendFormat("{0}Resistance Cause +{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
         //invisibility
         int invisibilityNew = releaseInvisibility;
         GameManager.instance.playerScript.invisibility = invisibilityNew;
-        builder.Append(string.Format("{0}Player's Invisibility +{1} (Now {2}){3}", colourGood, invisibilityNew, invisibilityNew, colourEnd));
+        builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //message
@@ -289,12 +286,11 @@ public class CaptureManager : MonoBehaviour
                 cause += actorReleased;
                 cause = Mathf.Min(cause, GameManager.instance.rebelScript.resistanceCauseMax);
                 GameManager.instance.rebelScript.resistanceCause = cause;
-                builder.Append(string.Format("{0}Resistance Cause +{1} (Now {2}){3}{4}{5}", colourGood, actorReleased,
-                    cause, colourEnd, "\n", "\n"));
+                builder.AppendFormat("{0}Resistance Cause +{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
                 //invisibility
                 int invisibilityNew = releaseInvisibility;
                 details.actor.datapoint2 = invisibilityNew;
-                builder.Append(string.Format("{0}{1} Invisibility +{2} (Now {3}){4}", colourGood, details.actor.actorName, invisibilityNew, invisibilityNew, colourEnd));
+                builder.AppendFormat("{0}{1} Invisibility +{2}{3}", colourGood, details.actor.actorName, invisibilityNew, colourEnd);
                 //update actor alpha
                 GameManager.instance.guiScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                 /*GameManager.instance.nodeScript.NodeRedraw = true;*/
@@ -315,7 +311,7 @@ public class CaptureManager : MonoBehaviour
                 };
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
             }
-            else { Debug.LogWarning(string.Format("{0}, {1} can't be released as not presently captured", details.actor.arc.name, details.actor.actorName)); }
+            else { Debug.LogWarningFormat("{0}, {1} can't be released as not presently captured", details.actor.arc.name, details.actor.actorName); }
         }
         else { Debug.LogError("Invalid details.actor (Null)"); }
     }

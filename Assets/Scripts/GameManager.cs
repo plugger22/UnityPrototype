@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window
     [HideInInspector] public ModalGUI modalGUIScropt;                 //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
+    [HideInInspector] public WidgetTopUI widgetTopScript;             //Widget Top UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
 
                                                                    
@@ -132,6 +133,7 @@ public class GameManager : MonoBehaviour
         inventoryScript = ModalInventoryUI.Instance();
         diceScript = ModalDiceUI.Instance();
         modalGUIScropt = ModalGUI.Instance();
+        widgetTopScript = WidgetTopUI.Instance();
         alertScript = AlertUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
         //sets this to not be destroyed when reloading a scene

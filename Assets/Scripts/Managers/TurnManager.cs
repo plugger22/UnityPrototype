@@ -234,7 +234,7 @@ public class TurnManager : MonoBehaviour
         _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
         _actionsTotal = Mathf.Max(0, _actionsTotal);
         Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}", "\n"));
-
+        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal);
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
     }
 
@@ -268,11 +268,16 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void UseAction()
     {
+        int remainder;
         _actionsCurrent++;
         Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}{2}", _actionsCurrent, _actionsTotal, "\n"));
-        //exceed action limit?
-        if (_actionsCurrent > _actionsTotal)
+        //exceed action limit? (total includes any temporary adjustments)
+        remainder = _actionsTotal - _actionsCurrent;
+        /*if (_actionsCurrent > _actionsTotal)*/
+        if (remainder < 0)
         { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
+        else
+        { EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, remainder); }
     }
 
     /// <summary>

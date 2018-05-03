@@ -865,14 +865,12 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider) (Now {1}){2}", colourEffect,
-                                                invisibility, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd);
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourEffect, effect.textTag,
-                                                invisibility, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd);
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
@@ -903,8 +901,7 @@ public class EffectManager : MonoBehaviour
                                             actor.datapoint2 += effect.value;
                                             actor.datapoint2 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint2);
                                         }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.textTag,
-                                            actor.datapoint2, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                     case "Subtract":
                                         int invisibility = actor.datapoint2;
@@ -912,14 +909,12 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider) (Now {2}){3}", colourEffect, actor.arc.name,
-                                                invisibility, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourEffect, actor.arc.name, colourEnd);
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourEffect, actor.arc.name, effect.textTag,
-                                                invisibility, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
@@ -961,14 +956,12 @@ public class EffectManager : MonoBehaviour
                             {
                                 case "Add":
                                     playerRenown += effect.value;
-                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourGood, effect.textTag,
-                                        playerRenown, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd);
                                     break;
                                 case "Subtract":
                                     playerRenown -= effect.value;
                                     playerRenown = Mathf.Max(0, playerRenown);
-                                    effectReturn.bottomText = string.Format("{0}Player {1} (Now {2}){3}", colourBad, effect.textTag,
-                                        playerRenown, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd);
                                     break;
                             }
                             GameManager.instance.playerScript.Renown = playerRenown;
@@ -982,14 +975,12 @@ public class EffectManager : MonoBehaviour
                                 {
                                     case "Add":
                                         actor.renown += effect.value;
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourBad, actor.arc.name, effect.textTag,
-                                            actor.renown, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                     case "Subtract":
                                         actor.renown -= effect.value;
                                         actor.renown = Mathf.Max(0, actor.renown);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2} (Now {3}){4}", colourGood, actor.arc.name, effect.textTag,
-                                            actor.renown, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                 }
                             }

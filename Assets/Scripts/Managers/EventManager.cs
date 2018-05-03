@@ -18,10 +18,12 @@ public enum EventType
     CloseOutcomeWindow,
     CreateMoveMenu,
     CreateGearNodeMenu,
-    //CloseTeamPicker,
+    //CloseTeamPicker
     ShowTargetNodes,
     NodeDisplay,
     ActivityDisplay,
+    //Top Widget
+    ChangeActionPoints,
     //Actions
     NodeAction,
     NodeGearAction,

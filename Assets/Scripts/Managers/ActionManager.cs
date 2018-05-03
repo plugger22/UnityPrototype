@@ -15,7 +15,6 @@ public class ActionManager : MonoBehaviour
 {
     
     //fast access
-    private Sprite targetSprite;
     private int failedTargetChance;
 
     //colour palette for Modal Outcome
@@ -34,8 +33,6 @@ public class ActionManager : MonoBehaviour
     {
         //fast access fields
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
-        targetSprite = GameManager.instance.guiScript.targetSprite;
-        Debug.Assert(targetSprite != null, "Invalid targetSprite (Null)");
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
         EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent);
@@ -1962,7 +1959,7 @@ public class ActionManager : MonoBehaviour
                     //target attempt UNSUCCESSFUL
                     listOfEffects.AddRange(target.listOfFailEffects);
                     builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.name, colourEnd, "\n");
-                    builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the Target{2}", colourAlert, failedTargetChance, colourEnd);
+                    builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the attempt{2}", colourAlert, failedTargetChance, colourEnd);
                     text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
@@ -1987,7 +1984,7 @@ public class ActionManager : MonoBehaviour
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         if (effectReturn != null)
                         {
-                            outcomeDetails.sprite = targetSprite;
+                            /*outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite;*/
                             //update stringBuilder texts (Bottom only)
                             if (builderBottom.Length > 0)
                             {
@@ -2022,7 +2019,8 @@ public class ActionManager : MonoBehaviour
                     outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
                     outcomeDetails.textTop = builderTop.ToString();
                     outcomeDetails.textBottom = builderBottom.ToString();
-                    outcomeDetails.sprite = targetSprite;
+                    if (isSuccessful == true) { outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite; }
+                    else { outcomeDetails.sprite = GameManager.instance.guiScript.targetFailSprite; }
                 }
                 else
                 {
