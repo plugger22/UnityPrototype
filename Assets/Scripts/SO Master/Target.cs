@@ -33,10 +33,12 @@ public class Target : ScriptableObject
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
 
     //effects
-    [Tooltip("All effects (SO's) that happen as a result of target successfully being resolved")]
+    [Tooltip("All GOOD effects (SO's) that happen as a result of target successfully being resolved")]
     public List<Effect> listOfGoodEffects;
-    [Tooltip("All effects (SO's) that happen as a result of target successfully being resolved")]
+    [Tooltip("All BAD effects (SO's) that happen as a result of target successfully being resolved")]
     public List<Effect> listOfBadEffects;
-    [Tooltip("All effects (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained.")]
-    public List<Effect> listOfOngoingEffects; 
+    [Tooltip("All ONGOING effects (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained.")]
+    public List<Effect> listOfOngoingEffects;
+    [Tooltip("All effects (SO's) that happen when a target is attempted and the attempt Fails")]
+    public List<Effect> listOfFailEffects;
 }

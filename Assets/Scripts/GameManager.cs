@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
         inputScript.Initialise();
         metaScript.Initialise();
         dataScript.InitialiseFinal();   //must be after metaScript.Initialise
-        actionScript.Initialise();
+        actionScript.Initialise();      
         targetScript.Initialise();
         playerScript.Initialise();
         nodeScript.Initialise();

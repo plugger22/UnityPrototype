@@ -26,6 +26,8 @@ public class GUIManager : MonoBehaviour
     public Sprite infoSprite;
     [Tooltip("Alarm (spotted) sprite")]
     public Sprite alarmSprite;
+    [Tooltip("Used for Targets")]
+    public Sprite targetSprite;
 
 
     [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]

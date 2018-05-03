@@ -55,6 +55,8 @@ public class AIManager : MonoBehaviour
 {
     [Tooltip("The % of the total map, from the centre outwards, that encompasses the geographic centre where any node in the area is node.isCentreNode true")]
     [Range(0, 100)] public float nodeGeographicCentre = 30f;
+    [Tooltip("When a target is attempted and the attempt fails this is the % chance of Authority becoming aware of the target (node.isTargetKnown true)")]
+    [Range(0, 100)] public int targetAttemptChance = 50;
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
     [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]

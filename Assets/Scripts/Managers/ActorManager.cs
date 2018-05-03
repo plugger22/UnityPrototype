@@ -451,33 +451,42 @@ public class ActorManager : MonoBehaviour
                     Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
                     if (target != null)
                     {
-                        bool targetProceed = false;
-                        //can tackle target if Player at node or target specified actor is present in line-up
-                        if (nodeID == playerID) { targetProceed = true; }
-                        else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, globalResistance) == true) { targetProceed = true; }
-                        //target live and dancing
-                        if (targetProceed == true)
+                        if (target.targetStatus == Status.Live)
                         {
-                            string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault, 
-                                target.description, colourEnd);
-                            //button target details
-                            EventButtonDetails targetDetails = new EventButtonDetails()
+                            bool targetProceed = false;
+                            //can tackle target if Player at node or target specified actor is present in line-up
+                            if (nodeID == playerID) { targetProceed = true; }
+                            else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, globalResistance) == true) { targetProceed = true; }
+                            //target live and dancing
+                            if (targetProceed == true)
                             {
-                                buttonTitle = "Attempt Target",
-                                buttonTooltipHeader = targetHeader,
-                                buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
-                                buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetID),
-                                //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
-                            };
-                            tempList.Add(targetDetails);
+                                string targetHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault,
+                                    target.description, colourEnd);
+                                //button target details
+                                EventButtonDetails targetDetails = new EventButtonDetails()
+                                {
+                                    buttonTitle = "Attempt Target",
+                                    buttonTooltipHeader = targetHeader,
+                                    buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
+                                    buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetID),
+                                    //use a Lambda to pass arguments to the action
+                                    action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
+                                };
+                                tempList.Add(targetDetails);
+                            }
+                            else
+                            {
+                                //invalid target (Player not present, specified actor Arc not in line up)
+                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                infoBuilder.AppendFormat("{0}Target invalid{1}{2}{3}(No Player, No {4}){5}",
+                                    colourInvalid, "\n", colourEnd, colourBad, target.actorArc.name, colourEnd);
+                            }
                         }
                         else
                         {
-                            //invalid target (Player not present, specified actor Arc not in line up)
+                            //target already completed
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.AppendFormat("{0}Target invalid{1}{2}{3}(No Player, No {4}){5}",
-                                colourInvalid, "\n", colourEnd, colourBad, target.actorArc.name, colourEnd);
+                            infoBuilder.Append("Target completed");
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.targetID, "\n")); }

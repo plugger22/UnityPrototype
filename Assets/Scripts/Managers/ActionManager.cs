@@ -13,8 +13,10 @@ using delegateAPI;
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
-
-    public Sprite targetSprite;
+    
+    //fast access
+    private Sprite targetSprite;
+    private int failedTargetChance;
 
     //colour palette for Modal Outcome
     private string colourNormal;
@@ -30,6 +32,10 @@ public class ActionManager : MonoBehaviour
 
     public void Initialise()
     {
+        //fast access fields
+        failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
+        targetSprite = GameManager.instance.guiScript.targetSprite;
+        Debug.Assert(targetSprite != null, "Invalid targetSprite (Null)");
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
         EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent);
@@ -1930,76 +1936,80 @@ public class ActionManager : MonoBehaviour
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
                 }
-                //set isTargetKnown regardless of success or failure
-                node.isTargetKnown = true;
+                //set isTargetKnown -> auto if success, % chance otherwise
+                if (isSuccessful == true) { node.isTargetKnown = true; }
+                else
+                {
+                    if (Random.Range(0, 100) < failedTargetChance)
+                    { node.isTargetKnown = true; }
+                }
                 Debug.Log(string.Format("Target Resolution: chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n"));
-
                 //
-                // - - - Effects - - - (only apply if target attempted successfully)
+                // - - - Effects - - - 
                 //
+                List<Effect> listOfEffects = new List<Effect>();
+                //target SUCCESSFUL
                 if (isSuccessful == true)
                 {
-                    List<Effect> listOfEffects = new List<Effect>();
-                    //return class
-                    EffectDataReturn effectReturn = new EffectDataReturn();
-
-                    //target success
-                    builderTop.AppendFormat("Target {0} successfully attempted", target.name);
-
+                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt <b>Successful</b>", colourNeutral, target.name, colourEnd, "\n");
                     //combine all effects into one list for processing
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
                     listOfEffects.AddRange(target.listOfOngoingEffects);
-                    //pass through data package
-                    EffectDataInput dataInput = new EffectDataInput();
-                    //handle any Ongoing effects of target completed
-                    if (target.listOfOngoingEffects.Count > 0)
-                    {
-                        dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
-                        dataInput.ongoingText = "Target";
-                        //add to target so it can link to effects
-                        target.ongoingID = dataInput.ongoingID;
-                    }
-                    //any effects to process?
-                    if (listOfEffects.Count > 0)
-                    {
-                        foreach (Effect effect in listOfEffects)
-                        {
-                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
-                            if (effectReturn != null)
-                            {
-                                outcomeDetails.sprite = targetSprite;
-                                //update stringBuilder texts (Bottom only)
-                                if (builderBottom.Length > 0)
-                                {
-                                    builderBottom.AppendLine();
-                                    builderBottom.AppendLine();
-                                }
-                                builderBottom.Append(effectReturn.bottomText);
-                                //exit effect loop on error
-                                if (effectReturn.errorFlag == true) { break; }
-                                //valid action? -> only has to be true once for an action to be valid
-                                if (effectReturn.isAction == true) { isAction = true; }
-                            }
-                            else
-                            {
-                                builderTop.AppendLine();
-                                builderTop.Append("Error");
-                                builderBottom.AppendLine();
-                                builderBottom.Append("Error");
-                                effectReturn.errorFlag = true;
-                                break;
-                            }
-                        }
-                    }
                 }
                 else
                 {
                     //target attempt UNSUCCESSFUL
-                    builderTop.AppendFormat("Failed attempt at Target {0}", target.name);
+                    listOfEffects.AddRange(target.listOfFailEffects);
+                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.name, colourEnd, "\n");
+                    builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the Target{2}", colourAlert, failedTargetChance, colourEnd);
                     text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
+                }
+                //Process effects
+                EffectDataReturn effectReturn = new EffectDataReturn();
+                //pass through data package
+                EffectDataInput dataInput = new EffectDataInput();
+                //handle any Ongoing effects of target completed -> only if target Successful
+                if (isSuccessful == true && target.listOfOngoingEffects.Count > 0)
+                {
+                    dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
+                    dataInput.ongoingText = "Target";
+                    //add to target so it can link to effects
+                    target.ongoingID = dataInput.ongoingID;
+                }
+                //any effects to process?
+                if (listOfEffects.Count > 0)
+                {
+                    foreach (Effect effect in listOfEffects)
+                    {
+                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                        if (effectReturn != null)
+                        {
+                            outcomeDetails.sprite = targetSprite;
+                            //update stringBuilder texts (Bottom only)
+                            if (builderBottom.Length > 0)
+                            {
+                                builderBottom.AppendLine();
+                                builderBottom.AppendLine();
+                            }
+                            builderBottom.Append(effectReturn.bottomText);
+                            //exit effect loop on error
+                            if (effectReturn.errorFlag == true) { break; }
+                            //valid action? -> only has to be true once for an action to be valid
+                            if (effectReturn.isAction == true) { isAction = true; }
+                        }
+                        else
+                        {
+                            builderTop.AppendLine();
+                            builderTop.Append("Error");
+                            builderBottom.AppendLine();
+                            builderBottom.Append("Error");
+                            effectReturn.errorFlag = true;
+                            break;
+                        }
+                    }
                 }
                 //
                 // - - - Outcome - - -
