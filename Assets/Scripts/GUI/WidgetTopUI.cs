@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gameAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,7 +15,11 @@ public class WidgetTopUI : MonoBehaviour
     public Sprite widgetTopSprite;
     public Image barCity;
     public Image barFaction;
+    public Image starLeft;
+    public Image starMiddle;
+    public Image starRight;
     public TextMeshProUGUI actionPoints;
+    public TextMeshProUGUI turnNumber;
 
     private RectTransform transformCity;
     private RectTransform transformFaction;
@@ -32,6 +37,10 @@ public class WidgetTopUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent);
     }
 
 
@@ -51,6 +60,14 @@ public class WidgetTopUI : MonoBehaviour
     }
 
 
+    public void Initialise()
+    {
+        //dim down objective stars
+        SetStar(10f, UIPosition.Left);
+        SetStar(10f, UIPosition.Middle);
+        SetStar(10f, UIPosition.Right);
+    }
+
     /// <summary>
     /// Event handler
     /// </summary>
@@ -63,13 +80,25 @@ public class WidgetTopUI : MonoBehaviour
         switch (eventType)
         {
             case EventType.ChangeActionPoints:
-                UpdateActionPoints((int)Param);
+                SetActionPoints((int)Param);
+                break;
+            case EventType.ChangeTurn:
+                SetTurn((int)Param);
                 break;
             case EventType.ChangeCityBar:
                 SetCityBar((int)Param);
                 break;
             case EventType.ChangeFactionBar:
                 SetFactionBar((int)Param);
+                break;
+            case EventType.ChangeStarLeft:
+                SetStar((float)Param, UIPosition.Left);
+                break;
+            case EventType.ChangeStarMiddle:
+                SetStar((float)Param, UIPosition.Middle);
+                break;
+            case EventType.ChangeStarRight:
+                SetStar((float)Param, UIPosition.Right);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -81,10 +110,20 @@ public class WidgetTopUI : MonoBehaviour
     /// Changes action point display
     /// </summary>
     /// <param name="points"></param>
-    private void UpdateActionPoints(int points)
+    private void SetActionPoints(int points)
     {
         Debug.Assert(points > -1 && points < 5, "Invalid action points");
         actionPoints.text = Convert.ToString(points);
+    }
+
+    /// <summary>
+    /// Changes Turn number display
+    /// </summary>
+    /// <param name="points"></param>
+    private void SetTurn(int turn)
+    {
+        Debug.Assert(turn > -1, "Invalid Turn number");
+        turnNumber.text = Convert.ToString(turn);
     }
 
     /// <summary>
@@ -105,6 +144,41 @@ public class WidgetTopUI : MonoBehaviour
     {
         Debug.Assert(size > -1 && size < 101, string.Format("Invalid size {0}", size));
         transformFaction.sizeDelta = new Vector2(size, transformFaction.sizeDelta.y);
+    }
+
+    /// <summary>
+    /// Change opacity (float, NOT int) of 3 Objective stars at top centre
+    /// </summary>
+    /// <param name="opacity"></param>
+    /// <param name="uiPosition"></param>
+    private void SetStar(float opacity, UIPosition uiPosition)
+    {
+        Debug.Assert(opacity >= 0 && opacity <= 100f, string.Format("Invalid opacity \"{0}\"", opacity));
+        //convert opacity to 0 to 1.0
+        opacity *= 0.01f;
+        //change opacity of relevant star
+        switch(uiPosition)
+        {
+            case UIPosition.Left:
+                Color tempLeftColor = starLeft.color;
+                tempLeftColor.a = opacity;
+                starLeft.color = tempLeftColor;
+                break;
+            case UIPosition.Middle:
+                Color tempMiddleColor = starMiddle.color;
+                tempMiddleColor.a = opacity;
+                starMiddle.color = tempMiddleColor;
+                break;
+            case UIPosition.Right:
+                Color tempRightColor = starRight.color;
+                tempRightColor.a = opacity;
+                starRight.color = tempRightColor;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid UIPosition \"{0}\"", uiPosition);
+                break;
+        }
+
     }
 
 

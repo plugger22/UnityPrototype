@@ -145,6 +145,8 @@ public class TurnManager : MonoBehaviour
         //reset nodes and connections if not in normal state
         if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
         { GameManager.instance.nodeScript.ResetAll(); }
+        //update turn in top widget UI
+        EventManager.instance.PostNotification(EventType.ChangeTurn, this, _turn);
     }
 
     /// <summary>
@@ -236,6 +238,11 @@ public class TurnManager : MonoBehaviour
         Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}", "\n"));
         EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal);
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
+
+        //debug
+        /*EventManager.instance.PostNotification(EventType.ChangeStarLeft, this, Random.Range(0f, 100f));
+        EventManager.instance.PostNotification(EventType.ChangeStarMiddle, this, Random.Range(0f, 100f));
+        EventManager.instance.PostNotification(EventType.ChangeStarRight, this, Random.Range(0f, 100f));*/
     }
 
 

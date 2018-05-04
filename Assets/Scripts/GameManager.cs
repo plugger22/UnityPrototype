@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
         rebelScript.Initialise();
         authorityScript.Initialise();
         debugGraphicsScript.Initialise();
+        widgetTopScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
 

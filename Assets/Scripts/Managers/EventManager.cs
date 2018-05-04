@@ -26,6 +26,10 @@ public enum EventType
     ChangeActionPoints,
     ChangeCityBar,
     ChangeFactionBar,
+    ChangeStarLeft,
+    ChangeStarMiddle,
+    ChangeStarRight,
+    ChangeTurn,
     //Actions
     NodeAction,
     NodeGearAction,

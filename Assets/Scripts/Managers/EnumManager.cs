@@ -21,6 +21,7 @@
     //
     public enum InventoryState { None, Gear, ReservePool}
     public enum AlertType { None, PlayerSatus, SideStatus, DebugAI, DebugPlayer }
+    public enum UIPosition { None, Left, Middle, Right }
 
     //
     // - - - Connections - - - 
