@@ -294,6 +294,13 @@ public class TurnManager : MonoBehaviour
     public int GetActionsCurrent()
     { return _actionsCurrent; }
 
+    /// <summary>
+    /// returns the number of remaining actions currently available to the player for this turn
+    /// </summary>
+    /// <returns></returns>
+    public int GetActionsAvailable()
+    { return _actionsTotal - _actionsCurrent; }
+
     public int GetActionsTotal()
     { return _actionsTotal; }
 

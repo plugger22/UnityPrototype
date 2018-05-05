@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// handles mouse interactions for top widget objective stars (2D polygon collider attached to game object)
+/// handles mouse interactions for top widget objective Turn indicator (2D polygon collider attached to game object)
 /// </summary>
-public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
@@ -28,9 +28,8 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
     /// <summary>
     /// Mouse over generic tooltip
     /// </summary>
-    public void OnPointerEnter (PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Mouse over Top Widget Stars");
         //check modal block isn't in place
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
@@ -47,7 +46,7 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
         }
     }
 
-    public void OnPointerClick (PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("Click!");
     }
@@ -56,7 +55,7 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
     /// <summary>
     /// mouse over exit, shut down tooltip
     /// </summary>
-    public void OnPointerExit (PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
@@ -65,11 +64,6 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
             GameManager.instance.tooltipGenericScript.CloseTooltip();
         }
     }
-
-    /*private void OnMouseDown()
-    {
-        Debug.Log("Mouse Click");
-    }*/
 
     /// <summary>
     /// Show generic tooltip
@@ -83,12 +77,15 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
         if (onMouseFlag == true)
         {
             //do once
+            Vector3 screenPos = transform.position;
+            screenPos.y -= 55;
+            int turn = GameManager.instance.turnScript.Turn;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = string.Format("Objectives");
-                tooltipMain = "Test Main";
-                tooltipDetails = "Test Details";
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, transform.position, tooltipHeader, tooltipDetails);
+                tooltipHeader = string.Format("Turn");
+                tooltipMain = string.Format("Turn {0}{1}Day {2}", turn, "\n", turn);
+                tooltipDetails = "Press Enter for a new Turn";
+                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                 yield return null;
             }
             //fade in
@@ -102,4 +99,5 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
             }
         }
     }
+
 }
