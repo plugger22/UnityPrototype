@@ -41,8 +41,8 @@ public class TurnManager : MonoBehaviour
     /*private string colourGood;
     private string colourBad;
     private string colourGrey;
-    private string colourAlert;
     private string colourSide;*/
+    private string colourAlert;
     private string colourEnd;
 
 
@@ -118,8 +118,8 @@ public class TurnManager : MonoBehaviour
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);*/
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);*/
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
         //current Player side colour
@@ -361,6 +361,12 @@ public class TurnManager : MonoBehaviour
     public string GetTurnTooltip()
     { return string.Format("Turn {0}{1}{2}", colourNeutral, _turn, colourEnd); }
 
+    /// <summary>
+    /// returns a colour string for the turn tooltip details info tip
+    /// </summary>
+    /// <returns></returns>
+    public string GetTurnInfoTip()
+    { return string.Format("{0}Press Enter for a New Turn{1}", colourAlert, colourEnd); }
 
     /// <summary>
     /// Quit 

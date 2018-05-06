@@ -34,9 +34,7 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             //Tool tip
-
             onMouseFlag = true;
-
             //exit any node tooltip that might be open
             StopCoroutine("ShowTooltip");
             GameManager.instance.tooltipNodeScript.CloseTooltip();
@@ -81,9 +79,8 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
             screenPos.y -= 100;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = string.Format("Objectives");
-                tooltipMain = "Test Main";
-                tooltipDetails = "Test Details";
+                tooltipHeader = GameManager.instance.objectiveScript.GetObjectivesTitle();
+                tooltipMain = GameManager.instance.objectiveScript.GetObjectivesSummary();
                 GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                 yield return null;
             }
