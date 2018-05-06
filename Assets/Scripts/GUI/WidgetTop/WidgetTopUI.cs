@@ -41,6 +41,7 @@ public class WidgetTopUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
 
 
@@ -85,6 +86,9 @@ public class WidgetTopUI : MonoBehaviour
             case EventType.ChangeTurn:
                 SetTurn((int)Param);
                 break;
+            case EventType.ChangeSide:
+                ChangeSides((GlobalSide)Param);
+                break;
             case EventType.ChangeCityBar:
                 SetCityBar((int)Param);
                 break;
@@ -105,6 +109,27 @@ public class WidgetTopUI : MonoBehaviour
                 break;
         }
     }
+
+
+    /// <summary>
+    /// Set city loyalty bar colour for the appropriate side
+    /// </summary>
+    /// <param name="side"></param>
+    private void ChangeSides(GlobalSide side)
+    {
+        Debug.Assert(side != null, "Invalid side (Null)");
+        SetCityBar(GameManager.instance.cityScript.CityLoyalty);
+        switch(side.level)
+        {
+            case 1:
+                SetFactionBar(GameManager.instance.factionScript.SupportAuthority);
+                break;
+            case 2:
+                SetFactionBar(GameManager.instance.factionScript.SupportResistance);
+                break;
+        }
+    }
+
 
     /// <summary>
     /// Changes action point display
@@ -127,23 +152,40 @@ public class WidgetTopUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets length and colour of city bar based on size (%)
+    /// Sets length and colour of city bar based on size (0 to 10)
     /// </summary>
     /// <param name="size"></param>
     private void SetCityBar(int size)
     {
-        Debug.Assert(size > -1 && size < 101, string.Format("Invalid size {0}", size));
-        transformCity.sizeDelta = new Vector2(size, transformCity.sizeDelta.y);
+        Debug.Assert(size > -1 && size < 11, string.Format("Invalid size {0}", size));
+        float floatSize = (float)size;
+        transformCity.sizeDelta = new Vector2(floatSize * 10f, transformCity.sizeDelta.y);
+        //set colour
+        float factor = floatSize * 0.1f;
+        //City Loyalty color depends on side (100% is green for Authority and red for Resistance)
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1:
+                barCity.color = new Color(2.0f * (1 - factor), 2.0f * factor, 0);
+                break;
+            case 2:
+                barCity.color = new Color(2.0f * factor, 2.0f * (1 - factor), 0);
+                break;
+        }
     }
 
     /// <summary>
-    /// Sets length and colour of faction bar based on size (%)
+    /// Sets length and colour of faction bar based on size (0 to 10)
     /// </summary>
     /// <param name="size"></param>
     private void SetFactionBar(int size)
     {
-        Debug.Assert(size > -1 && size < 101, string.Format("Invalid size {0}", size));
-        transformFaction.sizeDelta = new Vector2(size, transformFaction.sizeDelta.y);
+        Debug.Assert(size > -1 && size < 11, string.Format("Invalid size {0}", size));
+        float floatSize = (float)size;
+        transformFaction.sizeDelta = new Vector2(floatSize * 10f, transformFaction.sizeDelta.y);
+        //set colour
+        float factor = floatSize * 0.1f;
+        barFaction.color = new Color(2.0f * (1 - factor), 2.0f * factor, 0);
     }
 
     /// <summary>

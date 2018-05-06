@@ -82,7 +82,7 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 tooltipHeader = "City Support";
-                tooltipMain = "Level 3 out of 10";
+                tooltipMain = string.Format("{0} out of {1}", GameManager.instance.cityScript.CityLoyalty, GameManager.instance.cityScript.maxSupportLevel);
                 GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                 yield return null;
             }

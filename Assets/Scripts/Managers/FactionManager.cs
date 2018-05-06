@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class FactionManager : MonoBehaviour
 {
+    [Tooltip("Support for both sides factions range from 0 to this amount")]
+    [Range(0, 10)] public int maxSupportLevel = 10;
 
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
@@ -56,7 +58,7 @@ public class FactionManager : MonoBehaviour
         factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
         factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
         SupportAuthority = 10;
-        SupportResistance = 10;
+        SupportResistance = 1;
         Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}", 
             factionResistance, factionAuthority, "\n"));
         //register listener
@@ -161,6 +163,28 @@ public class FactionManager : MonoBehaviour
                 break;
             case 2:
                 description = string.Format("{0}{1}{2}", colourNormal, factionResistance.descriptor, colourEnd);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                break;
+        }
+        return description;
+    }
+
+    /// <summary>
+    /// returns current faction support level for player side in colour formatted string
+    /// </summary>
+    /// <returns></returns>
+    public string GetFactionSupportLevel()
+    {
+        string description = "Unknown";
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1:
+                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportAuthority, colourEnd, maxSupportLevel);
+                break;
+            case 2:
+                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportResistance, colourEnd, maxSupportLevel);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
