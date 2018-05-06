@@ -435,15 +435,11 @@ public class Node : MonoBehaviour
     { return listOfNeighbourPositions.Count; }
 
     /// <summary>
-    /// add neighbouring vector3 to list
+    /// add neighbouring vector3 to list (can't null test a vector3)
     /// </summary>
     /// <param name="pos"></param>
     public void AddNeighbourPosition(Vector3 pos)
-    {
-        if (pos != null)
-        { listOfNeighbourPositions.Add(pos); }
-        else { Debug.LogError("Invalid pos (Null)"); }
-    }
+    { listOfNeighbourPositions.Add(pos); }
 
 
     /// <summary>

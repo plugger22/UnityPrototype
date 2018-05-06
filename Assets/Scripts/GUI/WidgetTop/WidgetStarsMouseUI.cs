@@ -76,11 +76,12 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
         {
             //do once
             Vector3 screenPos = transform.position;
-            screenPos.y -= 100;
+            screenPos.y -= 125;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 tooltipHeader = GameManager.instance.objectiveScript.GetObjectivesTitle();
                 tooltipMain = GameManager.instance.objectiveScript.GetObjectivesSummary();
+                tooltipDetails = GameManager.instance.objectiveScript.GetObjectiveDetails();
                 GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                 yield return null;
             }

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// SO for Cities. Name of SO is the name of the city, eg. "Gotham City"
 /// </summary>
-[CreateAssetMenu(menuName = "City / City")]
+[CreateAssetMenu(menuName = "Game / City")]
 public class City : ScriptableObject
 {
     [Tooltip("Short text summary that appears in city tooltip")]

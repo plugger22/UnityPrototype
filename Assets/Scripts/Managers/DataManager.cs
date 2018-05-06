@@ -118,6 +118,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
     private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
     private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
+    private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();         //Key -> objectiveID, Value -> Objective
 
     //global SO's (enum equivalents)
     private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
@@ -711,6 +712,31 @@ public class DataManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid City (duplicate) ID \"{0}\" for \"{1}\"", counter, city.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfCities has {0} entries{1}", counter, "\n"));
+        //
+        // - - - Objectives - - -
+        //
+        counter = 0;
+        //get GUID of all SO Objective Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var objectiveGUID = AssetDatabase.FindAssets("t:Objective");
+        foreach (var guid in objectiveGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object objectiveObject = AssetDatabase.LoadAssetAtPath(path, typeof(Objective));
+            //assign a zero based unique ID number
+            Objective objective = objectiveObject as Objective;
+            //set data
+            objective.objectiveID = counter++;
+            //add to dictionary
+            try
+            { dictOfObjectives.Add(objective.objectiveID, objective); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Objective (Null)"); counter--; }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid Objective (duplicate) ID \"{0}\" for \"{1}\"", counter, objective.name)); counter--; }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfObjectives has {0} entries{1}", counter, "\n"));
     }
 
 
@@ -3064,14 +3090,38 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// returns a random City, null if a problem
     /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
     public City GetRandomCity()
     {
         City city = null;
         List<City> listOfCities = dictOfCities.Values.ToList();
         city = listOfCities[Random.Range(0, listOfCities.Count)];
         return city;
+    }
+
+    //
+    // - - - Objectives - - -
+    //
+
+    /// <summary>
+    /// returns a list of random Objectives, empty if a problem
+    /// </summary>
+    public List<Objective> GetRandomObjectives(int num)
+    {
+        Debug.Assert(num > 0 && num < dictOfObjectives.Count, string.Format("Invalid number of objectives \"{0}\"", num));
+        int index;
+        List<Objective> listOfRandom = new List<Objective>();
+        List<Objective> listOfObjectives = new List<Objective>(dictOfObjectives.Values.ToList());
+        for(int i = 0; i < num; i++)
+        {
+            index = Random.Range(0, listOfObjectives.Count);
+            Objective objective = listOfObjectives[index];
+            if (objective != null)
+            { listOfRandom.Add(objective); }
+            else { Debug.LogWarning("Invalid Objective in listOfObjectives (Null)"); }
+            //remove objective from list to prevent being selected again
+            listOfObjectives.RemoveAt(index);
+        }
+        return listOfRandom;
     }
 
 
