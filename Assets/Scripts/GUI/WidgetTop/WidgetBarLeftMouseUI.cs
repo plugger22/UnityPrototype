@@ -34,9 +34,7 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             //Tool tip
-
             onMouseFlag = true;
-
             //exit any node tooltip that might be open
             StopCoroutine("ShowTooltip");
             GameManager.instance.tooltipNodeScript.CloseTooltip();
@@ -81,8 +79,8 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             screenPos.y -= 55;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = "City Support";
-                tooltipMain = string.Format("{0} out of {1}", GameManager.instance.cityScript.CityLoyalty, GameManager.instance.cityScript.maxSupportLevel);
+                tooltipHeader = string.Format("{0} Support", GameManager.instance.cityScript.GetCityName());
+                tooltipMain = GameManager.instance.cityScript.GetCityLoyalty();
                 GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                 yield return null;
             }

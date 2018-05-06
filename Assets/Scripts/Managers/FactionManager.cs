@@ -9,7 +9,7 @@ using UnityEngine;
 public class FactionManager : MonoBehaviour
 {
     [Tooltip("Support for both sides factions range from 0 to this amount")]
-    [Range(0, 10)] public int maxSupportLevel = 10;
+    [Range(0, 10)] public int maxSupportLevelFaction = 10;
 
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
@@ -58,7 +58,7 @@ public class FactionManager : MonoBehaviour
         factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
         factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
         SupportAuthority = 10;
-        SupportResistance = 1;
+        SupportResistance = 10;
         Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}", 
             factionResistance, factionAuthority, "\n"));
         //register listener
@@ -181,10 +181,10 @@ public class FactionManager : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportAuthority, colourEnd, maxSupportLevel);
+                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportAuthority, colourEnd, maxSupportLevelFaction);
                 break;
             case 2:
-                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportResistance, colourEnd, maxSupportLevel);
+                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportResistance, colourEnd, maxSupportLevelFaction);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));

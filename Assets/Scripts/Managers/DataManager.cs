@@ -117,6 +117,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();             //Key -> msgID, Value -> Message
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
     private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
+    private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
 
     //global SO's (enum equivalents)
     private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
@@ -685,6 +686,31 @@ public class DataManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid Faction (duplicate) ID \"{0}\" for \"{1}\"", counter, faction.name)); counter--; }
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfFactions has {0} entries{1}", counter, "\n"));
+        //
+        // - - - Cities - - -
+        //
+        counter = 0;
+        //get GUID of all SO City Objects -> Note that I'm searching the entire database here so it's not folder dependant
+        var cityGUID = AssetDatabase.FindAssets("t:City");
+        foreach (var guid in cityGUID)
+        {
+            //get path
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            //get SO
+            UnityEngine.Object cityObject = AssetDatabase.LoadAssetAtPath(path, typeof(City));
+            //assign a zero based unique ID number
+            City city = cityObject as City;
+            //set data
+            city.cityID = counter++;
+            //add to dictionary
+            try
+            { dictOfCities.Add(city.cityID, city); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid City (Null)"); counter--; }
+            catch (ArgumentException)
+            { Debug.LogError(string.Format("Invalid City (duplicate) ID \"{0}\" for \"{1}\"", counter, city.name)); counter--; }
+        }
+        Debug.Log(string.Format("DataManager: Initialise -> dictOfCities has {0} entries{1}", counter, "\n"));
     }
 
 
@@ -3029,6 +3055,23 @@ public class DataManager : MonoBehaviour
                 break;
         }
         return factionReturn;
+    }
+
+    //
+    // - - - Cities - - -
+    //
+
+    /// <summary>
+    /// returns a random City, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public City GetRandomCity()
+    {
+        City city = null;
+        List<City> listOfCities = dictOfCities.Values.ToList();
+        city = listOfCities[Random.Range(0, listOfCities.Count)];
+        return city;
     }
 
 

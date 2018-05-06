@@ -8,9 +8,11 @@ using UnityEngine;
 public class CityManager : MonoBehaviour
 {
     [Tooltip("City Loyalty (same for both sides) range from 0 to this amount")]
-    [Range(0, 10)] public int maxSupportLevel = 10;
+    [Range(0, 10)] public int maxSupportLevelCity = 10;
 
     private int _cityLoyalty;                       //loyalty of city (0 to 10). Same number for both sides
+
+    private City city;
 
     private string colourRebel;
     private string colourAuthority;
@@ -37,7 +39,10 @@ public class CityManager : MonoBehaviour
 
     public void Initialise()
     {
-        CityLoyalty = 10;
+        //get random city -> Placeholder
+        city = GameManager.instance.dataScript.GetRandomCity();
+        Debug.Assert(city != null, "Invalid City (Null)");
+        CityLoyalty = city.baseLoyalty;
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
@@ -77,8 +82,50 @@ public class CityManager : MonoBehaviour
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
+        //current Player side colour
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
     }
+
+
+    /// <summary>
+    /// returns city name in a Player side colour formatted string   
+    /// </summary>
+    /// <returns></returns>
+    public string GetCityName()
+    {
+        string description = "Unknown";
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1:
+                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
+                break;
+            case 2:
+                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                break;
+        }
+        return description;
+    }
+
+
+    /// <summary>
+    /// returns current city loyalty level for player side in colour formatted string
+    /// </summary>
+    /// <returns></returns>
+    public string GetCityLoyalty()
+    { return string.Format("{0}{1}{2} out of {1}", colourNeutral, _cityLoyalty, colourEnd, maxSupportLevelCity); }
+
+
+    public string GetCityDescription()
+    {
+        if (city.descriptor != null)
+        { return string.Format("{0}{1}{2}", colourNormal, city.descriptor, colourEnd); }
+        else { return "Unknown"; }
+    }
+
+    //new methods above here
 }

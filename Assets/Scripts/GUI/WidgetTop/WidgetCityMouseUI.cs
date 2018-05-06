@@ -34,9 +34,7 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             //Tool tip
-
             onMouseFlag = true;
-
             //exit any node tooltip that might be open
             StopCoroutine("ShowTooltip");
             GameManager.instance.tooltipNodeScript.CloseTooltip();
@@ -82,9 +80,9 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             screenPos.y -= 90;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = "City Information";
-                tooltipMain = "Gotham City";
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
+                tooltipHeader = GameManager.instance.cityScript.GetCityName();
+                tooltipMain = GameManager.instance.cityScript.GetCityDescription();
+                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader);
                 yield return null;
             }
             //fade in
