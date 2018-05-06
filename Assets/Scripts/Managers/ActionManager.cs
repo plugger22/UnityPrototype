@@ -1907,6 +1907,7 @@ public class ActionManager : MonoBehaviour
                 //
                 // - - - Process target - - -  
                 //
+                isAction = true;
                 int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.Log(string.Format(" Target: {0} - - - {1}", target.name, "\n"));
@@ -1956,7 +1957,7 @@ public class ActionManager : MonoBehaviour
                 }
                 else
                 {
-                    //target attempt UNSUCCESSFUL
+                    //FAILED target attempt
                     listOfEffects.AddRange(target.listOfFailEffects);
                     builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.name, colourEnd, "\n");
                     builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the attempt{2}", colourAlert, failedTargetChance, colourEnd);
@@ -1984,7 +1985,6 @@ public class ActionManager : MonoBehaviour
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         if (effectReturn != null)
                         {
-                            /*outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite;*/
                             //update stringBuilder texts (Bottom only)
                             if (builderBottom.Length > 0)
                             {
@@ -1994,8 +1994,8 @@ public class ActionManager : MonoBehaviour
                             builderBottom.Append(effectReturn.bottomText);
                             //exit effect loop on error
                             if (effectReturn.errorFlag == true) { break; }
-                            //valid action? -> only has to be true once for an action to be valid
-                            if (effectReturn.isAction == true) { isAction = true; }
+                            /*//valid action? -> only has to be true once for an action to be valid
+                            if (effectReturn.isAction == true) { isAction = true; }*/
                         }
                         else
                         {
@@ -2019,6 +2019,7 @@ public class ActionManager : MonoBehaviour
                     outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
                     outcomeDetails.textTop = builderTop.ToString();
                     outcomeDetails.textBottom = builderBottom.ToString();
+                    //which sprite to use
                     if (isSuccessful == true) { outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite; }
                     else { outcomeDetails.sprite = GameManager.instance.guiScript.targetFailSprite; }
                 }

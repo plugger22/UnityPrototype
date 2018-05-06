@@ -82,8 +82,7 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             int turn = GameManager.instance.turnScript.Turn;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = string.Format("Turn");
-                tooltipMain = string.Format("Turn {0}{1}Day {2}", turn, "\n", turn);
+                tooltipMain = GameManager.instance.turnScript.GetTurnTooltip();
                 tooltipDetails = "Press Enter for a new Turn";
                 GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                 yield return null;

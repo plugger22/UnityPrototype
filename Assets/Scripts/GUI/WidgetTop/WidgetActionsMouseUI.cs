@@ -81,8 +81,7 @@ public class WidgetActionsMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             screenPos.y -= 55;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipMain = string.Format("{0} out {1} Actions available", GameManager.instance.turnScript.GetActionsAvailable(), 
-                    GameManager.instance.turnScript.GetActionsTotal());
+                tooltipMain = GameManager.instance.turnScript.GetActionsTooltip();
                 GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                 yield return null;
             }

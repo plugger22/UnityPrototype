@@ -13,7 +13,9 @@ using UnityEditor;
 /// </summary>
 public class TurnManager : MonoBehaviour
 {
+    [Tooltip("Base number of actions that the Resistance side can carry out each turn")]
     [Range(1, 4)] public int actionsResistance = 2;
+    [Tooltip("Base number of actions that the Authority side can carry out each turn")]
     [Range(1, 4)] public int actionsAuthority = 2;
 
     public float showSplashTimeout = 2.0f;
@@ -32,7 +34,17 @@ public class TurnManager : MonoBehaviour
 
     private bool allowQuitting = false;
 
-    //public bool updatePlayerActions = false;                                    //if set true then action limits are updated at turn start
+    /*private string colourRebel;
+    private string colourAuthority;*/
+    private string colourNeutral;
+    private string colourNormal;
+    /*private string colourGood;
+    private string colourBad;
+    private string colourGrey;
+    private string colourAlert;
+    private string colourSide;*/
+    private string colourEnd;
+
 
     public int Turn
     {
@@ -60,6 +72,7 @@ public class TurnManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.UseAction, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
         EventManager.instance.AddListener(EventType.ExitGame, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
 
 
@@ -86,10 +99,33 @@ public class TurnManager : MonoBehaviour
             case EventType.ChangeSide:
                 ChangeSide((GlobalSide)Param);
                 break;
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
+    }
+
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        /*colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);*/
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        //current Player side colour
+        /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { colourSide = colourAuthority; }
+        else { colourSide = colourRebel; }*/
     }
 
     /// <summary>
@@ -238,11 +274,6 @@ public class TurnManager : MonoBehaviour
         Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}", "\n"));
         EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal);
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
-
-        //debug
-        /*EventManager.instance.PostNotification(EventType.ChangeStarLeft, this, Random.Range(0f, 100f));
-        EventManager.instance.PostNotification(EventType.ChangeStarMiddle, this, Random.Range(0f, 100f));
-        EventManager.instance.PostNotification(EventType.ChangeStarRight, this, Random.Range(0f, 100f));*/
     }
 
 
@@ -305,6 +336,14 @@ public class TurnManager : MonoBehaviour
     { return _actionsTotal; }
 
     /// <summary>
+    /// returns a  colour string in format "1 or 2 Actions available"
+    /// </summary>
+    /// <returns></returns>
+    public string GetActionsTooltip()
+    { return string.Format("{0}{1}{2}{3} of {4}<b>{5}</b>{6} Actions available{7}", colourNeutral, GetActionsAvailable(), colourEnd, colourNormal, colourEnd,
+        _actionsTotal, colourNormal, colourEnd); }
+
+    /// <summary>
     /// Returns true if the player has at least one remaining action, otherwise false
     /// </summary>
     /// <returns></returns>
@@ -314,6 +353,13 @@ public class TurnManager : MonoBehaviour
         { return true; }
         return false;
     }
+
+    /// <summary>
+    /// returns a colour string in format "Turn 2"
+    /// </summary>
+    /// <returns></returns>
+    public string GetTurnTooltip()
+    { return string.Format("Turn {0}{1}{2}", colourNeutral, _turn, colourEnd); }
 
 
     /// <summary>

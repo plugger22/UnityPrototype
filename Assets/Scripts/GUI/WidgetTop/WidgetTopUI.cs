@@ -63,6 +63,8 @@ public class WidgetTopUI : MonoBehaviour
 
     public void Initialise()
     {
+        //get correct number of action points
+        SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
         //dim down objective stars
         SetStar(10f, UIPosition.Left);
         SetStar(10f, UIPosition.Middle);
@@ -119,6 +121,7 @@ public class WidgetTopUI : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         SetCityBar(GameManager.instance.cityScript.CityLoyalty);
+        SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
         switch(side.level)
         {
             case 1:
