@@ -169,8 +169,9 @@ namespace packageAPI
     public class ActionAdjustment
     {
         public GlobalSide side;
+        public string descriptor;                                       //short (two word) text descriptor used in Turn tooltip
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
-        public int timer;                                               //number of turns that the effect lasts for (decremented down to zero)
+        public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
     }
 
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using gameAPI;
+using packageAPI;
+using System.Text;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -38,10 +40,10 @@ public class TurnManager : MonoBehaviour
     private string colourAuthority;*/
     private string colourNeutral;
     private string colourNormal;
-    /*private string colourGood;
+    private string colourGood;
     private string colourBad;
     private string colourGrey;
-    private string colourSide;*/
+    /*private string colourSide;*/
     private string colourAlert;
     private string colourEnd;
 
@@ -116,9 +118,9 @@ public class TurnManager : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         /*colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);*/
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
@@ -352,6 +354,44 @@ public class TurnManager : MonoBehaviour
         if (_actionsCurrent < _actionsTotal)
         { return true; }
         return false;
+    }
+
+    /// <summary>
+    /// returns a colour formatted string detailing action adjustments (if any) for the action tooltips (details). Null if none.
+    /// </summary>
+    /// <returns></returns>
+    public string GetActionAdjustmentTooltip()
+    {
+        StringBuilder builder = new StringBuilder();
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //standard action allowance
+        if (side.level == 1)
+        { builder.AppendFormat("{0}Base Actions{1} {2}{3}{4} per turn", colourNormal, colourEnd, colourNeutral, actionsAuthority, colourEnd); }
+        else if (side.level == 2)
+        { builder.AppendFormat("{0}Base Actions{1} {2}{3}{4} per turn", colourNormal, colourEnd, colourNeutral, actionsResistance, colourEnd); }
+        //get adjustments
+        List<ActionAdjustment> listOfAdjustments = GameManager.instance.dataScript.GetListOfActionAdjustments();
+        if (listOfAdjustments != null)
+        {
+            if (listOfAdjustments.Count > 0)
+            {
+                foreach (ActionAdjustment actionAdjustment in listOfAdjustments)
+                {
+                    //same side
+                    if (actionAdjustment.side.level == side.level)
+                    {
+                        if (builder.Length > 0) { builder.AppendLine(); }
+                        {
+                            if (actionAdjustment.value > 0)
+                            { builder.AppendFormat("{0}  {1}+{2}{3}", actionAdjustment.descriptor, colourGood, actionAdjustment.value, colourEnd); }
+                            else
+                            { builder.AppendFormat("{0}  {1}{2}{3}", actionAdjustment.descriptor, colourBad, actionAdjustment.value, colourEnd); }
+                        }
+                    }
+                }
+            }
+        }
+        return builder.ToString();
     }
 
     /// <summary>

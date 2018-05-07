@@ -2340,6 +2340,7 @@ public class EffectManager : MonoBehaviour
                         case "Single":
                             //once off effect -> Note: timer is 2 because it will be immediately knocked down to 1 at the end of this turn
                             actionAdjustment.timer = 2;
+                            actionAdjustment.descriptor = "One Off Effect";
                             switch (effect.operand.name)
                             {
                                 case "Add":
@@ -2362,6 +2363,7 @@ public class EffectManager : MonoBehaviour
                         case "Ongoing":
                             //NOTE: Ongoing effects are handled differently here than a standard ongoing effect (there is also an extra +1 due to decrement at end of turn)
                             actionAdjustment.timer = GameManager.instance.effectScript.ongoingEffectTimer + 1;
+                            actionAdjustment.descriptor = "Ongoing Effect";
                             switch (effect.operand.name)
                             {
                                 case "Add":

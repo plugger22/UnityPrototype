@@ -3185,6 +3185,7 @@ public class DataManager : MonoBehaviour
         return netAdjustment;
     }
 
+
     /// <summary>
     /// Debug function to display Action Adjustments
     /// </summary>
