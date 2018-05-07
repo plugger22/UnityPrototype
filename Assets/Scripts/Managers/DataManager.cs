@@ -107,7 +107,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
     private Dictionary<int, Target> dictOfTargets = new Dictionary<int, Target>();                  //Key -> targetID, Value -> Target
     private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();               //Key -> teamID, Value -> Team
-    private Dictionary<string, int> dictOfLookupTeamArcs = new Dictionary<string, int>();           //Key -> teamArc name, Value -> TeamArcID
+    private Dictionary<string, int> dictOfLookUpTeamArcs = new Dictionary<string, int>();           //Key -> teamArc name, Value -> TeamArcID
     private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
     private Dictionary<int, Gear> dictOfGear = new Dictionary<int, Gear>();                         //Key -> gearID, Value -> Gear
     private Dictionary<int, Connection> dictOfConnections = new Dictionary<int, Connection>();      //Key -> connID, Value -> Connection
@@ -127,7 +127,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();         //Key -> GlobalSide.name, Value -> GlobalSide
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
 
-    /// <summary>
+    /*/// <summary>
     /// first up initialisation
     /// </summary>
     public void InitialiseStart()
@@ -820,7 +820,7 @@ public class DataManager : MonoBehaviour
             }
         }
         Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));
-    }
+    }*/
 
     /// <summary>
     /// handles events
@@ -909,6 +909,12 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    public Dictionary<int, NodeArc> GetDictOfNodeArcs()
+    { return dictOfNodeArcs; }
+
+    public Dictionary<string, int> GetDictOfLookUpNodeArcs()
+    { return dictOfLookUpNodeArcs; }
+
     /// <summary>
     /// returns nodeArcID for specified nodeArc name, eg. "Corporate". Returns '-1' if not found in lookup dictionary. Must be in CAPS
     /// </summary>
@@ -951,6 +957,12 @@ public class DataManager : MonoBehaviour
         else { Debug.LogWarning("Not found in DictOfActions " + actionID); }
         return null;
     }
+
+    public Dictionary<int, Action> GetDictOfActions()
+    { return dictOfActions; }
+
+    public Dictionary<string, int> GetDictOfLookUpActions()
+    { return dictOfLookUpActions; }
 
     //
     // - - - Actor Arcs and Traits - - - 
@@ -1019,6 +1031,14 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    public Dictionary<int, ActorArc> GetDictOfActorArcs()
+    { return dictOfActorArcs; }
+
+    public List<ActorArc> GetListOfAuthorityActorArcs()
+    { return authorityActorArcs; }
+
+    public List<ActorArc> GetListOfResistanceActorArcs()
+    { return resistanceActorArcs; }
 
     /// <summary>
     /// return a random trait (could be good, bad or neutral)
@@ -1029,6 +1049,11 @@ public class DataManager : MonoBehaviour
         return listOfAllTraits[Random.Range(0, listOfAllTraits.Count)];
     }
 
+    public Dictionary<int, Trait> GetDictOfTraits()
+    { return dictOfTraits; }
+
+    public List<Trait> GetListOfAllTraits()
+    { return listOfAllTraits; }
 
     //
     // - - - Nodes - - -
@@ -1445,8 +1470,8 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int GetTeamArcID(string teamArcName)
     {
-        if (dictOfLookupTeamArcs.ContainsKey(teamArcName))
-        { return dictOfLookupTeamArcs[teamArcName]; }
+        if (dictOfLookUpTeamArcs.ContainsKey(teamArcName))
+        { return dictOfLookUpTeamArcs[teamArcName]; }
         else { Debug.LogWarning(string.Format("Not found in Lookup TeamArcID dict \"{0}\"{1}", teamArcName, "\n")); }
         return -1;
     }
@@ -1455,8 +1480,20 @@ public class DataManager : MonoBehaviour
     /// returns dictOfTeamArcs
     /// </summary>
     /// <returns></returns>
-    public Dictionary<int, TeamArc> GetTeamArcs()
+    public Dictionary<int, TeamArc> GetDictOfTeamArcs()
     { return dictOfTeamArcs; }
+
+    public Dictionary<string, int> GetDictOfLookUpTeamArcs()
+    { return dictOfLookUpTeamArcs; }
+
+    /// <summary>
+    /// called from ImportManager.cs
+    /// </summary>
+    /// <param name="numOfTeams"></param>
+    /// <param name="numOfTeamInfo"></param>
+    public void InitialiseArrayOfTeams(int numOfTeams, int numOfTeamInfo)
+    { arrayOfTeams = new int[numOfTeams, numOfTeamInfo]; }
+
 
     /// <summary>
     /// returns TeamArc based on teamArcID, null if not found in dictionary
@@ -1618,7 +1655,7 @@ public class DataManager : MonoBehaviour
     /// return dictOfTeams
     /// </summary>
     /// <returns></returns>
-    public Dictionary<int, Team> GetTeams()
+    public Dictionary<int, Team> GetDictOfTeams()
     { return dictOfTeams; }
 
 
@@ -2268,6 +2305,26 @@ public class DataManager : MonoBehaviour
         return slotID;
     }
 
+    
+                    
+    /// <summary>
+    /// called from ImportManager.cs
+    /// </summary>
+    public void InitialiseArrayOfActors()
+    {arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors]; }
+
+    /// <summary>
+    /// called from ImportManager.cs
+    /// </summary>
+    public void InitialiseArrayOfActorsPresent()
+    { arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];}
+
+    public Actor[,] GetArrayOfActors()
+    { return arrayOfActors; }
+
+    public bool[,] GetArrayOfActorsPresent()
+    { return arrayOfActorsPresent; }
+
     /// <summary>
     /// debug method to show contents of both sides reserve lists
     /// </summary>
@@ -2368,6 +2425,26 @@ public class DataManager : MonoBehaviour
         return arrayOfStatTags[side.level, qualityNum];
     }
 
+
+    public Quality[] GetArrayOfAuthorityQualities()
+    { return authorityQualities; }
+
+    public Quality[] GetArrayOfResistanceQualities()
+    { return resistanceQualities; }
+
+    /// <summary>
+    /// method called from ImportManager.cs
+    /// </summary>
+    public void InitialiseArrayOfStatTags()
+    {
+        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
+        int numOfGlobalSides = GameManager.instance.dataScript.GetNumOfGlobalSide();
+        arrayOfStatTags = new string[numOfGlobalSides, numOfQualities];
+    }
+
+    public string[,] GetArrayOfStatTags()
+    { return arrayOfStatTags; }
+
     //
     // - - - Gear - - -
     //
@@ -2376,7 +2453,7 @@ public class DataManager : MonoBehaviour
     /// returns dictionary of Gear (all metaLevels)
     /// </summary>
     /// <returns></returns>
-    public Dictionary<int, Gear> GetAllGear()
+    public Dictionary<int, Gear> GetDictOfGear()
     { return dictOfGear; }
 
     /// <summary>
@@ -2889,6 +2966,9 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public Dictionary<int, Effect> GetDictOfEffects()
+    { return dictOfEffects; }
+
     //
     // - - - AI - - -
     //
@@ -3001,6 +3081,9 @@ public class DataManager : MonoBehaviour
         return condition;
     }
 
+    public Dictionary<string, Condition> GetDictOfConditions()
+    { return dictOfConditions; }
+
     /// <summary>
     /// returns a dictionary (by value) of all conditions of the specified type, returns empty dictionary if none
     /// </summary>
@@ -3039,18 +3122,9 @@ public class DataManager : MonoBehaviour
             return manageAction;
     }
 
-    /*/// <summary>
-    /// returns level of globalMeta based on string (metaLevel SO name). Returns '-1' if not found
-    /// </summary>
-    /// <param name="metaName"></param>
-    /// <returns></returns>
-    public int GetGlobalMetaLevel(string metaName)
-    {
-        int level = -1;
-        if (dictOfGlobalMeta.ContainsKey(metaName) == true)
-        { level = dictOfGlobalMeta[metaName].level; }
-        return level;
-    }*/
+    public Dictionary<string, ManageAction> GetDictOfManageActions()
+    { return dictOfManageActions; }
+
 
     //
     // - - - Factions - - - 
@@ -3083,6 +3157,9 @@ public class DataManager : MonoBehaviour
         return factionReturn;
     }
 
+    public Dictionary<int, Faction> GetDictOfFactions()
+    { return dictOfFactions; }
+
     //
     // - - - Cities - - -
     //
@@ -3097,6 +3174,9 @@ public class DataManager : MonoBehaviour
         city = listOfCities[Random.Range(0, listOfCities.Count)];
         return city;
     }
+
+    public Dictionary<int, City> GetDictOfCities()
+    { return dictOfCities; }
 
     //
     // - - - Objectives - - -
@@ -3123,6 +3203,10 @@ public class DataManager : MonoBehaviour
         }
         return listOfRandom;
     }
+
+    public Dictionary<int, Objective> GetDictOfObjectives()
+    { return dictOfObjectives; }
+
 
 
     //

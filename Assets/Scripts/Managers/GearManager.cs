@@ -131,7 +131,7 @@ public class GearManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfGearType (Null)"); }
 
         //initialise gear lists
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
+        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             int gameLevel = GameManager.instance.metaScript.metaLevel.level;

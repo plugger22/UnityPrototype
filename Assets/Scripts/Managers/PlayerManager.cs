@@ -507,7 +507,7 @@ public class PlayerManager : MonoBehaviour
         if (string.IsNullOrEmpty(gearName) == false)
         {
             //find gear in dictionary
-            Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetAllGear();
+            Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
             if (dictOfGear != null)
             {
                 //loop dictionary looking for gear

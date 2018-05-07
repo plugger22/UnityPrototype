@@ -302,7 +302,7 @@ public class TeamManager : MonoBehaviour
     public void SeedTeamsOnMap()
     {
         List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetAllNodes().Values);
-        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetTeams();
+        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {
             int actorSlotID;
@@ -637,7 +637,7 @@ public class TeamManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //get dictionary of team arcs
-        Dictionary<int, TeamArc> tempDict = GameManager.instance.dataScript.GetTeamArcs();
+        Dictionary<int, TeamArc> tempDict = GameManager.instance.dataScript.GetDictOfTeamArcs();
         if (tempDict != null)
         {
             int reserve, onMap, inTransit, Total;
@@ -723,7 +723,7 @@ public class TeamManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //get dictionary of team arcs
-        Dictionary<int, Team> teamDict = GameManager.instance.dataScript.GetTeams();
+        Dictionary<int, Team> teamDict = GameManager.instance.dataScript.GetDictOfTeams();
         if (teamDict != null)
         {
             //header

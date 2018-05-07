@@ -66,7 +66,7 @@ public class ModalTeamPicker : MonoBehaviour
     public void Initialise()
     {
         //assign sprites to team Images
-        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetTeamArcs();
+        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
         if (dictOfTeamArcs != null)
         {
             if (dictOfTeamArcs.Count != arrayOfTeamOptions.Length)
