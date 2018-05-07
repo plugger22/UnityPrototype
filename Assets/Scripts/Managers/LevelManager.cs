@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     public int numOfNodes;              //number of nodes (adjusted after use in InitialiseNodes() to reflect actual number)
     public float minSpacing;            //minimum spacing (world units) between nodes (>=)
     [Tooltip("Random % chance of a node having additional connections")]
-    public int randomConnection;        //% chance of a node gaining a random additional connection after the MST set-up      
+    [Range(0, 100)] public int connectionFrequency = 50;    
 
     private GameObject instance;
     private GameObject instanceConnection;
@@ -382,7 +382,7 @@ public class LevelManager : MonoBehaviour
         for (int v = 0; v < numOfNodes; v++)
         {
             //each node has a % chance of gaining an additional connection
-            if (Random.Range(0, 100) <= randomConnection)
+            if (Random.Range(0, 100) <= connectionFrequency)
             {
                 num = listOfSortedNodes[v].Count;
                 if (num >= 3)

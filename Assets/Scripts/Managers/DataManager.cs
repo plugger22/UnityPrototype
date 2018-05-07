@@ -68,7 +68,7 @@ public class DataManager : MonoBehaviour
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
-    //NOTE: Public because data is added in Editor
+    //NOTE: Public because data is added in Editor -> default version (each city has it's own set, use default if cities version is null)
     public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfTwoConnArcs = new List<NodeArc>();
     public List<NodeArc> listOfThreeConnArcs = new List<NodeArc>();
