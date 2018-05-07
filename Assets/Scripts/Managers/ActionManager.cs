@@ -228,6 +228,7 @@ public class ActionManager : MonoBehaviour
                             StringBuilder builderBottom = new StringBuilder();
                             //pass through data package
                             EffectDataInput dataInput = new EffectDataInput();
+                            dataInput.textOrigin = action.name;
                             //
                             // - - - Process effects
                             //
@@ -1286,6 +1287,7 @@ public class ActionManager : MonoBehaviour
                         EffectDataReturn effectReturn = new EffectDataReturn();
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
+                        dataInput.textOrigin = gear.name;
                         //
                         // - - - Process effects
                         //

@@ -3136,7 +3136,11 @@ public class DataManager : MonoBehaviour
     public void AddActionAdjustment(ActionAdjustment adjustment)
     {
         if (adjustment != null)
-        { listOfActionAdjustments.Add(adjustment); }
+        {
+            //set start to following turn
+            adjustment.turnStart = GameManager.instance.turnScript.Turn + 1;
+            listOfActionAdjustments.Add(adjustment);
+        }
         else
         { Debug.LogError("Invalid ActionAdjustment (Null)"); }
     }
@@ -3195,7 +3199,8 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Action Adjustments Register{0}", "\n"));
         foreach (ActionAdjustment actionAdjustment in listOfActionAdjustments)
-        { builder.Append(string.Format("{0} Side: {1} Adjust: {2} Timer: {3}", "\n", actionAdjustment.side.name, actionAdjustment.value, actionAdjustment.timer)); }
+        { builder.Append(string.Format("{0}\"{1}\", Side: {2} Adjust: {3} Timer: {4}", "\n", actionAdjustment.descriptor, 
+            actionAdjustment.side.name, actionAdjustment.value, actionAdjustment.timer)); }
         return builder.ToString();
     }
 

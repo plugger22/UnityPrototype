@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     #region variables
     public static GameManager instance = null;      //static instance of GameManager which allows it to be accessed by any other script
     [HideInInspector] public LevelManager levelScript;                //Level Manager
+    [HideInInspector] public ImportManager importScript;              //Import Manager
     [HideInInspector] public MetaManager metaScript;                  //Meta Manager
     [HideInInspector] public DataManager dataScript;                  //Data Manager
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
@@ -95,6 +96,7 @@ public class GameManager : MonoBehaviour
         Random.InitState(seed);
         //Get component references
         levelScript = GetComponent<LevelManager>();
+        importScript = GetComponent<ImportManager>();
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();

@@ -644,7 +644,7 @@ public class EffectManager : MonoBehaviour
                 // - - - Player Actions - - -
                 //
                 case "PlayerActions":
-                    EffectDataResolve resolvePlayer = ResolvePlayerData(effect);
+                    EffectDataResolve resolvePlayer = ResolvePlayerData(effect, dataInput);
                     if (resolvePlayer.isError == true)
                     { effectReturn.errorFlag = true; }
                     else
@@ -2302,7 +2302,7 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>
-    private EffectDataResolve ResolvePlayerData(Effect effect)
+    private EffectDataResolve ResolvePlayerData(Effect effect, EffectDataInput dataInput)
     {
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //sort out colour based on type (which is effect benefit from POV of Resistance)
@@ -2340,7 +2340,7 @@ public class EffectManager : MonoBehaviour
                         case "Single":
                             //once off effect -> Note: timer is 2 because it will be immediately knocked down to 1 at the end of this turn
                             actionAdjustment.timer = 2;
-                            actionAdjustment.descriptor = "One Off Effect";
+                            actionAdjustment.descriptor = dataInput.textOrigin;
                             switch (effect.operand.name)
                             {
                                 case "Add":
@@ -2363,7 +2363,7 @@ public class EffectManager : MonoBehaviour
                         case "Ongoing":
                             //NOTE: Ongoing effects are handled differently here than a standard ongoing effect (there is also an extra +1 due to decrement at end of turn)
                             actionAdjustment.timer = GameManager.instance.effectScript.ongoingEffectTimer + 1;
-                            actionAdjustment.descriptor = "Ongoing Effect";
+                            actionAdjustment.descriptor = dataInput.textOrigin;
                             switch (effect.operand.name)
                             {
                                 case "Add":

@@ -83,7 +83,7 @@ namespace packageAPI
         public GlobalSide side;                                              //used to determine colouring of good/bad effects
         public int ongoingID = -1;                                           //used only if there are going to be ongoing effects, ignore otherwise
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
-
+        public string textOrigin;                                            //name of thing that caused the effect, eg. gear name
         public EffectDataInput()
         { side = GameManager.instance.sideScript.PlayerSide; }
     }
@@ -172,6 +172,7 @@ namespace packageAPI
         public string descriptor;                                       //short (two word) text descriptor used in Turn tooltip
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
+        public int turnStart;                                           //turn number where effect commences (added automatically, used for actions tooltip). Ignore.
     }
 
 
