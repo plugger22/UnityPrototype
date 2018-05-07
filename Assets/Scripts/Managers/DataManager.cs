@@ -69,11 +69,12 @@ public class DataManager : MonoBehaviour
 
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
     //NOTE: Public because data is added in Editor -> default version (each city has it's own set, use default if cities version is null)
-    public List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
-    public List<NodeArc> listOfTwoConnArcs = new List<NodeArc>();
-    public List<NodeArc> listOfThreeConnArcs = new List<NodeArc>();
-    public List<NodeArc> listOfFourConnArcs = new List<NodeArc>();
-    public List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
+    [Header("Default Node Mix")]
+    public List<NodeArc> listOfOneConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfTwoConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfThreeConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfFourConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfFiveConnArcsDefault = new List<NodeArc>();
 
     //manage actor choices
     private List<ManageAction> listOfActorHandle = new List<ManageAction>();
@@ -832,41 +833,38 @@ public class DataManager : MonoBehaviour
     // - - - NodeArcs - - -
     //
 
+
     /// <summary>
-    /// returns a random Arc from the appropriate list based on the number of Connections that the node has
+    /// returns a list of Default Node Arcs based on number of node connections (1 to 5). Null if a problem.
     /// </summary>
     /// <param name="numConnections"></param>
     /// <returns></returns>
-    public NodeArc GetRandomNodeArc(int numConnections)
+    public List<NodeArc> GetDefaultNodeArcList(int numConnections)
     {
-        NodeArc tempArc = null;
+        Debug.Assert(numConnections > 0 && numConnections < 6, string.Format("Invalid numConnections \"{0}\"", numConnections));
         List<NodeArc> tempList = null;
-        switch(numConnections)
+        switch (numConnections)
         {
             case 1:
-                tempList = listOfOneConnArcs;
+                tempList = listOfOneConnArcsDefault;
                 break;
             case 2:
-                tempList = listOfTwoConnArcs;
+                tempList = listOfTwoConnArcsDefault;
                 break;
             case 3:
-                tempList = listOfThreeConnArcs;
+                tempList = listOfThreeConnArcsDefault;
                 break;
             case 4:
-                tempList = listOfFourConnArcs;
+                tempList = listOfFourConnArcsDefault;
                 break;
             case 5:
-            case 6:
-            case 7:
-            case 8:
-                tempList = listOfFiveConnArcs;
+                tempList = listOfFiveConnArcsDefault;
                 break;
             default:
                 Debug.LogError("Invalid number of Connections " + numConnections);
                 break;
         }
-        tempArc = tempList[Random.Range(0, tempList.Count)];
-        return tempArc;
+        return tempList;
     }
 
     /// <summary>

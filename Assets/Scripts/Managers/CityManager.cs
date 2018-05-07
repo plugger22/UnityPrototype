@@ -88,6 +88,12 @@ public class CityManager : MonoBehaviour
         else { colourSide = colourRebel; }
     }
 
+    /// <summary>
+    /// gets current city, null if none
+    /// </summary>
+    /// <returns></returns>
+    public City GetCity()
+    { return city; }
 
     /// <summary>
     /// returns city name in a Player side colour formatted string   

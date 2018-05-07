@@ -13,10 +13,16 @@ public class LevelManager : MonoBehaviour
     public GameObject node;             //node prefab
     public GameObject connection;       //connection prefab
     public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
-    public int numOfNodes;              //number of nodes (adjusted after use in InitialiseNodes() to reflect actual number)
-    public float minSpacing;            //minimum spacing (world units) between nodes (>=)
+    [Header("Default City Setup")]
+    [Range(10, 30)] public int numOfNodesDefault = 20;              //number of nodes (adjusted after use in InitialiseNodes() to reflect actual number)
+    [Range(1f, 3f)] public float minSpacingDefault = 1.5f;            //minimum spacing (world units) between nodes (>=)
     [Tooltip("Random % chance of a node having additional connections")]
-    [Range(0, 100)] public int connectionFrequency = 50;    
+    [Range(0, 100)] public int connectionFrequencyDefault = 50;   
+    
+    //actual values used (city values or default, if none)
+    private int numOfNodes;
+    private float minSpacing;
+    private int connectionFrequency;
 
     private GameObject instance;
     private GameObject instanceConnection;
@@ -29,6 +35,12 @@ public class LevelManager : MonoBehaviour
 
     private BoxCollider boxColliderStart;
     private BoxCollider boxColliderEnd;
+
+    private List<NodeArc> listOfOneConnArcs = new List<NodeArc>();
+    private List<NodeArc> listOfTwoConnArcs = new List<NodeArc>();
+    private List<NodeArc> listOfThreeConnArcs = new List<NodeArc>();
+    private List<NodeArc> listOfFourConnArcs = new List<NodeArc>();
+    private List<NodeArc> listOfFiveConnArcs = new List<NodeArc>();
 
     //collections (all indexes correspond throughout, eg. listOfNodes[2] = listOfCoordinates[2] = listOfSortedDistances[2])
     //Note: collections initialised here as GameManager.SetUpScene will run prior to the Awake callback here
@@ -50,6 +62,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        InitialiseData();
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
         RemoveInvalidNodes();
@@ -658,7 +671,7 @@ public class LevelManager : MonoBehaviour
             //node name
             node.nodeName = "Placeholder";
             //get random node Arc from appropriate list
-            node.Arc = GameManager.instance.dataScript.GetRandomNodeArc(numNodes);
+            node.Arc = GetRandomNodeArc(numNodes);
             //provide base level stats 
             node.Stability = node.Arc.Stability;
             node.Support = node.Arc.Support;
@@ -691,6 +704,107 @@ public class LevelManager : MonoBehaviour
                 Debug.Log(string.Format("Node {0} total {1}{2}", name, num, "\n"));
             }
         }
+    }
+
+    /// <summary>
+    /// populates lists of node arcs by connection number. First checks City data and, if none, uses DataManager.cs default set
+    /// Also initialises level set-up data using the city first, default second approach
+    /// </summary>
+    private void InitialiseData()
+    {
+        City city = GameManager.instance.cityScript.GetCity();
+        if (city != null)
+        {
+            //
+            // - - - Node Arc Lists - - -
+            //
+            //one connection
+            if (city.listOfOneConnArcs != null && city.listOfOneConnArcs.Count > 0)
+            { listOfOneConnArcs = city.listOfOneConnArcs; }
+            else { listOfOneConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(1); }
+            //two connection
+            if (city.listOfTwoConnArcs != null && city.listOfTwoConnArcs.Count > 0)
+            { listOfTwoConnArcs = city.listOfTwoConnArcs; }
+            else { listOfTwoConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(2); }
+            //three connection
+            if (city.listOfThreeConnArcs != null && city.listOfThreeConnArcs.Count > 0)
+            { listOfThreeConnArcs = city.listOfThreeConnArcs; }
+            else { listOfThreeConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(3); }
+            //four connection
+            if (city.listOfFourConnArcs != null && city.listOfFourConnArcs.Count > 0)
+            { listOfFourConnArcs = city.listOfFourConnArcs; }
+            else { listOfFourConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(4); }
+            //five connection
+            if (city.listOfFiveConnArcs != null && city.listOfFiveConnArcs.Count > 0)
+            { listOfFiveConnArcs = city.listOfFiveConnArcs; }
+            else { listOfFiveConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(5); }
+            //asserts
+            Debug.Assert(listOfOneConnArcs != null && listOfOneConnArcs.Count > 0, "Invalid listOfOneConnArcs");
+            Debug.Assert(listOfTwoConnArcs != null && listOfTwoConnArcs.Count > 0, "Invalid listOfTwoConnArcs");
+            Debug.Assert(listOfThreeConnArcs != null && listOfThreeConnArcs.Count > 0, "Invalid listOfThreeConnArcs");
+            Debug.Assert(listOfFourConnArcs != null && listOfFourConnArcs.Count > 0, "Invalid listOfFourConnArcs");
+            Debug.Assert(listOfFiveConnArcs != null && listOfFiveConnArcs.Count > 0, "Invalid listOfFiveConnArcs");
+            //
+            // - - - Set up data - - -
+            //
+            if (city.numOfNodes >= 10 && city.numOfNodes < 40)
+            { numOfNodes = city.numOfNodes; }
+            else { numOfNodes = numOfNodesDefault; }
+            if (city.minNodeSpacing >= 1.0f && city.minNodeSpacing <= 3.0f)
+            { minSpacing = city.minNodeSpacing; }
+            else { minSpacing = minSpacingDefault; }
+            if (city.connectionFrequency >= 0 && city.connectionFrequency <= 100)
+            { connectionFrequency = city.connectionFrequency; }
+            else { connectionFrequency = connectionFrequencyDefault; }
+        }
+        else
+        {
+            //no valid city found
+            Debug.LogWarning("Invalid city (Null)");
+            //Node Arc lists
+            listOfOneConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(1);
+            listOfTwoConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(2);
+            listOfThreeConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(3);
+            listOfFourConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(4);
+            listOfFiveConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(5);
+            //Set up Data
+            numOfNodes = numOfNodesDefault;
+            minSpacing = minSpacingDefault;
+            connectionFrequency = connectionFrequencyDefault;
+        }
+
+    }
+
+    /// <summary>
+    /// returns a random Arc from the appropriate list based on the number of Connections that the node has
+    /// </summary>
+    /// <param name="numConnections"></param>
+    /// <returns></returns>
+    private NodeArc GetRandomNodeArc(int numConnections)
+    {
+        NodeArc tempArc = null;
+        List<NodeArc> tempList = null;
+        switch (numConnections)
+        {
+            case 1:
+                tempList = listOfOneConnArcs; break;
+            case 2:
+                tempList = listOfTwoConnArcs; break;
+            case 3:
+                tempList = listOfThreeConnArcs; break;
+            case 4:
+                tempList = listOfFourConnArcs;  break;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                tempList = listOfFiveConnArcs; break;
+            default:
+                Debug.LogError("Invalid number of Connections " + numConnections);
+                break;
+        }
+        tempArc = tempList[Random.Range(0, tempList.Count)];
+        return tempArc;
     }
 
     /// <summary>
