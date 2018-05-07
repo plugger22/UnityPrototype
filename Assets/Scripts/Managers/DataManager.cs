@@ -15,6 +15,8 @@ using packageAPI;
 /// </summary>
 public class DataManager : MonoBehaviour
 {
+    
+    //NOTE: some arrays are initialised by ImportManager.cs making a call to DataManager methods due to sequencing issues
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
@@ -738,7 +740,7 @@ public class DataManager : MonoBehaviour
         }
         Debug.Log(string.Format("DataManager: Initialise -> dictOfObjectives has {0} entries{1}", counter, "\n"));
     }
-
+    */
 
     /// <summary>
     /// Stuff that is done after level Manager.SetUp
@@ -765,28 +767,6 @@ public class DataManager : MonoBehaviour
             Node node = nodeObj.Value.GetComponent<Node>();
             listOfNodesByType[node.Arc.nodeArcID].Add(node);
         }
-        //
-        // - - - Nodes - - -
-        //
-        int counter = 0;
-        List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
-        if (tempNodeList != null)
-        {
-            foreach (Node node in tempNodeList)
-            {
-                //add to dictionary
-                try
-                { dictOfNodes.Add(node.nodeID, node); counter++; }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Node (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name)); }
-            }
-            Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
-        }
-        else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
-        //Actor Nodes
-        UpdateActorNodes();
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
     }
@@ -820,7 +800,7 @@ public class DataManager : MonoBehaviour
             }
         }
         Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));
-    }*/
+    }
 
     /// <summary>
     /// handles events
@@ -1103,7 +1083,7 @@ public class DataManager : MonoBehaviour
     }
 
 
-    public Dictionary<int, Node> GetAllNodes()
+    public Dictionary<int, Node> GetDictOfNodes()
     { return dictOfNodes; }
 
     /// <summary>
@@ -1144,6 +1124,15 @@ public class DataManager : MonoBehaviour
     public int CheckNumOfNodeTypes()
     { return arrayOfNodes.Length; }
 
+    /// <summary>
+    /// intialised in ImportManager.cs
+    /// </summary>
+    public void InitialiseArrayOfNodes()
+    { arrayOfNodes = new int[GameManager.instance.levelScript.GetNodeTypeTotals().Length, (int)NodeInfo.Count]; }
+
+    public int[,] GetArrayOfNodes()
+    { return arrayOfNodes; }
+
 
     /// <summary>
     /// return a list of Nodes, all of which are the same type (nodeArcID)
@@ -1156,6 +1145,7 @@ public class DataManager : MonoBehaviour
         return listOfNodesByType[nodeArcID];
     }
 
+    
     /// <summary>
     /// returns a Random node of a particular NodeArc type, or (by default) ANY random node. Returns null if a problem.
     /// </summary>

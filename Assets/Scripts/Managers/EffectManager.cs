@@ -1452,7 +1452,7 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all nodes
-                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetAllNodes();
+                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetDictOfNodes();
                 if (dictOfAllNodes != null)
                 {
                     foreach (var nodeTemp in dictOfAllNodes)
@@ -1550,7 +1550,7 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
-                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
                 if (dictOfNodes != null)
                 {
                     foreach (var nodeTemp in dictOfNodes)
@@ -1741,7 +1741,7 @@ public class EffectManager : MonoBehaviour
                     GameManager.instance.dataScript.AddOngoingIDToDict(effectProcess.effectOngoing.ongoingID, "Connection Security");*/
                 }
                 //Process Connection effect
-                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetAllNodes();
+                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetDictOfNodes();
                 if (dictOfAllNodes != null)
                 {
                     //clear all connection flags first to prevent double dipping
@@ -1793,7 +1793,7 @@ public class EffectManager : MonoBehaviour
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
                 }
                 //Process Connection effect
-                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
                 if (dictOfNodes != null)
                 {                
                     //clear all connection flags first to prevent double dipping

@@ -126,7 +126,7 @@ public class TargetManager : MonoBehaviour
     private void StartTurnLate()
     {
         int targetID;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             foreach(var node in dictOfNodes)

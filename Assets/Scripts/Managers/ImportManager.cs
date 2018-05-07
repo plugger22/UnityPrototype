@@ -786,85 +786,40 @@ public class ImportManager : MonoBehaviour
 
     /// <summary>
     /// Stuff that is done after level Manager.SetUp
+    /// Note: DataManager.cs InitialiseLate runs immediately prior to this and sets up node arrays and lists
     /// </summary>
     public void InitialiseLate()
     {
-        //arrayOfNodes -> contains all relevant info on nodes by type
-        int[] tempArray = GameManager.instance.levelScript.GetNodeTypeTotals();
-        arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
-        for (int i = 0; i < tempArray.Length; i++)
-        {
-            arrayOfNodes[i, 0] = tempArray[i];
-        }
-        //List of Nodes by Types -> each index has a list of all nodes of that NodeArc type
-        int limit = CheckNumOfNodeTypes();
-        for (int i = 0; i < limit; i++)
-        {
-            List<Node> tempList = new List<Node>();
-            listOfNodesByType.Add(tempList);
-        }
-        //Populate List of lists -> place node in the correct list
-        foreach (var nodeObj in dictOfNodeObjects)
-        {
-            Node node = nodeObj.Value.GetComponent<Node>();
-            listOfNodesByType[node.Arc.nodeArcID].Add(node);
-        }
         //
         // - - - Nodes - - -
         //
-        int counter = 0;
-        List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
-        if (tempNodeList != null)
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        if (dictOfNodes != null)
         {
-            foreach (Node node in tempNodeList)
+            int counter = 0;
+            List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
+            if (tempNodeList != null)
             {
-                //add to dictionary
-                try
-                { dictOfNodes.Add(node.nodeID, node); counter++; }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Node (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name)); }
+                foreach (Node node in tempNodeList)
+                {
+                    //add to dictionary
+                    try
+                    { dictOfNodes.Add(node.nodeID, node); counter++; }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Node (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name)); }
+                }
+                Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
             }
-            Debug.Log(string.Format("DataManager: Initialise -> dictOfNodes has {0} entries{1}", counter, "\n"));
+            else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
+            //Actor Nodes
+            GameManager.instance.dataScript.UpdateActorNodes();
         }
-        else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
-        //Actor Nodes
-        UpdateActorNodes();
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        else { Debug.LogError("Invalid dictOfNodes (Null) -> Import failed"); }
+
     }
 
-    /// <summary>
-    /// stuff that is done a lot later in the process (dependant on other stuff being done first). Must be after metaScript.Initialise()
-    /// </summary>
-    public void InitialiseFinal()
-    {
-        //
-        // - - - Possible Targets - - - 
-        //
-        int currentMetaLevel = GameManager.instance.metaScript.metaLevel.level;
-        foreach (var target in dictOfTargets)
-        {
-            //add to list pf Possible targets if a level 1 target & nodes of the required type are available
-            if (target.Value.targetLevel == 1)
-            {
-                //check target is the correct metaLevel or that no metaLevel has been specified
-                if (target.Value.metaLevel == null || target.Value.metaLevel.level == currentMetaLevel)
-                {
-                    //add to list of Possible targets
-                    if (CheckNodeInfo(target.Value.nodeArc.nodeArcID, NodeInfo.Number) > 0)
-                    { possibleTargetsPool.Add(target.Value); }
-                    else
-                    {
-                        Debug.Log(string.Format("DataManager: {0} has been ignored as there are no required node types present (\"{1}\"){2}",
-                            target.Value.name, target.Value.nodeArc.name, "\n"));
-                    }
-                }
-            }
-        }
-        Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));
-    }
 
     //new methods above here
 }

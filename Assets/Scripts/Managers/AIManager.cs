@@ -257,7 +257,7 @@ public class AIManager : MonoBehaviour
         int numOfConnections, numNodesHalf, counter, limit;
         //temp dictionary, key -> nodeID, value -> # of connections
         Dictionary<int, int> dictOfConnected = new Dictionary<int, int>();
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         List<Node> listOfMostConnectedNodes = new List<Node>();
         if (dictOfNodes != null)
         {
@@ -353,7 +353,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void SetPreferredNodes()
     {
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             //isPreferred
@@ -384,7 +384,7 @@ public class AIManager : MonoBehaviour
         float limit = centreNum / 2f;
         float upper = limit;
         float lower = limit * -1;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             foreach (var node in dictOfNodes)
@@ -410,7 +410,7 @@ public class AIManager : MonoBehaviour
     {
         List<Node> listOfNearNeighbours = new List<Node>();
         List<int> listLookup = new List<int>();
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             foreach(var node in dictOfNodes)
@@ -527,7 +527,7 @@ public class AIManager : MonoBehaviour
     {
         int data;
         AINodeData dataPackage;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             foreach (var node in dictOfNodes)

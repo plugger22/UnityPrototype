@@ -301,7 +301,7 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void SeedTeamsOnMap()
     {
-        List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetAllNodes().Values);
+        List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetDictOfNodes().Values);
         Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {

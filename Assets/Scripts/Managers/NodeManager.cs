@@ -413,7 +413,7 @@ public class NodeManager : MonoBehaviour
 
             //show all nodes containng a spider
             case NodeUI.ShowSpiders:
-                Dictionary<int, Node> dictOfSpiderNodes = GameManager.instance.dataScript.GetAllNodes();
+                Dictionary<int, Node> dictOfSpiderNodes = GameManager.instance.dataScript.GetDictOfNodes();
                 if (dictOfSpiderNodes != null)
                 {
                     int count = 0;
@@ -467,7 +467,7 @@ public class NodeManager : MonoBehaviour
 
             //show all nodes with a tracer or within one node radius of a tracer
             case NodeUI.ShowTracers:
-                Dictionary<int, Node> dictOfTracerNodes = GameManager.instance.dataScript.GetAllNodes();
+                Dictionary<int, Node> dictOfTracerNodes = GameManager.instance.dataScript.GetDictOfNodes();
                 if (dictOfTracerNodes != null)
                 {
                     int count = 0;
@@ -545,7 +545,7 @@ public class NodeManager : MonoBehaviour
                             Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
                             break;
                     }
-                    Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+                    Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
                     if (dictOfNodes != null)
                     {
                         foreach (var node in dictOfNodes)
@@ -644,7 +644,7 @@ public class NodeManager : MonoBehaviour
                 break;
             case NodeUI.Centre:
                 //display all nodes with AI designated central area (node.isCentreNode true)
-                Dictionary<int, Node> dictOfCentreNodes = GameManager.instance.dataScript.GetAllNodes();
+                Dictionary<int, Node> dictOfCentreNodes = GameManager.instance.dataScript.GetDictOfNodes();
                 if (dictOfCentreNodes != null)
                 {
                     if (dictOfCentreNodes.Count > 0)
@@ -774,7 +774,7 @@ public class NodeManager : MonoBehaviour
     {
         Renderer nodeRenderer;
         bool proceedFlag = true;
-        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
         if (tempDict != null)
         {
             //loop all nodes & assign current materials to their renderers (changes colour on screen)
@@ -834,7 +834,7 @@ public class NodeManager : MonoBehaviour
         //get default material
         Material nodeMaterial = GetNodeMaterial(NodeType.Normal);
         //loop and assign
-        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
         if (tempDict != null)
         {
             foreach (var node in tempDict)
@@ -897,7 +897,7 @@ public class NodeManager : MonoBehaviour
         if (activityUI != ActivityUI.None)
         {
             int data;
-            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
             if (dictOfNodes != null)
             {
                 //loop nodes
@@ -1754,7 +1754,7 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     public void SetNodeActorFlags()
     {
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         GlobalSide side = GameManager.instance.globalScript.sideResistance;
         if (dictOfNodes != null)
         {
@@ -1805,7 +1805,7 @@ public class NodeManager : MonoBehaviour
     {
         if (ongoingID > -1)
         {
-            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
             if (dictOfNodes != null)
             {
                 foreach (var node in dictOfNodes)
@@ -1823,7 +1823,7 @@ public class NodeManager : MonoBehaviour
     private void ProcessNodeTimers()
     {
         //Debug.LogWarning(string.Format("PROCESSNODETIMER: turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             foreach (var node in dictOfNodes)
@@ -1842,7 +1842,7 @@ public class NodeManager : MonoBehaviour
         int baseChance = 20;
         int counter = 0;
         //Nodes
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             foreach (var node in dictOfNodes)
