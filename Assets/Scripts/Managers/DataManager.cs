@@ -121,7 +121,9 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
     private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
     private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
+    private Dictionary<int, CityArc> dictOfCityArcs = new Dictionary<int, CityArc>();               //Key -> cityArcID, Value -> CityArc
     private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();         //Key -> objectiveID, Value -> Objective
+    
 
     //global SO's (enum equivalents)
     private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
@@ -3165,6 +3167,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, City> GetDictOfCities()
     { return dictOfCities; }
+
+    public Dictionary<int, CityArc> GetDictOfCityArcs()
+    { return dictOfCityArcs; }
 
     //
     // - - - Objectives - - -

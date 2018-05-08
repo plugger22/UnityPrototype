@@ -721,6 +721,36 @@ public class ImportManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfFactions (Null) -> Import failed"); }
         //
+        // - - - City Arcs - - -
+        //
+        Dictionary<int, CityArc> dictOfCityArcs = GameManager.instance.dataScript.GetDictOfCityArcs();
+        if (dictOfCityArcs != null)
+        {
+            counter = 0;
+            //get GUID of all SO CityArc Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var cityArcGUID = AssetDatabase.FindAssets("t:CityArc");
+            foreach (var guid in cityArcGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object cityArcObject = AssetDatabase.LoadAssetAtPath(path, typeof(CityArc));
+                //assign a zero based unique ID number
+                CityArc cityArc = cityArcObject as CityArc;
+                //set data
+                cityArc.cityArcID = counter++;
+                //add to dictionary
+                try
+                { dictOfCityArcs.Add(cityArc.cityArcID, cityArc); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid CityArc (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid CityArc (duplicate) ID \"{0}\" for \"{1}\"", counter, cityArc.name)); counter--; }
+            }
+            Debug.Log(string.Format("DataManager: Initialise -> dictOfCityArcs has {0} entries{1}", counter, "\n"));
+        }
+        else { Debug.LogError("Invalid dictOfCityArcs (Null) -> Import failed"); }
+        //
         // - - - Cities - - -
         //
         Dictionary<int, City> dictOfCities = GameManager.instance.dataScript.GetDictOfCities();

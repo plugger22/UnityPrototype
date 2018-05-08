@@ -102,23 +102,28 @@ public class CityManager : MonoBehaviour
     /// <returns></returns>
     public string GetCityName()
     {
-        StringBuilder builder = new StringBuilder();
+        string description = "Unknown";
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                builder.AppendFormat("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
+                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
                 break;
             case 2:
-                builder.AppendFormat("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
+                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
                 break;
             default:
-                builder.AppendFormat("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
+                description = string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                 break;
         }
-        Debug.Assert(city.Arc != null, "Invalid city Arc (Null)");
-        builder.AppendFormat("{0}<size=90%>{1}</size>", "\n", city.Arc.name);
-        return builder.ToString();
+        return description;
     }
+
+    /// <summary>
+    /// returns current city Arc name in 90% size, default white text format
+    /// </summary>
+    /// <returns></returns>
+    public string GetCityArc()
+    { return string.Format("{0}<size=90%>{1}</size>", "\n", city.Arc.name); }
 
 
     /// <summary>
