@@ -643,7 +643,6 @@ public class ImportManager : MonoBehaviour
         //
         // - - - Actor Qualities - - -
         //
-        
         Quality[] authorityQualities = GameManager.instance.dataScript.GetArrayOfAuthorityQualities();
         Quality[] resistanceQualities = GameManager.instance.dataScript.GetArrayOfResistanceQualities();
         if (authorityQualities != null)

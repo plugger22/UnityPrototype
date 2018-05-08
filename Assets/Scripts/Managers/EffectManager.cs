@@ -20,8 +20,8 @@ public class EffectManager : MonoBehaviour
     private int delayYesSpider;
 
     //colour palette for Modal Outcome
-    private string colourGood; //good effect Rebel / bad effect Authority
-    private string colourBad; //bad effect Authority / bad effect Rebel
+    private string colourGood; //good effect Resisance / bad effect Authority
+    private string colourBad; //bad effect Authority / bad effect Resistance
     private string colourNeutral; //used when node is EqualsTo, eg. reset, or for Team Names
     private string colourNormal;
     private string colourDefault;
@@ -438,12 +438,6 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { BuildString(result, "No Gear available"); }
                                                 break;
-                                            case "RebelCauseMin":
-                                                val = GameManager.instance.rebelScript.resistanceCauseMin;
-                                                compareTip = ComparisonCheck(val, GameManager.instance.rebelScript.resistanceCause, criteria.comparison);
-                                                if (compareTip != null)
-                                                { BuildString(result, "Rebel Cause  " + compareTip); }
-                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
@@ -725,27 +719,23 @@ public class EffectManager : MonoBehaviour
                     }
                     
                     break;
-                //
-                // - - - Resistance effects
-                //
-                case "RebelCause":
-                    int rebelCause = GameManager.instance.rebelScript.resistanceCause;
-                    int maxCause = GameManager.instance.rebelScript.resistanceCauseMax;
+                case "CityLoyalty":
+                    int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
                     switch (effect.operand.name)
                     {
                         case "Add":
-                            rebelCause += effect.value;
-                            rebelCause = Mathf.Min(maxCause, rebelCause);
-                            GameManager.instance.rebelScript.resistanceCause = rebelCause;
-                            effectReturn.topText = string.Format("{0}The Rebel Cause gains traction{1}", colourText, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Rebel Cause +{1}{2}", colourEffect, effect.value, colourEnd);
+                            cityLoyalty += effect.value;
+                            cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
+                            GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                            effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourEffect, effect.value, colourEnd);
                             break;
                         case "Subtract":
-                            rebelCause -= effect.value;
-                            rebelCause = Mathf.Max(0, rebelCause);
-                            GameManager.instance.rebelScript.resistanceCause = rebelCause;
-                            effectReturn.topText = string.Format("{0}The Rebel Cause is losing ground{1}", colourText, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Rebel Cause -{1}{2}", colourEffect, effect.value, colourEnd);
+                            cityLoyalty -= effect.value;
+                            cityLoyalty = Mathf.Max(0, cityLoyalty);
+                            GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                            effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourEffect, effect.value, colourEnd);
                             break;
                         default:
                             Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
@@ -754,7 +744,65 @@ public class EffectManager : MonoBehaviour
                     }
                     effectReturn.isAction = true;
                     break;
-
+                case "FactionSupportResistance":
+                    int resistanceSupport;
+                    resistanceSupport = GameManager.instance.factionScript.SupportResistance;
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            resistanceSupport += effect.value;
+                            resistanceSupport = Mathf.Min(GameManager.instance.factionScript.maxFactionSupport, resistanceSupport);
+                            GameManager.instance.factionScript.SupportResistance = resistanceSupport;
+                            effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText, 
+                                GameManager.instance.factionScript.factionResistance.name, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
+                            break;
+                        case "Subtract":
+                            resistanceSupport  -= effect.value;
+                            resistanceSupport = Mathf.Max(0, resistanceSupport);
+                            GameManager.instance.factionScript.SupportResistance = resistanceSupport;
+                            effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText, 
+                                GameManager.instance.factionScript.factionResistance.name, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectReturn.errorFlag = true;
+                            break;
+                    }
+                    effectReturn.isAction = true;
+                    break;
+                case "FactionSupportAuthority":
+                    int authoritySupport;
+                    authoritySupport = GameManager.instance.factionScript.SupportAuthority;
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            authoritySupport += effect.value;
+                            authoritySupport = Mathf.Min(GameManager.instance.factionScript.maxFactionSupport, authoritySupport);
+                            GameManager.instance.factionScript.SupportAuthority = authoritySupport;
+                            effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
+                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
+                            break;
+                        case "Subtract":
+                            authoritySupport -= effect.value;
+                            authoritySupport = Mathf.Max(0, authoritySupport);
+                            GameManager.instance.factionScript.SupportAuthority = authoritySupport;
+                            effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
+                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectReturn.errorFlag = true;
+                            break;
+                    }
+                    effectReturn.isAction = true;
+                    break;
+                //
+                // - - - Resistance effects
+                //
                 case "Tracer":
                     if (node != null)
                     {
@@ -1203,7 +1251,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the situation{1}", colourText, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels{1}", colourText, colourEnd);
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Resistance{1}", colourText, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}The Node security system has been scanned for intruders{1}", colourText, colourEnd);
@@ -1234,7 +1282,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout{1}", colourText, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity{1}", colourText, colourEnd);
+                                    effectResolve.topText = string.Format("{0}The Resistance is losing popularity{1}", colourText, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}The Node security system has been spoofed to conceal Tracers{1}", colourText, colourEnd);
@@ -1289,7 +1337,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised neighbouring nodes{1}", colourText, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in neighbouring nodes{1}", colourText, colourEnd);
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Resistance in neighbouring nodes{1}", colourText, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}The neighbouring security systems have been scanned for intruders{1}", colourText, colourEnd);
@@ -1320,7 +1368,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the neighbouring nodes{1}", colourText, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity in neighbouring nodes{1}", colourText, colourEnd);
+                                    effectResolve.topText = string.Format("{0}The Resistance is losing popularity in neighbouring nodes{1}", colourText, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}The neighbouring security systems have been spoofed to hide Tracers{1}", colourText, colourEnd);
@@ -1383,7 +1431,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the city wide situation{1}", colourText, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels throughout the city{1}", colourText, colourEnd);
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Resistance throughout the city{1}", colourText, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}The cities security systems have been scanned for intruders{1}", colourText, colourEnd);
@@ -1414,7 +1462,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout the city{1}", colourText, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout the city{1}", colourText, colourEnd);
+                                    effectResolve.topText = string.Format("{0}The Resistance is losing popularity throughout the city{1}", colourText, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}Countermeasures have been deployed to conceal all Tracers within the City{1}", colourText, colourEnd);
@@ -1481,7 +1529,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Law Enforcement teams have stabilised the {1} situation{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Rebels in {1} nodes{2}", colourText, node.Arc.name, colourEnd);
+                                    effectResolve.topText = string.Format("{0}There is a surge of support for the Resistance in {1} nodes{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}{1} security systems have been scanned for intruders{2}", colourText, node.Arc.name, colourEnd);
@@ -1512,7 +1560,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.topText = string.Format("{0}Civil unrest and instability is spreading throughout {1} nodes{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "NodeSupport":
-                                    effectResolve.topText = string.Format("{0}The Rebels are losing popularity throughout {1} nodes{2}", colourText, node.Arc.name, colourEnd);
+                                    effectResolve.topText = string.Format("{0}The Resistance is losing popularity throughout {1} nodes{2}", colourText, node.Arc.name, colourEnd);
                                     break;
                                 case "StatusTracers":
                                     effectResolve.topText = string.Format("{0}{1} security systems have been spoofed to conceal Tracers{2}", colourText, node.Arc.name, colourEnd);

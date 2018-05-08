@@ -438,8 +438,8 @@ public class PlayerManager : MonoBehaviour
         builder.Append(string.Format(" TooltipStatus {0}{1}", tooltipStatus, "\n"));
         builder.Append(string.Format(" isBreakdown {0}{1}", isBreakdown, "\n"));
         builder.Append(string.Format("{0}- Global{1}", "\n", "\n"));
-        builder.Append(string.Format(" Resistance Cause  {0} of {1}{2}", GameManager.instance.rebelScript.resistanceCause,
-            GameManager.instance.rebelScript.resistanceCauseMax, "\n"));
+        /*builder.Append(string.Format(" Resistance Cause  {0} of {1}{2}", GameManager.instance.rebelScript.resistanceCause,
+            GameManager.instance.rebelScript.resistanceCauseMax, "\n"));*/
         builder.Append(string.Format(" resistanceState {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
         builder.Append(string.Format(" authorityState {0}{1}", GameManager.instance.turnScript.authorityState, "\n"));
         builder.Append(string.Format("{0}- Reserve Pool{1}", "\n", "\n"));

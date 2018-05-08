@@ -17,7 +17,7 @@ public class NodeManager : MonoBehaviour
     [Tooltip("Minimum number of active nodes on a map for any actor type")]
     [Range(0,4)] public int nodeActiveMinimum = 3;
     [Tooltip("Node Colour Types")]
-    public Material[] arrayOfNodeTypes;
+    public Material[] arrayOfNodeMaterials;
     [Tooltip("The base factor used for calculating ('factor - (gear - seclvl [High is 3, Low is 1])') the delay in notifying the Authority player that move activity has occurred ")]
     [Range(0,10)]public int moveInvisibilityDelay = 4;
     [Tooltip("The standard time delay, in turns, before Authority notification for any node activity that results in a loss of invisibility with no spider present")]
@@ -319,7 +319,7 @@ public class NodeManager : MonoBehaviour
     /// <param name="nodeType"></param>
     /// <returns></returns>
     public Material GetNodeMaterial(NodeType nodeType)
-    { return arrayOfNodeTypes[(int)nodeType]; }
+    { return arrayOfNodeMaterials[(int)nodeType]; }
 
 
     /// <summary>

@@ -8,7 +8,7 @@ using UnityEngine;
 public class CityManager : MonoBehaviour
 {
     [Tooltip("City Loyalty (same for both sides) range from 0 to this amount")]
-    [Range(0, 10)] public int maxSupportLevelCity = 10;
+    [Range(0, 10)] public int maxCityLoyalty = 10;
 
     private int _cityLoyalty;                       //loyalty of city (0 to 10). Same number for both sides
 
@@ -123,7 +123,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetCityLoyalty()
-    { return string.Format("{0}{1}{2} out of {1}", colourNeutral, _cityLoyalty, colourEnd, maxSupportLevelCity); }
+    { return string.Format("{0}{1}{2} out of {1}", colourNeutral, _cityLoyalty, colourEnd, maxCityLoyalty); }
 
 
     public string GetCityDescription()

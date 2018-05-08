@@ -11,18 +11,15 @@ using packageAPI;
 /// </summary>
 public class CaptureManager : MonoBehaviour
 {
-    [Tooltip("The reduction to the ResistanceCause due to the Player being Captured")]
-    [Range(1, 4)]
-    public int playerCaptured = 2;
-    [Tooltip("The reduction to the ResistanceCause due to a Resistance Actor being Captured")]
-    [Range(1, 4)]
-    public int actorCaptured = 1;
-    [Tooltip("The increase to the ResistanceCause due to an Actor being Released")]
-    [Range(1, 4)]
-    public int actorReleased = 1;
+    /*[Tooltip("The increase to city loyalty due to the Player being Captured")]
+    [Range(0, 2)] public int playerCaptured = 1;*/
+    [Tooltip("The increase to city loyalty due to a Resistance Actor, or Player, being Captured")]
+    [Range(0, 2)] public int actorCaptured = 1;
+    [Tooltip("The decrease to city loyalty due to an Actor being Released")]
+    [Range(0, 2)] public int actorReleased = 1;
+
     [Tooltip("The value of the Actor's invisibility upon Release")]
-    [Range(0, 3)]
-    public int releaseInvisibility = 2;
+    [Range(0, 3)] public int releaseInvisibility = 2;
 
     private string colourGood;
     private string colourNeutral;
@@ -139,12 +136,13 @@ public class CaptureManager : MonoBehaviour
                 else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
             }
         }
-        //lower resistance Cause
-        int cause = GameManager.instance.rebelScript.resistanceCause;
-        cause -= playerCaptured;
-        cause = Mathf.Max(0, cause);
-        GameManager.instance.rebelScript.resistanceCause = cause;
-        builder.AppendFormat("{0}Resistance Cause -{1}{2}{3}{4}", colourBad, playerCaptured, colourEnd, "\n", "\n");
+        //Raise city loyalty
+        int cause = GameManager.instance.cityScript.CityLoyalty;
+        cause += actorCaptured;
+        cause = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cause);
+        GameManager.instance.cityScript.CityLoyalty = cause;
+
+        builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
         //Gear confiscated
         int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
         if (numOfGear > 0)
@@ -194,12 +192,14 @@ public class CaptureManager : MonoBehaviour
         //message
         Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.teamID, details.actor.actorID);
         GameManager.instance.dataScript.AddMessage(message);
-        //lower resistance Cause
-        int cause = GameManager.instance.rebelScript.resistanceCause;
-        cause -= playerCaptured;
-        cause = Mathf.Max(0, cause);
-        GameManager.instance.rebelScript.resistanceCause = cause;
-        builder.AppendFormat("{0}Resistance Cause -{1}{2}{3}{4}", colourBad, playerCaptured, colourEnd, "\n", "\n");
+
+        //raise city loyalty
+        int cause = GameManager.instance.cityScript.CityLoyalty;
+        cause += actorCaptured;
+        cause = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cause);
+        GameManager.instance.cityScript.CityLoyalty = cause;
+
+        builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
         //invisibility set to zero (most likely already is)
         details.actor.datapoint2 = 0;
         //update map
@@ -235,12 +235,14 @@ public class CaptureManager : MonoBehaviour
         //reset state
         /*GameManager.instance.turnScript.resistanceState = ResistanceState.Normal;*/
         GameManager.instance.playerScript.status = ActorStatus.Active;
-        //increase resistance Cause
-        int cause = GameManager.instance.rebelScript.resistanceCause;
-        cause += actorReleased;
-        cause = Mathf.Min(cause, GameManager.instance.rebelScript.resistanceCauseMax);
-        GameManager.instance.rebelScript.resistanceCause = cause;
-        builder.AppendFormat("{0}Resistance Cause +{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
+
+        //decrease city loyalty
+        int cause = GameManager.instance.cityScript.CityLoyalty;
+        cause -= actorReleased;
+        cause = Mathf.Max(0, cause);
+        GameManager.instance.cityScript.CityLoyalty = cause;
+
+        builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
         //invisibility
         int invisibilityNew = releaseInvisibility;
         GameManager.instance.playerScript.invisibility = invisibilityNew;
@@ -284,12 +286,13 @@ public class CaptureManager : MonoBehaviour
                 details.actor.nodeCaptured = -1;
                 //reset actor state
                 details.actor.Status = ActorStatus.Active;
-                //increase resistance Cause
-                int cause = GameManager.instance.rebelScript.resistanceCause;
-                cause += actorReleased;
-                cause = Mathf.Min(cause, GameManager.instance.rebelScript.resistanceCauseMax);
-                GameManager.instance.rebelScript.resistanceCause = cause;
-                builder.AppendFormat("{0}Resistance Cause +{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
+                //decrease City loyalty
+                int cause = GameManager.instance.cityScript.CityLoyalty;
+                cause -= actorReleased;
+                cause = Mathf.Max(0, cause);
+                GameManager.instance.cityScript.CityLoyalty = cause;
+
+                builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
                 //invisibility
                 int invisibilityNew = releaseInvisibility;
                 details.actor.datapoint2 = invisibilityNew;

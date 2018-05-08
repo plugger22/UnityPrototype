@@ -9,7 +9,7 @@ using UnityEngine;
 public class FactionManager : MonoBehaviour
 {
     [Tooltip("Support for both sides factions range from 0 to this amount")]
-    [Range(0, 10)] public int maxSupportLevelFaction = 10;
+    [Range(0, 10)] public int maxFactionSupport = 10;
 
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
@@ -181,10 +181,10 @@ public class FactionManager : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportAuthority, colourEnd, maxSupportLevelFaction);
+                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportAuthority, colourEnd, maxFactionSupport);
                 break;
             case 2:
-                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportResistance, colourEnd, maxSupportLevelFaction);
+                description = string.Format("{0}{1}{2} out of {1}", colourNeutral, _supportResistance, colourEnd, maxFactionSupport);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));

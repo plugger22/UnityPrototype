@@ -11,9 +11,9 @@ using gameAPI;
 public class ResistanceManager : MonoBehaviour
 {
 
-    [HideInInspector] public int resistanceCauseMin = 0;
+    /*[HideInInspector] public int resistanceCauseMin = 0;
     [HideInInspector] public int resistanceCauseMax;                        //level of Rebel Support. Max out to Win the level. Max level is a big part of difficulty.
-    [HideInInspector] public int resistanceCause;                           //current level of Rebel Support
+    [HideInInspector] public int resistanceCause;                           //current level of Rebel Support*/
 
     private string colourGood;
     private string colourNeutral;
@@ -23,8 +23,9 @@ public class ResistanceManager : MonoBehaviour
 
     public void Initialise()
     {
-        resistanceCauseMax = 10;
-        resistanceCause = 0;
+        /*resistanceCauseMax = 10;
+        resistanceCause = 0;*/
+
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
     }
