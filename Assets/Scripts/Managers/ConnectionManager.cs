@@ -9,7 +9,6 @@ using gameAPI;
 /// </summary>
 public class ConnectionManager : MonoBehaviour
 {
-    public int connectionSecurityChance = 25;                       //chance of connection having a higher security level at game start (than default)
     [HideInInspector] public bool resetNeeded;                      //used for temp changes in connection states, if true run RestoreConnections
     public Material[] arrayOfConnectionTypes;
 

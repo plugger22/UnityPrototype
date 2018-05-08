@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -101,20 +102,22 @@ public class CityManager : MonoBehaviour
     /// <returns></returns>
     public string GetCityName()
     {
-        string description = "Unknown";
+        StringBuilder builder = new StringBuilder();
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
+                builder.AppendFormat("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
                 break;
             case 2:
-                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
+                builder.AppendFormat("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
                 break;
             default:
-                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                builder.AppendFormat("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                 break;
         }
-        return description;
+        Debug.Assert(city.Arc != null, "Invalid city Arc (Null)");
+        builder.AppendFormat("{0}<size=90%>{1}</size>", "\n", city.Arc.name);
+        return builder.ToString();
     }
 
 

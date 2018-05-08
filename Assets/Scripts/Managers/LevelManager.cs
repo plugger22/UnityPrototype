@@ -16,13 +16,17 @@ public class LevelManager : MonoBehaviour
     [Header("Default City Setup")]
     [Range(10, 30)] public int numOfNodesDefault = 20;              //number of nodes (adjusted after use in InitialiseNodes() to reflect actual number)
     [Range(1f, 3f)] public float minSpacingDefault = 1.5f;            //minimum spacing (world units) between nodes (>=)
+    [Header("Connections")]
     [Tooltip("Random % chance of a node having additional connections")]
-    [Range(0, 100)] public int connectionFrequencyDefault = 50;   
-    
+    [Range(0, 100)] public int connectionFrequencyDefault = 50;
+    [Tooltip("Chance of a connection having a high security level (more than 'None')")]
+    [Range(0, 100)] public int connectionSecurityDefault = 25;
+
     //actual values used (city values or default, if none)
     private int numOfNodes;
     private float minSpacing;
     private int connectionFrequency;
+    private int connectionSecurity;
 
     private GameObject instance;
     private GameObject instanceConnection;
@@ -713,30 +717,31 @@ public class LevelManager : MonoBehaviour
     private void InitialiseData()
     {
         City city = GameManager.instance.cityScript.GetCity();
-        if (city != null)
+        Debug.Assert(city != null && city.Arc != null, "City or City.Arc is Null");
+        if (city != null && city.Arc != null)
         {
             //
             // - - - Node Arc Lists - - -
             //
             //one connection
-            if (city.listOfOneConnArcs != null && city.listOfOneConnArcs.Count > 0)
-            { listOfOneConnArcs = city.listOfOneConnArcs; }
+            if (city.Arc.listOfOneConnArcs != null && city.Arc.listOfOneConnArcs.Count > 0)
+            { listOfOneConnArcs = city.Arc.listOfOneConnArcs; }
             else { listOfOneConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(1); }
             //two connection
-            if (city.listOfTwoConnArcs != null && city.listOfTwoConnArcs.Count > 0)
-            { listOfTwoConnArcs = city.listOfTwoConnArcs; }
+            if (city.Arc.listOfTwoConnArcs != null && city.Arc.listOfTwoConnArcs.Count > 0)
+            { listOfTwoConnArcs = city.Arc.listOfTwoConnArcs; }
             else { listOfTwoConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(2); }
             //three connection
-            if (city.listOfThreeConnArcs != null && city.listOfThreeConnArcs.Count > 0)
-            { listOfThreeConnArcs = city.listOfThreeConnArcs; }
+            if (city.Arc.listOfThreeConnArcs != null && city.Arc.listOfThreeConnArcs.Count > 0)
+            { listOfThreeConnArcs = city.Arc.listOfThreeConnArcs; }
             else { listOfThreeConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(3); }
             //four connection
-            if (city.listOfFourConnArcs != null && city.listOfFourConnArcs.Count > 0)
-            { listOfFourConnArcs = city.listOfFourConnArcs; }
+            if (city.Arc.listOfFourConnArcs != null && city.Arc.listOfFourConnArcs.Count > 0)
+            { listOfFourConnArcs = city.Arc.listOfFourConnArcs; }
             else { listOfFourConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(4); }
             //five connection
-            if (city.listOfFiveConnArcs != null && city.listOfFiveConnArcs.Count > 0)
-            { listOfFiveConnArcs = city.listOfFiveConnArcs; }
+            if (city.Arc.listOfFiveConnArcs != null && city.Arc.listOfFiveConnArcs.Count > 0)
+            { listOfFiveConnArcs = city.Arc.listOfFiveConnArcs; }
             else { listOfFiveConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(5); }
             //asserts
             Debug.Assert(listOfOneConnArcs != null && listOfOneConnArcs.Count > 0, "Invalid listOfOneConnArcs");
@@ -747,20 +752,23 @@ public class LevelManager : MonoBehaviour
             //
             // - - - Set up data - - -
             //
-            if (city.numOfNodes >= 10 && city.numOfNodes < 40)
-            { numOfNodes = city.numOfNodes; }
+            if (city.Arc.numOfNodes >= 10 && city.Arc.numOfNodes < 40)
+            { numOfNodes = city.Arc.numOfNodes; }
             else { numOfNodes = numOfNodesDefault; }
-            if (city.minNodeSpacing >= 1.0f && city.minNodeSpacing <= 3.0f)
-            { minSpacing = city.minNodeSpacing; }
+            if (city.Arc.minNodeSpacing >= 1.0f && city.Arc.minNodeSpacing <= 3.0f)
+            { minSpacing = city.Arc.minNodeSpacing; }
             else { minSpacing = minSpacingDefault; }
-            if (city.connectionFrequency >= 0 && city.connectionFrequency <= 100)
-            { connectionFrequency = city.connectionFrequency; }
+            if (city.Arc.connectionFrequency >= 0 && city.Arc.connectionFrequency <= 100)
+            { connectionFrequency = city.Arc.connectionFrequency; }
             else { connectionFrequency = connectionFrequencyDefault; }
+            if (city.connectionSecurityChance >= 0 && city.connectionSecurityChance <= 100)
+            { connectionSecurity = city.connectionSecurityChance; }
+            else { connectionSecurity = connectionSecurityDefault; }
         }
         else
         {
             //no valid city found
-            Debug.LogWarning("Invalid city (Null)");
+            Debug.LogWarning("Invalid City or City Arc (Null)");
             //Node Arc lists
             listOfOneConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(1);
             listOfTwoConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(2);
@@ -771,6 +779,7 @@ public class LevelManager : MonoBehaviour
             numOfNodes = numOfNodesDefault;
             minSpacing = minSpacingDefault;
             connectionFrequency = connectionFrequencyDefault;
+            connectionSecurity = connectionSecurityDefault;
         }
 
     }
@@ -968,7 +977,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void AssignSecurityLevels()
     {
-        int chance = GameManager.instance.connScript.connectionSecurityChance;
+        int chance = connectionSecurity;
         int node1, node2, security = 0;       //node ID's either end of connection
         //set all to default level
         ChangeAllConnections(ConnectionType.None);

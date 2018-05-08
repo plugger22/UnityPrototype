@@ -137,9 +137,9 @@ public class DebugGUI : MonoBehaviour
 
 
             //sixth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Actor Analysis"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Node Analysis"))
             {
-                Debug.Log("Button -> Toggle Node/Actors Analysis");
+                Debug.Log("Button -> Toggle Node Analysis");
                 if (debugDisplay != 1)
                 { debugDisplay = 1; }
                 else { debugDisplay = 0; }
@@ -484,17 +484,17 @@ public class DebugGUI : MonoBehaviour
                         //graph data, far right
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.levelScript.GetGraphAnalysis();
-                        GUI.Box(new Rect(Screen.width - 115, 10, 110, 200), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 155, 10, 150, 200), analysis, customBackground);
 
-                        //Actor data, middle right
+                        /*//Actor data, middle right
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.levelScript.GetActorAnalysis(GameManager.instance.sideScript.PlayerSide);
-                        GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysis, customBackground);*/
 
                         // Node Type data, near centre right
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.levelScript.GetNodeAnalysis();
-                        GUI.Box(new Rect(Screen.width - 485, 10, 150, 200), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 305, 10, 150, 200), analysis, customBackground);
                         break;
                     //toggle team data
                     case 2:
