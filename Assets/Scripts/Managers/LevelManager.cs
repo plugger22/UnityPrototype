@@ -58,8 +58,8 @@ public class LevelManager : MonoBehaviour
     private List<List<GameObject>> listOfActorNodesAuthority = new List<List<GameObject>>();        //list containing sublists, one each of all the active nodes for each actor in the level
     private List<List<GameObject>> listOfActorNodesResistance = new List<List<GameObject>>();       //need a separate list for each side   
 
-    private int[] arrayOfNodeTypeTotals;                                                    //array of how many of each node type there is on the map
-    private bool[,,] arrayOfActiveNodes;                                                  //[total nodes, side, total actors] true if node active for that actor
+    private int[] arrayOfNodeTypeTotals;            //array of how many of each node type there is on the map, index = node.Arc.nodeArcID
+    private bool[,,] arrayOfActiveNodes;            //[total nodes, side, total actors] true if node active for that actor
     
     /// <summary>
     /// Master method that drives a level
@@ -499,6 +499,10 @@ public class LevelManager : MonoBehaviour
         }
         return builder.ToString();
     }
+
+
+    public int[] GetArrayOfNodeTypeTotals()
+    { return arrayOfNodeTypeTotals; }
 
     /// <summary>
     /// returns a string made up of Actors data

@@ -134,10 +134,10 @@ public class ModalOutcome : MonoBehaviour
                 break;
             case "Resistance":
                 //set button sprites
-                confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
+                confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
                 //set sprite transitions
                 SpriteState spriteStateRebel = new SpriteState();
-                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Rebel;
+                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
                 spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
                 confirmButton.spriteState = spriteStateRebel;
                 break;

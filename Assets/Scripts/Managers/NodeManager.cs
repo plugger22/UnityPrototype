@@ -1928,9 +1928,46 @@ public class NodeManager : MonoBehaviour
             }
             builder.AppendLine();
             builder.AppendLine();
-            builder.AppendFormat("<b>Total");
+            builder.AppendFormat("<b>Total<\b>");
         }
         else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns a colour formatted string of total district types (Node Arcs) for the City Info Display, Null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public string GetNodeArcNumbers()
+    {
+        StringBuilder builder = new StringBuilder();
+        string colourText;
+        int num;
+        int total = 0;
+        //NOTE: array is indexed by node.Arc.nodeArcID and assumes that the dictOfNodeArcs is in the same order (it is unless it's been fiddled with)
+        int[] arrayOfNodeTypeTotals = GameManager.instance.levelScript.GetArrayOfNodeTypeTotals();
+        if (arrayOfNodeTypeTotals != null)
+        {
+            //basic check to confirm identical number of records in both dict and array (can't verify if they are in the same order)
+            Debug.Assert(GameManager.instance.dataScript.CheckNumOfNodeTypes() == arrayOfNodeTypeTotals.Length, "dictOfNodeType count and array don't correspond");
+            int counter = 0;
+            for (int i = 0; i < arrayOfNodeTypeTotals.Length; i++)
+            {
+                counter++;
+                if (builder.Length > 0) { builder.AppendLine(); }
+                //make every second item display in a different colour for ease of reading
+                if (counter == 2)
+                { colourText = ""; counter = 0; }
+                else { colourText = colourDefault; }
+                num = arrayOfNodeTypeTotals[i];
+                total += num;
+                builder.AppendFormat("{0}{1}{2}", colourText, num, colourEnd);
+            }
+            builder.AppendLine();
+            builder.AppendLine();
+            builder.AppendFormat("<b>{0}<\b>", total);
+        }
+        else { Debug.LogError("Invalid arrayOfNodeTypeTotals (Null)"); }
         return builder.ToString();
     }
 

@@ -10,6 +10,7 @@ public enum EventType
     //Options
     ChangeColour,
     ChangeSide,
+    ChangeLevel,
     UseAction,
     ExitGame,
     //UI
@@ -100,6 +101,9 @@ public enum EventType
     DiceBypass,
     DiceReturnMove,
     DiceReturnGear,
+    //City Info
+    OpenCityInfo,
+    CloseCityInfo,
     //AI
     Capture,
     ReleasePlayer,

@@ -176,13 +176,13 @@ public class ModalInventoryUI : MonoBehaviour
                     buttonCancel.spriteState = spriteStateAuthority;
                     break;
                 case "Resistance":
-                    modalPanel.sprite = GameManager.instance.sideScript.inventory_background_Rebel;
-                    headerPanel.sprite = GameManager.instance.sideScript.header_background_Rebel;
+                    modalPanel.sprite = GameManager.instance.sideScript.inventory_background_Resistance;
+                    headerPanel.sprite = GameManager.instance.sideScript.header_background_Resistance;
                     //set button sprites
-                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Rebel;
+                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
                     //set sprite transitions
                     SpriteState spriteStateRebel = new SpriteState();
-                    spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Rebel;
+                    spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
                     spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
                     buttonCancel.spriteState = spriteStateRebel;
                     break;

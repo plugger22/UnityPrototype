@@ -23,6 +23,7 @@ public class WidgetTopUI : MonoBehaviour
 
     private RectTransform transformCity;
     private RectTransform transformFaction;
+
     private static WidgetTopUI widgetTopUI;
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -44,11 +45,6 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("Click!");
-    }
-
 
     /// <summary>
     /// mouse over exit, shut down tooltip
@@ -60,6 +56,28 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             onMouseFlag = false;
             StopCoroutine("ShowTooltip");
             GameManager.instance.tooltipGenericScript.CloseTooltip();
+        }
+    }
+
+    /// <summary>
+    /// Mouse click -> Right: Actor Action Menu
+    /// </summary>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        switch (eventData.button)
+        {
+            case PointerEventData.InputButton.Left:
+            case PointerEventData.InputButton.Right:
+                if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+                {
+                    //activate city Info Display
+                    EventManager.instance.PostNotification(EventType.OpenCityInfo, this);
+                }
+                break;
+            default:
+                Debug.LogError("Unknown InputButton");
+                break;
         }
     }
 

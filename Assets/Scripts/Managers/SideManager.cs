@@ -21,13 +21,15 @@ public class SideManager : MonoBehaviour
     public Sprite picker_background_Authority;
     public Sprite picker_background_Rebel;
     public Sprite inventory_background_Authority;
-    public Sprite inventory_background_Rebel;
+    public Sprite inventory_background_Resistance;
+    public Sprite info_background_Authority;
+    public Sprite info_background_Resistance;
     public Sprite header_background_Authority;
-    public Sprite header_background_Rebel;
+    public Sprite header_background_Resistance;
     public Sprite button_Authority;
     public Sprite button_highlight_Authority;
-    public Sprite button_Rebel;
-    public Sprite button_highlight_Rebel;
+    public Sprite button_Resistance;
+    public Sprite button_highlight_Resistance;
     public Sprite button_Click;
 
     [HideInInspector] public SideState resistanceCurrent;               //who's currently in charge, AI or player?

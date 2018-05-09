@@ -186,4 +186,5 @@ namespace packageAPI
         public Actor actor;
         public string effects;                  //carry over effects for a combined outcome window, eg insert tracer and then get captured
     }
+
 }
