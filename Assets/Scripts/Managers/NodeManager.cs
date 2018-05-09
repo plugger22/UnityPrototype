@@ -1897,5 +1897,43 @@ public class NodeManager : MonoBehaviour
         delay = Mathf.Max(0, delay);
         return delay;
     }
+
+
+    /// <summary>
+    /// returns a colour formatted string of district names for City Info display, Null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public string GetNodeArcNames()
+    {
+        StringBuilder builder = new StringBuilder();
+        int counter = 0;
+        string colourText = colourAlert;
+        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
+        if (dictOfNodeArcs != null)
+        {
+            for (int i = 0; i < dictOfNodeArcs.Count; i++)
+            {
+                counter++;
+                NodeArc nodeArc = dictOfNodeArcs[i];
+                if (nodeArc != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    //make every second item display in a different colour for ease of reading
+                    if (counter == 2)
+                    { colourText = ""; counter = 0; }
+                    else { colourText = colourDefault; }
+                    builder.AppendFormat("{0}{1}{2}", colourText, nodeArc.name, colourEnd);
+                }
+                else { Debug.LogWarningFormat("Invalid nodeArc (Null) from dictOfNodeArcs[{0}]", i); }
+            }
+            builder.AppendLine();
+            builder.AppendLine();
+            builder.AppendFormat("<b>Total");
+        }
+        else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
+        return builder.ToString();
+    }
+
+
     //new methods above here
 }

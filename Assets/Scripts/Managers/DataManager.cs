@@ -908,6 +908,9 @@ public class DataManager : MonoBehaviour
         return -1;
     }
 
+
+
+
     //
     // - - - Action Related - - -
     //
@@ -2560,7 +2563,7 @@ public class DataManager : MonoBehaviour
         if (message != null)
         {
             //Generate a Debug Message for the log
-            Debug.Log(string.Format("Message: {0}{1}", message.text, "\n"));
+            Debug.Log(string.Format("Msg: {0}{1}", message.text, "\n"));
             //auto sort
             switch (message.isPublic)
             {
