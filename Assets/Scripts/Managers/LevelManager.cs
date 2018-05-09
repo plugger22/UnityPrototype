@@ -492,7 +492,7 @@ public class LevelManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append("Node Analysis" + "\n\n");
-        for (int i = 0; i < GameManager.instance.dataScript.CheckNumNodeArcs(); i++)
+        for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfNodeArcs(); i++)
         {
             NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
             builder.Append(string.Format("{0}  {1}{2}", arc.name, arrayOfNodeTypeTotals[i], "\n"));
@@ -668,7 +668,7 @@ public class LevelManager : MonoBehaviour
     private void AssignNodeArcs()
     {
         int index;
-        int numRecords = GameManager.instance.dataScript.CheckNumNodeArcs();
+        int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
         //array of counters
         arrayOfNodeTypeTotals = new int[numRecords];
         //loop list of nodes
@@ -836,7 +836,7 @@ public class LevelManager : MonoBehaviour
     private void AssignActorsToNodes(GlobalSide side)
     {
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);           //the four, or less, available actors for the level
-        int[] arrayOfArcs = new int[GameManager.instance.dataScript.CheckNumNodeArcs()];    //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
+        int[] arrayOfArcs = new int[GameManager.instance.dataScript.CheckNumOfNodeArcs()];    //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
         List<NodeArc> listOfNodeArcs = new List<NodeArc>();                 //temp list of NodeArcs used for an Actors primary and exclude nodeArc preference
 
         int primary = GameManager.instance.nodeScript.nodePrimaryChance;               //% chance, times actor.Ability, of node being active for this actor -> Primary Node

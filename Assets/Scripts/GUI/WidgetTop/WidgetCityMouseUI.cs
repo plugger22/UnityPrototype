@@ -72,7 +72,7 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
                 if (GameManager.instance.guiScript.CheckIsBlocked() == false)
                 {
                     //activate city Info Display
-                    EventManager.instance.PostNotification(EventType.OpenCityInfo, this);
+                    EventManager.instance.PostNotification(EventType.CityInfoOpen, this);
                 }
                 break;
             default:

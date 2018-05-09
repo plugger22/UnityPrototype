@@ -23,10 +23,10 @@ public class CityInfoUI : MonoBehaviour
     public TextMeshProUGUI districtNames;
     public TextMeshProUGUI districtTotals;
 
-    public Button cancelButton;
+    public Button buttonClose;
 
 
-
+    private ButtonInteraction buttonInteraction;
     private City city;                              //current city level
 
     private static CityInfoUI cityInfoUI;
@@ -48,6 +48,16 @@ public class CityInfoUI : MonoBehaviour
     }
 
 
+    private void Awake()
+    {
+        //close button event
+        buttonInteraction = buttonClose.GetComponent<ButtonInteraction>();
+        if (buttonInteraction != null)
+        { buttonInteraction.SetEvent(EventType.CityInfoClose); }
+        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+
+    }
+
     public void Initialise()
     {
         UpdateCachedData();
@@ -60,8 +70,8 @@ public class CityInfoUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.ChangeLevel, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
-        EventManager.instance.AddListener(EventType.OpenCityInfo, OnEvent);
-        EventManager.instance.AddListener(EventType.CloseCityInfo, OnEvent);
+        EventManager.instance.AddListener(EventType.CityInfoOpen, OnEvent);
+        EventManager.instance.AddListener(EventType.CityInfoClose, OnEvent);
     }
 
     /// <summary>
@@ -81,10 +91,10 @@ public class CityInfoUI : MonoBehaviour
             case EventType.ChangeSide:
                 ChangeSides((GlobalSide)Param);
                 break;
-            case EventType.OpenCityInfo:
+            case EventType.CityInfoOpen:
                 SetCityInfo();
                 break;
-            case EventType.CloseCityInfo:
+            case EventType.CityInfoClose:
                 CloseCityInfo();
                 break;
             default:
@@ -113,11 +123,21 @@ public class CityInfoUI : MonoBehaviour
         {
             case 1:
                 backgroundPanel.sprite = GameManager.instance.sideScript.info_background_Authority;
-                cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                buttonClose.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                //set sprite transitions
+                SpriteState spriteStateAuthority = new SpriteState();
+                spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
+                spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                buttonClose.spriteState = spriteStateAuthority;
                 break;
             case 2:
                 backgroundPanel.sprite = GameManager.instance.sideScript.info_background_Resistance;
-                cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                buttonClose.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                //set sprite transitions
+                SpriteState spriteStateRebel = new SpriteState();
+                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
+                spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                buttonClose.spriteState = spriteStateRebel;
                 break;
         }
     }
@@ -159,13 +179,17 @@ public class CityInfoUI : MonoBehaviour
     /// Open City Info display
     /// </summary>
     private void SetCityInfo()
-    {        
-        //set modal status
-        GameManager.instance.guiScript.SetIsBlocked(true);
+    {
+        //exit any generic or node tooltips
+        StopCoroutine("ShowTooltip");
+        GameManager.instance.tooltipGenericScript.CloseTooltip();
+        GameManager.instance.tooltipNodeScript.CloseTooltip();
         //activate main panel
         cityInfoObject.SetActive(true);
+        //set modal status
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //set game state
-        GameManager.instance.inputScript.SetModalState(ModalState.GenericPicker);
+        GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay);
         Debug.Log("UI: Open -> Open City Info Display" + "\n");
     }
 

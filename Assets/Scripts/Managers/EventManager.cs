@@ -102,8 +102,8 @@ public enum EventType
     DiceReturnMove,
     DiceReturnGear,
     //City Info
-    OpenCityInfo,
-    CloseCityInfo,
+    CityInfoOpen,
+    CityInfoClose,
     //AI
     Capture,
     ReleasePlayer,

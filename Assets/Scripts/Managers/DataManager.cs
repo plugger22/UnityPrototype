@@ -873,7 +873,7 @@ public class DataManager : MonoBehaviour
     /// Get number of NodeArcs in dictionary
     /// </summary>
     /// <returns></returns>
-    public int CheckNumNodeArcs()
+    public int CheckNumOfNodeArcs()
     { return dictOfNodeArcs.Count; }
 
     /// <summary>

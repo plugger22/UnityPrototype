@@ -1920,7 +1920,7 @@ public class NodeManager : MonoBehaviour
                     if (builder.Length > 0) { builder.AppendLine(); }
                     //make every second item display in a different colour for ease of reading
                     if (counter == 2)
-                    { colourText = ""; counter = 0; }
+                    { colourText = colourAlert; counter = 0; }
                     else { colourText = colourDefault; }
                     builder.AppendFormat("{0}{1}{2}", colourText, nodeArc.name, colourEnd);
                 }
@@ -1928,7 +1928,7 @@ public class NodeManager : MonoBehaviour
             }
             builder.AppendLine();
             builder.AppendLine();
-            builder.AppendFormat("<b>Total<\b>");
+            builder.AppendFormat("<b>Total</b>");
         }
         else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
         return builder.ToString();
@@ -1949,7 +1949,7 @@ public class NodeManager : MonoBehaviour
         if (arrayOfNodeTypeTotals != null)
         {
             //basic check to confirm identical number of records in both dict and array (can't verify if they are in the same order)
-            Debug.Assert(GameManager.instance.dataScript.CheckNumOfNodeTypes() == arrayOfNodeTypeTotals.Length, "dictOfNodeType count and array don't correspond");
+            Debug.Assert(GameManager.instance.dataScript.CheckNumOfNodeArcs() == arrayOfNodeTypeTotals.Length, "dictOfNodeType count and array don't correspond");
             int counter = 0;
             for (int i = 0; i < arrayOfNodeTypeTotals.Length; i++)
             {
@@ -1957,7 +1957,7 @@ public class NodeManager : MonoBehaviour
                 if (builder.Length > 0) { builder.AppendLine(); }
                 //make every second item display in a different colour for ease of reading
                 if (counter == 2)
-                { colourText = ""; counter = 0; }
+                { colourText = colourAlert; counter = 0; }
                 else { colourText = colourDefault; }
                 num = arrayOfNodeTypeTotals[i];
                 total += num;
@@ -1965,7 +1965,7 @@ public class NodeManager : MonoBehaviour
             }
             builder.AppendLine();
             builder.AppendLine();
-            builder.AppendFormat("<b>{0}<\b>", total);
+            builder.AppendFormat("<b>{0}</b>", total);
         }
         else { Debug.LogError("Invalid arrayOfNodeTypeTotals (Null)"); }
         return builder.ToString();

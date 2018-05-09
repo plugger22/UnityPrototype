@@ -326,7 +326,6 @@ public class Node : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// tooltip coroutine
     /// </summary>
