@@ -96,7 +96,7 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             Vector3 screenPos = transform.position;
             screenPos.x -= 280;
             screenPos.y -= 90;
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false && GameManager.instance.guiScript.CheckIsBlocked() == false)
             {
                 tooltipHeader = string.Format("{0}{1}", GameManager.instance.cityScript.GetCityName(), GameManager.instance.cityScript.GetCityArc());
                 tooltipMain = GameManager.instance.cityScript.GetCityDescription();
