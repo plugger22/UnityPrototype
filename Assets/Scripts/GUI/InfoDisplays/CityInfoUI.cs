@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +28,9 @@ public class CityInfoUI : MonoBehaviour
 
 
     private ButtonInteraction buttonInteraction;
-    private City city;                              //current city level
+
+    //cached data
+    private List<string> listOfDistrictNames;
 
     private static CityInfoUI cityInfoUI;
 
@@ -60,7 +63,18 @@ public class CityInfoUI : MonoBehaviour
 
     public void Initialise()
     {
-        UpdateCachedData();
+        int counter = 0;
+        //cache list of District names
+        listOfDistrictNames = new List<string>();
+        Dictionary<string, int> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfLookUpNodeArcs();
+        if (dictOfNodeArcs != null)
+        {
+            foreach (var record in dictOfNodeArcs)
+            { listOfDistrictNames.Add(record.Key); counter++; }
+        }
+        else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
+        Debug.LogFormat("CityInfoUI -> Initialise: {0} records addd to listOfDistrictNames", counter);
+        Debug.Assert(counter > 0, "Invalid number of records added to listOfDistrictNames");
         SetAllToActive();
     }
 
@@ -92,7 +106,7 @@ public class CityInfoUI : MonoBehaviour
                 ChangeSides((GlobalSide)Param);
                 break;
             case EventType.CityInfoOpen:
-                SetCityInfo();
+                SetCityInfo((City)Param);
                 break;
             case EventType.CityInfoClose:
                 CloseCityInfo();
@@ -108,7 +122,7 @@ public class CityInfoUI : MonoBehaviour
     /// </summary>
     private void ChangeLevel()
     {
-        UpdateCachedData();
+        //UpdateCachedData();
     }
 
 
@@ -142,11 +156,12 @@ public class CityInfoUI : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// updates and assigns all cached data for city info screen when a new level (City) is loaded
     /// </summary>
     private void UpdateCachedData()
     {
+        Debug.LogFormat("CityInfoUI -> UpdateCachedData()");
         //city details
         city = GameManager.instance.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid city (Null)");
@@ -156,7 +171,7 @@ public class CityInfoUI : MonoBehaviour
         //district details
         districtNames.text = GameManager.instance.nodeScript.GetNodeArcNames();
         districtTotals.text = GameManager.instance.nodeScript.GetNodeArcNumbers();
-    }
+    }*/
 
     /// <summary>
     /// set all UI components (apart from main) to active. Run at level start to ensure no problems (something hasn't been switched off in the editor)
@@ -173,24 +188,43 @@ public class CityInfoUI : MonoBehaviour
         subPanelLeft.gameObject.SetActive(true);
         subPanelMiddle.gameObject.SetActive(true);
         subPanelRight.gameObject.SetActive(true);
+        //subPanel opacities (same for all three)
+        float opacity = GameManager.instance.cityScript.subPanelOpacity;
+        Debug.Assert(opacity >= 0 && opacity <= 100.0f, string.Format("Invalid subPanel opacity \"{0}\"", opacity));
+        Color panelColor = subPanelLeft.color;
+        panelColor.a = opacity;
+        subPanelLeft.color = panelColor;
+        subPanelMiddle.color = panelColor;
+        subPanelRight.color = panelColor;
     }
 
     /// <summary>
     /// Open City Info display
     /// </summary>
-    private void SetCityInfo()
+    private void SetCityInfo(City city)
     {
-        //exit any generic or node tooltips
-        StopCoroutine("ShowTooltip");
-        GameManager.instance.tooltipGenericScript.CloseTooltip();
-        GameManager.instance.tooltipNodeScript.CloseTooltip();
-        //activate main panel
-        cityInfoObject.SetActive(true);
-        //set modal status
-        GameManager.instance.guiScript.SetIsBlocked(true);
-        //set game state
-        GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay);
-        Debug.Log("UI: Open -> Open City Info Display" + "\n");
+        if (city != null)
+        {
+            //exit any generic or node tooltips
+            StopCoroutine("ShowTooltip");
+            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipNodeScript.CloseTooltip();
+            //populate data
+            cityName.text = city.name;
+            cityArc.text = city.Arc.name;
+            cityDescription.text = city.descriptor;
+            //district details
+            districtNames.text = GetDistrictNames();
+            districtTotals.text = GameManager.instance.nodeScript.GetNodeArcNumbers();
+            //activate main panel
+            cityInfoObject.SetActive(true);
+            //set modal status
+            GameManager.instance.guiScript.SetIsBlocked(true);
+            //set game state
+            GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay);
+            Debug.Log("UI: Open -> Open City Info Display" + "\n");
+        }
+        else { Debug.LogWarning("Invalid city (Null) -> tooltip cancelled"); }
     }
 
     /// <summary>
@@ -205,6 +239,21 @@ public class CityInfoUI : MonoBehaviour
         Debug.Log("UI: Close -> CityInfoDisplay" + "\n");
     }
 
+    /// <summary>
+    /// sub method to get formatted string for district names (cached)
+    /// </summary>
+    /// <returns></returns>
+    private string GetDistrictNames()
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < listOfDistrictNames.Count; i++)
+        {
+            if (builder.Length > 0) { builder.AppendLine(); }
+            builder.AppendFormat("{0}", listOfDistrictNames[i]);
+        }
+
+        return builder.ToString();
+    }
 
     //new methods above here
 }

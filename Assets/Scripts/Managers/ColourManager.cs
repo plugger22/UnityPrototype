@@ -65,7 +65,7 @@ public class ColourManager : MonoBehaviour
     private List<Colour[]> listOfColourTypes;       //facilitates automatic population of array
 
 
-    private void Awake()
+    public void Initialise()
     {
         arrayOfColours = new Colour[(int)ColourType.Count, (int)ColourScheme.Count];
         //add each array of Colours into the List -> NOTE: change this whenever you add, or modify, a colour. 

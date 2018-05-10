@@ -54,6 +54,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public ActivityUI activityState;
 
     string colourDefault;
+    string colourNormal;
     string colourAlert;
     string colourHighlight;
     string colourResistance;
@@ -274,6 +275,7 @@ public class NodeManager : MonoBehaviour
     public void SetColours()
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
@@ -1919,10 +1921,13 @@ public class NodeManager : MonoBehaviour
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
                     //make every second item display in a different colour for ease of reading
-                    if (counter == 2)
+                    /*if (counter == 2)
                     { colourText = colourAlert; counter = 0; }
                     else { colourText = colourDefault; }
-                    builder.AppendFormat("{0}{1}{2}", colourText, nodeArc.name, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}", colourText, nodeArc.name, colourEnd);*/
+                    if (counter == 2)
+                    { builder.AppendFormat("{0}<b>{1}</b>{2}", colourNormal, nodeArc.name, colourEnd); counter = 0; }
+                    else { builder.Append(nodeArc.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid nodeArc (Null) from dictOfNodeArcs[{0}]", i); }
             }
@@ -1945,7 +1950,7 @@ public class NodeManager : MonoBehaviour
         int num;
         int total = 0;
         //NOTE: array is indexed by node.Arc.nodeArcID and assumes that the dictOfNodeArcs is in the same order (it is unless it's been fiddled with)
-        int[] arrayOfNodeTypeTotals = GameManager.instance.levelScript.GetArrayOfNodeTypeTotals();
+        int[] arrayOfNodeTypeTotals = GameManager.instance.levelScript.GetNodeTypeTotals();
         if (arrayOfNodeTypeTotals != null)
         {
             //basic check to confirm identical number of records in both dict and array (can't verify if they are in the same order)

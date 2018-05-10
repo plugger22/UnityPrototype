@@ -163,7 +163,8 @@ public class GameManager : MonoBehaviour
     private void InitialiseGame()
     {
         importScript.InitialiseStart();   //must be first
-        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly  
+        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
+        colourScript.Initialise();
         messageScript.Initialise();     //must be after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
         tooltipNodeScript.Initialise();
         sideScript.Initialise();
@@ -171,7 +172,7 @@ public class GameManager : MonoBehaviour
         importScript.InitialiseEarly();
         guiScript.Initialise();         //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
         factionScript.Initialise();
-        cityScript.Initialise();
+        cityScript.Initialise();        //before levelScript
         objectiveScript.Initialise();
         actorScript.Initialise();
         levelScript.Initialise();
@@ -196,6 +197,7 @@ public class GameManager : MonoBehaviour
         rebelScript.Initialise();
         authorityScript.Initialise();
         debugGraphicsScript.Initialise();
+
         cityInfoScript.Initialise();
         widgetTopScript.Initialise();
         //do a final redraw before game start

@@ -500,10 +500,6 @@ public class LevelManager : MonoBehaviour
         return builder.ToString();
     }
 
-
-    public int[] GetArrayOfNodeTypeTotals()
-    { return arrayOfNodeTypeTotals; }
-
     /// <summary>
     /// returns a string made up of Actors data
     /// </summary>

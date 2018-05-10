@@ -10,6 +10,8 @@ public class CityManager : MonoBehaviour
 {
     [Tooltip("City Loyalty (same for both sides) range from 0 to this amount")]
     [Range(0, 10)] public int maxCityLoyalty = 10;
+    [Tooltip("Opacity of the 3 grey background subPanels in the city tooltip")]
+    [Range(0f, 1.0f)] public float subPanelOpacity = 0.1f;
 
     private int _cityLoyalty;                       //loyalty of city (0 to 10). Same number for both sides
 
