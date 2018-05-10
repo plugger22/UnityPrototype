@@ -62,9 +62,18 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
+        CityLoyalty = city.baseLoyalty;
         //initialise number of districts
         city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
-        CityLoyalty = city.baseLoyalty;
+        //Placeholder
+        city.mayor = GameManager.instance.dataScript.GetRandomMayor();
+        if (city.mayor != null)
+        { city.faction = city.mayor.faction; }
+        else { Debug.LogError("Invalid city Mayor (Null)"); }
+        //organisations -> placeholder (should be a loop for all cities
+        GameManager.instance.orgScript.SetOrganisationsInCity(city);
+        
+        
     }
 
     /// <summary>
@@ -159,6 +168,9 @@ public class CityManager : MonoBehaviour
         { return string.Format("{0}{1}{2}", colourNormal, city.descriptor, colourEnd); }
         else { return "Unknown"; }
     }
+
+
+
 
     //new methods above here
 }

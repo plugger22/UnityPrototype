@@ -13,4 +13,5 @@ public class Mayor : ScriptableObject
     [Tooltip("Motto of Mayor in 6 words or less")]
     public string motto;
 
+    [HideInInspector] public int mayorID;
 }

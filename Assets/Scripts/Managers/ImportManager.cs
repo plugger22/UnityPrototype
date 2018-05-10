@@ -810,6 +810,66 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("DataManager: Initialise -> dictOfObjectives has {0} entries{1}", counter, "\n"));
         }
         else { Debug.LogError("Invalid dictOfObjectives (Null) -> Import failed"); }
+        //
+        // - - - Organisations - - -
+        //
+        Dictionary<int, Organisation> dictOfOrganisations = GameManager.instance.dataScript.GetDictOfOrganisations();
+        if (dictOfOrganisations != null)
+        {
+            counter = 0;
+            //get GUID of all SO Organisation Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var organisationGUID = AssetDatabase.FindAssets("t:Organisation");
+            foreach (var guid in organisationGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object organisationObject = AssetDatabase.LoadAssetAtPath(path, typeof(Organisation));
+                //assign a zero based unique ID number
+                Organisation organisation = organisationObject as Organisation;
+                //set data
+                organisation.orgID = counter++;
+                //add to dictionary
+                try
+                { dictOfOrganisations.Add(organisation.orgID, organisation); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Organisation (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Organisation (duplicate) ID \"{0}\" for \"{1}\"", counter, organisation.name)); counter--; }
+            }
+            Debug.Log(string.Format("DataManager: Initialise -> dictOfOrganisations has {0} entries{1}", counter, "\n"));
+        }
+        else { Debug.LogError("Invalid dictOfOrganisations (Null) -> Import failed"); }
+        //
+        // - - - Mayors - - -
+        //
+        Dictionary<int, Mayor> dictOfMayors = GameManager.instance.dataScript.GetDictOfMayors();
+        if (dictOfMayors != null)
+        {
+            counter = 0;
+            //get GUID of all SO Mayor Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var mayorGUID = AssetDatabase.FindAssets("t:Mayor");
+            foreach (var guid in mayorGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object mayorObject = AssetDatabase.LoadAssetAtPath(path, typeof(Mayor));
+                //assign a zero based unique ID number
+                Mayor mayor = mayorObject as Mayor;
+                //set data
+                mayor.mayorID = counter++;
+                //add to dictionary
+                try
+                { dictOfMayors.Add(mayor.mayorID, mayor); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Mayor (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.name)); counter--; }
+            }
+            Debug.Log(string.Format("DataManager: Initialise -> dictOfMayors has {0} entries{1}", counter, "\n"));
+        }
+        else { Debug.LogError("Invalid dictOfMayors (Null) -> Import failed"); }
     }
 
 

@@ -10,6 +10,8 @@ public class Organisation : ScriptableObject
 {
     [Tooltip("Short text description (3 words max)")]
     public string descriptor;
-    [Tooltip("% Chance of an organisation being present in a city")]
-    [Range(0, 100)] public int chance;
+    [Tooltip("Preferred node type for this Organisation. The more of this type of node the greater the chance of an organisation being present in a city")]
+    public NodeArc nodeArc;
+
+    [HideInInspector] public int orgID;
 }

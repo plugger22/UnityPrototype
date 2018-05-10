@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using gameAPI;
-using Random = UnityEngine.Random;
-using System.Text;
+﻿using gameAPI;
 using packageAPI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 /// <summary>
@@ -123,6 +121,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
     private Dictionary<int, CityArc> dictOfCityArcs = new Dictionary<int, CityArc>();               //Key -> cityArcID, Value -> CityArc
     private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();         //Key -> objectiveID, Value -> Objective
+    private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();//Key -> orgID, Value -> Organisation
+    private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                     //Key -> mayorID, Value -> Mayor
     
 
     //global SO's (enum equivalents)
@@ -3204,7 +3204,32 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Objective> GetDictOfObjectives()
     { return dictOfObjectives; }
 
+    //
+    // - - - Organisations - - -
+    //
 
+    public Dictionary<int, Organisation> GetDictOfOrganisations()
+    { return dictOfOrganisations; }
+
+    //
+    // - - - Mayors - - -
+    //
+
+    public Dictionary<int, Mayor> GetDictOfMayors()
+    { return dictOfMayors; }
+
+    /// <summary>
+    /// Gets a random Mayor, returns null if none. NOTE: Debug method, Duplicates ARE NOT CHECKED FOR
+    /// </summary>
+    /// <returns></returns>
+    public Mayor GetRandomMayor()
+    {
+        Mayor mayor = null;
+        List<Mayor> tempList = dictOfMayors.Values.ToList();
+        if (tempList != null)
+        { mayor = tempList[Random.Range(0, tempList.Count)]; }
+        return mayor;
+    }
 
     //
     // - - - Adjustments - - -
