@@ -20,4 +20,30 @@ public class City : ScriptableObject
 
     [HideInInspector] public int cityID;         //dynamically assigned by ImportManager.cs
 
+    private List<int> listOfDistrictTotals = new List<int>();       //cityManager.cs assigns this data (needs to be in the same order as DataManager.cs -> dictOfNodeArc's)
+
+    /// <summary>
+    /// initialise district totals
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetDistrictTotals(int[] tempArray)
+    {
+        int counter = 0;
+        if (tempArray != null)
+        {
+            listOfDistrictTotals.Clear();
+            for (int i = 0; i < tempArray.Length; i++)
+            {
+                listOfDistrictTotals.Add(tempArray[i]);
+                counter++;
+            }
+            Debug.Assert(counter > 0, "No records in listOfDistrictTotals");
+            Debug.LogFormat("City \"{0}\" added {1} records to listOfDistrictTotals", name, listOfDistrictTotals.Count);
+        }
+    }
+
+
+    public List<int> GetListOfDistrictTotals()
+    { return listOfDistrictTotals; }
+   
 }

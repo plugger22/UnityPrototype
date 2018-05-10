@@ -31,6 +31,7 @@ public class CityInfoUI : MonoBehaviour
 
     //cached data
     private List<string> listOfDistrictNames;
+    private List<int> listOfDistrictTotals;
 
     private static CityInfoUI cityInfoUI;
 
@@ -213,9 +214,10 @@ public class CityInfoUI : MonoBehaviour
             cityName.text = city.name;
             cityArc.text = city.Arc.name;
             cityDescription.text = city.descriptor;
-            //district details
-            districtNames.text = GetDistrictNames();
-            districtTotals.text = GameManager.instance.nodeScript.GetNodeArcNumbers();
+            //district details -> keep in this order (GetDistrictNames initialises data for GetDistrictTotals)
+            districtNames.text = GetDistrictNames(city);
+            districtTotals.text = GetDistrictTotals();
+            /*districtTotals.text = GameManager.instance.nodeScript.GetNodeArcNumbers();*/
             //activate main panel
             cityInfoObject.SetActive(true);
             //set modal status
@@ -243,15 +245,49 @@ public class CityInfoUI : MonoBehaviour
     /// sub method to get formatted string for district names (cached)
     /// </summary>
     /// <returns></returns>
-    private string GetDistrictNames()
+    private string GetDistrictNames(City city)
     {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < listOfDistrictNames.Count; i++)
+        //import list of totals (needed for formatting options and error checking)
+        listOfDistrictTotals = city.GetListOfDistrictTotals();
+        if (listOfDistrictTotals != null)
+        {
+            Debug.Assert(listOfDistrictTotals.Count == listOfDistrictNames.Count, "Counts don't match for listOfDistrict Names and Totals");
+            for (int i = 0; i < listOfDistrictNames.Count; i++)
+            {
+                if (builder.Length > 0) { builder.AppendLine(); }
+                if (listOfDistrictTotals[i] > 0)
+                { builder.AppendFormat("<b>{0}</b>", listOfDistrictNames[i]); }
+                else { builder.AppendFormat("{0}", listOfDistrictNames[i]); }
+            }
+            builder.AppendLine();
+            builder.AppendLine();
+            builder.AppendFormat("<b>TOTAL</b>");
+        }
+        else { Debug.LogError("Invalid listOfDistrictTotals (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// sub method to get formatted string for district totals (direct from city SO). Null if none
+    /// NOTE: listOfDistrictTotals is initialised and error checked by GetDistrictNames which runs immediately before this metho
+    /// </summary>
+    /// <returns></returns>
+    private string GetDistrictTotals()
+    {
+        StringBuilder builder = new StringBuilder();
+        int total = 0;
+        for (int i = 0; i < listOfDistrictTotals.Count; i++)
         {
             if (builder.Length > 0) { builder.AppendLine(); }
-            builder.AppendFormat("{0}", listOfDistrictNames[i]);
+            if (listOfDistrictTotals[i] > 0)
+            { builder.AppendFormat("<b>{0}</b>", listOfDistrictTotals[i]); }
+            else { builder.AppendFormat("{0}", listOfDistrictTotals[i]); }
+            total += listOfDistrictTotals[i];
         }
-
+        builder.AppendLine();
+        builder.AppendLine();
+        builder.AppendFormat("<b>{0}</b>", total);
         return builder.ToString();
     }
 

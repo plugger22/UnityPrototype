@@ -39,15 +39,30 @@ public class CityManager : MonoBehaviour
         }
     }
 
-
-    public void Initialise()
+    /// <summary>
+    /// need to do BEFORE levelManager.cs -> Initialise
+    /// </summary>
+    public void InitialiseEarly()
     {
-        //get random city -> Placeholder
+        //get random current city -> Placeholder
+            // need to do this once at very start of a new game (set up all cities, set up data in the city SO's)
+            // need to get list of all cities here from mapManager.cs
+            // need to initialise levels (run graphs and get node totals) and store seeds so the cities can be duplicated
+            // need to initialise all relevant info in city.SO's
+
         city = GameManager.instance.dataScript.GetRandomCity();
-        Debug.Assert(city != null, "Invalid City (Null)");
-        CityLoyalty = city.baseLoyalty;
+
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+    }
+
+    /// <summary>
+    /// need to do AFTER levelManager.cs -> Initialise
+    /// </summary>
+    public void InitialiseLate()
+    {
+        //initialise number of districts
+        city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
     }
 
     /// <summary>

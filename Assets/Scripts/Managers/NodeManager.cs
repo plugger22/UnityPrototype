@@ -1901,7 +1901,7 @@ public class NodeManager : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// returns a colour formatted string of district names for City Info display, Null if a problem
     /// </summary>
     /// <returns></returns>
@@ -1921,10 +1921,10 @@ public class NodeManager : MonoBehaviour
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
                     //make every second item display in a different colour for ease of reading
-                    /*if (counter == 2)
+                    if (counter == 2)
                     { colourText = colourAlert; counter = 0; }
                     else { colourText = colourDefault; }
-                    builder.AppendFormat("{0}{1}{2}", colourText, nodeArc.name, colourEnd);*/
+                    builder.AppendFormat("{0}{1}{2}", colourText, nodeArc.name, colourEnd);
                     if (counter == 2)
                     { builder.AppendFormat("{0}<b>{1}</b>{2}", colourNormal, nodeArc.name, colourEnd); counter = 0; }
                     else { builder.Append(nodeArc.name); }
@@ -1974,7 +1974,7 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfNodeTypeTotals (Null)"); }
         return builder.ToString();
-    }
+    }*/
 
 
     //new methods above here
