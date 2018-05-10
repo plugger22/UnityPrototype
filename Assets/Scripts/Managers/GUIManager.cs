@@ -34,6 +34,8 @@ public class GUIManager : MonoBehaviour
     public Sprite targetFailSprite;
     [Tooltip("Used for Player or Actor having been captured")]
     public Sprite capturedSprite;
+    [Tooltip("Default City Arc sprite (512 x 150 png")]
+    public Sprite cityArcDefaultSprite;
 
 
     //Actor display at bottom

@@ -19,7 +19,8 @@ public class CityArc : ScriptableObject
     [Range(1f, 3f)] public float minNodeSpacing = 1.5f;
     [Tooltip("% chance of each node having an additional connection")]
     [Range(0, 100)] public int connectionFrequency = 50;
-
+    [Tooltip("512 x 150 Png sprite of city Arc")]
+    public Sprite sprite;
     //Lists that control node type distribution within a city
     //allow individual city set-ups (randomly chosen still). Leave any empty if you are happy with DataManager.cs default versions.
     [Header("Preferred Node Mix")]

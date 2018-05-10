@@ -217,7 +217,11 @@ public class CityInfoUI : MonoBehaviour
             //district details -> keep in this order (GetDistrictNames initialises data for GetDistrictTotals)
             districtNames.text = GetDistrictNames(city);
             districtTotals.text = GetDistrictTotals();
-            /*districtTotals.text = GameManager.instance.nodeScript.GetNodeArcNumbers();*/
+            //city image (uses arc sprite, GUIManager.cs default sprite if arc sprite is null)
+            if (city.Arc.sprite != null)
+            { cityImage.sprite = city.Arc.sprite; }
+            else { cityImage.sprite = GameManager.instance.guiScript.cityArcDefaultSprite; }
+            Debug.Assert(cityImage.sprite != null, "Invalid city Arc default sprite");
             //activate main panel
             cityInfoObject.SetActive(true);
             //set modal status

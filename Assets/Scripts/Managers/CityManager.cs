@@ -51,6 +51,7 @@ public class CityManager : MonoBehaviour
             // need to initialise all relevant info in city.SO's
 
         city = GameManager.instance.dataScript.GetRandomCity();
+        
 
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
@@ -63,6 +64,7 @@ public class CityManager : MonoBehaviour
     {
         //initialise number of districts
         city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
+        CityLoyalty = city.baseLoyalty;
     }
 
     /// <summary>

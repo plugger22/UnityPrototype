@@ -18,8 +18,12 @@ public class City : ScriptableObject
     [Tooltip("City Arc determines the size, layout and node type frequencies of the city")]
     public CityArc Arc;
 
+    
+
     [HideInInspector] public int cityID;         //dynamically assigned by ImportManager.cs
 
+    //dynamically assigned data
+    private Mayor mayor;                                            //alignment of mayor determines which faction is in charge of the city
     private List<int> listOfDistrictTotals = new List<int>();       //cityManager.cs assigns this data (needs to be in the same order as DataManager.cs -> dictOfNodeArc's)
 
     /// <summary>
