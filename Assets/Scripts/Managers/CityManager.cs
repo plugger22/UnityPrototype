@@ -176,26 +176,82 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <param name="city"></param>
     /// <returns></returns>
-    public string GetOrganisations()
+    public string GetOrganisationsTooltip()
     {
         StringBuilder builder = new StringBuilder();
         List<Organisation> listOfOrganisations = city.GetListOfOrganisations();
-        if (listOfOrganisations != null)
+        if (listOfOrganisations != null || listOfOrganisations.Count == 0)
         {
             foreach (Organisation org in listOfOrganisations)
             {
                 if (builder.Length > 0) { builder.AppendLine(); }
                 builder.AppendFormat("<b>{0}{1}{2}</b>", colourNormal, org.name, colourEnd);
+                if (string.IsNullOrEmpty(org.descriptor) == false)
+                { builder.AppendFormat("{0}{1}<size=95%>{2}</size>{3}", "\n", colourAlert, org.descriptor, colourEnd); }
             }
         }
         else
         {
             Debug.LogWarning("Invalid listOfOrganisations (Null)");
-            builder.Append("None present");
+            builder.AppendFormat("{0}None present{1}", colourGrey, colourEnd);
         }
         return builder.ToString();
     }
 
+    /// <summary>
+    /// returns a colour formatted string of current cities Faction. Used by cityInfoUI faction tooltip
+    /// </summary>
+    /// <returns></returns>
+    public string GetFactionName()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2}", colourSide, city.faction.name, colourEnd);
+        if (string.IsNullOrEmpty(city.faction.descriptor) == false)
+        { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.descriptor, colourEnd); }
+        return builder.ToString();
+    }
 
+    /// <summary>
+    /// returns a colour formatted string of current city's faction details (preferred node Arc, disliked node Arc). Used by cityInfoUI faction tooltip.
+    /// </summary>
+    /// <returns></returns>
+    public string GetFactionDetails()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}Prefers{1}", colourNeutral, colourEnd);
+        builder.AppendLine();
+        if (city.faction.preferredArc != null)
+        { builder.AppendFormat("{0}{1}{2} Districts", colourGood, city.faction.preferredArc.name, colourEnd); }
+        else { builder.AppendFormat("{0}None{1}", colourGrey, colourEnd); }
+        builder.AppendLine();
+        builder.AppendFormat("{0}Dislikes{1}", colourNeutral, colourEnd);
+        builder.AppendLine();
+        if (city.faction.hostileArc != null)
+        { builder.AppendFormat("{0}{1}{2} Districts", colourBad, city.faction.preferredArc.name, colourEnd); }
+        else { builder.AppendFormat("{0}None{1}", colourGrey, colourEnd); }
+        builder.AppendLine();
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns a colour formatted string of current cities Mayor. Used by cityInfoUI mayor tooltip
+    /// </summary>
+    /// <returns></returns>
+    public string GetMayorName()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2}", colourSide, city.mayor.name, colourEnd);
+        if (string.IsNullOrEmpty(city.mayor.motto) == false)
+        { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.mayor.motto, colourEnd); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns a colour formatted string of Mayor's faction alignment. Used by cityInfoUI mayor tooltip
+    /// </summary>
+    /// <returns></returns>
+    public string GetMayorFaction()
+    { return string.Format("{0}Faction Alignment{1}{2}<b>{3}</b>", colourNeutral, colourEnd, "\n", city.faction.name); }
+    
     //new methods above here
 }

@@ -37,7 +37,11 @@ public class CityInfoUI : MonoBehaviour
 
 
     private ButtonInteraction buttonInteraction;
+    private GenericTooltipUI districtTooltip;
     private GenericTooltipUI organisationTooltip;
+    private GenericTooltipUI factionTooltip;
+    private GenericTooltipUI mayorTooltip;
+
 
     //cached data
     private List<string> listOfDistrictNames;
@@ -70,7 +74,10 @@ public class CityInfoUI : MonoBehaviour
         { buttonInteraction.SetEvent(EventType.CityInfoClose); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
         //tooltips
+        districtTooltip = subPanelLeft.GetComponent<GenericTooltipUI>();
         organisationTooltip = miniPanelBottom.GetComponent<GenericTooltipUI>();
+        factionTooltip = miniPanelMiddle.GetComponent<GenericTooltipUI>();
+        mayorTooltip = miniPanelTop.GetComponent<GenericTooltipUI>();
 
     }
 
@@ -209,8 +216,10 @@ public class CityInfoUI : MonoBehaviour
     /// </summary>
     private void SetFixedTooltips()
     {
-        
-        organisationTooltip.tooltipMain = "These are the Organisations that are active in the city";
+        districtTooltip.tooltipHeader =  string.Format("<b>City Districts</b>");
+        districtTooltip.tooltipMain = "Only districts that are accessible are shown. Others are in permanent Lockdown";
+        organisationTooltip.tooltipMain = "Organisations that are active in the city";
+
     }
 
     /// <summary>
@@ -243,8 +252,14 @@ public class CityInfoUI : MonoBehaviour
             else { cityImage.sprite = GameManager.instance.guiScript.cityArcDefaultSprite; }
             Debug.Assert(cityImage.sprite != null, "Invalid city Arc default sprite");
             //Organisation tooltip
+            mayorTooltip.tooltipHeader = GameManager.instance.cityScript.GetMayorName();
+            mayorTooltip.tooltipMain = "Trait details";
+            mayorTooltip.tooltipEffect = GameManager.instance.cityScript.GetMayorFaction();
+            factionTooltip.tooltipHeader = GameManager.instance.cityScript.GetFactionName();
+            factionTooltip.tooltipMain = "Trait details";
+            factionTooltip.tooltipEffect = GameManager.instance.cityScript.GetFactionDetails();
             organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityName();
-            organisationTooltip.tooltipEffect = GameManager.instance.cityScript.GetOrganisations();
+            organisationTooltip.tooltipEffect = GameManager.instance.cityScript.GetOrganisationsTooltip();
             //activate main panel
             cityInfoObject.SetActive(true);
             //set modal status
