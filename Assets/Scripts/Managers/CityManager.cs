@@ -171,7 +171,30 @@ public class CityManager : MonoBehaviour
         else { return "Unknown"; }
     }
 
-
+    /// <summary>
+    /// returns a colour formatted string of all the organisation within a city. Used by cityInfoUI organisations tooltip
+    /// </summary>
+    /// <param name="city"></param>
+    /// <returns></returns>
+    public string GetOrganisations()
+    {
+        StringBuilder builder = new StringBuilder();
+        List<Organisation> listOfOrganisations = city.GetListOfOrganisations();
+        if (listOfOrganisations != null)
+        {
+            foreach (Organisation org in listOfOrganisations)
+            {
+                if (builder.Length > 0) { builder.AppendLine(); }
+                builder.AppendFormat("<b>{0}{1}{2}</b>", colourNormal, org.name, colourEnd);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid listOfOrganisations (Null)");
+            builder.Append("None present");
+        }
+        return builder.ToString();
+    }
 
 
     //new methods above here

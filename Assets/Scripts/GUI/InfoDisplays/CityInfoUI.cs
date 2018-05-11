@@ -28,6 +28,7 @@ public class CityInfoUI : MonoBehaviour
     public TextMeshProUGUI factionName;
     public TextMeshProUGUI factionTrait;
     public TextMeshProUGUI organisations;
+
     //left panel -> Districts
     public TextMeshProUGUI districtNames;
     public TextMeshProUGUI districtTotals;
@@ -36,6 +37,7 @@ public class CityInfoUI : MonoBehaviour
 
 
     private ButtonInteraction buttonInteraction;
+    private GenericTooltipUI organisationTooltip;
 
     //cached data
     private List<string> listOfDistrictNames;
@@ -67,6 +69,8 @@ public class CityInfoUI : MonoBehaviour
         if (buttonInteraction != null)
         { buttonInteraction.SetEvent(EventType.CityInfoClose); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+        //tooltips
+        organisationTooltip = miniPanelBottom.GetComponent<GenericTooltipUI>();
 
     }
 
@@ -85,6 +89,8 @@ public class CityInfoUI : MonoBehaviour
         Debug.LogFormat("CityInfoUI -> Initialise: {0} records addd to listOfDistrictNames", counter);
         Debug.Assert(counter > 0, "Invalid number of records added to listOfDistrictNames");
         SetAllToActive();
+        SetOpacities();
+        SetFixedTooltips();
     }
 
 
@@ -170,6 +176,13 @@ public class CityInfoUI : MonoBehaviour
         subPanelLeft.gameObject.SetActive(true);
         subPanelMiddle.gameObject.SetActive(true);
         subPanelRight.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// sets all panel opacities to values specified in CityManager.cs
+    /// </summary>
+    private void SetOpacities()
+    {
         //subPanel opacities (same for all three)
         float opacitySub = GameManager.instance.cityScript.subPanelOpacity;
         float opacityMini = GameManager.instance.cityScript.miniPanelOpacity;
@@ -192,6 +205,15 @@ public class CityInfoUI : MonoBehaviour
     }
 
     /// <summary>
+    /// sets all generic tooltip data for tooltips which are constant
+    /// </summary>
+    private void SetFixedTooltips()
+    {
+        
+        organisationTooltip.tooltipMain = "These are the Organisations that are active in the city";
+    }
+
+    /// <summary>
     /// Open City Info display
     /// </summary>
     private void SetCityInfo(City city)
@@ -209,11 +231,20 @@ public class CityInfoUI : MonoBehaviour
             //district details -> keep in this order (GetDistrictNames initialises data for GetDistrictTotals)
             districtNames.text = GetDistrictNames(city);
             districtTotals.text = GetDistrictTotals();
+            //centre panel -> mayor / faction / organisation
+            mayorName.text = city.mayor.name;
+            mayorTrait.text = "Restless";
+            factionName.text = city.faction.name;
+            factionTrait.text = "Security Focused";
+            organisations.text = string.Format("{0} present", city.CheckNumOfOrganisations());
             //city image (uses arc sprite, GUIManager.cs default sprite if arc sprite is null)
             if (city.Arc.sprite != null)
             { cityImage.sprite = city.Arc.sprite; }
             else { cityImage.sprite = GameManager.instance.guiScript.cityArcDefaultSprite; }
             Debug.Assert(cityImage.sprite != null, "Invalid city Arc default sprite");
+            //Organisation tooltip
+            organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityName();
+            organisationTooltip.tooltipEffect = GameManager.instance.cityScript.GetOrganisations();
             //activate main panel
             cityInfoObject.SetActive(true);
             //set modal status

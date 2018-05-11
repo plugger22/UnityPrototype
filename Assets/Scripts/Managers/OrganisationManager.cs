@@ -21,6 +21,8 @@ public class OrganisationManager : MonoBehaviour
     {
         if (city != null)
         {
+            //empty out first as SO's are persistent
+            city.ClearOrganisations();
             List<int> listOfDistrictTotals = city.GetListOfDistrictTotals();
             if (listOfDistrictTotals != null)
             {
@@ -48,5 +50,7 @@ public class OrganisationManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid city (Null)"); }
     }
+
+
 
 }

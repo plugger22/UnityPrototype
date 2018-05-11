@@ -52,6 +52,9 @@ public class City : ScriptableObject
     public List<int> GetListOfDistrictTotals()
     { return listOfDistrictTotals; }
 
+    public void ClearOrganisations()
+    { listOfOrganisations.Clear(); }
+
     /// <summary>
     /// Add an organisation
     /// </summary>
@@ -63,4 +66,10 @@ public class City : ScriptableObject
         else { Debug.LogWarning("Invalid organisation (Null)"); }
     }
    
+    public int CheckNumOfOrganisations()
+    { return listOfOrganisations.Count; }
+
+    public List<Organisation> GetListOfOrganisations()
+    { return listOfOrganisations; }
+
 }
