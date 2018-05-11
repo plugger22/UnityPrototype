@@ -19,12 +19,12 @@ public class City : ScriptableObject
     public CityArc Arc;
 
     
-
     [HideInInspector] public int cityID;         //dynamically assigned by ImportManager.cs
 
     //dynamically assigned data
     [HideInInspector] public Mayor mayor;                                         //alignment of mayor determines which faction is in charge of the city
     [HideInInspector] public Faction faction;                                     //ruling faction of current city (derived from mayor)
+
     private List<Organisation> listOfOrganisations = new List<Organisation>();    //organisations present in the city
     private List<int> listOfDistrictTotals = new List<int>();       //cityManager.cs assigns this data (needs to be in the same order as DataManager.cs -> dictOfNodeArc's)
 
@@ -51,5 +51,16 @@ public class City : ScriptableObject
 
     public List<int> GetListOfDistrictTotals()
     { return listOfDistrictTotals; }
+
+    /// <summary>
+    /// Add an organisation
+    /// </summary>
+    /// <param name="organisation"></param>
+    public void AddOrganisation(Organisation organisation)
+    {
+        if (organisation != null)
+        { listOfOrganisations.Add(organisation); }
+        else { Debug.LogWarning("Invalid organisation (Null)"); }
+    }
    
 }

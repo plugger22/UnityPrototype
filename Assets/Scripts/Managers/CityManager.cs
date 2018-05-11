@@ -12,6 +12,8 @@ public class CityManager : MonoBehaviour
     [Range(0, 10)] public int maxCityLoyalty = 10;
     [Tooltip("Opacity of the 3 grey background subPanels in the city tooltip")]
     [Range(0f, 1.0f)] public float subPanelOpacity = 0.1f;
+    [Tooltip("Opacity of the 3 grey background miniPanels (centre panel -> Mayor / Faction / Orgs) in the city tooltip")]
+    [Range(0f, 1.0f)] public float miniPanelOpacity = 0.25f;
 
     private int _cityLoyalty;                       //loyalty of city (0 to 10). Same number for both sides
 
@@ -70,7 +72,7 @@ public class CityManager : MonoBehaviour
         if (city.mayor != null)
         { city.faction = city.mayor.faction; }
         else { Debug.LogError("Invalid city Mayor (Null)"); }
-        //organisations -> placeholder (should be a loop for all cities
+        //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);
         
         

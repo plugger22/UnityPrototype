@@ -17,9 +17,17 @@ public class CityInfoUI : MonoBehaviour
     public Image subPanelLeft;
     public Image subPanelMiddle;
     public Image subPanelRight;
+    public Image miniPanelTop;
+    public Image miniPanelMiddle;
+    public Image miniPanelBottom;
     public TextMeshProUGUI cityName;
     public TextMeshProUGUI cityArc;
     public TextMeshProUGUI cityDescription;
+    public TextMeshProUGUI mayorName;
+    public TextMeshProUGUI mayorTrait;
+    public TextMeshProUGUI factionName;
+    public TextMeshProUGUI factionTrait;
+    public TextMeshProUGUI organisations;
     //left panel -> Districts
     public TextMeshProUGUI districtNames;
     public TextMeshProUGUI districtTotals;
@@ -83,7 +91,6 @@ public class CityInfoUI : MonoBehaviour
     public void Start()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeLevel, OnEvent);
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
         EventManager.instance.AddListener(EventType.CityInfoOpen, OnEvent);
         EventManager.instance.AddListener(EventType.CityInfoClose, OnEvent);
@@ -100,9 +107,6 @@ public class CityInfoUI : MonoBehaviour
         //Detect event type
         switch (eventType)
         {
-            case EventType.ChangeLevel:
-                ChangeLevel();
-                break;
             case EventType.ChangeSide:
                 ChangeSides((GlobalSide)Param);
                 break;
@@ -118,13 +122,7 @@ public class CityInfoUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Change level event
-    /// </summary>
-    private void ChangeLevel()
-    {
-        //UpdateCachedData();
-    }
+
 
 
     /// <summary>
@@ -157,23 +155,6 @@ public class CityInfoUI : MonoBehaviour
         }
     }
 
-    /*/// <summary>
-    /// updates and assigns all cached data for city info screen when a new level (City) is loaded
-    /// </summary>
-    private void UpdateCachedData()
-    {
-        Debug.LogFormat("CityInfoUI -> UpdateCachedData()");
-        //city details
-        city = GameManager.instance.cityScript.GetCity();
-        Debug.Assert(city != null, "Invalid city (Null)");
-        cityName.text = city.name;
-        cityArc.text = city.Arc.name;
-        cityDescription.text = city.descriptor;
-        //district details
-        districtNames.text = GameManager.instance.nodeScript.GetNodeArcNames();
-        districtTotals.text = GameManager.instance.nodeScript.GetNodeArcNumbers();
-    }*/
-
     /// <summary>
     /// set all UI components (apart from main) to active. Run at level start to ensure no problems (something hasn't been switched off in the editor)
     /// </summary>
@@ -190,13 +171,24 @@ public class CityInfoUI : MonoBehaviour
         subPanelMiddle.gameObject.SetActive(true);
         subPanelRight.gameObject.SetActive(true);
         //subPanel opacities (same for all three)
-        float opacity = GameManager.instance.cityScript.subPanelOpacity;
-        Debug.Assert(opacity >= 0 && opacity <= 100.0f, string.Format("Invalid subPanel opacity \"{0}\"", opacity));
+        float opacitySub = GameManager.instance.cityScript.subPanelOpacity;
+        float opacityMini = GameManager.instance.cityScript.miniPanelOpacity;
+        Debug.Assert(opacitySub >= 0 && opacitySub <= 100.0f, string.Format("Invalid subPanel opacity \"{0}\"", opacitySub));
+        //left and right panels faintly visible
         Color panelColor = subPanelLeft.color;
-        panelColor.a = opacity;
+        panelColor.a = opacitySub;
         subPanelLeft.color = panelColor;
-        subPanelMiddle.color = panelColor;
         subPanelRight.color = panelColor;
+        //middle panel invisibile
+        panelColor = subPanelMiddle.color;
+        panelColor.a = 0.0f;
+        subPanelMiddle.color = panelColor;
+        //mini panels more visible
+        panelColor = miniPanelTop.color;
+        panelColor.a = opacityMini;
+        miniPanelTop.color = panelColor;
+        miniPanelMiddle.color = panelColor;
+        miniPanelBottom.color = panelColor;
     }
 
     /// <summary>

@@ -132,6 +132,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();         //Key -> GlobalSide.name, Value -> GlobalSide
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
 
+    #region Archived Import Methods
     /*/// <summary>
     /// first up initialisation
     /// </summary>
@@ -744,6 +745,7 @@ public class DataManager : MonoBehaviour
         Debug.Log(string.Format("DataManager: Initialise -> dictOfObjectives has {0} entries{1}", counter, "\n"));
     }
     */
+    #endregion
 
     /// <summary>
     /// Stuff that is done after level Manager.SetUp
