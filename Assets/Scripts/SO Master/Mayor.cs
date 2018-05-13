@@ -12,6 +12,9 @@ public class Mayor : ScriptableObject
     public Faction faction;
     [Tooltip("Motto of Mayor in 6 words or less")]
     public string motto;
+    [Tooltip("Unique trait of the Mayor")]
+    public Trait trait;
 
     [HideInInspector] public int mayorID;
+
 }

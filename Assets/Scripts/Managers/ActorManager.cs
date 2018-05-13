@@ -14,7 +14,7 @@ using UnityEngine.Events;
 /// </summary>
 public class ActorManager : MonoBehaviour
 {
-
+    [Header("Basics")]
     [HideInInspector] public int numOfActiveActors;    //Actors who are OnMap and active, eg. not asleep or captured
     [Tooltip("Maxium number of actors (Active or Inactive) that can be onMap (eg. 'Onscreen') at any one time")]
     [Range(1, 4)] public int maxNumOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
@@ -26,6 +26,7 @@ public class ActorManager : MonoBehaviour
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
     [Range(2, 4)] public int minStatValue = 0;
+    [Header("Management")]
     [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int promiseReserveTimer = 10;
     [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their unhappy timer will be set to this number of turns.")]
@@ -1888,9 +1889,11 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">", 
+                        /*tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">", 
                             GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level), 
-                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);*/
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.trait.tagFormatted, 
+                            "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
@@ -1962,14 +1965,14 @@ public class ActorManager : MonoBehaviour
                             InventoryOptionData optionData = new InventoryOptionData();
                             optionData.sprite = actor.arc.baseSprite;
                             optionData.textUpper = actor.arc.name;
-                            //colour code trait
+                            /*//colour code trait
                             switch (actor.trait.typeOfTrait.name)
                             {
                                 case "Good": colourTrait = colourGood; break;
                                 case "Neutral": colourTrait = colourNeutral; break;
                                 case "Bad": colourTrait = colourBad; break;
                                 default: colourTrait = colourDefault; break;
-                            }
+                            }*/
                             //unhappy situation
                             if (actor.CheckConditionPresent(conditionUnhappy) == true)
                             { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
@@ -1977,7 +1980,8 @@ public class ActorManager : MonoBehaviour
                             { unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer, 
                                 actor.unhappyTimer != 1 ? "s" : "", colourEnd); }
                             //combined text string
-                            optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);
+                            /*optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);*/
+                            optionData.textLower = string.Format("{0}{1}{2}", actor.trait.tagFormatted, "\n", unhappySituation);
                             optionData.optionID = actor.actorID;
                             //tooltip
                             GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
@@ -1998,9 +2002,11 @@ public class ActorManager : MonoBehaviour
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
-                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
+                            /*tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
                                 GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level),
-                                "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                                "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);*/
+                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", 
+                                actor.trait.tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                             //add to arrays
                             data.arrayOfOptions[i] = optionData;
                             data.arrayOfTooltips[i] = tooltipDetails;
@@ -2088,14 +2094,14 @@ public class ActorManager : MonoBehaviour
                         InventoryOptionData optionData = new InventoryOptionData();
                         optionData.sprite = actor.arc.baseSprite;
                         optionData.textUpper = actor.arc.name;
-                        //colour code trait
+                        /*//colour code trait
                         switch (actor.trait.typeOfTrait.name)
                         {
                             case "Good": colourTrait = colourGood; break;
                             case "Neutral": colourTrait = colourNeutral; break;
                             case "Bad": colourTrait = colourBad; break;
                             default: colourTrait = colourDefault; break;
-                        }
+                        }*/
                         //unhappy situation
                         if (actor.CheckConditionPresent(conditionUnhappy) == true)
                         { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
@@ -2105,7 +2111,8 @@ public class ActorManager : MonoBehaviour
                               actor.unhappyTimer != 1 ? "s" : "", colourEnd);
                         }
                         //combined text string
-                        optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);
+                        /*optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);*/
+                        optionData.textLower = string.Format("{0}{1}{2}{3}{4}", actor.trait.tagFormatted, "\n", unhappySituation);
                         optionData.optionID = actor.actorID;
                         //tooltip
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
@@ -2126,9 +2133,11 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
+                        /*tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
                             GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level),
-                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);*/
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.trait.tagFormatted, 
+                            "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to arrays
                         data.arrayOfOptions[i] = optionData;
                         data.arrayOfTooltips[i] = tooltipDetails;
@@ -2567,7 +2576,7 @@ public class ActorManager : MonoBehaviour
                                 if (actor.isBreakdown == false)
                                 {
                                     //double chance of a breakdown if actor is sensitive
-                                    if (actor.trait.name.Equals("Sensitive") == true)
+                                    if (actor.trait.tag.Equals("Sensitive") == true)
                                     { chance *= 2; }
                                     if (Random.Range(0, 100) <= chance)
                                     {
@@ -2612,7 +2621,7 @@ public class ActorManager : MonoBehaviour
                                 if (actor.isBreakdown == false)
                                 {
                                     //double chance of a breakdown if actor is sensitive
-                                    if (actor.trait.name.Equals("Sensitive") == true)
+                                    if (actor.trait.tag.Equals("Sensitive") == true)
                                     { chance *= 2; }
                                     if (Random.Range(0, 100) <= chance)
                                     {

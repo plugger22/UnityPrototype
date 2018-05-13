@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TargetManager targetScript;              //Target Manager
     [HideInInspector] public OptionManager optionScript;              //Option Manager
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
+    [HideInInspector] public TraitManager traitScript;                //Trait Manager
     [HideInInspector] public FactionManager factionScript;            //Faction Manager
     [HideInInspector] public OrganisationManager orgScript;           //Organisation Manager
     [HideInInspector] public CityManager cityScript;                  //City Manager
@@ -106,6 +107,7 @@ public class GameManager : MonoBehaviour
         actorScript = GetComponent<ActorManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
+        traitScript = GetComponent<TraitManager>();
         factionScript = GetComponent<FactionManager>();
         orgScript = GetComponent<OrganisationManager>();
         cityScript = GetComponent<CityManager>();
@@ -166,7 +168,7 @@ public class GameManager : MonoBehaviour
     {
         importScript.InitialiseStart();   //must be first
         globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
-        colourScript.Initialise();
+        colourScript.Initialise();      
         messageScript.Initialise();     //must be after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
         tooltipNodeScript.Initialise();
         sideScript.Initialise();
@@ -200,7 +202,7 @@ public class GameManager : MonoBehaviour
         rebelScript.Initialise();
         authorityScript.Initialise();
         debugGraphicsScript.Initialise();
-
+        traitScript.Initialise();
         cityInfoScript.Initialise();
         widgetTopScript.Initialise();
         //do a final redraw before game start

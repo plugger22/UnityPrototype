@@ -144,7 +144,7 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="eventType">Event to Listen for</param>
     /// <param name="Listener">Object to listen for event</param>
-    public void AddListener(EventType eventType, OnEvent Listener)
+    public void AddListener(EventType eventType, OnEvent Listener, string methodName = "Unknown")
     {
         //List of listeners for this event
         List<OnEvent> ListenList = null;
@@ -162,7 +162,7 @@ public class EventManager : MonoBehaviour
             //Add to internal listeners list
             dictOfListeners.Add(eventType, ListenList); 
         }
-        Debug.Log(string.Format("EventManager -> Listener Added -> type: {0}  sender: {1}{2}", eventType, Listener.GetType(), "\n"));
+        Debug.Log(string.Format("EVM -> Listener Added -> type: {0}  sender: {1}{2}", eventType, methodName, "\n"));
     }
     
     /// <summary>
@@ -191,7 +191,7 @@ public class EventManager : MonoBehaviour
         {
             if (ListenList[i] != null)
             {
-                Debug.Log(string.Format("EventManager: PostNotification -> type: {0}{1}", eventType, "\n"));
+                Debug.Log(string.Format("EVM: PostNotification -> type: {0}{1}", eventType, "\n"));
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);
             }

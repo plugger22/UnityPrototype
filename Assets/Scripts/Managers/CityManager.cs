@@ -172,6 +172,14 @@ public class CityManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns colour formatted string detailed # of organisations active in city
+    /// </summary>
+    /// <returns></returns>
+    public string GetNumOfOrganisations()
+    { return string.Format("{0}{1}{2} present", colourNeutral, city.CheckNumOfOrganisations(), colourEnd); }
+
+
+    /// <summary>
     /// returns a colour formatted string of all the organisation within a city. Used by cityInfoUI organisations tooltip
     /// </summary>
     /// <param name="city"></param>

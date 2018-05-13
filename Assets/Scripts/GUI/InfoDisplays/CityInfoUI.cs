@@ -242,10 +242,10 @@ public class CityInfoUI : MonoBehaviour
             districtTotals.text = GetDistrictTotals();
             //centre panel -> mayor / faction / organisation
             mayorName.text = city.mayor.name;
-            mayorTrait.text = "Restless";
+            mayorTrait.text = city.mayor.trait.tagFormatted;
             factionName.text = city.faction.name;
             factionTrait.text = "Security Focused";
-            organisations.text = string.Format("{0} present", city.CheckNumOfOrganisations());
+            organisations.text = GameManager.instance.cityScript.GetNumOfOrganisations();
             //city image (uses arc sprite, GUIManager.cs default sprite if arc sprite is null)
             if (city.Arc.sprite != null)
             { cityImage.sprite = city.Arc.sprite; }

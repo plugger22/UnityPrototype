@@ -16,6 +16,8 @@ public class Faction : ScriptableObject
     public NodeArc hostileArc;
     [Tooltip("How many actions the AI faction can carry out per turn")]
     [Range(1,3)] public int maxTaskPerTurn = 3;
+    [Tooltip("Unique trait of the Faction")]
+    public Trait trait;
 
     [HideInInspector] public int factionID;         //dynamically assigned by DataManager.cs on import
 }

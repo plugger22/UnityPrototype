@@ -201,7 +201,7 @@ public class TooltipActor : MonoBehaviour
             }
 
             //Trait
-            string colourTrait = colourQuality;
+            /*string colourTrait = colourQuality;
             if (data.actor.trait.typeOfTrait != null)
             {
                 switch (data.actor.trait.typeOfTrait.name)
@@ -216,7 +216,9 @@ public class TooltipActor : MonoBehaviour
                 colourTrait = colourDefault;
                 Debug.LogWarning("Invalid actor.trait.typeOfTrait (Null)");
             }
-            actorTrait.text = string.Format("{0}{1}{2}", colourTrait, data.actor.trait.name, colourEnd);
+            actorTrait.text = string.Format("{0}{1}{2}", colourTrait, data.actor.trait.name, colourEnd);*/
+            actorTrait.text = data.actor.trait.tagFormatted;
+
 
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
