@@ -63,7 +63,7 @@ public class ModalActionMenu : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
         //register listener
-        EventManager.instance.AddListener(EventType.CloseActionMenu, OnEvent);
+        EventManager.instance.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
     }
 
     /// <summary>

@@ -22,8 +22,8 @@ public class MessageManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         //event Listeners
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
-        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
+        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "MessageManager");
     }
 
 

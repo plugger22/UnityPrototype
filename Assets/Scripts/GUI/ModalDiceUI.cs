@@ -94,17 +94,17 @@ public class ModalDiceUI : MonoBehaviour
     private void Start()
     {
         //register listeners
-        EventManager.instance.AddListener(EventType.OpenDiceUI, OnEvent);
-        EventManager.instance.AddListener(EventType.CloseDiceUI, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceIgnore, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceAuto, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceBypass, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceRoll, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceConfirm, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceRenownYes, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceRenownNo, OnEvent);
+        EventManager.instance.AddListener(EventType.OpenDiceUI, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.CloseDiceUI, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.DiceIgnore, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.DiceAuto, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.DiceBypass, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.DiceRoll, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.DiceConfirm, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.DiceRenownYes, OnEvent, "ModalDiceUI");
+        EventManager.instance.AddListener(EventType.DiceRenownNo, OnEvent, "ModalDiceUI");
     }
 
     /// <summary>

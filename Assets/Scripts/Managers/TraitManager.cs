@@ -49,16 +49,9 @@ public class TraitManager : MonoBehaviour
 
 
 
-    public void InitialiseEarly()
-    {
-
-    }
-
-
     public void Initialise()
     {
-        //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TraitManager");
+        SetColours();
         //initialise trait formatted field
         Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
         if (dictOfTraits != null)
@@ -92,6 +85,7 @@ public class TraitManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTraits (Null)"); }
-
+        //register listener
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TraitManager");
     }
 }

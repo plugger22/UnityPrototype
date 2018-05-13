@@ -70,11 +70,11 @@ public class TurnManager : MonoBehaviour
         //current side
         currentSide = GameManager.instance.sideScript.PlayerSide;
         //event Listeners
-        EventManager.instance.AddListener(EventType.NewTurn, OnEvent);
-        EventManager.instance.AddListener(EventType.UseAction, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
-        EventManager.instance.AddListener(EventType.ExitGame, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
+        EventManager.instance.AddListener(EventType.UseAction, OnEvent, "TurnManager");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
+        EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "TurnManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
     }
 
 

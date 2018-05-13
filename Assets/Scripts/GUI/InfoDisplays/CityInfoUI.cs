@@ -104,9 +104,9 @@ public class CityInfoUI : MonoBehaviour
     public void Start()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
-        EventManager.instance.AddListener(EventType.CityInfoOpen, OnEvent);
-        EventManager.instance.AddListener(EventType.CityInfoClose, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "CityInfoUI");
+        EventManager.instance.AddListener(EventType.CityInfoOpen, OnEvent, "CityInfoUI");
+        EventManager.instance.AddListener(EventType.CityInfoClose, OnEvent, "CityInfoUI");
     }
 
     /// <summary>
@@ -241,10 +241,22 @@ public class CityInfoUI : MonoBehaviour
             districtNames.text = GetDistrictNames(city);
             districtTotals.text = GetDistrictTotals();
             //centre panel -> mayor / faction / organisation
-            mayorName.text = city.mayor.name;
-            mayorTrait.text = city.mayor.trait.tagFormatted;
-            factionName.text = city.faction.name;
-            factionTrait.text = "Security Focused";
+            if (city.mayor != null)
+            {
+                mayorName.text = city.mayor.name;
+                if (city.mayor.trait != null)
+                { mayorTrait.text = city.mayor.trait.tagFormatted; }
+                else { mayorTrait.text = "Unknown"; }
+            }
+            else { mayorName.text = "Unknown"; }
+            if (city.faction != null)
+            {
+                factionName.text = city.faction.name;
+                if (city.faction.trait != null)
+                { factionTrait.text = city.faction.trait.tagFormatted; }
+                else { factionTrait.text = "Unknown"; }
+            }
+            else { factionName.text = "Unknown"; }
             organisations.text = GameManager.instance.cityScript.GetNumOfOrganisations();
             //city image (uses arc sprite, GUIManager.cs default sprite if arc sprite is null)
             if (city.Arc.sprite != null)

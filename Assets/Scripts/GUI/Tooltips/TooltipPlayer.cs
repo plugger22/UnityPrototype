@@ -51,8 +51,8 @@ public class TooltipPlayer : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipPlayer");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipPlayer");
     }
 
     /// <summary>

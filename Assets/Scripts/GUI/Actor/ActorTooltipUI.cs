@@ -41,7 +41,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         mouseOverFade /= 2;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         //event listener is registered in InitialiseActors() due to GameManager sequence.
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorTooltipUI");
     }
 
 

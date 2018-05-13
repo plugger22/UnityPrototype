@@ -88,13 +88,13 @@ public class ModalGenericPicker : MonoBehaviour
     private void Start()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.OpenGenericPicker, OnEvent);
-        EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.ConfirmGenericActivate, OnEvent);
-        EventManager.instance.AddListener(EventType.ConfirmGenericChoice, OnEvent);
-        EventManager.instance.AddListener(EventType.ConfirmGenericDeactivate, OnEvent);
-        EventManager.instance.AddListener(EventType.BackButtonGeneric, OnEvent);
+        EventManager.instance.AddListener(EventType.OpenGenericPicker, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.ConfirmGenericActivate, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.ConfirmGenericChoice, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.ConfirmGenericDeactivate, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.BackButtonGeneric, OnEvent, "ModalGenericPicker");
     }
 
     /// <summary>

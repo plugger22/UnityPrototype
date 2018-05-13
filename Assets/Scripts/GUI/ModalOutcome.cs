@@ -53,9 +53,9 @@ public class ModalOutcome : MonoBehaviour
         { buttonInteract.SetEvent(EventType.CloseOutcomeWindow); }
         else { Debug.LogError("Invalid buttonInteract (Null)"); }
         //register a listener
-        EventManager.instance.AddListener(EventType.OpenOutcomeWindow, OnEvent);
-        EventManager.instance.AddListener(EventType.CloseOutcomeWindow, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        EventManager.instance.AddListener(EventType.OpenOutcomeWindow, OnEvent, "ModalOutcome");
+        EventManager.instance.AddListener(EventType.CloseOutcomeWindow, OnEvent, "ModalOutcome");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ModalOutcome");
     }
 
     /// <summary>

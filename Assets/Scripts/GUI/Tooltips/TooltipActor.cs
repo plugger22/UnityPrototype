@@ -53,8 +53,8 @@ public class TooltipActor : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipActor");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipActor");
     }
 
     /// <summary>
@@ -199,34 +199,14 @@ public class TooltipActor : MonoBehaviour
                 }
                 else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
             }
-
             //Trait
-            /*string colourTrait = colourQuality;
-            if (data.actor.trait.typeOfTrait != null)
-            {
-                switch (data.actor.trait.typeOfTrait.name)
-                {
-                    case "Good": colourTrait = colourGood; break;
-                    case "Neutral": colourTrait = colourNeutral; break;
-                    case "Bad": colourTrait = colourBad; break;
-                }
-            }
-            else
-            {
-                colourTrait = colourDefault;
-                Debug.LogWarning("Invalid actor.trait.typeOfTrait (Null)");
-            }
-            actorTrait.text = string.Format("{0}{1}{2}", colourTrait, data.actor.trait.name, colourEnd);*/
             actorTrait.text = data.actor.trait.tagFormatted;
-
-
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
         //action
         if (data.action != null)
         { actorAction.text = string.Format("{0}{1}{2}", colourAction, data.action.name, colourEnd); }
         else { Debug.LogWarning(string.Format("Actor \"{0}\" has an invalid Action (Null)", data.actor.actorName)); }
-
         //qualities
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         if (data.arrayOfQualities.Length > 0)

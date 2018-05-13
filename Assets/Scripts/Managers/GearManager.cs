@@ -161,10 +161,10 @@ public class GearManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfGear (Null) -> Gear not initialised"); }
         //event Listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.GearAction, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent);
-        EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GearManager");
+        EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
+        EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
+        EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
     }
 
 

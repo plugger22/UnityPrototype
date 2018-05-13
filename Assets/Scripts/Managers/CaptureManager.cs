@@ -30,11 +30,11 @@ public class CaptureManager : MonoBehaviour
     public void Initialise()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.Capture, OnEvent);
-        EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent);
-        EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
     }
 
     /// <summary>

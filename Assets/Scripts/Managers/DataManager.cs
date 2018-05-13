@@ -773,7 +773,7 @@ public class DataManager : MonoBehaviour
             listOfNodesByType[node.Arc.nodeArcID].Add(node);
         }
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "DataManager");
     }
 
     /// <summary>

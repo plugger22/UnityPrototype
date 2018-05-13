@@ -34,25 +34,25 @@ public class ActionManager : MonoBehaviour
         //fast access fields
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         //register listener
-        EventManager.instance.AddListener(EventType.NodeAction, OnEvent);
-        EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent);
-        EventManager.instance.AddListener(EventType.TargetAction, OnEvent);
-        EventManager.instance.AddListener(EventType.LieLowAction, OnEvent);
-        EventManager.instance.AddListener(EventType.ActivateAction, OnEvent);
-        EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent);
-        EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent);
-        EventManager.instance.AddListener(EventType.UseGearAction, OnEvent);
-        EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericReserveActor, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent);
-        EventManager.instance.AddListener(EventType.InventoryReassure, OnEvent);
-        EventManager.instance.AddListener(EventType.InventoryThreaten, OnEvent);
-        EventManager.instance.AddListener(EventType.InventoryActiveDuty, OnEvent);
-        EventManager.instance.AddListener(EventType.InventoryLetGo, OnEvent);
-        EventManager.instance.AddListener(EventType.InventoryFire, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.NodeAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.TargetAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LieLowAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ActivateAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.UseGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericReserveActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryReassure, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryThreaten, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryActiveDuty, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryLetGo, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryFire, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActionManager");
     }
 
     /// <summary>

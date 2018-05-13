@@ -72,8 +72,8 @@ public class TargetManager : MonoBehaviour
         foreach(var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, this.OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnLate, this.OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TargetManager");
     }
 
 

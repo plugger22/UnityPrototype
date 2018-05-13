@@ -36,7 +36,7 @@ public class EffectManager : MonoBehaviour
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
     }
 
     /// <summary>

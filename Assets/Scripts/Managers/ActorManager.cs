@@ -116,13 +116,13 @@ public class ActorManager : MonoBehaviour
         if (conditionStressed == null)
         { Debug.LogError("Invalid conditionStressed (Null)"); }
         //event listener is registered in InitialiseActors() due to GameManager sequence.
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.RecruitAction, OnEvent);
-        EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent);
-        EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent);
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.RecruitAction, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent, "ActorManager");
         //create active, OnMap actors
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
@@ -1889,9 +1889,6 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        /*tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">", 
-                            GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level), 
-                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);*/
                         tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.trait.tagFormatted, 
                             "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to master arrays
@@ -1931,7 +1928,7 @@ public class ActorManager : MonoBehaviour
     private void InitialiseReservePoolInventory()
     {
         int numOfActors;
-        string colourTrait, unhappySituation;
+        string unhappySituation;
         bool errorFlag = false;
         //close node tooltip -> safety check
         GameManager.instance.tooltipNodeScript.CloseTooltip();
@@ -1965,14 +1962,6 @@ public class ActorManager : MonoBehaviour
                             InventoryOptionData optionData = new InventoryOptionData();
                             optionData.sprite = actor.arc.baseSprite;
                             optionData.textUpper = actor.arc.name;
-                            /*//colour code trait
-                            switch (actor.trait.typeOfTrait.name)
-                            {
-                                case "Good": colourTrait = colourGood; break;
-                                case "Neutral": colourTrait = colourNeutral; break;
-                                case "Bad": colourTrait = colourBad; break;
-                                default: colourTrait = colourDefault; break;
-                            }*/
                             //unhappy situation
                             if (actor.CheckConditionPresent(conditionUnhappy) == true)
                             { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
@@ -1980,7 +1969,6 @@ public class ActorManager : MonoBehaviour
                             { unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer, 
                                 actor.unhappyTimer != 1 ? "s" : "", colourEnd); }
                             //combined text string
-                            /*optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);*/
                             optionData.textLower = string.Format("{0}{1}{2}", actor.trait.tagFormatted, "\n", unhappySituation);
                             optionData.optionID = actor.actorID;
                             //tooltip
@@ -2002,9 +1990,6 @@ public class ActorManager : MonoBehaviour
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
-                            /*tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
-                                GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level),
-                                "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);*/
                             tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", 
                                 actor.trait.tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                             //add to arrays
@@ -2066,7 +2051,7 @@ public class ActorManager : MonoBehaviour
     public InventoryInputData RefreshReservePool()
     {
         int numOfActors;
-        string colourTrait, unhappySituation;
+        string unhappySituation;
         InventoryInputData data = new InventoryInputData();
         numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
         data.side = GameManager.instance.sideScript.PlayerSide;
@@ -2094,14 +2079,6 @@ public class ActorManager : MonoBehaviour
                         InventoryOptionData optionData = new InventoryOptionData();
                         optionData.sprite = actor.arc.baseSprite;
                         optionData.textUpper = actor.arc.name;
-                        /*//colour code trait
-                        switch (actor.trait.typeOfTrait.name)
-                        {
-                            case "Good": colourTrait = colourGood; break;
-                            case "Neutral": colourTrait = colourNeutral; break;
-                            case "Bad": colourTrait = colourBad; break;
-                            default: colourTrait = colourDefault; break;
-                        }*/
                         //unhappy situation
                         if (actor.CheckConditionPresent(conditionUnhappy) == true)
                         { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
@@ -2111,8 +2088,7 @@ public class ActorManager : MonoBehaviour
                               actor.unhappyTimer != 1 ? "s" : "", colourEnd);
                         }
                         //combined text string
-                        /*optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourTrait, actor.trait.name.ToUpper(), colourEnd, "\n", unhappySituation);*/
-                        optionData.textLower = string.Format("{0}{1}{2}{3}{4}", actor.trait.tagFormatted, "\n", unhappySituation);
+                        optionData.textLower = string.Format("{0}{1}{2}", actor.trait.tagFormatted, "\n", unhappySituation);
                         optionData.optionID = actor.actorID;
                         //tooltip
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
@@ -2133,9 +2109,6 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        /*tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}", "<font=\"Bangers SDF\">",
-                            GameManager.instance.colourScript.GetValueColour(1 + actor.trait.typeOfTrait.level),
-                            "<cspace=0.6em>", actor.trait.name, "</cspace>", colourEnd, "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);*/
                         tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.trait.tagFormatted, 
                             "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to arrays

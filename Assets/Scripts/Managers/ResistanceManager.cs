@@ -27,7 +27,7 @@ public class ResistanceManager : MonoBehaviour
         resistanceCause = 0;*/
 
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ResistanceManager");
     }
 
     /// <summary>

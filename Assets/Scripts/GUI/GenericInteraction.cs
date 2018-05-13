@@ -36,7 +36,7 @@ namespace gameAPI
         private void Start()
         {
             //event listener
-            EventManager.instance.AddListener(EventType.DeselectOtherGenerics, OnEvent);
+            EventManager.instance.AddListener(EventType.DeselectOtherGenerics, OnEvent, "GenericInteraction");
         }
 
         /// <summary>

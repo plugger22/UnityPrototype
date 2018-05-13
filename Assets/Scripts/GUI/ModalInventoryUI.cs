@@ -95,9 +95,9 @@ public class ModalInventoryUI : MonoBehaviour
     private void Start()
     {        
         //register listener
-        EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent);
-        EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent, "ModalInventoryUI");
+        EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent, "ModalInventoryUI");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalInventoryUI");
     }
 
     /// <summary>

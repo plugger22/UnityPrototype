@@ -141,7 +141,7 @@ public class GUIManager : MonoBehaviour
         for (int i = 0; i < isBlocked.Length; i++)
         { isBlocked[i] = false; }
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");
     }
 
     public void InitialiseLate()

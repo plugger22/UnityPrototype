@@ -38,7 +38,7 @@ public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         mouseOverFade /= 2;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "PlayerTooltipUI");
     }
 
 

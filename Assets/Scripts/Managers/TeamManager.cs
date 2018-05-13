@@ -50,13 +50,13 @@ public class TeamManager : MonoBehaviour
         InitialiseTeams();
         /*SeedTeamsOnMap();     //DEBUG*/
         //event Listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
-        EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent);
-        EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent);
-        EventManager.instance.AddListener(EventType.GenericNeutraliseTeam, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.GenericNeutraliseTeam, OnEvent, "TeamManager");
     }
 
 

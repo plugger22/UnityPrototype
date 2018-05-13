@@ -35,7 +35,7 @@ namespace gameAPI
         private void Start()
         {
             //event listener
-            EventManager.instance.AddListener(EventType.DeselectOtherTeams, OnEvent);
+            EventManager.instance.AddListener(EventType.DeselectOtherTeams, OnEvent, "TeamInteraction");
         }
 
         /// <summary>

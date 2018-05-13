@@ -35,14 +35,14 @@ public class WidgetTopUI : MonoBehaviour
         Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
         Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
     }
 
 

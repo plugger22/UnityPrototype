@@ -108,8 +108,6 @@ public class Connection : MonoBehaviour
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
-        /*//register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);*/
     }
 
     public void InitialiseConnection(int v1, int v2)

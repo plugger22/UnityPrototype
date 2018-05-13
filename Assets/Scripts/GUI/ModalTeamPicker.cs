@@ -100,12 +100,12 @@ public class ModalTeamPicker : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTeamArcs (null) -> Sprites not assigned to ModalTeamPicker"); }
         //register listener
-        EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent);
-        EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.ConfirmTeamActivate, OnEvent);
-        EventManager.instance.AddListener(EventType.ConfirmTeamChoice, OnEvent);
-        EventManager.instance.AddListener(EventType.ConfirmTeamDeactivate, OnEvent);
+        EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ConfirmTeamActivate, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ConfirmTeamChoice, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ConfirmTeamDeactivate, OnEvent, "ModalTeamPicker");
     }
 
 

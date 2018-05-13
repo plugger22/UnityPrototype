@@ -56,7 +56,7 @@ public class CityManager : MonoBehaviour
         
 
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CityManager");
     }
 
     /// <summary>

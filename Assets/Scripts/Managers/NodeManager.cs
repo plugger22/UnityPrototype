@@ -170,14 +170,14 @@ public class NodeManager : MonoBehaviour
         //DEBUG
         /*DebugRandomActivityValues();*/
         //register listener
-        EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent);
-        EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent);
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
-        EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent);
-        EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent);
-        EventManager.instance.AddListener(EventType.MoveAction, OnEvent);
-        EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent);
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent);
+        EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
     }
 
 

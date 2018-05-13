@@ -62,7 +62,7 @@ public class FactionManager : MonoBehaviour
         Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}", 
             factionResistance, factionAuthority, "\n"));
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
     }
 
     /// <summary>

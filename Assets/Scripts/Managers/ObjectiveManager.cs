@@ -35,7 +35,7 @@ public class ObjectiveManager : MonoBehaviour
         listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(maxNumOfObjectives));
         objectivesTotal = maxNumOfObjectives;
         //event listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent);
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ObjectiveManager");
     }
 
 
