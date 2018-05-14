@@ -15,6 +15,7 @@ public class ImportManager : MonoBehaviour
 
     public void InitialiseStart()
     {
+        int counter;
         string path;
         //
         // - - - GlobalMeta - - -
@@ -172,6 +173,44 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("DataManager: Initialise -> dictOfTraitCategories has {0} entries{1}", dictOfTraitCategories.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfTraitCategories (Null) -> Import failed"); }
+        //
+        // - - - TraitEffects - - -
+        //
+        Dictionary<int, TraitEffect> dictOfTraitEffects = GameManager.instance.dataScript.GetDictOfTraitEffects();
+        Dictionary<string, int> dictOfLookUpTraitEffects = GameManager.instance.dataScript.GetDictOfLookUpTraitEffects();
+        if (dictOfTraitCategories != null)
+        {
+            if (dictOfLookUpTraitEffects != null)
+            {
+                counter = 0;
+                var traitEffectGUID = AssetDatabase.FindAssets("t:TraitEffect");
+                foreach (var guid in traitEffectGUID)
+                {
+                    //get path
+                    path = AssetDatabase.GUIDToAssetPath(guid);
+                    //get SO
+                    UnityEngine.Object traitEffectObject = AssetDatabase.LoadAssetAtPath(path, typeof(TraitEffect));
+                    //assign a zero based unique ID number
+                    TraitEffect traitEffect = traitEffectObject as TraitEffect;
+                    traitEffect.teffID = counter;
+                    counter++;
+                    //add to dictionaries
+                    try
+                    {
+                        dictOfTraitEffects.Add(traitEffect.teffID, traitEffect);
+                        dictOfLookUpTraitEffects.Add(traitEffect.name, traitEffect.teffID);
+                    }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid trait Effect (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid trait Effect (duplicate) \"{0}\"", traitEffect.name)); }
+                }
+                Debug.LogFormat("DataManager: Initialise -> dictOfTraitEffects has {0} entries{1}", dictOfTraitEffects.Count, "\n");
+                Debug.LogFormat("DataManager: Initialise -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
+            }
+            else { Debug.LogError("Invalid dictOfLookUpTraitEffects (Null) -> Import failed"); }
+        }
+        else { Debug.LogError("Invalid dictOfTraitEffects (Null) -> Import failed"); }
     }
 
 

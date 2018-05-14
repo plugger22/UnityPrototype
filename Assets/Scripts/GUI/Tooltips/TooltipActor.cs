@@ -200,7 +200,7 @@ public class TooltipActor : MonoBehaviour
                 else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
             }
             //Trait
-            actorTrait.text = data.actor.trait.tagFormatted;
+            actorTrait.text = data.actor.GetTrait().tagFormatted;
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
         //action

@@ -1074,10 +1074,10 @@ public class DataManager : MonoBehaviour
         return traitCategory;
     }
 
-    public Dictionary<int, TraitEffect> GetDictionaryOfTraitEffects()
+    public Dictionary<int, TraitEffect> GetDictOfTraitEffects()
     { return dictOfTraitEffects; }
 
-    public Dictionary<string, int> GetDictionaryOfLookUpTraitEffects()
+    public Dictionary<string, int> GetDictOfLookUpTraitEffects()
     { return dictOfLookUpTraitEffects; }
 
     /// <summary>

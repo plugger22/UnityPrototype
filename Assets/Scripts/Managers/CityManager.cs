@@ -146,7 +146,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetCityLoyalty()
-    { return string.Format("{0}{1}{2} out of {1}", colourNeutral, _cityLoyalty, colourEnd, maxCityLoyalty); }
+    { return string.Format("{0}{1}{2} out of {3}", colourNeutral, _cityLoyalty, colourEnd, maxCityLoyalty); }
 
 
     public string GetCityDescription()

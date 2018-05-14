@@ -83,6 +83,9 @@ public class ActorManager : MonoBehaviour
     private GlobalSide globalResistance;
     private Condition conditionStressed;
     private TraitCategory actorCategory;
+    //cached Trait Effects
+    private int actorBreakdownHigh;
+    private int actorBreakdownLow;
 
     //colour palette for Generic tool tip
     private string colourResistance;
@@ -119,6 +122,11 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
+        //cached TraitEffects
+        actorBreakdownHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
+        actorBreakdownLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
+        Debug.Assert(actorBreakdownHigh > -1, "Invalid actorBreakdownHigh (-1)");
+        Debug.Assert(actorBreakdownLow > -1, "Invalid actorBreakdownLow (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -361,9 +369,9 @@ public class ActorManager : MonoBehaviour
                 actor.side = side;
                 actor.arc = arc;
                 actor.actorName = arc.actorName;
-                actor.trait = GameManager.instance.dataScript.GetRandomTrait(actorCategory);
+                actor.AddTrait(GameManager.instance.dataScript.GetRandomTrait(actorCategory));
                 actor.Status = status;
-                Debug.Assert(actor.trait != null, "Invalid actor.trait (Null)");
+                Debug.Assert(actor.GetTrait() != null, "Invalid actor.trait (Null)");
                 //level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }
@@ -1894,7 +1902,7 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.trait.tagFormatted, 
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted, 
                             "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to master arrays
                         genericDetails.arrayOfOptions[i] = optionDetails;
@@ -1974,7 +1982,7 @@ public class ActorManager : MonoBehaviour
                             { unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer, 
                                 actor.unhappyTimer != 1 ? "s" : "", colourEnd); }
                             //combined text string
-                            optionData.textLower = string.Format("{0}{1}{2}", actor.trait.tagFormatted, "\n", unhappySituation);
+                            optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
                             optionData.optionID = actor.actorID;
                             //tooltip
                             GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
@@ -1996,7 +2004,7 @@ public class ActorManager : MonoBehaviour
                             }
                             //trait and action
                             tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", 
-                                actor.trait.tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                                actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                             //add to arrays
                             data.arrayOfOptions[i] = optionData;
                             data.arrayOfTooltips[i] = tooltipDetails;
@@ -2093,7 +2101,7 @@ public class ActorManager : MonoBehaviour
                               actor.unhappyTimer != 1 ? "s" : "", colourEnd);
                         }
                         //combined text string
-                        optionData.textLower = string.Format("{0}{1}{2}", actor.trait.tagFormatted, "\n", unhappySituation);
+                        optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
                         optionData.optionID = actor.actorID;
                         //tooltip
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
@@ -2114,7 +2122,7 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.trait.tagFormatted, 
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=1em>", actor.GetTrait().tagFormatted, 
                             "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to arrays
                         data.arrayOfOptions[i] = optionData;
@@ -2553,8 +2561,8 @@ public class ActorManager : MonoBehaviour
                                 //enforces a minimu one turn gap between successive breakdowns
                                 if (actor.isBreakdown == false)
                                 {
-                                    //double chance of a breakdown if actor is sensitive
-                                    if (actor.trait.tag.Equals("Sensitive") == true)
+                                    //double chance of a breakdown (Trait Check)
+                                    if (actor.CheckTraitEffect(actorBreakdownHigh) == true)
                                     { chance *= 2; }
                                     if (Random.Range(0, 100) <= chance)
                                     {
@@ -2598,8 +2606,8 @@ public class ActorManager : MonoBehaviour
                                 //enforces a minimu one turn gap between successive breakdowns
                                 if (actor.isBreakdown == false)
                                 {
-                                    //double chance of a breakdown if actor is sensitive
-                                    if (actor.trait.tag.Equals("Sensitive") == true)
+                                    //double chance of a breakdown (Trait Check)
+                                    if (actor.CheckTraitEffect(actorBreakdownHigh) == true)
                                     { chance *= 2; }
                                     if (Random.Range(0, 100) <= chance)
                                     {

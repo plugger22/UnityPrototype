@@ -27,13 +27,14 @@ namespace gameAPI
         [HideInInspector] public bool isBreakdown;              //set true when breakdown so that there is at least a one turn gap between successive breakdowns
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;
-        [HideInInspector] public Trait trait;
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
-        
+
+        private Trait trait;
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
         private List<int> listOfSecrets = new List<int>();
         private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
+        private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
 
         //private backing field
         private ActorStatus _status;
@@ -175,6 +176,44 @@ namespace gameAPI
 
         public List<int> GetListOfSecrets()
         { return listOfSecrets; }
+
+        //
+        // - - -  Trait - - -
+        //
+
+        public Trait GetTrait()
+        { return trait; }
+
+        /// <summary>
+        /// Replaces any existing trait and overwrites listofTraitEffects with new data. Max one trait at a time.
+        /// </summary>
+        /// <param name="trait"></param>
+        public void AddTrait(Trait trait)
+        {
+            if (trait != null)
+            {
+                listOfTraitEffects.Clear();
+                this.trait = trait;
+                foreach(TraitEffect traitEffect in trait.listOfTraitEffects)
+                { listOfTraitEffects.Add(traitEffect.teffID); }
+            }
+            else { Debug.LogError("Invalid trait (Null)"); }
+        }
+
+        /// <summary>
+        /// returns true if a particular trait effect is present, false otherwise
+        /// </summary>
+        /// <param name="traitEffectID"></param>
+        /// <returns></returns>
+        public bool CheckTraitEffect(int traitEffectID)
+        {
+            if (listOfTraitEffects != null)
+            { return listOfTraitEffects.Exists(x => x == traitEffectID); }
+            else { return false; }
+        }
+
+
+
 
         //place methods above here
     }
