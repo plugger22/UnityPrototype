@@ -15,6 +15,7 @@ public class Trait : ScriptableObject
     public string description;
     [Tooltip("Is the trait good, neutral or bad (value assigned dynamically 2 / 1 / 0)")]
     public GlobalType typeOfTrait;
+    [Tooltip("Only add a side if the trait is specific to a particular side, otherwise leave as 'None'")]
     public GlobalSide side;
     [Tooltip("What type of trait is it? Any SO with this trait will be error checked on import to confirm that it has the correct trait category")]
     public TraitCategory category;

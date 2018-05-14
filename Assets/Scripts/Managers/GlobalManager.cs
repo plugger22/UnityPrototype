@@ -23,6 +23,10 @@ public class GlobalManager : MonoBehaviour
     [HideInInspector] public GlobalSide sideAI;
     [HideInInspector] public GlobalSide sideAuthority;
     [HideInInspector] public GlobalSide sideResistance;
+    //TraitCategory
+    [HideInInspector] public TraitCategory categoryActor;
+    [HideInInspector] public TraitCategory categoryMayor;
+    [HideInInspector] public TraitCategory categoryFaction;
 
     public void Initialise()
     {
@@ -150,6 +154,15 @@ public class GlobalManager : MonoBehaviour
             if (sideAuthority == null) { Debug.LogError("Invalid sideAuthority (Null)"); }
             if (sideResistance == null) { Debug.LogError("Invalid sideResistance (Null)"); }
         }
+        //
+        // - - - Trait Categories - - -
+        //
+        categoryActor = GameManager.instance.dataScript.GetTraitCategory("Actor");
+        categoryMayor = GameManager.instance.dataScript.GetTraitCategory("Mayor");
+        categoryFaction = GameManager.instance.dataScript.GetTraitCategory("Faction");
+        Debug.Assert(categoryActor != null, "Invalid categoryActor");
+        Debug.Assert(categoryMayor != null, "Invalid categoryMayor");
+        Debug.Assert(categoryFaction != null, "Invalid categoryFaction");
     }
 
 

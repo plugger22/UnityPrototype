@@ -70,7 +70,12 @@ public class CityManager : MonoBehaviour
         //Placeholder
         city.mayor = GameManager.instance.dataScript.GetRandomMayor();
         if (city.mayor != null)
-        { city.faction = city.mayor.faction; }
+        {
+            city.faction = city.mayor.faction;
+            Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryMayor);
+            Debug.Assert(trait != null, "Invalid trait (Null)");
+            city.mayor.AddTrait(trait);
+        }
         else { Debug.LogError("Invalid city Mayor (Null)"); }
         //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);
@@ -253,8 +258,8 @@ public class CityManager : MonoBehaviour
     public string GetMayorTrait()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.mayor.trait.tagFormatted);
-        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.mayor.trait.description, colourEnd);
+        builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.mayor.GetTrait().tagFormatted);
+        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.mayor.GetTrait().description, colourEnd);
         return builder.ToString();
     }
 
@@ -265,8 +270,8 @@ public class CityManager : MonoBehaviour
     public string GetFactionTrait()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.trait.tagFormatted);
-        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.trait.description, colourEnd);
+        builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.GetTrait().tagFormatted);
+        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.GetTrait().description, colourEnd);
         return builder.ToString();
     }
 

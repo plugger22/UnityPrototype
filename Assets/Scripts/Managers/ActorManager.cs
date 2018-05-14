@@ -83,9 +83,10 @@ public class ActorManager : MonoBehaviour
     private GlobalSide globalResistance;
     private Condition conditionStressed;
     private TraitCategory actorCategory;
-    //cached Trait Effects
-    private int actorBreakdownHigh;
-    private int actorBreakdownLow;
+    //cached TraitEffects
+    private int actorBreakdownChanceHigh;
+    private int actorBreakdownChanceLow;
+    private int actorBreakdownChanceNone;
 
     //colour palette for Generic tool tip
     private string colourResistance;
@@ -123,10 +124,12 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         //cached TraitEffects
-        actorBreakdownHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
-        actorBreakdownLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
-        Debug.Assert(actorBreakdownHigh > -1, "Invalid actorBreakdownHigh (-1)");
-        Debug.Assert(actorBreakdownLow > -1, "Invalid actorBreakdownLow (-1)");
+        actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
+        actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
+        actorBreakdownChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceNone");
+        Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
+        Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
+        Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -2561,10 +2564,14 @@ public class ActorManager : MonoBehaviour
                                 //enforces a minimu one turn gap between successive breakdowns
                                 if (actor.isBreakdown == false)
                                 {
-                                    //double chance of a breakdown (Trait Check)
-                                    if (actor.CheckTraitEffect(actorBreakdownHigh) == true)
+                                    //Trait Check
+                                    if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
                                     { chance *= 2; }
-                                    if (Random.Range(0, 100) <= chance)
+                                    else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
+                                    { chance /= 2; }
+                                    else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
+                                    { chance = 0; }
+                                    if (Random.Range(0, 100) < chance)
                                     {
                                         //actor suffers a breakdown
                                         ActorBreakdown(actor, globalResistance);
@@ -2606,13 +2613,17 @@ public class ActorManager : MonoBehaviour
                                 //enforces a minimu one turn gap between successive breakdowns
                                 if (actor.isBreakdown == false)
                                 {
-                                    //double chance of a breakdown (Trait Check)
-                                    if (actor.CheckTraitEffect(actorBreakdownHigh) == true)
+                                    //Trait Check
+                                    if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
                                     { chance *= 2; }
-                                    if (Random.Range(0, 100) <= chance)
+                                    else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
+                                    { chance /= 2; }
+                                    else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
+                                    { chance = 0; }
+                                    if (Random.Range(0, 100) < chance)
                                     {
                                         //actor suffers a breakdown
-                                        ActorBreakdown(actor, globalAuthority);
+                                        ActorBreakdown(actor, globalResistance);
                                     }
                                 }
                                 else { actor.isBreakdown = false; }

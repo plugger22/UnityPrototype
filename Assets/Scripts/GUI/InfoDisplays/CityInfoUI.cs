@@ -217,7 +217,7 @@ public class CityInfoUI : MonoBehaviour
     private void SetFixedTooltips()
     {
         districtTooltip.tooltipHeader =  string.Format("<b>City Districts</b>");
-        districtTooltip.tooltipMain = "Only districts that are accessible are shown. Others are in permanent Lockdown";
+        districtTooltip.tooltipMain = "Only districts that are accessible are shown. Districts in permanent Lockdown are not visible";
         organisationTooltip.tooltipMain = "Organisations that are active in the city";
 
     }
@@ -244,16 +244,16 @@ public class CityInfoUI : MonoBehaviour
             if (city.mayor != null)
             {
                 mayorName.text = city.mayor.name;
-                if (city.mayor.trait != null)
-                { mayorTrait.text = city.mayor.trait.tagFormatted; }
+                if (city.mayor.GetTrait() != null)
+                { mayorTrait.text = city.mayor.GetTrait().tagFormatted; }
                 else { mayorTrait.text = "Unknown"; }
             }
             else { mayorName.text = "Unknown"; }
             if (city.faction != null)
             {
                 factionName.text = city.faction.name;
-                if (city.faction.trait != null)
-                { factionTrait.text = city.faction.trait.tagFormatted; }
+                if (city.faction.GetTrait() != null)
+                { factionTrait.text = city.faction.GetTrait().tagFormatted; }
                 else { factionTrait.text = "Unknown"; }
             }
             else { factionName.text = "Unknown"; }
