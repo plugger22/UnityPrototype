@@ -9,7 +9,7 @@ using packageAPI;
 /// </summary>
 public class DebugGUI : MonoBehaviour
 {
-    private enum GUIStatus { None, GiveGear, GiveCondition}
+    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait}
 
     public GUIStyle customBackground;
 
@@ -468,6 +468,14 @@ public class DebugGUI : MonoBehaviour
                 { debugDisplay = 18; }
                 else { debugDisplay = 0; }
             }
+            //twelfth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Give Trait"))
+            {
+                Debug.Log("Button -> Give Actor Trait");
+                if (debugDisplay != 20)
+                { debugDisplay = 20; }
+                else { debugDisplay = 0; }
+            }
 
 
             //
@@ -485,12 +493,6 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.levelScript.GetGraphAnalysis();
                         GUI.Box(new Rect(Screen.width - 155, 10, 150, 200), analysis, customBackground);
-
-                        /*//Actor data, middle right
-                        customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.levelScript.GetActorAnalysis(GameManager.instance.sideScript.PlayerSide);
-                        GUI.Box(new Rect(Screen.width - 335, 10, 220, 200), analysis, customBackground);*/
-
                         // Node Type data, near centre right
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.levelScript.GetNodeAnalysis();
@@ -645,11 +647,11 @@ public class DebugGUI : MonoBehaviour
                     //Give Condition
                     case 18:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
-                        GUI.Label(new Rect(Screen.width / 2 - 95, 55, 190, 20), "Input Condition name (lwr case)");
-                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 75, 100, 20), textInput_0);
-                        GUI.Label(new Rect(Screen.width / 2 - 75, 100, 150, 20), "Input Actor (0 - 3 or p)");
-                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 50, 120, 100, 20), textInput_1);
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 190, 20), "Input Condition name (lwr case)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3 or p)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
                         status = GUIStatus.GiveCondition;
                         textOutput = null;
                         break;
@@ -658,7 +660,26 @@ public class DebugGUI : MonoBehaviour
                         if (textOutput == null)
                         { textOutput = GameManager.instance.actorScript.DebugAddCondition(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
+                    //Give Trait to Actor
+                    case 20:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 190, 20), "Input Trait name (case sensistive)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
+                        status = GUIStatus.GiveActorTrait;
+                        textOutput = null;
+                        break;
+                    //Give Trait to Actor processing and Output
+                    case 21:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.actorScript.DebugAddTrait(textInput_0, textInput_1); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
                 }
@@ -680,6 +701,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.GiveCondition:
                         debugDisplay = 19;
+                        break;
+                    case GUIStatus.GiveActorTrait:
+                        debugDisplay = 21;
                         break;
                 }
                 break;

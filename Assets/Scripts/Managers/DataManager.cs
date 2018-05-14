@@ -1047,6 +1047,25 @@ public class DataManager : MonoBehaviour
         return trait;
     }
 
+    /// <summary>
+    /// returns the matching trait to the input string. Null if not found.
+    /// </summary>
+    /// <param name="traitText"></param>
+    /// <returns></returns>
+    public Trait GetTrait(string traitText)
+    {
+        Trait trait = null;
+        foreach(var record in dictOfTraits)
+        {
+            if (record.Value.tag.Equals(traitText) == true)
+            {
+                trait = record.Value;
+                break;
+            }
+        }
+        return trait;
+    }
+
     public Dictionary<int, Trait> GetDictOfTraits()
     { return dictOfTraits; }
 
