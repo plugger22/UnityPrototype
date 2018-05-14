@@ -82,6 +82,7 @@ public class ActorManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private Condition conditionStressed;
+    private TraitCategory actorCategory;
 
     //colour palette for Generic tool tip
     private string colourResistance;
@@ -113,8 +114,11 @@ public class ActorManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-        if (conditionStressed == null)
-        { Debug.LogError("Invalid conditionStressed (Null)"); }
+        actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -357,8 +361,9 @@ public class ActorManager : MonoBehaviour
                 actor.side = side;
                 actor.arc = arc;
                 actor.actorName = arc.actorName;
-                actor.trait = GameManager.instance.dataScript.GetRandomTrait();
+                actor.trait = GameManager.instance.dataScript.GetRandomTrait(actorCategory);
                 actor.Status = status;
+                Debug.Assert(actor.trait != null, "Invalid actor.trait (Null)");
                 //level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }

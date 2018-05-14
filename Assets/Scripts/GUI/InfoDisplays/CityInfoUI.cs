@@ -265,10 +265,10 @@ public class CityInfoUI : MonoBehaviour
             Debug.Assert(cityImage.sprite != null, "Invalid city Arc default sprite");
             //Organisation tooltip
             mayorTooltip.tooltipHeader = GameManager.instance.cityScript.GetMayorName();
-            mayorTooltip.tooltipMain = "Trait details";
+            mayorTooltip.tooltipMain = GameManager.instance.cityScript.GetMayorTrait();
             mayorTooltip.tooltipEffect = GameManager.instance.cityScript.GetMayorFaction();
             factionTooltip.tooltipHeader = GameManager.instance.cityScript.GetFactionName();
-            factionTooltip.tooltipMain = "Trait details";
+            factionTooltip.tooltipMain = GameManager.instance.cityScript.GetFactionTrait();
             factionTooltip.tooltipEffect = GameManager.instance.cityScript.GetFactionDetails();
             organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityName();
             organisationTooltip.tooltipEffect = GameManager.instance.cityScript.GetOrganisationsTooltip();

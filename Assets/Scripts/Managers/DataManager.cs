@@ -102,6 +102,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
+    private Dictionary<int, TraitEffect> dictOfTraitEffects = new Dictionary<int, TraitEffect>();   //Key -> teffID, Value -> TraitEffect
+    private Dictionary<string, int> dictOfLookUpTraitEffects = new Dictionary<string, int>();       //Key -> TraitEffect name, Value -> teffID
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
     private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>(); //Key -> ManageAction.name, Value -> ManageAction
     private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();            //Key -> action name, Value -> actionID
@@ -131,6 +133,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();         //Key -> GlobalType.name, Value -> GlobalType
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();         //Key -> GlobalSide.name, Value -> GlobalSide
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
+    private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
 
     #region Archived Import Methods
     /*/// <summary>
@@ -951,7 +954,7 @@ public class DataManager : MonoBehaviour
     { return dictOfLookUpActions; }
 
     //
-    // - - - Actor Arcs and Traits - - - 
+    // - - - Actor Arcs - - - 
     //
 
     /// <summary>
@@ -1026,13 +1029,22 @@ public class DataManager : MonoBehaviour
     public List<ActorArc> GetListOfResistanceActorArcs()
     { return resistanceActorArcs; }
 
+    //
+    // - - - Traits - - -
+    //
+
     /// <summary>
-    /// return a random trait (could be good, bad or neutral)
+    /// return a random trait (could be good, bad or neutral) specific to a category of traits. Null if a problem
     /// </summary>
     /// <returns></returns>
-    public Trait GetRandomTrait()
+    public Trait GetRandomTrait(TraitCategory category)
     {
-        return listOfAllTraits[Random.Range(0, listOfAllTraits.Count)];
+        Trait trait = null;
+        List<Trait> tempList = new List<Trait>();
+        tempList = listOfAllTraits.FindAll(x => x.category.name == category.name);
+        if (tempList.Count > 0)
+        { trait = tempList[Random.Range(0, tempList.Count)]; }
+        return trait;
     }
 
     public Dictionary<int, Trait> GetDictOfTraits()
@@ -1040,6 +1052,71 @@ public class DataManager : MonoBehaviour
 
     public List<Trait> GetListOfAllTraits()
     { return listOfAllTraits; }
+
+    public Dictionary<string, TraitCategory> GetDictOfTraitCategories()
+    { return dictOfTraitCategories; }
+
+    /// <summary>
+    /// Returns TraitCategory SO, Null if not found in dictionary
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public TraitCategory GetTraitCategory(string category)
+    {
+        TraitCategory traitCategory = null;
+        if (string.IsNullOrEmpty(category) == false)
+        {
+            if (dictOfTraitCategories.ContainsKey(category))
+            { return dictOfTraitCategories[category]; }
+            else { Debug.LogWarning(string.Format("TraitCategory \"{0}\" not found in dictOfTraitCategories{1}", category, "\n")); }
+        }
+        else { Debug.LogError("Invalid category (Null or Empty)"); }
+        return traitCategory;
+    }
+
+    public Dictionary<int, TraitEffect> GetDictionaryOfTraitEffects()
+    { return dictOfTraitEffects; }
+
+    public Dictionary<string, int> GetDictionaryOfLookUpTraitEffects()
+    { return dictOfLookUpTraitEffects; }
+
+    /// <summary>
+    /// Gets specified TraitEffect, returns null if not found
+    /// </summary>
+    /// <param name="actorArcID"></param>
+    /// <returns></returns>
+    public TraitEffect GetTraitEffect(int traitEffectID)
+    {
+        TraitEffect traitEffect = null;
+        if (dictOfTraitEffects.TryGetValue(traitEffectID, out traitEffect))
+        {
+            return traitEffect;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Returns TraitEffect teffID, -1 if not found in dictionary
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public int GetTraitEffectID(string traitEffect)
+    {
+        int teffID = -1;
+        if (string.IsNullOrEmpty(traitEffect) == false)
+        {
+            if (dictOfLookUpTraitEffects.ContainsKey(traitEffect))
+            { return dictOfLookUpTraitEffects[traitEffect]; }
+            else { Debug.LogWarning(string.Format("TraitEffect \"{0}\" not found in dictOfLookUpTraitEffects{1}", traitEffect, "\n")); }
+        }
+        else { Debug.LogError("Invalid traitEffect (Null or Empty)"); }
+        return teffID;
+    }
+
+
+
+
+
 
     //
     // - - - Nodes - - -
@@ -3062,7 +3139,7 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Returns condition SO, Null if not found in dictionary
     /// </summary>
-    /// <param name="conditionName"></param>
+    /// <param name="category"></param>
     /// <returns></returns>
     public Condition GetCondition(string conditionName)
     {

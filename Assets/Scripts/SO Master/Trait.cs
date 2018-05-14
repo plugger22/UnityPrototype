@@ -18,6 +18,8 @@ public class Trait : ScriptableObject
     public GlobalSide side;
     [Tooltip("What type of trait is it? Any SO with this trait will be error checked on import to confirm that it has the correct trait category")]
     public TraitCategory category;
+    [Tooltip("Specific in-game effects of the trait")]
+    public List<TraitEffect> listOfTraitEffects;
 
     [HideInInspector] public string tagFormatted;                     //pre-formatted (TextMeshPro) string ready for trait display (initialised on import)
     [HideInInspector] public int traitID;           //unique #, zero based -> assigned automatically by DataManager.Initialise

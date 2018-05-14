@@ -146,6 +146,32 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("DataManager: Initialise -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfConditions (Null) -> Import failed"); }
+        //
+        // - - - TraitCategories - - -
+        //
+        Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.instance.dataScript.GetDictOfTraitCategories();
+        if (dictOfTraitCategories != null)
+        {
+            var categoryGUID = AssetDatabase.FindAssets("t:TraitCategory");
+            foreach (var guid in categoryGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object categoryObject = AssetDatabase.LoadAssetAtPath(path, typeof(TraitCategory));
+                //assign a zero based unique ID number
+                TraitCategory category = categoryObject as TraitCategory;
+                //add to dictionary
+                try
+                { dictOfTraitCategories.Add(category.name, category); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid trait category (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid trait category (duplicate) \"{0}\"", category.name)); }
+            }
+            Debug.Log(string.Format("DataManager: Initialise -> dictOfTraitCategories has {0} entries{1}", dictOfTraitCategories.Count, "\n"));
+        }
+        else { Debug.LogError("Invalid dictOfTraitCategories (Null) -> Import failed"); }
     }
 
 

@@ -131,22 +131,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetCityName()
-    {
-        string description = "Unknown";
-        switch (GameManager.instance.sideScript.PlayerSide.level)
-        {
-            case 1:
-                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
-                break;
-            case 2:
-                description = string.Format("<b>{0}{1}{2}</b>", colourSide, city.name, colourEnd);
-                break;
-            default:
-                description = string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
-                break;
-        }
-        return description;
-    }
+    { return string.Format("{0}<size=115%><b>{1}</b></size>{2}", colourSide, city.name, colourEnd); }
 
     /// <summary>
     /// returns current city Arc name in 90% size, default white text format
@@ -213,7 +198,7 @@ public class CityManager : MonoBehaviour
     public string GetFactionName()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1}{2}", colourSide, city.faction.name, colourEnd);
+        builder.AppendFormat("{0}<size=115%><b>{1}</b></size>{2}", colourSide, city.faction.name, colourEnd);
         if (string.IsNullOrEmpty(city.faction.descriptor) == false)
         { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.descriptor, colourEnd); }
         return builder.ToString();
@@ -248,7 +233,7 @@ public class CityManager : MonoBehaviour
     public string GetMayorName()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1}{2}", colourSide, city.mayor.name, colourEnd);
+        builder.AppendFormat("{0}<size=115%><b>{1}</size></b>{2}", colourSide, city.mayor.name, colourEnd);
         if (string.IsNullOrEmpty(city.mayor.motto) == false)
         { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.mayor.motto, colourEnd); }
         return builder.ToString();
@@ -260,6 +245,30 @@ public class CityManager : MonoBehaviour
     /// <returns></returns>
     public string GetMayorFaction()
     { return string.Format("{0}Faction Alignment{1}{2}<b>{3}</b>", colourNeutral, colourEnd, "\n", city.faction.name); }
-    
+
+    /// <summary>
+    /// returns a colour formatted string of the Mayor's trait. Used by cityInfoUI mayor tooltip
+    /// </summary>
+    /// <returns></returns>
+    public string GetMayorTrait()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.mayor.trait.tagFormatted);
+        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.mayor.trait.description, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns a colour formatted string of the Faction's trait. Used by cityInfoUI faction tooltip
+    /// </summary>
+    /// <returns></returns>
+    public string GetFactionTrait()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.trait.tagFormatted);
+        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.trait.description, colourEnd);
+        return builder.ToString();
+    }
+
     //new methods above here
 }
