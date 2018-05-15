@@ -32,6 +32,8 @@ namespace gameAPI
 
         //cached trait effects
         private int actorStressNone;
+        private int actorCorruptNone;
+        private int actorUnhappyNone;
 
         private Trait trait;
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
@@ -55,12 +57,19 @@ namespace gameAPI
             }
         }
 
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public Actor()
         {
             nodeCaptured = -1;
             //cached Trait Effects
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
+            actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
+            actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
             Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
+            Debug.Assert(actorStressNone > -1, "Invalid actorCorruptNone (-1)");
+            Debug.Assert(actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
         }
 
         /// <summary>
@@ -115,6 +124,20 @@ namespace gameAPI
                         {
                             proceedFlag = false;
                             GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent STRESSED Condition");
+                        }
+                        break;
+                    case "CORRUPT":
+                        if (CheckTraitEffect(actorCorruptNone) == true)
+                        {
+                            proceedFlag = false;
+                            GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent CORRUPT Condition");
+                        }
+                        break;
+                    case "UNHAPPY":
+                        if (CheckTraitEffect(actorUnhappyNone) == true)
+                        {
+                            proceedFlag = false;
+                            GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent UNHAPPY Condition");
                         }
                         break;
                 }
