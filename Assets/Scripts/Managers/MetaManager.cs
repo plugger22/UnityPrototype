@@ -23,7 +23,7 @@ public class MetaManager : MonoBehaviour
     /// returns official authority title
     /// </summary>
     /// <returns></returns>
-    public AuthorityActor GetAuthorityTitle()
-    { return (AuthorityActor)(metaLevel.level); }
+    public AuthorityTitle GetAuthorityTitle()
+    { return (AuthorityTitle)(metaLevel.level); }
 
 }

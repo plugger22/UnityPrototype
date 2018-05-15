@@ -2356,7 +2356,6 @@ public class EffectManager : MonoBehaviour
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
-        bool errorFlag = false;            
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         if (effect.typeOfEffect != null)
@@ -2405,7 +2404,7 @@ public class EffectManager : MonoBehaviour
                                         colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
                                     break;
                                 default:
-                                    Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name)); errorFlag = true;
+                                    Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name));
                                     break;
                             }
                             break;
@@ -2430,21 +2429,21 @@ public class EffectManager : MonoBehaviour
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
                                     break;
                                 default:
-                                    Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name)); errorFlag = true;
+                                    Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name));
                                     break;
                             }
                             break;
                         default:
-                            Debug.LogError(string.Format("Invalid effect.duration \"{0}\"", effect.duration.name)); errorFlag = true;
+                            Debug.LogError(string.Format("Invalid effect.duration \"{0}\"", effect.duration.name));
                             break;
                     }
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name)); errorFlag = true;
+                    Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name)); 
                     break;
             }
         }
-        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); errorFlag = true; }
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name));}
 
 
         return effectResolve;

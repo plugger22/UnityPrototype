@@ -373,7 +373,7 @@ public class ActorManager : MonoBehaviour
                 actor.side = side;
                 actor.arc = arc;
                 actor.actorName = arc.actorName;
-                actor.AddTrait(GameManager.instance.dataScript.GetRandomTrait(actorCategory));
+                actor.AddTrait(GameManager.instance.dataScript.GetRandomTrait(actorCategory, side));
                 actor.Status = status;
                 Debug.Assert(actor.GetTrait() != null, "Invalid actor.trait (Null)");
                 //level -> range limits

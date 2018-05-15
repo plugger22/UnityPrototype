@@ -325,6 +325,7 @@ public class CaptureManager : MonoBehaviour
 
     /// <summary>
     /// Checks if Resistance player/actor captured by an Erasure team at the node (must have invisibility '0'). Returns null if not.
+    /// parameters vary if an 'APB' or a 'SecurityAlert' in play
     /// ActorID is default '999' for player
     /// </summary>
     /// <param name="node"></param>
@@ -344,8 +345,9 @@ public class CaptureManager : MonoBehaviour
                     //check player at node
                     if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                     {
-                        //Erasure team picks up player/actor immediately if invisibility 0
-                        if (GameManager.instance.playerScript.invisibility == 0)
+                        //Erasure team picks up player/actor immediately if invisibility low enough
+                        if (CheckCaptureVisibility(GameManager.instance.playerScript.invisibility) == true)
+                        /*if (GameManager.instance.playerScript.invisibility == 0)*/
                         {
                             int teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
                             if (teamArcID > -1)
@@ -379,7 +381,8 @@ public class CaptureManager : MonoBehaviour
                     if (actor != null)
                     {
                         //Erasure team picks up player/actor immediately if invisibility 0
-                        if (actor.datapoint2 == 0)
+                        if (CheckCaptureVisibility(actor.datapoint2) == true)
+                        /*if (actor.datapoint2 == 0)*/
                         {
                             int teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
                             if (teamArcID > -1)
@@ -411,6 +414,26 @@ public class CaptureManager : MonoBehaviour
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
         //return CaptureDetails
         return details;
+    }
+
+    /// <summary>
+    /// subMethod for check capture that takes into account any APB's etc. and returns true if invisibility is low enough for a capture attempt
+    /// </summary>
+    /// <param name="actorInvisibility"></param>
+    /// <returns></returns>
+    private bool CheckCaptureVisibility(int actorInvisibility)
+    {
+        bool isAtRisk = false;
+        switch(GameManager.instance.turnScript.authorityState)
+        {
+            case AuthorityState.APB:
+                if (actorInvisibility <= 1) { isAtRisk = true; }
+                break;
+            default:
+                if (actorInvisibility == 0) { isAtRisk = true; }
+                break;
+        }
+        return isAtRisk;
     }
 
     /// <summary>
