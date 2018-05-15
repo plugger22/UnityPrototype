@@ -73,10 +73,15 @@ public class CityManager : MonoBehaviour
         {
             city.faction = city.mayor.faction;
             Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryMayor);
-            Debug.Assert(trait != null, "Invalid trait (Null)");
+            Debug.Assert(trait != null, "Invalid Mayoral trait (Null)");
             city.mayor.AddTrait(trait);
+            trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
+            Debug.Assert(trait != null, "Invalid Faction trait (Null)");
+            city.mayor.faction.AddTrait(trait);
+            //update authority faction
+            GameManager.instance.factionScript.factionAuthority = city.mayor.faction;
         }
-        else { Debug.LogError("Invalid city Mayor (Null)"); }
+        else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
         //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);
         

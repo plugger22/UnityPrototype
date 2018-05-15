@@ -30,6 +30,9 @@ namespace gameAPI
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
 
+        //cached trait effects
+        private int actorStressNone;
+
         private Trait trait;
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
         private List<int> listOfSecrets = new List<int>();
@@ -55,6 +58,9 @@ namespace gameAPI
         public Actor()
         {
             nodeCaptured = -1;
+            //cached Trait Effects
+            actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
+            Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
         }
 
         /// <summary>
@@ -98,16 +104,31 @@ namespace gameAPI
         /// <param name="condition"></param>
         public void AddCondition(Condition condition)
         {
+            bool proceedFlag = true;
             if (condition != null)
             {
-                //check that condition isn't already present
-                if (CheckConditionPresent(condition) == false)
+                //trait check
+                switch(condition.name)
                 {
-                    listOfConditions.Add(condition);
-                    //message
-                    string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
-                    Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    case "STRESSED":
+                        if (CheckTraitEffect(actorStressNone) == true)
+                        {
+                            proceedFlag = false;
+                            GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent STRESSED Condition");
+                        }
+                        break;
+                }
+                if (proceedFlag == true)
+                {
+                    //check that condition isn't already present
+                    if (CheckConditionPresent(condition) == false)
+                    {
+                        listOfConditions.Add(condition);
+                        //message
+                        string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
+                        Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                        GameManager.instance.dataScript.AddMessage(message);
+                    }
                 }
             }
             else { Debug.LogError("Invalid condition (Null)"); }

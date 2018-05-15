@@ -175,14 +175,15 @@ public class GameManager : MonoBehaviour
         actorScript.PreInitialiseActors();
         importScript.InitialiseEarly();
         guiScript.Initialise();         //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
-        factionScript.Initialise();
         cityScript.InitialiseEarly();        //before levelScript
+        
         objectiveScript.Initialise();
         actorScript.Initialise();
         levelScript.Initialise();
         dataScript.InitialiseLate();      //must be immediately after levelScript.Initialise
         importScript.InitialiseLate();    //must be immediately after levelScript.Initialise
         cityScript.InitialiseLate();      //must be immediately after levelScript.Initialise
+        factionScript.Initialise();
         guiScript.InitialiseLate();
         inputScript.Initialise();
         metaScript.Initialise();

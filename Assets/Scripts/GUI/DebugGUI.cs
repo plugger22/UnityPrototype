@@ -92,7 +92,7 @@ public class DebugGUI : MonoBehaviour
             //first button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Help"))
             {
-                Debug.Log("Button -> Toggle Help");
+                Debug.Log("[Dbg] Button -> Toggle Help");
                 if (debugDisplay != 13)
                 { debugDisplay = 13; }
                 else { debugDisplay = 0; }
@@ -101,7 +101,7 @@ public class DebugGUI : MonoBehaviour
             //second button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Actor Lists"))
             {
-                Debug.Log("Button -> Toggle Actor Lists");
+                Debug.Log("[Dbg] Button -> Toggle Actor Lists");
                 if (debugDisplay != 7)
                 { debugDisplay = 7; }
                 else { debugDisplay = 0; }
@@ -110,7 +110,7 @@ public class DebugGUI : MonoBehaviour
             //third button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Actor Pools"))
             {
-                Debug.Log("Button -> Toggle Actor Pools");
+                Debug.Log("[Dbg] Button -> Toggle Actor Pools");
                 if (debugDisplay != 6)
                 { debugDisplay = 6; }
                 else { debugDisplay = 0; }
@@ -120,7 +120,7 @@ public class DebugGUI : MonoBehaviour
             //fourth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Player Stats"))
             {
-                Debug.Log("Button -> Toggle Player Stats");
+                Debug.Log("[Dbg] Button -> Toggle Player Stats");
                 if (debugDisplay != 8)
                 { debugDisplay = 8; }
                 else { debugDisplay = 0; }
@@ -129,7 +129,7 @@ public class DebugGUI : MonoBehaviour
             //fifth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Game State"))
             {
-                Debug.Log("Button -> Toggle Game State");
+                Debug.Log("[Dbg] Button -> Toggle Game State");
                 if (debugDisplay != 5)
                 { debugDisplay = 5; }
                 else { debugDisplay = 0; }
@@ -139,7 +139,7 @@ public class DebugGUI : MonoBehaviour
             //sixth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Node Analysis"))
             {
-                Debug.Log("Button -> Toggle Node Analysis");
+                Debug.Log("[Dbg] Button -> Toggle Node Analysis");
                 if (debugDisplay != 1)
                 { debugDisplay = 1; }
                 else { debugDisplay = 0; }
@@ -148,7 +148,7 @@ public class DebugGUI : MonoBehaviour
             //seventh button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Actions Register"))
             {
-                Debug.Log("Button -> Toggle Actions Register");
+                Debug.Log("[Dbg] Button -> Toggle Actions Register");
                 if (debugDisplay != 15)
                 { debugDisplay = 15; }
                 else { debugDisplay = 0; }
@@ -157,7 +157,7 @@ public class DebugGUI : MonoBehaviour
             //eigth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Ongoing Register"))
             {
-                Debug.Log("Button -> Toggle OngoingID Register");
+                Debug.Log("[Dbg] Button -> Toggle OngoingID Register");
                 if (debugDisplay != 14)
                 { debugDisplay = 14; }
                 else { debugDisplay = 0; }
@@ -166,7 +166,7 @@ public class DebugGUI : MonoBehaviour
             //ninth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Factions"))
             {
-                Debug.Log("Button -> Toggle Factions");
+                Debug.Log("[Dbg] Button -> Toggle Factions");
                 if (debugDisplay != 11)
                 { debugDisplay = 11; }
                 else { debugDisplay = 0; }
@@ -181,7 +181,7 @@ public class DebugGUI : MonoBehaviour
             //eleventh button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Toggle Teams"))
             {
-                Debug.Log("Button -> Toggle Team Data");
+                Debug.Log("[Dbg] Button -> Toggle Team Data");
                 //toggles sequentially through team data displays and then switches off
                 switch (teamStatus)
                 {
@@ -199,7 +199,7 @@ public class DebugGUI : MonoBehaviour
             //twelth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Toggle Messages"))
             {
-                Debug.Log("Button -> Toggle Messages");
+                Debug.Log("[Dbg] Button -> Toggle Messages");
                 //toggles sequentially through message dictionaries and then switches off
                 switch(msgStatus)
                 {
@@ -215,7 +215,7 @@ public class DebugGUI : MonoBehaviour
             //thirteenth button
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Toggle AI Data"))
             {
-                Debug.Log("Button -> AI Data");
+                Debug.Log("[Dbg] Button -> AI Data");
                 /*if (debugDisplay != 10)
                 { debugDisplay = 10; }
                 else { debugDisplay = 0; }*/
@@ -244,7 +244,7 @@ public class DebugGUI : MonoBehaviour
             //first button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Show Options"))
             {
-                Debug.Log("Button -> Show Options");
+                Debug.Log("[Dbg] Button -> Show Options");
                 if (debugDisplay != 12)
                 { debugDisplay = 12; }
                 else { debugDisplay = 0; }
@@ -253,7 +253,7 @@ public class DebugGUI : MonoBehaviour
             //second button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), optionAutoGear))
             {
-                Debug.Log("Button -> Toggle OptionAutoGear");
+                Debug.Log("[Dbg] Button -> Toggle OptionAutoGear");
                 if (GameManager.instance.optionScript.autoGearResolution == true)
                 {
                     GameManager.instance.optionScript.autoGearResolution = false;
@@ -269,7 +269,7 @@ public class DebugGUI : MonoBehaviour
             //third button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), optionFogOfWar))
             {
-                Debug.Log("Button -> Toggle Fog Of War");
+                Debug.Log("[Dbg] Button -> Toggle Fog Of War");
                 if (GameManager.instance.optionScript.fogOfWar == true)
                 {
                     GameManager.instance.optionScript.fogOfWar = false;
@@ -285,7 +285,7 @@ public class DebugGUI : MonoBehaviour
             //fourth button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), optionConnectorTooltips))
             {
-                Debug.Log("Button -> Toggle Connection Tooltips");
+                Debug.Log("[Dbg] Button -> Toggle Connection Tooltips");
                 if (GameManager.instance.optionScript.connectorTooltips == true)
                 {
                     GameManager.instance.optionScript.connectorTooltips = false;
@@ -301,7 +301,7 @@ public class DebugGUI : MonoBehaviour
             //fifth button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), optionDebugData))
             {
-                Debug.Log("Button -> Toggle Debug Data");
+                Debug.Log("[Dbg] Button -> Toggle Debug Data");
                 if (GameManager.instance.optionScript.debugData == true)
                 {
                     GameManager.instance.optionScript.debugData = false;
@@ -319,7 +319,7 @@ public class DebugGUI : MonoBehaviour
             {
                 if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), optionNoAI))
                 {
-                    Debug.Log("Button -> Toggle NO AI");
+                    Debug.Log("[Dbg] Button -> Toggle NO AI");
                     //option only available on first turn
                     if (GameManager.instance.turnScript.Turn == 0)
                     {
@@ -358,7 +358,7 @@ public class DebugGUI : MonoBehaviour
             //first button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Swap Sides"))
             {
-                Debug.Log("Button -> Swap sides");
+                Debug.Log("[Dbg] Button -> Swap sides");
                 if (GameManager.instance.inputScript.GameState == GameState.Normal)
                 {
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
@@ -372,7 +372,7 @@ public class DebugGUI : MonoBehaviour
             //second button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Recruit Authority"))
             {
-                Debug.Log("Button -> Authority Recruit Actor");
+                Debug.Log("[Dbg] Button -> Authority Recruit Actor");
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                 { GameManager.instance.actorScript.RecruitActor(2); }
             }
@@ -380,7 +380,7 @@ public class DebugGUI : MonoBehaviour
             //third button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Remove Tracer"))
             {
-                Debug.Log(string.Format("Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n"));
+                Debug.LogFormat("[Dbg] Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n");
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
@@ -391,7 +391,7 @@ public class DebugGUI : MonoBehaviour
             //fourth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Release Player"))
             {
-                Debug.Log("Button -> Release Player");
+                Debug.Log("[Dbg] Button -> Release Player");
                 if (GameManager.instance.playerScript.status == ActorStatus.Captured)
                 { GameManager.instance.captureScript.ReleasePlayer(); }
             }
@@ -400,7 +400,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Release Actor"))
             {
                 //will release a captured actor each time pressed, nothing happens if no captured actors are present
-                Debug.Log("Button -> Release Actor");
+                Debug.Log("[Dbg] Button -> Release Actor");
                 int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
                 if (GameManager.instance.actorScript.numOfActiveActors < numOfActors)
                 {
@@ -422,21 +422,21 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Remove Ongoing"))
             {
                 //removes connection Security ongoing effects (first entry in register dict)
-                Debug.Log("Button -> Remove Ongoing");
+                Debug.Log("[Dbg] Button -> Remove Ongoing");
                 GameManager.instance.dataScript.RemoveOngoingEffects();
             }
 
             //seventh button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Most Connected"))
             {
-                Debug.Log("Button -> Show Most Connected Nodes");
+                Debug.Log("[Dbg] Button -> Show Most Connected Nodes");
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected);
             }
 
             //eighth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Centre Nodes"))
             {
-                Debug.Log("Button -> Centre Nodes");
+                Debug.Log("[Dbg] Button -> Centre Nodes");
                 GameManager.instance.debugGraphicsScript.SetCentrePane(true);
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre);
             }
@@ -444,7 +444,7 @@ public class DebugGUI : MonoBehaviour
             //ninth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Near Neighbours"))
             {
-                Debug.Log("Button -> NearNeighbours");
+                Debug.Log("[Dbg] Button -> NearNeighbours");
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours);
             }
 
@@ -454,7 +454,7 @@ public class DebugGUI : MonoBehaviour
                 //Resistance player only
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
-                    Debug.Log("Button -> Give Gear");
+                    Debug.Log("[Dbg] Button -> Give Gear");
                     if (debugDisplay != 16)
                     { debugDisplay = 16; }
                     else { debugDisplay = 0; }
@@ -463,7 +463,7 @@ public class DebugGUI : MonoBehaviour
             //eleventh button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Give Condition"))
             {
-                Debug.Log("Button -> Give Condition");
+                Debug.Log("[Dbg] Button -> Give Condition");
                 if (debugDisplay != 18)
                 { debugDisplay = 18; }
                 else { debugDisplay = 0; }
@@ -471,7 +471,7 @@ public class DebugGUI : MonoBehaviour
             //twelfth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Give Trait"))
             {
-                Debug.Log("Button -> Give Actor Trait");
+                Debug.Log("[Dbg] Button -> Give Actor Trait");
                 if (debugDisplay != 20)
                 { debugDisplay = 20; }
                 else { debugDisplay = 0; }
@@ -706,6 +706,10 @@ public class DebugGUI : MonoBehaviour
                         debugDisplay = 21;
                         break;
                 }
+                break;
+            case KeyCode.Delete:
+                //used to provide input control on text fields
+                textInput_0 = "";
                 break;
             case KeyCode.Escape:
                 debugDisplay = 0;

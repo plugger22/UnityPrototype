@@ -130,6 +130,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
+        
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -2600,11 +2601,12 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //Trait Check
                                     if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
-                                    { chance *= 2; }
+                                    { chance *= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (doubled)"); }
                                     else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
-                                    { chance /= 2; }
+                                    { chance /= 2; DebugTraitMessage(actor, " for a Nervous Breakdown check (halved)"); }
                                     else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
-                                    { chance = 0; }
+                                    { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
+                                    //test
                                     if (Random.Range(0, 100) < chance)
                                     {
                                         //actor suffers a breakdown
@@ -2649,11 +2651,11 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //Trait Check
                                     if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
-                                    { chance *= 2; }
+                                    { chance *= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (doubled)"); }
                                     else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
-                                    { chance /= 2; }
+                                    { chance /= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (halved)"); }
                                     else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
-                                    { chance = 0; }
+                                    { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
                                     if (Random.Range(0, 100) < chance)
                                     {
                                         //actor suffers a breakdown
@@ -2974,6 +2976,21 @@ public class ActorManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Generates a debug log message indicating use of a trait. Input skillCheck as "Actor uses x trait ...... (for a Nervous Breakdown check / to prevent Stressed)"
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="skillCheck"></param>
+    public void DebugTraitMessage(Actor actor, string skillCheck)
+    {
+        if (actor != null)
+        {
+            if (string.IsNullOrEmpty(skillCheck) == false)
+            { Debug.LogFormat("[Trt] {0} uses {1} trait {2}", actor.actorName, actor.GetTrait().tag, skillCheck); }
+            else { Debug.LogError("Invalid skillCheck parameter (Null or empty)"); }
+        }
+        else { Debug.LogError("Invalid actor (Null)"); }
+    }
 
     //new methods above here
 }

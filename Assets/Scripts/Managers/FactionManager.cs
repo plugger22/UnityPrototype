@@ -55,16 +55,18 @@ public class FactionManager : MonoBehaviour
 
     public void Initialise()
     {
-        //factions
+        /*//Authority faction -> cityManager decides current authority faction as it depends on mayor's faction
         factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
-        factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
-        Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
         //add faction traits
         Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
         Debug.Assert(trait != null, "Invalid authority trait (Null)");
-        factionAuthority.AddTrait(trait);
-        trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
+        factionAuthority.AddTrait(trait);*/
+        
+        //Resistance faction
+        factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
+        Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
+        Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
         Debug.Assert(trait != null, "Invalid resistance trait (Null)");
         factionResistance.AddTrait(trait);
         //support levels
