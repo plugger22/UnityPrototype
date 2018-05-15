@@ -258,6 +258,8 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" ResistanceCurrent -> {0}{1}{2}", GameManager.instance.sideScript.resistanceCurrent, "\n", "\n");
         builder.AppendFormat(" AuthorityOverall -> {0}{1}", GameManager.instance.sideScript.authorityOverall, "\n");
         builder.AppendFormat(" ResistanceOverall -> {0}{1}{2}", GameManager.instance.sideScript.resistanceOverall, "\n", "\n");
+        builder.AppendFormat(" AuthorityState -> {0}{1}", GameManager.instance.turnScript.authorityState, "\n");
+        builder.AppendFormat(" ResistanceState -> {0}{1}{2}", GameManager.instance.turnScript.resistanceState, "\n", "\n");
         return builder.ToString();
     }
     

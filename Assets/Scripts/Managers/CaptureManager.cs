@@ -21,6 +21,9 @@ public class CaptureManager : MonoBehaviour
     [Tooltip("The value of the Actor's invisibility upon Release")]
     [Range(0, 3)] public int releaseInvisibility = 2;
 
+    //fast access
+    private int teamErasureID;
+
     private string colourGood;
     private string colourNeutral;
     private string colourBad;
@@ -29,6 +32,9 @@ public class CaptureManager : MonoBehaviour
 
     public void Initialise()
     {
+        //fast access
+        teamErasureID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        Debug.Assert(teamErasureID > -1, "Invalid teamErasureID");
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
         EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
@@ -334,6 +340,7 @@ public class CaptureManager : MonoBehaviour
     {
         CaptureDetails details = null;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        Team team = null;
         if (node != null)
         {
             //correct state
@@ -347,29 +354,28 @@ public class CaptureManager : MonoBehaviour
                     {
                         //Erasure team picks up player/actor immediately if invisibility low enough
                         if (CheckCaptureVisibility(GameManager.instance.playerScript.invisibility) == true)
-                        /*if (GameManager.instance.playerScript.invisibility == 0)*/
                         {
-                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-                            if (teamArcID > -1)
+                            int teamID = node.CheckTeamPresent(teamErasureID);
+                            if (teamID > -1)
                             {
-                                int teamID = node.CheckTeamPresent(teamArcID);
-                                if (teamID > -1)
+                                team = GameManager.instance.dataScript.GetTeam(teamID);
+                                if (team != null)
                                 {
-                                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
-                                    if (team != null)
-                                    {
-                                        //Player Captured
-                                        details = new CaptureDetails
-                                        {
-                                            node = node,
-                                            team = team,
-                                            actor = null
-                                        };
-                                    }
-                                    else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                                    //Player Captured
+                                    details = new CaptureDetails { node = node, team = team, actor = null };
+                                }
+                                else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                            }
+                            //Security Alert -> check if an Erasure team is in a neighbouring node
+                            if (GameManager.instance.turnScript.authorityState == AuthorityState.SecurityAlert)
+                            {
+                                team = CheckCaptureAlert(node);
+                                if (team != null)
+                                {
+                                    //Player Captured
+                                    details = new CaptureDetails { node = node, team = team, actor = null };
                                 }
                             }
-                            /*else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }*/
                         }
                     }
                     else { Debug.LogError(string.Format("Player not at the nodeID {0}", nodeID)); }
@@ -382,29 +388,28 @@ public class CaptureManager : MonoBehaviour
                     {
                         //Erasure team picks up player/actor immediately if invisibility 0
                         if (CheckCaptureVisibility(actor.datapoint2) == true)
-                        /*if (actor.datapoint2 == 0)*/
                         {
-                            int teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-                            if (teamArcID > -1)
-                            {
-                                int teamID = node.CheckTeamPresent(teamArcID);
+                                int teamID = node.CheckTeamPresent(teamErasureID);
                                 if (teamID > -1)
                                 {
-                                    Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                                    team = GameManager.instance.dataScript.GetTeam(teamID);
                                     if (team != null)
                                     {
                                         //Actor Captured
-                                        details = new CaptureDetails
-                                        {
-                                            node = node,
-                                            team = team,
-                                            actor = actor
-                                        };
+                                        details = new CaptureDetails { node = node, team = team, actor = actor };
                                     }
                                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                 }
+                            //Security Alert -> Check if an Erasure team is in a neighbouring node
+                            if (GameManager.instance.turnScript.authorityState == AuthorityState.SecurityAlert)
+                            {
+                                team = CheckCaptureAlert(node);
+                                if (team != null)
+                                {
+                                    //Player Captured
+                                    details = new CaptureDetails { node = node, team = team, actor = actor };
+                                }
                             }
-                            /*else { Debug.LogError("Invalid teamArcID (-1) for ERASURE team"); }*/
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", actorID)); }
@@ -417,7 +422,7 @@ public class CaptureManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod for check capture that takes into account any APB's etc. and returns true if invisibility is low enough for a capture attempt
+    /// subMethod for checkCapture that assesses whether the actor is within the correct visibility level for a possible capture candidates
     /// </summary>
     /// <param name="actorInvisibility"></param>
     /// <returns></returns>
@@ -434,6 +439,33 @@ public class CaptureManager : MonoBehaviour
                 break;
         }
         return isAtRisk;
+    }
+
+    /// <summary>
+    /// subMethod for CheckCapture that handles Security Alert -> checks neighbouring nodes for presence of Erasure team. Returns team if found, null otherwise
+    /// NOTE: node checked for Null by parent method
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private Team CheckCaptureAlert(Node node)
+    {
+        Team team = null;
+        List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+        if (listOfNeighbours != null)
+        {
+            //loop each node and check for a match
+            foreach (Node nodeCheck in listOfNeighbours)
+            {
+                //does any have an Erasure team present?
+                int teamID = nodeCheck.CheckTeamPresent(teamErasureID);
+                if (teamID > -1)
+                {
+                    team = GameManager.instance.dataScript.GetTeam(teamID);
+                    break;
+                }
+            }
+        }
+        return team;
     }
 
     /// <summary>
