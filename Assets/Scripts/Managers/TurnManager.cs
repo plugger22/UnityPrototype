@@ -446,5 +446,48 @@ public class TurnManager : MonoBehaviour
         EventManager.instance.RemoveEvent(EventType.ExitGame);
     }
 
+    /// <summary>
+    /// debug method to change game states
+    /// category is 'a' -> AuthorityState, 'r' -> ResistanceState
+    /// state is specific, AuthorityState -> 'apb' & 'sec' & 'nor'
+    /// </summary>
+    /// <param name="stateCategory"></param>
+    /// <param name="stateSpecific"></param>
+    /// <returns></returns>
+    public string DebugSetState(string category, string state)
+    {
+        string text = "No matching state found, nothing changed.";
+        switch (category)
+        {
+            case "a":
+            case "A":
+                //AuthorityState
+                switch (state)
+                {
+                    case "apb":
+                    case "APB":
+                        //all points bulletin
+                        text = GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.APB);
+                        break;
+                    case "sec":
+                    case "SEC":
+                        //security alert
+                        text = GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.SecurityAlert);
+                        break;
+                    case "nor":
+                    case "NOR":
+                        //reset back to normal
+                        text = GameManager.instance.authorityScript.SetAuthorityState();
+                        break;
+                }
+                break;
+            case "r":
+            case "R":
+                //ResistanceState
+                break;
+        }
+        return string.Format("{0}{1}Press ESC to exit", text, "\n");
+    }
+
     //new methods above here
 }

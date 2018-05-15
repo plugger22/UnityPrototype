@@ -83,7 +83,7 @@
     // - - - Messages - - -
     //
     public enum MessageCategory { None, Current, Pending, Archive, AI }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT, DECISION }
     public enum MessageSubType
     {
         None,
@@ -101,6 +101,8 @@
         AI_Node,
         AI_Capture,
         AI_Release,
+        //Decision
+        Decision_Global,
         //Gear
         Gear_Comprised,
         Gear_Used,

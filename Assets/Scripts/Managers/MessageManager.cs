@@ -375,20 +375,18 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="side"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message GlobalDecision(string text, int decID, GlobalSide side, bool isPublic = false)
+    public Message DecisionGlobal(string text, int decID, GlobalSide side, bool isPublic = false)
     {
         Debug.Assert(decID >= 0, string.Format("Invalid decID {0}", decID));
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.AI;
-            message.subType = MessageSubType.AI_Capture;
-            message.side = globalResistance;
-            message.isPublic = true;
-            message.data0 = nodeID;
-            message.data1 = actorID;
+            message.type = MessageType.DECISION;
+            message.subType = MessageSubType.Decision_Global;
+            message.side = side;
+            message.isPublic = isPublic;
+            message.data0 = decID;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

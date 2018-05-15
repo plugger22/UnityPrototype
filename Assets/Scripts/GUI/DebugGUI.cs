@@ -9,7 +9,7 @@ using packageAPI;
 /// </summary>
 public class DebugGUI : MonoBehaviour
 {
-    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait}
+    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState}
 
     public GUIStyle customBackground;
 
@@ -476,6 +476,14 @@ public class DebugGUI : MonoBehaviour
                 { debugDisplay = 20; }
                 else { debugDisplay = 0; }
             }
+            //thirteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Set State"))
+            {
+                Debug.Log("[Dbg] Button -> Set State");
+                if (debugDisplay != 22)
+                { debugDisplay = 22; }
+                else { debugDisplay = 0; }
+            }
 
 
             //
@@ -682,15 +690,32 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
+                    //Set State
+                    case 22:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 190, 20), "category (a / r)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "state (a -> apb/sec/nor)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
+                        status = GUIStatus.SetState;
+                        textOutput = null;
+                        break;
+                    //Assign state
+                    case 23:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.turnScript.DebugSetState(textInput_0, textInput_1); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
-
-
         }
+
         //User input
         Event e = Event.current;
-
         switch (e.keyCode)
         {
             case KeyCode.Return:
@@ -704,6 +729,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.GiveActorTrait:
                         debugDisplay = 21;
+                        break;
+                    case GUIStatus.SetState:
+                        debugDisplay = 23;
                         break;
                 }
                 break;
