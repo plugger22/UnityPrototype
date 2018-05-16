@@ -55,20 +55,23 @@ public class FactionManager : MonoBehaviour
 
     public void Initialise()
     {
-        /*//Authority faction -> cityManager decides current authority faction as it depends on mayor's faction
-        factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
+        //Authority faction -> cityManager decides current authority faction as it depends on mayor's faction
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
-        //add faction traits
         Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
         Debug.Assert(trait != null, "Invalid authority trait (Null)");
-        factionAuthority.AddTrait(trait);*/
-        
+        factionAuthority.AddTrait(trait);
+        //set AI resource levels
+        GameManager.instance.aiScript.resourcesGainAuthority = factionAuthority.resourcesAllowance;
+        GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideAuthority, factionAuthority.resourcesStarting);
         //Resistance faction
         factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
-        Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
+        trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
         Debug.Assert(trait != null, "Invalid resistance trait (Null)");
         factionResistance.AddTrait(trait);
+        //set AI resource levels
+        GameManager.instance.aiScript.resourcesGainResistance = factionResistance.resourcesAllowance;
+        GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);
         //support levels
         SupportAuthority = 10;
         SupportResistance = 10;
@@ -259,21 +262,23 @@ public class FactionManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //authority
-        builder.AppendFormat(" AUTHORITY{0}", "\n");
+        builder.AppendFormat(" AUTHORITY{0}{1}", "\n", "\n");
         builder.AppendFormat(" {0} faction{1}", factionAuthority.name, "\n");
-        builder.AppendFormat(" {0}{1}", factionAuthority.descriptor, "\n");
-        builder.AppendFormat(" Preferred Nodes: {0},  Hostile Nodes: {1}{2}",
-            factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None",
-            factionAuthority.hostileArc != null ? factionAuthority.hostileArc.name : "None", "\n");
-        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}", factionAuthority.maxTaskPerTurn, "\n");
+        builder.AppendFormat(" {0}{1}{2}", factionAuthority.descriptor, "\n", "\n");
+        builder.AppendFormat(" Preferred Nodes: {0}{1}", factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None", "\n");
+        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionAuthority.hostileArc != null ? factionAuthority.hostileArc.name : "None", "\n", "\n");
+        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}{2}", factionAuthority.maxTaskPerTurn, "\n", "\n");
+        builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideAuthority), "\n");
+        builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainAuthority, "\n", "\n");
         //resistance
-        builder.AppendFormat("{0} RESISTANCE{1}", "\n", "\n");
+        builder.AppendFormat("{0} RESISTANCE{1}{2}", "\n", "\n", "\n");
         builder.AppendFormat(" {0} faction{1}", factionResistance.name, "\n");
-        builder.AppendFormat(" {0}{1}", factionResistance.descriptor, "\n");
-        builder.AppendFormat(" Preferred Nodes: {0}, Hostile Nodes: {1}{2}",
-            factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None",
-            factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n");
-        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}", factionResistance.maxTaskPerTurn, "\n");
+        builder.AppendFormat(" {0}{1}{2}", factionResistance.descriptor, "\n", "\n");
+        builder.AppendFormat(" Preferred Nodes: {0}{1}", factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None", "\n");
+        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n", "\n");
+        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}{2}", factionResistance.maxTaskPerTurn, "\n", "\n");
+        builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
+        builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
         return builder.ToString();
     }
 }

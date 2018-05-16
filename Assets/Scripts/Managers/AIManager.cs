@@ -61,16 +61,19 @@ public class AIManager : MonoBehaviour
     [Range(5, 15)] public int activityTimeLimit = 10;
     [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
     [Range(0, 10)] public int playerAIRenownCost = 1;
+    [Header("Priorities")]
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to High Priority tasks")]
     [Range(0, 10)] public int priorityHighWeight = 3;
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Medium Priority tasks")]
     [Range(0, 10)] public int priorityMediumWeight = 2;
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Low Priority tasks")]
     [Range(0, 10)] public int priorityLowWeight = 1;
+    [Header("Tracking")]
     [Tooltip("How many of the most recent AI activities are tracked (keeps this number of most recent in a priorityQueue)")]
     [Range(0, 10)] public int numOfActivitiesTracked = 5;
     [Tooltip("How many turns ago (activity wise) will the AI use to select a target node for Erasure team AI processing")]
     [Range(0, 5)] public int trackerNumOfTurnsAgo = 2;
+    [Header("Nodes")]
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections. If < 3 nodes then the next set down are added. Max capped at total nodes/2")]
     [Range(0, 5)] public int nodeConnectionThreshold = 3;
     [Tooltip("Spider/Erasure Team node score -> Each resistance activity point is multiplied by this factor")]
@@ -89,6 +92,7 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int nodeConnectedFactor = 3;
     [Tooltip("Spider Team node score -> If node is in the designated central region of the map (see 'nodeGeographicCentre') this is added to the score")]
     [Range(0, 5)] public int nodeCentreFactor = 3;
+    [Header("Connections")]
     [Tooltip("Spider Team node score -> This is added to the score for ever 'None' security connection the node has")]
     [Range(0, 5)] public int securityNoneFactor = 3;
     [Tooltip("Spider Team node score -> This is added to the score for ever Low security connection the node has")]
@@ -97,6 +101,7 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int securityMediumFactor = 1;
     [Tooltip("Spider Team node score -> This is added to the score for ever High security connection the node has")]
     [Range(0, 5)] public int securityHighFactor = 0;
+    [Header("Teams")]
     [Tooltip("Pool of tasks for Spider team -> number of entries for a Known target")]
     [Range(0, 5)] public int teamPoolTargetFactor = 3;
     [Tooltip("Pool of tasks for Spider/Erasure team -> number of entries for the top scored node")]
@@ -108,6 +113,8 @@ public class AIManager : MonoBehaviour
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
+    [HideInInspector] public int resourcesGainAuthority;                //resources added to pool (DataManager.cs -> arrayOfAIResources every turn
+    [HideInInspector] public int resourcesGainResistance;
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -193,6 +200,7 @@ public class AIManager : MonoBehaviour
         Debug.Log(string.Format("AIManager: ProcessAISideResistance{0}", "\n"));
         ExecuteTasks();
         ClearAICollections();
+        UpdateResources(GameManager.instance.globalScript.sideResistance);
         //reset flags
         immediateFlagAuthority = false;
     }
@@ -206,6 +214,7 @@ public class AIManager : MonoBehaviour
         Debug.Log(string.Format("AIManager: ProcessAISideAuthority{0}", "\n"));
         ExecuteTasks();
         ClearAICollections();
+        UpdateResources(GameManager.instance.globalScript.sideAuthority);
         //Info Gathering      
         GetAINodeData();
         ProcessNodeData();
@@ -471,6 +480,19 @@ public class AIManager : MonoBehaviour
     //
     // - - - Miscellaneous - - -
     //
+
+    /// <summary>
+    /// add the resource allowance each turn to the relevant pool
+    /// </summary>
+    /// <param name="side"></param>
+    private void UpdateResources(GlobalSide side)
+    {
+        int resources = GameManager.instance.dataScript.CheckAIResourcePool(side);
+        if (side.level == 1)
+        { resources += resourcesGainAuthority; }
+        else if (side.level == 2)
+        { resources += resourcesGainResistance; }
+    }
 
     /// <summary>
     /// Extracts all relevant AI data from an AI related message

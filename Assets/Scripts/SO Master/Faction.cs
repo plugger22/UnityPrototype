@@ -10,12 +10,20 @@ public class Faction : ScriptableObject
 {
     public string descriptor;
     public GlobalSide side;
+    [Header("Node Arcs")]
     [Tooltip("Node type that faction wants to protect (authority) or turn a blind eye to (resistance). Leave blank if none.")]
     public NodeArc preferredArc; 
     [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
     public NodeArc hostileArc;
+    [Header("AI Tasks")]
     [Tooltip("How many actions the AI faction can carry out per turn")]
     [Range(1,3)] public int maxTaskPerTurn = 3;
+    [Header("AI Resources")]
+    [Tooltip("The number of AI Resources granted per turn")]
+    [Range(1, 3)] public int resourcesAllowance = 1;
+    [Tooltip("The starting pool of AI Resources used for Decisions")]
+    [Range(1, 10)] public int resourcesStarting = 5;
+
     
     [HideInInspector] public int factionID;         //dynamically assigned by DataManager.cs on import
 

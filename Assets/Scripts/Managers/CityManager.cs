@@ -10,6 +10,7 @@ public class CityManager : MonoBehaviour
 {
     [Tooltip("City Loyalty (same for both sides) range from 0 to this amount")]
     [Range(0, 10)] public int maxCityLoyalty = 10;
+    [Header("GUI data")]
     [Tooltip("Opacity of the 3 grey background subPanels in the city tooltip")]
     [Range(0f, 1.0f)] public float subPanelOpacity = 0.1f;
     [Tooltip("Opacity of the 3 grey background miniPanels (centre panel -> Mayor / Faction / Orgs) in the city tooltip")]
@@ -75,10 +76,7 @@ public class CityManager : MonoBehaviour
             Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryMayor);
             Debug.Assert(trait != null, "Invalid Mayoral trait (Null)");
             city.mayor.AddTrait(trait);
-            trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
-            Debug.Assert(trait != null, "Invalid Faction trait (Null)");
-            city.mayor.faction.AddTrait(trait);
-            //update authority faction
+            //initialise authority faction (determined by mayor's faction
             GameManager.instance.factionScript.factionAuthority = city.mayor.faction;
         }
         else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
