@@ -99,6 +99,7 @@
         //AI
         AI_Connection,
         AI_Node,
+        AI_Immediate,
         AI_Capture,
         AI_Release,
         //Decision

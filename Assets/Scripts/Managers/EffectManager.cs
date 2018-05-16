@@ -616,7 +616,6 @@ public class EffectManager : MonoBehaviour
                 case "ConditionGroupGood":
                     if (node != null)
                     {
-
                         //it's OK to pass a null actor provided it's a player condition
                         EffectDataResolve resolve = ResolveConditionData(effect, node, actor);
                         if (resolve.isError == true)
@@ -627,7 +626,6 @@ public class EffectManager : MonoBehaviour
                             effectReturn.bottomText = resolve.bottomText;
                             effectReturn.isAction = true;
                         }
-
                     }
                     else
                     {
@@ -914,12 +912,29 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd);
+                                            if (invisibility >= 0)
+                                            { effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd); }
+                                            else
+                                            {
+                                                //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
+                                                effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}Authority will know immediately{5}",
+                                                    colourAlert, colourEnd, "\n", "\n", colourBad, colourEnd);
+                                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                            }
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd);
+                                            if (invisibility >= 0)
+                                            { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd); }
+                                            else
+                                            {
+                                                //immediate notification. AI flag set. Applies if player invis was 0 before action taken
+                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}Authority will know immediately{6}", 
+                                                    colourAlert, effect.textTag, colourEnd, "\n", "\n", colourBad, colourEnd);
+                                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                            }
+                                            
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
@@ -929,8 +944,16 @@ public class EffectManager : MonoBehaviour
                                     int delay;
                                     if (node.isSpider == true) { delay = delayYesSpider; }
                                     else { delay = delayNoSpider; }
-                                    Message messageAI = GameManager.instance.messageScript.AINodeActivity("Resistance Activity (Player)" ,node.nodeID, 999, delay);
+                                    Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)", 
+                                        dataInput.textOrigin), node.nodeID, 999, delay);
                                     GameManager.instance.dataScript.AddMessage(messageAI);
+                                    //AI Immediate message
+                                    if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                                    {
+                                        Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
+                                            dataInput.textOrigin), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
+                                        GameManager.instance.dataScript.AddMessage(message);
+                                    }
                                     break;
                             }
                         }
@@ -958,12 +981,28 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true)
                                         {
                                             invisibility -= 2;
-                                            effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourEffect, actor.arc.name, colourEnd);
+                                            if (invisibility >= 0)
+                                            { effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourEffect, actor.arc.name, colourEnd); }
+                                            else
+                                            {
+                                                //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
+                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}Authority will know immediately{5}",
+                                                    colourEffect, actor.arc.name, effect.textTag, "\n", "\n", colourEnd);
+                                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                            }
                                         }
                                         else
                                         {
                                             invisibility -= 1;
-                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                                            if (invisibility >= 0)
+                                            { effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd); }
+                                            else
+                                            {
+                                                //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
+                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}Authority will know immediately{5}", 
+                                                    colourEffect, actor.arc.name, effect.textTag, "\n", "\n", colourEnd);
+                                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                            }
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
@@ -972,9 +1011,16 @@ public class EffectManager : MonoBehaviour
                                         int delay;
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
-                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity ({0})", actor.arc.name), 
-                                            node.nodeID, actor.actorID, delay);
+                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})", 
+                                            dataInput.textOrigin, actor.arc.name), node.nodeID, actor.actorID, delay);
                                         GameManager.instance.dataScript.AddMessage(messageAI);
+                                        //AI Immediate message
+                                        if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                                        {
+                                            Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
+                                                dataInput.textOrigin, actor.arc.name), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
+                                            GameManager.instance.dataScript.AddMessage(message);
+                                        }
                                         break;
                                 }
                             }

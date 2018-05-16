@@ -307,6 +307,36 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// AI notification of Player/Actor activity that results in immediateAuthorityFlag/immediateResistanceFlag being set true
+    /// use either nodeID or connID and set the other to -1
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID">Set to -1 if not applicable</param>
+    /// <param name="connID">Set to -1 if not applicable</param>
+    /// <param name="side"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Message AIImmediateActivity(string text, GlobalSide side, int nodeID, int connID, int actorID = 999)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Immediate;
+            message.side = side;
+            message.isPublic = false;
+            message.data0 = nodeID;
+            message.data1 = connID;
+            message.data2 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// AI notification of Player (use default actorID 999) or actor being captured at a node
     /// </summary>
     /// <param name="text"></param>

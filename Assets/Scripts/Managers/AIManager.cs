@@ -106,7 +106,8 @@ public class AIManager : MonoBehaviour
     [Tooltip("Pool of tasks for Spider/Erasure team -> number of entries for the third top scored node")]
     [Range(0, 5)] public int teamPoolThirdFactor = 1;
 
-
+    [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
+    [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -114,6 +115,7 @@ public class AIManager : MonoBehaviour
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
+    
 
     //fast access
     private int teamArcCivil = -1;
@@ -191,6 +193,8 @@ public class AIManager : MonoBehaviour
         Debug.Log(string.Format("AIManager: ProcessAISideResistance{0}", "\n"));
         ExecuteTasks();
         ClearAICollections();
+        //reset flags
+        immediateFlagAuthority = false;
     }
 
     /// <summary>
@@ -215,6 +219,8 @@ public class AIManager : MonoBehaviour
         ProcessErasureTask();
         //choose tasks for the turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
+        //reset flags
+        immediateFlagResistance = false;
     }
 
     /// <summary>
