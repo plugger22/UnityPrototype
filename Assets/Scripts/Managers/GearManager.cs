@@ -35,6 +35,7 @@ public class GearManager : MonoBehaviour
     [HideInInspector] public GearType typeMovement;
     [HideInInspector] public GearType typeRecovery;
     [HideInInspector] public GearType typePersuasion;
+    
 
     private string colourEffectGood;
     private string colourEffectNeutral;
@@ -689,10 +690,11 @@ public class GearManager : MonoBehaviour
                                 if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;
+                                EffectDataInput dataInput = new EffectDataInput();
+                                dataInput.textOrigin = "Gear";
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)
                                 {
-                                    EffectDataInput dataInput = new EffectDataInput();
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
@@ -804,13 +806,7 @@ public class GearManager : MonoBehaviour
     /// <param name="gear"></param>
     /// <param name="node"></param>
     public string GearUsed(Gear gear, Node node)
-    {
-        /*//message -> redundant
-        string textMsg = string.Format("{0}, ID {1} has been used", gear.name, gear.gearID);
-        Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
-        if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }*/
-        return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd);
-    }
+    { return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd); }
 
     /// <summary>
     /// subMethod to handle admin for Player renown expenditure
@@ -824,7 +820,6 @@ public class GearManager : MonoBehaviour
         renown -= amount;
         GameManager.instance.playerScript.Renown = renown;
         //message
-
         string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
         Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
         if (messageRenown != null) { GameManager.instance.dataScript.AddMessage(messageRenown); }

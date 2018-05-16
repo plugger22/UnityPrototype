@@ -844,7 +844,7 @@ public class EffectManager : MonoBehaviour
                     //raise/lower invisibility of actor or Player
                     if (node != null)
                     {
-
+                        bool isGearUsed = false;
                         if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                         {
                             //
@@ -872,13 +872,14 @@ public class EffectManager : MonoBehaviour
                                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                         if (gear != null)
                                         {
+                                            isGearUsed = true;
                                             int chance = GameManager.instance.gearScript.GetChanceOfCompromise(gearID);
                                             if (Random.Range(0, 100) <= chance)
                                             {
                                                 //gear compromised
                                                 string text = string.Format("{0} used to stay Invisible ", gear.name);
                                                 effectReturn.bottomText = string.Format("{0}{1}(Compromised!){2}", colourEffect, text, colourEnd);
-                                                Message messageGear = GameManager.instance.messageScript.GearCompromised(string.Format("{0}(Obtain Gear)", text), 
+                                                Message messageGear = GameManager.instance.messageScript.GearCompromised(string.Format("{0}(Obtain Gear)", text),
                                                     node.nodeID, gear.gearID);
                                                 GameManager.instance.dataScript.AddMessage(messageGear);
                                                 //remove gear
@@ -889,6 +890,10 @@ public class EffectManager : MonoBehaviour
                                                 //gear O.K
                                                 effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourEffect, gear.name,
                                                     colourEnd);
+                                                //message
+                                                string textMsg = string.Format("{0}, ({1}), has prevented detection", gear.name, gear.type.name);
+                                                Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
+                                                if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                             }
                                             //special invisibility gear effects
                                             switch (gear.data)
@@ -941,18 +946,21 @@ public class EffectManager : MonoBehaviour
                                         GameManager.instance.playerScript.invisibility = invisibility;
                                     }
                                     //AI activity message
-                                    int delay;
-                                    if (node.isSpider == true) { delay = delayYesSpider; }
-                                    else { delay = delayNoSpider; }
-                                    Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)", 
-                                        dataInput.textOrigin), node.nodeID, 999, delay);
-                                    GameManager.instance.dataScript.AddMessage(messageAI);
-                                    //AI Immediate message
-                                    if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                                    if (isGearUsed == false)
                                     {
-                                        Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
-                                            dataInput.textOrigin), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
-                                        GameManager.instance.dataScript.AddMessage(message);
+                                        int delay;
+                                        if (node.isSpider == true) { delay = delayYesSpider; }
+                                        else { delay = delayNoSpider; }
+                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
+                                            dataInput.textOrigin), node.nodeID, 999, delay);
+                                        GameManager.instance.dataScript.AddMessage(messageAI);
+                                        //AI Immediate message
+                                        if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                                        {
+                                            Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
+                                                dataInput.textOrigin), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
+                                            GameManager.instance.dataScript.AddMessage(message);
+                                        }
                                     }
                                     break;
                             }

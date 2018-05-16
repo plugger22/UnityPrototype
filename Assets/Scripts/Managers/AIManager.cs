@@ -211,12 +211,14 @@ public class AIManager : MonoBehaviour
         ProcessNodeData();
         ProcessSpiderData();
         ProcessErasureData();
+        ProcessDecisionData();
         //AI Rulesets
         ProcessNodeTasks();
         ProcessProbeTask();
         ProcessSpiderTask();
         ProcessDamageTask();
         ProcessErasureTask();
+        ProcessDecisionTask();
         //choose tasks for the turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
         //reset flags
@@ -985,6 +987,13 @@ public class AIManager : MonoBehaviour
         else { Debug.LogFormat("AIManager.cs -> ProcessSpiderData: No Erasure teams available in reserves{0}", "\n"); }
     }
 
+    /// <summary>
+    /// Processes all data relevant for deciding on Decision tasks
+    /// </summary>
+    private void ProcessDecisionData()
+    {
+
+    }
 
     /// <summary>
     /// master method that determines up to 3 separate tasks, one for each node datapoint and the relevant team (Control/Civil/Media)
@@ -1261,6 +1270,14 @@ public class AIManager : MonoBehaviour
             else { Debug.Log(string.Format("AIManager.cs -> ProcessDamageTask: No available Damaged Targets{0}", "\n")); }
         }
         else { Debug.Log(string.Format("AIManager.cs -> ProcessDamageTask: No Damage teams available in reserves{0}", "\n")); }
+    }
+
+    /// <summary>
+    /// selects a decision if situation warrants it
+    /// </summary>
+    private void ProcessDecisionTask()
+    {
+
     }
 
     /// <summary>

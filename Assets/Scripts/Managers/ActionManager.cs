@@ -357,6 +357,7 @@ public class ActionManager : MonoBehaviour
                         StringBuilder builderBottom = new StringBuilder();
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
+                        dataInput.textOrigin = "Node Gear";
                         //
                         // - - - Process effects
                         //
@@ -1971,6 +1972,7 @@ public class ActionManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
+                dataInput.textOrigin = "Target";
                 //handle any Ongoing effects of target completed -> only if target Successful
                 if (isSuccessful == true && target.listOfOngoingEffects.Count > 0)
                 {
@@ -2124,7 +2126,7 @@ public class ActionManager : MonoBehaviour
                             if (listOfEffects.Count > 0)
                             {
                                 EffectDataInput dataInput = new EffectDataInput();
-
+                                dataInput.textOrigin = "Reserve Actor";
                                 foreach (Effect effect in listOfEffects)
                                 {
                                     if (effect.ignoreEffect == false)
@@ -2277,7 +2279,7 @@ public class ActionManager : MonoBehaviour
                                 if (listOfEffects.Count > 0)
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
-
+                                    dataInput.textOrigin = "Dismiss Actor";
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
@@ -2428,7 +2430,7 @@ public class ActionManager : MonoBehaviour
                                 if (listOfEffects.Count > 0)
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
-
+                                    dataInput.textOrigin = "Dispose Actor";
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)

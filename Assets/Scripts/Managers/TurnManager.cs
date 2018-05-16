@@ -135,8 +135,8 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void ProcessNewTurn()
     {
-        Debug.Log(string.Format("TurnManager -> ProcessNewTurn -> Player side: {0}, Current side: {1}{2}", 
-            GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n"));
+        Debug.Log(string.Format("TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}", 
+            _turn, GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n"));
         bool finishedProcessing = false;
         int safetyCircuit = 0;
         //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
@@ -178,7 +178,7 @@ public class TurnManager : MonoBehaviour
     {
         //increment turn counter
         _turn++;
-        Debug.Log(string.Format("TurnManager: - - - StartTurnEarly - - - turn {0}", "\n"));
+        Debug.Log(string.Format("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n"));
         EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
         //reset nodes and connections if not in normal state
         if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
@@ -192,7 +192,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        Debug.Log(string.Format("TurnManager: - - - StartTurnLate - - - turn {0}", "\n"));
+        Debug.Log(string.Format("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n"));
         EventManager.instance.PostNotification(EventType.StartTurnLate, this);
     }
 
@@ -202,7 +202,7 @@ public class TurnManager : MonoBehaviour
     private bool StartTurnFinal()
     {
         bool playerInteraction = true;
-        Debug.Log(string.Format("TurnManager: - - - StartTurnFinal - - - turn {0}", "\n"));
+        Debug.Log(string.Format("TurnManager: - - - StartTurnFinal - - - turn {0}{1}", _turn, "\n"));
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
@@ -228,7 +228,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     private void EndTurnAI()
     {
-        Debug.Log(string.Format("TurnManager: - - - EndTurnAI - - - turn {0}", "\n"));
+        Debug.Log(string.Format("TurnManager: - - - EndTurnAI - - - turn {0}{1}", _turn, "\n"));
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
@@ -273,7 +273,7 @@ public class TurnManager : MonoBehaviour
         _actionsCurrent = 0;
         _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
         _actionsTotal = Mathf.Max(0, _actionsTotal);
-        Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}", "\n"));
+        Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}{1}", _turn, "\n"));
         EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal);
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
     }
