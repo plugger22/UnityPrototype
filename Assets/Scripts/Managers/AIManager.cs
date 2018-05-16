@@ -133,6 +133,8 @@ public class AIManager : MonoBehaviour
     private int teamArcDamage = -1;
     private int teamArcErasure = -1;
     private int maxTeamsAtNode = -1;
+    private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -158,10 +160,16 @@ public class AIManager : MonoBehaviour
 
     public void Initialise()
     {
+        //factions
         factionAuthority = GameManager.instance.factionScript.factionAuthority;
         factionResistance = GameManager.instance.factionScript.factionResistance;
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
+        //sides
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         //get names of node arcs (name or null, if none)
         if (factionAuthority.preferredArc != null) { authorityPreferredArc = factionAuthority.preferredArc.name; }
         if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
@@ -197,10 +205,10 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessAISideResistance()
     {
-        Debug.Log(string.Format("AIManager: ProcessAISideResistance{0}", "\n"));
+        Debug.Log(string.Format("[Aim] : ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         ExecuteTasks();
         ClearAICollections();
-        UpdateResources(GameManager.instance.globalScript.sideResistance);
+        UpdateResources(globalResistance);
         //reset flags
         immediateFlagAuthority = false;
     }
@@ -211,10 +219,10 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessAISideAuthority()
     {
-        Debug.Log(string.Format("AIManager: ProcessAISideAuthority{0}", "\n"));
+        Debug.Log(string.Format("[Aim] : ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         ExecuteTasks();
         ClearAICollections();
-        UpdateResources(GameManager.instance.globalScript.sideAuthority);
+        UpdateResources(globalAuthority);
         //Info Gathering      
         GetAINodeData();
         ProcessNodeData();
@@ -321,7 +329,7 @@ public class AIManager : MonoBehaviour
                         }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.Key)); }
                     }
-                    Debug.Log(string.Format("A!Manager.cs -> SetConnectedNodes: Extra nodes ({0} connections) have been added to the listOfMostConnectedNodes{1}", 
+                    Debug.Log(string.Format("[Aim] -> SetConnectedNodes: Extra nodes ({0} connections) have been added to the listOfMostConnectedNodes{1}", 
                         numSpecific, "\n"));
                 }
                 else { Debug.LogWarning("Insufficient records for SetConnectedNodes"); }
@@ -356,7 +364,7 @@ public class AIManager : MonoBehaviour
                     }
                     //Pass data to the main reference list
                     GameManager.instance.dataScript.SetConnectedNodes(listOfMostConnectedNodes);
-                    Debug.Log(string.Format("A!Manager.cs -> SetConnectedNodes: {0} nodes have been added to the listOfMostConnectedNodes{1}", counter, "\n"));
+                    Debug.Log(string.Format("A!Manager -> SetConnectedNodes: {0} nodes have been added to the listOfMostConnectedNodes{1}", counter, "\n"));
                 }
                 else { Debug.LogWarning("Insufficient number of records ( < 3) for SetConnectedNodes"); }
             }
@@ -492,6 +500,8 @@ public class AIManager : MonoBehaviour
         { resources += resourcesGainAuthority; }
         else if (side.level == 2)
         { resources += resourcesGainResistance; }
+        GameManager.instance.dataScript.SetAIResources(side, resources);
+        Debug.LogFormat("[Aim]  -> UpdateResources: {0} resources {1}{2}", side.name, resources, "\n");
     }
 
     /// <summary>
@@ -796,11 +806,11 @@ public class AIManager : MonoBehaviour
                         }
                     }
                 }
-                Debug.LogFormat("AIManager.cs -> ProcessSpiderData: {0} possible nodes added{1}", listOfSpiderNodes.Count, "\n");
+                Debug.LogFormat("[Aim]  -> ProcessSpiderData: {0} possible nodes added{1}", listOfSpiderNodes.Count, "\n");
             }
             else { Debug.LogError("Invalid listOfMostConnected (Null)"); }
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessSpiderData: No Spider teams available in reserves{0}", "\n")); }
+        else { Debug.Log(string.Format("[Aim]  -> ProcessSpiderData: No Spider teams available in reserves{0}", "\n")); }
     }
 
     /// <summary>
@@ -868,7 +878,7 @@ public class AIManager : MonoBehaviour
             if (nodeReturnID > 0)
             { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
             else { listOfErasureAILog.Add("No viable target node found"); }
-            Debug.LogFormat("AIManager.cs -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID, "\n");
+            Debug.LogFormat("[Aim]  -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID, "\n");
         }
         else { Debug.LogWarning("Invalid queue (Null)"); }
         return nodeReturnID;
@@ -975,7 +985,7 @@ public class AIManager : MonoBehaviour
             }
             else
             {
-                Debug.LogFormat("AIManager.cs -> ProcessErasureData: No target node identified, checking other possibilities{0}", "\n");
+                Debug.LogFormat("[Aim]  -> ProcessErasureData: No target node identified, checking other possibilities{0}", "\n");
 
                 //if a minimum number of erasure teams in reserve then place one at a likely place
                 if (numOfTeams > 1)
@@ -1000,13 +1010,13 @@ public class AIManager : MonoBehaviour
                                 listOfErasureNodes.Add(data);
                             }
                         }
-                        Debug.LogFormat("AIManager.cs -> ProcessErasureData: {0} possible nodes added (Connected and Unknown Spiders{1}", listOfErasureNodes.Count, "\n");
+                        Debug.LogFormat("[Aim]  -> ProcessErasureData: {0} possible nodes added (Connected and Unknown Spiders{1}", listOfErasureNodes.Count, "\n");
                     }
                     else { Debug.LogWarning("Invalid lisOfMostConnected (Null)"); }
                 }
             }
         }
-        else { Debug.LogFormat("AIManager.cs -> ProcessSpiderData: No Erasure teams available in reserves{0}", "\n"); }
+        else { Debug.LogFormat("[Aim]  -> ProcessSpiderData: No Erasure teams available in reserves{0}", "\n"); }
     }
 
     /// <summary>
@@ -1029,27 +1039,27 @@ public class AIManager : MonoBehaviour
         {
             AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL", teamArcCivil);
             if (taskStability != null) { listOfTasksPotential.Add(taskStability); }
-            else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No available Stability Node tasks{0}", "\n")); }
+            else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No available Stability Node tasks{0}", "\n")); }
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No Civil teams available in reserves{0}", "\n")); }
+        else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No Civil teams available in reserves{0}", "\n")); }
         //Security
         numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcControl, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
             AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL", teamArcControl);
             if (taskSecurity != null) { listOfTasksPotential.Add(taskSecurity); }
-            else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No available Security Node tasks{0}", "\n")); }
+            else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No available Security Node tasks{0}", "\n")); }
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No Security teams available in reserves{0}", "\n")); }
+        else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No Security teams available in reserves{0}", "\n")); }
         //Support
         numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcMedia, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
             AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA", teamArcMedia);
             if (taskSupport != null) { listOfTasksPotential.Add(taskSupport); }
-            else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No available Support Node tasks{0}", "\n")); }
+            else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No available Support Node tasks{0}", "\n")); }
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessNodeTasks: No Media teams available in reserves{0}", "\n")); }
+        else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No Media teams available in reserves{0}", "\n")); }
 
     }
 
@@ -1083,7 +1093,7 @@ public class AIManager : MonoBehaviour
             }
             else { Debug.Log("No available nodes for a Probe Team"); }
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessProbeTasks: No Probe teams available in reserves{0}", "\n")); }
+        else { Debug.Log(string.Format("[Aim]  -> ProcessProbeTasks: No Probe teams available in reserves{0}", "\n")); }
     }
 
     /// <summary>
@@ -1176,7 +1186,7 @@ public class AIManager : MonoBehaviour
                 //add to list of potentials
                 listOfTasksPotential.Add(taskSpider);
             }
-            else { Debug.Log(string.Format("AIManager.cs -> ProcessSpiderTask: No available Spider Team tasks{0}", "\n")); }
+            else { Debug.Log(string.Format("[Aim]  -> ProcessSpiderTask: No available Spider Team tasks{0}", "\n")); }
         }
     }
 
@@ -1239,7 +1249,7 @@ public class AIManager : MonoBehaviour
                     //add to list of potentials
                     listOfTasksPotential.Add(taskErasure);
                 }
-                else { Debug.Log(string.Format("AIManager.cs -> ProcessErasureTask: No available Erasure Team tasks{0}", "\n")); }
+                else { Debug.Log(string.Format("[Aim]  -> ProcessErasureTask: No available Erasure Team tasks{0}", "\n")); }
             }
         }
     }
@@ -1289,9 +1299,9 @@ public class AIManager : MonoBehaviour
                     else { Debug.LogWarning("Invalid record (Null) in listOfTargetsDamaged"); }
                 }
             }
-            else { Debug.Log(string.Format("AIManager.cs -> ProcessDamageTask: No available Damaged Targets{0}", "\n")); }
+            else { Debug.Log(string.Format("[Aim]  -> ProcessDamageTask: No available Damaged Targets{0}", "\n")); }
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessDamageTask: No Damage teams available in reserves{0}", "\n")); }
+        else { Debug.Log(string.Format("[Aim]  -> ProcessDamageTask: No Damage teams available in reserves{0}", "\n")); }
     }
 
     /// <summary>
@@ -1456,7 +1466,7 @@ public class AIManager : MonoBehaviour
             }
 
         }
-        else { Debug.Log(string.Format("AIManager.cs -> ProcessTasksFinal: No tasks this turn{0}", "\n")); }
+        else { Debug.Log(string.Format("[Aim]  -> ProcessTasksFinal: No tasks this turn{0}", "\n")); }
     }
 
 

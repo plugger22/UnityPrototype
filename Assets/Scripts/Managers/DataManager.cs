@@ -126,6 +126,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();         //Key -> objectiveID, Value -> Objective
     private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();//Key -> orgID, Value -> Organisation
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                     //Key -> mayorID, Value -> Mayor
+    private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();      //Key -> aiDecID, Value -> DecisionAI
     
 
     //global SO's (enum equivalents)
@@ -2525,6 +2526,10 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         arrayOfAIResources[side.level] = amount;
     }
+
+
+    public Dictionary<int, DecisionAI> GetDictOfAIDecisions()
+    { return dictOfAIDecisions; }
 
     //
     // - - - Manage - - -

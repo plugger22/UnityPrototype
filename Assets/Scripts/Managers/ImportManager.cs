@@ -935,11 +935,41 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("DataManager: Initialise -> dictOfMayors has {0} entries{1}", counter, "\n"));
         }
         else { Debug.LogError("Invalid dictOfMayors (Null) -> Import failed"); }
+        //
+        // - - - AI Decisions - - -
+        //
+        Dictionary<int, DecisionAI> dictOfAIDecisions = GameManager.instance.dataScript.GetDictOfAIDecisions();
+        if (dictOfAIDecisions != null)
+        {
+            counter = 0;
+            //get GUID of all SO DecisionAI Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var decisionAIGUID = AssetDatabase.FindAssets("t:DecisionAI");
+            foreach (var guid in decisionAIGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object decisionAIObject = AssetDatabase.LoadAssetAtPath(path, typeof(DecisionAI));
+                //assign a zero based unique ID number
+                DecisionAI decisionAI = decisionAIObject as DecisionAI;
+                //set data
+                decisionAI.aiDecID = counter++;
+                //add to dictionary
+                try
+                { dictOfAIDecisions.Add(decisionAI.aiDecID, decisionAI); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid decisionAI (duplicate) ID \"{0}\" for \"{1}\"", counter, decisionAI.name)); counter--; }
+            }
+            Debug.Log(string.Format("DataManager: Initialise -> dictOfAIDecisions has {0} entries{1}", counter, "\n"));
+        }
+        else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
     }
 
 
     /// <summary>
-    /// Stuff that is done after level Manager.SetUp
+    /// Stuff that is done after LevelManager.SetUp
     /// Note: DataManager.cs InitialiseLate runs immediately prior to this and sets up node arrays and lists
     /// </summary>
     public void InitialiseLate()
