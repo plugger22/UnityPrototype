@@ -740,6 +740,13 @@ public class DataManager : MonoBehaviour
     { return dictOfConnections; }
 
     /// <summary>
+    /// Returns total number of connections
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfConnections()
+    { return dictOfConnections.Count; }
+
+    /// <summary>
     /// pass the top most connected nodes (those with 3+ connections) to the list. Used by AI
     /// </summary>
     /// <param name="listOfConnected"></param>

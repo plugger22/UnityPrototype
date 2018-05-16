@@ -61,6 +61,7 @@ public class AIManager : MonoBehaviour
     [Range(5, 15)] public int activityTimeLimit = 10;
     [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
     [Range(0, 10)] public int playerAIRenownCost = 1;
+
     [Header("Priorities")]
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to High Priority tasks")]
     [Range(0, 10)] public int priorityHighWeight = 3;
@@ -68,11 +69,13 @@ public class AIManager : MonoBehaviour
     [Range(0, 10)] public int priorityMediumWeight = 2;
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to Low Priority tasks")]
     [Range(0, 10)] public int priorityLowWeight = 1;
+
     [Header("Tracking")]
     [Tooltip("How many of the most recent AI activities are tracked (keeps this number of most recent in a priorityQueue)")]
     [Range(0, 10)] public int numOfActivitiesTracked = 5;
     [Tooltip("How many turns ago (activity wise) will the AI use to select a target node for Erasure team AI processing")]
     [Range(0, 5)] public int trackerNumOfTurnsAgo = 2;
+
     [Header("Nodes")]
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections. If < 3 nodes then the next set down are added. Max capped at total nodes/2")]
     [Range(0, 5)] public int nodeConnectionThreshold = 3;
@@ -92,6 +95,7 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int nodeConnectedFactor = 3;
     [Tooltip("Spider Team node score -> If node is in the designated central region of the map (see 'nodeGeographicCentre') this is added to the score")]
     [Range(0, 5)] public int nodeCentreFactor = 3;
+
     [Header("Connections")]
     [Tooltip("Spider Team node score -> This is added to the score for ever 'None' security connection the node has")]
     [Range(0, 5)] public int securityNoneFactor = 3;
@@ -101,6 +105,7 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int securityMediumFactor = 1;
     [Tooltip("Spider Team node score -> This is added to the score for ever High security connection the node has")]
     [Range(0, 5)] public int securityHighFactor = 0;
+
     [Header("Teams")]
     [Tooltip("Pool of tasks for Spider team -> number of entries for a Known target")]
     [Range(0, 5)] public int teamPoolTargetFactor = 3;
@@ -110,6 +115,12 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int teamPoolSecondFactor = 2;
     [Tooltip("Pool of tasks for Spider/Erasure team -> number of entries for the third top scored node")]
     [Range(0, 5)] public int teamPoolThirdFactor = 1;
+
+    [Header("Decisions")]
+    [Tooltip("The ratio level above which no more Connection Security decisions will be made")]
+    [Range(0f, 1f)] public float connectionRatioThreshold = 0.75f;
+    [Tooltip("The ratio level above which no more Request Team decisions will be made")]
+    [Range(0f, 1f)] public float teamRatioThreshold = 0.75f;
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
@@ -122,7 +133,11 @@ public class AIManager : MonoBehaviour
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
-    
+
+    //decision data
+    private float connSecRatio;
+    private float teamRatio;
+    private int erasureTeamsOnMap;
 
     //fast access
     private int teamArcCivil = -1;
@@ -135,6 +150,8 @@ public class AIManager : MonoBehaviour
     private int maxTeamsAtNode = -1;
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
+    private int totalNodes;
+    private int totalConnections;
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -156,6 +173,7 @@ public class AIManager : MonoBehaviour
     List<AITask> listOfTasksFinal = new List<AITask>();
     List<AITask> listOfSpiderTasks = new List<AITask>();
     List<AITask> listOfErasureTasks = new List<AITask>();
+    List<AITask> listOfDecisionTasks = new List<AITask>();
 
 
     public void Initialise()
@@ -165,6 +183,9 @@ public class AIManager : MonoBehaviour
         factionResistance = GameManager.instance.factionScript.factionResistance;
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
+        //decision data
+        totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
+        totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
         //sides
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -205,7 +226,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessAISideResistance()
     {
-        Debug.Log(string.Format("[Aim] : ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
+        Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         ExecuteTasks();
         ClearAICollections();
         UpdateResources(globalResistance);
@@ -219,7 +240,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessAISideAuthority()
     {
-        Debug.Log(string.Format("[Aim] : ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
+        Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         ExecuteTasks();
         ClearAICollections();
         UpdateResources(globalAuthority);
@@ -268,6 +289,7 @@ public class AIManager : MonoBehaviour
         listOfTasksPotential.Clear();
         listOfSpiderTasks.Clear();
         listOfErasureTasks.Clear();
+        listOfDecisionTasks.Clear();
     }
 
     //
@@ -1024,7 +1046,42 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessDecisionData()
     {
-
+        float tally;
+        //zero data points
+        connSecRatio = 0;
+        teamRatio = 0;
+        erasureTeamsOnMap = 0;
+        //work out connection security ratio (cumulate tally of connection security levels / number of connections)
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        if (dictOfConnections != null)
+        {
+            tally = 0;
+            foreach(var conn in dictOfConnections)
+            {
+                switch(conn.Value.SecurityLevel)
+                {
+                    case ConnectionType.HIGH:
+                        tally += 3f;
+                        break;
+                    case ConnectionType.MEDIUM:
+                        tally += 2f;
+                        break;
+                    case ConnectionType.LOW:
+                        tally += 1f;
+                        break;
+                }
+            }
+            connSecRatio = tally / (float)totalConnections;
+        }
+        else { Debug.LogWarning("Invalid dictOfConnections (Null)"); }
+        //work out team ratio (total teams / total nodes)
+        teamRatio = GameManager.instance.dataScript.CheckNumOfTeams() / (float)totalNodes;
+        //work out number of erasure teams onMap
+        erasureTeamsOnMap = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
+        //log output
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0}", connSecRatio);
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: teamRatio {0}", teamRatio);
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: number of Erasure teams onMap {0}", erasureTeamsOnMap);
     }
 
     /// <summary>
@@ -1309,7 +1366,15 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessDecisionTask()
     {
+        Debug.Assert(listOfDecisionTasks != null, "Invalid listOfDecisionTasks (Null)");
+        //Connections
 
+        //Security
+
+        //Teams
+
+
+      
     }
 
     /// <summary>
