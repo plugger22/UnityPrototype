@@ -2539,6 +2539,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, DecisionAI> GetDictOfAIDecisions()
     { return dictOfAIDecisions; }
 
+    public Dictionary<string, int> GetDictOfLookUpAIDecisions()
+    { return dictOfLookUpAIDecisions; }
+
     /// <summary>
     /// returns DecisionAI.aiDecID from an input decision name (name of SO), -1 if not found
     /// </summary>
@@ -2555,6 +2558,19 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid decisionName (Null or Empty)"); }
         return aiDecID;
+    }
+
+    /// <summary>
+    /// returns DecisionAI from dictOfAIDecisions based on aiDecID. Null if not found.
+    /// </summary>
+    /// <param name="aiDecID"></param>
+    /// <returns></returns>
+    public DecisionAI GetAIDecision(int aiDecID)
+    {
+        DecisionAI decisionAI = null;
+        if (dictOfAIDecisions.TryGetValue(aiDecID, out decisionAI))
+        { return decisionAI; }
+        return null;
     }
 
     //

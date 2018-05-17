@@ -155,12 +155,12 @@ public class AIManager : MonoBehaviour
     private int totalNodes;
     private int totalConnections;
     //fast access decisions
-    private int decisionAPB;
-    private int decisionConnSec;
-    private int decisionRequestTeam;
-    private int decisionSecAlert;
-    private int decisionCrackdown;
-    private int decisionResources;
+    private DecisionAI decisionAPB;
+    private DecisionAI decisionConnSec;
+    private DecisionAI decisionRequestTeam;
+    private DecisionAI decisionSecAlert;
+    private DecisionAI decisionCrackdown;
+    private DecisionAI decisionResources;
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -182,7 +182,8 @@ public class AIManager : MonoBehaviour
     List<AITask> listOfTasksFinal = new List<AITask>();
     List<AITask> listOfSpiderTasks = new List<AITask>();
     List<AITask> listOfErasureTasks = new List<AITask>();
-    List<AITask> listOfDecisionTasks = new List<AITask>();
+    List<AITask> listOfDecisionTasksNonCritical = new List<AITask>();
+    List<AITask> listOfDecisionTasksCritical = new List<AITask>();
 
 
     public void Initialise()
@@ -196,18 +197,24 @@ public class AIManager : MonoBehaviour
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
         //decision ID's
-        decisionAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
-        decisionConnSec = GameManager.instance.dataScript.GetAIDecisionID("Connection Security");
-        decisionRequestTeam = GameManager.instance.dataScript.GetAIDecisionID("Request Team");
-        decisionSecAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
-        decisionCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Survelliance Crackdown");
-        decisionResources = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
-        Debug.Assert(decisionAPB > -1, "Invalid decisionAPB (-1)");
-        Debug.Assert(decisionConnSec > -1, "Invalid decisionConnSec (-1)");
-        Debug.Assert(decisionRequestTeam > -1, "Invalid decisionRequestTeam (-1)");
-        Debug.Assert(decisionSecAlert > -1, "Invalid decisionSecAlert (-1)");
-        Debug.Assert(decisionCrackdown > -1, "Invalid decisionCrackdown (-1)");
-        Debug.Assert(decisionResources > -1, "Invalid decisionResources (-1)");
+        int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
+        decisionAPB = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Connection Security");
+        decisionConnSec = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Team");
+        decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
+        decisionSecAlert = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Survelliance Crackdown");
+        decisionCrackdown = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
+        decisionResources = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
+        Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
+        Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
+        Debug.Assert(decisionSecAlert != null, "Invalid decisionSecAlert (Null)");
+        Debug.Assert(decisionCrackdown != null, "Invalid decisionCrackdown (Null)");
+        Debug.Assert(decisionResources != null, "Invalid decisionResources (Null)");
         //sides
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -311,7 +318,8 @@ public class AIManager : MonoBehaviour
         listOfTasksPotential.Clear();
         listOfSpiderTasks.Clear();
         listOfErasureTasks.Clear();
-        listOfDecisionTasks.Clear();
+        listOfDecisionTasksNonCritical.Clear();
+        listOfDecisionTasksCritical.Clear();
     }
 
     //
@@ -1385,11 +1393,55 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// selects a decision if situation warrants it
+    /// Goes through each decision and adds 'x' entries (depending on priority) of each before randomly choosing one to add to the listOfTaskPotential
     /// </summary>
     private void ProcessDecisionTask()
     {
-        Debug.Assert(listOfDecisionTasks != null, "Invalid listOfDecisionTasks (Null)");
-        //Connections
+        Debug.Assert(listOfDecisionTasksNonCritical != null, "Invalid listOfDecisionTasksNonCritical (Null)");
+        Debug.Assert(listOfDecisionTasksCritical != null, "Invalid listOfDecisionTasksCritical (Null)");
+        //Security -> Critical priority
+        if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
+        {
+            //generate a security decision, choose which one (random choice but exclude ones where the cost can't be covered by the resource pool)
+            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            //APB
+            if (resources >= decisionAPB.cost)
+            {
+                AITask taskAPB = new AITask()
+                {
+                    data0 = decisionAPB.aiDecID,
+                    name0 = decisionAPB.name,
+                    type = AIType.Decision,
+                    priority = Priority.Critical
+                };
+                listOfDecisionTasksCritical.Add(taskAPB);
+            }
+            //Security Alert
+            if (resources >= decisionSecAlert.cost)
+            {
+                AITask taskSecAlert = new AITask()
+                {
+                    data0 = decisionSecAlert.aiDecID,
+                    name0 = decisionSecAlert.name,
+                    type = AIType.Decision,
+                    priority = Priority.Critical
+                };
+                listOfDecisionTasksCritical.Add(taskSecAlert);
+            }
+            //Surveillance Crackdown
+            if (resources >= decisionCrackdown.cost)
+            {
+                AITask taskCrackdown = new AITask()
+                {
+                    data0 = decisionCrackdown.aiDecID,
+                    name0 = decisionCrackdown.name,
+                    type = AIType.Decision,
+                    priority = Priority.Critical
+                };
+                listOfDecisionTasksCritical.Add(taskCrackdown);
+            }
+        }
+        //Connections -> Medium priority
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         {
             AITask taskConnSec = new AITask()
@@ -1399,17 +1451,47 @@ public class AIManager : MonoBehaviour
                 type = AIType.Decision,
                 priority = Priority.Medium
             };
-            listOfTasksPotential.Add(taskConnSec);
+            for (int i = 0; i < priorityMediumWeight; i++)
+            { listOfDecisionTasksNonCritical.Add(taskConnSec); }
         }
-        //Security
-
-        //Teams
-
-        //resource situation
+        //Team request -> medium priority
+        if (teamRatio < teamRatioThreshold)
+        {
+            AITask taskTeam = new AITask()
+            {
+                data0 = decisionRequestTeam.aiDecID,
+                name0 = decisionRequestTeam.name,
+                type = AIType.Decision,
+                priority = Priority.Medium
+            };
+            for (int i = 0; i < priorityMediumWeight; i++)
+            { listOfDecisionTasksNonCritical.Add(taskTeam); }
+        }
+        //Resource request -> 
         if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) < lowResourcesThreshold)
-        { }
-
-
+        {
+            AITask taskResources = new AITask()
+            {
+                data0 = decisionResources.aiDecID,
+                name0 = decisionResources.name,
+                type = AIType.Decision,
+                priority = Priority.Medium
+            };
+            for (int i = 0; i < priorityMediumWeight; i++)
+            { listOfDecisionTasksNonCritical.Add(taskResources); }
+        }
+        //Select task -> Critical have priority
+        if (listOfDecisionTasksCritical.Count > 0)
+        {
+            AITask task = listOfDecisionTasksCritical[Random.Range(0, listOfDecisionTasksCritical.Count)];
+            listOfTasksPotential.Add(task);
+        }
+        else
+        {
+            //choose a non-critical task from the weighted list
+            AITask task = listOfDecisionTasksNonCritical[Random.Range(0, listOfDecisionTasksNonCritical.Count)];
+            listOfTasksPotential.Add(task);
+        }
     }
 
     /// <summary>
@@ -1832,6 +1914,21 @@ public class AIManager : MonoBehaviour
             { builder.AppendFormat("{0}{1}", data, "\n"); }
         }
         else { builder.AppendFormat(" No records{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    public String DisplayDecisionData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- listOfDecisionTasksCritical{0}", "\n");
+        builder.Append(DebugTaskList(listOfDecisionTasksCritical));
+        builder.AppendFormat("{0}- listOfDecisionTasksNonCritical{1}", "\n", "\n");
+        builder.Append(DebugTaskList(listOfDecisionTasksNonCritical));
+        builder.AppendFormat("{0}{1}- ProcessDecisionData{2}", "\n", "\n", "\n");
+        builder.AppendFormat(" connectionSecurityRatio -> {0}{1}", connSecRatio, "\n");
+        builder.AppendFormat(" teamRatio -> {0}{1}", teamRatio, "\n");
+        builder.AppendFormat(" erasureTeamsOnMap -> {0}{1}", erasureTeamsOnMap, "\n");
+        builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
         return builder.ToString();
     }
 

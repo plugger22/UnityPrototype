@@ -196,17 +196,23 @@ public class ImportManager : MonoBehaviour
                     counter++;
                     //add to dictionaries
                     try
-                    {
-                        dictOfTraitEffects.Add(traitEffect.teffID, traitEffect);
-                        dictOfLookUpTraitEffects.Add(traitEffect.name, traitEffect.teffID);
-                    }
+                    { dictOfTraitEffects.Add(traitEffect.teffID, traitEffect); }
                     catch (ArgumentNullException)
                     { Debug.LogError("Invalid trait Effect (Null)"); }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid trait Effect (duplicate) \"{0}\"", traitEffect.name)); }
+                    { Debug.LogError(string.Format("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name)); }
+                    try
+                    { dictOfLookUpTraitEffects.Add(traitEffect.name, traitEffect.teffID); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid traitEffect.name (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid traitEffect.name (duplicate) \"{0}\"", traitEffect.name)); }
                 }
                 Debug.LogFormat("DataManager: Initialise -> dictOfTraitEffects has {0} entries{1}", dictOfTraitEffects.Count, "\n");
                 Debug.LogFormat("DataManager: Initialise -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
+                //error check
+                Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
+                Debug.Assert(dictOfLookUpTraitEffects.Count == counter, "Mismatch on count");
             }
             else { Debug.LogError("Invalid dictOfLookUpTraitEffects (Null) -> Import failed"); }
         }
@@ -260,7 +266,11 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid NodeArc (duplicate) Name \"{0}\" for ID \"{1}\"", nodeArc.name, nodeArc.nodeArcID)); }
                 }
-                Debug.Log(string.Format("DataManager: Initialise -> dictOfNodeArcs has {0} entries{1}", counter, "\n"));
+                Debug.LogFormat("DataManager: Initialise -> dictOfNodeArcs has {0} entries{1}", dictOfNodeArcs.Count, "\n");
+                Debug.LogFormat("DataManager: Initialise -> dictOfLookUpNodeArcs has {0} entries{1}", dictOfLookUpNodeArcs.Count, "\n");
+                //error check
+                Debug.Assert(dictOfNodeArcs.Count == counter, "Mismatch on Count");
+                Debug.Assert(dictOfLookUpNodeArcs.Count == counter, "Mismatch on Count");
             }
             else { Debug.LogError("Invalid dictOfLookUpNodeArcs (Null) -> Import failed"); }
         }
@@ -298,7 +308,9 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); counter--; }
                 }
-                Debug.Log(string.Format("DataManager: Initialise -> dictOfTraits has {0} entries{1}", counter, "\n"));
+                Debug.LogFormat("DataManager: Initialise -> dictOfTraits has {0} entries{1}", dictOfTraits.Count, "\n");
+                //error check
+                Debug.Assert(dictOfTraits.Count == counter, "Mismatch on count");
             }
             else { Debug.LogError("Invalid listOfAllTraits (Null) -> Import failed"); }
         }
@@ -932,37 +944,54 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.name)); counter--; }
             }
-            Debug.Log(string.Format("DataManager: Initialise -> dictOfMayors has {0} entries{1}", counter, "\n"));
+            Debug.Log(string.Format("DataManager: Initialise -> dictOfMayors has {0} entries{1}", dictOfMayors.Count, "\n"));
+            Debug.Assert(dictOfMayors.Count == counter, "Mismatch in count");
         }
         else { Debug.LogError("Invalid dictOfMayors (Null) -> Import failed"); }
         //
         // - - - AI Decisions - - -
         //
         Dictionary<int, DecisionAI> dictOfAIDecisions = GameManager.instance.dataScript.GetDictOfAIDecisions();
+        Dictionary<string, int> dictOfLookUpAIDecisions = GameManager.instance.dataScript.GetDictOfLookUpAIDecisions();
         if (dictOfAIDecisions != null)
         {
-            counter = 0;
-            //get GUID of all SO DecisionAI Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var decisionAIGUID = AssetDatabase.FindAssets("t:DecisionAI");
-            foreach (var guid in decisionAIGUID)
+            if (dictOfLookUpAIDecisions != null)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object decisionAIObject = AssetDatabase.LoadAssetAtPath(path, typeof(DecisionAI));
-                //assign a zero based unique ID number
-                DecisionAI decisionAI = decisionAIObject as DecisionAI;
-                //set data
-                decisionAI.aiDecID = counter++;
-                //add to dictionary
-                try
-                { dictOfAIDecisions.Add(decisionAI.aiDecID, decisionAI); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid decisionAI (duplicate) ID \"{0}\" for \"{1}\"", counter, decisionAI.name)); counter--; }
+                counter = 0;
+                //get GUID of all SO DecisionAI Objects -> Note that I'm searching the entire database here so it's not folder dependant
+                var decisionAIGUID = AssetDatabase.FindAssets("t:DecisionAI");
+                foreach (var guid in decisionAIGUID)
+                {
+                    //get path
+                    path = AssetDatabase.GUIDToAssetPath(guid);
+                    //get SO
+                    UnityEngine.Object decisionAIObject = AssetDatabase.LoadAssetAtPath(path, typeof(DecisionAI));
+                    //assign a zero based unique ID number
+                    DecisionAI decisionAI = decisionAIObject as DecisionAI;
+                    //set data
+                    decisionAI.aiDecID = counter++;
+                    //add to main dictionary
+                    try
+                    { dictOfAIDecisions.Add(decisionAI.aiDecID, decisionAI); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid decisionAI (duplicate) ID \"{0}\" for \"{1}\"", counter, decisionAI.name)); counter--; }
+                    //add to Lookup dictionary
+                    try
+                    { dictOfLookUpAIDecisions.Add(decisionAI.name, decisionAI.aiDecID); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid decisionAI.name (duplicate) \"{0}\" for aiDecID \"{1}\"", decisionAI.name, counter)); counter--; }
+                }
+                Debug.LogFormat("DataManager: Initialise -> dictOfAIDecisions has {0} entries{1}", dictOfAIDecisions.Count, "\n");
+                Debug.LogFormat("DataManager: Initialise -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
+                //error check
+                Debug.Assert(dictOfAIDecisions.Count == counter, "Mismatch in count");
+                Debug.Assert(dictOfLookUpAIDecisions.Count == counter, "Mismatch in count");
             }
-            Debug.Log(string.Format("DataManager: Initialise -> dictOfAIDecisions has {0} entries{1}", counter, "\n"));
+            else { Debug.LogError("Invalid dictOfLookUpAIDecision (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
     }
