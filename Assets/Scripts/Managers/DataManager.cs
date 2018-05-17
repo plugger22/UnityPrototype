@@ -127,6 +127,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();//Key -> orgID, Value -> Organisation
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                     //Key -> mayorID, Value -> Mayor
     private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();      //Key -> aiDecID, Value -> DecisionAI
+    private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();        //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
     
 
     //global SO's (enum equivalents)
@@ -2537,6 +2538,24 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, DecisionAI> GetDictOfAIDecisions()
     { return dictOfAIDecisions; }
+
+    /// <summary>
+    /// returns DecisionAI.aiDecID from an input decision name (name of SO), -1 if not found
+    /// </summary>
+    /// <param name="decisionName"></param>
+    /// <returns></returns>
+    public int GetAIDecisionID(string decisionName)
+    {
+        int aiDecID = -1;
+        if (string.IsNullOrEmpty(decisionName) == false)
+        {
+            if (dictOfLookUpAIDecisions.ContainsKey(decisionName))
+            {  return dictOfLookUpAIDecisions[decisionName]; }
+            else { Debug.LogWarning(string.Format("DecisionAI \"{0}\" not found in dictOfLookUpAIDecisions{1}", decisionName, "\n")); }
+        }
+        else { Debug.LogError("Invalid decisionName (Null or Empty)"); }
+        return aiDecID;
+    }
 
     //
     // - - - Manage - - -

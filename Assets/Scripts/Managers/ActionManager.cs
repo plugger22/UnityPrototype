@@ -2519,14 +2519,10 @@ public class ActionManager : MonoBehaviour
     public void ProcessHandleActor(GenericReturnData data)
     {
         bool errorFlag = false;
-        string colourSide;
         manageDelegate handler = null;
         ModalActionDetails details = new ModalActionDetails();
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
-        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-        { colourSide = colourAuthority; }
-        else { colourSide = colourResistance; }
         if (data != null)
         {
             //pass through data

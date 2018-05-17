@@ -121,6 +121,8 @@ public class AIManager : MonoBehaviour
     [Range(0f, 1f)] public float connectionRatioThreshold = 0.75f;
     [Tooltip("The ratio level above which no more Request Team decisions will be made")]
     [Range(0f, 1f)] public float teamRatioThreshold = 0.75f;
+    [Tooltip("The point below which a low Resource Pool situation (isLowResources true) is declared and a request for more resources can be made")]
+    [Range(0, 10)] public int lowResourcesThreshold = 2;
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
@@ -152,6 +154,13 @@ public class AIManager : MonoBehaviour
     private GlobalSide globalResistance;
     private int totalNodes;
     private int totalConnections;
+    //fast access decisions
+    private int decisionAPB;
+    private int decisionConnSec;
+    private int decisionRequestTeam;
+    private int decisionSecAlert;
+    private int decisionCrackdown;
+    private int decisionResources;
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -186,6 +195,19 @@ public class AIManager : MonoBehaviour
         //decision data
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
+        //decision ID's
+        decisionAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
+        decisionConnSec = GameManager.instance.dataScript.GetAIDecisionID("Connection Security");
+        decisionRequestTeam = GameManager.instance.dataScript.GetAIDecisionID("Request Team");
+        decisionSecAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
+        decisionCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Survelliance Crackdown");
+        decisionResources = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
+        Debug.Assert(decisionAPB > -1, "Invalid decisionAPB (-1)");
+        Debug.Assert(decisionConnSec > -1, "Invalid decisionConnSec (-1)");
+        Debug.Assert(decisionRequestTeam > -1, "Invalid decisionRequestTeam (-1)");
+        Debug.Assert(decisionSecAlert > -1, "Invalid decisionSecAlert (-1)");
+        Debug.Assert(decisionCrackdown > -1, "Invalid decisionCrackdown (-1)");
+        Debug.Assert(decisionResources > -1, "Invalid decisionResources (-1)");
         //sides
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -1368,13 +1390,26 @@ public class AIManager : MonoBehaviour
     {
         Debug.Assert(listOfDecisionTasks != null, "Invalid listOfDecisionTasks (Null)");
         //Connections
-
+        if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
+        {
+            AITask taskConnSec = new AITask()
+            {
+                data0 = decisionConnSec.aiDecID,
+                name0 = decisionConnSec.name,
+                type = AIType.Decision,
+                priority = Priority.Medium
+            };
+            listOfTasksPotential.Add(taskConnSec);
+        }
         //Security
 
         //Teams
 
+        //resource situation
+        if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) < lowResourcesThreshold)
+        { }
 
-      
+
     }
 
     /// <summary>

@@ -1922,7 +1922,6 @@ public class EffectManager : MonoBehaviour
     {
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
-        string colourText = colourDefault;
         Condition condition = null;
         if (effect.typeOfEffect != null)
         {
@@ -1933,11 +1932,9 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "Neutral":
                     colourEffect = colourNeutral;
-                    colourText = colourNeutral;
                     break;
                 case "Bad":
                     colourEffect = colourBad;
-                    colourText = colourAlert;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));

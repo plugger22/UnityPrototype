@@ -2347,7 +2347,6 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public string DisplayPools()
     {
-        List<int> listOfActors = new List<int>();
         StringBuilder builder = new StringBuilder();
         //Resistance
         builder.Append(DisplaySubPool(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance), " ResistanceActorPoolLevelOne"));
