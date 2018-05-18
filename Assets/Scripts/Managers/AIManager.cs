@@ -169,6 +169,13 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionSecAlert;
     private DecisionAI decisionCrackdown;
     private DecisionAI decisionResources;
+    //fast access decision names
+    private string decisionNameAPB = "unknown";
+    private string decisionNameConnSec;
+    private string decisionNameRequestTeam;
+    private string decisionNameSecAlert;
+    private string decisionNameCrackdown;
+    private string decisionNameResources;
 
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
@@ -207,16 +214,22 @@ public class AIManager : MonoBehaviour
         //decision ID's
         int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
         decisionAPB = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionNameAPB = decisionAPB.name;
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Connection Security");
         decisionConnSec = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionNameConnSec = decisionConnSec.name;
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Team");
         decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionNameRequestTeam = decisionRequestTeam.name;
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
         decisionSecAlert = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionNameSecAlert = decisionSecAlert.name;
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Survelliance Crackdown");
         decisionCrackdown = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionNameCrackdown = decisionCrackdown.name;
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
         decisionResources = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionNameResources = decisionResources.name;
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -1830,11 +1843,24 @@ public class AIManager : MonoBehaviour
             resources -= decisionCost;
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
+            //implement decision
+            if (task.name0.Equals(decisionNameAPB) == true)
+            { GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.APB); }
+            else if (task.name0.Equals(decisionNameSecAlert) == true)
+            { GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.SecurityAlert); }
+            else if (task.name0.Equals(decisionNameCrackdown) == true)
+            { GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.SurvellianceCrackdown); }
+            else if (task.name0.Equals(decisionNameConnSec) == true)
+            { }
+            else if (task.name0.Equals(decisionNameRequestTeam) == true)
+            { }
+            else if (task.name0.Equals(decisionNameResources) == true)
+            { }
         }
         else
         {
             //decision cancelled due to insufficient resources
-            Debug.LogFormat("[Aim] -> ExecuteDecisionTask: Insufficient Resources to implement \"{0}\" decision{1}", task.name0, "\n");
+            Debug.LogFormat("[Aim] -> ExecuteDecisionTask: INSUFFICIENT RESOURCES to implement \"{0}\" decision{1}", task.name0, "\n");
         }
     }
 
