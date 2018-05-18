@@ -18,32 +18,35 @@ public class AuthorityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Debug method that Sets a mutually exclusive AuthorityState (enum). Default (no parameter) is to reset back to normal.
+    /// method that Sets a mutually exclusive AuthorityState (enum). Default (no parameter) is to reset back to normal.
+    /// Descriptor is the decision.descriptor
     /// </summary>
     /// <param name="state"></param>
-    public string SetAuthorityState(AuthorityState state = AuthorityState.Normal)
+    public bool SetAuthorityState(string descriptor, AuthorityState state = AuthorityState.Normal)
     {
-        GameManager.instance.turnScript.authorityState = state;
-        //message
         bool isPublic = false;
+        bool isDone = false;
         string text = "Unknown";
-        switch(state)
+        if (string.IsNullOrEmpty(descriptor) == false)
         {
-            case AuthorityState.APB:
-                isPublic = true;
-                text = "Authorities issue a city wide All Points Bulletin";
-                break;
-            case AuthorityState.SecurityAlert:
-                isPublic = true;
-                text = "Authorities issue a city wide Security Alert";
-                break;
-            default:
-                text = string.Format("AuthorityState reset to {0}", state);
-                break;
+            //set state
+            GameManager.instance.turnScript.authorityState = state;
+            //message
+            switch (state)
+            {
+                case AuthorityState.APB:
+                case AuthorityState.SecurityAlert:
+                case AuthorityState.SurvellianceCrackdown:
+                    isPublic = true; isDone = true;
+                    break;
+                default:
+                    break;
+            }
+            Message message = GameManager.instance.messageScript.DecisionGlobal(text, 0, globalAuthority, isPublic);
+            GameManager.instance.dataScript.AddMessage(message);
         }
-        Message message = GameManager.instance.messageScript.DecisionGlobal(text, 0, globalAuthority, isPublic);
-        GameManager.instance.dataScript.AddMessage(message);
-        return text;
+        else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
+        return isDone;
     }
 
 

@@ -700,7 +700,7 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 400, 50, 200, 100), "", customBackground);
                         GUI.Label(new Rect(Screen.width / 2 - 395, 55, 190, 20), "category (a / r)");
                         textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
-                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "state (a -> apb/sec/nor)");
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "state (a -> apb/sec/sur/nor)");
                         textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
                         status = GUIStatus.SetState;
                         textOutput = null;

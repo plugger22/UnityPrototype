@@ -467,17 +467,26 @@ public class TurnManager : MonoBehaviour
                     case "apb":
                     case "APB":
                         //all points bulletin
-                        text = GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.APB);
+                        text = "Authorities issue a city wide All Points Bulletin";
+                        GameManager.instance.authorityScript.SetAuthorityState(text, AuthorityState.APB);
                         break;
                     case "sec":
                     case "SEC":
-                        //security alert
-                        text = GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.SecurityAlert);
+                        //security alert 
+                        text = "Authorities issue a city wide Security Alert";
+                        GameManager.instance.authorityScript.SetAuthorityState(text, AuthorityState.SecurityAlert);
+                        break;
+                    case "sur":
+                    case "SUR":
+                        //surveillance crackdown
+                        text = "Authorities declare a city wide Survelliance Crackdown";
+                        GameManager.instance.authorityScript.SetAuthorityState(text, AuthorityState.SurvellianceCrackdown);
                         break;
                     case "nor":
                     case "NOR":
                         //reset back to normal
-                        text = GameManager.instance.authorityScript.SetAuthorityState();
+                        text = string.Format("AuthorityState reset to {0}", state);
+                        GameManager.instance.authorityScript.SetAuthorityState(text);
                         break;
                 }
                 break;
