@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Decision / AI Decision")]
 public class DecisionAI : ScriptableObject
 {
+    [Tooltip("Used for tooltip and message descriptors")]
     public string descriptor;
     public GlobalSide side;
 

@@ -1420,6 +1420,7 @@ public class AIManager : MonoBehaviour
                 AITask taskAPB = new AITask()
                 {
                     data0 = decisionAPB.aiDecID,
+                    data1 = decisionAPB.cost,
                     name0 = decisionAPB.name,
                     type = AIType.Decision,
                     priority = Priority.Critical
@@ -1432,6 +1433,7 @@ public class AIManager : MonoBehaviour
                 AITask taskSecAlert = new AITask()
                 {
                     data0 = decisionSecAlert.aiDecID,
+                    data1 = decisionSecAlert.cost,
                     name0 = decisionSecAlert.name,
                     type = AIType.Decision,
                     priority = Priority.Critical
@@ -1444,6 +1446,7 @@ public class AIManager : MonoBehaviour
                 AITask taskCrackdown = new AITask()
                 {
                     data0 = decisionCrackdown.aiDecID,
+                    data1 = decisionCrackdown.cost,
                     name0 = decisionCrackdown.name,
                     type = AIType.Decision,
                     priority = Priority.Critical
@@ -1457,6 +1460,7 @@ public class AIManager : MonoBehaviour
             AITask taskConnSec = new AITask()
             {
                 data0 = decisionConnSec.aiDecID,
+                data1 = decisionConnSec.cost,
                 name0 = decisionConnSec.name,
                 type = AIType.Decision,
                 priority = Priority.Medium
@@ -1470,6 +1474,7 @@ public class AIManager : MonoBehaviour
             AITask taskTeam = new AITask()
             {
                 data0 = decisionRequestTeam.aiDecID,
+                data1 = decisionRequestTeam.cost,
                 name0 = decisionRequestTeam.name,
                 type = AIType.Decision,
                 priority = Priority.Medium
@@ -1483,6 +1488,7 @@ public class AIManager : MonoBehaviour
             AITask taskResources = new AITask()
             {
                 data0 = decisionResources.aiDecID,
+                data1 = decisionResources.cost,
                 name0 = decisionResources.name,
                 type = AIType.Decision,
                 priority = Priority.Medium
@@ -1778,23 +1784,57 @@ public class AIManager : MonoBehaviour
             switch (task.type)
             {
                 case AIType.Team:
-                    dataID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
-                    if (dataID > -1)
-                    {
-                        Node node = GameManager.instance.dataScript.GetNode(task.data0);
-                        if (node != null)
-                        { GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
-                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
-                    }
-                    else { Debug.LogWarning(string.Format("Invalid teamID (-1) for teamArcID {0}", task.data1)); }
+                    ExecuteTeamTask(task);
                     break;
                 case AIType.Decision:
-
+                    ExecuteDecisionTask(task);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    /// carry out a team deploy OnMap task
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteTeamTask(AITask task)
+    {
+        int dataID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
+        if (dataID > -1)
+        {
+            Node node = GameManager.instance.dataScript.GetNode(task.data0);
+            if (node != null)
+            { GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
+            else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
+        }
+        else { Debug.LogWarning(string.Format("Invalid teamID (-1) for teamArcID {0}", task.data1)); }
+    }
+
+    /// <summary>
+    /// carry out a decision task
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteDecisionTask(AITask task)
+    {
+        Message message;
+        string msgText;
+        //check enough resources in pool to carry out task
+        int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+        int decisionCost = task.data1;
+        if (decisionCost <= resources)
+        {
+            //deduct cost
+            resources -= decisionCost;
+            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
+        }
+        else
+        {
+            //decision cancelled due to insufficient resources
+            Debug.LogFormat("[Aim] -> ExecuteDecisionTask: Insufficient Resources to implement \"{0}\" decision{1}", task.name0, "\n");
         }
     }
 
@@ -1813,10 +1853,13 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("- Task Allowances{0}", "\n");
         builder.AppendFormat(" {0} Authority tasks per turn ({1}){2}", factionAuthority.maxTaskPerTurn, factionAuthority.name, "\n");
         builder.AppendFormat(" {0} Resistance tasks per turn ({1}){2}{3}", factionResistance.maxTaskPerTurn, factionResistance.name, "\n", "\n");
+        builder.AppendFormat("- Resource Pools{0}", "\n");
+        builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
+        builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
         builder.AppendFormat("- listOfTasksFinal{0}", "\n");
         builder.Append(DebugTaskList(listOfTasksFinal));
         builder.AppendFormat("{0}{1}- listOfTasksPotential{2}", "\n", "\n", "\n");
-        builder.Append(DebugTaskList(listOfTasksPotential));
+        builder.Append(DebugTaskList(listOfTasksPotential, true));
         return builder.ToString();
     }
 
@@ -1975,7 +2018,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    private string DebugTaskList(List<AITask> listOfTasks)
+    private string DebugTaskList(List<AITask> listOfTasks, bool showChance = false)
     {
         StringBuilder builderList = new StringBuilder();
         if (listOfTasks != null)
@@ -1987,11 +2030,18 @@ public class AIManager : MonoBehaviour
                     switch (task.type)
                     {
                         case AIType.Team:
-                            builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
-                            task.chance, "\n");
+                            if (showChance == true)
+                            { builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority, 
+                                task.chance, "\n"); }
+                            else
+                            { builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority{4}", task.data0, task.name0, task.name1, task.priority, "\n"); }
+
                             break;
                         case AIType.Decision:
-                            builderList.AppendFormat(" taskID {0}, aiDecID {1}, Decision \"{2}\", Prob {3} %{4}", task.taskID, task.data0, task.name0, task.chance, "\n");
+                            if (showChance == true)
+                            { builderList.AppendFormat(" taskID {0}, aiDecID {1}, Decision \"{2}\", Prob {3} %{4}", task.taskID, task.data0, task.name0, task.chance, "\n"); }
+                            else
+                            { builderList.AppendFormat(" taskID {0}, aiDecID {1}, Decision \"{2}\", {3}{4}", task.taskID, task.data0, task.name0, task.priority, "\n"); }
                             break;
                         default:
                             builderList.AppendFormat(" Unknown task type \"{0}\"{1}", task.type, "\n");

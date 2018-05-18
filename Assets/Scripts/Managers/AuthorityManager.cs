@@ -18,10 +18,10 @@ public class AuthorityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets a mutually exclusive AuthorityState (enum). Default (no parameter) is to reset back to normal.
+    /// Debug method that Sets a mutually exclusive AuthorityState (enum). Default (no parameter) is to reset back to normal.
     /// </summary>
     /// <param name="state"></param>
-    public string SetAuthorityState(AuthorityState state = AuthorityState.Normal)
+    public string DebugSetAuthorityState(AuthorityState state = AuthorityState.Normal)
     {
         GameManager.instance.turnScript.authorityState = state;
         //message

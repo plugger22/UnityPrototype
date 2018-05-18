@@ -40,7 +40,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", meta.name)); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfGlobalMeta (Null) -> Import failed"); }
         //
@@ -66,7 +66,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", chance.name)); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseStart -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfGlobalChance (Null) -> Import failed"); }
         //
@@ -92,7 +92,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid GlobalType (duplicate) \"{0}\"", type.name)); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseStart -> dictOfGlobalType has {0} entries{1}", dictOfGlobalType.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalType has {0} entries{1}", dictOfGlobalType.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfGlobalType (Null) -> Import failed"); }
         //
@@ -118,7 +118,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid GlobalSide (duplicate) \"{0}\"", side.name)); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseStart -> dictOfGlobalSide has {0} entries{1}", dictOfGlobalSide.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalSide has {0} entries{1}", dictOfGlobalSide.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfGlobalSide (Null) -> Import failed"); }
         //
@@ -144,7 +144,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.name)); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseStart -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfConditions (Null) -> Import failed"); }
         //
@@ -170,7 +170,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid trait category (duplicate) \"{0}\"", category.name)); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", dictOfTraitCategories.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", dictOfTraitCategories.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfTraitCategories (Null) -> Import failed"); }
         //
@@ -208,8 +208,8 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid traitEffect.name (duplicate) \"{0}\"", traitEffect.name)); }
                 }
-                Debug.LogFormat("[Aim] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", dictOfTraitEffects.Count, "\n");
-                Debug.LogFormat("[Aim] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", dictOfTraitEffects.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
                 Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfLookUpTraitEffects.Count == counter, "Mismatch on count");
             }
@@ -265,8 +265,8 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid NodeArc (duplicate) Name \"{0}\" for ID \"{1}\"", nodeArc.name, nodeArc.nodeArcID)); }
                 }
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfNodeArcs has {0} entries{1}", dictOfNodeArcs.Count, "\n");
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfLookUpNodeArcs has {0} entries{1}", dictOfLookUpNodeArcs.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfNodeArcs has {0} entries{1}", dictOfNodeArcs.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpNodeArcs has {0} entries{1}", dictOfLookUpNodeArcs.Count, "\n");
                 Debug.Assert(dictOfNodeArcs.Count == counter, "Mismatch on Count");
                 Debug.Assert(dictOfLookUpNodeArcs.Count == counter, "Mismatch on Count");
             }
@@ -306,7 +306,7 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); counter--; }
                 }
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfTraits has {0} entries{1}", dictOfTraits.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTraits has {0} entries{1}", dictOfTraits.Count, "\n");
                 Debug.Assert(dictOfTraits.Count == counter, "Mismatch on count");
             }
             else { Debug.LogError("Invalid listOfAllTraits (Null) -> Import failed"); }
@@ -354,9 +354,9 @@ public class ImportManager : MonoBehaviour
                         catch (ArgumentException)
                         { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); counter--; }
                     }
-                    Debug.LogFormat("[Aim] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", dictOfActorArcs.Count, "\n");
-                    Debug.LogFormat("[Aim] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
-                    Debug.LogFormat("[Aim] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
+                    Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", dictOfActorArcs.Count, "\n");
+                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
+                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
                     Debug.Assert(dictOfActorArcs.Count == counter, "Mismatch on count");
                 }
                 else { Debug.LogError("Invalid resistanceActorArcs (Null) -> Import failed"); }
@@ -416,7 +416,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfEffects has {0} entries{1}", dictOfEffects.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfEffects has {0} entries{1}", dictOfEffects.Count, "\n");
             Debug.Assert(dictOfEffects.Count == counter, "Mismatch on count");
         }
         else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }
@@ -453,7 +453,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfTargets has {0} entries{1}", dictOfTargets.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTargets has {0} entries{1}", dictOfTargets.Count, "\n");
             Debug.Assert(dictOfTargets.Count == counter, "Mismatch on count");
         }
         else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }
@@ -494,8 +494,8 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid Lookup Actions (duplicate) ID \"{0}\" for \"{1}\"", counter, action.name)); }
                 }
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfActions has {0} entries{1}", dictOfActions.Count, "\n");
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActions has {0} entries{1}", dictOfActions.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
                 Debug.Assert(dictOfActions.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfLookUpActions.Count == counter, "Mismatch on count");
             }
@@ -539,8 +539,8 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid Lookup TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
                 }
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfTeamArcs has {0} entries{1}", dictOfTeamArcs.Count, "\n");
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfLookUpTeamArcs has {0} entries{1}", dictOfLookUpTeamArcs.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTeamArcs has {0} entries{1}", dictOfTeamArcs.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpTeamArcs has {0} entries{1}", dictOfLookUpTeamArcs.Count, "\n");
                 Debug.Assert(dictOfTeamArcs.Count == counter, "Mismatch on Count");
                 Debug.Assert(dictOfLookUpTeamArcs.Count == counter, "Mismatch on Count");
                 //arrayOfTeams
@@ -576,7 +576,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfGear has {0} entries{1}", dictOfGear.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfGear has {0} entries{1}", dictOfGear.Count, "\n");
             Debug.Assert(dictOfGear.Count == counter, "Mismatch on Count");
         }
         else { Debug.LogError("Invalid dictOfGear (Null) -> Import failed"); }
@@ -599,7 +599,7 @@ public class ImportManager : MonoBehaviour
                 { listOfGearRarity.Add(gearRarity); }
                 else { Debug.LogError("Invalid gearRarity (Null)"); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseEarly -> listOfGearRarity has {0} entries{1}", listOfGearRarity.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearRarity has {0} entries{1}", listOfGearRarity.Count, "\n"));
         }
         else { Debug.LogError("Invalid listOfGearRarity (Null) -> Import failed"); }
         //
@@ -621,7 +621,7 @@ public class ImportManager : MonoBehaviour
                 { listOfGearType.Add(gearType); }
                 else { Debug.LogError("Invalid gearType (Null)"); }
             }
-            Debug.Log(string.Format("[Aim] InitialiseEarly -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
+            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
         }
         else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }
         //
@@ -679,7 +679,7 @@ public class ImportManager : MonoBehaviour
                                 catch (ArgumentException)
                                 { Debug.LogError(string.Format("Invalid ManageAction (duplicate name)  \"{0}\"", manageAction.name)); }
                             }
-                            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n");
+                            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n");
                             //sort fast access lists by order -> ActorHandle
                             if (listOfActorHandle.Count > 0)
                             {
@@ -803,7 +803,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Faction (duplicate) ID \"{0}\" for \"{1}\"", counter, faction.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfFactions has {0} entries{1}", dictOfFactions.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfFactions has {0} entries{1}", dictOfFactions.Count, "\n");
             Debug.Assert(dictOfFactions.Count == counter, "Mismatch on count");
         }
         else { Debug.LogError("Invalid dictOfFactions (Null) -> Import failed"); }
@@ -834,7 +834,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid CityArc (duplicate) ID \"{0}\" for \"{1}\"", counter, cityArc.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", dictOfCityArcs.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", dictOfCityArcs.Count, "\n");
             Debug.Assert(dictOfCityArcs.Count == counter, "Mismatch on count");
         }
         else { Debug.LogError("Invalid dictOfCityArcs (Null) -> Import failed"); }
@@ -865,7 +865,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid City (duplicate) ID \"{0}\" for \"{1}\"", counter, city.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfCities has {0} entries{1}", dictOfCities.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCities has {0} entries{1}", dictOfCities.Count, "\n");
             Debug.Assert(dictOfCities.Count == counter, "Mismatch on Count");
         }
         else { Debug.LogError("Invalid dictOfCities (Null) -> Import failed"); }
@@ -896,7 +896,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Objective (duplicate) ID \"{0}\" for \"{1}\"", counter, objective.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfObjectives has {0} entries{1}", dictOfObjectives.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfObjectives has {0} entries{1}", dictOfObjectives.Count, "\n");
             Debug.Assert(dictOfObjectives.Count == counter, "Mismatch on Count");
         }
         else { Debug.LogError("Invalid dictOfObjectives (Null) -> Import failed"); }
@@ -927,7 +927,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Organisation (duplicate) ID \"{0}\" for \"{1}\"", counter, organisation.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", dictOfOrganisations.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", dictOfOrganisations.Count, "\n");
             Debug.Assert(dictOfOrganisations.Count == counter, "Mismatch on Count");
         }
         else { Debug.LogError("Invalid dictOfOrganisations (Null) -> Import failed"); }
@@ -958,7 +958,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.name)); counter--; }
             }
-            Debug.LogFormat("[Aim] InitialiseEarly -> dictOfMayors has {0} entries{1}", dictOfMayors.Count, "\n");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfMayors has {0} entries{1}", dictOfMayors.Count, "\n");
             Debug.Assert(dictOfMayors.Count == counter, "Mismatch in count");
         }
         else { Debug.LogError("Invalid dictOfMayors (Null) -> Import failed"); }
@@ -999,8 +999,8 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid decisionAI.name (duplicate) \"{0}\" for aiDecID \"{1}\"", decisionAI.name, counter)); counter--; }
                 }
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", dictOfAIDecisions.Count, "\n");
-                Debug.LogFormat("[Aim] InitialiseEarly -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", dictOfAIDecisions.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
                 Debug.Assert(dictOfAIDecisions.Count == counter, "Mismatch in count");
                 Debug.Assert(dictOfLookUpAIDecisions.Count == counter, "Mismatch in count");
             }
@@ -1036,7 +1036,7 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name)); }
                 }
-                Debug.LogFormat("[Aim] InitialiseLate -> dictOfNodes has {0} entries{1}", dictOfNodes.Count, "\n");
+                Debug.LogFormat("[Imp] InitialiseLate -> dictOfNodes has {0} entries{1}", dictOfNodes.Count, "\n");
                 Debug.Assert(dictOfNodes.Count == counter, "Mismatch in Count");
             }
             else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }

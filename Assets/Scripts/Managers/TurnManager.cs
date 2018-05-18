@@ -467,17 +467,17 @@ public class TurnManager : MonoBehaviour
                     case "apb":
                     case "APB":
                         //all points bulletin
-                        text = GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.APB);
+                        text = GameManager.instance.authorityScript.DebugSetAuthorityState(AuthorityState.APB);
                         break;
                     case "sec":
                     case "SEC":
                         //security alert
-                        text = GameManager.instance.authorityScript.SetAuthorityState(AuthorityState.SecurityAlert);
+                        text = GameManager.instance.authorityScript.DebugSetAuthorityState(AuthorityState.SecurityAlert);
                         break;
                     case "nor":
                     case "NOR":
                         //reset back to normal
-                        text = GameManager.instance.authorityScript.SetAuthorityState();
+                        text = GameManager.instance.authorityScript.DebugSetAuthorityState();
                         break;
                 }
                 break;
