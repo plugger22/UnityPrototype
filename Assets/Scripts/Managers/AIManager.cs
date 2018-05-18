@@ -26,6 +26,7 @@ public class AINodeData
 /// </summary>
 public class AITask
 {
+    public int taskID;                     //automatically assigned
     public int data0;                      //could be node or connection ID
     public int data1;                      //teamArcID
     public string name0;                   //node arc name
@@ -33,6 +34,9 @@ public class AITask
     public Priority priority;
     public AIType type;                     //what type of task
     public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
+
+    public AITask()
+    { taskID = GameManager.instance.aiScript.aiTaskCounter++; }
 }
 
 /// <summary>
@@ -128,6 +132,7 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
     [HideInInspector] public int resourcesGainAuthority;                //resources added to pool (DataManager.cs -> arrayOfAIResources every turn
     [HideInInspector] public int resourcesGainResistance;
+    [HideInInspector] public int aiTaskCounter;                         //AITask ID counter (reset every turn)
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -140,6 +145,9 @@ public class AIManager : MonoBehaviour
     private float connSecRatio;
     private float teamRatio;
     private int erasureTeamsOnMap;
+
+
+    
 
     //fast access
     private int teamArcCivil = -1;
@@ -298,6 +306,8 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ClearAICollections()
     {
+        //reset AITask ID counter
+        aiTaskCounter = 0;
         //AINodeData
         listNodeMaster.Clear();
         listStabilityCritical.Clear();
@@ -1561,10 +1571,6 @@ public class AIManager : MonoBehaviour
                 if (remainingChoices >= numTasks)
                 {
                     //do all -> assign odds first
-
-                    /*if (remainingChoices == numTasks) { odds = (int)baseOdds; }
-                    else { odds = (int)((baseOdds / (float)numTasks) * remainingChoices); }*/
-
                     foreach (AITask task in listOfTasksNonCritical)
                     { task.chance = (int)baseOdds; }
                     //select tasks
@@ -1620,7 +1626,7 @@ public class AIManager : MonoBehaviour
                         }
                     }
                     //randomly draw from pool
-                    string selectedTeamArc;
+                    int taskID;
                     do
                     {
                         numTasks = tempList.Count;
@@ -1628,7 +1634,7 @@ public class AIManager : MonoBehaviour
                         {
                             index = Random.Range(0, numTasks);
                             listOfTasksFinal.Add(tempList[index]);
-                            selectedTeamArc = tempList[index].name1;
+                            taskID = tempList[index].taskID;
                             numTasksSelected++;
                             //don't bother unless further selections are needed
                             if (numTasksSelected < maxTasksPerTurn)
@@ -1636,7 +1642,7 @@ public class AIManager : MonoBehaviour
                                 //reverse loop and remove all instances of task from tempList to prevent duplicate selections
                                 for (int i = numTasks - 1; i >= 0; i--)
                                 {
-                                    if (tempList[i].name1.Equals(selectedTeamArc) == true)
+                                    if (tempList[i].taskID == taskID)
                                     { tempList.RemoveAt(i); }
                                 }
                             }
@@ -1681,20 +1687,23 @@ public class AIManager : MonoBehaviour
                     //randomly select a preferred faction option
                     index = Random.Range(0, tempList.Count);
                     //generate task
-                    task = new AITask() { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = Priority.Critical };
+                    task = new AITask()
+                    { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = Priority.Critical };
                 }
                 else
                 {
                     //otherwise randomly select any option
                     index = Random.Range(0, listCount);
                     //generate task
-                    task = new AITask() { data0 = listCritical[index].nodeID, name0 = listCritical[index].arc.name, name1 = name, priority = Priority.Critical };
+                    task = new AITask()
+                    { data0 = listCritical[index].nodeID, name0 = listCritical[index].arc.name, name1 = name, priority = Priority.Critical };
                 }
             }
             else
             {
                 //single record only
-                task = new AITask() { data0 = listCritical[0].nodeID, name0 = listCritical[0].arc.name, name1 = name, priority = Priority.Critical };
+                task = new AITask()
+                { data0 = listCritical[0].nodeID, name0 = listCritical[0].arc.name, name1 = name, priority = Priority.Critical };
             }
         }
         else
@@ -1726,7 +1735,8 @@ public class AIManager : MonoBehaviour
                        tempList[0].nodeID)); break;
                     }
                     //generate task
-                    task = new AITask() { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = priority };
+                    task = new AITask()
+                    { data0 = tempList[index].nodeID, name0 = tempList[index].arc.name, name1 = name, priority = priority };
                 }
                 else
                 {
@@ -1742,7 +1752,8 @@ public class AIManager : MonoBehaviour
                        listNonCritical[0].nodeID)); break;
                     }
                     //generate task
-                    task = new AITask() { data0 = listNonCritical[index].nodeID, name0 = listNonCritical[index].arc.name, name1 = name, priority = priority };
+                    task = new AITask()
+                    { data0 = listNonCritical[index].nodeID, name0 = listNonCritical[index].arc.name, name1 = name, priority = priority };
                 }
             }
         }
@@ -1777,6 +1788,9 @@ public class AIManager : MonoBehaviour
                     }
                     else { Debug.LogWarning(string.Format("Invalid teamID (-1) for teamArcID {0}", task.data1)); }
                     break;
+                case AIType.Decision:
+
+                    break;
                 default:
                     Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
                     break;
@@ -1796,6 +1810,9 @@ public class AIManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //Task lists
+        builder.AppendFormat("- Task Allowances{0}", "\n");
+        builder.AppendFormat(" {0} Authority tasks per turn ({1}){2}", factionAuthority.maxTaskPerTurn, factionAuthority.name, "\n");
+        builder.AppendFormat(" {0} Resistance tasks per turn ({1}){2}{3}", factionResistance.maxTaskPerTurn, factionResistance.name, "\n", "\n");
         builder.AppendFormat("- listOfTasksFinal{0}", "\n");
         builder.Append(DebugTaskList(listOfTasksFinal));
         builder.AppendFormat("{0}{1}- listOfTasksPotential{2}", "\n", "\n", "\n");
@@ -1970,8 +1987,11 @@ public class AIManager : MonoBehaviour
                     switch (task.type)
                     {
                         case AIType.Team:
-                            builderList.AppendFormat(" ID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
+                            builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority,
                             task.chance, "\n");
+                            break;
+                        case AIType.Decision:
+                            builderList.AppendFormat(" taskID {0}, aiDecID {1}, Decision \"{2}\", Prob {3} %{4}", task.taskID, task.data0, task.name0, task.chance, "\n");
                             break;
                         default:
                             builderList.AppendFormat(" Unknown task type \"{0}\"{1}", task.type, "\n");
