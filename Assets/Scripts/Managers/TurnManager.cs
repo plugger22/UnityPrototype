@@ -22,7 +22,7 @@ public class TurnManager : MonoBehaviour
 
     public float showSplashTimeout = 2.0f;
 
-    
+
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthorityState authorityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
@@ -35,6 +35,9 @@ public class TurnManager : MonoBehaviour
     private int _actionsTotal;                                                  //total number of actions available to the player this turn (adjustments + limit)
 
     private bool allowQuitting = false;
+
+    //fast access
+    private int teamArcErasure = -1;
 
     /*private string colourRebel;
     private string colourAuthority;*/
@@ -63,6 +66,10 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        //fast access
+        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
+        //actions
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
         resistanceState = ResistanceState.Normal;
@@ -87,7 +94,7 @@ public class TurnManager : MonoBehaviour
     public void OnEvent(EventType eventType, Component Sender, object Param = null)
     {
         //Detect Event type
-        switch(eventType)
+        switch (eventType)
         {
             case EventType.NewTurn:
                 ProcessNewTurn();
@@ -135,7 +142,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void ProcessNewTurn()
     {
-        Debug.Log(string.Format("TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}", 
+        Debug.Log(string.Format("TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
             _turn, GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n"));
         bool finishedProcessing = false;
         int safetyCircuit = 0;
@@ -159,7 +166,8 @@ public class TurnManager : MonoBehaviour
                     {
                         finishedProcessing = true;
                         Debug.LogError("TurnManagers.cs -> ProcessNewTurn -> SafetyCircuit triggered");
-                        Quit(); }
+                        Quit();
+                    }
                 }
                 else
                 { finishedProcessing = true; }
@@ -194,6 +202,7 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log(string.Format("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n"));
         EventManager.instance.PostNotification(EventType.StartTurnLate, this);
+        UpdateStates();
     }
 
     /// <summary>
@@ -266,7 +275,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     private void EndTurnFinal()
-    {        
+    {
         //decrement any action adjustments
         GameManager.instance.dataScript.UpdateActionAdjustments();
         //actions
@@ -342,8 +351,10 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetActionsTooltip()
-    { return string.Format("{0}{1}{2}{3} of {4}<b>{5}</b>{6} Actions available{7}", colourNeutral, GetActionsAvailable(), colourEnd, colourNormal, colourEnd,
-        _actionsTotal, colourNormal, colourEnd); }
+    {
+        return string.Format("{0}{1}{2}{3} of {4}<b>{5}</b>{6} Actions available{7}", colourNeutral, GetActionsAvailable(), colourEnd, colourNormal, colourEnd,
+          _actionsTotal, colourNormal, colourEnd);
+    }
 
     /// <summary>
     /// Returns true if the player has at least one remaining action, otherwise false
@@ -422,7 +433,7 @@ public class TurnManager : MonoBehaviour
             Application.CancelQuit();
         }
     }
-    
+
 
     /// <summary>
     /// display splash screen for a short while before quitting
@@ -434,11 +445,11 @@ public class TurnManager : MonoBehaviour
         yield return new WaitForSeconds(showSplashTimeout);
         allowQuitting = true;
         //editor quit or application quit
-        #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
             Application.Quit();
-        #endif
+#endif
     }
 
     public void OnDisable()
@@ -496,6 +507,34 @@ public class TurnManager : MonoBehaviour
                 break;
         }
         return string.Format("{0}{1}Press ESC to exit", text, "\n");
+    }
+
+
+    /// <summary>
+    /// Run in Event.StartTurnLate to update Authority/Resistance States when required
+    /// </summary>
+    public void UpdateStates()
+    {
+        string text = "";
+        //Authority State
+        switch (authorityState)
+        {
+            case AuthorityState.APB:
+                text = "The city wide All Points Bulletin (APB) has been cancelled";
+                break;
+            case AuthorityState.SecurityAlert:
+                text = "The city wide Security Alert has been cancelled";
+                break;
+            case AuthorityState.SurvellianceCrackdown:
+                text = "The city wide Survelliance Crackdown has been cancelled";
+                break;
+        }
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            //if no Erasure teams currently on map, revert state to normal
+            if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap) <= 0)
+            { GameManager.instance.authorityScript.SetAuthorityState(text); }
+        }
     }
 
     //new methods above here

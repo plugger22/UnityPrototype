@@ -20,13 +20,13 @@ public class AuthorityManager : MonoBehaviour
     /// <summary>
     /// method that Sets a mutually exclusive AuthorityState (enum). Default (no parameter) is to reset back to normal.
     /// Descriptor is the decision.descriptor
+    /// Method generates a DecisionGlobal message using descriptor
     /// </summary>
     /// <param name="state"></param>
     public bool SetAuthorityState(string descriptor, AuthorityState state = AuthorityState.Normal)
     {
         bool isPublic = false;
         bool isDone = false;
-        string text = "Unknown";
         if (string.IsNullOrEmpty(descriptor) == false)
         {
             //set state
@@ -42,12 +42,13 @@ public class AuthorityManager : MonoBehaviour
                 default:
                     break;
             }
-            Message message = GameManager.instance.messageScript.DecisionGlobal(text, 0, globalAuthority, isPublic);
+            Message message = GameManager.instance.messageScript.DecisionGlobal(descriptor, 0, globalAuthority, isPublic);
             GameManager.instance.dataScript.AddMessage(message);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
         return isDone;
     }
+
 
 
     

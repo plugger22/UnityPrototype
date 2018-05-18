@@ -606,6 +606,9 @@ public class AIManager : MonoBehaviour
                         //- - - TO DO - - - 
 
                         break;
+                    case MessageSubType.AI_Immediate:
+                        //immediate flag is set by EffectManager.cs -> ProcessEffect (Invisibility) prior to this
+                        break;
                     default:
                         Debug.LogWarning(string.Format("Invalid message AI subType \"{0}\" for \"{1}\"", message.subType, message.text));
                         break;
