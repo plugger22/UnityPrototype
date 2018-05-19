@@ -164,6 +164,7 @@ public class ConnectionManager : MonoBehaviour
     public bool ProcessConnectionSecurityDecision()
     {
         bool isDone = false;
+        int index;
         List<Node> listOfConnectedNodes = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
         
         List<Node> tempList = new List<Node>();
@@ -181,22 +182,82 @@ public class ConnectionManager : MonoBehaviour
                     for (int i = listOfCopiedNodes.Count - 1; i >= 0; i--)
                     {
                         if (listOfCopiedNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
-                        { tempList.Add(listOfCopiedNodes[i]); }
+                        {
+                            //add to tempList and remove from Copiedlist
+                            tempList.Add(listOfCopiedNodes[i]);
+                            listOfCopiedNodes.RemoveAt(i);
+                        }
                     }
                     //found any suitable nodes and do they have suitable connections?
                     if (tempList.Count > 0)
-                    { isDone = ProcessNodeConnection(node); }
+                    {
+                        do
+                        {
+                            index = Random.Range(0, tempList.Count);
+                            isDone = ProcessNodeConnection(tempList[index]);
+                            if (isDone == false)
+                            { tempList.RemoveAt(index); }
+                            else { break; }
+                        }
+                        while (tempList.Count > 0 );
+                    }
                 }
                 else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
-                //keep looking if not yet successful
+                //keep looking if not yet successful. List should have all preferred nodes stripped out.
                 if (isDone == false)
                 {
                     //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
+                    if (listOfCopiedNodes.Count > 0)
+                    {
+                        do
+                        {
+                            index = Random.Range(0, listOfCopiedNodes.Count);
+                            isDone = ProcessNodeConnection(listOfCopiedNodes[index]);
+                            if (isDone == false)
+                            { listOfCopiedNodes.RemoveAt(index); }
+                            else { break; }
+                        }
+                        while (tempList.Count > 0);
+                    }
                 }
             }
             else { Debug.LogWarning("Invalid factionAuthority (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
+        if (isDone != true)
+        { Debug.LogFormat("ConnectionManager.cs -> ProcessConnectionSecurityDecision: FAILED TO FIND suitable connection for nodeID {0}", "\n"); }
+        return isDone;
+    }
+
+    /// <summary>
+    /// sub-Method for ProcessConnectionSecurityDecision that takes a node, checks for a Securitylevel.None connection, raises it up +1 level and returns true if successful.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private bool ProcessNodeConnection(Node node)
+    {
+        bool isDone = false;
+        if (node != null)
+        {
+            List<Connection> listOfConnections = node.GetListOfConnections();
+            if (listOfConnections != null)
+            {
+                //loop connections and take first one with no security
+                foreach(Connection connection in listOfConnections)
+                {
+                    if (connection.SecurityLevel == ConnectionType.None)
+                    {
+                        //raise security level + 1 permanently
+                        connection.ChangeSecurityLevel(ConnectionType.LOW);
+                        Debug.LogFormat("ConnectionManager.cs -> ProcessNodeConnection: Connection ID {0} Security Level increased to LOW", connection.connID);
+                        isDone = true;
+                        break;
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.nodeID); }
+        }
+        Debug.LogWarning("Invalid node (Null)");
         return isDone;
     }
 

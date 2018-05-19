@@ -1037,7 +1037,7 @@ public class Node : MonoBehaviour
     }
 
 
-    public List<Connection> GetAllConnections()
+    public List<Connection> GetListOfConnections()
     { return listOfConnections; }
 
     /// <summary>

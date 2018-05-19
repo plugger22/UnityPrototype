@@ -839,7 +839,7 @@ public class AIManager : MonoBehaviour
                                 { score += tally; }
                             }
                             //connections
-                            List<Connection> listOfConnections = node.GetAllConnections();
+                            List<Connection> listOfConnections = node.GetListOfConnections();
                             if (listOfConnections != null)
                             {
                                 foreach (Connection conn in listOfConnections)
