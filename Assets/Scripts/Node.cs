@@ -1040,6 +1040,9 @@ public class Node : MonoBehaviour
     public List<Connection> GetListOfConnections()
     { return listOfConnections; }
 
+    public int CheckNumOfConnections()
+    { return listOfConnections.Count; }
+
     /// <summary>
     /// //stats are the same for both sides, colours change though in the tooltips
     /// </summary>

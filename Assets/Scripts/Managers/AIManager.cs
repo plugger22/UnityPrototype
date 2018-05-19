@@ -2017,8 +2017,8 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("{0}- listOfDecisionTasksNonCritical{1}", "\n", "\n");
         builder.Append(DebugTaskList(listOfDecisionTasksNonCritical));
         builder.AppendFormat("{0}{1}- ProcessDecisionData{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" connectionSecurityRatio -> {0}{1}", connSecRatio, "\n");
-        builder.AppendFormat(" teamRatio -> {0}{1}", teamRatio, "\n");
+        builder.AppendFormat(" connectionSecurityRatio -> {0} / {1}{2}", connSecRatio, connectionRatioThreshold, "\n");
+        builder.AppendFormat(" teamRatio -> {0} / {1}{2}", teamRatio, teamRatioThreshold, "\n");
         builder.AppendFormat(" erasureTeamsOnMap -> {0}{1}", erasureTeamsOnMap, "\n");
         builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
         return builder.ToString();

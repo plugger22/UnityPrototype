@@ -322,6 +322,9 @@ public class LevelManager : MonoBehaviour
             nodeEnd.AddNeighbourPosition(pos1);
             nodeEnd.AddNeighbourNode(nodeStart);
             nodeEnd.AddConnection(connectionTemp);
+            //connection
+            connectionTemp.node1 = nodeStart;
+            connectionTemp.node2 = nodeEnd;
         }
         else { Debug.LogError(string.Format("Invalid Connection, ID {0} -> Not added to collections", connectionTemp.connID)); }
     }

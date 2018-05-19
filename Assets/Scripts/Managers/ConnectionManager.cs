@@ -212,12 +212,17 @@ public class ConnectionManager : MonoBehaviour
                         do
                         {
                             index = Random.Range(0, listOfCopiedNodes.Count);
-                            isDone = ProcessNodeConnection(listOfCopiedNodes[index]);
+                            Node nodeTemp = listOfCopiedNodes[index];
+                            isDone = ProcessNodeConnection(nodeTemp);
                             if (isDone == false)
-                            { listOfCopiedNodes.RemoveAt(index); }
+                            {
+                                Debug.LogWarningFormat("ListOfCopiedNodes -> Before -> {0}", listOfCopiedNodes.Count);
+                                listOfCopiedNodes.RemoveAt(index);
+                                Debug.LogWarningFormat("ListOfCopiedNodes -> AFTER -> {0}", listOfCopiedNodes.Count);
+                            }
                             else { break; }
                         }
-                        while (tempList.Count > 0);
+                        while (listOfCopiedNodes.Count > 0);
                     }
                 }
             }
@@ -236,29 +241,39 @@ public class ConnectionManager : MonoBehaviour
     /// <returns></returns>
     private bool ProcessNodeConnection(Node node)
     {
-        bool isDone = false;
+        bool isSuccessful = false;
         if (node != null)
         {
             List<Connection> listOfConnections = node.GetListOfConnections();
             if (listOfConnections != null)
             {
+                Node nodeFar = null;
                 //loop connections and take first one with no security
-                foreach(Connection connection in listOfConnections)
+                foreach (Connection connection in listOfConnections)
                 {
                     if (connection.SecurityLevel == ConnectionType.None)
                     {
-                        //raise security level + 1 permanently
-                        connection.ChangeSecurityLevel(ConnectionType.LOW);
-                        Debug.LogFormat("ConnectionManager.cs -> ProcessNodeConnection: Connection ID {0} Security Level increased to LOW", connection.connID);
-                        isDone = true;
-                        break;
+                        nodeFar = connection.node1;
+                        //check that we've got the correct connection end
+                        if (nodeFar.nodeID == node.nodeID)
+                        { nodeFar = connection.node2; }
+                        //check that the far node has at least 2 connections (ignore single dead end connections)
+                        if (nodeFar.CheckNumOfConnections() > 1)
+                        {
+                            //raise security level + 1 permanently
+                            connection.ChangeSecurityLevel(ConnectionType.LOW);
+                            Debug.LogFormat("ConnectionManager.cs -> ProcessNodeConnection: Connection ID {0} Security Level now LOW (nodeID's {1} -> {2}){3}", 
+                                connection.connID, connection.node1.nodeID, connection.node2.nodeID, "\n");
+                            isSuccessful = true;
+                            break;
+                        }
                     }
                 }
             }
             else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.nodeID); }
         }
-        Debug.LogWarning("Invalid node (Null)");
-        return isDone;
+        else { Debug.LogWarning("Invalid node (Null)"); }
+        return isSuccessful;
     }
 
     //new methods above here

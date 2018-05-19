@@ -29,6 +29,8 @@ public class Connection : MonoBehaviour
 
     [HideInInspector] public int VerticeOne { get { return v1; } }
     [HideInInspector] public int VerticeTwo { get { return v2; } }
+    [HideInInspector] public Node node1;                                        //Nodes at either end of connection
+    [HideInInspector] public Node node2;
 
     [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1, player movement)
     [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
