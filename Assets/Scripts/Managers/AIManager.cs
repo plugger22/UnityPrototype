@@ -803,7 +803,7 @@ public class AIManager : MonoBehaviour
         //only bother proceeding if there are spider teams available to deploy
         if (GameManager.instance.dataScript.CheckTeamInfo(teamArcSpider, TeamInfo.Reserve) > 0)
         {
-            List<Node> listOfMostConnected = GameManager.instance.dataScript.GetMostConnectedNodes();
+            List<Node> listOfMostConnected = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
             if (listOfMostConnected != null)
             {
                 int score, tally;
@@ -1055,7 +1055,7 @@ public class AIManager : MonoBehaviour
                 //if a minimum number of erasure teams in reserve then place one at a likely place
                 if (numOfTeams > 1)
                 {
-                    List<Node> listOfMostConnected = GameManager.instance.dataScript.GetMostConnectedNodes();
+                    List<Node> listOfMostConnected = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
                     if (listOfMostConnected != null)
                     {
                         foreach (Node nodeConnected in listOfMostConnected)
@@ -1837,21 +1837,22 @@ public class AIManager : MonoBehaviour
             if (task.name0.Equals(decisionAPB.name) == true)
             {
                 if (GameManager.instance.authorityScript.SetAuthorityState(decisionAPB.descriptor, AuthorityState.APB) == true)
-                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask \"{0}\" Decision implemented{1}", task.name0, "\n"); }
+                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
             }
             else if (task.name0.Equals(decisionSecAlert.name) == true)
             {
                 if (GameManager.instance.authorityScript.SetAuthorityState(decisionSecAlert.descriptor, AuthorityState.SecurityAlert) == true)
-                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask \"{0}\" Decision implemented{1}", task.name0, "\n"); }
+                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
             }
             else if (task.name0.Equals(decisionCrackdown.name) == true)
             {
                 if (GameManager.instance.authorityScript.SetAuthorityState(decisionCrackdown.descriptor, AuthorityState.SurvellianceCrackdown) == true)
-                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask \"{0}\" Decision implemented{1}", task.name0, "\n"); }
+                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
             }
             else if (task.name0.Equals(decisionConnSec.name) == true)
             {
-
+                if (GameManager.instance.connScript.ProcessConnectionSecurityDecision() == true)
+                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
             }
             else if (task.name0.Equals(decisionRequestTeam.name) == true)
             {

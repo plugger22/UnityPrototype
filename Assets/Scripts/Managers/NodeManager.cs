@@ -584,7 +584,7 @@ public class NodeManager : MonoBehaviour
                 }
                 break;
             case NodeUI.MostConnected:
-                List<Node> connectedList = GameManager.instance.dataScript.GetMostConnectedNodes();
+                List<Node> connectedList = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
                 if (connectedList != null)
                 {
                     if (connectedList.Count > 0)

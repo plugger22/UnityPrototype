@@ -761,7 +761,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfConnected (Null)"); }
     }
 
-    public List<Node> GetMostConnectedNodes()
+    public List<Node> GetListOfMostConnectedNodes()
     { return listOfMostConnectedNodes; }
     
 

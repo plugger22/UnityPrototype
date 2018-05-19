@@ -156,4 +156,49 @@ public class ConnectionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfConnections (Null)"); }
     }
+
+
+    /// <summary>
+    /// Permanently raises the security level (+1) of a randomly (some logic here) chosen connection due to an Authority decision. Returns true if successful
+    /// </summary>
+    public bool ProcessConnectionSecurityDecision()
+    {
+        bool isDone = false;
+        List<Node> listOfConnectedNodes = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
+        
+        List<Node> tempList = new List<Node>();
+        if (listOfConnectedNodes != null)
+        {
+            //create a temporary list (by value) that can be deleted from without upsetting the main list
+            List<Node> listOfCopiedNodes = new List<Node>(listOfConnectedNodes);
+            Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
+            if (factionAuthority != null)
+            {
+                NodeArc preferredNodeArc = factionAuthority.preferredArc;
+                if (preferredNodeArc != null)
+                {
+                    //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)
+                    for (int i = listOfCopiedNodes.Count - 1; i >= 0; i--)
+                    {
+                        if (listOfCopiedNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
+                        { tempList.Add(listOfCopiedNodes[i]); }
+                    }
+                    //found any suitable nodes and do they have suitable connections?
+                    if (tempList.Count > 0)
+                    { isDone = ProcessNodeConnection(node); }
+                }
+                else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
+                //keep looking if not yet successful
+                if (isDone == false)
+                {
+                    //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
+                }
+            }
+            else { Debug.LogWarning("Invalid factionAuthority (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
+        return isDone;
+    }
+
+    //new methods above here
 }
