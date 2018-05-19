@@ -172,6 +172,7 @@ public class ConnectionManager : MonoBehaviour
         {
             //create a temporary list (by value) that can be deleted from without upsetting the main list
             List<Node> listOfCopiedNodes = new List<Node>(listOfConnectedNodes);
+            Debug.LogFormat("ListOfCopiedNodes -> Start -> {0}  Turn {1}", listOfCopiedNodes.Count, GameManager.instance.turnScript.Turn);
             Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
             if (factionAuthority != null)
             {
@@ -191,6 +192,7 @@ public class ConnectionManager : MonoBehaviour
                     //found any suitable nodes and do they have suitable connections?
                     if (tempList.Count > 0)
                     {
+                        Debug.LogFormat("ListOfCopiedNodes -> TempList.Count {0}", tempList.Count);
                         do
                         {
                             index = Random.Range(0, tempList.Count);
@@ -203,9 +205,11 @@ public class ConnectionManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
+                Debug.LogFormat("ListOfCopiedNodes -> Preferred Nodes Done -> {0}", listOfCopiedNodes.Count);
                 //keep looking if not yet successful. List should have all preferred nodes stripped out.
                 if (isDone == false)
                 {
+                    Debug.Log("ListOfCopiedNodes -> Look for a Random Node");
                     //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
                     if (listOfCopiedNodes.Count > 0)
                     {
@@ -216,9 +220,9 @@ public class ConnectionManager : MonoBehaviour
                             isDone = ProcessNodeConnection(nodeTemp);
                             if (isDone == false)
                             {
-                                Debug.LogWarningFormat("ListOfCopiedNodes -> Before -> {0}", listOfCopiedNodes.Count);
+                                Debug.LogFormat("ListOfCopiedNodes -> Before -> {0}", listOfCopiedNodes.Count);
                                 listOfCopiedNodes.RemoveAt(index);
-                                Debug.LogWarningFormat("ListOfCopiedNodes -> AFTER -> {0}", listOfCopiedNodes.Count);
+                                Debug.LogFormat("ListOfCopiedNodes -> AFTER -> {0}", listOfCopiedNodes.Count);
                             }
                             else { break; }
                         }
