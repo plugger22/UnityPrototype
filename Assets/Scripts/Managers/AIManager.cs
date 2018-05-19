@@ -254,6 +254,7 @@ public class AIManager : MonoBehaviour
         SetConnectedNodes();
         SetPreferredNodes();
         SetCentreNodes();
+        SetDecisionNodes();
         SetNearNeighbours();
     }
 
@@ -488,6 +489,45 @@ public class AIManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// initialises DataManager.cs -> listOfDecisionNodes which is all nodes isCentred or isConnected with at least one no security connection that isn't a dead end
+    /// </summary>
+    public void SetDecisionNodes()
+    {
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        List<Node> listOfNodes = new List<Node>();
+        if (dictOfNodes != null)
+        {
+            foreach(var node in dictOfNodes)
+            {
+                if (node.Value != null)
+                {
+                    //centred and/or connected
+                    if (node.Value.isCentreNode == true || node.Value.isConnectedNode == true)
+                    {
+                        //check connections
+                        List<Connection> listOfConnections = node.Value.GetListOfConnections();
+                        if (listOfConnections != null)
+                        {
+                            foreach(Connection connection in listOfConnections)
+                            {
+
+                            }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.Key); }
+                        //add to list
+                        listOfNodes.Add(node.Value);
+                    }
+                }
+                else { Debug.LogWarning("Invalid node (Null) in dictOfNodes"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        //initialise list (overwrites any existing data)
+        GameManager.instance.dataScript.SetDecisionNodes(listOfNodes);
     }
 
     /// <summary>

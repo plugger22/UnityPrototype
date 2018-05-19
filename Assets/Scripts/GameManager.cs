@@ -176,7 +176,6 @@ public class GameManager : MonoBehaviour
         importScript.InitialiseEarly();
         guiScript.Initialise();         //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
         cityScript.InitialiseEarly();        //before levelScript
-        
         objectiveScript.Initialise();
         actorScript.Initialise();
         levelScript.Initialise();

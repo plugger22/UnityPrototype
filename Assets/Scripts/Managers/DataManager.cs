@@ -23,6 +23,7 @@ public class DataManager : MonoBehaviour
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
     private List<Node> listOfMostConnectedNodes = new List<Node>();                             //top connected nodes (3+ connections), used by AI for ProcessSpiderTeam
+    private List<Node> listOfDecisionNodes = new List<Node>();                                  //dynamic list of nodes used for connection security level decisions
 
     //actor quality input arrays (used to populate arrayOfQualities)
     public Quality[] authorityQualities = new Quality[3];
@@ -763,7 +764,24 @@ public class DataManager : MonoBehaviour
 
     public List<Node> GetListOfMostConnectedNodes()
     { return listOfMostConnectedNodes; }
-    
+
+    public List<Node> GetListOfDecisionNodes()
+    { return listOfDecisionNodes; }
+
+    /// <summary>
+    /// Centred and Most Connected nodes with at least one no security connection that isn't a dead end. Used by AI
+    /// </summary>
+    /// <param name="listOfConnected"></param>
+    public void SetDecisionNodes(List<Node> listOfNodes)
+    {
+        if (listOfNodes != null)
+        {
+            listOfDecisionNodes.Clear();
+            listOfDecisionNodes.AddRange(listOfNodes);
+        }
+        else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
+    }
+
 
     //
     // - - - Targets - -  -
