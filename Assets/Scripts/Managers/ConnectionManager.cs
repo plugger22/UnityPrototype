@@ -158,7 +158,7 @@ public class ConnectionManager : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*\/// <summary>
     /// Permanently raises the security level (+1) of a randomly (some logic here) chosen connection due to an Authority decision. Returns true if successful
     /// </summary>
     public bool ProcessConnectionSecurityDecision()
@@ -235,6 +235,84 @@ public class ConnectionManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
         if (isDone != true)
         { Debug.LogFormat("ConnectionManager.cs -> ProcessConnectionSecurityDecision: FAILED TO FIND suitable connection for nodeID {0}", "\n"); }
+        return isDone;
+    }*/
+
+    /// <summary>
+    /// Permanently raises the security level (+1) of a randomly (some logic here) chosen connection due to an Authority decision. Returns true if successful
+    /// </summary>
+    public bool ProcessConnectionSecurityDecision()
+    {
+        bool isDone = false;
+        int index;
+        List<Node> listOfDecisionNodes = GameManager.instance.dataScript.GetListOfDecisionNodes();
+        List<Node> tempList = new List<Node>();
+        if (listOfDecisionNodes != null)
+        {
+            /*Debug.LogFormat("ListOfDecisionNodes -> Start -> {0}  Turn {1}", listOfDecisionNodes.Count, GameManager.instance.turnScript.Turn);*/
+            Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
+            if (factionAuthority != null)
+            {
+                NodeArc preferredNodeArc = factionAuthority.preferredArc;
+                if (preferredNodeArc != null)
+                {
+                    //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)
+                    for (int i = listOfDecisionNodes.Count - 1; i >= 0; i--)
+                    {
+                        if (listOfDecisionNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
+                        {
+                            //add to tempList and remove from decision List
+                            tempList.Add(listOfDecisionNodes[i]);
+                            listOfDecisionNodes.RemoveAt(i);
+                        }
+                    }
+                    //found any suitable nodes and do they have suitable connections?
+                    if (tempList.Count > 0)
+                    {
+                        /*Debug.LogFormat("ListOfDecisionNodes -> TempList.Count {0}", tempList.Count);*/
+                        do
+                        {
+                            index = Random.Range(0, tempList.Count);
+                            isDone = ProcessNodeConnection(tempList[index]);
+                            if (isDone == false)
+                            { tempList.RemoveAt(index); }
+                            else { break; }
+                        }
+                        while (tempList.Count > 0);
+                    }
+                }
+                else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
+                /*Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);*/
+                //keep looking if not yet successful. List should have all preferred nodes stripped out.
+                if (isDone == false)
+                {
+                    /*Debug.Log("ListOfDecisionNodes -> Look for a Random Node");*/
+                    //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
+                    if (listOfDecisionNodes.Count > 0)
+                    {
+                        do
+                        {
+                            index = Random.Range(0, listOfDecisionNodes.Count);
+                            Node nodeTemp = listOfDecisionNodes[index];
+                            isDone = ProcessNodeConnection(nodeTemp);
+                            if (isDone == false)
+                            { listOfDecisionNodes.RemoveAt(index); } //not needed with refactored code but left in anyway
+                            else { break; }
+                        }
+                        while (listOfDecisionNodes.Count > 0);
+                    }
+                }
+            }
+            else { Debug.LogWarning("Invalid factionAuthority (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
+        if (isDone != true)
+        { Debug.LogWarningFormat("ConnectionManager.cs -> ProcessConnectionSecurityDecision: FAILED TO FIND suitable connection for nodeID {0}", "\n"); }
+        else
+        {
+            //update listOfDecisionNodes
+            GameManager.instance.aiScript.SetDecisionNodes();
+        }
         return isDone;
     }
 

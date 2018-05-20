@@ -498,10 +498,13 @@ public class AIManager : MonoBehaviour
     {
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         List<Node> listOfNodes = new List<Node>();
+        Node nodeFar;
+        bool isSuccessful;
         if (dictOfNodes != null)
         {
             foreach(var node in dictOfNodes)
             {
+                isSuccessful = false;
                 if (node.Value != null)
                 {
                     //centred and/or connected
@@ -511,15 +514,32 @@ public class AIManager : MonoBehaviour
                         List<Connection> listOfConnections = node.Value.GetListOfConnections();
                         if (listOfConnections != null)
                         {
-                            foreach(Connection connection in listOfConnections)
+                            //avoid dead end connections
+                            if (listOfConnections.Count > 1)
                             {
-
+                                foreach (Connection connection in listOfConnections)
+                                {
+                                    if (connection.SecurityLevel == ConnectionType.None)
+                                    {
+                                        nodeFar = connection.node1;
+                                        //check that we've got the correct connection end
+                                        if (nodeFar.nodeID == node.Value.nodeID)
+                                        { nodeFar = connection.node2; }
+                                        //check that the far node has at least 2 connections (ignore single dead end connections)
+                                        if (nodeFar.CheckNumOfConnections() > 1)
+                                        {
+                                            isSuccessful = true;
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                         }
                         else
                         { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.Key); }
                         //add to list
-                        listOfNodes.Add(node.Value);
+                        if (isSuccessful == true)
+                        { listOfNodes.Add(node.Value); }
                     }
                 }
                 else { Debug.LogWarning("Invalid node (Null) in dictOfNodes"); }
@@ -527,6 +547,7 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
         //initialise list (overwrites any existing data)
+        Debug.LogFormat("AIManager.cs -> SetDecisionNodes: {0} nodes have been added to listOfDecisionNodes{1}", listOfNodes.Count, "\n");
         GameManager.instance.dataScript.SetDecisionNodes(listOfNodes);
     }
 
@@ -1540,6 +1561,8 @@ public class AIManager : MonoBehaviour
             { listOfDecisionTasksNonCritical.Add(taskResources); }
         }
         //Select task -> Critical have priority
+        Debug.LogFormat("[Aim] -> ProcessDecisionTask: {0} Critical tasks available{1}", listOfDecisionTasksCritical.Count, "\n");
+        Debug.LogFormat("[Aim] -> ProcessDecisionTask: {0} Non-Critical tasks available{1}", listOfDecisionTasksNonCritical.Count, "\n");
         if (listOfDecisionTasksCritical.Count > 0)
         {
             AITask task = listOfDecisionTasksCritical[Random.Range(0, listOfDecisionTasksCritical.Count)];
@@ -1548,8 +1571,11 @@ public class AIManager : MonoBehaviour
         else
         {
             //choose a non-critical task from the weighted list
-            AITask task = listOfDecisionTasksNonCritical[Random.Range(0, listOfDecisionTasksNonCritical.Count)];
-            listOfTasksPotential.Add(task);
+            if (listOfDecisionTasksNonCritical.Count > 0)
+            {
+                AITask task = listOfDecisionTasksNonCritical[Random.Range(0, listOfDecisionTasksNonCritical.Count)];
+                listOfTasksPotential.Add(task);
+            }
         }
     }
 
@@ -2057,10 +2083,14 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("{0}- listOfDecisionTasksNonCritical{1}", "\n", "\n");
         builder.Append(DebugTaskList(listOfDecisionTasksNonCritical));
         builder.AppendFormat("{0}{1}- ProcessDecisionData{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" connectionSecurityRatio -> {0} / {1}{2}", connSecRatio, connectionRatioThreshold, "\n");
-        builder.AppendFormat(" teamRatio -> {0} / {1}{2}", teamRatio, teamRatioThreshold, "\n");
+        builder.AppendFormat(" connectionSecurityRatio -> {0} / {1} {2}{3}", connSecRatio, connectionRatioThreshold, 
+            connSecRatio >= connectionRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
+        builder.AppendFormat(" teamRatio -> {0} / {1} {2}{3}", teamRatio, teamRatioThreshold, 
+            teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         builder.AppendFormat(" erasureTeamsOnMap -> {0}{1}", erasureTeamsOnMap, "\n");
         builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
+        if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
+        { builder.AppendFormat(" SECURITY MEASURES Available{0}", "\n"); }
         return builder.ToString();
     }
 

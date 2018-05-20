@@ -485,6 +485,12 @@ public class DebugGUI : MonoBehaviour
                 { debugDisplay = 22; }
                 else { debugDisplay = 0; }
             }
+            //fourteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Decision Nodes"))
+            {
+                Debug.Log("[Dbg] Button -> Show Decision Nodes");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes);
+            }
 
 
             //

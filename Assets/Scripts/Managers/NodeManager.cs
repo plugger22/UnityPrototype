@@ -213,6 +213,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.MostConnected:
                     case NodeUI.Centre:
                     case NodeUI.NearNeighbours:
+                    case NodeUI.DecisionNodes:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -607,6 +608,33 @@ public class NodeManager : MonoBehaviour
                 {
                     Debug.LogWarning("Invalid connectedList (Null)");
                     displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Connected Nodes", colourEnd);
+                }
+                break;
+            case NodeUI.DecisionNodes:
+                //highlight nodes in DataManager.cs -> ListOfDecisionNodes (ones used for AI 'connection Security' decisions)
+                List<Node> decisionList = GameManager.instance.dataScript.GetListOfDecisionNodes();
+                if (decisionList != null)
+                {
+                    if (decisionList.Count > 0)
+                    {
+                        foreach (Node node in decisionList)
+                        {
+                            if (node != null)
+                            {
+                                Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                node.SetMaterial(nodeMaterial);
+                            }
+                            else { Debug.LogWarning("Invalid node (Null)"); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Decision Node{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
+                            decisionList.Count != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid decisionList (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Decision Nodes", colourEnd);
                 }
                 break;
             case NodeUI.NearNeighbours:
