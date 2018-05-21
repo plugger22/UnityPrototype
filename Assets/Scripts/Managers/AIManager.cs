@@ -1183,9 +1183,13 @@ public class AIManager : MonoBehaviour
         //work out number of erasure teams onMap
         erasureTeamsOnMap = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
         //log output
-        Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0}", connSecRatio);
-        Debug.LogFormat("[Aim] -> ProcessDecisionData: teamRatio {0}", teamRatio);
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0} {1}{2}", connSecRatio, 
+            connSecRatio >= connectionRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: teamRatio {0} {1}{2}", teamRatio, teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         Debug.LogFormat("[Aim] -> ProcessDecisionData: number of Erasure teams onMap {0}", erasureTeamsOnMap);
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
+        if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
+        { Debug.LogFormat("[Aim] -> ProcessDecisionData: SECURITY MEASURES Available{0}", "\n"); }
     }
 
     /// <summary>
