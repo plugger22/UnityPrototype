@@ -10,7 +10,7 @@
     public enum GameState { Normal, ModalUI}                                                                            //main game states
     public enum ModalState { None, Outcome, GenericPicker, ActionMenu, Inventory, TeamPicker, DiceRoller, InfoDisplay} //ModalUI sub game states
     public enum ResistanceState { Normal }                                                                              //specific Resistance states (Player or AI)
-    public enum AuthorityState { Normal, APB, SecurityAlert, SurvellianceCrackdown }                                                           //specific Authority states (Player or AI)   
+    public enum AuthoritySecurityState { Normal, APB, SecurityAlert, SurvellianceCrackdown }                            //specific Authority Security states (Player or AI)   
     public enum SideState { None, AI, Player }                                                                          //who's running the side
     public enum MetaLevel { None, City, State, Nation }
     public enum AuthorityTitle { Superintendent, Minister, Secretary }                                          //different names for authority actors depending on MetaLevel
@@ -104,6 +104,8 @@
         AI_Release,
         //Decision
         Decision_Global,
+        Decision_Connection,                    //increaes connection security level
+        Decision_Resources,                     //additional resources request
         //Gear
         Gear_Comprised,
         Gear_Used,

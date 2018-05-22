@@ -2389,6 +2389,32 @@ public class DataManager : MonoBehaviour
                                 counterAuthority++;
                             }
                             break;
+                        case "Both":
+                            //Resistance side
+                            if (counterResistance < limitResistance)
+                            {
+                                builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                                if (!isSingleLine)
+                                {
+                                    builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
+                                }
+                                counterResistance++;
+                            }
+                            //Authority side
+                            if (counterAuthority < limitAuthority)
+                            {
+                                builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                                if (!isSingleLine)
+                                {
+                                    builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
+                                }
+                                counterAuthority++;
+                            }
+                            break;
                         default:
                             builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", msg.side.name, msg.msgID, "\n"));
                             break;
@@ -2425,7 +2451,7 @@ public class DataManager : MonoBehaviour
                 {
                     dictOfOngoingID.Add(ongoing.ongoingID, text);
                     //generate message
-                    Message message = GameManager.instance.messageScript.OngoingEffectCreated(text, ongoing.side, nodeID);
+                    Message message = GameManager.instance.messageScript.OngoingEffectCreated(text, nodeID);
                     GameManager.instance.dataScript.AddMessage(message);
                 }
                 catch (ArgumentException)
@@ -2463,7 +2489,7 @@ public class DataManager : MonoBehaviour
                 dictOfOngoingID.Remove(ongoing.ongoingID);
                 //generate message
                 string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);
-                Message message = GameManager.instance.messageScript.OngoingEffectExpired(text, ongoing.side, dataID);
+                Message message = GameManager.instance.messageScript.OngoingEffectExpired(text, dataID);
                 GameManager.instance.dataScript.AddMessage(message);
             }
         }

@@ -13,6 +13,7 @@ public class MessageManager : MonoBehaviour
     //fast access
     GlobalSide globalResistance;
     GlobalSide globalAuthority;
+    GlobalSide globalBoth;
 
     /// <summary>
     /// Set up at start
@@ -21,6 +22,7 @@ public class MessageManager : MonoBehaviour
     {
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalBoth = GameManager.instance.globalScript.sideBoth;
         //event Listeners
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
         EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "MessageManager");
@@ -394,7 +396,7 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     //
-    // - - - General - - -
+    // - - - Decisions - - -
     //
 
     /// <summary>
@@ -417,6 +419,59 @@ public Message PlayerMove(string text, int nodeID)
             message.side = side;
             message.isPublic = isPublic;
             message.data0 = decID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Either side (Player/AI) changes security level on a connection. Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="connID"></param>
+    /// <param name="secLevel"></param>
+    /// <returns></returns>
+    public Message DecisionConnection(string text, int connID, int secLevel)
+    {
+        Debug.Assert(connID >= 0, string.Format("Invalid connID {0}", connID));
+        Debug.Assert(secLevel >= 0, string.Format("Invalid secLevel {0}", secLevel));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.DECISION;
+            message.subType = MessageSubType.Decision_Connection;
+            message.side = globalBoth;
+            message.isPublic = true;
+            message.data0 = connID;
+            message.data1 = secLevel;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Any side requests additional resources. Approved or denied. Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="side"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public Message DecisionRequestResources(string text, GlobalSide side, int amount)
+    {
+        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(amount >= 0, string.Format("Invalid amount {0}", amount));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.DECISION;
+            message.subType = MessageSubType.Decision_Resources;
+            message.side = side;
+            message.isPublic = true;
+            message.data0 = amount;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -769,7 +824,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Contained;
-            message.side = globalAuthority;
+            message.side = globalBoth;
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
@@ -792,9 +847,8 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="side"></param>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public Message OngoingEffectCreated(string text, GlobalSide side, int nodeID)
+    public Message OngoingEffectCreated(string text, int nodeID)
     {
-        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID/connID {0}", nodeID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -802,7 +856,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.EFFECT;
             message.subType = MessageSubType.Ongoing_Created;
-            message.side = side;
+            message.side = globalBoth;
             message.isPublic = false;
             message.data0 = nodeID;
             return message;
@@ -817,9 +871,8 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="text"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message OngoingEffectExpired(string text, GlobalSide side, int nodeID)
+    public Message OngoingEffectExpired(string text, int nodeID)
     {
-        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID/connID {0}", nodeID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -827,7 +880,7 @@ public Message PlayerMove(string text, int nodeID)
             message.text = text;
             message.type = MessageType.EFFECT;
             message.subType = MessageSubType.Ongoing_Expired;
-            message.side = side;
+            message.side = globalBoth;
             message.isPublic = true;
             message.data0 = nodeID;
             return message;

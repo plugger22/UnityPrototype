@@ -367,7 +367,7 @@ public class CaptureManager : MonoBehaviour
                                 else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                             }
                             //Security Alert -> check if an Erasure team is in a neighbouring node
-                            if (GameManager.instance.turnScript.authorityState == AuthorityState.SecurityAlert)
+                            if (GameManager.instance.turnScript.authorityState == AuthoritySecurityState.SecurityAlert)
                             {
                                 team = CheckCaptureAlert(node);
                                 if (team != null)
@@ -401,7 +401,7 @@ public class CaptureManager : MonoBehaviour
                                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                 }
                             //Security Alert -> Check if an Erasure team is in a neighbouring node
-                            if (GameManager.instance.turnScript.authorityState == AuthorityState.SecurityAlert)
+                            if (GameManager.instance.turnScript.authorityState == AuthoritySecurityState.SecurityAlert)
                             {
                                 team = CheckCaptureAlert(node);
                                 if (team != null)
@@ -431,7 +431,7 @@ public class CaptureManager : MonoBehaviour
         bool isAtRisk = false;
         switch(GameManager.instance.turnScript.authorityState)
         {
-            case AuthorityState.APB:
+            case AuthoritySecurityState.APB:
                 if (actorInvisibility <= 1) { isAtRisk = true; }
                 break;
             default:
@@ -473,12 +473,16 @@ public class CaptureManager : MonoBehaviour
     /// </summary>
     private void CheckStartTurnCapture()
     {
-        CaptureDetails details = CheckCaptured(GameManager.instance.nodeScript.nodePlayer);
-        if (details != null)
+        //only check if player active
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
-            //Player captured
-            details.effects = string.Format("{0}They kicked in the door before you could get out of bed{1}", colourNeutral, colourEnd);
-            CapturePlayer(details);
+            CaptureDetails details = CheckCaptured(GameManager.instance.nodeScript.nodePlayer);
+            if (details != null)
+            {
+                //Player captured
+                details.effects = string.Format("{0}They kicked in the door before you could get out of bed{1}", colourNeutral, colourEnd);
+                CapturePlayer(details);
+            }
         }
     }
 

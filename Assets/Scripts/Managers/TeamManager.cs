@@ -273,11 +273,15 @@ public class TeamManager : MonoBehaviour
                 //Add one extra team of each type (so AI starts with 2 teams of each type overall)
                 if (listOfTeamArcIDs != null && listOfTeamArcIDs.Count > 0)
                 {
-                    //loop list and add one team of each type to teamReserve pool
-                    foreach (int arcID in listOfTeamArcIDs)
+                    //Scaled by map size (nodes < 20, then no extra teams)
+                    if (GameManager.instance.dataScript.CheckNumOfNodes() >= 20)
                     {
-                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
-                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                        //loop list and add one team of each type to teamReserve pool
+                        foreach (int arcID in listOfTeamArcIDs)
+                        {
+                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
+                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                        }
                     }
                 }
                 else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }

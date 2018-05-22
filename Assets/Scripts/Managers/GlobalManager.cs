@@ -23,6 +23,7 @@ public class GlobalManager : MonoBehaviour
     [HideInInspector] public GlobalSide sideAI;
     [HideInInspector] public GlobalSide sideAuthority;
     [HideInInspector] public GlobalSide sideResistance;
+    [HideInInspector] public GlobalSide sideBoth;
     //TraitCategory
     [HideInInspector] public TraitCategory categoryActor;
     [HideInInspector] public TraitCategory categoryMayor;
@@ -147,12 +148,17 @@ public class GlobalManager : MonoBehaviour
                         sideResistance = side.Value;
                         side.Value.level = 2;
                         break;
+                    case "Both":
+                        sideBoth = side.Value;
+                        side.Value.level = 3;
+                        break;
                 }
             }
             //error check
-            if (sideAI == null) { Debug.LogError("Invalid sideAI (Null)"); }
-            if (sideAuthority == null) { Debug.LogError("Invalid sideAuthority (Null)"); }
-            if (sideResistance == null) { Debug.LogError("Invalid sideResistance (Null)"); }
+            Debug.Assert(sideAI != null, "Invalid sideAI (Null)");
+            Debug.Assert(sideAuthority != null, "Invalid sideAuthority (Null)");
+            Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
+            Debug.Assert(sideBoth != null, "Invalid sideBoth (Null)");
         }
         //
         // - - - Trait Categories - - -

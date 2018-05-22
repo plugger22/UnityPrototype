@@ -20,9 +20,11 @@ public class Faction : ScriptableObject
     [Range(1,3)] public int maxTaskPerTurn = 3;
     [Header("AI Resources")]
     [Tooltip("The number of AI Resources granted per turn")]
-    [Range(1, 3)] public int resourcesAllowance = 1;
+    [Range(0, 3)] public int resourcesAllowance = 0;
     [Tooltip("The starting pool of AI Resources used for Decisions")]
     [Range(1, 10)] public int resourcesStarting = 5;
+    [Tooltip("The % chance that an AI request for additional resources will be approved")]
+    [Range(1, 100)] public int resourcesChance = 50;
 
     
     [HideInInspector] public int factionID;         //dynamically assigned by DataManager.cs on import

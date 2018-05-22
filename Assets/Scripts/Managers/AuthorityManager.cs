@@ -10,11 +10,13 @@ public class AuthorityManager : MonoBehaviour
 {
     //fast access fields
     private GlobalSide globalAuthority;
+    private GlobalSide globalBoth;
 
     public void Initialise()
     {
         //fast acess fields
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalBoth = GameManager.instance.globalScript.sideBoth;
     }
 
     /// <summary>
@@ -23,7 +25,7 @@ public class AuthorityManager : MonoBehaviour
     /// Method generates a DecisionGlobal message using descriptor
     /// </summary>
     /// <param name="state"></param>
-    public bool SetAuthorityState(string descriptor, AuthorityState state = AuthorityState.Normal)
+    public bool SetAuthoritySecurityState(string descriptor, AuthoritySecurityState state = AuthoritySecurityState.Normal)
     {
         bool isPublic = false;
         bool isDone = false;
@@ -34,15 +36,16 @@ public class AuthorityManager : MonoBehaviour
             //message
             switch (state)
             {
-                case AuthorityState.APB:
-                case AuthorityState.SecurityAlert:
-                case AuthorityState.SurvellianceCrackdown:
-                    isPublic = true; isDone = true;
+                case AuthoritySecurityState.APB:
+                case AuthoritySecurityState.SecurityAlert:
+                case AuthoritySecurityState.SurvellianceCrackdown:
+                    isPublic = true;
+                    isDone = true;
                     break;
                 default:
                     break;
             }
-            Message message = GameManager.instance.messageScript.DecisionGlobal(descriptor, 0, globalAuthority, isPublic);
+            Message message = GameManager.instance.messageScript.DecisionGlobal(descriptor, 0, globalBoth, isPublic);
             GameManager.instance.dataScript.AddMessage(message);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }

@@ -1550,8 +1550,8 @@ public class AIManager : MonoBehaviour
             for (int i = 0; i < priorityMediumWeight; i++)
             { listOfDecisionTasksNonCritical.Add(taskTeam); }
         }
-        //Resource request -> 
-        if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) < lowResourcesThreshold)
+        //Resource request -> once made can be Approved or Denied by higher authority. NOTE: make sure it is '<=' to avoid getting stuck in dead end with '<'
+        if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) <= lowResourcesThreshold)
         {
             AITask taskResources = new AITask()
             {
@@ -1851,7 +1851,6 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ExecuteTasks()
     {
-        int dataID;
         foreach(AITask task in listOfTasksFinal)
         {
             switch (task.type)
@@ -1892,11 +1891,10 @@ public class AIManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteDecisionTask(AITask task)
     {
-        Message message;
-        string msgText;
         //check enough resources in pool to carry out task
         int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
         int decisionCost = task.data1;
+        bool isSuccess = false;
         if (decisionCost <= resources)
         {
             //deduct cost
@@ -1905,39 +1903,58 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
             //implement decision
             if (task.name0.Equals(decisionAPB.name) == true)
-            {
-                if (GameManager.instance.authorityScript.SetAuthorityState(decisionAPB.descriptor, AuthorityState.APB) == true)
-                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
-            }
+            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, AuthoritySecurityState.APB); }
             else if (task.name0.Equals(decisionSecAlert.name) == true)
-            {
-                if (GameManager.instance.authorityScript.SetAuthorityState(decisionSecAlert.descriptor, AuthorityState.SecurityAlert) == true)
-                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
-            }
+            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, AuthoritySecurityState.SecurityAlert); }
             else if (task.name0.Equals(decisionCrackdown.name) == true)
-            {
-                if (GameManager.instance.authorityScript.SetAuthorityState(decisionCrackdown.descriptor, AuthorityState.SurvellianceCrackdown) == true)
-                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
-            }
+            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, AuthoritySecurityState.SurvellianceCrackdown); }
             else if (task.name0.Equals(decisionConnSec.name) == true)
-            {
-                if (GameManager.instance.connScript.ProcessConnectionSecurityDecision() == true)
-                { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
-            }
+            { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(); }
             else if (task.name0.Equals(decisionRequestTeam.name) == true)
             {
-
+                //To Do
             }
             else if (task.name0.Equals(decisionResources.name) == true)
-            {
-
-            }
+            { isSuccess = ProcessResourceRequest(); }
+            //debug logs
+            if (isSuccess == true) { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
+            else { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision NOT implemented{1}", task.name0, "\n"); }
         }
         else
         {
             //decision cancelled due to insufficient resources
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: INSUFFICIENT RESOURCES to implement \"{0}\" decision{1}", task.name0, "\n");
         }
+    }
+
+    /// <summary>
+    /// Processes a 'Request Resources' decision from Authority. Returns true if successful
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessResourceRequest()
+    {
+        bool isSuccess = false;
+        //each faction has a % chance of the request being approved (acts as a friction limiter on faction efficiency as resources drive everything)
+        if (Random.Range(0, 100) < factionAuthority.resourcesChance)
+        {
+            int resourcePool = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) + factionAuthority.resourcesStarting;
+            //add faction starting resources amount to their resource pool
+            GameManager.instance.dataScript.SetAIResources(globalAuthority, resourcePool);
+            isSuccess = true;
+        }
+        //message
+        string text = "";
+        int amount = 0;
+        if (isSuccess == true)
+        {
+            amount = factionAuthority.resourcesStarting;
+            text = string.Format("Request for Resources APPROVED ({0} added to pool)", amount);
+        }
+        else
+        { text = string.Format("Request for Resources DENIED ({0} % chance of being Approved)", factionAuthority.resourcesChance); amount = 0; }
+        Message message = GameManager.instance.messageScript.DecisionRequestResources(text, globalAuthority, amount);
+        GameManager.instance.dataScript.AddMessage(message);
+        return isSuccess;
     }
 
     //
@@ -2087,9 +2104,9 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("{0}- listOfDecisionTasksNonCritical{1}", "\n", "\n");
         builder.Append(DebugTaskList(listOfDecisionTasksNonCritical));
         builder.AppendFormat("{0}{1}- ProcessDecisionData{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" connectionSecurityRatio -> {0} / {1} {2}{3}", connSecRatio, connectionRatioThreshold, 
+        builder.AppendFormat(" connectionSecurityRatio -> {0:f2} / {1} {2}{3}", connSecRatio, connectionRatioThreshold, 
             connSecRatio >= connectionRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
-        builder.AppendFormat(" teamRatio -> {0} / {1} {2}{3}", teamRatio, teamRatioThreshold, 
+        builder.AppendFormat(" teamRatio -> {0:f2} / {1} {2}{3}", teamRatio, teamRatioThreshold, 
             teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         builder.AppendFormat(" erasureTeamsOnMap -> {0}{1}", erasureTeamsOnMap, "\n");
         builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
@@ -2141,7 +2158,6 @@ public class AIManager : MonoBehaviour
                                 task.chance, "\n"); }
                             else
                             { builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority{4}", task.data0, task.name0, task.name1, task.priority, "\n"); }
-
                             break;
                         case AIType.Decision:
                             if (showChance == true)

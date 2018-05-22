@@ -264,8 +264,11 @@ public class ConnectionManager : MonoBehaviour
                         {
                             //raise security level + 1 permanently
                             connection.ChangeSecurityLevel(ConnectionType.LOW);
-                            Debug.LogFormat("ConnectionManager.cs -> ProcessNodeConnection: Connection ID {0} Security Level now LOW (nodeID's {1} -> {2}){3}", 
-                                connection.connID, connection.node1.nodeID, connection.node2.nodeID, "\n");
+                            //message
+                            string descriptor = string.Format("ConnID {0}, Security Level now LOW (btwn nodeID's {1} & {2})", 
+                                connection.connID, connection.node1.nodeID, connection.node2.nodeID);
+                            Message message = GameManager.instance.messageScript.DecisionConnection(descriptor, connection.connID, (int)ConnectionType.LOW);
+                            GameManager.instance.dataScript.AddMessage(message);
                             isSuccessful = true;
                             break;
                         }

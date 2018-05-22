@@ -24,7 +24,7 @@ public class TurnManager : MonoBehaviour
 
 
     [HideInInspector] public ResistanceState resistanceState;
-    [HideInInspector] public AuthorityState authorityState;
+    [HideInInspector] public AuthoritySecurityState authorityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
 
     [SerializeField, HideInInspector]
@@ -73,7 +73,7 @@ public class TurnManager : MonoBehaviour
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
         resistanceState = ResistanceState.Normal;
-        authorityState = AuthorityState.Normal;
+        authorityState = AuthoritySecurityState.Normal;
         //current side
         currentSide = GameManager.instance.sideScript.PlayerSide;
         //event Listeners
@@ -479,25 +479,25 @@ public class TurnManager : MonoBehaviour
                     case "APB":
                         //all points bulletin
                         text = "Authorities issue a city wide All Points Bulletin";
-                        GameManager.instance.authorityScript.SetAuthorityState(text, AuthorityState.APB);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.APB);
                         break;
                     case "sec":
                     case "SEC":
                         //security alert 
                         text = "Authorities issue a city wide Security Alert";
-                        GameManager.instance.authorityScript.SetAuthorityState(text, AuthorityState.SecurityAlert);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SecurityAlert);
                         break;
                     case "sur":
                     case "SUR":
                         //surveillance crackdown
                         text = "Authorities declare a city wide Survelliance Crackdown";
-                        GameManager.instance.authorityScript.SetAuthorityState(text, AuthorityState.SurvellianceCrackdown);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SurvellianceCrackdown);
                         break;
                     case "nor":
                     case "NOR":
                         //reset back to normal
                         text = string.Format("AuthorityState reset to {0}", state);
-                        GameManager.instance.authorityScript.SetAuthorityState(text);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text);
                         break;
                 }
                 break;
@@ -519,13 +519,13 @@ public class TurnManager : MonoBehaviour
         //Authority State
         switch (authorityState)
         {
-            case AuthorityState.APB:
+            case AuthoritySecurityState.APB:
                 text = "The city wide All Points Bulletin (APB) has been cancelled";
                 break;
-            case AuthorityState.SecurityAlert:
+            case AuthoritySecurityState.SecurityAlert:
                 text = "The city wide Security Alert has been cancelled";
                 break;
-            case AuthorityState.SurvellianceCrackdown:
+            case AuthoritySecurityState.SurvellianceCrackdown:
                 text = "The city wide Survelliance Crackdown has been cancelled";
                 break;
         }
@@ -533,7 +533,7 @@ public class TurnManager : MonoBehaviour
         {
             //if no Erasure teams currently on map, revert state to normal
             if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap) <= 0)
-            { GameManager.instance.authorityScript.SetAuthorityState(text); }
+            { GameManager.instance.authorityScript.SetAuthoritySecurityState(text); }
         }
     }
 
