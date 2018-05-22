@@ -24,6 +24,12 @@ public class TeamManager : MonoBehaviour
     [Tooltip("The decrease to node support due to the presence of a Media Team. Note that this is converted to a negative number by Node.cs")]
     [Range(1, 4)] public int mediaNodeEffect = 2;
 
+    [Tooltip("Team Arcs that are High priority (order doesn't matter they are all assumed to the same). Used to help figure out which team is needed. Don't duplicate in other lists")]
+    public List<TeamArc> listOfTeamPrioritiesHigh;
+    [Tooltip("Team Arcs that are Medium priority (order doesn't matter they are all assumed to the same). Used to help figure out which team is needed. Don't duplicate in other lists")]
+    public List<TeamArc> listOfTeamPrioritiesMedium;
+    [Tooltip("Team Arcs that are Low priority (order doesn't matter they are all assumed to the same). Used to help figure out which team is needed. Don't duplicate in other lists")]
+    public List<TeamArc> listOfTeamPrioritiesLow;
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -47,6 +53,15 @@ public class TeamManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         //Teams
+        int teamArcCount = 0;
+        Debug.Assert(listOfTeamPrioritiesHigh != null, "Invalid listOfTeamPrioritiesHigh (Null)");
+        Debug.Assert(listOfTeamPrioritiesHigh.Count > 0, "listOfTeamPrioritiesHigh has no records");
+        Debug.Assert(listOfTeamPrioritiesMedium != null, "Invalid listOfTeamPrioritiesMedium (Null)");
+        Debug.Assert(listOfTeamPrioritiesMedium.Count > 0, "listOfTeamPrioritiesMedium has no records");
+        Debug.Assert(listOfTeamPrioritiesLow != null, "Invalid listOfTeamPrioritiesLow (Null)");
+        Debug.Assert(listOfTeamPrioritiesLow.Count > 0, "listOfTeamPrioritiesLow has no records");
+        teamArcCount += listOfTeamPrioritiesHigh.Count + listOfTeamPrioritiesMedium.Count + listOfTeamPrioritiesLow.Count;
+        Debug.Assert(teamArcCount == GameManager.instance.dataScript.CheckNumOfTeamArcs(), "Mismatched count of team Priority Arcs (should be same # as num of unique Team Arcs");
         InitialiseTeams();
         /*SeedTeamsOnMap();     //DEBUG*/
         //event Listeners
@@ -251,15 +266,18 @@ public class TeamManager : MonoBehaviour
         switch (GameManager.instance.sideScript.authorityOverall)
         {
             case SideState.Player:
-                //Add extra teams equal to each Authority actors ability level and off their preferred type
+                //Add extra teams ([edit] No, see below [/edit] 
                 Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors.Length > 0)
                 {
                     int ability, arcID;
                     foreach (Actor actor in arrayOfActors)
                     {
-                        //get actors Ability
-                        ability = actor.datapoint2;
+                        /*//get actors Ability -> equal to each Authority actors ability level and off their preferred type)
+                        ability = actor.datapoint2;*/
+
+                        //[Edit] Give one team fixed of the preferred type, NOT an amount equal to actor ability
+                        ability = 1;
                         //get preferred team
                         arcID = actor.arc.preferredTeam.TeamArcID;
                         //add the ability number of teams to the reserve
@@ -270,9 +288,10 @@ public class TeamManager : MonoBehaviour
                 else { Debug.LogError("Invalid arrayOfActors (Empty)"); }
                 break;
             case SideState.AI:
-                //Add one extra team of each type (so AI starts with 2 teams of each type overall)
+                //Add extra teams, two high priority, two medium priority
                 if (listOfTeamArcIDs != null && listOfTeamArcIDs.Count > 0)
                 {
+                    /*//Add one extra team of each type (so AI starts with 2 teams of each type overall)
                     //Scaled by map size (nodes < 20, then no extra teams)
                     if (GameManager.instance.dataScript.CheckNumOfNodes() >= 20)
                     {
@@ -282,7 +301,33 @@ public class TeamManager : MonoBehaviour
                             GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
                             GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
                         }
+                    }*/
+
+                    int arcID;
+                    int numOfTeams = 2;
+                    //High priority teams (random choice)
+                    for (int i = 0; i < numOfTeams; i++)
+                    {
+                        arcID = listOfTeamPrioritiesHigh[Random.Range(0, listOfTeamPrioritiesHigh.Count)].TeamArcID;
+                        if (arcID >= 0)
+                        {
+                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
+                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                        }
+                        else { Debug.LogWarningFormat("Invalid High priority teamArcID \"{0}\"", arcID); }
                     }
+                    //Medium priority teams (random choice)
+                    for (int i = 0; i < numOfTeams; i++)
+                    {
+                        arcID = listOfTeamPrioritiesMedium[Random.Range(0, listOfTeamPrioritiesMedium.Count)].TeamArcID;
+                        if (arcID >= 0)
+                        {
+                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
+                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                        }
+                        else { Debug.LogWarningFormat("Invalid Medium priority teamArcID \"{0}\"", arcID); }
+                    }
+
                 }
                 else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
                 break;
@@ -293,6 +338,8 @@ public class TeamManager : MonoBehaviour
         {
             //how many present? (only check reserve as at start of game that's where all teams are)
             numToCreate = GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve);
+            Debug.LogFormat("TeamManager.cs -> InitialiseTeams: {0} {1} team{2} created{3}", numToCreate, GameManager.instance.dataScript.GetTeamArc(teamArcID).name,
+                numToCreate != 1 ? "s" : "", "\n");
             //create teams
             for (int i = 0; i < numToCreate; i++)
             { Team team = new Team(teamArcID, i); }
