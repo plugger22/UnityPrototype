@@ -713,7 +713,7 @@ public class Node : MonoBehaviour
                 team.actorSlotID = actorID;
                 team.pool = TeamPool.OnMap;
                 team.timer = GameManager.instance.teamScript.deployTime;
-                Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, nodeName, nodeID, "\n"));
+                /*Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, nodeName, nodeID, "\n"));*/
                 return true;
             }
             else { Debug.LogWarning(string.Format("Maximum number of teams already present at Node {0}, ID {1}{2}", nodeName, nodeID, "\n")); }

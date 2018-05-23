@@ -1874,15 +1874,20 @@ public class AIManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteTeamTask(AITask task)
     {
+        bool isSuccess = false;
         int dataID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
         if (dataID > -1)
         {
             Node node = GameManager.instance.dataScript.GetNode(task.data0);
             if (node != null)
-            { GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
+            { isSuccess = GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
             else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
         }
         else { Debug.LogWarning(string.Format("Invalid teamID (-1) for teamArcID {0}", task.data1)); }
+        //debug log
+        if (isSuccess == true)
+        { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision implemented{1}", task.name1, "\n"); }
+        else { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision NOT implemented{1}", task.name1, "\n"); }
     }
 
     /// <summary>
@@ -1911,7 +1916,7 @@ public class AIManager : MonoBehaviour
             else if (task.name0.Equals(decisionConnSec.name) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(); }
             else if (task.name0.Equals(decisionRequestTeam.name) == true)
-            { isSuccess = GameManager.instance.teamScript.ProcessAITeamRequest(); }
+            { isSuccess = ProcessAITeamRequest(); }
             else if (task.name0.Equals(decisionResources.name) == true)
             { isSuccess = ProcessAIResourceRequest(); }
             //debug logs
@@ -1968,47 +1973,69 @@ public class AIManager : MonoBehaviour
         int teamCap = 2;
         int teamID = -1;
         string msgText = "";
-        //keeps checking for teams (high priority then medium, ignores low) that are under a teamCap (2 of each, then 3 of each), until one found
-        List<TeamArc> tempList = new List<TeamArc>();
-        do
+        List<TeamArc> listOfTeamPrioritiesHigh = GameManager.instance.teamScript.GetListOfTeamPrioritiesHigh();
+        List<TeamArc> listOfTeamPrioritiesMedium = GameManager.instance.teamScript.GetListOfTeamPrioritiesMed();
+        if (listOfTeamPrioritiesHigh != null)
         {
-            //first check if there are less than 2 team of all high priority team types
-            foreach (TeamArc arc in listOfTeamPrioritiesHigh)
+            if (listOfTeamPrioritiesMedium != null)
             {
-                if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Count) < teamCap)
-                { tempList.Add(arc); }
-            }
-            if (tempList.Count > 0)
-            {
-                teamArc = tempList[Random.Range(0, tempList.Count)].TeamArcID;
-                isDone = true;
-            }
-            //second check if there are less than 2 teams of all medium priority team types
-            if (isDone == false)
-            {
-                tempList.Clear();
-                foreach (TeamArc arc in listOfTeamPrioritiesMedium)
+                if (listOfTeamPrioritiesHigh.Count > 0 || listOfTeamPrioritiesMedium.Count > 0)
                 {
-                    if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Count) < teamCap)
-                    { tempList.Add(arc); }
+                    //keeps checking for teams (high priority then medium, ignores low) that are under a teamCap (2 of each, then 3 of each), until one found
+                    List<TeamArc> tempList = new List<TeamArc>();
+                    do
+                    {
+                        //first check if there are less than 2 team of all high priority team types
+                        if (listOfTeamPrioritiesHigh.Count > 0)
+                        {
+                            tempList.Clear();
+                            foreach (TeamArc arc in listOfTeamPrioritiesHigh)
+                            {
+                                if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Total) < teamCap)
+                                { tempList.Add(arc); }
+                            }
+                            if (tempList.Count > 0)
+                            {
+                                teamArc = tempList[Random.Range(0, tempList.Count)].TeamArcID;
+                                isDone = true;
+                            }
+                        }
+                        //second check if there are less than 2 teams of all medium priority team types
+                        if (isDone == false)
+                        {
+                            //must be at least one record   
+                            if (listOfTeamPrioritiesMedium.Count > 0)
+                            {
+                                tempList.Clear();
+                                foreach (TeamArc arc in listOfTeamPrioritiesMedium)
+                                {
+                                    if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Total) < teamCap)
+                                    { tempList.Add(arc); }
+                                }
+                                if (tempList.Count > 0)
+                                {
+                                    teamArc = tempList[Random.Range(0, tempList.Count)].TeamArcID;
+                                    isDone = true;
+                                }
+                            }
+                        }
+                        teamCap++;
+                    }
+                    while (isDone == false && teamCap < 4);
                 }
-                if (tempList.Count > 0)
-                {
-                    teamArc = tempList[Random.Range(0, tempList.Count)].TeamArcID;
-                    isDone = true;
-                }
+                else { Debug.LogError("No valid records in listOfTeamPriorities High and Medium"); }
             }
-            teamCap++;
+            else { Debug.LogError("Invalid listOfTeamPriortiesMedium (Null)"); }
         }
-        while (isDone == false && teamCap < 4);
+        else { Debug.LogError("Invalid listOfTeamPriortiesHigh (Null)"); }
+        //Add a new team if successful
         if (isDone == true && teamArc > -1)
         {
-            //add new team
-            Team team = new Team(teamArc, teamCap);
+            Team team = new Team(teamArc, teamCap - 1);
             //update team info
             GameManager.instance.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Reserve, +1);
             GameManager.instance.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Total, +1);
-            msgText = string.Format("Request for Team Approved. {0} team {1} added to Reserves", team.arc.name, team.teamName);
+            msgText = string.Format("Request for Team: {0} {1} added to Reserves", team.arc.name, team.teamName);
             teamID = team.teamID;
         }
         else

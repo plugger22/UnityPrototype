@@ -18,7 +18,7 @@ public class TeamManager : MonoBehaviour
     [Tooltip("How long a team is deployed for before automatically being recalled")]
     [Range(1, 4)] public int deployTime = 3;
 
-    [Header("Team Node Effects")];
+    [Header("Team Node Effects")]
     [Tooltip("The increase to node security due to the presence of a Control Team")]
     [Range(1, 4)] public int controlNodeEffect = 2;
     [Tooltip("The increase to node stability due to the presence of a Civil Team")]
@@ -628,7 +628,7 @@ public class TeamManager : MonoBehaviour
                                 //confirmation
                                 string text = string.Format("{0} {1}, ID {2}, deployed to {3}, Node ID {4}", team.arc.name, team.teamName, team.teamID,
                                     destinationPool, node.nodeID);
-                                Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
+                                /*Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));*/
                                 //message
                                 Message message = GameManager.instance.messageScript.TeamDeploy(text, node.nodeID, team.teamID, actorID);
                                 if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
@@ -1297,6 +1297,11 @@ public class TeamManager : MonoBehaviour
         return counter;
     }
 
+    public List<TeamArc> GetListOfTeamPrioritiesHigh()
+    { return listOfTeamPrioritiesHigh; }
+
+    public List<TeamArc> GetListOfTeamPrioritiesMed()
+    { return listOfTeamPrioritiesMedium; }
 
     //place new method above here
 }
