@@ -547,7 +547,7 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
         //initialise list (overwrites any existing data)
-        Debug.LogFormat("AIManager.cs -> SetDecisionNodes: {0} nodes have been added to listOfDecisionNodes{1}", listOfNodes.Count, "\n");
+        Debug.LogFormat("[Aim] -> SetDecisionNodes: {0} nodes have been added to listOfDecisionNodes{1}", listOfNodes.Count, "\n");
         GameManager.instance.dataScript.SetDecisionNodes(listOfNodes);
     }
 
@@ -1851,6 +1851,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ExecuteTasks()
     {
+        Debug.LogFormat("[Aim] -> ExecuteTasks: {0} tasks to implement for AI this turn{1}", listOfTasksFinal.Count, "\n");
         foreach(AITask task in listOfTasksFinal)
         {
             switch (task.type)
