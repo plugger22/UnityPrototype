@@ -46,10 +46,10 @@ namespace gameAPI
 
 
         /// <summary>
-        /// Creates a new team of a particular teamArcID
+        /// Creates a new team of a particular teamArcID. Count is used to determine Nato nomlecture, eg. 'Alpha/Bravo/Charlie'
         /// </summary>
         /// <param name="arcType"></param>
-        public Team(int teamArcID, int count)
+        public Team(int teamArcID, int natoCount)
         {
             //valid arcType
             if (teamArcID > -1)
@@ -60,7 +60,7 @@ namespace gameAPI
                 {
                     teamID = teamCounter++;
                     this.arc = teamArc;
-                    InitialiseTeamData(count);
+                    InitialiseTeamData(natoCount);
                     AddToCollections(this);
                 }
                 else Debug.LogError(string.Format("TeamArc type \"{0}\", ID {1}, not found in dictionary -> Team not created{2}", teamArc.name, teamArcID, "\n"));
@@ -74,15 +74,15 @@ namespace gameAPI
         /// subMethod to set up a team's base data
         /// </summary>
         /// <param name="team"></param>
-        private void InitialiseTeamData(int count)
+        private void InitialiseTeamData(int natoCount)
         {
             pool = TeamPool.Reserve;
             actorSlotID = -1;
             nodeID = -1;
             timer = -1;
             turnDeployed = -1;
-            if (count > -1 && count < (int)NATO.Count)
-            { teamName = "Team " + (NATO)count; }
+            if (natoCount > -1 && natoCount < (int)NATO.Count)
+            { teamName = "Team " + (NATO)natoCount; }
             else { teamName = "Team Unknown"; }
         }
 

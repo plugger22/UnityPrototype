@@ -1180,12 +1180,12 @@ public class AIManager : MonoBehaviour
         else { Debug.LogWarning("Invalid dictOfConnections (Null)"); }
         //work out team ratio (total teams / total nodes)
         teamRatio = GameManager.instance.dataScript.CheckNumOfTeams() / (float)totalNodes;
-        //work out number of erasure teams onMap
+        //number of erasure teams onMap
         erasureTeamsOnMap = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
         //log output
-        Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0} {1}{2}", connSecRatio, 
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0:f1} {1}{2}", connSecRatio, 
             connSecRatio >= connectionRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
-        Debug.LogFormat("[Aim] -> ProcessDecisionData: teamRatio {0} {1}{2}", teamRatio, teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
+        Debug.LogFormat("[Aim] -> ProcessDecisionData: teamRatio {0:f1} {1}{2}", teamRatio, teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         Debug.LogFormat("[Aim] -> ProcessDecisionData: number of Erasure teams onMap {0}", erasureTeamsOnMap);
         Debug.LogFormat("[Aim] -> ProcessDecisionData: immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
@@ -1911,11 +1911,9 @@ public class AIManager : MonoBehaviour
             else if (task.name0.Equals(decisionConnSec.name) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(); }
             else if (task.name0.Equals(decisionRequestTeam.name) == true)
-            {
-                //To Do
-            }
+            { isSuccess = GameManager.instance.teamScript.ProcessAITeamRequest(); }
             else if (task.name0.Equals(decisionResources.name) == true)
-            { isSuccess = ProcessResourceRequest(); }
+            { isSuccess = ProcessAIResourceRequest(); }
             //debug logs
             if (isSuccess == true) { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
             else { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision NOT implemented{1}", task.name0, "\n"); }
@@ -1931,7 +1929,7 @@ public class AIManager : MonoBehaviour
     /// Processes a 'Request Resources' decision from Authority. Returns true if successful
     /// </summary>
     /// <returns></returns>
-    private bool ProcessResourceRequest()
+    private bool ProcessAIResourceRequest()
     {
         bool isSuccess = false;
         //each faction has a % chance of the request being approved (acts as a friction limiter on faction efficiency as resources drive everything)
@@ -1955,6 +1953,70 @@ public class AIManager : MonoBehaviour
         Message message = GameManager.instance.messageScript.DecisionRequestResources(text, globalAuthority, amount);
         GameManager.instance.dataScript.AddMessage(message);
         return isSuccess;
+    }
+
+
+    /// <summary>
+    /// handles AI team request. Returns true if request successful and adds an single Team to the Reserve pool. Handles logic for what type of team.
+    /// Calling method assumed to have already checked team ratio vs. teamRatioThreshold
+    /// </summary>
+    /// <returns></returns>
+    public bool ProcessAITeamRequest()
+    {
+        bool isDone = false;
+        int teamArc = -1;
+        int teamCap = 2;
+        int teamID = -1;
+        string msgText = "";
+        //keeps checking for teams (high priority then medium, ignores low) that are under a teamCap (2 of each, then 3 of each), until one found
+        List<TeamArc> tempList = new List<TeamArc>();
+        do
+        {
+            //first check if there are less than 2 team of all high priority team types
+            foreach (TeamArc arc in listOfTeamPrioritiesHigh)
+            {
+                if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Count) < teamCap)
+                { tempList.Add(arc); }
+            }
+            if (tempList.Count > 0)
+            {
+                teamArc = tempList[Random.Range(0, tempList.Count)].TeamArcID;
+                isDone = true;
+            }
+            //second check if there are less than 2 teams of all medium priority team types
+            if (isDone == false)
+            {
+                tempList.Clear();
+                foreach (TeamArc arc in listOfTeamPrioritiesMedium)
+                {
+                    if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Count) < teamCap)
+                    { tempList.Add(arc); }
+                }
+                if (tempList.Count > 0)
+                {
+                    teamArc = tempList[Random.Range(0, tempList.Count)].TeamArcID;
+                    isDone = true;
+                }
+            }
+            teamCap++;
+        }
+        while (isDone == false && teamCap < 4);
+        if (isDone == true && teamArc > -1)
+        {
+            //add new team
+            Team team = new Team(teamArc, teamCap);
+            //update team info
+            GameManager.instance.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Reserve, +1);
+            GameManager.instance.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Total, +1);
+            msgText = string.Format("Request for Team Approved. {0} team {1} added to Reserves", team.arc.name, team.teamName);
+            teamID = team.teamID;
+        }
+        else
+        { msgText = "Request for Team DENIED"; }
+        //message
+        Message message = GameManager.instance.messageScript.DecisionRequestTeam(msgText, teamID);
+        GameManager.instance.dataScript.AddMessage(message);
+        return isDone;
     }
 
     //

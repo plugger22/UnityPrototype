@@ -106,6 +106,7 @@
         Decision_Global,
         Decision_Connection,                    //increaes connection security level
         Decision_Resources,                     //additional resources request
+        Decision_Team,                          //additional team request
         //Gear
         Gear_Comprised,
         Gear_Used,

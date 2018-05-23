@@ -17,6 +17,8 @@ public class TeamManager : MonoBehaviour
     [HideInInspector] public int minTeamsAtNode = 0;
     [Tooltip("How long a team is deployed for before automatically being recalled")]
     [Range(1, 4)] public int deployTime = 3;
+
+    [Header("Team Node Effects")];
     [Tooltip("The increase to node security due to the presence of a Control Team")]
     [Range(1, 4)] public int controlNodeEffect = 2;
     [Tooltip("The increase to node stability due to the presence of a Civil Team")]
@@ -24,6 +26,7 @@ public class TeamManager : MonoBehaviour
     [Tooltip("The decrease to node support due to the presence of a Media Team. Note that this is converted to a negative number by Node.cs")]
     [Range(1, 4)] public int mediaNodeEffect = 2;
 
+    [Header("Team Type Priorities")]
     [Tooltip("Team Arcs that are High priority (order doesn't matter they are all assumed to the same). Used to help figure out which team is needed. Don't duplicate in other lists")]
     public List<TeamArc> listOfTeamPrioritiesHigh;
     [Tooltip("Team Arcs that are Medium priority (order doesn't matter they are all assumed to the same). Used to help figure out which team is needed. Don't duplicate in other lists")]

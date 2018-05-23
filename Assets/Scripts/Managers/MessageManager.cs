@@ -478,6 +478,30 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
+    /// <summary>
+    /// Authority requests an additional team. Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="teamID"></param>
+    /// <returns></returns>
+    public Message DecisionRequestTeam(string text, int teamID)
+    {
+        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.DECISION;
+            message.subType = MessageSubType.Decision_Team;
+            message.side = globalAuthority;
+            message.isPublic = true;
+            message.data0 = teamID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Teams - - -
     //
