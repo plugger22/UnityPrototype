@@ -628,102 +628,86 @@ public class ImportManager : MonoBehaviour
         // - - - Manage Actions - - -
         //
         Dictionary<string, ManageAction> dictOfManageActions = GameManager.instance.dataScript.GetDictOfManageActions();
-        List<ManageAction> listOfActorHandle = GameManager.instance.dataScript.GetListOfActorHandle();
-        List<ManageAction> listOfActorReserve = GameManager.instance.dataScript.GetListOfActorReserve();
-        List<ManageAction> listOfActorDismiss = GameManager.instance.dataScript.GetListOfActorDismiss();
-        List<ManageAction> listOfActorDispose = GameManager.instance.dataScript.GetListOfActorDispose();
+        List<ManageAction> listOfActorHandle = new List<ManageAction>();
+        List<ManageAction> listOfActorReserve = new List<ManageAction>();
+        List<ManageAction> listOfActorDismiss = new List<ManageAction>();
+        List<ManageAction> listOfActorDispose = new List<ManageAction>();
         if (dictOfManageActions != null)
         {
-            if (listOfActorHandle != null)
+            var manageGUID = AssetDatabase.FindAssets("t:ManageAction");
+            foreach (var guid in manageGUID)
             {
-                if (listOfActorReserve != null)
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object manageObject = AssetDatabase.LoadAssetAtPath(path, typeof(ManageAction));
+                ManageAction manageAction = manageObject as ManageAction;
+                //add to dictionary
+                try
                 {
-                    if (listOfActorDismiss != null)
+                    dictOfManageActions.Add(manageAction.name, manageAction);
+                    //add to the appropriate fast access list
+                    switch (manageAction.manage.name)
                     {
-                        if (listOfActorDispose != null)
-                        {
-                            var manageGUID = AssetDatabase.FindAssets("t:ManageAction");
-                            foreach (var guid in manageGUID)
-                            {
-                                //get path
-                                path = AssetDatabase.GUIDToAssetPath(guid);
-                                //get SO
-                                UnityEngine.Object manageObject = AssetDatabase.LoadAssetAtPath(path, typeof(ManageAction));
-                                ManageAction manageAction = manageObject as ManageAction;
-                                //add to dictionary
-                                try
-                                {
-                                    dictOfManageActions.Add(manageAction.name, manageAction);
-                                    //add to the appropriate fast access list
-                                    switch (manageAction.manage.name)
-                                    {
-                                        case "Handle":
-                                            listOfActorHandle.Add(manageAction);
-                                            break;
-                                        case "Reserve":
-                                            listOfActorReserve.Add(manageAction);
-                                            break;
-                                        case "Dismiss":
-                                            listOfActorDismiss.Add(manageAction);
-                                            break;
-                                        case "Dispose":
-                                            listOfActorDispose.Add(manageAction);
-                                            break;
-                                        default:
-                                            Debug.LogError(string.Format("Invalid manage.manage.name \"{0}\"", manageAction.manage.name));
-                                            break;
-                                    }
-                                }
-                                catch (ArgumentNullException)
-                                { Debug.LogError("Invalid manage Action (Null)"); }
-                                catch (ArgumentException)
-                                { Debug.LogError(string.Format("Invalid ManageAction (duplicate name)  \"{0}\"", manageAction.name)); }
-                            }
-                            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n");
-                            //sort fast access lists by order -> ActorHandle
-                            if (listOfActorHandle.Count > 0)
-                            {
-                                var manageActions = from element in listOfActorHandle
-                                                    orderby element.order
-                                                    select element;
-                                listOfActorHandle = manageActions.ToList();
-                            }
-                            else { Debug.LogError("There are no entries in listOfActorHandle"); }
-                            //ActorReserve
-                            if (listOfActorReserve.Count > 0)
-                            {
-                                var manageActions = from element in listOfActorReserve
-                                                    orderby element.order
-                                                    select element;
-                                listOfActorReserve = manageActions.ToList();
-                            }
-                            else { Debug.LogError("There are no entries in listOfActorReserve"); }
-                            //ActorDismiss
-                            if (listOfActorDismiss.Count > 0)
-                            {
-                                var manageActions = from element in listOfActorDismiss
-                                                    orderby element.order
-                                                    select element;
-                                listOfActorDismiss = manageActions.ToList();
-                            }
-                            else { Debug.LogError("There are no entries in listOfActorDismiss"); }
-                            //ActorDispose
-                            if (listOfActorDispose.Count > 0)
-                            {
-                                var manageActions = from element in listOfActorDispose
-                                                    orderby element.order
-                                                    select element;
-                                listOfActorDispose = manageActions.ToList();
-                            }
-                            else { Debug.LogError("There are no entries in listOfActorDispose"); }
-                        }
-                        else { Debug.LogError("Invalid listOfActorDispose (Null) -> Import failed"); }
+                        case "Handle":
+                            listOfActorHandle.Add(manageAction);
+                            break;
+                        case "Reserve":
+                            listOfActorReserve.Add(manageAction);
+                            break;
+                        case "Dismiss":
+                            listOfActorDismiss.Add(manageAction);
+                            break;
+                        case "Dispose":
+                            listOfActorDispose.Add(manageAction);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid manage.manage.name \"{0}\"", manageAction.manage.name));
+                            break;
                     }
-                    else { Debug.LogError("Invalid listOfActorDismiss (Null) -> Import failed"); }
                 }
-                else { Debug.LogError("Invalid listOfActorReserve (Null) -> Import failed"); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid manage Action (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid ManageAction (duplicate name)  \"{0}\"", manageAction.name)); }
             }
-            else { Debug.LogError("Invalid listOfActorHandle (Null) -> Import failed"); }
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n");
+            //sort fast access lists by order -> ActorHandle
+            if (listOfActorHandle.Count > 0)
+            {
+                var manageHandle = listOfActorHandle.OrderBy(o => o.order);
+                listOfActorHandle = manageHandle.ToList();
+                Debug.Assert(listOfActorHandle.Count > 0, "Invalid count (empty) for listOfActorHandle");
+                GameManager.instance.dataScript.SetListOfActorHandle(listOfActorHandle);
+            }
+            else { Debug.LogError("There are no entries in listOfActorHandle"); }
+            //ActorReserve
+            if (listOfActorReserve.Count > 0)
+            {
+                var manageReserve = listOfActorReserve.OrderBy(o => o.order);
+                listOfActorReserve = manageReserve.ToList();
+                GameManager.instance.dataScript.SetListOfActorReserve(listOfActorReserve);
+                Debug.Assert(listOfActorReserve.Count > 0, "Invalid count (empty) for listOfActorReserve");
+            }
+            else { Debug.LogError("There are no entries in listOfActorReserve"); }
+            //ActorDismiss
+            if (listOfActorDismiss.Count > 0)
+            {
+                var manageDismiss = listOfActorDismiss.OrderBy(o => o.order);
+                listOfActorDismiss = manageDismiss.ToList();
+                GameManager.instance.dataScript.SetListOfActorDismiss(listOfActorDismiss);
+                Debug.Assert(listOfActorDismiss.Count > 0, "Invalid count (empty) for listOfActorDismiss");
+            }
+            else { Debug.LogError("There are no entries in listOfActorDismiss"); }
+            //ActorDispose
+            if (listOfActorDispose.Count > 0)
+            {
+                var manageDispose = listOfActorDispose.OrderBy(o => o.order);
+                listOfActorDispose = manageDispose.ToList();
+                GameManager.instance.dataScript.SetListOfActorDispose(listOfActorDispose);
+                Debug.Assert(listOfActorDispose.Count > 0, "Invalid count (empty) for listOfActorDispose");
+            }
+            else { Debug.LogError("There are no entries in listOfActorDispose"); }
         }
         else { Debug.LogError("Invalid dictOfManageActions (Null) -> Import failed"); }
         //

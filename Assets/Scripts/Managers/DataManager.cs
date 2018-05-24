@@ -2649,6 +2649,62 @@ public class DataManager : MonoBehaviour
     public List<ManageAction> GetListOfActorDispose()
     { return listOfActorDispose; }
 
+    /// <summary>
+    /// initialise Actor Handles
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfActorHandle(List<ManageAction> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfActorHandle.Clear();
+            listOfActorHandle.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// initialise Actor Reserve
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfActorReserve(List<ManageAction> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfActorReserve.Clear();
+            listOfActorReserve.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// initialise Actor Dismiss
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfActorDismiss(List<ManageAction> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfActorDismiss.Clear();
+            listOfActorDismiss.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// initialise Actor Dispose
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfActorDispose(List<ManageAction> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfActorDispose.Clear();
+            listOfActorDispose.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
     //
     // - - - Global SO's - - -
     //
