@@ -273,19 +273,16 @@ public class TeamManager : MonoBehaviour
                 Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors.Length > 0)
                 {
-                    int ability, arcID;
+                    int numToDeploy, arcID;
                     foreach (Actor actor in arrayOfActors)
                     {
-                        /*//get actors Ability -> equal to each Authority actors ability level and off their preferred type)
-                        ability = actor.datapoint2;*/
-
-                        //[Edit] Give one team fixed of the preferred type, NOT an amount equal to actor ability
-                        ability = 1;
+                        //Give one team fixed of the preferred type, NOT an amount equal to actor ability
+                        numToDeploy = 1;
                         //get preferred team
                         arcID = actor.arc.preferredTeam.TeamArcID;
                         //add the ability number of teams to the reserve
-                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, ability);
-                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, ability);
+                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, numToDeploy);
+                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, numToDeploy);
                     }
                 }
                 else { Debug.LogError("Invalid arrayOfActors (Empty)"); }
@@ -294,18 +291,6 @@ public class TeamManager : MonoBehaviour
                 //Add extra teams, two high priority, two medium priority
                 if (listOfTeamArcIDs != null && listOfTeamArcIDs.Count > 0)
                 {
-                    /*//Add one extra team of each type (so AI starts with 2 teams of each type overall)
-                    //Scaled by map size (nodes < 20, then no extra teams)
-                    if (GameManager.instance.dataScript.CheckNumOfNodes() >= 20)
-                    {
-                        //loop list and add one team of each type to teamReserve pool
-                        foreach (int arcID in listOfTeamArcIDs)
-                        {
-                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
-                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
-                        }
-                    }*/
-
                     int arcID;
                     int numOfTeams = 2;
                     //High priority teams (random choice)
@@ -337,6 +322,7 @@ public class TeamManager : MonoBehaviour
         }
         //create actual teams and fill the reserve pool based on the number of teams decided upon above
         int numToCreate;
+        /*Message message;*/
         foreach (int teamArcID in listOfTeamArcIDs)
         {
             //how many present? (only check reserve as at start of game that's where all teams are)
@@ -345,7 +331,12 @@ public class TeamManager : MonoBehaviour
                 numToCreate != 1 ? "s" : "", "\n");
             //create teams
             for (int i = 0; i < numToCreate; i++)
-            { Team team = new Team(teamArcID, i); }
+            {
+                Team team = new Team(teamArcID, i);
+                /*//message
+                message = GameManager.instance.messageScript.TeamAdd(string.Format("{0} {1} added to Reserves", team.arc.name, team.teamName), team.teamID);
+                GameManager.instance.dataScript.AddMessage(message);*/
+            }
         }
     }
 

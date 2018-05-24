@@ -1485,21 +1485,39 @@ public class ActorManager : MonoBehaviour
             int actorSlotID = GameManager.instance.dataScript.CheckForSpareActorSlot(playerSide);
             if (actorSlotID > -1)
             {
-                tooltipText = string.Format("{0}{1} Motivation +{2}{3}{4}{5}{6} joins others On Map{7}{8}{9}{10} will no longer Threaten or be Unhappy{11}", 
-                    colourGood, actor.actorName, motivationGainActiveDuty, colourEnd, "\n", colourNeutral, actor.actorName, colourEnd, "\n", 
-                    colourGood, actor.actorName, colourEnd);
-                EventButtonDetails actorDetails = new EventButtonDetails()
+                //can't have 2 actors of the same type OnMap
+                if (GameManager.instance.dataScript.CheckActorArcPresent(actor.arc, playerSide, true) == false)
                 {
-                    buttonTitle = "Active Duty",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                    buttonTooltipMain = string.Format(string.Format("Inform {0} that they are required immediately for Active Duty", actor.actorName)),
-                    buttonTooltipDetail = tooltipText,
-                    //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.InventoryActiveDuty, this, actorActionDetails); },
+                    StringBuilder builderActive = new StringBuilder();
+                    builderActive.AppendFormat("{0}{1} Motivation +{2}{3}{4}", colourGood, actor.actorName, motivationGainActiveDuty, colourEnd, "\n");
+                    builderActive.AppendFormat("{0}{1} joins others On Map{2}{3}", colourNeutral, actor.actorName, colourEnd, "\n");
+                    builderActive.AppendFormat("{0}{1} will no longer Threaten or be Unhappy{2}{3}", colourGood, actor.actorName, colourEnd, "\n");
+                    if (playerSide.level == globalAuthority.level)
+                    {
+                        //will or won't bring a team with them
+                        if (GameManager.instance.aiScript.CheckNewTeamPossible() == true)
+                        { builderActive.AppendFormat("{0}Will bring a {1} team{2}", colourNeutral, actor.arc.preferredTeam.name, colourEnd); }
+                        else { builderActive.AppendFormat("{0}Can't bring a team as roster is full{1}", colourAlert, colourEnd); }
+                    }
+                    EventButtonDetails actorDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Active Duty",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                        buttonTooltipMain = string.Format(string.Format("Inform {0} that they are required immediately for Active Duty", actor.actorName)),
+                        buttonTooltipDetail = builderActive.ToString(),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.InventoryActiveDuty, this, actorActionDetails); },
 
-                };
-                //add Lie Low button to list
-                eventList.Add(actorDetails);
+                    };
+                    //add Active Duty button to list
+                    eventList.Add(actorDetails);
+                }
+                else
+                {
+                    //can't have duplicate actor types OnMap
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                    infoBuilder.Append(string.Format("{0}Active Duty not possible as duplicate Actor types aren't allowed{1}", colourCancel, colourEnd));
+                }
             }
             else
             {

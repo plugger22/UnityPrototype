@@ -427,7 +427,7 @@ public class AIManager : MonoBehaviour
                     }
                     //Pass data to the main reference list
                     GameManager.instance.dataScript.SetConnectedNodes(listOfMostConnectedNodes);
-                    Debug.Log(string.Format("A!Manager -> SetConnectedNodes: {0} nodes have been added to the listOfMostConnectedNodes{1}", counter, "\n"));
+                    Debug.Log(string.Format("[Aim] -> SetConnectedNodes: {0} nodes have been added to the listOfMostConnectedNodes{1}", counter, "\n"));
                 }
                 else { Debug.LogWarning("Insufficient number of records ( < 3) for SetConnectedNodes"); }
             }
@@ -2046,6 +2046,13 @@ public class AIManager : MonoBehaviour
         GameManager.instance.dataScript.AddMessage(message);
         return isDone;
     }
+
+    /// <summary>
+    /// returns true if there is space available for a new team (team ratio < team ratio Threshold)
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckNewTeamPossible()
+    { return teamRatio < teamRatioThreshold; }
 
     //
     // - - - Debug - - -

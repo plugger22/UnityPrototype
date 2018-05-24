@@ -1802,6 +1802,37 @@ public class ActionManager : MonoBehaviour
                         { Debug.LogWarning(string.Format("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID)); }
                     }
                     else { Debug.LogError(string.Format("Invalid reservePoolList (Null) for GlobalSide {0}", details.side)); errorFlag = true; }
+                    //Authority Actor brings team with them (if space available)
+                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                    {
+                        //is there room available for another team?
+                        if (GameManager.instance.aiScript.CheckNewTeamPossible() == true)
+                        {
+                            TeamArc teamArc = actor.arc.preferredTeam;
+                            if (teamArc != null)
+                            {
+                                if (teamArc.TeamArcID > -1)
+                                {
+                                    //add new team to reserve pool
+                                    int teamCount = GameManager.instance.dataScript.CheckTeamInfo(teamArc.TeamArcID, TeamInfo.Total);
+                                    Team team = new Team(teamArc.TeamArcID, teamCount);
+                                    //update team info
+                                    GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Reserve, +1);
+                                    GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Total, +1);
+                                    //message
+                                    string msgText = string.Format("{0} {1} added to Reserves", team.arc.name, team.teamName);
+                                    Message messageTeam = GameManager.instance.messageScript.TeamAdd(msgText, team.teamID, true);
+                                    GameManager.instance.dataScript.AddMessage(messageTeam);
+                                    builder.AppendFormat(string.Format("{0}{1}{2}{3}{4}", "\n", "\n", colourGood, msgText, colourEnd));
+                                }
+                                else { Debug.LogWarningFormat("Invalid teamArcID {0} for {1}", teamArc.TeamArcID, teamArc.name); }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid preferred team Arc (Null) for actorID {0}, {1}, \"{2}\"", actor.actorID, actor.arc.name, actor.actorName); }
+                        }
+                        else { builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourAlert, "New team not available as roster is full", colourEnd); }
+                    }
+                    //outcome dialogue
                     outcomeDetails.textTop = string.Format("{0} {1} bounds forward and enthusiastically shakes your hand", actor.arc.name,
                         actor.actorName);
                     outcomeDetails.textBottom = builder.ToString();

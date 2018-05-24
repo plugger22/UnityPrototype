@@ -1764,11 +1764,11 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns true if specified actor Arc is present in line up and active, false otherwise
+    /// returns true if specified actor Arc is present in OnMap line up and active (default -> to ignore this condition set isActiveIgnore to true), false otherwise
     /// </summary>
     /// <param name="arc"></param>
     /// <returns></returns>
-    public bool CheckActorArcPresent(ActorArc arc, GlobalSide side)
+    public bool CheckActorArcPresent(ActorArc arc, GlobalSide side, bool isActiveIgnore = false)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         if (arc != null)
@@ -1780,8 +1780,19 @@ public class DataManager : MonoBehaviour
                 if (CheckActorSlotStatus(i, side) == true)
                 {
                     Actor actor = arrayOfActors[side.level, i];
-                    //check actor is Active and of the correct type
-                    if (actor.arc == arc && actor.Status == ActorStatus.Active) { return true; }
+                    //check actor is of the correct tpe
+                    if (actor.arc == arc)
+                    {
+                        //ignore active status condition
+                        if (isActiveIgnore == true)
+                        { return true; }
+                        else
+                        {
+                            //only true if actor is active (default condition)
+                            if (actor.Status == ActorStatus.Active)
+                            { return true; }
+                        }
+                    }
                 }
             }
             return false;

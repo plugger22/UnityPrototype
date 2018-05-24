@@ -91,6 +91,7 @@
         Plyr_Move,
         Plyr_Renown,
         //Team
+        Team_Add,
         Team_Deploy,
         Team_Withdraw,
         Team_AutoRecall,
