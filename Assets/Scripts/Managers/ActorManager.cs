@@ -1496,7 +1496,13 @@ public class ActorManager : MonoBehaviour
                     {
                         //will or won't bring a team with them
                         if (GameManager.instance.aiScript.CheckNewTeamPossible() == true)
-                        { builderActive.AppendFormat("{0}Will bring a {1} team{2}", colourNeutral, actor.arc.preferredTeam.name, colourEnd); }
+                        {
+                            //only if a new actor
+                            if (actor.isNewRecruit == true)
+                            { builderActive.AppendFormat("{0}Will bring a {1} team{2}", colourNeutral, actor.arc.preferredTeam.name, colourEnd); }
+                            else
+                            { builderActive.AppendFormat("{0}Only new actors can bring a team{1}", colourAlert, colourEnd); }
+                        }
                         else { builderActive.AppendFormat("{0}Can't bring a team as roster is full{1}", colourAlert, colourEnd); }
                     }
                     EventButtonDetails actorDetails = new EventButtonDetails()

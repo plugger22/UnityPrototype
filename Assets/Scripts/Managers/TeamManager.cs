@@ -288,30 +288,45 @@ public class TeamManager : MonoBehaviour
                 else { Debug.LogError("Invalid arrayOfActors (Empty)"); }
                 break;
             case SideState.AI:
-                //Add extra teams, two high priority, two medium priority
+                //Add extra teams, two high priority, two medium priority (if # nodes < 20, then 1 of each)
                 if (listOfTeamArcIDs != null && listOfTeamArcIDs.Count > 0)
                 {
-                    int arcID;
+                    int arcID, index;
+                    //map size scaling
                     int numOfTeams = 2;
+                    if (GameManager.instance.dataScript.CheckNumOfNodes() < 20) { numOfTeams = 1; }
+                    //copy of list to prevent duplicate selections
+                    List<TeamArc> tempList = new List<TeamArc>(listOfTeamPrioritiesHigh);
                     //High priority teams (random choice)
+                    numOfTeams = Mathf.Min(numOfTeams, tempList.Count);
                     for (int i = 0; i < numOfTeams; i++)
                     {
-                        arcID = listOfTeamPrioritiesHigh[Random.Range(0, listOfTeamPrioritiesHigh.Count)].TeamArcID;
+                        index = Random.Range(0, tempList.Count);
+                        arcID = tempList[index].TeamArcID;
                         if (arcID >= 0)
                         {
                             GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
                             GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                            tempList.RemoveAt(index);
                         }
                         else { Debug.LogWarningFormat("Invalid High priority teamArcID \"{0}\"", arcID); }
                     }
                     //Medium priority teams (random choice)
+                    tempList.Clear();
+                    tempList = new List<TeamArc>(listOfTeamPrioritiesMedium);
+                    //map size scaling
+                    numOfTeams = 2;
+                    if (GameManager.instance.dataScript.CheckNumOfNodes() < 20) { numOfTeams = 1; }
+                    numOfTeams = Mathf.Min(numOfTeams, tempList.Count);
                     for (int i = 0; i < numOfTeams; i++)
                     {
-                        arcID = listOfTeamPrioritiesMedium[Random.Range(0, listOfTeamPrioritiesMedium.Count)].TeamArcID;
+                        index = Random.Range(0, tempList.Count);
+                        arcID = tempList[index].TeamArcID;
                         if (arcID >= 0)
                         {
                             GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
                             GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                            tempList.RemoveAt(index);
                         }
                         else { Debug.LogWarningFormat("Invalid Medium priority teamArcID \"{0}\"", arcID); }
                     }
@@ -327,6 +342,8 @@ public class TeamManager : MonoBehaviour
         {
             //how many present? (only check reserve as at start of game that's where all teams are)
             numToCreate = GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve);
+            //should never be more than 2
+            Debug.Assert(numToCreate < 3, string.Format("Excessive number ({0}) of {1} teams", numToCreate, GameManager.instance.dataScript.GetTeamArc(teamArcID).name));
             Debug.LogFormat("TeamManager.cs -> InitialiseTeams: {0} {1} team{2} created{3}", numToCreate, GameManager.instance.dataScript.GetTeamArc(teamArcID).name,
                 numToCreate != 1 ? "s" : "", "\n");
             //create teams
