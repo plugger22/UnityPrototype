@@ -2613,6 +2613,9 @@ public class ActorManager : MonoBehaviour
         if (arrayOfActorsResistance != null)
         {
             int chance = breakdownChance;
+            //base chance of nervous breakdown doubled during a surveillance crackdown
+            if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
+            { chance *= 2; }
             for (int i = 0; i < arrayOfActorsResistance.Length; i++)
             {
                 //check actor is present in slot (not vacant)
