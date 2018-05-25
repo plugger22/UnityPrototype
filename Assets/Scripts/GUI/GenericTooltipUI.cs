@@ -20,7 +20,6 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private RectTransform rectTransform;
 
 
-
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();

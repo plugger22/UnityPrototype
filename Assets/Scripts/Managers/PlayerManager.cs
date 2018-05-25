@@ -441,7 +441,7 @@ public class PlayerManager : MonoBehaviour
         /*builder.Append(string.Format(" Resistance Cause  {0} of {1}{2}", GameManager.instance.rebelScript.resistanceCause,
             GameManager.instance.rebelScript.resistanceCauseMax, "\n"));*/
         builder.Append(string.Format(" resistanceState {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
-        builder.Append(string.Format(" authorityState {0}{1}", GameManager.instance.turnScript.authorityState, "\n"));
+        builder.Append(string.Format(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n"));
         builder.Append(string.Format("{0}- Reserve Pool{1}", "\n", "\n"));
         builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}", numOfRecruits, GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n"));
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)

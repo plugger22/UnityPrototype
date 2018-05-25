@@ -24,7 +24,7 @@ public class TurnManager : MonoBehaviour
 
 
     [HideInInspector] public ResistanceState resistanceState;
-    [HideInInspector] public AuthoritySecurityState authorityState;
+    [HideInInspector] public AuthoritySecurityState authoritySecurityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
 
     [SerializeField, HideInInspector]
@@ -73,7 +73,7 @@ public class TurnManager : MonoBehaviour
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
         resistanceState = ResistanceState.Normal;
-        authorityState = AuthoritySecurityState.Normal;
+        authoritySecurityState = AuthoritySecurityState.Normal;
         //current side
         currentSide = GameManager.instance.sideScript.PlayerSide;
         //event Listeners
@@ -420,6 +420,75 @@ public class TurnManager : MonoBehaviour
     { return string.Format("{0}Press Enter for a New Turn{1}", colourAlert, colourEnd); }
 
     /// <summary>
+    /// returns a colour formatted string detailing info on any Security Measures
+    /// </summary>
+    /// <returns></returns>
+    public string GetSecurityMeasureTooltip()
+    {
+        StringBuilder builder = new StringBuilder();
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1:
+                //Authority Player
+                switch (GameManager.instance.turnScript.authoritySecurityState)
+                {
+                    case AuthoritySecurityState.Normal:
+                        builder.AppendFormat("{0}No Security Measures in place{1}", colourBad, colourEnd);
+                        break;
+                    case AuthoritySecurityState.APB:
+                        builder.AppendFormat("{0}All Points Bulletin in place{1}", colourGood, colourEnd);
+
+                        break;
+                    case AuthoritySecurityState.SecurityAlert:
+                        builder.AppendFormat("{0}Security Alert in place{1}", colourGood, colourEnd);
+                        break;
+                    case AuthoritySecurityState.SurveillanceCrackdown:
+                        builder.AppendFormat("{0}Surveillance Crackdown in place{1}", colourGood, colourEnd);
+                        builder.AppendFormat("{0}{1}Lying Low isn't possible (Resistance){2}", "\n", colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}Stress Condition gained while doing anything with Invisibility 0 (Resistance){2}", "\n", colourAlert, colourEnd);
+                        builder.AppendFormat("{0}{1}Chance of a Nervous Breakdown doubled{2}", "\n", colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything (Resistance){6}", "\n", colourAlert, colourEnd,
+                            colourNeutral, colourEnd, colourAlert, colourEnd);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);
+                        builder.AppendFormat("{0}No data available on Security Measures{1}", colourAlert, colourEnd);
+                        break;
+                }
+                break;
+            case 2:
+                //Resistance Player
+                switch (GameManager.instance.turnScript.authoritySecurityState)
+                {
+                    case AuthoritySecurityState.Normal:
+                        builder.AppendFormat("{0}No Security Measures in place{1}", colourGood, colourEnd);
+                        break;
+                    case AuthoritySecurityState.APB:
+                        builder.AppendFormat("{0}All Points Bulletin in place{1}", colourBad, colourEnd);
+
+                        break;
+                    case AuthoritySecurityState.SecurityAlert:
+                        builder.AppendFormat("{0}Security Alert in place{1}", colourBad, colourEnd);
+                        break;
+                    case AuthoritySecurityState.SurveillanceCrackdown:
+                        builder.AppendFormat("{0}Surveillance Crackdown in place{1}", colourBad, colourEnd);
+                        builder.AppendFormat("{0}{1}Lying Low isn't possible{2}", "\n", colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}Stress Condition gained while doing anything with Invisibility 0{2}", "\n", colourAlert, colourEnd);
+                        builder.AppendFormat("{0}{1}Chance of a Nervous Breakdown doubled{2}", "\n", colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything{6}", "\n", colourAlert, colourEnd,
+                            colourNeutral, colourEnd, colourAlert, colourEnd);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);
+                        builder.AppendFormat("{0}No data available on Security Measures{1}", colourAlert, colourEnd);
+                        break;
+                }
+                break;
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Quit 
     /// </summary>
     private void Quit()
@@ -491,7 +560,7 @@ public class TurnManager : MonoBehaviour
                     case "SUR":
                         //surveillance crackdown
                         text = "Authorities declare a city wide Survelliance Crackdown";
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SurvellianceCrackdown);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SurveillanceCrackdown);
                         break;
                     case "nor":
                     case "NOR":
@@ -517,7 +586,7 @@ public class TurnManager : MonoBehaviour
     {
         string text = "";
         //Authority State
-        switch (authorityState)
+        switch (authoritySecurityState)
         {
             case AuthoritySecurityState.APB:
                 text = "The city wide All Points Bulletin (APB) has been cancelled";
@@ -525,7 +594,7 @@ public class TurnManager : MonoBehaviour
             case AuthoritySecurityState.SecurityAlert:
                 text = "The city wide Security Alert has been cancelled";
                 break;
-            case AuthoritySecurityState.SurvellianceCrackdown:
+            case AuthoritySecurityState.SurveillanceCrackdown:
                 text = "The city wide Survelliance Crackdown has been cancelled";
                 break;
         }

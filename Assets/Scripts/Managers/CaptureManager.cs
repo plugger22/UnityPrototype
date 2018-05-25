@@ -367,7 +367,7 @@ public class CaptureManager : MonoBehaviour
                                 else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                             }
                             //Security Alert -> check if an Erasure team is in a neighbouring node
-                            if (GameManager.instance.turnScript.authorityState == AuthoritySecurityState.SecurityAlert)
+                            if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SecurityAlert)
                             {
                                 team = CheckCaptureAlert(node);
                                 if (team != null)
@@ -401,7 +401,7 @@ public class CaptureManager : MonoBehaviour
                                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                                 }
                             //Security Alert -> Check if an Erasure team is in a neighbouring node
-                            if (GameManager.instance.turnScript.authorityState == AuthoritySecurityState.SecurityAlert)
+                            if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SecurityAlert)
                             {
                                 team = CheckCaptureAlert(node);
                                 if (team != null)
@@ -429,7 +429,7 @@ public class CaptureManager : MonoBehaviour
     private bool CheckCaptureVisibility(int actorInvisibility)
     {
         bool isAtRisk = false;
-        switch(GameManager.instance.turnScript.authorityState)
+        switch(GameManager.instance.turnScript.authoritySecurityState)
         {
             case AuthoritySecurityState.APB:
                 if (actorInvisibility <= 1) { isAtRisk = true; }

@@ -1913,7 +1913,7 @@ public class AIManager : MonoBehaviour
             else if (task.name0.Equals(decisionSecAlert.name) == true)
             { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, AuthoritySecurityState.SecurityAlert); }
             else if (task.name0.Equals(decisionCrackdown.name) == true)
-            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, AuthoritySecurityState.SurvellianceCrackdown); }
+            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, AuthoritySecurityState.SurveillanceCrackdown); }
             else if (task.name0.Equals(decisionConnSec.name) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(); }
             else if (task.name0.Equals(decisionRequestTeam.name) == true)

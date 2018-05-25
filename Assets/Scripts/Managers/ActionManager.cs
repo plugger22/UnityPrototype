@@ -1023,6 +1023,8 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessLieLowActorAction(ModalActionDetails details)
     {
+        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.Normal, string.Format("Invalid authoritySecurityState {0}",
+            GameManager.instance.turnScript.authoritySecurityState));
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         StringBuilder builder = new StringBuilder();

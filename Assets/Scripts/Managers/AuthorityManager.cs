@@ -32,13 +32,13 @@ public class AuthorityManager : MonoBehaviour
         if (string.IsNullOrEmpty(descriptor) == false)
         {
             //set state
-            GameManager.instance.turnScript.authorityState = state;
+            GameManager.instance.turnScript.authoritySecurityState = state;
             //message
             switch (state)
             {
                 case AuthoritySecurityState.APB:
                 case AuthoritySecurityState.SecurityAlert:
-                case AuthoritySecurityState.SurvellianceCrackdown:
+                case AuthoritySecurityState.SurveillanceCrackdown:
                     isPublic = true;
                     isDone = true;
                     break;

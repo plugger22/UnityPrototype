@@ -948,6 +948,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the actor to enable a ModalActionMenu to be put together (one button per action). 
     /// Resistance only -> up to 3 x 'Give Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Manage' and an automatic Cancel button (6 total)
+    /// triggered when you Right Click an Actor's portrait
     /// </summary>
     /// <param name="actorSlotID"></param>
     /// <returns></returns>
@@ -1006,23 +1007,29 @@ public class ActorManager : MonoBehaviour
                         //Invisibility must be less than max
                         if (actor.datapoint2 < maxStatValue)
                         {
-                            ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
-                            lielowActionDetails.side = playerSide;
-                            lielowActionDetails.actorDataID = actor.actorSlotID;
-                            int numOfTurns = 3 - actor.datapoint2;
-                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName, 
-                                colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
-                            EventButtonDetails lielowDetails = new EventButtonDetails()
+                            //can't lie low if any Security Measures are in place
+                            if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
                             {
-                                buttonTitle = "Lie Low",
-                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
-                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                                //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails); }
-                            };
-                            //add Lie Low button to list
-                            tempList.Add(lielowDetails);
+                                ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                                lielowActionDetails.side = playerSide;
+                                lielowActionDetails.actorDataID = actor.actorSlotID;
+                                int numOfTurns = 3 - actor.datapoint2;
+                                tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName,
+                                    colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                                EventButtonDetails lielowDetails = new EventButtonDetails()
+                                {
+                                    buttonTitle = "Lie Low",
+                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                    buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
+                                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                    //use a Lambda to pass arguments to the action
+                                    action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails); }
+                                };
+                                //add Lie Low button to list
+                                tempList.Add(lielowDetails);
+                            }
+                            else
+                            { infoBuilder.Append("Can't Lie Low while a Surveillance Crackdown is in force"); }
                         }
                         else
                         {
