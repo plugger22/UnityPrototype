@@ -20,6 +20,7 @@ public class EffectManager : MonoBehaviour
     private int delayYesSpider;
 
 
+
     //colour palette for Modal Outcome
     private string colourGood; //good effect Resisance / bad effect Authority
     private string colourBad; //bad effect Authority / bad effect Resistance

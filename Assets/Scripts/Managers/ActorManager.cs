@@ -490,6 +490,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         targetProceed = false;
                                         infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actorTemp.arc.name, colourNeutral, colourEnd);
+                                        DebugTraitMessage(actorTemp, "and is prevented from attempting a Target");
                                     }
                                     else { targetProceed = true; }
                                 }
@@ -562,6 +563,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                             infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actor.arc.name, colourNeutral, colourEnd);
+                                            DebugTraitMessage(actor, "and is prevented from carrying out a Node Action");
                                             proceedFlag = false;
                                         }
                                     }
@@ -1161,7 +1163,10 @@ public class ActorManager : MonoBehaviour
                         proceedFlag = true;
                         //won't activate if spooked & security measures in place
                         if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
-                        { proceedFlag = false; }
+                        {
+                            proceedFlag = false;
+                            DebugTraitMessage(actor, "and is prevented from Activating (Lying Low)");
+                        }
                         if (proceedFlag == true)
                         {
                             //

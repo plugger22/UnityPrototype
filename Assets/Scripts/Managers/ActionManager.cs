@@ -16,6 +16,8 @@ public class ActionManager : MonoBehaviour
     
     //fast access
     private int failedTargetChance;
+    //traits
+    private int actorStressedDuringSecurity;
 
     //colour palette for Modal Outcome
     private string colourNormal;
@@ -33,6 +35,9 @@ public class ActionManager : MonoBehaviour
     {
         //fast access fields
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
+        actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
+        Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
+        Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent, "ActionManager");
@@ -267,6 +272,21 @@ public class ActionManager : MonoBehaviour
                                     effectReturn.errorFlag = true;
                                     break;
                                 }
+                            }
+                            //Nervous trait gains Stressed condition if security measures are in place
+                            if (actor.CheckTraitEffect(actorStressedDuringSecurity) == true && GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
+                            {
+                                //actor gains condition stressed
+                                Condition stressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+                                if (stressed != null)
+                                {
+                                    actor.AddCondition(stressed);
+                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                    builderBottom.AppendFormat("{0}Gains {1}{2}STRESSED{3}{4} condition due to{5}{6} Nervous{7}{8} trait{9}", colourBad, colourEnd,
+                                        colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd);
+                                    GameManager.instance.actorScript.DebugTraitMessage(actor, "and gains STRESSED condition");
+                                }
+                                else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                             }
                             //texts
                             outcomeDetails.textTop = builderTop.ToString();
