@@ -87,6 +87,7 @@ public class ActorManager : MonoBehaviour
     private int actorBreakdownChanceHigh;
     private int actorBreakdownChanceLow;
     private int actorBreakdownChanceNone;
+    private int actorNoActionsDuringSecurityMeasures;
 
     //colour palette for Generic tool tip
     private string colourResistance;
@@ -127,9 +128,11 @@ public class ActorManager : MonoBehaviour
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
         actorBreakdownChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceNone");
+        actorNoActionsDuringSecurityMeasures = GameManager.instance.dataScript.GetTraitEffectID("ActorNoActionsSecurity");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
+        Debug.Assert(actorNoActionsDuringSecurityMeasures > -1, "Invalid actorNoActionsDuringSecurityMeasures (-1)");
         
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
@@ -432,6 +435,7 @@ public class ActorManager : MonoBehaviour
         string cancelText = null;
         string effectCriteria;
         bool proceedFlag;
+        AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
         int actionID;
         Actor[] arrayOfActors;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
@@ -474,7 +478,27 @@ public class ActorManager : MonoBehaviour
                             bool targetProceed = false;
                             //can tackle target if Player at node or target specified actor is present in line-up
                             if (nodeID == playerID) { targetProceed = true; }
-                            else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, globalResistance) == true) { targetProceed = true; }
+                            else if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, globalResistance) == true)
+                            {
+                                //check traits
+                                int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, globalResistance);
+                                Actor actorTemp = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
+                                if (actorTemp != null)
+                                {
+                                    //Not if Spooked trait and Security Measures in place
+                                    if (actorTemp.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
+                                    {
+                                        targetProceed = false;
+                                        infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actorTemp.arc.name, colourNeutral, colourEnd);
+                                    }
+                                    else { targetProceed = true; }
+                                }
+                                else
+                                {
+                                    Debug.LogWarningFormat("Invalid actor for target.actorArc.ActorArcID {0} and slotID {1}", target.actorArc.ActorArcID, slotID);
+                                    targetProceed = false;
+                                }
+                            }
                             //target live and dancing
                             if (targetProceed == true)
                             {
@@ -519,7 +543,6 @@ public class ActorManager : MonoBehaviour
                     //if invalid actor or vacant position then ignore
                     if (actor != null)
                     {
-                        proceedFlag = true;
                         details = null;
                         //correct side?
                         if (actor.side.level == playerSide.level)
@@ -527,10 +550,22 @@ public class ActorManager : MonoBehaviour
                             //actor active?
                             if (actor.Status == ActorStatus.Active)
                             {
+                                proceedFlag = true;
                                 //active node for actor or player at node
-                                if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true ||
-                                    nodeID == playerID)
-                                {
+                                if (nodeID != playerID)
+                                { 
+                                    if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true)
+                                    {
+                                        //Not if actor has Spooked trait and Security Measures in place
+                                        if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures ) == true && securityState != AuthoritySecurityState.Normal)
+                                        {
+                                            proceedFlag = false;
+
+                                        }
+                                    }
+                                }
+                                if (proceedFlag == true)
+                                    { 
                                     //get node action
                                     tempAction = actor.arc.nodeAction;
 
@@ -958,6 +993,8 @@ public class ActorManager : MonoBehaviour
         string cancelText = null;
         int benefit;
         bool isResistance;
+        bool proceedFlag;
+        AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
         //return list of button details
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
         //Cancel button tooltip (handles all no go cases)
@@ -988,7 +1025,7 @@ public class ActorManager : MonoBehaviour
                     {
                         buttonTitle = "MANAGE",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("Unfortunately {0}{1}{2} {3}{4}  isn't working out", colourNeutral, actor.arc.name, colourEnd, 
+                        buttonTooltipMain = string.Format("Unfortunately {0}{1}{2} {3}{4}  isn't working out", colourNeutral, actor.arc.name, colourEnd,
                         title, actor.actorName),
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
@@ -1007,8 +1044,8 @@ public class ActorManager : MonoBehaviour
                         //Invisibility must be less than max
                         if (actor.datapoint2 < maxStatValue)
                         {
-                            //can't lie low if any Security Measures are in place
-                            if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
+                            //can't lie low if a Surveillance Crackdown is in place
+                            if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
                             {
                                 ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                                 lielowActionDetails.side = playerSide;
@@ -1070,11 +1107,15 @@ public class ActorManager : MonoBehaviour
                                                     break;
                                             }
                                             if (preferredGear.name.Equals(gear.type.name) == true)
-                                            { tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}", 
-                                                actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd); }
+                                            {
+                                                tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}",
+                                                  actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                            }
                                             else
-                                            { tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral, 
-                                                preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd); }
+                                            {
+                                                tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
+                                                  preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd);
+                                            }
                                         }
                                         else
                                         {
@@ -1085,7 +1126,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             buttonTitle = string.Format("Give {0}", gear.name),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name, 
+                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name,
                                             colourEnd, actor.arc.name, actor.actorName),
                                             buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                             //use a Lambda to pass arguments to the action
@@ -1113,28 +1154,35 @@ public class ActorManager : MonoBehaviour
                     //
                     if (isResistance == true)
                     {
-                        //
-                        // - - - Activate - - -
-                        //
-                        ModalActionDetails activateActionDetails = new ModalActionDetails() { };
-                        activateActionDetails.side = playerSide;
-                        activateActionDetails.actorDataID = actor.actorSlotID;
-                        int numOfTurns = 3 - actor.datapoint2;
-                        tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", actor.actorName, numOfTurns,
-                            numOfTurns != 1 ? "s" : "");
-                        EventButtonDetails activateDetails = new EventButtonDetails()
+                        proceedFlag = true;
+                        //won't activate if spooked & security measures in place
+                        if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
+                        { proceedFlag = false; }
+                        if (proceedFlag == true)
                         {
-                            buttonTitle = "Activate",
-                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                            buttonTooltipMain = string.Format("{0} {1} will be Immediately Recalled", actor.arc.name, actor.actorName),
-                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                            //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails); }
-                        };
-                        //add Lie Low button to list
-                        tempList.Add(activateDetails);
-                        //cancel tooltips
-                        infoBuilder.Append("Gear cannot be given when Lying Low");
+                            //
+                            // - - - Activate - - -
+                            //
+                            ModalActionDetails activateActionDetails = new ModalActionDetails() { };
+                            activateActionDetails.side = playerSide;
+                            activateActionDetails.actorDataID = actor.actorSlotID;
+                            int numOfTurns = 3 - actor.datapoint2;
+                            tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", actor.actorName, numOfTurns,
+                                numOfTurns != 1 ? "s" : "");
+                            EventButtonDetails activateDetails = new EventButtonDetails()
+                            {
+                                buttonTitle = "Activate",
+                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                buttonTooltipMain = string.Format("{0} {1} will be Immediately Recalled", actor.arc.name, actor.actorName),
+                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                //use a Lambda to pass arguments to the action
+                                action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails); }
+                            };
+                            //add Activate button to list
+                            tempList.Add(activateDetails);
+                        }
+                        else
+                        { infoBuilder.AppendFormat("Won't Activate as {0}Spooked{1} (Trait) due to Security Measures", colourNeutral, colourEnd); }
                     }
                     break;
                 //
@@ -1144,7 +1192,6 @@ public class ActorManager : MonoBehaviour
                     cancelText = string.Format("{0}Actor is \"{1}\" and out of contact{2}", colourBad, actor.Status, colourEnd);
                     break;
             }
-
         }
         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
 

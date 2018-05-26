@@ -11,6 +11,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Trait / Trait Effect")]
 public class TraitEffect : ScriptableObject
 {
+    [TextArea]
     [Tooltip("Specifically mention here what the effect does (used in tooltips)")]
     public string descriptor;
 

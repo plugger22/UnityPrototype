@@ -438,9 +438,14 @@ public class TurnManager : MonoBehaviour
                     case AuthoritySecurityState.APB:
                         builder.AppendFormat("{0}All Points Bulletin in place{1}", colourGood, colourEnd);
 
+                        builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything (Resistance){6}", "\n", colourAlert, colourEnd,
+                            colourNeutral, colourEnd, colourAlert, colourEnd);
                         break;
                     case AuthoritySecurityState.SecurityAlert:
                         builder.AppendFormat("{0}Security Alert in place{1}", colourGood, colourEnd);
+
+                        builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything (Resistance){6}", "\n", colourAlert, colourEnd,
+                            colourNeutral, colourEnd, colourAlert, colourEnd);
                         break;
                     case AuthoritySecurityState.SurveillanceCrackdown:
                         builder.AppendFormat("{0}Surveillance Crackdown in place{1}", colourGood, colourEnd);
@@ -466,9 +471,14 @@ public class TurnManager : MonoBehaviour
                     case AuthoritySecurityState.APB:
                         builder.AppendFormat("{0}All Points Bulletin in place{1}", colourBad, colourEnd);
 
+                        builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything{6}", "\n", colourAlert, colourEnd,
+                            colourNeutral, colourEnd, colourAlert, colourEnd);
                         break;
                     case AuthoritySecurityState.SecurityAlert:
                         builder.AppendFormat("{0}Security Alert in place{1}", colourBad, colourEnd);
+
+                        builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything{6}", "\n", colourAlert, colourEnd,
+                            colourNeutral, colourEnd, colourAlert, colourEnd);
                         break;
                     case AuthoritySecurityState.SurveillanceCrackdown:
                         builder.AppendFormat("{0}Surveillance Crackdown in place{1}", colourBad, colourEnd);
