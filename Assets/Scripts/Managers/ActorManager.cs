@@ -554,14 +554,23 @@ public class ActorManager : MonoBehaviour
                                 //active node for actor or player at node
                                 if (nodeID != playerID)
                                 { 
+                                    //check for actor connections at node
                                     if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true)
                                     {
                                         //Not if actor has Spooked trait and Security Measures in place
                                         if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures ) == true && securityState != AuthoritySecurityState.Normal)
                                         {
+                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                            infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actor.arc.name, colourNeutral, colourEnd);
                                             proceedFlag = false;
-
                                         }
+                                    }
+                                    else
+                                    {
+                                        //actor has no connections at node
+                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                        infoBuilder.AppendFormat("{0} has no connections", actor.arc.name);
+                                        proceedFlag = false;
                                     }
                                 }
                                 if (proceedFlag == true)
@@ -706,12 +715,7 @@ public class ActorManager : MonoBehaviour
                                         }
                                     }
                                 }
-                                else
-                                {
-                                    //actor has no connections at node
-                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("{0} has no connections", actor.arc.name);
-                                }
+
                             }
                             else
                             {
