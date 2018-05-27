@@ -350,9 +350,7 @@ public class TeamManager : MonoBehaviour
             for (int i = 0; i < numToCreate; i++)
             {
                 Team team = new Team(teamArcID, i);
-                /*//message
-                message = GameManager.instance.messageScript.TeamAdd(string.Format("{0} {1} added to Reserves", team.arc.name, team.teamName), team.teamID);
-                GameManager.instance.dataScript.AddMessage(message);*/
+                Debug.Assert(team != null, "Invalid team (Null)");
             }
         }
     }
@@ -928,8 +926,6 @@ public class TeamManager : MonoBehaviour
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Neutralise team. Mouseover teams for more information.";
                 //loop teams present at node
-                int turnsAgo;
-                string dataColour;
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
                     Team team = listOfTeams[i];
@@ -943,8 +939,6 @@ public class TeamManager : MonoBehaviour
                         //tooltip -> TO DO
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
                         tooltipDetails.textHeader = string.Format("{0}{1}{2} {3}{4}{5}", colourTeam, team.arc.name, colourEnd, colourNormal, team.teamName, colourEnd);
-                        turnsAgo = GameManager.instance.turnScript.Turn - team.turnDeployed;
-                        if (team.timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
                         tooltipDetails.textMain = string.Format("Will be immediately removed from the location.");
                         tooltipDetails.textDetails = string.Format("{0}Automatic success{1}", colourEffect, colourEnd);
                         //add to master arrays

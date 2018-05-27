@@ -1651,7 +1651,6 @@ public class NodeManager : MonoBehaviour
         if (moveDetails != null)
         {
             Node node = GameManager.instance.dataScript.GetNode(moveDetails.nodeID);
-            int nodeOriginal = nodePlayer;
             if (node != null)
             {
                 //update Player node

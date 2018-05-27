@@ -27,6 +27,8 @@ namespace GraphAPI
             graph = G;
             arrayOfEdgesTo = new DirectedEdge[graph.Vertices];
             arrayOfDistTo = new float[graph.Vertices];
+            Debug.Assert(arrayOfEdgesTo != null, "Invalid arrayOfEdgesTo (Null)");
+            Debug.Assert(arrayOfDistTo != null, "Invalid arrayOfDistTo (Null)");
 
             //priorityQueue = new SimplePriorityQueue<float>(graph.Vertices); -> no implementation of an indexed priority queue available yet
         }
