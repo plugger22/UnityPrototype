@@ -18,6 +18,7 @@ public class WidgetTopUI : MonoBehaviour
     public Image starLeft;
     public Image starMiddle;
     public Image starRight;
+    public Image flashRed;
     public TextMeshProUGUI actionPoints;
     public TextMeshProUGUI turnNumber;
 
@@ -66,6 +67,10 @@ public class WidgetTopUI : MonoBehaviour
     {
         //get correct number of action points
         SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
+        //red flash opacity set to 0
+        Color tempColor = flashRed.color;
+        tempColor.a = 0.0f;
+        flashRed.color = tempColor;
         //dim down objective stars
         SetStar(10f, UIPosition.Left);
         SetStar(10f, UIPosition.Middle);
