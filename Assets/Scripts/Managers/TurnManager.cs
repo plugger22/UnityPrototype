@@ -556,18 +556,31 @@ public class TurnManager : MonoBehaviour
                     case "APB":
                         //all points bulletin
                         text = "Authorities issue a city wide All Points Bulletin";
+                        //start flashing red alarm (top WidgetUI) if not already going
+                        if (authoritySecurityState == AuthoritySecurityState.Normal)
+                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);}
+                        //set state
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.APB);
+                        
                         break;
                     case "sec":
                     case "SEC":
                         //security alert 
                         text = "Authorities issue a city wide Security Alert";
+                        //start flashing red alarm (top WidgetUI) if not already going
+                        if (authoritySecurityState == AuthoritySecurityState.Normal)
+                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this); }
+                        //set state
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SecurityAlert);
                         break;
                     case "sur":
                     case "SUR":
                         //surveillance crackdown
                         text = "Authorities declare a city wide Survelliance Crackdown";
+                        //start flashing red alarm (top WidgetUI) if not already going
+                        if (authoritySecurityState == AuthoritySecurityState.Normal)
+                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this); }
+                        //set state
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SurveillanceCrackdown);
                         break;
                     case "nor":
@@ -575,6 +588,8 @@ public class TurnManager : MonoBehaviour
                         //reset back to normal
                         text = string.Format("AuthorityState reset to {0}", state);
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text);
+                        //stop flashing red alarm
+                        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this);
                         break;
                 }
                 break;

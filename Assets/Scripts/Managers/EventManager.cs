@@ -31,6 +31,8 @@ public enum EventType
     ChangeStarMiddle,
     ChangeStarRight,
     ChangeTurn,
+    StartSecurityFlash,
+    StopSecurityFlash,
     //Actions
     NodeAction,
     NodeGearAction,

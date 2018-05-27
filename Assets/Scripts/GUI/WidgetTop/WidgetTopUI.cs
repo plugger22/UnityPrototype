@@ -24,6 +24,7 @@ public class WidgetTopUI : MonoBehaviour
 
     private RectTransform transformCity;
     private RectTransform transformFaction;
+    private bool isFading;                                  //flashing red security measure indicator, if true then opacity fading, otherwise increasing
 
     private static WidgetTopUI widgetTopUI;
 
@@ -44,6 +45,8 @@ public class WidgetTopUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.StartSecurityFlash, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.StopSecurityFlash, OnEvent, "WidgetTopUI");
     }
 
 
@@ -71,6 +74,8 @@ public class WidgetTopUI : MonoBehaviour
         Color tempColor = flashRed.color;
         tempColor.a = 0.0f;
         flashRed.color = tempColor;
+        flashOpacity = tempColor.a;
+        isFading = false;
         //dim down objective stars
         SetStar(10f, UIPosition.Left);
         SetStar(10f, UIPosition.Middle);
@@ -111,6 +116,12 @@ public class WidgetTopUI : MonoBehaviour
                 break;
             case EventType.ChangeStarRight:
                 SetStar((float)Param, UIPosition.Right);
+                break;
+            case EventType.StartSecurityFlash:
+                SetSecurityFlash(true);
+                break;
+            case EventType.StopSecurityFlash:
+                SetSecurityFlash(false);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -230,6 +241,51 @@ public class WidgetTopUI : MonoBehaviour
                 break;
         }
 
+    }
+
+
+    /// <summary>
+    /// Start (true) or Stop (false) the Action button red flash indicating that Security Measures are in place
+    /// </summary>
+    /// <param name="isStart"></param>
+    private void SetSecurityFlash(bool isStart)
+    {
+        switch (isStart)
+        {
+            case true:
+                StartCoroutine(ShowFlashRed());
+                break;
+            case false:
+                StopCoroutine(ShowFlashRed());
+                isFading = false;
+                break;
+        }
+    }
+
+
+    /// <summary>
+    /// Coroutine to display a flashing red alarm at action point display indicating Security Measures in place
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowFlashRed()
+    {
+        Color tempColor = flashRed.color;
+        switch (isFading)
+        {
+            case false:
+                tempColor.a += Time.deltaTime / 2.0f;
+                flashRed.color = tempColor;
+                if (tempColor.a >= 1.0f)
+                { isFading = false; }
+                break;
+            case true:
+                tempColor.a -= Time.deltaTime / 2.0f;
+                flashRed.color = tempColor;
+                if (tempColor.a <= 0.0f)
+                { isFading = true; }
+                break;
+        }
+        yield return null;
     }
 
 
