@@ -23,6 +23,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     private Actor actor;
     private GlobalSide side;
 
+    //colours
     private string colourSide;
     private string colourRebel;
     private string colourAlert;
@@ -114,8 +115,6 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         else
         { StopCoroutine(ShowVacantActorTooltip()); }
         GameManager.instance.tooltipGenericScript.CloseTooltip();
-        /*StopCoroutine(ShowGenericTooltip());
-        GameManager.instance.tooltipGenericScript.CloseTooltip();*/
     }
 
 
@@ -185,14 +184,10 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-
-                /*Vector3 tooltipPos = parent.transform.position;
-                tooltipPos.x -= 75;
-                tooltipPos.y += 75;*/
-                string headerText = string.Format("{0}Position Vacant{1}", colourNeutral, colourEnd);
-                string mainText = "There is currently nobody acting in this position.";
-                string detailText = string.Format("{0}Go to the Reserve Pool and click on a person for the option to recall them to active duty{1}",
-                    colourAlert, colourEnd);
+                string headerText = "Position Vacant";
+                string mainText = string.Format("{0}There is currently nobody acting in this position{1}", colourNormal, colourEnd);
+                string detailText = string.Format("{0}Go to the {1}{2}Reserve Pool{3}{4} and click on a person for the option to recall them to active duty{5}",
+                    colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd);
                 GameManager.instance.tooltipGenericScript.SetTooltip(mainText, transform.position, headerText, detailText);
                 yield return null;
             }
