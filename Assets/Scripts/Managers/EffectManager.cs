@@ -18,7 +18,8 @@ public class EffectManager : MonoBehaviour
     //fast access
     private int delayNoSpider;
     private int delayYesSpider;
-
+    //traits
+    private int actorStressedOverInvisibility;
 
 
     //colour palette for Modal Outcome
@@ -35,8 +36,11 @@ public class EffectManager : MonoBehaviour
 
     public void Initialise()
     {
+        //fast access
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
+        actorStressedOverInvisibility = GameManager.instance.dataScript.GetTraitEffectID("ActorInvisibilityStress");
+        Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
     }
@@ -1029,6 +1033,26 @@ public class EffectManager : MonoBehaviour
                                             Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
                                                 dataInput.textOrigin, actor.arc.name), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
                                             GameManager.instance.dataScript.AddMessage(message);
+                                        }
+                                        //Coward trait -> gets Stressed everytime they lose invisibility
+                                        if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)
+                                        {
+                                            Condition conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+                                            if (conditionStressed != null)
+                                            {
+                                                if (actor.CheckConditionPresent(conditionStressed) == false)
+                                                {
+                                                    actor.AddCondition(conditionStressed);
+                                                    GameManager.instance.actorScript.DebugTraitMessage(actor, " and becomes STRESSED after losing invisibility");
+                                                    StringBuilder builder = new StringBuilder();
+                                                    builder.Append(effectReturn.bottomText);
+
+                                                    builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
+                                                        colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd);
+                                                    effectReturn.bottomText = builder.ToString();
+                                                }
+                                            }
+                                            else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                                         }
                                         break;
                                 }

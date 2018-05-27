@@ -25,6 +25,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private string colourSide;
     private string colourRebel;
+    private string colourAlert;
     private string colourAuthority;
     private string colourNeutral;
     private string colourNormal;
@@ -75,6 +76,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -96,6 +98,8 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                 { StartCoroutine(ShowGenericTooltip()); }
             }
         }
+        else
+        { StartCoroutine(ShowVacantActorTooltip()); }
     }
 
     /// <summary>
@@ -105,8 +109,13 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowGenericTooltip());
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        { StopCoroutine(ShowGenericTooltip()); }
+        else
+        { StopCoroutine(ShowVacantActorTooltip()); }
         GameManager.instance.tooltipGenericScript.CloseTooltip();
+        /*StopCoroutine(ShowGenericTooltip());
+        GameManager.instance.tooltipGenericScript.CloseTooltip();*/
     }
 
 
@@ -123,19 +132,20 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                 colourSide = colourRebel;
                 if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { colourSide = colourAuthority; }
-                switch(actor.tooltipStatus)
+
+                switch (actor.tooltipStatus)
                 {
                     case ActorTooltip.Breakdown:
                         tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
-                        tooltipMain = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd, 
+                        tooltipMain = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
                         tooltipEffect = string.Format("{0} is expected to recover next turn", actor.actorName);
                         break;
                     case ActorTooltip.LieLow:
                         tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
-                        tooltipMain = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd, 
+                        tooltipMain = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them", 
+                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
                             actor.actorName, colourNeutral, colourEnd);
                         break;
                     case ActorTooltip.Talk:
@@ -159,4 +169,43 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             }
         }
     }
+
+    /// <summary>
+    /// Position vacant generic info tooltip
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowVacantActorTooltip()
+    {
+        //delay before tooltip kicks in
+        yield return new WaitForSeconds(mouseOverDelay);
+        //activate tool tip if mouse still over 'vacant' text
+        if (onMouseFlag == true)
+        {
+            //do once
+            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            {
+                GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+
+                /*Vector3 tooltipPos = parent.transform.position;
+                tooltipPos.x -= 75;
+                tooltipPos.y += 75;*/
+                string headerText = string.Format("{0}Position Vacant{1}", colourNeutral, colourEnd);
+                string mainText = "There is currently nobody acting in this position.";
+                string detailText = string.Format("{0}Go to the Reserve Pool and click on a person for the option to recall them to active duty{1}",
+                    colourAlert, colourEnd);
+                GameManager.instance.tooltipGenericScript.SetTooltip(mainText, transform.position, headerText, detailText);
+                yield return null;
+            }
+            //fade in
+            float alphaCurrent;
+            while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+            {
+                alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                alphaCurrent += Time.deltaTime / mouseOverFade;
+                GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                yield return null;
+            }
+        }
+    }
+
 }

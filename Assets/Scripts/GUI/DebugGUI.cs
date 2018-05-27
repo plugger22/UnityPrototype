@@ -684,8 +684,8 @@ public class DebugGUI : MonoBehaviour
                     //Give Trait to Actor
                     case 20:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 200, 100), "", customBackground);
-                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 190, 20), "Input Trait name (case sensistive)");
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Input Trait name (Case sensistive)");
                         textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
                         GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3)");
                         textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);

@@ -18,9 +18,9 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private RectTransform rectTransform;
     private GameObject parent;
 
-    private string colourNeutral;
+    /*private string colourNeutral;
     private string colourAlert;
-    private string colourEnd;
+    private string colourEnd;*/
 
 
     private void Awake()
@@ -40,12 +40,12 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
         mouseOverFade /= 2;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
-        //event listener is registered in InitialiseActors() due to GameManager sequence.
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorTooltipUI");
+        /*//event listener is registered in InitialiseActors() due to GameManager sequence.
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorTooltipUI");*/
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// handles events
     /// </summary>
     /// <param name="eventType"></param>
@@ -63,10 +63,10 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }
+    }*/
 
 
-    /// <summary>
+    /*/// <summary>
     /// set colour palette for Generic Tool tip
     /// </summary>
     public void SetColours()
@@ -74,7 +74,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
-    }
+    }*/
 
 
 
@@ -86,10 +86,12 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter (PointerEventData eventData)
     {
         onMouseFlag = true;
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        /*if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
         { StartCoroutine(ShowActiveActorTooltip()); }
         else
-        { StartCoroutine(ShowVacantActorTooltip()); }
+        { StartCoroutine(ShowVacantActorTooltip()); }*/
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        { StartCoroutine(ShowActiveActorTooltip()); }
     }
 
     /// <summary>
@@ -99,7 +101,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        /*if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
         {
             StopCoroutine(ShowActiveActorTooltip());
             GameManager.instance.tooltipActorScript.CloseTooltip();
@@ -108,7 +110,10 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             StopCoroutine(ShowVacantActorTooltip());
             GameManager.instance.tooltipGenericScript.CloseTooltip();
-        }
+        }*/
+
+        StopCoroutine(ShowActiveActorTooltip());
+        GameManager.instance.tooltipActorScript.CloseTooltip();
     }
 
     /// <summary>
@@ -149,7 +154,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Position vacant generic info tooltip
     /// </summary>
     /// <returns></returns>
@@ -185,7 +190,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 yield return null;
             }
         }
-    }
+    }*/
 
 
 
