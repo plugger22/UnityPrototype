@@ -41,15 +41,12 @@ public class TargetManager : MonoBehaviour
 
     //colour Palette
     private string colourGood;
-    private string colourNeutral;
+    //private string colourNeutral;
     private string colourBad;
     private string colourGear;
     private string colourNormal;
     private string colourDefault;
     private string colourGrey;
-    private string colourDataGood;
-    private string colourDataNeutral;
-    private string colourDataBad;
     private string colourRebel;
     private string colourTarget;
     private string colourEnd;
@@ -106,15 +103,12 @@ public class TargetManager : MonoBehaviour
     public void SetColours()
     {
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        //colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourDataGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourDataNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
-        colourDataBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourTarget = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();

@@ -17,7 +17,6 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [HideInInspector] public int actorSlotID;
     [HideInInspector] public ActionMenuType menuType;
 
-    private int offset;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
@@ -37,9 +36,6 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
-        //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
-        //mouseOverFade /= 2;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
         //need to get nodeObject details at start to accomodate OnPointerEnter & node component details later in coroutine
         nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
 

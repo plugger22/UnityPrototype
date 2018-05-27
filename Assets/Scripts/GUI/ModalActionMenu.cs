@@ -41,8 +41,6 @@ public class ModalActionMenu : MonoBehaviour
 
 
     private RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
-    private float fadeInTime;
     private int offset;
     private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetActionMenu
     private ModalState modalState;                          //modal state to return to if action panel closed
@@ -58,9 +56,6 @@ public class ModalActionMenu : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        canvasGroup = modalMenuObject.GetComponent<CanvasGroup>();
-        rectTransform = modalMenuObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
         //register listener
         EventManager.instance.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");

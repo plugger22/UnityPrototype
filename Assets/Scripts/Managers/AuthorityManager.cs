@@ -17,6 +17,8 @@ public class AuthorityManager : MonoBehaviour
         //fast acess fields
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalBoth = GameManager.instance.globalScript.sideBoth;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
     }
 
     /// <summary>

@@ -146,10 +146,7 @@ public class AIManager : MonoBehaviour
     private float teamRatio;
     private int erasureTeamsOnMap;
 
-
-    
-
-    //fast access
+    //fast access -> teams
     private int teamArcCivil = -1;
     private int teamArcControl = -1;
     private int teamArcMedia = -1;
@@ -158,11 +155,12 @@ public class AIManager : MonoBehaviour
     private int teamArcDamage = -1;
     private int teamArcErasure = -1;
     private int maxTeamsAtNode = -1;
+    //sides
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private int totalNodes;
     private int totalConnections;
-    //fast access decisions
+    //decisions Authority
     private DecisionAI decisionAPB;
     private DecisionAI decisionConnSec;
     private DecisionAI decisionRequestTeam;
@@ -233,6 +231,8 @@ public class AIManager : MonoBehaviour
         if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
         authorityMaxTasksPerTurn = factionAuthority.maxTaskPerTurn;
         resistanceMaxTasksPerTurn = factionResistance.maxTaskPerTurn;
+        Debug.Assert(authorityMaxTasksPerTurn > -1, "Invalid authorityMaxTasksPerTurn (-1)");
+        Debug.Assert(resistanceMaxTasksPerTurn > -1, "Invalid resistanceMaxTasksPerTurn (-1)");
         //fast access
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
@@ -270,6 +270,8 @@ public class AIManager : MonoBehaviour
         UpdateResources(globalResistance);
         //reset flags
         immediateFlagAuthority = false;
+        //temp
+
     }
 
     /// <summary>
@@ -457,7 +459,16 @@ public class AIManager : MonoBehaviour
             else { Debug.LogWarning("Invalid authorityPreferredArc (Null)"); }
 
             //Resistance preferred -> TO DO
-
+            if (resistancePreferredArc != null)
+            {
+                foreach (var node in dictOfNodes)
+                {
+                    if (node.Value.Arc.name.Equals(resistancePreferredArc) == true)
+                    { node.Value.isPreferredResistance = true; }
+                    else { node.Value.isPreferredResistance = false; }
+                }
+            }
+            else { Debug.LogWarning("Invalid resistancePreferredArc (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }

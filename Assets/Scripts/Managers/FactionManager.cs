@@ -24,7 +24,7 @@ public class FactionManager : MonoBehaviour
     private string colourGood;
     private string colourBad;
     private string colourGrey;
-    private string colourAlert;
+    //private string colourAlert;
     private string colourSide;
     private string colourEnd;
 
@@ -113,7 +113,7 @@ public class FactionManager : MonoBehaviour
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)

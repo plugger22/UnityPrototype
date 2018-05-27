@@ -13,7 +13,6 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
-    private RectTransform rectTransform;
     //data derived whenever parent sprite moused over (OnPointerEnter)
     private GlobalSide side;
     private string playerName;
@@ -25,11 +24,6 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     private string colourNormal;
     private string colourEnd;
 
-
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
 
     /// <summary>
     /// constructor -> needs to be Start as GameManager hasn't initialised prior to this (UI elements initialise before normal gameObjects?)

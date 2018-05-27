@@ -8,21 +8,14 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private int offset;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
-    private RectTransform rectTransform;
     private GameObject parent;
-
-    private string colourNeutral;
-    private string colourAlert;
-    private string colourEnd;
 
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
         parent = transform.parent.gameObject;
     }
 
@@ -36,44 +29,7 @@ public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
         //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
         mouseOverFade /= 2;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "PlayerTooltipUI");
     }
-
-
-    /// <summary>
-    /// handles events
-    /// </summary>
-    /// <param name="eventType"></param>
-    /// <param name="Sender"></param>
-    /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object Param = null)
-    {
-        //Detect event type
-        switch (eventType)
-        {
-            case EventType.ChangeColour:
-                SetColours();
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
-                break;
-        }
-    }
-
-
-    /// <summary>
-    /// set colour palette for Generic Tool tip
-    /// </summary>
-    public void SetColours()
-    {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
-    }
-
-
 
 
     /// <summary>
@@ -84,7 +40,6 @@ public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         onMouseFlag = true;
         StartCoroutine(ShowPlayerTooltip());
-
     }
 
     /// <summary>

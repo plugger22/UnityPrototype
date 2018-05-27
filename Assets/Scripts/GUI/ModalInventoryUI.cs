@@ -35,14 +35,6 @@ public class ModalInventoryUI : MonoBehaviour
 
     private InventoryDelegate handler;                          //method to be called for an option refresh (passed into SetInventoryUI)
 
-    private string colourEffect;
-    private string colourSide;
-    private string colourTeam;
-    private string colourDefault;
-    private string colourNormal;
-    private string colourGood;
-    private string colourBad;
-    private string colourEnd;
 
     /// <summary>
     /// Static instance so the ModalInventoryUI can be accessed from any script
@@ -97,7 +89,6 @@ public class ModalInventoryUI : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent, "ModalInventoryUI");
         EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent, "ModalInventoryUI");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalInventoryUI");
     }
 
     /// <summary>
@@ -118,28 +109,10 @@ public class ModalInventoryUI : MonoBehaviour
             case EventType.InventoryCloseUI:
                 CloseInventoryUI();
                 break;
-            case EventType.ChangeColour:
-                SetColours();
-                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }
-
-    /// <summary>
-    /// set colour palette for modal Outcome Window
-    /// </summary>
-    public void SetColours()
-    {
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
 

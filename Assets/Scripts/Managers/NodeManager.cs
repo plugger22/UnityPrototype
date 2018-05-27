@@ -54,7 +54,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public ActivityUI activityState;
 
     string colourDefault;
-    string colourNormal;
+    //string colourNormal;
     string colourAlert;
     string colourHighlight;
     string colourResistance;
@@ -276,7 +276,7 @@ public class NodeManager : MonoBehaviour
     public void SetColours()
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
@@ -1945,82 +1945,6 @@ public class NodeManager : MonoBehaviour
         delay = Mathf.Max(0, delay);
         return delay;
     }
-
-
-    /*/// <summary>
-    /// returns a colour formatted string of district names for City Info display, Null if a problem
-    /// </summary>
-    /// <returns></returns>
-    public string GetNodeArcNames()
-    {
-        StringBuilder builder = new StringBuilder();
-        int counter = 0;
-        string colourText = colourAlert;
-        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
-        if (dictOfNodeArcs != null)
-        {
-            for (int i = 0; i < dictOfNodeArcs.Count; i++)
-            {
-                counter++;
-                NodeArc nodeArc = dictOfNodeArcs[i];
-                if (nodeArc != null)
-                {
-                    if (builder.Length > 0) { builder.AppendLine(); }
-                    //make every second item display in a different colour for ease of reading
-                    if (counter == 2)
-                    { colourText = colourAlert; counter = 0; }
-                    else { colourText = colourDefault; }
-                    builder.AppendFormat("{0}{1}{2}", colourText, nodeArc.name, colourEnd);
-                    if (counter == 2)
-                    { builder.AppendFormat("{0}<b>{1}</b>{2}", colourNormal, nodeArc.name, colourEnd); counter = 0; }
-                    else { builder.Append(nodeArc.name); }
-                }
-                else { Debug.LogWarningFormat("Invalid nodeArc (Null) from dictOfNodeArcs[{0}]", i); }
-            }
-            builder.AppendLine();
-            builder.AppendLine();
-            builder.AppendFormat("<b>Total</b>");
-        }
-        else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
-        return builder.ToString();
-    }
-
-    /// <summary>
-    /// returns a colour formatted string of total district types (Node Arcs) for the City Info Display, Null if a problem
-    /// </summary>
-    /// <returns></returns>
-    public string GetNodeArcNumbers()
-    {
-        StringBuilder builder = new StringBuilder();
-        string colourText;
-        int num;
-        int total = 0;
-        //NOTE: array is indexed by node.Arc.nodeArcID and assumes that the dictOfNodeArcs is in the same order (it is unless it's been fiddled with)
-        int[] arrayOfNodeTypeTotals = GameManager.instance.levelScript.GetNodeTypeTotals();
-        if (arrayOfNodeTypeTotals != null)
-        {
-            //basic check to confirm identical number of records in both dict and array (can't verify if they are in the same order)
-            Debug.Assert(GameManager.instance.dataScript.CheckNumOfNodeArcs() == arrayOfNodeTypeTotals.Length, "dictOfNodeType count and array don't correspond");
-            int counter = 0;
-            for (int i = 0; i < arrayOfNodeTypeTotals.Length; i++)
-            {
-                counter++;
-                if (builder.Length > 0) { builder.AppendLine(); }
-                //make every second item display in a different colour for ease of reading
-                if (counter == 2)
-                { colourText = colourAlert; counter = 0; }
-                else { colourText = colourDefault; }
-                num = arrayOfNodeTypeTotals[i];
-                total += num;
-                builder.AppendFormat("{0}{1}{2}", colourText, num, colourEnd);
-            }
-            builder.AppendLine();
-            builder.AppendLine();
-            builder.AppendFormat("<b>{0}</b>", total);
-        }
-        else { Debug.LogError("Invalid arrayOfNodeTypeTotals (Null)"); }
-        return builder.ToString();
-    }*/
 
 
     //new methods above here

@@ -13,7 +13,6 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     private float mouseOverFade;                        //tooltip
-    private GlobalSide side;                            //tooltip
 
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
@@ -40,7 +39,6 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             StopCoroutine("ShowTooltip");
             GameManager.instance.tooltipNodeScript.CloseTooltip();
             //start tooltip routine
-            side = GameManager.instance.sideScript.PlayerSide;
             StartCoroutine(ShowTooltip());
         }
     }
@@ -64,7 +62,6 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:

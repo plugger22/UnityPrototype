@@ -38,9 +38,7 @@ public class TeamManager : MonoBehaviour
     private GlobalSide globalResistance;
 
     private string colourEffect;
-    private string colourSide;
     private string colourTeam;
-    private string colourDefault;
     private string colourNormal;
     private string colourGood;
     private string colourActor;
@@ -125,8 +123,6 @@ public class TeamManager : MonoBehaviour
     public void SetColours()
     {
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);

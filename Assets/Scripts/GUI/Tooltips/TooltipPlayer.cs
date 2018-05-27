@@ -34,10 +34,7 @@ public class TooltipPlayer : MonoBehaviour
     private string colourNeutral;
     private string colourBad;
     private string colourName;
-    private string colourQuality;
-    private string colourAction;
     private string colourArc;
-    private string colourDefault;
     private string colourEnd;
 
 
@@ -98,10 +95,7 @@ public class TooltipPlayer : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        colourAction = GameManager.instance.colourScript.GetColour(ColourType.actorAction);
         colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

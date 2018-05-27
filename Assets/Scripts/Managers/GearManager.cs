@@ -45,10 +45,10 @@ public class GearManager : MonoBehaviour
     private string colourDefault;
     private string colourGrey;
     private string colourNormal;
-    private string colourGood;
-    private string colourActor;
-    private string colourAlert;
+    /*private string colourGood;
     private string colourBad;
+    private string colourActor;*/
+    private string colourAlert;
     private string colourEnd;
 
 
@@ -214,10 +214,10 @@ public class GearManager : MonoBehaviour
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);*/
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

@@ -199,7 +199,6 @@ public class GameManager : MonoBehaviour
         diceScript.Initialise();
         aiScript.Initialise();          //after factionScript
         captureScript.Initialise();
-        rebelScript.Initialise();
         authorityScript.Initialise();
         debugGraphicsScript.Initialise();
         traitScript.Initialise();

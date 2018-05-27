@@ -13,18 +13,10 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipEffect;
 
-    private int offset;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
-    private RectTransform rectTransform;
 
-
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-        //parent = transform.parent.gameObject;
-    }
 
     /// <summary>
     /// constructor -> needs to be Start as GameManager hasn't initialised prior to this (UI elements initialise before normal gameObjects?)
@@ -33,9 +25,6 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
-        //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
-        //mouseOverFade /= 2;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
     }
 
     /// <summary>

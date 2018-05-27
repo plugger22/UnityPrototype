@@ -41,12 +41,8 @@ public class ModalGenericPicker : MonoBehaviour
     private ModalActionDetails nestedDetails;           //used only if there are multiple, nested, option windows (dynamic -> InitialiseNestedOptions)
 
     private string colourEffect;
-    private string colourSide;
-    private string colourTeam;
     private string colourDefault;
     private string colourNormal;
-    private string colourGood;
-    private string colourBad;
     private string colourEnd;
 
 
@@ -143,12 +139,8 @@ public class ModalGenericPicker : MonoBehaviour
     public void SetColours()
     {
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

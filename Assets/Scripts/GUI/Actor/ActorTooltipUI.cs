@@ -10,18 +10,15 @@ using modalAPI;
 /// </summary>
 public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private int offset;
     [HideInInspector] public int actorSlotID;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
-    private RectTransform rectTransform;
     private GameObject parent;
 
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
         parent = transform.parent.gameObject;
     }
 
@@ -35,7 +32,6 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
         //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
         mouseOverFade /= 2;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
     }
 
     /// <summary>

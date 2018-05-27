@@ -507,7 +507,7 @@ public class TurnManager : MonoBehaviour
         if (allowQuitting == false)
         {
             Debug.Log(string.Format("TurnManager: Quit selected but not allowed as allowQuitting is false{0}", "\n"));
-            Application.CancelQuit();
+            //Application.CancelQuit();
         }
     }
 

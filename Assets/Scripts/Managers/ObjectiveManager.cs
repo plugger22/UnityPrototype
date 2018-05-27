@@ -24,7 +24,7 @@ public class ObjectiveManager : MonoBehaviour
     private string colourNormal;
     private string colourGood;
     private string colourBad;
-    private string colourGrey;
+    //private string colourGrey;
     private string colourAlert;
     private string colourSide;
     private string colourEnd;
@@ -67,7 +67,7 @@ public class ObjectiveManager : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);

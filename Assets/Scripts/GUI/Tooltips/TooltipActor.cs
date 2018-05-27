@@ -39,7 +39,6 @@ public class TooltipActor : MonoBehaviour
     private string colourQuality;
     private string colourAction;
     private string colourArc;
-    private string colourDefault;
     private string colourEnd;
 
 
@@ -103,7 +102,6 @@ public class TooltipActor : MonoBehaviour
         colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourAction = GameManager.instance.colourScript.GetColour(ColourType.actorAction);
         colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
