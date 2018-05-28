@@ -105,9 +105,9 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         onMouseFlag = false;
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
-        { StopCoroutine(ShowGenericTooltip()); }
+        { StopCoroutine("ShowGenericTooltip"); }
         else
-        { StopCoroutine(ShowVacantActorTooltip()); }
+        { StopCoroutine("ShowVacantActorTooltip"); }
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 

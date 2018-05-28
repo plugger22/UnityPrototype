@@ -90,7 +90,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowGenericTooltip());
+        StopCoroutine("ShowGenericTooltip");
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 

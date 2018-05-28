@@ -74,7 +74,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowTooltip());
+        StopCoroutine("ShowTooltip");
         switch (menuType)
         {
             case ActionMenuType.Node:

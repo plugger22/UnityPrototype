@@ -25,6 +25,7 @@ public class WidgetTopUI : MonoBehaviour
     private RectTransform transformCity;
     private RectTransform transformFaction;
     private bool isFading;                                  //flashing red security measure indicator, if true then opacity fading, otherwise increasing
+    private Coroutine myCoroutine;
 
     private static WidgetTopUI widgetTopUI;
 
@@ -74,7 +75,6 @@ public class WidgetTopUI : MonoBehaviour
         Color tempColor = flashRed.color;
         tempColor.a = 0.0f;
         flashRed.color = tempColor;
-        flashOpacity = tempColor.a;
         isFading = false;
         //dim down objective stars
         SetStar(10f, UIPosition.Left);
@@ -186,10 +186,10 @@ public class WidgetTopUI : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                barCity.color = new Color(2.0f * (1 - factor), 2.0f * factor, 0);
+                barCity.color = new Color(2.0f * (1 - factor), 1.0f * factor, 0);
                 break;
             case 2:
-                barCity.color = new Color(2.0f * factor, 2.0f * (1 - factor), 0);
+                barCity.color = new Color(2.0f * factor, 1.0f * (1 - factor), 0);
                 break;
         }
     }
@@ -253,11 +253,15 @@ public class WidgetTopUI : MonoBehaviour
         switch (isStart)
         {
             case true:
-                StartCoroutine(ShowFlashRed());
+                myCoroutine = StartCoroutine("ShowFlashRed");
                 break;
             case false:
-                StopCoroutine(ShowFlashRed());
+                StopCoroutine(myCoroutine);
                 isFading = false;
+                //reset opacity back to zero
+                Color tempColor = flashRed.color;
+                tempColor.a = 0.0f;
+                flashRed.color = tempColor;
                 break;
         }
     }
@@ -269,23 +273,25 @@ public class WidgetTopUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator ShowFlashRed()
     {
-        Color tempColor = flashRed.color;
-        switch (isFading)
+        //infinite while loop
+        while (true)
         {
-            case false:
+            Color tempColor = flashRed.color;
+            if (isFading == false)
+            {
                 tempColor.a += Time.deltaTime / 2.0f;
-                flashRed.color = tempColor;
                 if (tempColor.a >= 1.0f)
-                { isFading = false; }
-                break;
-            case true:
-                tempColor.a -= Time.deltaTime / 2.0f;
-                flashRed.color = tempColor;
-                if (tempColor.a <= 0.0f)
                 { isFading = true; }
-                break;
+            }
+            else
+            {
+                tempColor.a -= Time.deltaTime / 2.0f;
+                if (tempColor.a <= 0.0f)
+                { isFading = false; }
+            }
+            flashRed.color = tempColor;
+            yield return null;
         }
-        yield return null;
     }
 
 

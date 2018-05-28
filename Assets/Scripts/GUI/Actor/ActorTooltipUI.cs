@@ -52,7 +52,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowActiveActorTooltip());
+        StopCoroutine("ShowActiveActorTooltip");
         GameManager.instance.tooltipActorScript.CloseTooltip();
     }
 

@@ -45,7 +45,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowGenericTooltip());
+        StopCoroutine("ShowGenericTooltip");
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 
@@ -56,7 +56,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerClick(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowGenericTooltip());
+        StopCoroutine("ShowGenericTooltip");
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 

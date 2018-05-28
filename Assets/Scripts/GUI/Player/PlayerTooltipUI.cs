@@ -49,7 +49,7 @@ public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine(ShowPlayerTooltip());
+        StopCoroutine("ShowPlayerTooltip");
         GameManager.instance.tooltipPlayerScript.CloseTooltip();
     }
 
