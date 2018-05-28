@@ -13,6 +13,9 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipEffect;
 
+    [HideInInspector] public int x_offset;                  //ignore unless you want to shift the default position of the tooltip
+    [HideInInspector] public int y_offset;
+
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
@@ -71,11 +74,13 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //activate tool tip if mouse still over button
         if (onMouseFlag == true)
         {
-            //do once
-
+            //take into account any user supplied position adjustments (by default will be '0')
+            Vector3 position = transform.position;
+            position.x += x_offset;
+            position.y += y_offset;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                GameManager.instance.tooltipGenericScript.SetTooltip (tooltipMain, transform.position, tooltipHeader, tooltipEffect );
+                GameManager.instance.tooltipGenericScript.SetTooltip (tooltipMain, position, tooltipHeader, tooltipEffect );
                 yield return null;
             }
             //fade in

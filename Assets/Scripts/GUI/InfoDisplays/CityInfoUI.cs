@@ -267,11 +267,14 @@ public class CityInfoUI : MonoBehaviour
             mayorTooltip.tooltipHeader = GameManager.instance.cityScript.GetMayorName();
             mayorTooltip.tooltipMain = GameManager.instance.cityScript.GetMayorTrait();
             mayorTooltip.tooltipEffect = GameManager.instance.cityScript.GetMayorFaction();
+            mayorTooltip.x_offset = 25;
             factionTooltip.tooltipHeader = GameManager.instance.cityScript.GetFactionName();
             factionTooltip.tooltipMain = GameManager.instance.cityScript.GetFactionTrait();
             factionTooltip.tooltipEffect = GameManager.instance.cityScript.GetFactionDetails();
+            factionTooltip.x_offset = 25;
             organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityName();
             organisationTooltip.tooltipEffect = GameManager.instance.cityScript.GetOrganisationsTooltip();
+            organisationTooltip.x_offset = 25;
             //activate main panel
             cityInfoObject.SetActive(true);
             //set modal status
