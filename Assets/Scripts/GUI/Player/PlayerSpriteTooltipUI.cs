@@ -13,6 +13,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
+    private Coroutine myCoroutine;
     //data derived whenever parent sprite moused over (OnPointerEnter)
     private GlobalSide side;
     private string playerName;
@@ -80,7 +81,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         playerName = GameManager.instance.playerScript.PlayerName;
         //activate tooltip if there is a valid reason
         if (GameManager.instance.playerScript.tooltipStatus > ActorTooltip.None)
-        { StartCoroutine(ShowGenericTooltip()); }
+        { myCoroutine = StartCoroutine("ShowGenericTooltip"); }
     }
 
     /// <summary>
@@ -90,7 +91,8 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine("ShowGenericTooltip");
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 

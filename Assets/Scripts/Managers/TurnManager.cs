@@ -522,11 +522,11 @@ public class TurnManager : MonoBehaviour
         yield return new WaitForSeconds(showSplashTimeout);
         allowQuitting = true;
         //editor quit or application quit
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
-#else
+        #else
             Application.Quit();
-#endif
+        #endif
     }
 
     public void OnDisable()

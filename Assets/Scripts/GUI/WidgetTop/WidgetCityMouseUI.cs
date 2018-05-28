@@ -13,6 +13,7 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     private float mouseOverFade;                        //tooltip
+    private Coroutine myCoroutine;
 
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
@@ -36,10 +37,10 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             //Tool tip
             onMouseFlag = true;
             //exit any node tooltip that might be open
-            StopCoroutine("ShowTooltip");
+            /*StopCoroutine("ShowTooltip"); */
             GameManager.instance.tooltipNodeScript.CloseTooltip();
             //start tooltip routine
-            StartCoroutine(ShowTooltip());
+            myCoroutine = StartCoroutine("ShowTooltip");
         }
     }
 
@@ -52,7 +53,8 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
-            StopCoroutine("ShowTooltip");
+            if (myCoroutine != null)
+            { StopCoroutine(myCoroutine); }
             GameManager.instance.tooltipGenericScript.CloseTooltip();
         }
     }

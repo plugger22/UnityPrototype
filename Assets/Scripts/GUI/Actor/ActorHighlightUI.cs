@@ -13,7 +13,7 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 {
     [HideInInspector] public int actorSlotID;               //0 to 3, assuming 4 actors
     private float mouseOverDelay;         //delay in seconds before mouseOver kicks in
-
+    private Coroutine myCoroutine;
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
         if (actor != null && actor.Status == ActorStatus.Active)
-        { StartCoroutine(ShowActiveNodes()); }
+        { myCoroutine = StartCoroutine("ShowActiveNodes"); }
     }
 
     /// <summary>
@@ -38,8 +38,8 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     /// <param name="eventData"></param>
     public void OnPointerExit(PointerEventData eventData)
     {
-        //StopAllCoroutines();
-        StopCoroutine("ShowActiveNodes");
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
     }
     

@@ -15,7 +15,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private float mouseOverFade;
     private bool onMouseFlag;
     private GameObject parent;
-
+    private Coroutine myCoroutine;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         onMouseFlag = true;
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
-        { StartCoroutine(ShowActiveActorTooltip()); }
+        { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
     }
 
     /// <summary>
@@ -52,7 +52,8 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine("ShowActiveActorTooltip");
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
         GameManager.instance.tooltipActorScript.CloseTooltip();
     }
 

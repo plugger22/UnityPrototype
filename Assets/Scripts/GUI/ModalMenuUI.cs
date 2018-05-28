@@ -20,6 +20,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
+    private Coroutine myCoroutine;
     private RectTransform rectTransform;
     private GameObject nodeObject;
     private Node node;
@@ -54,15 +55,15 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             case ActionMenuType.Node:
             case ActionMenuType.NodeGear:
                 if (nodeObject != null)
-                { StartCoroutine(ShowTooltip()); }
+                { myCoroutine = StartCoroutine("ShowTooltip"); }
                 break;
             case ActionMenuType.Actor:
                 if (actorSlotID > -1)
-                { StartCoroutine(ShowTooltip()); }
+                { myCoroutine = StartCoroutine("ShowTooltip"); }
                 break;
             case ActionMenuType.Gear:
                 if (gearID > -1)
-                { StartCoroutine(ShowTooltip()); }
+                { myCoroutine = StartCoroutine("ShowTooltip"); }
                 break;
         }
     }
@@ -74,7 +75,8 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine("ShowTooltip");
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
         switch (menuType)
         {
             case ActionMenuType.Node:

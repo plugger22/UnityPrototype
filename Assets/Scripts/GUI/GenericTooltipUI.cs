@@ -16,6 +16,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
+    private Coroutine myCoroutine;
 
 
     /// <summary>
@@ -35,7 +36,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         onMouseFlag = true;
         if (string.IsNullOrEmpty(tooltipMain) == false)
-        { StartCoroutine(ShowGenericTooltip()); }
+        { myCoroutine = StartCoroutine("ShowGenericTooltip"); }
     }
 
     /// <summary>
@@ -45,7 +46,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine("ShowGenericTooltip");
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 
@@ -56,7 +58,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerClick(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine("ShowGenericTooltip");
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 

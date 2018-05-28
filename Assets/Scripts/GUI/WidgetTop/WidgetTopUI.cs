@@ -256,7 +256,8 @@ public class WidgetTopUI : MonoBehaviour
                 myCoroutine = StartCoroutine("ShowFlashRed");
                 break;
             case false:
-                StopCoroutine(myCoroutine);
+                if (myCoroutine != null)
+                { StopCoroutine(myCoroutine); }
                 isFading = false;
                 //reset opacity back to zero
                 Color tempColor = flashRed.color;

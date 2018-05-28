@@ -15,6 +15,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
 
     [HideInInspector] public int actorSlotID;               //initialised in GUIManager.cs
 
+    private Coroutine myCoroutine;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
@@ -90,11 +91,11 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             if (actor != null)
             {
                 if (actor.tooltipStatus > ActorTooltip.None)
-                { StartCoroutine(ShowGenericTooltip()); }
+                { myCoroutine = StartCoroutine("ShowGenericTooltip"); }
             }
         }
         else
-        { StartCoroutine(ShowVacantActorTooltip()); }
+        { myCoroutine = StartCoroutine("ShowVacantActorTooltip"); }
     }
 
     /// <summary>
@@ -104,10 +105,16 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
-        { StopCoroutine("ShowGenericTooltip"); }
+        /*if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        {
+            StopCoroutine(myCoroutine);
+        }
         else
-        { StopCoroutine("ShowVacantActorTooltip"); }
+        { StopCoroutine(myCoroutine); }*/
+
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
+
         GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 

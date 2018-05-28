@@ -230,7 +230,7 @@ public class CityInfoUI : MonoBehaviour
         if (city != null)
         {
             //exit any generic or node tooltips
-            StopCoroutine("ShowTooltip");
+            /*StopCoroutine("ShowTooltip");*/
             GameManager.instance.tooltipGenericScript.CloseTooltip();
             GameManager.instance.tooltipNodeScript.CloseTooltip();
             //populate data

@@ -12,6 +12,7 @@ public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private float mouseOverFade;
     private bool onMouseFlag;
     private GameObject parent;
+    private Coroutine myCoroutine;
 
 
     private void Awake()
@@ -39,7 +40,7 @@ public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        StartCoroutine(ShowPlayerTooltip());
+        myCoroutine = StartCoroutine("ShowPlayerTooltip");
     }
 
     /// <summary>
@@ -49,7 +50,8 @@ public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        StopCoroutine("ShowPlayerTooltip");
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
         GameManager.instance.tooltipPlayerScript.CloseTooltip();
     }
 

@@ -42,6 +42,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isErasureTeam;       //Erasure team present at node
 
 
+    private Coroutine myCoroutine;
 
     //fast access fields
     private int stabilityTeamEffect;
@@ -261,7 +262,8 @@ public class Node : MonoBehaviour
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
-            StopCoroutine("ShowTooltip");
+            if (myCoroutine != null)
+            { StopCoroutine(myCoroutine); }
             GameManager.instance.tooltipNodeScript.CloseTooltip();
         }
     }
@@ -295,7 +297,7 @@ public class Node : MonoBehaviour
                     if (proceedFlag == true)
                     {
                         //exit any tooltip
-                        StopCoroutine("ShowTooltip");
+                        /*StopCoroutine("ShowTooltip");*/
                         GameManager.instance.tooltipNodeScript.CloseTooltip();
                         //Create a Move Menu at the node
                         if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
@@ -321,7 +323,7 @@ public class Node : MonoBehaviour
             else
             {
                 onMouseFlag = true;
-                StartCoroutine(ShowTooltip());
+                myCoroutine = StartCoroutine("ShowTooltip");
             }
         }
     }
