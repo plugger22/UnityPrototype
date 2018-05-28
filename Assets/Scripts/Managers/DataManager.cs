@@ -2350,7 +2350,7 @@ public class DataManager : MonoBehaviour
         if (tempDict != null)
         {
             builderResistance.Append(string.Format(" Messages -> Resistance{0}", "\n"));
-            builderAuthority.Append(string.Format("{0}{1} Messages -> Authority{2}", "\n", "\n", "\n"));
+            builderAuthority.Append(string.Format("{0} Messages -> Authority{1}", "\n", "\n"));
             //max # of records per side
             int numOfRecordsPerSide = 20;
             int counterResistance = 0;

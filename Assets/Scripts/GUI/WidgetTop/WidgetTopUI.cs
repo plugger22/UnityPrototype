@@ -18,7 +18,8 @@ public class WidgetTopUI : MonoBehaviour
     public Image starLeft;
     public Image starMiddle;
     public Image starRight;
-    public Image flashRed;
+    public Image flashRedInner;                             //inner circle that covers action point area (flashes when Security Measures in force)
+    public Image flashRedOuter;                             //outer red rim (flashes when Security Measures in force)
     public TextMeshProUGUI actionPoints;
     public TextMeshProUGUI turnNumber;
 
@@ -26,6 +27,7 @@ public class WidgetTopUI : MonoBehaviour
     private RectTransform transformFaction;
     private bool isFading;                                  //flashing red security measure indicator, if true then opacity fading, otherwise increasing
     private Coroutine myCoroutine;
+    private float flashRedTime;
 
     private static WidgetTopUI widgetTopUI;
 
@@ -35,8 +37,10 @@ public class WidgetTopUI : MonoBehaviour
         //cache components
         transformCity = barCity.GetComponent<RectTransform>();
         transformFaction = barFaction.GetComponent<RectTransform>();
+        flashRedTime = GameManager.instance.guiScript.flashRedTime;
         Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
         Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
+        Debug.Assert(flashRedTime > 0.0f, "Invalid flashRedTime (Zero)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
@@ -71,10 +75,14 @@ public class WidgetTopUI : MonoBehaviour
     {
         //get correct number of action points
         SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
-        //red flash opacity set to 0
-        Color tempColor = flashRed.color;
+        //flash red inner opacity set to 0
+        Color tempColor = flashRedInner.color;
         tempColor.a = 0.0f;
-        flashRed.color = tempColor;
+        flashRedInner.color = tempColor;
+        //flash red outer rim opacity set to 0
+        tempColor = flashRedOuter.color;
+        tempColor.a = 0.0f;
+        flashRedOuter.color = tempColor;
         isFading = false;
         //dim down objective stars
         SetStar(10f, UIPosition.Left);
@@ -253,16 +261,21 @@ public class WidgetTopUI : MonoBehaviour
         switch (isStart)
         {
             case true:
-                myCoroutine = StartCoroutine("ShowFlashRed");
+                if (myCoroutine == null)
+                { myCoroutine = StartCoroutine("ShowFlashRed"); }
                 break;
             case false:
                 if (myCoroutine != null)
-                { StopCoroutine(myCoroutine); }
+                { StopCoroutine(myCoroutine); myCoroutine = null;}
                 isFading = false;
-                //reset opacity back to zero
-                Color tempColor = flashRed.color;
+                //reset opacity back to zero -> inner
+                Color tempColor = flashRedInner.color;
                 tempColor.a = 0.0f;
-                flashRed.color = tempColor;
+                flashRedInner.color = tempColor;
+                //reset opacity back to zero -> outer
+                tempColor = flashRedOuter.color;
+                tempColor.a = 0.0f;
+                flashRedOuter.color = tempColor;
                 break;
         }
     }
@@ -277,20 +290,24 @@ public class WidgetTopUI : MonoBehaviour
         //infinite while loop
         while (true)
         {
-            Color tempColor = flashRed.color;
+            Color innerColor = flashRedInner.color;
+            Color outerColor = flashRedOuter.color;
             if (isFading == false)
             {
-                tempColor.a += Time.deltaTime / 2.0f;
-                if (tempColor.a >= 1.0f)
+                innerColor.a += Time.deltaTime / flashRedTime;
+                outerColor.a += Time.deltaTime / flashRedTime;
+                if (innerColor.a >= 1.0f)
                 { isFading = true; }
             }
             else
             {
-                tempColor.a -= Time.deltaTime / 2.0f;
-                if (tempColor.a <= 0.0f)
+                innerColor.a -= Time.deltaTime / flashRedTime;
+                outerColor.a -= Time.deltaTime / flashRedTime;
+                if (innerColor.a <= 0.0f)
                 { isFading = false; }
             }
-            flashRed.color = tempColor;
+            flashRedInner.color = innerColor;
+            flashRedOuter.color = outerColor;
             yield return null;
         }
     }

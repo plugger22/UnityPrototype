@@ -1920,11 +1920,20 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
             //implement decision
             if (task.name0.Equals(decisionAPB.name) == true)
-            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, AuthoritySecurityState.APB); }
+            {
+                isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, AuthoritySecurityState.APB);
+                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);
+            }
             else if (task.name0.Equals(decisionSecAlert.name) == true)
-            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, AuthoritySecurityState.SecurityAlert); }
+            {
+                isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, AuthoritySecurityState.SecurityAlert);
+                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);
+            }
             else if (task.name0.Equals(decisionCrackdown.name) == true)
-            { isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, AuthoritySecurityState.SurveillanceCrackdown); }
+            {
+                isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, AuthoritySecurityState.SurveillanceCrackdown);
+                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);
+            }
             else if (task.name0.Equals(decisionConnSec.name) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(); }
             else if (task.name0.Equals(decisionRequestTeam.name) == true)

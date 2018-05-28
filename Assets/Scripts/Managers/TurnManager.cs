@@ -625,7 +625,11 @@ public class TurnManager : MonoBehaviour
         {
             //if no Erasure teams currently on map, revert state to normal
             if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap) <= 0)
-            { GameManager.instance.authorityScript.SetAuthoritySecurityState(text); }
+            {
+                GameManager.instance.authorityScript.SetAuthoritySecurityState(text);
+                //switch off flashing red indicator on top widget UI
+                EventManager.instance.PostNotification(EventType.StopSecurityFlash, this);
+            }
         }
     }
 

@@ -167,6 +167,10 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.playerScript.invisibility = 0;
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
+        //set security state back to normal
+        GameManager.instance.authorityScript.SetAuthoritySecurityState("Player Captured: Security measures have been cancelled");
+        //switch off flashing red indicator on top widget UI
+        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this);
         //player captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
         {
