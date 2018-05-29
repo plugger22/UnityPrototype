@@ -78,7 +78,7 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Data)
-            GUI.Box(new Rect(box_x, box_y, box_width, box_height), string.Format("Debug Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
+            GUI.Box(new Rect(box_x, box_y, box_width, box_height), string.Format("Info Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Action {1} of {2}", "\n",
                 GameManager.instance.turnScript.GetActionsCurrent(), GameManager.instance.turnScript.GetActionsTotal()), customBackground);
@@ -173,9 +173,11 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Toggle AI UI"))
             {
-
+                if (debugDisplay != 3)
+                { debugDisplay = 3; }
+                else { debugDisplay = 4; }
             }
 
             //eleventh button
@@ -534,17 +536,13 @@ public class DebugGUI : MonoBehaviour
                                 break;
                         }
                         break;
-                    //teams
+                    //AI Display ON
                     case 3:
-                        /*customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.teamScript.DisplayIndividualTeams();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);*/
+                        EventManager.instance.PostNotification(EventType.AIDisplayOpen, this);
                         break;
-                    //actor Teams
+                    //AI Display OFF
                     case 4:
-                        /*customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.teamScript.DisplayTeamActorAnalysis();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);*/
+                        EventManager.instance.PostNotification(EventType.AIDisplayClose, this);
                         break;
                     //Game state
                     case 5:

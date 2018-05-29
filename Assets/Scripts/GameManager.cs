@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public WidgetTopUI widgetTopScript;             //Widget Top UI
     [HideInInspector] public CityInfoUI cityInfoScript;               //City Info UI
     [HideInInspector] public AIDisplayUI aiDisplayScript;             //AI Display UI
+    [HideInInspector] public AISideTabUI aiSideTabScript;             //AI SideTab UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
 
                                                                    
@@ -148,6 +149,7 @@ public class GameManager : MonoBehaviour
         widgetTopScript = WidgetTopUI.Instance();
         cityInfoScript = CityInfoUI.Instance();
         aiDisplayScript = AIDisplayUI.Instance();
+        aiSideTabScript = AISideTabUI.Instance();
         alertScript = AlertUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
         //sets this to not be destroyed when reloading a scene
@@ -206,6 +208,7 @@ public class GameManager : MonoBehaviour
         traitScript.Initialise();
         cityInfoScript.Initialise();
         aiDisplayScript.Initialise();
+        aiSideTabScript.Initialise();
         widgetTopScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;

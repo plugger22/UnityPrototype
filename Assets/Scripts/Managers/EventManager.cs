@@ -106,6 +106,11 @@ public enum EventType
     //City Info
     CityInfoOpen,
     CityInfoClose,
+    //AI Info Display
+    AIDisplayOpen,
+    AIDisplayClose,
+    AISideTabOpen,
+    AISideTabClose,
     //AI
     Capture,
     ReleasePlayer,
