@@ -27,9 +27,9 @@ public class AINodeData
 public class AITask
 {
     public int taskID;                     //automatically assigned
-    public int data0;                      //could be node or connection ID
-    public int data1;                      //teamArcID
-    public string name0;                   //node arc name
+    public int data0;                      //could be node, connection ID or aiDecID
+    public int data1;                      //teamArcID, decision cost in resources
+    public string name0;                   //node arc name, decision name
     public string name1;                   //could be team arc name, eg. 'CIVIL'
     public Priority priority;
     public AIType type;                     //what type of task
@@ -65,8 +65,7 @@ public class AIDisplayData
     public string task_3_textUpper;
     public string task_3_textLower;
     public string task_3_chance;
-    public string factionName;
-    public string numOfActions;
+    public string factionDetails;
     public string hackingAttempts;
     public string aiAlertStatus;
 }
@@ -1810,14 +1809,19 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// takes listOfPotentialTasks and packages up data for AIDisplayUI
+    /// takes listOfPotentialTasks and packages up data for AIDisplayUI. Returns package even if all data is blanked
     /// </summary>
     private void ProcessTasksDataPackage()
     {
+        AIDisplayData data = new AIDisplayData();
         int count = listOfTasksPotential.Count;
-        if ( count > 0)
+        //zero out data for (prevents previous turns task data from carrying over)
+        data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = "";
+        data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = "";
+        data.task_1_textUpper = ""; data.task_1_textLower = ""; data.task_1_chance = "";
+        //if tasks are present, process into descriptor strings
+        if (count > 0)
         {
-            AIDisplayData data = new AIDisplayData();
             string colourChance;
             //loop final tasks
             for (int i = 0; i < count; i++)
@@ -1825,29 +1829,75 @@ public class AIManager : MonoBehaviour
                 AITask task = listOfTasksPotential[i];
                 if (task != null)
                 {
+                    //colour code chance (green if upper third %, yellow for middle, red for lower third)
                     if (task.chance > 66) { colourChance = colourGood; }
                     else if (task.chance < 33) { colourChance = colourBad; }
                     else { colourChance = colourNeutral; }
+                    //get upper and lower strings
+                    Tuple<string, string> results = GetTaskDescriptors(task);
+                    //up to 3 tasks
                     switch (i)
                     {
                         case 0:
+                            data.task_1_textUpper = results.Item1;
+                            data.task_1_textLower = results.Item2;
                             data.task_1_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
                             break;
                         case 1:
+                            data.task_2_textUpper = results.Item1;
+                            data.task_2_textLower = results.Item2;
                             data.task_2_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
                             break;
                         case 2:
+                            data.task_3_textUpper = results.Item1;
+                            data.task_3_textLower = results.Item2;
                             data.task_3_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid index {0} for listOfTasksPotential", i);
                             break;
                     }
+                    //other data
+                    data.factionDetails = string.Format("{0} Actions{1}{2}", factionAuthority.maxTaskPerTurn, "\n", factionAuthority.name);
                 }
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksPotential[{0}]", i); }
             }
-            EventManager.instance.PostNotification(EventType.AISendData, this, data);
         }
+        EventManager.instance.PostNotification(EventType.AISendData, this, data);
+    }
+
+    /// <summary>
+    /// private sub-Method for ProcessTaskDescriptors that takes an AI task and returns two strings that correspond to AIDisplayUI textUpper & textLower
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    private Tuple<string, string> GetTaskDescriptors(AITask task)
+    {
+        string textUpper = "";
+        string textLower = "";
+        if (task != null)
+        {
+            switch(task.type)
+            {
+                case AIType.Team:
+                    textUpper = string.Format("Deploy {0} Team", task.name1);
+                    textLower = "details to follow";
+                    break;
+                case AIType.Connection:
+                    textUpper = "Increase CONNECTION Security Level";
+                    textLower = "details to follow";
+                    break;
+                case AIType.Decision:
+                    textUpper = string.Format("{0} DECISION", task.name0);
+                    textLower = "details to follow";
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid task.type \"{0}\"", task.type);
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid AI task (Null)"); }
+        return new Tuple<string, string>(textUpper, textLower);
     }
 
     /// <summary>

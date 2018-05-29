@@ -117,15 +117,40 @@ public class AIDisplayUI : MonoBehaviour
     {
         if (data != null)
         {
+            //1st Task
+            if (String.IsNullOrEmpty(data.task_1_textUpper) == false)
+            { subTopUpper.text = data.task_1_textUpper; }
+            else { subTopUpper.text = ""; }
+            if (String.IsNullOrEmpty(data.task_1_textLower) == false)
+            { subTopLower.text = data.task_1_textLower; }
+            else { subTopLower.text = ""; }
             if (String.IsNullOrEmpty(data.task_1_chance) == false)
             { subTopChance.text = data.task_1_chance; }
             else { subTopChance.text = ""; }
+            //2nd Task
+            if (String.IsNullOrEmpty(data.task_2_textUpper) == false)
+            { subMiddleUpper.text = data.task_2_textUpper; }
+            else { subMiddleUpper.text = ""; }
+            if (String.IsNullOrEmpty(data.task_2_textLower) == false)
+            { subMiddleLower.text = data.task_2_textLower; }
+            else { subMiddleLower.text = ""; }
             if (String.IsNullOrEmpty(data.task_2_chance) == false)
             { subMiddleChance.text = data.task_2_chance; }
             else { subMiddleChance.text = ""; }
+            //3rd Task
+            if (String.IsNullOrEmpty(data.task_3_textUpper) == false)
+            { subBottomUpper.text = data.task_3_textUpper; }
+            else { subBottomUpper.text = ""; }
+            if (String.IsNullOrEmpty(data.task_3_textLower) == false)
+            { subBottomLower.text = data.task_3_textLower; }
+            else { subBottomLower.text = ""; }
             if (String.IsNullOrEmpty(data.task_3_chance) == false)
             { subBottomChance.text = data.task_3_chance; }
             else { subBottomChance.text = ""; }
+            //Faction
+            if (String.IsNullOrEmpty(data.factionDetails) == false)
+            { tabTopText.text = data.factionDetails; }
+            else { tabTopText.text = ""; }
         }
         else { Debug.LogWarning("Invalid AIDisplayData (Null)"); }
     }
