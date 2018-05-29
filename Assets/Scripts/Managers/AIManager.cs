@@ -51,6 +51,25 @@ public class AITracker
     { data0 = data; this.turn = turn; }
 }
 
+/// <summary>
+/// data package to populate AIDisplayUI
+/// </summary>
+public class AIDisplayData
+{
+    public string task_1_textUpper;
+    public string task_1_textLower;
+    public string task_1_chance;
+    public string task_2_textUpper;
+    public string task_2_textLower;
+    public string task_2_chance;
+    public string task_3_textUpper;
+    public string task_3_textLower;
+    public string task_3_chance;
+    public string factionName;
+    public string numOfActions;
+    public string hackingAttempts;
+    public string aiAlertStatus;
+}
 
 /// <summary>
 /// Handles AI management of both sides
@@ -168,6 +187,14 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionCrackdown;
     private DecisionAI decisionResources;
 
+    //colour palette 
+    private string colourAlert;
+    private string colourGood;
+    private string colourNeutral;
+    private string colourBad;
+    private string colourNormal;
+    private string colourEnd;
+
     //info gathering lists (collated every turn)
     List<AINodeData> listNodeMaster = new List<AINodeData>();
     List<AINodeData> listStabilityCritical = new List<AINodeData>();
@@ -256,6 +283,41 @@ public class AIManager : MonoBehaviour
         SetCentreNodes();
         SetDecisionNodes();
         SetNearNeighbours();
+        //event listeners
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
+    }
+
+    /// <summary>
+    /// handles events
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// set colour palette for Generic Tool tip
+    /// </summary>
+    public void SetColours()
+    {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -297,8 +359,9 @@ public class AIManager : MonoBehaviour
         ProcessDamageTask();
         ProcessErasureTask();
         ProcessDecisionTask();
-        //choose tasks for the turn
+        //choose tasks for the following turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
+        ProcessTasksDataPackage();
         //reset flags
         immediateFlagResistance = false;
     }
@@ -1742,11 +1805,50 @@ public class AIManager : MonoBehaviour
                     while (numTasksSelected < maxTasksPerTurn);
                 }
             }
-
         }
         else { Debug.Log(string.Format("[Aim]  -> ProcessTasksFinal: No tasks this turn{0}", "\n")); }
     }
 
+    /// <summary>
+    /// takes listOfPotentialTasks and packages up data for AIDisplayUI
+    /// </summary>
+    private void ProcessTasksDataPackage()
+    {
+        int count = listOfTasksPotential.Count;
+        if ( count > 0)
+        {
+            AIDisplayData data = new AIDisplayData();
+            string colourChance;
+            //loop final tasks
+            for (int i = 0; i < count; i++)
+            {
+                AITask task = listOfTasksPotential[i];
+                if (task != null)
+                {
+                    if (task.chance > 66) { colourChance = colourGood; }
+                    else if (task.chance < 33) { colourChance = colourBad; }
+                    else { colourChance = colourNeutral; }
+                    switch (i)
+                    {
+                        case 0:
+                            data.task_1_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
+                            break;
+                        case 1:
+                            data.task_2_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
+                            break;
+                        case 2:
+                            data.task_3_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Invalid index {0} for listOfTasksPotential", i);
+                            break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid AITask for listOfTasksPotential[{0}]", i); }
+            }
+            EventManager.instance.PostNotification(EventType.AISendData, this, data);
+        }
+    }
 
     /// <summary>
     /// sub method (ProcessNodeTasks) that takes two node datapoint lists (must be the same datapoint, eg. security) and determines a task (Null if none) based on AI rules

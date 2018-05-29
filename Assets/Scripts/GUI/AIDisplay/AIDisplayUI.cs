@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -61,6 +62,7 @@ public class AIDisplayUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AISendData, OnEvent, "AIDisplayUI");
     }
 
 
@@ -80,6 +82,10 @@ public class AIDisplayUI : MonoBehaviour
                 break;
             case EventType.AIDisplayClose:
                 CloseAIDisplay();
+                break;
+            case EventType.AISendData:
+                AIDisplayData data = Param as AIDisplayData;
+                ProcessData(data);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -101,6 +107,27 @@ public class AIDisplayUI : MonoBehaviour
         subBottomPanel.gameObject.SetActive(true);
         tabCloseText.gameObject.SetActive(true);
         sideTabMouse.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// populates all text fields with data package sent from AIManager.cs -> ProcessTasksDataPackage
+    /// </summary>
+    /// <param name="data"></param>
+    private void ProcessData(AIDisplayData data)
+    {
+        if (data != null)
+        {
+            if (String.IsNullOrEmpty(data.task_1_chance) == false)
+            { subTopChance.text = data.task_1_chance; }
+            else { subTopChance.text = ""; }
+            if (String.IsNullOrEmpty(data.task_2_chance) == false)
+            { subMiddleChance.text = data.task_2_chance; }
+            else { subMiddleChance.text = ""; }
+            if (String.IsNullOrEmpty(data.task_3_chance) == false)
+            { subBottomChance.text = data.task_3_chance; }
+            else { subBottomChance.text = ""; }
+        }
+        else { Debug.LogWarning("Invalid AIDisplayData (Null)"); }
     }
 
     /// <summary>

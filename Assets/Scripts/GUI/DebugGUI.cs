@@ -173,11 +173,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Toggle AI UI"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
             {
-                if (debugDisplay != 3)
-                { debugDisplay = 3; }
-                else { debugDisplay = 4; }
+
             }
 
             //eleventh button
@@ -538,11 +536,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     //AI Display ON
                     case 3:
-                        EventManager.instance.PostNotification(EventType.AIDisplayOpen, this);
                         break;
                     //AI Display OFF
                     case 4:
-                        EventManager.instance.PostNotification(EventType.AIDisplayClose, this);
                         break;
                     //Game state
                     case 5:

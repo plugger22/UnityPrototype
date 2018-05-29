@@ -56,11 +56,8 @@ public class AIDisplaySideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPoi
         {
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
-                if (GameManager.instance.guiScript.CheckIsBlocked() == false)
-                {
-                    //closes AI Display (auto opens side tab)
-                    EventManager.instance.PostNotification(EventType.AIDisplayClose, this);
-                }
+                //closes AI Display (auto opens side tab)
+                EventManager.instance.PostNotification(EventType.AIDisplayClose, this);
                 break;
             default:
                 Debug.LogError("Unknown InputButton");
