@@ -1858,7 +1858,8 @@ public class AIManager : MonoBehaviour
                             break;
                     }
                     //other data
-                    data.factionDetails = string.Format("{0} Actions{1}{2}", factionAuthority.maxTaskPerTurn, "\n", factionAuthority.name);
+                    data.factionDetails = string.Format("{0} Action{1}{2}{3}", factionAuthority.maxTaskPerTurn, 
+                        factionAuthority.maxTaskPerTurn != 1 ? "s" : "", "\n", factionAuthority.name);
                 }
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksPotential[{0}]", i); }
             }
@@ -1881,15 +1882,40 @@ public class AIManager : MonoBehaviour
             {
                 case AIType.Team:
                     textUpper = string.Format("Deploy {0} Team", task.name1);
-                    textLower = "details to follow";
-                    break;
-                case AIType.Connection:
-                    textUpper = "Increase CONNECTION Security Level";
-                    textLower = "details to follow";
+                    Node node = GameManager.instance.dataScript.GetNode(task.data0);
+                    if (node != null)
+                    { textLower = string.Format("Deploy to {0}, {1} district", node.nodeName, node.Arc.name); }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid node (Null) for task.data0 nodeID {0}", task.data0);
+                        textLower = "Details unknown";
+                    }
                     break;
                 case AIType.Decision:
                     textUpper = string.Format("{0} DECISION", task.name0);
-                    textLower = "details to follow";
+                    DecisionAI decisionAI = GameManager.instance.dataScript.GetAIDecision(task.data0);
+                    if (decisionAI != null)
+                    {
+                        //Connection decision
+                        if (decisionAI.name.Equals(decisionConnSec.name) == true)
+                        {
+                            Connection connection = GameManager.instance.dataScript.GetConnection(task.data0);
+                            if (connection != null)
+                            { textLower = string.Format("Between {0} and {1}", connection.node1.nodeName, connection.node2.nodeName); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid connection (Null) for task.data0 connectionID {0}", task.data0);
+                                textLower = "Details unknown";
+                            }
+                        }
+                        //all other decisions
+                        else { textLower = decisionAI.descriptor; }
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid decisionAI (Null) for task.data0 aiDecID {0}", task.data0);
+                        textLower = "Details unknown";
+                    }
                     break;
                 default:
                     Debug.LogWarningFormat("Invalid task.type \"{0}\"", task.type);
