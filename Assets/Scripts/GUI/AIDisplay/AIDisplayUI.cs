@@ -32,6 +32,8 @@ public class AIDisplayUI : MonoBehaviour
     public TextMeshProUGUI subBottomLower;
     public TextMeshProUGUI subBottomChance;
 
+    private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
+
     private static AIDisplayUI aiDisplayUI;
 
 
@@ -62,7 +64,7 @@ public class AIDisplayUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AISendData, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AISendDisplayData, OnEvent, "AIDisplayUI");
     }
 
 
@@ -78,12 +80,13 @@ public class AIDisplayUI : MonoBehaviour
         switch (eventType)
         {
             case EventType.AIDisplayOpen:
-                SetAIDisplay();
+                if (rebootTimer == 0)
+                { SetAIDisplay(); }
                 break;
             case EventType.AIDisplayClose:
                 CloseAIDisplay();
                 break;
-            case EventType.AISendData:
+            case EventType.AISendDisplayData:
                 AIDisplayData data = Param as AIDisplayData;
                 ProcessData(data);
                 break;
@@ -117,6 +120,8 @@ public class AIDisplayUI : MonoBehaviour
     {
         if (data != null)
         {
+            //timer
+            rebootTimer = data.rebootTimer;
             //1st Task
             if (String.IsNullOrEmpty(data.task_1_textUpper) == false)
             { subTopUpper.text = data.task_1_textUpper; }

@@ -173,9 +173,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "AI Reboot"))
             {
-
+                Debug.Log("[Dbg] Button -> Force AI Reboot");
+                GameManager.instance.aiScript.RebootCommence();
             }
 
             //eleventh button

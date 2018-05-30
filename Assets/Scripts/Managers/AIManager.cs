@@ -56,6 +56,7 @@ public class AITracker
 /// </summary>
 public class AIDisplayData
 {
+    public int rebootTimer;                 //AIDisplayUI will only open (allow hacking attempts) if timer = 0 (which infers that isRebooting = false)
     public string task_1_textUpper;
     public string task_1_textLower;
     public string task_1_chance;
@@ -68,6 +69,16 @@ public class AIDisplayData
     public string factionDetails;
     public string hackingAttempts;
     public string aiAlertStatus;
+}
+
+/// <summary>
+/// data package to populate AISideTabUI
+/// </summary>
+public class AISideTabData
+{
+    public string topText;              //eg. 'A.I' but colour formatted
+    public string bottomText;           //eg. Renown cost to hack or 'X' if not possible, greyed out if not enough renown
+    public HackingStatus status;        //used to determine what happens when player clicks AI Side Tab UI
 }
 
 /// <summary>
@@ -146,11 +157,27 @@ public class AIManager : MonoBehaviour
     [Tooltip("The point below which a low Resource Pool situation (isLowResources true) is declared and a request for more resources can be made")]
     [Range(0, 10)] public int lowResourcesThreshold = 2;
 
+    [Header("Hacking AI")]
+    [Tooltip("Base cost, in renown, to hack AI at start of a level")]
+    [Range(0, 5)] public int hackingBaseCost = 2;
+    [Tooltip("Amount that the hackingBaseCost increases everytime AI Reboots")]
+    [Range(0, 3)] public int hackingIncrement = 1;
+    [Tooltip("% chance that each hacking attempt will lead to an increase in AI Alert Level")]
+    [Range(1, 100)] public int hackingAlertIncreaseChance = 50;
+    [Tooltip("How many turns does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
+    [Range(0, 10)] public int hackingRebootTimer = 2;
+
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
     [HideInInspector] public int resourcesGainAuthority;                //resources added to pool (DataManager.cs -> arrayOfAIResources every turn
     [HideInInspector] public int resourcesGainResistance;
     [HideInInspector] public int aiTaskCounter;                         //AITask ID counter (reset every turn)
+    //hacking
+    [HideInInspector] public int hackingAttempts;
+    [HideInInspector] public int hackingCurrentCost;
+    [HideInInspector] public Priority aiAlertStatus;
+    [HideInInspector] public bool isRebooting;                          //true if AI Security System is rebooting and hacking not possible (external access cut)
+    [HideInInspector] public int rebootTimer;                           //how many times does it take to reboot, (rebooted when timer reaches zero)
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -190,6 +217,7 @@ public class AIManager : MonoBehaviour
     private string colourAlert;
     private string colourGood;
     private string colourNeutral;
+    private string colourGrey;
     private string colourBad;
     private string colourNormal;
     private string colourEnd;
@@ -267,6 +295,7 @@ public class AIManager : MonoBehaviour
         teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
         teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
@@ -274,8 +303,13 @@ public class AIManager : MonoBehaviour
         Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider");
         Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
-        maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
+        //Hacking
+        hackingAttempts = 0;
+        hackingCurrentCost = hackingBaseCost;
+        aiAlertStatus = Priority.Low;
+        isRebooting = false;
+        rebootTimer = 0;
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
@@ -314,6 +348,7 @@ public class AIManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
@@ -345,6 +380,8 @@ public class AIManager : MonoBehaviour
         ExecuteTasks();
         ClearAICollections();
         UpdateResources(globalAuthority);
+        //Reboot check
+        UpdateRebootStatus();
         //Info Gathering      
         GetAINodeData();
         ProcessNodeData();
@@ -360,7 +397,9 @@ public class AIManager : MonoBehaviour
         ProcessDecisionTask();
         //choose tasks for the following turn
         ProcessTasksFinal(authorityMaxTasksPerTurn);
-        ProcessTasksDataPackage();
+        //send data to UI's
+        UpdateTaskDisplayData();
+        UpdateSideTabData();
         //reset flags
         immediateFlagResistance = false;
     }
@@ -1811,7 +1850,7 @@ public class AIManager : MonoBehaviour
     /// <summary>
     /// takes listOfPotentialTasks and packages up data for AIDisplayUI. Returns package even if all data is blanked
     /// </summary>
-    private void ProcessTasksDataPackage()
+    private void UpdateTaskDisplayData()
     {
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksPotential.Count;
@@ -1819,6 +1858,8 @@ public class AIManager : MonoBehaviour
         data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = "";
         data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = "";
         data.task_1_textUpper = ""; data.task_1_textLower = ""; data.task_1_chance = "";
+        //pass timer
+        data.rebootTimer = rebootTimer;
         //if tasks are present, process into descriptor strings
         if (count > 0)
         {
@@ -1864,7 +1905,7 @@ public class AIManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksPotential[{0}]", i); }
             }
         }
-        EventManager.instance.PostNotification(EventType.AISendData, this, data);
+        EventManager.instance.PostNotification(EventType.AISendDisplayData, this, data);
     }
 
     /// <summary>
@@ -2251,6 +2292,86 @@ public class AIManager : MonoBehaviour
     /// <returns></returns>
     public bool CheckNewTeamPossible()
     { return teamRatio < teamRatioThreshold; }
+
+
+    /// <summary>
+    /// Sends a colour formatted data package to AISideTabUI indicating cost and status to hack AI. Ignore renown (it's used by PlayerManager.cs -> Renown Set property)
+    /// </summary>
+    public void UpdateSideTabData(int renown = 0)
+    {
+        AISideTabData data = new AISideTabData();
+        int playerRenown = renown;
+        if (playerRenown == 0)
+        { playerRenown = GameManager.instance.playerScript.Renown; }
+        if (isRebooting == true)
+        {
+            //AI Security System rebooting, Hacking is unavailable
+            data.topText = string.Format("{0}A.I{1}", colourBad, colourEnd);
+            data.bottomText = string.Format("{0}X{1}", colourBad, colourEnd);
+            data.status = HackingStatus.Rebooting;
+        }
+        else
+        {
+            data.topText = "A.I";
+            data.status = HackingStatus.Possible;
+            //renown to spare -> Green
+            if (playerRenown > hackingCurrentCost)
+            {  data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingCurrentCost, colourEnd); }
+            //just enough renown -> Yellow
+            else if (playerRenown == hackingCurrentCost)
+            { data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingCurrentCost, colourEnd); }
+            else
+            {
+                //insufficient renown -> Greyed out
+                data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
+                data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingCurrentCost, colourEnd);
+                data.status = HackingStatus.InsufficientRenown;
+            }
+        }
+        //send data package
+        EventManager.instance.PostNotification(EventType.AISendSideData, this, data);
+    }
+
+    /// <summary>
+    /// reboots AI security system and prevents hacking until reboot is over
+    /// </summary>
+    public void RebootCommence()
+    {
+        isRebooting = true;
+        rebootTimer = hackingRebootTimer;
+        //message
+        Message message = GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer);
+        GameManager.instance.dataScript.AddMessage(message);
+    }
+
+    /// <summary>
+    /// Reboot of Security system is complete, hacking is now possible
+    /// </summary>
+    private void RebootComplete()
+    {
+        isRebooting = false;
+        rebootTimer = 0;
+        //increment hacking cost
+        hackingCurrentCost += hackingIncrement;
+        //reset Alert status to low
+        aiAlertStatus = Priority.Low;
+        //message
+        Message message = GameManager.instance.messageScript.AIReboot("AI completes Rebooting Security Systems", hackingCurrentCost, rebootTimer);
+        GameManager.instance.dataScript.AddMessage(message);
+    }
+
+    /// <summary>
+    /// Checks reboot timer each turn, decrements if necessary and handles admin
+    /// </summary>
+    private void UpdateRebootStatus()
+    {
+        if (rebootTimer > 0)
+        {
+            rebootTimer--;
+            if (rebootTimer <= 0)
+            { RebootComplete(); }
+        }
+    }
 
     //
     // - - - Debug - - -

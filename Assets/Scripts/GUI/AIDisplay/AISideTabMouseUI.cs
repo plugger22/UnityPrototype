@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using gameAPI;
 
 
 /// <summary>
@@ -59,9 +60,23 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnt
             case PointerEventData.InputButton.Right:
                 if (GameManager.instance.guiScript.CheckIsBlocked() == false)
                 {
-                    //activate AI Display (auto closes side tab)
-                    EventManager.instance.PostNotification(EventType.AIDisplayOpen, this);
-
+                    switch (GameManager.instance.aiSideTabScript.hackingStatus)
+                    {
+                        case HackingStatus.Rebooting:
+                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingRebootInProgress);
+                            break;
+                        case HackingStatus.InsufficientRenown:
+                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingInsufficientRenown);
+                            break;
+                        case HackingStatus.Possible:
+                            //activate AI Display (auto closes side tab)
+                            EventManager.instance.PostNotification(EventType.AIDisplayOpen, this);
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Invalid aiSideTabUI.cs hackingStatus {0}", GameManager.instance.aiSideTabScript.hackingStatus);
+                            GameManager.instance.guiScript.SetAlertMessage(AlertType.SomethingWrong);
+                            break;
+                    }
                 }
                 break;
             default:

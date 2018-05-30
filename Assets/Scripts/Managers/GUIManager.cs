@@ -295,7 +295,12 @@ public class GUIManager : MonoBehaviour
         details.side = GameManager.instance.sideScript.PlayerSide;
         switch (type)
         {
-            case AlertType.PlayerSatus:
+            case AlertType.SomethingWrong:
+                //generic fault message
+                details.textTop = "Something has gone wrong";
+                details.textBottom = "We aren't sure what but we've got our best man on it";
+                break;
+            case AlertType.PlayerStatus:
                 switch (GameManager.instance.playerScript.status)
                 {
                     case ActorStatus.Captured:
@@ -327,6 +332,14 @@ public class GUIManager : MonoBehaviour
             case AlertType.DebugPlayer:
                 details.textTop = "The AI has been switched back ON (Authority)";
                 details.textBottom = "The Player has <b>Manual control</b> of the Resistance side only";
+                break;
+            case AlertType.HackingInsufficientRenown:
+                details.textTop = "You have insufficient Renown for a Hacking attempt";
+                details.textBottom = "Check the colour of the Renown cost. If Yellow you have just enough, if Green you have more than enough";
+                break;
+            case AlertType.HackingRebootInProgress:
+                details.textTop = "The AI is Rebooting it's Security Systems";
+                details.textBottom = "Hacking attempts aren't possible until the Reboot is complete";
                 break;
             default:
                 details.textTop = "This action is unavailable";

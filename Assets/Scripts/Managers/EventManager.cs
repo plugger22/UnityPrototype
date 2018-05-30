@@ -111,7 +111,8 @@ public enum EventType
     AIDisplayClose,
     AISideTabOpen,
     AISideTabClose,
-    AISendData,
+    AISendDisplayData,
+    AISendSideData,
     //AI
     Capture,
     ReleasePlayer,

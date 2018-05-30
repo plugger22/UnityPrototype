@@ -67,7 +67,12 @@ public class PlayerManager : MonoBehaviour
         }
         set
         {
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { _renownResistance = value; }
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+            {
+                _renownResistance = value;
+                //update AI side tab
+                GameManager.instance.aiScript.UpdateSideTabData(_renownResistance);
+            }
             else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { _renownAuthority = value; }
             else
             {

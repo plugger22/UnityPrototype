@@ -395,6 +395,31 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
+    /// <summary>
+    /// AI notification to both sides of an AI Security System Reboot (commence / complete)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="currentRenownCost"></param>
+    /// <param name="rebootTimer"></param>
+    /// <returns></returns>
+    public Message AIReboot(string text, int currentRenownCost, int rebootTimer)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Reboot;
+            message.side = globalBoth;
+            message.isPublic = true;
+            message.data0 = currentRenownCost;
+            message.data1 = rebootTimer;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Decisions - - -
     //

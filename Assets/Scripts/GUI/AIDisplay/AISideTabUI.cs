@@ -4,9 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using gameAPI;
 
 /// <summary>
-/// Handles AI side tab matters (mouse interactions are handled by AISideTabMouseUI.cs)
+/// Handles AI side tab data and logic matters (mouse interactions are handled by AISideTabMouseUI.cs)
 /// </summary>
 public class AISideTabUI : MonoBehaviour
 {
@@ -16,16 +17,17 @@ public class AISideTabUI : MonoBehaviour
     public TextMeshProUGUI bottomText;
 
 
-
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipDetails;
+
+    [HideInInspector] public HackingStatus hackingStatus;             //data passed in from AIManager.cs -> UpdateSideTabData
 
     private static AISideTabUI aiSideTabUI;
 
 
     /// <summary>
-    /// provide a static reference to AIDisplayUI that can be accessed from any script
+    /// provide a static reference to AISideTabUI that can be accessed from any script
     /// </summary>
     /// <returns></returns>
     public static AISideTabUI Instance()
@@ -52,6 +54,7 @@ public class AISideTabUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.AISideTabOpen, OnEvent, "AISideTabUI");
         EventManager.instance.AddListener(EventType.AISideTabClose, OnEvent, "AISideTabUI");
+        EventManager.instance.AddListener(EventType.AISendSideData, OnEvent, "AISideTabUI");
     }
 
 
@@ -71,6 +74,10 @@ public class AISideTabUI : MonoBehaviour
                 break;
             case EventType.AISideTabClose:
                 CloseSideTab();
+                break;
+            case EventType.AISendSideData:
+                AISideTabData data = Param as AISideTabData;
+                UpdateSideTab(data);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -98,4 +105,29 @@ public class AISideTabUI : MonoBehaviour
 
     public void CloseSideTab()
     { sideTabImage.gameObject.SetActive(false); }
+
+
+    /// <summary>
+    /// update data on side tab (sent from AIManager.cs -> UpdateSideTabData)
+    /// </summary>
+    /// <param name="data"></param>
+    private void UpdateSideTab(AISideTabData data)
+    {
+        if (data != null)
+        {
+            //'A.I'
+            if (string.IsNullOrEmpty(data.topText) == false)
+            { topText.text = data.topText; }
+            else { topText.text = "?"; }
+            //cost in renown
+            if (string.IsNullOrEmpty(data.bottomText) == false)
+            { bottomText.text = data.bottomText; }
+            else { bottomText.text = "?"; }
+            //hacking Status
+            hackingStatus = data.status;
+        }
+        else { Debug.LogWarning("Invalid AISideTabData (Null)"); }
+    }
+
+    //new methods above here
 }
