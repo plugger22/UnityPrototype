@@ -233,9 +233,12 @@ public class DebugGUI : MonoBehaviour
 
             
             //fourteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Give Renown"))
             {
-
+                Debug.Log("[Dbg] Button -> Give Player Renown");
+                int renown = GameManager.instance.playerScript.Renown;
+                renown += 10;
+                GameManager.instance.playerScript.Renown = renown;
             }
 
 

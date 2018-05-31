@@ -420,6 +420,31 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
+    /// <summary>
+    /// AI notification to both sides of a change in AI Alert Status
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="chanceOfIncrease"></param>
+    /// <param name="randomRoll"></param>
+    /// <returns></returns>
+    public Message AIAlertStatus(string text, int chanceOfIncrease, int randomRoll)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Alert;
+            message.side = globalBoth;
+            message.isPublic = true;
+            message.data0 = chanceOfIncrease;
+            message.data1 = randomRoll;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Decisions - - -
     //

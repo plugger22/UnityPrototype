@@ -112,6 +112,7 @@
         AI_Capture,
         AI_Release,
         AI_Reboot,
+        AI_Alert,
         //Decision
         Decision_Global,
         Decision_Connection,                    //increaes connection security level

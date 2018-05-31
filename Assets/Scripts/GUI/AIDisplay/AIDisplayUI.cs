@@ -173,7 +173,9 @@ public class AIDisplayUI : MonoBehaviour
     {
         if (data != null)
         {
-
+            if (String.IsNullOrEmpty(data.hackingStatus) == false)
+            { tabBottomText.text = data.hackingStatus; }
+            else { tabBottomText.text = "Unknown Data"; }
         }
         else { Debug.LogWarning("Invalid AIHackingData package (Null)"); }
     }

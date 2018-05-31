@@ -72,6 +72,8 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnt
                             GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingInsufficientRenown);
                             break;
                         case HackingStatus.Possible:
+                            //update hacking status
+                            GameManager.instance.aiScript.UpdateHackingStatus();
                             //activate AI Display (auto closes side tab)
                             EventManager.instance.PostNotification(EventType.AIDisplayOpen, this);
                             break;

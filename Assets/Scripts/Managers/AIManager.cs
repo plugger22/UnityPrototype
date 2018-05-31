@@ -75,8 +75,7 @@ public class AIDisplayData
 /// </summary>
 public class AIHackingData
 {
-    public string hackingAttempts;
-    public string aiAlertStatus;
+    public string hackingStatus;            //combined string of AI Alert Status and number of hacking attempts
 }
 
 /// <summary>
@@ -183,6 +182,7 @@ public class AIManager : MonoBehaviour
     //hacking
     [HideInInspector] public int hackingAttempts;
     [HideInInspector] public int hackingCurrentCost;
+    [HideInInspector] public bool isHacked;                             //true if player has already hacked AI this turn, reset each turn
     [HideInInspector] public Priority aiAlertStatus;
     [HideInInspector] public bool isRebooting;                          //true if AI Security System is rebooting and hacking not possible (external access cut)
     [HideInInspector] public int rebootTimer;                           //how many times does it take to reboot, (rebooted when timer reaches zero)
@@ -410,6 +410,7 @@ public class AIManager : MonoBehaviour
         UpdateSideTabData();
         //reset flags
         immediateFlagResistance = false;
+        isHacked = false;
     }
 
     /// <summary>
@@ -791,6 +792,7 @@ public class AIManager : MonoBehaviour
                         //immediate flag is set by EffectManager.cs -> ProcessEffect (Invisibility) prior to this
                         break;
                     case MessageSubType.AI_Reboot:
+                    case MessageSubType.AI_Alert:
                         //not applicable
                         break;
                     default:
@@ -2395,20 +2397,69 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void UpdateHackingStatus()
     {
-        AIHackingData data = new AIHackingData();
-        //increment number of hacking attempts
-        hackingAttempts++;
-        //does AI Alert Status increase?
-
-
-        //log entries
-        Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: hackingAttempts now {0}{1}", hackingAttempts, "\n");
-
-        //data package
-        data.hackingAttempts = Convert.ToString(hackingAttempts);
-
-        //send data package to AIDisplayUI
-        EventManager.instance.PostNotification(EventType.AISendHackingData, this, data);
+        //ignore if Player has already hacked AI this turn
+        if (isHacked == false)
+        {
+            string colourStatus = colourNormal;
+            AIHackingData data = new AIHackingData();
+            //increment number of hacking attempts
+            hackingAttempts++;
+            isHacked = true;
+            //does AI Alert Status increase?
+            int rnd = Random.Range(0, 100);
+            if (rnd <= hackingAlertIncreaseChance)
+            {
+                //increase alert status
+                switch (aiAlertStatus)
+                {
+                    case Priority.Low:
+                        aiAlertStatus = Priority.Medium;
+                        colourStatus = colourNeutral;
+                        //Message
+                        string textLow = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
+                        Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, hackingAlertIncreaseChance, rnd);
+                        GameManager.instance.dataScript.AddMessage(messageLow);
+                        break;
+                    case Priority.Medium:
+                        aiAlertStatus = Priority.High;
+                        colourStatus = colourBad;
+                        //Message
+                        string textMedium = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
+                        Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, hackingAlertIncreaseChance, rnd);
+                        GameManager.instance.dataScript.AddMessage(messageMedium);
+                        break;
+                    case Priority.High:
+                        //stays High (auto reset to Low by RebootComplete) -> Trigger Reboot 
+                        colourStatus = colourBad;
+                        RebootCommence();
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
+                        break;
+                }
+            }
+            else
+            {
+                //no change to status
+                switch (aiAlertStatus)
+                {
+                    case Priority.Low: colourStatus = colourGood; break;
+                    case Priority.Medium: colourStatus = colourNeutral; break;
+                    case Priority.High: colourStatus = colourBad; break;
+                    default:
+                        Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
+                        break;
+                }
+            }
+            //log entries
+            Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: hackingAttempts now {0}{1}", hackingAttempts, "\n");
+            Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: AI Alert Status {0}{1}", aiAlertStatus, "\n");
+            //data package
+            data.hackingStatus = string.Format("{0} Hacking Attempt{1}{2}AI Alert Status {3}{4}{5}", hackingAttempts,
+                hackingAttempts != 1 ? "s" : "", "\n", colourStatus, aiAlertStatus, colourEnd);
+            //send data package to AIDisplayUI
+            EventManager.instance.PostNotification(EventType.AISendHackingData, this, data);
+        }
     }
 
     //
