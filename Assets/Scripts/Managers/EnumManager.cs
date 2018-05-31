@@ -19,8 +19,15 @@
     //  - - - UI - - -
     //
     public enum InventoryState { None, Gear, ReservePool}
-    public enum AlertType { None, SomethingWrong, PlayerStatus, SideStatus, DebugAI, DebugPlayer, HackingRebootInProgress, HackingInsufficientRenown }
     public enum UIPosition { None, Left, Middle, Right }
+    public enum AlertType {
+        None,
+        SomethingWrong,
+        PlayerStatus, SideStatus,
+        DebugAI, DebugPlayer,
+        HackingRebootInProgress, HackingInsufficientRenown, HackingInitialising
+    }
+    
 
     //
     // - - - Connections - - - 
@@ -72,7 +79,7 @@
     public enum Priority { Low, Medium, High, Critical }
     public enum AIType { None, Team, Decision }
     public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                             //used for toggling debugGUI.cs  AI data
-    public enum HackingStatus { Rebooting, InsufficientRenown, Possible}                               //determines what happens when player clicks AISideTabUI
+    public enum HackingStatus { Initialising, Rebooting, InsufficientRenown, Possible}                               //determines what happens when player clicks AISideTabUI
 
     //
     // - - - Dice - - -

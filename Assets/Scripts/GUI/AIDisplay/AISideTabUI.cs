@@ -46,7 +46,8 @@ public class AISideTabUI : MonoBehaviour
         //set all sub compoponents to Active
         SetAllToActive();
         topText.text = "AI";
-        bottomText.text = "2";    //PLACEHOLDER
+        bottomText.text = "-";
+        hackingStatus = HackingStatus.Initialising;
     }
 
     public void Start()

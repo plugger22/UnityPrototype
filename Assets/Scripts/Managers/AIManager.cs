@@ -164,7 +164,7 @@ public class AIManager : MonoBehaviour
     [Range(0, 3)] public int hackingIncrement = 1;
     [Tooltip("% chance that each hacking attempt will lead to an increase in AI Alert Level")]
     [Range(1, 100)] public int hackingAlertIncreaseChance = 50;
-    [Tooltip("How many turns does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
+    [Tooltip("How many turns (inclusive of current) does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
     [Range(0, 10)] public int hackingRebootTimer = 2;
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
@@ -2339,6 +2339,8 @@ public class AIManager : MonoBehaviour
     {
         isRebooting = true;
         rebootTimer = hackingRebootTimer;
+        //update side tab
+        UpdateSideTabData();
         //message
         Message message = GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer);
         GameManager.instance.dataScript.AddMessage(message);
@@ -2370,6 +2372,7 @@ public class AIManager : MonoBehaviour
             rebootTimer--;
             if (rebootTimer <= 0)
             { RebootComplete(); }
+            Debug.LogFormat("[Aim] AIManager.cs -> UpdateRebootStatus: rebootTimer now {0}{1}", rebootTimer, "\n");
         }
     }
 

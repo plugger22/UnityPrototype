@@ -62,6 +62,9 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnt
                 {
                     switch (GameManager.instance.aiSideTabScript.hackingStatus)
                     {
+                        case HackingStatus.Initialising:
+                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingInitialising);
+                            break;
                         case HackingStatus.Rebooting:
                             GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingRebootInProgress);
                             break;

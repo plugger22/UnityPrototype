@@ -333,6 +333,10 @@ public class GUIManager : MonoBehaviour
                 details.textTop = "The AI has been switched back ON (Authority)";
                 details.textBottom = "The Player has <b>Manual control</b> of the Resistance side only";
                 break;
+            case AlertType.HackingInitialising:
+                details.textTop = "Jacking into Authority AI. Initialising Icebreakers...";
+                details.textBottom = "Wait one...";
+                break;
             case AlertType.HackingInsufficientRenown:
                 details.textTop = "You have insufficient Renown for a Hacking attempt";
                 details.textBottom = "Check the colour of the Renown cost. If Yellow you have just enough, if Green you have more than enough";
