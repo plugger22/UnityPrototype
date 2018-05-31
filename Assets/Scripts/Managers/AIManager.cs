@@ -67,6 +67,14 @@ public class AIDisplayData
     public string task_3_textLower;
     public string task_3_chance;
     public string factionDetails;
+
+}
+
+/// <summary>
+/// data package to populate AIDisplayUI (needs to be separate because it's dynamic data whereas AIDisplayData is sent once during AIEndOfTurn)
+/// </summary>
+public class AIHackingData
+{
     public string hackingAttempts;
     public string aiAlertStatus;
 }
@@ -781,6 +789,9 @@ public class AIManager : MonoBehaviour
                         break;
                     case MessageSubType.AI_Immediate:
                         //immediate flag is set by EffectManager.cs -> ProcessEffect (Invisibility) prior to this
+                        break;
+                    case MessageSubType.AI_Reboot:
+                        //not applicable
                         break;
                     default:
                         Debug.LogWarning(string.Format("Invalid message AI subType \"{0}\" for \"{1}\"", message.subType, message.text));
@@ -2296,6 +2307,7 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// Sends a colour formatted data package to AISideTabUI indicating cost and status to hack AI. Ignore renown (it's used by PlayerManager.cs -> Renown Set property)
+    /// NOTE: data is dynamic
     /// </summary>
     public void UpdateSideTabData(int renown = 0)
     {
@@ -2342,6 +2354,7 @@ public class AIManager : MonoBehaviour
         //update side tab
         UpdateSideTabData();
         //message
+        Debug.LogFormat("[Aim] AIManager.cs -> RebootCommence: rebootTimer set to {0}{1}", rebootTimer, "\n");
         Message message = GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer);
         GameManager.instance.dataScript.AddMessage(message);
     }
@@ -2374,6 +2387,28 @@ public class AIManager : MonoBehaviour
             { RebootComplete(); }
             Debug.LogFormat("[Aim] AIManager.cs -> UpdateRebootStatus: rebootTimer now {0}{1}", rebootTimer, "\n");
         }
+    }
+
+    /// <summary>
+    /// called everytime Player hacks AI. Updates data and sends package to AIDisplay
+    /// NOTE: data is dynamic
+    /// </summary>
+    public void UpdateHackingStatus()
+    {
+        AIHackingData data = new AIHackingData();
+        //increment number of hacking attempts
+        hackingAttempts++;
+        //does AI Alert Status increase?
+
+
+        //log entries
+        Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: hackingAttempts now {0}{1}", hackingAttempts, "\n");
+
+        //data package
+        data.hackingAttempts = Convert.ToString(hackingAttempts);
+
+        //send data package to AIDisplayUI
+        EventManager.instance.PostNotification(EventType.AISendHackingData, this, data);
     }
 
     //

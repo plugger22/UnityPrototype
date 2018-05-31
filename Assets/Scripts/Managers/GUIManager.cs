@@ -70,8 +70,17 @@ public class GUIManager : MonoBehaviour
     List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
-                                                                    //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
-                                                                    //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
+                                                                      //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
+                                                                      //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
+
+    //colour palette 
+    private string colourAlert;
+    private string colourGood;
+    private string colourNeutral;
+    private string colourGrey;
+    private string colourBad;
+    private string colourNormal;
+    private string colourEnd;
 
     /// <summary>
     /// Initialises GUI with all relevant data
@@ -145,6 +154,7 @@ public class GUIManager : MonoBehaviour
         { isBlocked[i] = false; }
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
     }
 
     public void InitialiseLate()
@@ -167,11 +177,29 @@ public class GUIManager : MonoBehaviour
             case EventType.ChangeSide:
                 UpdateActorGUI();
                 break;
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
     }
+
+    /// <summary>
+    /// set colour palette for Generic Tool tip
+    /// </summary>
+    public void SetColours()
+    {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
 
     //
     // - - - Actors - - -
@@ -258,6 +286,11 @@ public class GUIManager : MonoBehaviour
     public void UpdatePlayerAlpha(float alpha)
     { canvasPlayer.alpha = alpha; }
 
+
+    //
+    // - - - GUI - - -
+    //
+
     /// <summary>
     /// set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
     /// NOTE: UI elements are blocked through modal panels masks (ModalGUI.cs) and node gameobjects through code (gamestate)
@@ -297,23 +330,24 @@ public class GUIManager : MonoBehaviour
         {
             case AlertType.SomethingWrong:
                 //generic fault message
-                details.textTop = "Something has gone wrong";
+                details.textTop = string.Format("{0}Something has gone horribly wrong{1}", colourBad, colourEnd);
                 details.textBottom = "We aren't sure what but we've got our best man on it";
                 break;
             case AlertType.PlayerStatus:
                 switch (GameManager.instance.playerScript.status)
                 {
                     case ActorStatus.Captured:
-                        details.textTop = "This action can't be taken because the Player has been Captured";
+                        details.textTop = string.Format("This action can't be taken because the Player has been {0}Captured{1}", colourBad, colourEnd);
                         break;
                     case ActorStatus.Inactive:
                         switch (GameManager.instance.playerScript.inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
-                                details.textTop = "This action can't be taken because the Player is undergoing a Breakdown (Stress)";
+                                details.textTop = string.Format("This action can't be taken because the Player is undergoing a {0}Breakdown{1} (Stress)", 
+                                    colourBad, colourEnd);
                                 break;
                             default:
-                                details.textTop = "This action can't be taken because the Player is indisposed";
+                                details.textTop = string.Format("{0}This action can't be taken because the Player is indisposed{1}", colourAlert, colourEnd);
                                 break;
                         }
                         break;
@@ -323,27 +357,28 @@ public class GUIManager : MonoBehaviour
                 }
                 break;
             case AlertType.SideStatus:
-                details.textTop = "This action is unavailable as the AI controls this side";
+                details.textTop = string.Format("{0}This action is unavailable as the AI controls this side{1}", colourAlert, colourEnd);
                 break;
             case AlertType.DebugAI:
                 details.textTop = "The AI has been switched OFF" ;
-                details.textBottom = "The Player now has <b>Manual control</b> of both sides";
+                details.textBottom = string.Format("The Player now has {0}<b>Manual control</b>{1} of both sides", colourNeutral, colourEnd);
                 break;
             case AlertType.DebugPlayer:
                 details.textTop = "The AI has been switched back ON (Authority)";
-                details.textBottom = "The Player has <b>Manual control</b> of the Resistance side only";
+                details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the Resistance side only", colourNeutral, colourEnd);
                 break;
             case AlertType.HackingInitialising:
-                details.textTop = "Jacking into Authority AI. Initialising Icebreakers...";
-                details.textBottom = "Wait one...";
+                details.textTop = "Jacking into Authority AI. Initialising Icebreakers.";
+                details.textBottom = string.Format("{0}Wait one...{1}", colourNeutral, colourEnd);
                 break;
             case AlertType.HackingInsufficientRenown:
-                details.textTop = "You have insufficient Renown for a Hacking attempt";
-                details.textBottom = "Check the colour of the Renown cost. If Yellow you have just enough, if Green you have more than enough";
+                details.textTop = string.Format("You have {0}Insufficient Renown{1} for a Hacking attempt", colourBad, colourEnd);
+                details.textBottom = string.Format("Check the colour of the Renown cost. If {0}Yellow{1} you have just enough, if {2}Green{3} you have more than enough",
+                    colourNeutral, colourEnd, colourGood, colourEnd);
                 break;
             case AlertType.HackingRebootInProgress:
-                details.textTop = "The AI is Rebooting it's Security Systems";
-                details.textBottom = "Hacking attempts aren't possible until the Reboot is complete";
+                details.textTop = string.Format("The AI is {0}Rebooting{1} it's Security Systems", colourBad, colourEnd);
+                details.textBottom = string.Format("Hacking attempts {0}aren't possible{1} until the Reboot is complete", colourNeutral, colourEnd);
                 break;
             default:
                 details.textTop = "This action is unavailable";

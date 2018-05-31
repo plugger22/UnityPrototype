@@ -112,6 +112,7 @@ public enum EventType
     AISideTabOpen,
     AISideTabClose,
     AISendDisplayData,
+    AISendHackingData,
     AISendSideData,
     //AI
     Capture,

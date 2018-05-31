@@ -65,6 +65,7 @@ public class AIDisplayUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AISendDisplayData, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AISendHackingData, OnEvent, "AIDisplayUI");
     }
 
 
@@ -87,8 +88,12 @@ public class AIDisplayUI : MonoBehaviour
                 CloseAIDisplay();
                 break;
             case EventType.AISendDisplayData:
-                AIDisplayData data = Param as AIDisplayData;
-                ProcessData(data);
+                AIDisplayData dataDisplay = Param as AIDisplayData;
+                ProcessDisplayData(dataDisplay);
+                break;
+            case EventType.AISendHackingData:
+                AIHackingData dataHacking = Param as AIHackingData;
+                ProcessHackingData(dataHacking);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -116,7 +121,7 @@ public class AIDisplayUI : MonoBehaviour
     /// populates all text fields with data package sent from AIManager.cs -> ProcessTasksDataPackage
     /// </summary>
     /// <param name="data"></param>
-    private void ProcessData(AIDisplayData data)
+    private void ProcessDisplayData(AIDisplayData data)
     {
         if (data != null)
         {
@@ -157,7 +162,20 @@ public class AIDisplayUI : MonoBehaviour
             { tabTopText.text = data.factionDetails; }
             else { tabTopText.text = ""; }
         }
-        else { Debug.LogWarning("Invalid AIDisplayData (Null)"); }
+        else { Debug.LogWarning("Invalid AIDisplayData package (Null)"); }
+    }
+
+    /// <summary>
+    /// populates Hacking data (bottom tab in display) with data from AIManager.cs -> UpdateHackingStatus
+    /// </summary>
+    /// <param name="data"></param>
+    private void ProcessHackingData(AIHackingData data)
+    {
+        if (data != null)
+        {
+
+        }
+        else { Debug.LogWarning("Invalid AIHackingData package (Null)"); }
     }
 
     /// <summary>
