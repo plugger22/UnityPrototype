@@ -322,6 +322,8 @@ public class TurnManager : MonoBehaviour
         Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}{2}", _actionsCurrent, _actionsTotal, "\n"));
         //exceed action limit? (total includes any temporary adjustments)
         remainder = _actionsTotal - _actionsCurrent;
+        //cached actions (so player can't keep regenerating new gear picks within an action)
+        GameManager.instance.gearScript.ResetCachedGearPicks();
         /*if (_actionsCurrent > _actionsTotal)*/
         if (remainder < 0)
         { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }

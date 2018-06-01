@@ -35,6 +35,11 @@ public class GearManager : MonoBehaviour
     [HideInInspector] public GearType typeMovement;
     [HideInInspector] public GearType typeRecovery;
     [HideInInspector] public GearType typePersuasion;
+
+    //cached gear picker choices
+    private int selectionTurn;                                          //turn number of last choice
+    private GenericPickerDetails cachedGenericDetails;
+    private bool isNewAction;
     
 
     private string colourEffectGood;
@@ -87,7 +92,10 @@ public class GearManager : MonoBehaviour
             if (gearUnique == null) { Debug.LogError("Invalid gearUnique (Null)"); }
         }
         else { Debug.LogError("Invalid listOfGearRarity (Null)"); }
-
+        //cached
+        selectionTurn = -1;
+        cachedGenericDetails = null;
+        isNewAction = true;
         //initialise fast access variables -> type
         List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
         if (listOfGearType != null)
@@ -222,7 +230,14 @@ public class GearManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// called by TurnManager.cs -> UseAction. Resets cache and action number for each new action to prevent player accessing new gear choices multiple times / action 
+    /// </summary>
+    public void ResetCachedGearPicks()
+    {
+        isNewAction = true;
+        Debug.Log("GearManager.cs -> ResetCachedGearPicks: isNewAction True");
+    }
 
 
     /// <summary>
@@ -231,195 +246,195 @@ public class GearManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseGenericPickerGear(ModalActionDetails details)
     {
-        bool errorFlag = false;
-        int gearID, index;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
-        GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
-        if (node != null)
+        Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear START: Turn {0}, isNewAction {1}", GameManager.instance.turnScript.Turn, isNewAction);
+        //get a new selection once per action. If multiple attempts during an action used the cached results to ensure the same gear is available on each attempt
+        if (selectionTurn != GameManager.instance.turnScript.Turn || isNewAction == true)
         {
-            //check for player/actor being captured
-            int actorID = 999;
-            if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
+            //first Gear Pick this action
+            bool errorFlag = false;
+            int gearID, index;
+            GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
+            GenericPickerDetails genericDetails = new GenericPickerDetails();
+            Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
+            if (node != null)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
-                if (actor != null)
-                { actorID = actor.actorID; }
-                else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorDataID)); errorFlag = true; }
-            }
-            //check capture provided no errors
-            if (errorFlag == false)
-            {
-                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
-                if (captureDetails != null)
+                //check for player/actor being captured
+                int actorID = 999;
+                if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
                 {
-                    //capture happened, abort recruitment
-                    captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
-                    return;
-                }
-            }
-            else
-            {
-                //reset flag to the default state prior to recruitments
-                errorFlag = false;
-            }
-            //Obtain Gear
-            genericDetails.returnEvent = EventType.GenericGearChoice;
-            genericDetails.side = globalResistance;
-            genericDetails.nodeID = details.nodeID;
-            genericDetails.actorSlotID = details.actorDataID;
-            //picker text
-            genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffectNeutral, colourEnd, colourNormal, colourEnd);
-            genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
-                colourNormal, colourEnd);
-            genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
-            //
-            //generate temp list of gear to choose from
-            //
-            List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
-            List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearRare));
-            //remove from lists any gear that the player currently has
-            List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
-            if (tempPlayerGear.Count > 0)
-            {
-
-                for (int i = 0; i < tempPlayerGear.Count; i++)
-                {
-                    gearID = tempPlayerGear[i];
-                    if (tempCommonGear.Exists(id => id == gearID) == true)
-                    { tempCommonGear.Remove(gearID); }
-                    else if (tempRareGear.Exists(id => id == gearID) == true)
-                    { tempRareGear.Remove(gearID); }
-                }
-            }
-            //
-            //select two items of gear for the picker
-            //
-            int[] arrayOfGear = new int[2];
-            int countOfGear = 0;
-            for (int i = 0; i < arrayOfGear.Length; i++)
-            {
-                gearID = -1;
-                //any rare gear available?
-                if (tempRareGear.Count > 0)
-                {
-                    //chance of rare gear -> base chance * actor ability (or 1 if player)
-                    int chance = chanceOfRareGear;
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                     if (actor != null)
+                    { actorID = actor.actorID; }
+                    else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorDataID)); errorFlag = true; }
+                }
+                //check capture provided no errors
+                if (errorFlag == false)
+                {
+                    CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                    if (captureDetails != null)
                     {
-                        //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
-                        if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
-                        { chance *= actor.datapoint2; }
-                    }
-                    else
-                    {
-                        chance = 0;
-                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID));
-                    }
-                    if (Random.Range(0, 100) < chance)
-                    {
-                        index = Random.Range(0, tempRareGear.Count);
-                        gearID = tempRareGear[index];
-                        tempRareGear.RemoveAt(index);
-                    }
-                    //if failed chance for rare gear then need to get common
-                    else if (tempCommonGear.Count > 0)
-                    {
-                        index = Random.Range(0, tempCommonGear.Count);
-                        gearID = tempCommonGear[index];
-                        tempCommonGear.RemoveAt(index);
+                        //capture happened, abort recruitment
+                        captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
+                        EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
+                        return;
                     }
                 }
-                //common gear
                 else
                 {
-                    if (tempCommonGear.Count > 0)
+                    //reset flag to the default state prior to recruitments
+                    errorFlag = false;
+                }
+                //Obtain Gear
+                genericDetails.returnEvent = EventType.GenericGearChoice;
+                genericDetails.side = globalResistance;
+                genericDetails.nodeID = details.nodeID;
+                genericDetails.actorSlotID = details.actorDataID;
+                //picker text
+                genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffectNeutral, colourEnd, colourNormal, colourEnd);
+                genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
+                    colourNormal, colourEnd);
+                genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
+                //
+                //generate temp list of gear to choose from
+                //
+                List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
+                List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearRare));
+                //remove from lists any gear that the player currently has
+                List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
+                if (tempPlayerGear.Count > 0)
+                {
+
+                    for (int i = 0; i < tempPlayerGear.Count; i++)
                     {
-                        index = Random.Range(0, tempCommonGear.Count);
-                        gearID = tempCommonGear[index];
-                        tempCommonGear.RemoveAt(index);
+                        gearID = tempPlayerGear[i];
+                        if (tempCommonGear.Exists(id => id == gearID) == true)
+                        { tempCommonGear.Remove(gearID); }
+                        else if (tempRareGear.Exists(id => id == gearID) == true)
+                        { tempRareGear.Remove(gearID); }
                     }
                 }
-                //found some gear?
-                if (gearID > -1)
-                { arrayOfGear[i] = gearID; countOfGear++; }
-            }
-            //check there is at least one item of gear available
-            if (countOfGear < 1)
-            {
-                //OUTCOME -> No gear available
-                Debug.LogWarning("GearManager: No gear available in InitaliseGenericPickerGear");
-                errorFlag = true;
+                //
+                //select two items of gear for the picker
+                //
+                int[] arrayOfGear = new int[2];
+                int countOfGear = 0;
+                for (int i = 0; i < arrayOfGear.Length; i++)
+                {
+                    gearID = -1;
+                    //any rare gear available?
+                    if (tempRareGear.Count > 0)
+                    {
+                        //chance of rare gear -> base chance * actor ability (or 1 if player)
+                        int chance = chanceOfRareGear;
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
+                        if (actor != null)
+                        {
+                            //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
+                            if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
+                            { chance *= actor.datapoint2; }
+                        }
+                        else
+                        {
+                            chance = 0;
+                            Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID));
+                        }
+                        if (Random.Range(0, 100) < chance)
+                        {
+                            index = Random.Range(0, tempRareGear.Count);
+                            gearID = tempRareGear[index];
+                            tempRareGear.RemoveAt(index);
+                        }
+                        //if failed chance for rare gear then need to get common
+                        else if (tempCommonGear.Count > 0)
+                        {
+                            index = Random.Range(0, tempCommonGear.Count);
+                            gearID = tempCommonGear[index];
+                            tempCommonGear.RemoveAt(index);
+                        }
+                    }
+                    //common gear
+                    else
+                    {
+                        if (tempCommonGear.Count > 0)
+                        {
+                            index = Random.Range(0, tempCommonGear.Count);
+                            gearID = tempCommonGear[index];
+                            tempCommonGear.RemoveAt(index);
+                        }
+                    }
+                    //found some gear?
+                    if (gearID > -1)
+                    { arrayOfGear[i] = gearID; countOfGear++; }
+                }
+                //check there is at least one item of gear available
+                if (countOfGear < 1)
+                {
+                    //OUTCOME -> No gear available
+                    Debug.LogWarning("GearManager: No gear available in InitaliseGenericPickerGear");
+                    errorFlag = true;
+                }
+                else
+                {
+                    //
+                    //loop gearID's that have been selected and package up ready for ModalGenericPicker
+                    //
+                    for (int i = 0; i < countOfGear; i++)
+                    {
+                        Gear gear = GameManager.instance.dataScript.GetGear(arrayOfGear[i]);
+                        if (gear != null)
+                        {
+                            //tooltip 
+                            GenericTooltipDetails tooltipDetails = GetGearTooltipDetails(gear);
+                            if (tooltipDetails != null)
+                            {
+                                //option details
+                                GenericOptionDetails optionDetails = new GenericOptionDetails();
+                                optionDetails.optionID = gear.gearID;
+                                optionDetails.text = gear.name.ToUpper();
+                                optionDetails.sprite = gear.sprite;
+                                //add to master arrays
+                                genericDetails.arrayOfOptions[i] = optionDetails;
+                                genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                            }
+                            else { Debug.LogError(string.Format("Invalid tooltip Details (Null) for gearID {0}", arrayOfGear[i])); }
+                        }
+                        else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
+                    }
+                }
             }
             else
             {
-                //
-                //loop gearID's that have been selected and package up ready for ModalGenericPicker
-                //
-                for (int i = 0; i < countOfGear; i++)
-                {
-                    Gear gear = GameManager.instance.dataScript.GetGear(arrayOfGear[i]);
-                    if (gear != null)
-                    {                        
-                        //tooltip 
-                        GenericTooltipDetails tooltipDetails = GetGearTooltipDetails(gear);
-                        if (tooltipDetails != null)
-                        {
-                            //option details
-                            GenericOptionDetails optionDetails = new GenericOptionDetails();
-                            optionDetails.optionID = gear.gearID;
-                            optionDetails.text = gear.name.ToUpper();
-                            optionDetails.sprite = gear.sprite;
-
-
-                            /*StringBuilder builderHeader = new StringBuilder();
-                            builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
-                            string colourGearEffect = colourEffectNeutral;
-                            if(gear.data == 3) { colourGearEffect = colourEffectGood; }
-                            else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
-                            //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
-                            switch(gear.type.name)
-                            {
-                                case "Movement":
-                                    builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
-                                    break;
-                            }
-                            tooltipDetails.textHeader = builderHeader.ToString();
-                            tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd, 
-                                "\n", colourSide, gear.type.name, colourEnd);*/
-
-                            //add to master arrays
-                            genericDetails.arrayOfOptions[i] = optionDetails;
-                            genericDetails.arrayOfTooltips[i] = tooltipDetails;
-                        }
-                        else { Debug.LogError(string.Format("Invalid tooltip Details (Null) for gearID {0}", arrayOfGear[i])); }
-                    }
-                    else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
-                }
+                Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
+                errorFlag = true;
+            }
+            //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+            if (errorFlag == true)
+            {
+                //create an outcome window to notify player
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                outcomeDetails.side = globalResistance;
+                outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
+                outcomeDetails.textBottom = "Heads will roll!";
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            }
+            else
+            {
+                //activate Generic Picker window
+                EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+                //cache details in case player attempts to access gear again
+                selectionTurn = GameManager.instance.turnScript.Turn;
+                cachedGenericDetails = genericDetails;
+                isNewAction = false;
+                Debug.Log("GearManager.cs -> InitialiseGenericPickerGear: isNewAction FALSE");
             }
         }
+        //player accessing gear during the same action multiple times. Used cached details so he gets the same result.
         else
         {
-            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
-            errorFlag = true;
-        }
-        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
-        if (errorFlag == true)
-        {
-            //create an outcome window to notify player
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.side = globalResistance;
-            outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
-            outcomeDetails.textBottom = "Heads will roll!";
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-        }
-        else
-        {
-            //activate Generic Picker window
-            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
+            if (cachedGenericDetails != null)
+            { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedGenericDetails); }
+            else
+                Debug.LogWarning("Invalid cachedGenericDetails (Null)");
         }
     }
 
