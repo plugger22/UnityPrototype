@@ -579,7 +579,6 @@ public class ActorManager : MonoBehaviour
                                     { 
                                     //get node action
                                     tempAction = actor.arc.nodeAction;
-
                                     if (tempAction != null)
                                     {
                                         //effects

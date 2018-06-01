@@ -15,10 +15,18 @@ public class EffectManager : MonoBehaviour
     [Tooltip("How long do ongoing effects last for? Global setting")]
     [Range(3,20)] public int ongoingEffectTimer = 3;
 
-    //fast access
+    //fast access -> spiders
     private int delayNoSpider;
     private int delayYesSpider;
-    //traits
+    //fast access -> teams
+    private int teamArcCivil = -1;
+    private int teamArcControl = -1;
+    private int teamArcMedia = -1;
+    private int teamArcProbe = -1;
+    private int teamArcSpider = -1;
+    private int teamArcDamage = -1;
+    private int teamArcErasure = -1;
+    //fast access -> traits
     private int actorStressedOverInvisibility;
 
 
@@ -41,6 +49,21 @@ public class EffectManager : MonoBehaviour
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         actorStressedOverInvisibility = GameManager.instance.dataScript.GetTraitEffectID("ActorInvisibilityStress");
         Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
+        //fast access -> teams
+        teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
+        teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
+        teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
+        teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
+        teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
+        teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
+        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
+        Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
+        Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
+        Debug.Assert(teamArcProbe > -1, "Invalid teamArcProbe");
+        Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider");
+        Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
+        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
     }
@@ -241,6 +264,46 @@ public class EffectManager : MonoBehaviour
                                                     }
                                                     else
                                                     { Debug.LogError(string.Format("Invalid teamArc (null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                    break;
+                                                case "TeamCivilNo":
+                                                    //A Civil team can't be present
+                                                    if (node != null)
+                                                    {
+                                                        if (node.CheckTeamPresent(teamArcCivil) > -1)
+                                                        { BuildString(result, string.Format("CIVIL team present", teamArc.name)); }
+                                                    }
+                                                    break;
+                                                case "TeamProbeNo":
+                                                    //A Probe team can't be present
+                                                    if (node != null)
+                                                    {
+                                                        if (node.CheckTeamPresent(teamArcProbe) > -1)
+                                                        { BuildString(result, string.Format("{0}PROBE team present{1}", colourBad, colourEnd)); }
+                                                    }
+                                                    break;
+                                                case "TeamControlNo":
+                                                    //A Control team can't be present
+                                                    if (node != null)
+                                                    {
+                                                        if (node.CheckTeamPresent(teamArcControl) > -1)
+                                                        { BuildString(result, string.Format("{0}CONTROL team present{1}", colourBad, colourEnd)); }
+                                                    }
+                                                    break;
+                                                case "TeamSpiderNo":
+                                                    //A Spider team can't be present
+                                                    if (node != null)
+                                                    {
+                                                        if (node.CheckTeamPresent(teamArcSpider) > -1)
+                                                        { BuildString(result, string.Format("{0}SPIDER team present{1}", colourBad, colourEnd)); }
+                                                    }
+                                                    break;
+                                                case "TeamMediaNo":
+                                                    //A Media team can't be present
+                                                    if (node != null)
+                                                    {
+                                                        if (node.CheckTeamPresent(teamArcMedia) > -1)
+                                                        { BuildString(result, string.Format("{0}MEDIA team present{1}", colourBad, colourEnd)); }
+                                                    }
                                                     break;
                                                 default:
                                                     BuildString(result, "Error!");
@@ -963,7 +1026,7 @@ public class EffectManager : MonoBehaviour
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
                                             Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
-                                                dataInput.textOrigin), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
+                                                dataInput.textOrigin), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1);
                                             GameManager.instance.dataScript.AddMessage(message);
                                         }
                                     }

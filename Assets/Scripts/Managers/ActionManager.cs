@@ -146,7 +146,7 @@ public class ActionManager : MonoBehaviour
                 SetColours();
                 break;
             default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
                 break;
         }
     }
@@ -294,7 +294,7 @@ public class ActionManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogError(string.Format("There are no Effects for this \"{0}\" Action", action.name));
+                            Debug.LogErrorFormat("There are no Effects for this \"{0}\" Action", action.name);
                             errorFlag = true;
                         }
                     }
@@ -419,7 +419,7 @@ public class ActionManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("There are no Effects for this \"{0}\" Action", action.name));
+                        Debug.LogErrorFormat("There are no Effects for this \"{0}\" Action", action.name);
                         errorFlag = true;
                     }
                 }
@@ -491,7 +491,7 @@ public class ActionManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", gear.gearID));
+                Debug.LogErrorFormat("Invalid Gear (Null) for gearID {0}", gear.gearID);
                 errorFlag = true;
             }
         }
@@ -514,7 +514,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     private void ProcessManageActorAction(ModalActionDetails details)
     {
-        Debug.Log(string.Format("Memory: total {0}{1}", System.GC.GetTotalMemory(false), "\n"));
+        //Debug.Log(string.Format("Memory: total {0}{1}", System.GC.GetTotalMemory(false), "\n"));
         bool errorFlag = false;
         string title;
         string colourSide;
@@ -605,7 +605,7 @@ public class ActionManager : MonoBehaviour
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
                     }
-                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+                    else { Debug.LogErrorFormat("Invalid manageAction (Null) for listOfManageOptions[{0}]", i); }
                 }
                 //add options to picker data package
                 genericDetails.arrayOfOptions = arrayOfGenericOptions;
@@ -614,7 +614,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorSlotID {0}", details.actorDataID); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -738,7 +738,7 @@ public class ActionManager : MonoBehaviour
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
                     }
-                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+                    else { Debug.LogErrorFormat("Invalid manageAction (Null) for listOfManageOptions[{0}]", i); }
 
                 }
                 //add options to picker data package
@@ -748,7 +748,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorSlotID {0}", details.actorDataID); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -873,7 +873,7 @@ public class ActionManager : MonoBehaviour
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
                     }
-                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+                    else { Debug.LogErrorFormat("Invalid manageAction (Null) for listOfManageOptions[{0}]", i); }
 
                 }
                 //add options to picker data package
@@ -883,7 +883,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorSlotID {0}", details.actorDataID); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -1007,7 +1007,7 @@ public class ActionManager : MonoBehaviour
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
                     }
-                    else { Debug.LogError(string.Format("Invalid manageAction (Null) for listOfManageOptions[{0}]", i)); }
+                    else { Debug.LogErrorFormat("Invalid manageAction (Null) for listOfManageOptions[{0}]", i); }
 
                 }
                 //add options to picker data package
@@ -1017,7 +1017,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfManageOptions (Null)"); errorFlag = true; }
 
         }
-        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", details.actorDataID)); errorFlag = true; }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorSlotID {0}", details.actorDataID); errorFlag = true; }
 
         //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
         if (errorFlag == true)
@@ -1078,7 +1078,7 @@ public class ActionManager : MonoBehaviour
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1138,7 +1138,7 @@ public class ActionManager : MonoBehaviour
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1203,7 +1203,7 @@ public class ActionManager : MonoBehaviour
                             case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
                             default:
                                 benefit = 0;
-                                Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gear.rarity.name));
+                                Debug.LogErrorFormat("Invalid gear rarity \"{0}\"", gear.rarity.name);
                                 break;
                         }
                         if (preferredGear.name.Equals(gear.type.name) == true)
@@ -1221,12 +1221,12 @@ public class ActionManager : MonoBehaviour
                         }
                     }
                     else
-                    { Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name)); errorFlag = true; }
+                    { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }
 
                 }
-                else { Debug.LogError(string.Format("Invalid gear (Null) for details.gearID {0}", details.gearID)); errorFlag = true; }
+                else { Debug.LogErrorFormat("Invalid gear (Null) for details.gearID {0}", details.gearID); errorFlag = true; }
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1353,13 +1353,13 @@ public class ActionManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError(string.Format("There are no USE Effects for this \"{0}\" gear", gear.name));
+                        Debug.LogErrorFormat("There are no USE Effects for this \"{0}\" gear", gear.name);
                         errorFlag = true;
                     }
                 }
                 else
                 {
-                    Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", details.gearID));
+                    Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", details.gearID);
                     errorFlag = true;
                 }
             }
@@ -1372,7 +1372,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             errorFlag = true;
-            Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer));
+            Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer);
         }
         //
         // - - - Outcome - - -
@@ -1415,7 +1415,7 @@ public class ActionManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", gear.gearID));
+                Debug.LogErrorFormat("Invalid Gear (Null) for gearID {0}", gear.gearID);
                 errorFlag = true;
             }
             outcomeDetails.textTop = builderTop.ToString();
@@ -1465,7 +1465,7 @@ public class ActionManager : MonoBehaviour
                 Message message = GameManager.instance.messageScript.ActorSpokenToo(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
@@ -1532,7 +1532,7 @@ public class ActionManager : MonoBehaviour
                 Message message = GameManager.instance.messageScript.ActorSpokenToo(text, actor.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
@@ -1602,15 +1602,15 @@ public class ActionManager : MonoBehaviour
                     builder.AppendLine(); builder.AppendLine();
                     builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
-                else { Debug.LogError(string.Format("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side)); }
+                else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side); }
                 //remove actor from reserve list
                 List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
                 if (reservePoolList != null)
                 {
                     if (reservePoolList.Remove(actor.actorID) == false)
-                    { Debug.LogWarning(string.Format("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID)); }
+                    { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); }
                 }
-                else { Debug.LogError(string.Format("Invalid reservePoolList (Null) for GlobalSide {0}", details.side)); }
+                else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); }
                 //teams
                 if (numOfTeams > 0)
                 {
@@ -1629,7 +1629,7 @@ public class ActionManager : MonoBehaviour
                 GameManager.instance.dataScript.AddMessage(message);
 
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
@@ -1715,15 +1715,15 @@ public class ActionManager : MonoBehaviour
                     builder.AppendLine(); builder.AppendLine();
                     builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
-                else { Debug.LogError(string.Format("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side)); }
+                else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side); }
                 //remove actor from reserve list
                 List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
                 if (reservePoolList != null)
                 {
                     if (reservePoolList.Remove(actor.actorID) == false)
-                    { Debug.LogWarning(string.Format("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID)); }
+                    { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); }
                 }
-                else { Debug.LogError(string.Format("Invalid reservePoolList (Null) for GlobalSide {0}", details.side)); }
+                else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); }
                 //teams
                 if (numOfTeams > 0)
                 {
@@ -1742,7 +1742,7 @@ public class ActionManager : MonoBehaviour
                 GameManager.instance.dataScript.AddMessage(message);
 
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
@@ -1821,9 +1821,9 @@ public class ActionManager : MonoBehaviour
                     if (reservePoolList != null)
                     {
                         if (reservePoolList.Remove(actor.actorID) == false)
-                        { Debug.LogWarning(string.Format("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID)); }
+                        { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); }
                     }
-                    else { Debug.LogError(string.Format("Invalid reservePoolList (Null) for GlobalSide {0}", details.side)); errorFlag = true; }
+                    else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); errorFlag = true; }
                     //Authority Actor brings team with them (if space available)
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                     {
@@ -1866,7 +1866,7 @@ public class ActionManager : MonoBehaviour
                 }
                 else { Debug.LogError("There are no vacancies on map for the actor to be recalled to Active Duty"); errorFlag = true; }
             }
-            else { Debug.LogError(string.Format("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID)); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
@@ -1890,7 +1890,7 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process node Target
+    /// Process attempt on node Target
     /// </summary>
     /// <param name="details"></param>
     public void ProcessNodeTarget(int nodeID)
@@ -1898,6 +1898,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         bool isAction = false;
         bool isSuccessful = false;
+        bool isZeroInvisibility = false;
         int targetID;
         int actorID = 999;
         string text;
@@ -1921,7 +1922,11 @@ public class ActionManager : MonoBehaviour
 
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
-                { details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID); }
+                {
+                    details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID);
+                    if (GameManager.instance.playerScript.invisibility == 0)
+                    { isZeroInvisibility = true; }
+                }
                 //Actor
                 else
                 {
@@ -1935,12 +1940,14 @@ public class ActionManager : MonoBehaviour
                         {
                             details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID);
                             actorID = actor.actorID;
+                            if (actor.datapoint2 == 0)
+                            { isZeroInvisibility = true; }
                         }
                         else
-                        { Debug.LogError(string.Format("Invalid actor (Null) for slotID {0}", slotID)); errorFlag = true; }
+                        { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); errorFlag = true; }
                     }
                     else
-                    { Debug.LogError(string.Format("Invalid slotID (-1) for target.actorArc.ActorArcID {0}", target.actorArc.ActorArcID)); }
+                    { Debug.LogErrorFormat("Invalid slotID (-1) for target.actorArc.ActorArcID {0}", target.actorArc.ActorArcID); }
                 }
                 //Player/Actor captured (provided no errors, otherwise bypass)
                 if (errorFlag == false)
@@ -1961,12 +1968,12 @@ public class ActionManager : MonoBehaviour
                 //NOT captured, proceed with target
 
                 //
-                // - - - Process target - - -  
+                // - - - Attempt Target - - -  
                 //
                 isAction = true;
                 int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
-                Debug.Log(string.Format(" Target: {0} - - - {1}", target.name, "\n"));
+                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0} - - - {1}", target.name, "\n");
                 int roll = Random.Range(0, 100);
                 if (roll <= chance)
                 {
@@ -1994,10 +2001,17 @@ public class ActionManager : MonoBehaviour
                 if (isSuccessful == true) { node.isTargetKnown = true; }
                 else
                 {
-                    if (Random.Range(0, 100) < failedTargetChance)
-                    { node.isTargetKnown = true; }
+                    //chance of being known
+                    if (isZeroInvisibility == false)
+                    {
+                        if (Random.Range(0, 100) < failedTargetChance)
+                        { node.isTargetKnown = true; }
+                    }
+                    //if zero invisibility then target auto known to authorities
+                    else { node.isTargetKnown = true; }
                 }
-                Debug.Log(string.Format("Target Resolution: chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n"));
+                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Authority aware of target: {0}", node.isTargetKnown);
+                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Resolution chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n");
                 //
                 // - - - Effects - - - 
                 //
@@ -2016,7 +2030,10 @@ public class ActionManager : MonoBehaviour
                     //FAILED target attempt
                     listOfEffects.AddRange(target.listOfFailEffects);
                     builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.name, colourEnd, "\n");
-                    builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the attempt{2}", colourAlert, failedTargetChance, colourEnd);
+                    if (isZeroInvisibility == false)
+                    { builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the attempt{2}", colourAlert, failedTargetChance, colourEnd); }
+                    else
+                    { builderBottom.AppendFormat("{0}Authorities are aware of the attempt (due to Zero Invisibility){1}", colourBad, colourEnd); }
                     text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
@@ -2090,9 +2107,9 @@ public class ActionManager : MonoBehaviour
                 //generate a create modal window event
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
             }
-            else { Debug.LogError(string.Format("Invalid Target (Null) for node.targetID {0}", nodeID)); }
+            else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", nodeID); }
         }
-        else { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", nodeID)); }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
 
     }
 
@@ -2149,7 +2166,7 @@ public class ActionManager : MonoBehaviour
                                     msgText = "No Promise";
                                     break;
                                 default:
-                                    Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
                                     break;
                             }
                             //teams
@@ -2164,7 +2181,7 @@ public class ActionManager : MonoBehaviour
                         else
                         {
                             //default data for missing outcome
-                            Debug.LogWarning(string.Format("Invalid optionText (Null or empty) for {0} {1}", actor.actorName, actor.arc.name));
+                            Debug.LogWarningFormat("Invalid optionText (Null or empty) for {0} {1}", actor.actorName, actor.arc.name);
                             builderTop.AppendFormat("{0} {1} is sent to the Reserves", actor.arc.name, actor.actorName);
                         }
                         //message
@@ -2203,7 +2220,7 @@ public class ActionManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogError(string.Format("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText));
+                            Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText);
                             successFlag = false;
                         }
                     }
@@ -2215,13 +2232,13 @@ public class ActionManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning(string.Format("Invalid Actor (Null) for actorSlotID {0}", data.optionID));
+                    Debug.LogWarningFormat("Invalid Actor (Null) for actorSlotID {0}", data.optionID);
                     successFlag = false;
                 }
 
             }
             else
-            { Debug.LogWarning(string.Format("Invalid actorSlotID {0}", data.actorSlotID)); }
+            { Debug.LogWarningFormat("Invalid actorSlotID {0}", data.actorSlotID); }
         }
         else
         {
@@ -2310,7 +2327,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 default:
-                                    Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
                                     break;
                             }
                             //teams
@@ -2356,7 +2373,7 @@ public class ActionManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText));
+                                Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText);
                                 successFlag = false;
                             }
                         }
@@ -2368,12 +2385,12 @@ public class ActionManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning(string.Format("Invalid Actor (Null) for actorSlotID {0}", data.optionID));
+                        Debug.LogWarningFormat("Invalid Actor (Null) for actorSlotID {0}", data.optionID);
                         successFlag = false;
                     }
                 }
                 else
-                { Debug.LogWarning(string.Format("Invalid actorSlotID {0}", data.actorSlotID)); }
+                { Debug.LogWarningFormat("Invalid actorSlotID {0}", data.actorSlotID); }
             }
             else
             { Debug.LogError("Invalid optionText (Null or empty)"); }
@@ -2461,7 +2478,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 default:
-                                    Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
                                     break;
                             }
                             //teams
@@ -2507,7 +2524,7 @@ public class ActionManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText));
+                                Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText);
                                 successFlag = false;
                             }
                         }
@@ -2519,12 +2536,12 @@ public class ActionManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning(string.Format("Invalid Actor (Null) for actorSlotID {0}", data.optionID));
+                        Debug.LogWarningFormat("Invalid Actor (Null) for actorSlotID {0}", data.optionID);
                         successFlag = false;
                     }
                 }
                 else
-                { Debug.LogWarning(string.Format("Invalid actorSlotID {0}", data.actorSlotID)); }
+                { Debug.LogWarningFormat("Invalid actorSlotID {0}", data.actorSlotID); }
             }
             else
             { Debug.LogError("Invalid optionText (Null or empty)"); }
@@ -2586,22 +2603,22 @@ public class ActionManager : MonoBehaviour
                 switch (data.optionText)
                 {
                     case "HandleReserve":
-                        Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
+                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n");
                         handler = InitialiseReserveActorAction;
                         details.eventType = EventType.GenericReserveActor;
                         break;
                     case "HandleDismiss":
-                        Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
+                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n");
                         handler = InitialiseDismissActorAction;
                         details.eventType = EventType.GenericDismissActor;
                         break;
                     case "HandleDispose":
-                        Debug.Log(string.Format("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n"));
+                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n");
                         handler = InitialiseDisposeActorAction;
                         details.eventType = EventType.GenericDisposeActor;
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                        Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
                         errorFlag = true;
                         break;
                 }
