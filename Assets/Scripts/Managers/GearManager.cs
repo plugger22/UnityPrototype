@@ -247,43 +247,54 @@ public class GearManager : MonoBehaviour
     private void InitialiseGenericPickerGear(ModalActionDetails details)
     {
         Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear START: Turn {0}, isNewAction {1}", GameManager.instance.turnScript.Turn, isNewAction);
-        //get a new selection once per action. If multiple attempts during an action used the cached results to ensure the same gear is available on each attempt
-        if (selectionTurn != GameManager.instance.turnScript.Turn || isNewAction == true)
+
+        //first Gear Pick this action
+        bool errorFlag = false;
+        bool isIgnoreCache = false;
+        int gearID, index;
+        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
+        if (node != null)
         {
-            //first Gear Pick this action
-            bool errorFlag = false;
-            int gearID, index;
-            GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
-            GenericPickerDetails genericDetails = new GenericPickerDetails();
-            Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
-            if (node != null)
+            
+            #region CaptureCheck
+            //check for player/actor being captured
+            int actorID = 999;
+            if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
             {
-                //check for player/actor being captured
-                int actorID = 999;
-                if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
+                if (actor != null)
+                { actorID = actor.actorID; }
+                else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorDataID)); errorFlag = true; }
+            }
+            //check capture provided no errors
+            if (errorFlag == false)
+            {
+                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                if (captureDetails != null)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
-                    if (actor != null)
-                    { actorID = actor.actorID; }
-                    else { Debug.LogError(string.Format("Invalid actor (Null) fro details.ActorSlotID {0}", details.actorDataID)); errorFlag = true; }
+                    //capture happened, abort recruitment
+                    captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
+                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
+                    return;
                 }
-                //check capture provided no errors
-                if (errorFlag == false)
-                {
-                    CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
-                    if (captureDetails != null)
-                    {
-                        //capture happened, abort recruitment
-                        captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
-                        EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
-                        return;
-                    }
-                }
-                else
-                {
-                    //reset flag to the default state prior to recruitments
-                    errorFlag = false;
-                }
+            }
+            else
+            {
+                //reset flag to the default state prior to recruitments
+                errorFlag = false;
+            }
+            #endregion
+
+            //get a new selection once per action. If multiple attempts during an action used the cached results to ensure the same gear is available on each attempt
+            if (selectionTurn != GameManager.instance.turnScript.Turn || isNewAction == true)
+            { isIgnoreCache = true; }
+            else { isIgnoreCache = false; }
+            //proceed with a new gear Selection
+            if (isIgnoreCache == true)
+            {
+                #region gearSelection
                 //Obtain Gear
                 genericDetails.returnEvent = EventType.GenericGearChoice;
                 genericDetails.side = globalResistance;
@@ -401,23 +412,27 @@ public class GearManager : MonoBehaviour
                         else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
                     }
                 }
+                #endregion
             }
-            else
-            {
-                Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
-                errorFlag = true;
-            }
-            //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
-            if (errorFlag == true)
-            {
-                //create an outcome window to notify player
-                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                outcomeDetails.side = globalResistance;
-                outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
-                outcomeDetails.textBottom = "Heads will roll!";
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
-            }
-            else
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
+            errorFlag = true;
+        }
+        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+        if (errorFlag == true)
+        {
+            //create an outcome window to notify player
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.side = globalResistance;
+            outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
+            outcomeDetails.textBottom = "Heads will roll!";
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        }
+        else
+        {
+            if (isIgnoreCache == true)
             {
                 //activate Generic Picker window
                 EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
@@ -427,14 +442,14 @@ public class GearManager : MonoBehaviour
                 isNewAction = false;
                 Debug.Log("GearManager.cs -> InitialiseGenericPickerGear: isNewAction FALSE");
             }
-        }
-        //player accessing gear during the same action multiple times. Used cached details so he gets the same result.
-        else
-        {
-            if (cachedGenericDetails != null)
-            { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedGenericDetails); }
+            //player accessing gear during the same action multiple times. Used cached details so he gets the same result.
             else
-                Debug.LogWarning("Invalid cachedGenericDetails (Null)");
+            {
+                if (cachedGenericDetails != null)
+                { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedGenericDetails); }
+                else
+                    Debug.LogWarning("Invalid cachedGenericDetails (Null)");
+            }
         }
     }
 
