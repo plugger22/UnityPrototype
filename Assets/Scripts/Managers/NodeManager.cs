@@ -1759,7 +1759,7 @@ public class NodeManager : MonoBehaviour
                         moveData.text = builder.ToString();
                         ProcessMoveOutcome(moveData);
                     }
-                    else { EventManager.instance.PostNotification(EventType.UseAction, this); }
+                    else { EventManager.instance.PostNotification(EventType.UseAction, this, "Player Move"); }
                 }
             }
             else
@@ -1792,6 +1792,7 @@ public class NodeManager : MonoBehaviour
             outcomeDetails.sprite = GameManager.instance.guiScript.alarmSprite;
             outcomeDetails.isAction = true;
             outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
+            outcomeDetails.reason = "Player Move";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
         }
     }

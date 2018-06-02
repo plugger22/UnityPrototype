@@ -330,7 +330,10 @@ public class ActionManager : MonoBehaviour
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Node Action";
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -1097,6 +1100,7 @@ public class ActionManager : MonoBehaviour
         if (errorFlag == false)
         {
             outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Actor Lie Low";
             outcomeDetails.textBottom = builder.ToString();
         }
         //generate a create modal window event
@@ -1155,7 +1159,10 @@ public class ActionManager : MonoBehaviour
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Activate Actor";
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -1267,6 +1274,7 @@ public class ActionManager : MonoBehaviour
         if (errorFlag == false)
         {
             outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Give Gear";
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
@@ -1480,6 +1488,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Reassure Actor";
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
@@ -1547,6 +1556,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Threaten Actor";
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
@@ -1644,7 +1654,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             outcomeDetails.isAction = true;
-            
+            outcomeDetails.reason = "Let Actor Go";
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
@@ -1757,7 +1767,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             outcomeDetails.isAction = true;
-
+            outcomeDetails.reason = "Fire Actor";
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
@@ -1881,6 +1891,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Active Duty";
             //is there a delegate method that needs processing?
             if (details.handler != null)
             { details.handler(); }
@@ -2087,6 +2098,9 @@ public class ActionManager : MonoBehaviour
                 //                        
                 //action (if valid) expended -> must be BEFORE outcome window event
                 outcomeDetails.isAction = isAction;
+                if (isSuccessful == true)
+                { outcomeDetails.reason = "Target Success"; }
+                else { outcomeDetails.reason = "Target Fail"; }
                 if (errorFlag == false)
                 {
                     //outcome
@@ -2261,7 +2275,10 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = playerSide;
         //action expended automatically for manage actor
         if (successFlag == true)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Manager Reserve Actor";
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -2416,7 +2433,10 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = playerSide;
         //action expended automatically for manage actor
         if (successFlag == true)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Dismiss Actor";
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -2567,7 +2587,10 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.side = playerSide;
         //action expended automatically for manage actor
         if (successFlag == true)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Dispose of Actor";
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }

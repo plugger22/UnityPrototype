@@ -37,9 +37,12 @@ public class GearManager : MonoBehaviour
     [HideInInspector] public GearType typePersuasion;
 
     //cached gear picker choices
-    private int selectionPlayerTurn;                                          //turn number of last choice
-    private GenericPickerDetails cachedPlayerDetails;
-    private bool isNewAction;
+    private int selectionPlayerTurn;                                          //turn number of last choice for a Player gear selection
+    private int selectionActorTurn;                                           //turn number of last choice for an Actor gear selection
+    private GenericPickerDetails cachedPlayerDetails;                         //last player gear selection this action
+    private GenericPickerDetails cachedActorDetails;                          //last actor gear selection this action
+    private bool isNewActionPlayer;                                           //set to true after player makes a gear choice at own node
+    private bool isNewActionActor;                                            //set to true after player makes a gear choice at an actor contact's node
     
 
     private string colourEffectGood;
@@ -94,8 +97,11 @@ public class GearManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfGearRarity (Null)"); }
         //cached
         selectionPlayerTurn = -1;
+        selectionActorTurn = -1;
         cachedPlayerDetails = null;
-        isNewAction = true;
+        cachedActorDetails = null;
+        isNewActionPlayer = true;
+        isNewActionActor = true;
         //initialise fast access variables -> type
         List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
         if (listOfGearType != null)
@@ -230,14 +236,14 @@ public class GearManager : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// called by TurnManager.cs -> UseAction. Resets cache and action number for each new action to prevent player accessing new gear choices multiple times / action 
     /// </summary>
     public void ResetCachedGearPicks()
     {
         isNewAction = true;
         Debug.Log("GearManager.cs -> ResetCachedGearPicks: isNewAction True");
-    }
+    }*/
 
 
     /// <summary>
@@ -246,7 +252,8 @@ public class GearManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseGenericPickerGear(ModalActionDetails details)
     {
-        Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear START: Turn {0}, isNewAction {1}", GameManager.instance.turnScript.Turn, isNewAction);
+        Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear START: Turn {0}, isNewActionPlayer {1}, isNewActionActor {2}{3}", 
+            GameManager.instance.turnScript.Turn, isNewActionPlayer, isNewActionActor, "\n");
 
         //first Gear Pick this action
         bool errorFlag = false;
@@ -258,7 +265,7 @@ public class GearManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
         if (node != null)
         {
-            
+
             #region CaptureCheck
             //check for player/actor being captured
             int actorID = 999;
@@ -290,9 +297,18 @@ public class GearManager : MonoBehaviour
             #endregion
 
             //get a new selection once per action. If multiple attempts during an action used the cached results to ensure the same gear is available on each attempt
-            if (selectionPlayerTurn != GameManager.instance.turnScript.Turn || isNewAction == true)
-            { isIgnoreCache = true; }
-            
+            if (isPlayer == true)
+            {
+                if (selectionPlayerTurn != GameManager.instance.turnScript.Turn || isNewActionPlayer == true)
+                { isIgnoreCache = true; }
+            }
+            else
+            {
+                //actor gear selection (can be different from Players, eg. better chance of rare gear)
+                if (selectionActorTurn != GameManager.instance.turnScript.Turn || isNewActionActor == true)
+                { isIgnoreCache = true; }
+            }
+            Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear ex-Capture: isPlayer {0} isIgnoreCache {1}", isPlayer, isIgnoreCache);
             //proceed with a new gear Selection
             if (isIgnoreCache == true)
             {
@@ -440,10 +456,21 @@ public class GearManager : MonoBehaviour
             {
                 //activate Generic Picker window
                 EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails);
-                //cache details in case player attempts to access gear again
-                selectionPlayerTurn = GameManager.instance.turnScript.Turn;
-                cachedPlayerDetails = genericDetails;
-                isNewAction = false;
+                if (isPlayer == true)
+                {
+                    //cache details in case player attempts to access Player gear selection again this action
+                    selectionPlayerTurn = GameManager.instance.turnScript.Turn;
+                    cachedPlayerDetails = genericDetails;
+                    isNewActionPlayer = false;
+                }
+                else
+                {
+                    //cache details in case player attempts to access Actor gear selection again this action
+                    selectionActorTurn = GameManager.instance.turnScript.Turn;
+                    cachedActorDetails = genericDetails;
+                    isNewActionActor = false;
+                }
+                
                 Debug.Log("GearManager.cs -> InitialiseGenericPickerGear: isNewAction FALSE");
             }
             //player accessing gear during the same action multiple times. Used cached details so he gets the same result.
@@ -451,10 +478,19 @@ public class GearManager : MonoBehaviour
             {
                 if (isPlayer == true)
                 {
+                    //Player gear selection
                     if (cachedPlayerDetails != null)
                     { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedPlayerDetails); }
                     else
-                        Debug.LogWarning("Invalid cachedGenericDetails (Null)");
+                    { Debug.LogWarning("Invalid cachedGenericDetails Player(Null)"); }
+                }
+                else
+                {
+                    //Actor gear selection
+                    if (cachedActorDetails != null)
+                    { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedActorDetails); }
+                    else
+                    { Debug.LogWarning("Invalid cachedGenericDetails Actor (Null)"); }
                 }
             }
         }
@@ -694,6 +730,7 @@ public class GearManager : MonoBehaviour
     {
         bool successFlag = true;
         bool isInvisibility = false;
+        bool isPlayer = false;
         if (data.optionID > -1)
         {
             //get currently selected node
@@ -709,6 +746,8 @@ public class GearManager : MonoBehaviour
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
+                        if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
+                        { isPlayer = true; }
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.globalScript.sideResistance);
                         if (actor != null)
                         {
@@ -721,6 +760,10 @@ public class GearManager : MonoBehaviour
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
                                     colourDefault, colourEnd));
+                                //reset flags for gear caches
+                                if (isPlayer == true)
+                                { isNewActionPlayer = true; }
+                                else { isNewActionActor = true; }
                                 //message
                                 string textMsg = string.Format("{0} ({1}) has been acquired at {2}", gear.name, gear.type.name, node.nodeName);
                                 Message messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
@@ -772,7 +815,10 @@ public class GearManager : MonoBehaviour
                             details.sprite = sprite;
                             details.side = GameManager.instance.globalScript.sideResistance;
                             if (successFlag == true)
-                            { details.isAction = true; }
+                            {
+                                details.isAction = true;
+                                details.reason = "Select Gear";
+                            }
                             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }

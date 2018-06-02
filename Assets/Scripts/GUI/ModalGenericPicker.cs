@@ -320,7 +320,7 @@ public class ModalGenericPicker : MonoBehaviour
             modalGenericObject.SetActive(false);
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.textTop = "There has been a SNAFU and mo teams can be recalled";
+            outcomeDetails.textTop = "There has been a SNAFU";
             outcomeDetails.textBottom = "Heads, toes and other limbswill be removed";
             outcomeDetails.side = details.side;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);

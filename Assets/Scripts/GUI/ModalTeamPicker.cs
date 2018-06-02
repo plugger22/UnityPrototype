@@ -452,6 +452,7 @@ public class ModalTeamPicker : MonoBehaviour
         //outcome dialogue windows
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.instance.globalScript.sideAuthority;
+        
         bool successFlag = true;
         if (teamIDSelected > -1)
         {
@@ -479,7 +480,10 @@ public class ModalTeamPicker : MonoBehaviour
         }
         //action expended if successful
         if (successFlag == true)
-        { details.isAction = true; }
+        {
+            details.isAction = true;
+            details.reason = "Team Picker";
+        }
         //fire up Outcome dialogue
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }

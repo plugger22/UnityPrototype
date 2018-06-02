@@ -33,6 +33,7 @@ public class ModalOutcome : MonoBehaviour
     private float fadeInTime;
     private int modalLevel;                              //modal level of menu, passed in by ModalOutcomeDetails in SetModalOutcome
     private ModalState modalState;                       //modal state to return to once outcome window closed (handles modalLevel 2+ cases, ignored for rest)
+    private string reason;                               //reason outcome window is being used (passed on via CloseOutcomeWindow event to UseAction event for debugging
 
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
 
@@ -113,65 +114,70 @@ public class ModalOutcome : MonoBehaviour
     //public void SetModalOutcome(Side side, string textTop, string textBottom, Sprite sprite = null)
     public void SetModalOutcome(ModalOutcomeDetails details)
     {
-        Debug.Log(string.Format("Outcome: {0}{1}", details.textTop, "\n"));
-        //set modal true
-        GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
-        //open panel at start, the modal window is already active on the panel
-        modalOutcomeWindow.SetActive(true);
-        //register action status
-        isAction = details.isAction;
-        //set confirm button image and sprite states
-        switch (details.side.name)
+        if (details != null)
         {
-            case "Authority":
-                //set button sprites
-                confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
-                //set sprite transitions
-                SpriteState spriteStateAuthority = new SpriteState();
-                spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
-                spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
-                confirmButton.spriteState = spriteStateAuthority;
-                break;
-            case "Resistance":
-                //set button sprites
-                confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-                //set sprite transitions
-                SpriteState spriteStateRebel = new SpriteState();
-                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
-                spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
-                confirmButton.spriteState = spriteStateRebel;
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", details.side));
-                break;
+            Debug.Log(string.Format("Outcome: {0}{1}", details.textTop, "\n"));
+            reason = details.reason;
+            //set modal true
+            GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
+            //open panel at start, the modal window is already active on the panel
+            modalOutcomeWindow.SetActive(true);
+            //register action status
+            isAction = details.isAction;
+            //set confirm button image and sprite states
+            switch (details.side.name)
+            {
+                case "Authority":
+                    //set button sprites
+                    confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                    //set sprite transitions
+                    SpriteState spriteStateAuthority = new SpriteState();
+                    spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
+                    spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    confirmButton.spriteState = spriteStateAuthority;
+                    break;
+                case "Resistance":
+                    //set button sprites
+                    confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                    //set sprite transitions
+                    SpriteState spriteStateRebel = new SpriteState();
+                    spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
+                    spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    confirmButton.spriteState = spriteStateRebel;
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid side \"{0}\"", details.side));
+                    break;
+            }
+            //set transition
+            confirmButton.transition = Selectable.Transition.SpriteSwap;
+
+            //set opacity to zero (invisible)
+            //SetOpacity(0f);
+
+            //set up modalOutcome elements
+            outcomeText.text = details.textTop;
+            effectText.text = details.textBottom;
+            if (details.sprite != null)
+            { outcomeImage.sprite = details.sprite; }
+
+            //get dimensions of dynamic tooltip
+            float width = rectTransform.rect.width;
+            float height = rectTransform.rect.height;
+
+            //Fixed position at screen centre
+            Vector3 screenPos = new Vector3();
+            screenPos.x = Screen.width / 2;
+            screenPos.y = Screen.height / 2;
+            //set position
+            modalOutcomeWindow.transform.position = screenPos;
+            GameManager.instance.inputScript.SetModalState(ModalState.Outcome);
+            //pass through data for when the outcome window is closed
+            modalLevel = details.modalLevel;
+            modalState = details.modalState;
+            Debug.Log("UI: Open -> ModalOutcome window" + "\n");
         }
-        //set transition
-        confirmButton.transition = Selectable.Transition.SpriteSwap;
-
-        //set opacity to zero (invisible)
-        //SetOpacity(0f);
-
-        //set up modalOutcome elements
-        outcomeText.text = details.textTop;
-        effectText.text = details.textBottom;
-        if (details.sprite != null)
-        { outcomeImage.sprite = details.sprite; }
-
-        //get dimensions of dynamic tooltip
-        float width = rectTransform.rect.width;
-        float height = rectTransform.rect.height;
-
-        //Fixed position at screen centre
-        Vector3 screenPos = new Vector3();
-        screenPos.x = Screen.width / 2;
-        screenPos.y = Screen.height / 2;
-        //set position
-        modalOutcomeWindow.transform.position = screenPos;
-        GameManager.instance.inputScript.SetModalState(ModalState.Outcome);
-        //pass through data for when the outcome window is closed
-        modalLevel = details.modalLevel;
-        modalState = details.modalState;
-        Debug.Log("UI: Open -> ModalOutcome window" + "\n");
+        else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
     }
 
 
@@ -213,7 +219,7 @@ public class ModalOutcome : MonoBehaviour
         GameManager.instance.inputScript.ResetStates(modalState);
         //end of turn check
         if (isAction == true)
-        { EventManager.instance.PostNotification(EventType.UseAction, this); }
+        { EventManager.instance.PostNotification(EventType.UseAction, this, reason); }
     }
 
 

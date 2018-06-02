@@ -1030,7 +1030,10 @@ public class TeamManager : MonoBehaviour
                         details.sprite = sprite;
                         details.side = globalAuthority;
                         if (successFlag == true)
-                        { details.isAction = true; }
+                        {
+                            details.isAction = true;
+                            details.reason = "Recall Team";
+                        }
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
@@ -1125,7 +1128,10 @@ public class TeamManager : MonoBehaviour
                             details.sprite = sprite;
                             details.side = globalResistance;
                             if (successFlag == true)
-                            { details.isAction = true; }
+                            {
+                                details.isAction = true;
+                                details.reason = "Neutralise Team";
+                            }
                             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }

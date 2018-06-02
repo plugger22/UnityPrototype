@@ -2344,7 +2344,10 @@ public class ActorManager : MonoBehaviour
         outcomeDetails.side = playerSide;
         //action expended automatically for recruit actor
         if (successFlag == true)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Recruit Actor";
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
     }
@@ -2423,7 +2426,10 @@ public class ActorManager : MonoBehaviour
         details.sprite = sprite;
         details.side = side;
         if (successFlag == true)
-        { details.isAction = true; }
+        {
+            details.isAction = true;
+            details.reason = "Recruit Actor";
+        }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
 

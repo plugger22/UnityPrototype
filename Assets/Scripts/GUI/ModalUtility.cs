@@ -84,12 +84,14 @@ namespace modalAPI
         public int modalLevel;              //modal level of outcome window, default 1
         public ModalState modalState;       //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
         public bool isAction;               //true if an action has been used
+        public string reason;               //short text giving reason for outcome window, eg. "Select Gear" (used for debugging)
 
         public ModalOutcomeDetails()
         {
             modalLevel = 1;
             modalState = ModalState.None;
             isAction = false;
+            reason = "Unknown";
         }
     }
 

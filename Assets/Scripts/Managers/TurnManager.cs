@@ -103,7 +103,7 @@ public class TurnManager : MonoBehaviour
                 Quit();
                 break;
             case EventType.UseAction:
-                UseAction();
+                UseAction((string)Param);
                 break;
             case EventType.ChangeSide:
                 ChangeSide((GlobalSide)Param);
@@ -315,16 +315,16 @@ public class TurnManager : MonoBehaviour
     /// <summary>
     /// call this method (via event) everytime an action is expended by the Player. Triggers new turn if action limit reached, error if exceeded
     /// </summary>
-    private void UseAction()
+    private void UseAction(string text = "Unknown")
     {
         int remainder;
         _actionsCurrent++;
-        Debug.Log(string.Format("TurnManager: Action used, {0} current actions of {1}{2}", _actionsCurrent, _actionsTotal, "\n"));
+        Debug.Log(string.Format("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, 
+            GameManager.instance.turnScript.Turn, "\n"));
         //exceed action limit? (total includes any temporary adjustments)
         remainder = _actionsTotal - _actionsCurrent;
-        //cached actions (so player can't keep regenerating new gear picks within an action)
-        GameManager.instance.gearScript.ResetCachedGearPicks();
-        /*if (_actionsCurrent > _actionsTotal)*/
+        /*//cached actions (so player can't keep regenerating new gear picks within an action)
+        GameManager.instance.gearScript.ResetCachedGearPicks();*/
         if (remainder < 0)
         { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
         else
