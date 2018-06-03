@@ -236,15 +236,6 @@ public class GearManager : MonoBehaviour
     }
 
 
-    /*/// <summary>
-    /// called by TurnManager.cs -> UseAction. Resets cache and action number for each new action to prevent player accessing new gear choices multiple times / action 
-    /// </summary>
-    public void ResetCachedGearPicks()
-    {
-        isNewAction = true;
-        Debug.Log("GearManager.cs -> ResetCachedGearPicks: isNewAction True");
-    }*/
-
 
     /// <summary>
     /// Choose Gear (Resistance): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
@@ -252,8 +243,8 @@ public class GearManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseGenericPickerGear(ModalActionDetails details)
     {
-        Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear START: Turn {0}, isNewActionPlayer {1}, isNewActionActor {2}{3}", 
-            GameManager.instance.turnScript.Turn, isNewActionPlayer, isNewActionActor, "\n");
+        /*Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear START: Turn {0}, isNewActionPlayer {1}, isNewActionActor {2}{3}", 
+            GameManager.instance.turnScript.Turn, isNewActionPlayer, isNewActionActor, "\n");*/
 
         //first Gear Pick this action
         bool errorFlag = false;
@@ -308,7 +299,6 @@ public class GearManager : MonoBehaviour
                 if (selectionActorTurn != GameManager.instance.turnScript.Turn || isNewActionActor == true)
                 { isIgnoreCache = true; }
             }
-            Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear ex-Capture: isPlayer {0} isIgnoreCache {1}", isPlayer, isIgnoreCache);
             //proceed with a new gear Selection
             if (isIgnoreCache == true)
             {
@@ -470,8 +460,6 @@ public class GearManager : MonoBehaviour
                     cachedActorDetails = genericDetails;
                     isNewActionActor = false;
                 }
-                
-                Debug.Log("GearManager.cs -> InitialiseGenericPickerGear: isNewAction FALSE");
             }
             //player accessing gear during the same action multiple times. Used cached details so he gets the same result.
             else
