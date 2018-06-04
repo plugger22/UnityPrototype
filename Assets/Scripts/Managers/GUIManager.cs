@@ -381,6 +381,11 @@ public class GUIManager : MonoBehaviour
                 details.textTop = string.Format("The AI is {0}Rebooting{1} it's Security Systems", colourBad, colourEnd);
                 details.textBottom = string.Format("Hacking attempts {0}aren't possible{1} until the Reboot is complete", colourNeutral, colourEnd);
                 break;
+            case AlertType.HackingIndisposed:
+                details.textTop = string.Format("The AI is currently {0}inaccessible{1}", colourBad, colourEnd);
+                details.textBottom = string.Format("This is a {0}temporary{1} state and is due to the Player being {2}indisposed{3}", colourNeutral, colourEnd, 
+                    colourNeutral, colourEnd);
+                break;
             default:
                 details.textTop = "This action is unavailable";
                 break;

@@ -1867,24 +1867,9 @@ public class AIManager : MonoBehaviour
                         else
                         {
                             if (task.chance <= 0)
-                            {
-                                /*switch (task.priority)
-                                {
-                                    case Priority.High:
-                                        task.chance = (int)(((float)priorityHighWeight / (float)numTasks) * 100 * remainingChoices);
-                                        break;
-                                    case Priority.Medium:
-                                        task.chance = (int)(((float)priorityMediumWeight / (float)numTasks) * 100 * remainingChoices);
-                                        break;
-                                    case Priority.Low:
-                                        task.chance = (int)(((float)priorityLowWeight / (float)numTasks) * 100 * remainingChoices);
-                                        break;
-                                }*/
-                                task.chance = (int)baseOdds / remainingChoices;
-                            }
+                            { task.chance = (int)baseOdds / remainingChoices;  }
                         }
                     }
-
                 }
             }
         }
@@ -1897,7 +1882,7 @@ public class AIManager : MonoBehaviour
     private void UpdateTaskDisplayData()
     {
         AIDisplayData data = new AIDisplayData();
-        int count = listOfTasksPotential.Count;
+        int count = listOfTasksFinal.Count;
         //zero out data for (prevents previous turns task data from carrying over)
         data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = "";
         data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = "";
@@ -1911,7 +1896,7 @@ public class AIManager : MonoBehaviour
             //loop final tasks
             for (int i = 0; i < count; i++)
             {
-                AITask task = listOfTasksPotential[i];
+                AITask task = listOfTasksFinal[i];
                 if (task != null)
                 {
                     //colour code chance (green if upper third %, yellow for middle, red for lower third)
@@ -1939,14 +1924,14 @@ public class AIManager : MonoBehaviour
                             data.task_3_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
                             break;
                         default:
-                            Debug.LogWarningFormat("Invalid index {0} for listOfTasksPotential", i);
+                            Debug.LogWarningFormat("Invalid index {0} for listOfTasksFinal", i);
                             break;
                     }
                     //other data
                     data.factionDetails = string.Format("{0} Action{1}{2}{3}", factionAuthority.maxTaskPerTurn, 
                         factionAuthority.maxTaskPerTurn != 1 ? "s" : "", "\n", factionAuthority.name);
                 }
-                else { Debug.LogWarningFormat("Invalid AITask for listOfTasksPotential[{0}]", i); }
+                else { Debug.LogWarningFormat("Invalid AITask for listOfTasksFinal[{0}]", i); }
             }
         }
         EventManager.instance.PostNotification(EventType.AISendDisplayData, this, data);
@@ -2345,33 +2330,44 @@ public class AIManager : MonoBehaviour
     public void UpdateSideTabData(int renown = 0)
     {
         AISideTabData data = new AISideTabData();
-        int playerRenown = renown;
-        if (playerRenown == 0)
-        { playerRenown = GameManager.instance.playerScript.Renown; }
-        if (isRebooting == true)
+        switch (GameManager.instance.playerScript.status)
         {
-            //AI Security System rebooting, Hacking is unavailable
-            data.topText = string.Format("{0}A.I{1}", colourBad, colourEnd);
-            data.bottomText = string.Format("{0}X{1}", colourBad, colourEnd);
-            data.status = HackingStatus.Rebooting;
-        }
-        else
-        {
-            data.topText = "A.I";
-            data.status = HackingStatus.Possible;
-            //renown to spare -> Green
-            if (playerRenown > hackingCurrentCost)
-            {  data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingCurrentCost, colourEnd); }
-            //just enough renown -> Yellow
-            else if (playerRenown == hackingCurrentCost)
-            { data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingCurrentCost, colourEnd); }
-            else
-            {
-                //insufficient renown -> Greyed out
+            case ActorStatus.Active:
+                int playerRenown = renown;
+                if (playerRenown == 0)
+                { playerRenown = GameManager.instance.playerScript.Renown; }
+                if (isRebooting == true)
+                {
+                    //AI Security System rebooting, Hacking is unavailable
+                    data.topText = string.Format("{0}A.I{1}", colourBad, colourEnd);
+                    data.bottomText = string.Format("{0}X{1}", colourBad, colourEnd);
+                    data.status = HackingStatus.Rebooting;
+                }
+                else
+                {
+                    data.topText = "A.I";
+                    data.status = HackingStatus.Possible;
+                    //renown to spare -> Green
+                    if (playerRenown > hackingCurrentCost)
+                    { data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingCurrentCost, colourEnd); }
+                    //just enough renown -> Yellow
+                    else if (playerRenown == hackingCurrentCost)
+                    { data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingCurrentCost, colourEnd); }
+                    else
+                    {
+                        //insufficient renown -> Greyed out
+                        data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
+                        data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingCurrentCost, colourEnd);
+                        data.status = HackingStatus.InsufficientRenown;
+                    }
+                }
+                break;
+            default:
+                //player indisposed -> Greyed out
                 data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                 data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingCurrentCost, colourEnd);
-                data.status = HackingStatus.InsufficientRenown;
-            }
+                data.status = HackingStatus.Indisposed;
+                break;
         }
         //send data package
         EventManager.instance.PostNotification(EventType.AISendSideData, this, data);
@@ -2423,7 +2419,7 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// called everytime Player hacks AI. Updates data and sends package to AIDisplay
+    /// called everytime Player hacks AI. Updates Alert Status and checks for reboots. Updates data and sends package to AIDisplay
     /// NOTE: data is dynamic
     /// </summary>
     public void UpdateHackingStatus()

@@ -2798,6 +2798,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveResistanceActors()
     {
+        int rnd;
         Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActorsResistance != null)
         {
@@ -2815,7 +2816,9 @@ public class ActorManager : MonoBehaviour
                     {
                         if (actor.Status == ActorStatus.Active)
                         {
-                            //check any actors with the stressed condition for a breakdown
+                            //
+                            // - - - Stress Condition - - -
+                            //
                             if (actor.CheckConditionPresent(conditionStressed) == true)
                             {
                                 //enforces a minimu one turn gap between successive breakdowns
@@ -2829,10 +2832,13 @@ public class ActorManager : MonoBehaviour
                                     else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
                                     { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
                                     //test
-                                    if (Random.Range(0, 100) < chance)
+                                    rnd = Random.Range(0, 100);
+                                    if ( rnd < chance)
                                     {
                                         //actor suffers a breakdown
                                         ActorBreakdown(actor, globalResistance);
+                                        Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need {0}, rolled {1}{2}", 
+                                            chance, rnd, "\n");
                                     }
                                 }
                                 else { actor.isBreakdown = false; }
@@ -2963,7 +2969,8 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckPlayerStartLate()
     {
-        //check for breakdown -> both sides
+        int rnd;
+        //check for Stress Nervous breakdown -> both sides
         switch (GameManager.instance.playerScript.status)
         {
             case ActorStatus.Inactive:
@@ -2986,10 +2993,11 @@ public class ActorManager : MonoBehaviour
                     //check any actors with the stressed condition for a breakdown
                     if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
                     {
-                        //enforces a minimu one turn gap between successive breakdowns
+                        //enforces a minimum one turn gap between successive breakdowns
                         if (GameManager.instance.playerScript.isBreakdown == false)
                         {
-                            if (Random.Range(0, 100) <= breakdownChance)
+                            rnd = Random.Range(0, 100);
+                            if ( rnd <= breakdownChance)
                             {
                                 //player Breakdown
                                 GameManager.instance.playerScript.status = ActorStatus.Inactive;
@@ -3002,6 +3010,10 @@ public class ActorManager : MonoBehaviour
                                 string text = "Player has suffered a Breakdown (Stressed)";
                                 Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                                 GameManager.instance.dataScript.AddMessage(message);
+                                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need {0}, rolled {1}{2}",
+                                    breakdownChance, rnd, "\n");
+                                //update AI side tab status
+                                GameManager.instance.aiScript.UpdateSideTabData();
                             }
                         }
                         else { GameManager.instance.playerScript.isBreakdown = false; }
