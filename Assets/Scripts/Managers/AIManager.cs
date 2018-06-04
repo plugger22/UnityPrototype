@@ -146,6 +146,10 @@ public class AIManager : MonoBehaviour
     [Tooltip("Spider Team node score -> This is added to the score for ever High security connection the node has")]
     [Range(0, 5)] public int securityHighFactor = 0;
 
+    [Header("AI Tasks")]
+    [Tooltip("The aiming point for the number of final tasks (if available) generated each turn. The faction chooses their set num of tasks out of this pool")]
+    [Range(1, 3)] public int numOfFinalTasks = 3;
+
     [Header("Teams")]
     [Tooltip("Pool of tasks for Spider team -> number of entries for a Known target")]
     [Range(0, 5)] public int teamPoolTargetFactor = 3;
@@ -173,6 +177,7 @@ public class AIManager : MonoBehaviour
     [Range(1, 100)] public int hackingAlertIncreaseChance = 50;
     [Tooltip("How many turns (inclusive of current) does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
     [Range(0, 10)] public int hackingRebootTimer = 2;
+    
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
@@ -193,6 +198,7 @@ public class AIManager : MonoBehaviour
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
+    private bool isAuthority;                                           //set true if current AI side processing is authority, false of resistance
 
     //decision data
     private float connSecRatio;
@@ -369,7 +375,8 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideResistance()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        ExecuteTasks();
+        isAuthority = false;
+        ExecuteTasks(resistanceMaxTasksPerTurn);
         ClearAICollections();
         UpdateResources(globalResistance);
         //reset flags
@@ -385,7 +392,8 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideAuthority()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        ExecuteTasks();
+        isAuthority = true;
+        ExecuteTasks(authorityMaxTasksPerTurn);
         ClearAICollections();
         UpdateResources(globalAuthority);
         //Reboot check
@@ -1711,7 +1719,7 @@ public class AIManager : MonoBehaviour
     /// <summary>
     /// Selects tasks from pool of potential tasks for this turn
     /// </summary>
-    private void ProcessTasksFinal(int maxTasksPerTurn)
+    private void ProcessTasksFinal(int numOfFactionTasks)
     {
         int numTasks = listOfTasksPotential.Count;
         int index, odds;
@@ -1738,7 +1746,7 @@ public class AIManager : MonoBehaviour
             numTasks = listOfTasksCritical.Count;
             if (numTasks > 0)
             {
-                if (numTasks <= maxTasksPerTurn)
+                if (numTasks <= numOfFinalTasks)
                 {
                     //enough available tasks to do all
                     foreach (AITask task in listOfTasksCritical)
@@ -1763,26 +1771,27 @@ public class AIManager : MonoBehaviour
                         //remove entry from list to prevent future selection
                         listOfTasksCritical.RemoveAt(index);
                     }
-                    while (numTasksSelected < maxTasksPerTurn);
+                    while (numTasksSelected < numOfFinalTasks);
                 }
             }
             //still room 
-            if (numTasksSelected < maxTasksPerTurn)
+            if (numTasksSelected < numOfFinalTasks)
             {
                 numTasks = listOfTasksNonCritical.Count;
-                int remainingChoices = maxTasksPerTurn - numTasksSelected;
+                int remainingChoices = numOfFinalTasks - numTasksSelected;
                 //Non-Critical tasks next
                 if (remainingChoices >= numTasks)
                 {
-                    //do all -> assign odds first
+                    /*//do all -> assign odds first
                     foreach (AITask task in listOfTasksNonCritical)
-                    { task.chance = (int)baseOdds; }
+                    { task.chance = (int)baseOdds; }*/
                     //select tasks
                     foreach (AITask task in listOfTasksNonCritical)
                     {
+                        task.chance = 0;
                         listOfTasksFinal.Add(task);
                         numTasksSelected++;
-                        if (numTasksSelected >= maxTasksPerTurn)
+                        if (numTasksSelected >= numOfFinalTasks)
                         { break; }
                     }
                 }
@@ -1843,7 +1852,7 @@ public class AIManager : MonoBehaviour
                             taskID = tempList[index].taskID;
                             numTasksSelected++;
                             //don't bother unless further selections are needed
-                            if (numTasksSelected < maxTasksPerTurn)
+                            if (numTasksSelected < numOfFinalTasks)
                             {
                                 //reverse loop and remove all instances of task from tempList to prevent duplicate selections
                                 for (int i = numTasks - 1; i >= 0; i--)
@@ -1855,20 +1864,22 @@ public class AIManager : MonoBehaviour
                         }
                         else { numTasksSelected++; }
                     }
-                    while (numTasksSelected < maxTasksPerTurn);
+                    while (numTasksSelected < numOfFinalTasks);
 
-                    //work out and assign odds
-                    numTasks = listOfTasksFinal.Count;
-                    
+
+                    //copy tasks with chance != 100 (non-critical tasks) to tempList for calculation of odds
+                    tempList.Clear();
                     foreach (AITask task in listOfTasksFinal)
                     {
-                        if (numTasks >= maxTasksPerTurn)
-                        { task.chance = (int)baseOdds; }
-                        else
-                        {
-                            if (task.chance <= 0)
-                            { task.chance = (int)baseOdds / remainingChoices;  }
-                        }
+                        if (task.chance != 100)
+                        { tempList.Add(task); }
+                    }
+                    //work out and assign odds
+                    numTasks = listOfTasksFinal.Count;
+                    if (numTasks > 0)
+                    {
+                        foreach (AITask task in tempList)
+                        { task.chance = (int)baseOdds / remainingChoices; }
                     }
                 }
             }
@@ -2106,24 +2117,88 @@ public class AIManager : MonoBehaviour
 
 
     /// <summary>
-    /// carry out all tasks in listOfTasksFinal 
+    /// carry out all tasks in listOfTasksFinal. 
     /// </summary>
-    private void ExecuteTasks()
+    private void ExecuteTasks(int numOfFactionTasks)
     {
+        int rnd;
+        int safetyCheck = 0;
+        int counter = 0;
         Debug.LogFormat("[Aim] -> ExecuteTasks: {0} tasks to implement for AI this turn{1}", listOfTasksFinal.Count, "\n");
-        foreach(AITask task in listOfTasksFinal)
+        //execute all 100% tasks first -> delete tasks as you go
+        for (int i = listOfTasksFinal.Count -1; i >= 0; i--)
         {
-            switch (task.type)
+            AITask task = listOfTasksFinal[i];
+            if (task != null)
             {
-                case AIType.Team:
-                    ExecuteTeamTask(task);
-                    break;
-                case AIType.Decision:
-                    ExecuteDecisionTask(task);
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
-                    break;
+                if (task.chance == 100)
+                {
+                    switch (task.type)
+                    {
+                        case AIType.Team:
+                            ExecuteTeamTask(task);
+                            break;
+                        case AIType.Decision:
+                            ExecuteDecisionTask(task);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
+                            break;
+                    }
+                }
+                counter++;
+                //remove task once executed
+                listOfTasksFinal.RemoveAt(i);
+            }
+            else { Debug.LogWarningFormat("Invalid task (Null) for listOfTasksFinal[{0}]", listOfTasksFinal); }
+        }
+        //Any Tasks remaining
+        if (listOfTasksFinal.Count > 0)
+        {
+            //more need for faction task list
+            if (counter < numOfFactionTasks)
+            {
+                do
+                {
+                    //keep checking until sufficient tasks have been executed or run out of tasks
+                    for (int i = listOfTasksFinal.Count - 1; i >= 0; i--)
+                    {
+                        AITask task = listOfTasksFinal[i];
+                        if (task != null)
+                        {
+                            rnd = Random.Range(0, 100);
+                            if (rnd < task.chance)
+                            {
+                                switch (task.type)
+                                {
+                                    case AIType.Team:
+                                        ExecuteTeamTask(task);
+                                        break;
+                                    case AIType.Decision:
+                                        ExecuteDecisionTask(task);
+                                        break;
+                                    default:
+                                        Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
+                                        break;
+                                }
+                                counter++;
+                                //remove task once executed
+                                listOfTasksFinal.RemoveAt(i);
+                                //interim check
+                                if (counter >= numOfFactionTasks || listOfTasksFinal.Count == 0)
+                                { break; }
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid task (Null) for listOfTasksFinal[{0}]", listOfTasksFinal); }
+                    }
+                    safetyCheck++;
+                    if (safetyCheck > 10)
+                    {
+                        Debug.LogWarning("SafetyCheck triggered (>10) in ExecuteTasks");
+                        break;
+                    }
+                }
+                while (counter < numOfFactionTasks || listOfTasksFinal.Count > 0);
             }
         }
     }

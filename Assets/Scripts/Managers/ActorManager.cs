@@ -2985,6 +2985,8 @@ public class ActorManager : MonoBehaviour
                         string textBreakdown = "Player has recovered from their Breakdown";
                         Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                         GameManager.instance.dataScript.AddMessage(messageBreakdown);
+                        //update AI side tab status
+                        GameManager.instance.aiScript.UpdateSideTabData();
                         break;
                 }
                 break;
@@ -3018,9 +3020,9 @@ public class ActorManager : MonoBehaviour
                         }
                         else { GameManager.instance.playerScript.isBreakdown = false; }
                     }
-                    
                 }
                 break;
+                //NO Default case here, only check for what you are interested in
         }
     }
 
