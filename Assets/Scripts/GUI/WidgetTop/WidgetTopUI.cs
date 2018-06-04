@@ -28,6 +28,8 @@ public class WidgetTopUI : MonoBehaviour
     private bool isFading;                                  //flashing red security measure indicator, if true then opacity fading, otherwise increasing
     private Coroutine myCoroutine;
     private float flashRedTime;
+    private Color innerColour;
+    private Color outerColour;
 
     private static WidgetTopUI widgetTopUI;
 
@@ -290,24 +292,24 @@ public class WidgetTopUI : MonoBehaviour
         //infinite while loop
         while (true)
         {
-            Color innerColor = flashRedInner.color;
-            Color outerColor = flashRedOuter.color;
+            innerColour = flashRedInner.color;
+            outerColour = flashRedOuter.color;
             if (isFading == false)
             {
-                innerColor.a += Time.deltaTime / flashRedTime;
-                outerColor.a += Time.deltaTime / flashRedTime;
-                if (innerColor.a >= 1.0f)
+                innerColour.a += Time.deltaTime / flashRedTime;
+                outerColour.a += Time.deltaTime / flashRedTime;
+                if (innerColour.a >= 1.0f)
                 { isFading = true; }
             }
             else
             {
-                innerColor.a -= Time.deltaTime / flashRedTime;
-                outerColor.a -= Time.deltaTime / flashRedTime;
-                if (innerColor.a <= 0.0f)
+                innerColour.a -= Time.deltaTime / flashRedTime;
+                outerColour.a -= Time.deltaTime / flashRedTime;
+                if (innerColour.a <= 0.0f)
                 { isFading = false; }
             }
-            flashRedInner.color = innerColor;
-            flashRedOuter.color = outerColor;
+            flashRedInner.color = innerColour;
+            flashRedOuter.color = outerColour;
             yield return null;
         }
     }

@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
         dataScript.InitialiseFinal();   //must be after metaScript.Initialise
         actionScript.Initialise();      
         targetScript.Initialise();
-        playerScript.Initialise();
+        
         nodeScript.Initialise();
         effectScript.Initialise();      //after nodeScript
         teamScript.Initialise();
@@ -204,6 +204,7 @@ public class GameManager : MonoBehaviour
         aiScript.Initialise();          //after factionScript
         captureScript.Initialise();
         authorityScript.Initialise();
+        playerScript.Initialise(); 
         debugGraphicsScript.Initialise();
         traitScript.Initialise();
         cityInfoScript.Initialise();

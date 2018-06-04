@@ -19,7 +19,8 @@ public class GUIManager : MonoBehaviour
     [Range(1,2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'
     [Tooltip("How long it takes, in seconds, for the flashing red security alert (WidgetTopUI) to go from zero to full opacity")]
     [Range(0.5f, 2.0f)] public float flashRedTime = 1.0f;
-
+    [Tooltip("How long it takes, in seconds, for the flashing white alert to go from zero to full opacity")]
+    [Range(0.5f, 2.0f)] public float flashAlertTime = 1.0f;
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantAuthorityActor;

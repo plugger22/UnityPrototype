@@ -70,8 +70,9 @@ public class PlayerManager : MonoBehaviour
             if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
             {
                 _renownResistance = value;
-                //update AI side tab
-                GameManager.instance.aiScript.UpdateSideTabData(_renownResistance);
+                //update AI side tab (not using an Event here) -> no updates for the first turn
+                if (GameManager.instance.turnScript.Turn > 0)
+                { GameManager.instance.aiScript.UpdateSideTabData(_renownResistance); }
             }
             else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { _renownAuthority = value; }
             else
@@ -107,11 +108,13 @@ public class PlayerManager : MonoBehaviour
         //fast acess fields (BEFORE set stats below)
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         //set stats
         Renown = 0;
         invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
-
+        Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);

@@ -13,9 +13,11 @@ public class AISideTabUI : MonoBehaviour
 {
 
     public Image sideTabImage;
+    public Image alertFlasher;
     public TextMeshProUGUI topText;
     public TextMeshProUGUI bottomText;
 
+    private float flashAlertTime;
 
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
@@ -24,6 +26,10 @@ public class AISideTabUI : MonoBehaviour
     [HideInInspector] public HackingStatus hackingStatus;             //data passed in from AIManager.cs -> UpdateSideTabData
 
     private static AISideTabUI aiSideTabUI;
+
+    private bool isFading;
+    private Color tempColour;
+    private Coroutine myCoroutine;
 
 
     /// <summary>
@@ -43,11 +49,19 @@ public class AISideTabUI : MonoBehaviour
 
     public void Initialise()
     {
-        //set all sub compoponents to Active
-        SetAllToActive();
+        flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
+        Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
         topText.text = "AI";
         bottomText.text = "-";
         hackingStatus = HackingStatus.Initialising;
+        myCoroutine = null;
+        isFading = false;
+        //set alert flasher to zero opacity
+        tempColour = alertFlasher.color;
+        tempColour.a = 0.0f;
+        alertFlasher.color = tempColour;
+        //set all sub compoponents to Active
+        SetAllToActive();
     }
 
     public void Start()
@@ -126,8 +140,54 @@ public class AISideTabUI : MonoBehaviour
             else { bottomText.text = "?"; }
             //hacking Status
             hackingStatus = data.status;
+            //alert flasher
+            if (hackingStatus == HackingStatus.Possible)
+            {
+                if (myCoroutine == null)
+                { myCoroutine = StartCoroutine("ShowAlertFlash"); }
+            }
+            else
+            {
+                if (myCoroutine != null)
+                {
+                    StopCoroutine(myCoroutine);
+                    myCoroutine = null;
+                    isFading = false;
+                    //reset opacity back to zero
+                    tempColour = alertFlasher.color;
+                    tempColour.a = 0.0f;
+                    alertFlasher.color = tempColour;
+                }
+            }
         }
         else { Debug.LogWarning("Invalid AISideTabData (Null)"); }
+    }
+
+    /// <summary>
+    /// coroutine to flash the white alert 'dot' whenever the side tab is ready to be hacked
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowAlertFlash()
+    {
+        //infinite while loop
+        while (true)
+        {
+            tempColour = alertFlasher.color;
+            if (isFading == false)
+            {
+                tempColour.a += Time.deltaTime / flashAlertTime;
+                if (tempColour.a >= 1.0f)
+                { isFading = true; }
+            }
+            else
+            {
+                tempColour.a -= Time.deltaTime / flashAlertTime;
+                if (tempColour.a <= 0.0f)
+                { isFading = false; }
+            }
+            alertFlasher.color = tempColour;
+            yield return null;
+        }
     }
 
     //new methods above here
