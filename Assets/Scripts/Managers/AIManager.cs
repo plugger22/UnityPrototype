@@ -165,6 +165,10 @@ public class AIManager : MonoBehaviour
     [Range(0f, 1f)] public float teamRatioThreshold = 0.75f;
     [Tooltip("The point below which a low Resource Pool situation (isLowResources true) is declared and a request for more resources can be made")]
     [Range(0, 10)] public int lowResourcesThreshold = 2;
+    [Tooltip("The base % chance of a Request Resources decision being approved")]
+    [Range(0, 100)] public int resourcesChance = 50;
+    [Tooltip("This amount will be added to the chance of a resource request being approved once per unsuccessful attempt")]
+    [Range(0, 100)] public int resourcesBoost = 15;
 
     [Header("Hacking AI")]
     [Tooltip("Base cost, in renown, to hack AI at start of a level")]
@@ -201,7 +205,8 @@ public class AIManager : MonoBehaviour
     private float connSecRatio;
     private float teamRatio;
     private int erasureTeamsOnMap;
-    private bool isInsufficientResources;                               //set true whenever not enough resources to implement a decision (triggers 'Request Resources')
+    private bool isInsufficientResources;                               //true whenever not enough resources to implement a decision (triggers 'Request Resources')
+    private int numOfUnsuccessfulResourceRequests;                      //running tally, reset back to zero once a request is APPROVED
 
     //fast access -> teams
     private int teamArcCivil = -1;
@@ -268,6 +273,7 @@ public class AIManager : MonoBehaviour
         //decision data
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
+        numOfUnsuccessfulResourceRequests = 0;
         isInsufficientResources = false;
         //decision ID's
         int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
@@ -1681,6 +1687,7 @@ public class AIManager : MonoBehaviour
             { listOfDecisionTasksNonCritical.Add(taskTeam); }
         }
         //Resource request -> once made can be Approved or Denied by higher authority. NOTE: make sure it is '<=' to avoid getting stuck in dead end with '<'
+        /*Debug.LogFormat("[Aim] ProcessDecisionTask: isInsufficientResources {0}{1}", isInsufficientResources, "\n");*/
         if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) <= lowResourcesThreshold || isInsufficientResources == true)
         {
             AITask taskResources = new AITask()
@@ -1691,8 +1698,7 @@ public class AIManager : MonoBehaviour
                 type = AIType.Decision,
                 priority = Priority.Critical
             };
-            for (int i = 0; i < priorityMediumWeight; i++)
-            { listOfDecisionTasksNonCritical.Add(taskResources); }
+            listOfDecisionTasksCritical.Add(taskResources);
         }
         isInsufficientResources = false;
         //Select task -> Critical have priority
@@ -1913,9 +1919,9 @@ public class AIManager : MonoBehaviour
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
         //zero out data for (prevents previous turns task data from carrying over)
-        data.task_3_textUpper = ""; data.task_3_textLower = "no task available"; data.task_3_chance = "";
-        data.task_2_textUpper = ""; data.task_2_textLower = "no task available"; data.task_2_chance = "";
-        data.task_1_textUpper = ""; data.task_1_textLower = "no task available"; data.task_1_chance = "";
+        data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = "";
+        data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = "";
+        data.task_1_textUpper = ""; data.task_1_textLower = ""; data.task_1_chance = "";
         //pass timer
         data.rebootTimer = rebootTimer;
         //if tasks are present, process into descriptor strings
@@ -2369,23 +2375,34 @@ public class AIManager : MonoBehaviour
     {
         bool isSuccess = false;
         //each faction has a % chance of the request being approved (acts as a friction limiter on faction efficiency as resources drive everything)
-        if (Random.Range(0, 100) < factionAuthority.resourcesChance)
+        int rnd = Random.Range(0, 100);
+        int adjustedChance = resourcesChance + numOfUnsuccessfulResourceRequests * resourcesBoost;
+        if (rnd < resourcesChance)
         {
             int resourcePool = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) + factionAuthority.resourcesStarting;
             //add faction starting resources amount to their resource pool
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resourcePool);
             isSuccess = true;
+            Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: APPROVED need {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
         }
-        //message
+        //message & request counter
         string text = "";
         int amount = 0;
         if (isSuccess == true)
         {
             amount = factionAuthority.resourcesStarting;
             text = string.Format("Request for Resources APPROVED ({0} added to pool)", amount);
+            //reset counter back to zero
+            numOfUnsuccessfulResourceRequests = 0;
         }
         else
-        { text = string.Format("Request for Resources DENIED ({0} % chance of being Approved)", factionAuthority.resourcesChance); amount = 0; }
+        {
+            text = string.Format("Request for Resources DENIED ({0} % chance of being Approved)", adjustedChance);
+            Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: DENIED need {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
+            //increment counter
+            numOfUnsuccessfulResourceRequests++;
+            amount = 0;
+        }
         Message message = GameManager.instance.messageScript.DecisionRequestResources(text, globalAuthority, amount);
         GameManager.instance.dataScript.AddMessage(message);
         return isSuccess;
@@ -2805,6 +2822,7 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" erasureTeamsOnMap -> {0}{1}", erasureTeamsOnMap, "\n");
         builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
         builder.AppendFormat(" isInsufficientResources -> {0}{1}", isInsufficientResources, "\n");
+        builder.AppendFormat(" numOfUnsuccessfulResourceRequests -> {0}{1}", numOfUnsuccessfulResourceRequests, "\n");
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         { builder.AppendFormat(" SECURITY MEASURES Available{0}", "\n"); }
         return builder.ToString();
