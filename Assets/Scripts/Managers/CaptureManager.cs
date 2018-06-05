@@ -171,6 +171,10 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.authorityScript.SetAuthoritySecurityState("Player Captured: Security measures have been cancelled");
         //switch off flashing red indicator on top widget UI
         EventManager.instance.PostNotification(EventType.StopSecurityFlash, this);
+        //reduce player alpha to show inactive (sprite and text)
+        GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+        //AI side tab
+        GameManager.instance.aiScript.UpdateSideTabData();
         //player captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
         {
@@ -257,6 +261,10 @@ public class CaptureManager : MonoBehaviour
         int invisibilityNew = releaseInvisibility;
         GameManager.instance.playerScript.invisibility = invisibilityNew;
         builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
+        //update Player alpha
+        GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+        //AI side tab (otherwise 'player indisposed' message when accessing tab)
+        GameManager.instance.aiScript.UpdateSideTabData();
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //message
@@ -309,7 +317,6 @@ public class CaptureManager : MonoBehaviour
                 builder.AppendFormat("{0}{1} Invisibility +{2}{3}", colourGood, details.actor.actorName, invisibilityNew, colourEnd);
                 //update actor alpha
                 GameManager.instance.guiScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-                /*GameManager.instance.nodeScript.NodeRedraw = true;*/
                 //admin
                 GameManager.instance.actorScript.numOfActiveActors++;
                 //message

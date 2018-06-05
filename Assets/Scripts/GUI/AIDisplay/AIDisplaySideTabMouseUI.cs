@@ -11,13 +11,11 @@ public class AIDisplaySideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPoi
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
-    private float mouseOverFade;                        //tooltip
 
 
     public void Start()
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
     }
 
     /// <summary>

@@ -78,9 +78,9 @@ public class GUIManager : MonoBehaviour
     private string colourAlert;
     private string colourGood;
     private string colourNeutral;
-    private string colourGrey;
+    //private string colourGrey;
     private string colourBad;
-    private string colourNormal;
+    //private string colourNormal;
     private string colourEnd;
 
     /// <summary>
@@ -195,8 +195,8 @@ public class GUIManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }

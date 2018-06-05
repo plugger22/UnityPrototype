@@ -270,7 +270,7 @@ public class EffectManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         if (node.CheckTeamPresent(teamArcCivil) > -1)
-                                                        { BuildString(result, string.Format("CIVIL team present", teamArc.name)); }
+                                                        { BuildString(result, string.Format("{0}CIVIL team present{1}", colourBad, colourEnd)); }
                                                     }
                                                     break;
                                                 case "TeamProbeNo":

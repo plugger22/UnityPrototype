@@ -99,8 +99,6 @@ public class AIManager : MonoBehaviour
     [Range(0, 100)] public int targetAttemptChance = 50;
     [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
     [Range(5, 15)] public int activityTimeLimit = 10;
-    [Tooltip("How much renown it will cost to access the AI's decision making process for Level 1 (potential tasks & % chances). Double this for level 2 (final tasks)")]
-    [Range(0, 10)] public int playerAIRenownCost = 1;
 
     [Header("Priorities")]
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to High Priority tasks")]
@@ -198,12 +196,12 @@ public class AIManager : MonoBehaviour
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
-    private bool isAuthority;                                           //set true if current AI side processing is authority, false of resistance
 
     //decision data
     private float connSecRatio;
     private float teamRatio;
     private int erasureTeamsOnMap;
+    private bool isInsufficientResources;                               //set true whenever not enough resources to implement a decision (triggers 'Request Resources')
 
     //fast access -> teams
     private int teamArcCivil = -1;
@@ -228,7 +226,7 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionResources;
 
     //colour palette 
-    private string colourAlert;
+    //private string colourAlert;
     private string colourGood;
     private string colourNeutral;
     private string colourGrey;
@@ -270,6 +268,7 @@ public class AIManager : MonoBehaviour
         //decision data
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
+        isInsufficientResources = false;
         //decision ID's
         int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
         decisionAPB = GameManager.instance.dataScript.GetAIDecision(aiDecID);
@@ -364,7 +363,7 @@ public class AIManager : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -375,7 +374,6 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideResistance()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        isAuthority = false;
         ExecuteTasks(resistanceMaxTasksPerTurn);
         ClearAICollections();
         UpdateResources(globalResistance);
@@ -392,7 +390,6 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideAuthority()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        isAuthority = true;
         ExecuteTasks(authorityMaxTasksPerTurn);
         ClearAICollections();
         UpdateResources(globalAuthority);
@@ -1684,7 +1681,7 @@ public class AIManager : MonoBehaviour
             { listOfDecisionTasksNonCritical.Add(taskTeam); }
         }
         //Resource request -> once made can be Approved or Denied by higher authority. NOTE: make sure it is '<=' to avoid getting stuck in dead end with '<'
-        if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) <= lowResourcesThreshold)
+        if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) <= lowResourcesThreshold || isInsufficientResources == true)
         {
             AITask taskResources = new AITask()
             {
@@ -1692,11 +1689,12 @@ public class AIManager : MonoBehaviour
                 data1 = decisionResources.cost,
                 name0 = decisionResources.name,
                 type = AIType.Decision,
-                priority = Priority.Medium
+                priority = Priority.Critical
             };
             for (int i = 0; i < priorityMediumWeight; i++)
             { listOfDecisionTasksNonCritical.Add(taskResources); }
         }
+        isInsufficientResources = false;
         //Select task -> Critical have priority
         Debug.LogFormat("[Aim] -> ProcessDecisionTask: {0} Critical tasks available{1}", listOfDecisionTasksCritical.Count, "\n");
         Debug.LogFormat("[Aim] -> ProcessDecisionTask: {0} Non-Critical tasks available{1}", listOfDecisionTasksNonCritical.Count, "\n");
@@ -1722,7 +1720,7 @@ public class AIManager : MonoBehaviour
     private void ProcessTasksFinal(int numOfFactionTasks)
     {
         int numTasks = listOfTasksPotential.Count;
-        int index, odds, remainingChoices;
+        int index, remainingChoices;
         float baseOdds = 100f;
         int numTasksSelected = 0;
         int maxCombinedTasks = Mathf.Min(numOfFinalTasks, numOfFactionTasks);
@@ -1761,18 +1759,14 @@ public class AIManager : MonoBehaviour
                 }
                 else
                 {
-                    //insufficient tasks -> work out odds first
-                    /*odds = (int)(baseOdds / numTasks);
-                    foreach (AITask task in listOfTasksCritical)
-                    { task.chance = odds; }*/
-
+                    //insufficient tasks -> set chance to 0
                     foreach (AITask task in listOfTasksCritical)
                     { task.chance = 0; }
 
                     //randomly choose
                     do
                     {
-                        index = Random.Range(0, numTasks);
+                        index = Random.Range(0, listOfTasksCritical.Count);
                         listOfTasksFinal.Add(listOfTasksCritical[index]);
                         numTasksSelected++;
                         //remove entry from list to prevent future selection
@@ -1919,9 +1913,9 @@ public class AIManager : MonoBehaviour
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
         //zero out data for (prevents previous turns task data from carrying over)
-        data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = "";
-        data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = "";
-        data.task_1_textUpper = ""; data.task_1_textLower = ""; data.task_1_chance = "";
+        data.task_3_textUpper = ""; data.task_3_textLower = "no task available"; data.task_3_chance = "";
+        data.task_2_textUpper = ""; data.task_2_textLower = "no task available"; data.task_2_chance = "";
+        data.task_1_textUpper = ""; data.task_1_textLower = "no task available"; data.task_1_chance = "";
         //pass timer
         data.rebootTimer = rebootTimer;
         //if tasks are present, process into descriptor strings
@@ -2148,13 +2142,18 @@ public class AIManager : MonoBehaviour
         int rnd;
         int safetyCheck = 0;
         int counter = 0;
-        Debug.LogFormat("[Aim] -> ExecuteTasks: {0} tasks to implement for AI this turn{1}", listOfTasksFinal.Count, "\n");
-        //execute all 100% tasks first -> delete tasks as you go
+        Debug.LogFormat("[Aim] -> ExecuteTasks: {0} tasks available (faction limit {1} tasks) for AI this turn{2}", listOfTasksFinal.Count, numOfFactionTasks, "\n");
+        if (listOfTasksFinal.Count == 0)
+        { Debug.Log("[Aim] -> ExecuteTasks: NO TASKS AVAILABLE"); }
+        //
+        // - - - Execute all 100% tasks first & remove an 0 % tasks -> delete tasks as you go
+        //
         for (int i = listOfTasksFinal.Count -1; i >= 0; i--)
         {
             AITask task = listOfTasksFinal[i];
             if (task != null)
             {
+                Debug.LogFormat("[Aim] -> ExecuteTasks: listOfFinalTasks[{0}] {1} task, {2} priority, {3} % chance{4}", i, task.type, task.priority, task.chance, "\n");
                 if (task.chance == 100)
                 {
                     switch (task.type)
@@ -2169,14 +2168,25 @@ public class AIManager : MonoBehaviour
                             Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
                             break;
                     }
+
+                    counter++;
+                    //remove task once executed
+                    listOfTasksFinal.RemoveAt(i);
+                    //check max. tasks haven't been exceeded
+                    if (counter >= numOfFactionTasks)
+                    { break; }
                 }
-                counter++;
-                //remove task once executed
-                listOfTasksFinal.RemoveAt(i);
+                else if (task.chance == 0)
+                {
+                    //remove all zero rated tasks as they'll never be implemented
+                    listOfTasksFinal.RemoveAt(i);
+                }
             }
             else { Debug.LogWarningFormat("Invalid task (Null) for listOfTasksFinal[{0}]", listOfTasksFinal); }
         }
-        //Any Tasks remaining
+        //
+        //- - - Remaining Tasks
+        //
         if (listOfTasksFinal.Count > 0)
         {
             //more need for faction task list
@@ -2223,7 +2233,56 @@ public class AIManager : MonoBehaviour
                         break;
                     }
                 }
-                while (counter < numOfFactionTasks || listOfTasksFinal.Count > 0);
+                while (counter < numOfFactionTasks && listOfTasksFinal.Count > 0);
+                //
+                // - - - Fallback if timed out -> low probability but need to cover it
+                //
+                if (counter < numOfFactionTasks)
+                {
+                    if (safetyCheck > 10 && listOfTasksFinal.Count > 0)
+                    {
+                        safetyCheck = 0;
+                        //implement remaining tasks sequentially up to the faction limit required
+                        Debug.LogWarning("Safety Check triggered -> Default sequential task implementation in progress");
+                        do
+                        {
+                            //keep checking until sufficient tasks have been executed or run out of tasks
+                            for (int i = listOfTasksFinal.Count - 1; i >= 0; i--)
+                            {
+                                AITask task = listOfTasksFinal[i];
+                                if (task != null)
+                                {
+                                    switch (task.type)
+                                    {
+                                        case AIType.Team:
+                                            ExecuteTeamTask(task);
+                                            break;
+                                        case AIType.Decision:
+                                            ExecuteDecisionTask(task);
+                                            break;
+                                        default:
+                                            Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
+                                            break;
+                                    }
+                                    counter++;
+                                    //remove task once executed
+                                    listOfTasksFinal.RemoveAt(i);
+                                    //interim check
+                                    if (counter >= numOfFactionTasks || listOfTasksFinal.Count == 0)
+                                    { break; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid task (Null) for listOfTasksFinal[{0}]", listOfTasksFinal); }
+                            }
+                            safetyCheck++;
+                            if (safetyCheck > 10)
+                            {
+                                Debug.LogWarning("SafetyCheck triggered SECOND TIME (>10) in fall back routine");
+                                break;
+                            }
+                        }
+                        while (counter < numOfFactionTasks && listOfTasksFinal.Count > 0);
+                    }
+                }
             }
         }
     }
@@ -2288,6 +2347,8 @@ public class AIManager : MonoBehaviour
             { isSuccess = ProcessAITeamRequest(); }
             else if (task.name0.Equals(decisionResources.name) == true)
             { isSuccess = ProcessAIResourceRequest(); }
+            else
+            { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
             //debug logs
             if (isSuccess == true) { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision implemented{1}", task.name0, "\n"); }
             else { Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" Decision NOT implemented{1}", task.name0, "\n"); }
@@ -2296,6 +2357,7 @@ public class AIManager : MonoBehaviour
         {
             //decision cancelled due to insufficient resources
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: INSUFFICIENT RESOURCES to implement \"{0}\" decision{1}", task.name0, "\n");
+            isInsufficientResources = true;
         }
     }
 
@@ -2742,6 +2804,7 @@ public class AIManager : MonoBehaviour
             teamRatio >= teamRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
         builder.AppendFormat(" erasureTeamsOnMap -> {0}{1}", erasureTeamsOnMap, "\n");
         builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
+        builder.AppendFormat(" isInsufficientResources -> {0}{1}", isInsufficientResources, "\n");
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         { builder.AppendFormat(" SECURITY MEASURES Available{0}", "\n"); }
         return builder.ToString();

@@ -57,7 +57,7 @@ public class TurnManager : MonoBehaviour
         set
         {
             _turn = value;
-            Debug.Log(string.Format("TurnManager: Turn {0}{1}", _turn, "\n"));
+            Debug.LogFormat("TurnManager: Turn {0}{1}", _turn, "\n");
         }
     }
 
@@ -112,7 +112,7 @@ public class TurnManager : MonoBehaviour
                 SetColours();
                 break;
             default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
                 break;
         }
     }
@@ -142,8 +142,8 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void ProcessNewTurn()
     {
-        Debug.Log(string.Format("TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
-            _turn, GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n"));
+        Debug.LogFormat("[Trn] TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
+            _turn, GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n");
         bool finishedProcessing = false;
         int safetyCircuit = 0;
         //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
@@ -186,7 +186,7 @@ public class TurnManager : MonoBehaviour
     {
         //increment turn counter
         _turn++;
-        Debug.Log(string.Format("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n"));
+        Debug.LogFormat("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
         //reset nodes and connections if not in normal state
         if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
@@ -200,7 +200,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        Debug.Log(string.Format("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n"));
+        Debug.LogFormat("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.StartTurnLate, this);
         UpdateStates();
     }
@@ -211,7 +211,7 @@ public class TurnManager : MonoBehaviour
     private bool StartTurnFinal()
     {
         bool playerInteraction = true;
-        Debug.Log(string.Format("TurnManager: - - - StartTurnFinal - - - turn {0}{1}", _turn, "\n"));
+        Debug.LogFormat("TurnManager: - - - StartTurnFinal - - - turn {0}{1}", _turn, "\n");
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
@@ -225,7 +225,7 @@ public class TurnManager : MonoBehaviour
                 playerInteraction = false;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                 break;
         }
         return playerInteraction;
@@ -237,7 +237,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     private void EndTurnAI()
     {
-        Debug.Log(string.Format("TurnManager: - - - EndTurnAI - - - turn {0}{1}", _turn, "\n"));
+        Debug.LogFormat("TurnManager: - - - EndTurnAI - - - turn {0}{1}", _turn, "\n");
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
@@ -264,7 +264,7 @@ public class TurnManager : MonoBehaviour
                 GameManager.instance.aiScript.ProcessAISideAuthority();
                 break;
             default:
-                Debug.LogError(string.Format("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                 break;
         }
 
@@ -282,7 +282,7 @@ public class TurnManager : MonoBehaviour
         _actionsCurrent = 0;
         _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
         _actionsTotal = Mathf.Max(0, _actionsTotal);
-        Debug.Log(string.Format("TurnManager: - - - EndTurnFinal - - - turn {0}{1}", _turn, "\n"));
+        Debug.LogFormat("TurnManager: - - - EndTurnFinal - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal);
         EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
     }
@@ -305,7 +305,7 @@ public class TurnManager : MonoBehaviour
         {
             case "Authority": _actionsLimit = actionsAuthority; break;
             case "Resistance": _actionsLimit = actionsResistance; break;
-            default: Debug.LogError(string.Format("Invalid side {0}", side.name)); break;
+            default: Debug.LogErrorFormat("Invalid side {0}", side.name); break;
         }
         //calculate total actions available
         _actionsAdjust = GameManager.instance.dataScript.GetActionAdjustment(side);
@@ -319,8 +319,8 @@ public class TurnManager : MonoBehaviour
     {
         int remainder;
         _actionsCurrent++;
-        Debug.Log(string.Format("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, 
-            GameManager.instance.turnScript.Turn, "\n"));
+        Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, 
+            GameManager.instance.turnScript.Turn, "\n");
         //exceed action limit? (total includes any temporary adjustments)
         remainder = _actionsTotal - _actionsCurrent;
         /*//cached actions (so player can't keep regenerating new gear picks within an action)
@@ -508,7 +508,7 @@ public class TurnManager : MonoBehaviour
         { StartCoroutine("DelayedQuit"); }
         if (allowQuitting == false)
         {
-            Debug.Log(string.Format("TurnManager: Quit selected but not allowed as allowQuitting is false{0}", "\n"));
+            Debug.LogFormat("TurnManager: Quit selected but not allowed as allowQuitting is false{0}", "\n");
             //Application.CancelQuit();
         }
     }
