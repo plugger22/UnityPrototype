@@ -389,7 +389,7 @@ public class TargetManager : MonoBehaviour
                                     case Status.Active:
                                     case Status.Live:
                                         tempList.Add(string.Format("<b>{0} Target</b>", target.targetStatus));
-                                        tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                                        tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.name, colourEnd));
                                         tempList.Add(string.Format("Level {0}", target.targetLevel));
                                         break;
                                 }
@@ -401,7 +401,7 @@ public class TargetManager : MonoBehaviour
                                     case Status.Completed:
                                     case Status.Contained:
                                         tempList.Add(string.Format("<b>{0} Target</b>", target.targetStatus));
-                                        tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                                        tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.name, colourEnd));
                                         tempList.Add(string.Format("Level {0}", target.targetLevel));
                                         break;
                                 }
@@ -460,11 +460,11 @@ public class TargetManager : MonoBehaviour
         {
             case Status.Active:
                 tempList.Add(string.Format("{0}<b>{1} Target</b>{2}", colourNormal, target.targetStatus, colourEnd));
-                tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.name, colourEnd));
                 tempList.Add(string.Format("{0}Level {1}{2}", colourDefault, target.targetLevel, colourEnd));
                 break;
             case Status.Live:
-                tempList.Add(string.Format("{0}{1}{2}", colourTarget, target.name, colourEnd));
+                tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.name, colourEnd));
                 tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
                 //good effects
                 Effect effect = null;

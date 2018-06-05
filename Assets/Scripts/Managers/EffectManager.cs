@@ -990,7 +990,8 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
-                                                effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}Authority will know immediately{5}",
+                                                effectReturn.bottomText = 
+                                                    string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
                                                     colourAlert, colourEnd, "\n", "\n", colourBad, colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
@@ -1003,7 +1004,7 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //immediate notification. AI flag set. Applies if player invis was 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}Authority will know immediately{6}", 
+                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}", 
                                                     colourAlert, effect.textTag, colourEnd, "\n", "\n", colourBad, colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
@@ -1062,7 +1063,7 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}Authority will know immediately{5}",
+                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
                                                     colourEffect, actor.arc.name, effect.textTag, "\n", "\n", colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
@@ -1075,7 +1076,7 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}Authority will know immediately{5}", 
+                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}", 
                                                     colourEffect, actor.arc.name, effect.textTag, "\n", "\n", colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }

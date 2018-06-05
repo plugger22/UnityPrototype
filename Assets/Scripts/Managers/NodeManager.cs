@@ -1095,7 +1095,7 @@ public class NodeManager : MonoBehaviour
                                         if (GameManager.instance.playerScript.invisibility <= 1)
                                         {
                                             //invisibility will be zero, or less, if move. Immediate notification
-                                            builderDetail.Append(string.Format("{0}Invisibility -1{1}Authority will know IMMEDIATELY{2}", colourEffectBad, "\n",
+                                            builderDetail.Append(string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourEffectBad, "\n",
                                               colourEnd));
                                             moveGearDetails.ai_Delay = 0;
                                         }
@@ -1152,7 +1152,7 @@ public class NodeManager : MonoBehaviour
                     if (GameManager.instance.playerScript.invisibility <= 1)
                     {
                         //invisibility will be zero, or less, if move. Immediate notification
-                        moveDetail = string.Format("{0}Invisibility -1{1}Authority will know IMMEDIATELY{2}", colourEffectBad, "\n",
+                        moveDetail = string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourEffectBad, "\n",
                           colourEnd);
                         moveDetails.ai_Delay = 0;
                     }
