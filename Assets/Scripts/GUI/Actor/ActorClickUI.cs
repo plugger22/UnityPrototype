@@ -15,7 +15,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
 
     public void Awake()
     {
-        Debug.Log(string.Format("ActorClickUI: actorSlotID {0}{1}", actorSlotID, "\n"));
+        /*Debug.Log(string.Format("ActorClickUI: actorSlotID {0}{1}", actorSlotID, "\n"));*/
     }
 
     /// <summary>

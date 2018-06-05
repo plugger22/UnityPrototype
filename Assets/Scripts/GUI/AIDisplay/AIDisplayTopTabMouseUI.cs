@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// handles mouse functionality for AIDisplay top tab (FACTION info)
 /// </summary>
-public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
 
@@ -20,6 +20,11 @@ public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerClickHandler, IPoin
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipDetails;
 
+
+    public void Awake()
+    {
+        onMouseFlag = false;
+    }
 
     public void Start()
     {
@@ -35,13 +40,9 @@ public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerClickHandler, IPoin
     /// </summary>
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //check modal block is in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == true)
-        {
             onMouseFlag = true;
             //start tooltip routine
-            myCoroutine = StartCoroutine("ShowTooltip");
-        }
+            myCoroutine = StartCoroutine("ShowFactionTooltip");
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -55,21 +56,17 @@ public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerClickHandler, IPoin
     /// </summary>
     public void OnPointerExit(PointerEventData eventData)
     {
-        //check modal block is in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == true)
-        {
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
             GameManager.instance.tooltipGenericScript.CloseTooltip();
-        }
     }
 
     /// <summary>
     /// Show generic tooltip
     /// </summary>
     /// <returns></returns>
-    IEnumerator ShowTooltip()
+    IEnumerator ShowFactionTooltip()
     {
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
@@ -78,7 +75,7 @@ public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerClickHandler, IPoin
         {
             //do once
             Vector3 screenPos = transform.position;
-            screenPos.x -= 20;
+            screenPos.x += 100;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 tooltipHeader = GameManager.instance.factionScript.GetFactionName();
