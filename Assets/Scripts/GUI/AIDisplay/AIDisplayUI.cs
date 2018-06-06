@@ -40,6 +40,9 @@ public class AIDisplayUI : MonoBehaviour
     private GenericTooltipUI topTabTooltip;
     private GenericTooltipUI bottomTabTooltip;
     private GenericTooltipUI sideTabTooltip;
+    private GenericTooltipUI topTaskTooltip;
+    private GenericTooltipUI middleTaskTooltip;
+    private GenericTooltipUI bottomTaskTooltip;
 
     private static AIDisplayUI aiDisplayUI;
     
@@ -65,10 +68,15 @@ public class AIDisplayUI : MonoBehaviour
         topTabTooltip = tabTopMouse.GetComponent<GenericTooltipUI>();
         bottomTabTooltip = tabBottomMouse.GetComponent<GenericTooltipUI>();
         sideTabTooltip = tabSideMouse.GetComponent<GenericTooltipUI>();
+        topTaskTooltip = subTopPanel.GetComponent<GenericTooltipUI>();
+        middleTaskTooltip = subMiddlePanel.GetComponent<GenericTooltipUI>();
+        bottomTaskTooltip = subBottomPanel.GetComponent<GenericTooltipUI>();
         Debug.Assert(topTabTooltip != null, "Invalid topTabTooltip (Null)");
         Debug.Assert(bottomTabTooltip != null, "Invalid bottomTabPanelTooltip (Null)");
         Debug.Assert(sideTabTooltip != null, "Invalid sideTabTooltip (Null)");
-        
+        Debug.Assert(topTaskTooltip != null, "Invalid topTaskTooltip (Null)");
+        Debug.Assert(middleTaskTooltip != null, "Invalid middleTaskTooltip (Null)");
+        Debug.Assert(bottomTaskTooltip != null, "Invalid bottomTaskTooltip (Null)");
     }
 
 
@@ -164,7 +172,25 @@ public class AIDisplayUI : MonoBehaviour
         //side tab tooltip
         sideTabTooltip.tooltipHeader = "Unknown";
         sideTabTooltip.tooltipMain = "Unknown";
-        sideTabTooltip.x_offset = 30;
+        //sideTabTooltip.x_offset = 30;
+        //top Task tooltip
+        topTaskTooltip.tooltipHeader = "Unknown top";
+        topTaskTooltip.tooltipMain = "Unknown";
+        topTaskTooltip.tooltipDetails = "Unknown";
+        topTaskTooltip.x_offset = 330;
+        topTaskTooltip.y_offset = 180;
+        //middle Task tooltip
+        middleTaskTooltip.tooltipHeader = "Unknown middle";
+        middleTaskTooltip.tooltipMain = "Unknown";
+        middleTaskTooltip.tooltipDetails = "Unknown";
+        middleTaskTooltip.x_offset = 330;
+        middleTaskTooltip.y_offset = 250;
+        //bottom Task tooltip
+        bottomTaskTooltip.tooltipHeader = "Unknown bottom";
+        bottomTaskTooltip.tooltipMain = "Unknown";
+        bottomTaskTooltip.tooltipDetails = "Unknown";
+        bottomTaskTooltip.x_offset = 330;
+        bottomTaskTooltip.y_offset = 310;
     }
 
     /// <summary>
