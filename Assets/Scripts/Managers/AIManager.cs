@@ -76,6 +76,9 @@ public class AIDisplayData
 public class AIHackingData
 {
     public string hackingStatus;            //combined string of AI Alert Status and number of hacking attempts
+    public string tooltipHeader;
+    public string tooltipMain;              //combined string for tooltip
+    public string tooltipDetails;
 }
 
 /// <summary>
@@ -187,7 +190,9 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public int resourcesGainResistance;
     [HideInInspector] public int aiTaskCounter;                         //AITask ID counter (reset every turn)
     //hacking
-    [HideInInspector] public int hackingAttempts;
+    [HideInInspector] public int hackingAttemptsTotal;                  //number of hacking attempts overall
+    [HideInInspector] public int hackingAttemptsReboot;                 //number of hacking attempts since last reboot
+    [HideInInspector] public int hackingAttemptsDetected;               //number of times hacking detected by AI since last reboot
     [HideInInspector] public int hackingCurrentCost;
     [HideInInspector] public bool isHacked;                             //true if player has already hacked AI this turn, reset each turn
     [HideInInspector] public Priority aiAlertStatus;
@@ -237,6 +242,7 @@ public class AIManager : MonoBehaviour
     private string colourGrey;
     private string colourBad;
     private string colourNormal;
+    private string colourAlert;
     private string colourEnd;
 
     //info gathering lists (collated every turn)
@@ -324,7 +330,9 @@ public class AIManager : MonoBehaviour
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
         //Hacking
-        hackingAttempts = 0;
+        hackingAttemptsTotal = 0;
+        hackingAttemptsReboot = 0;
+        hackingAttemptsDetected = 0;
         hackingCurrentCost = hackingBaseCost;
         aiAlertStatus = Priority.Low;
         isRebooting = false;
@@ -369,7 +377,7 @@ public class AIManager : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -2574,6 +2582,8 @@ public class AIManager : MonoBehaviour
     {
         isRebooting = false;
         rebootTimer = 0;
+        hackingAttemptsDetected = 0;
+        hackingAttemptsReboot = 0;
         //increment hacking cost
         hackingCurrentCost += hackingIncrement;
         //reset Alert status to low
@@ -2609,13 +2619,16 @@ public class AIManager : MonoBehaviour
             string colourStatus = colourNormal;
             AIHackingData data = new AIHackingData();
             //increment number of hacking attempts
-            hackingAttempts++;
+            hackingAttemptsTotal++;
+            hackingAttemptsReboot++;
             isHacked = true;
             //does AI Alert Status increase?
             int rnd = Random.Range(0, 100);
-            if (rnd < hackingAlertIncreaseChance)
+            int chance = hackingAlertIncreaseChance;
+            if (rnd < chance)
             {
-                Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", hackingAlertIncreaseChance, rnd, "\n");
+                Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", chance, rnd, "\n");
+                hackingAttemptsDetected++;
                 //increase alert status
                 switch (aiAlertStatus)
                 {
@@ -2658,12 +2671,19 @@ public class AIManager : MonoBehaviour
                         break;
                 }
             }
+            //tooltip string
+            
+            data.tooltipHeader = string.Format("There is a {0}{1} %{2} chance of being {3}Detected{4}", colourNeutral, chance, colourEnd, colourBad, colourEnd);
+            data.tooltipMain = string.Format("{0}Alert Status increases whenever hacking detected. AI will {1}{2}Reboot{3}{4} at status {5}{6}Critical{7}", 
+                colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);
+            data.tooltipDetails = string.Format("{0}The AI has detected{1}{2}{3}{4} hacking attempt{5}{6}{7}{8}since its last Reboot{9}", colourNormal, colourEnd, "\n",
+                colourNeutral, hackingAttemptsDetected,  hackingAttemptsDetected != 1 ? "s" : "", colourEnd, "\n", colourNormal, colourEnd);
             //log entries
-            Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: hackingAttempts now {0}{1}", hackingAttempts, "\n");
+            Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: hackingAttemptsTotal now {0}{1}", hackingAttemptsTotal, "\n");
             Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: AI Alert Status {0}{1}", aiAlertStatus, "\n");
             //data package
-            data.hackingStatus = string.Format("{0} Hacking Attempt{1}{2}AI Alert Status {3}{4}{5}", hackingAttempts,
-                hackingAttempts != 1 ? "s" : "", "\n", colourStatus, aiAlertStatus, colourEnd);
+            data.hackingStatus = string.Format("{0} Hacking Attempt{1}{2}AI Alert Status {3}{4}{5}", hackingAttemptsReboot,
+                hackingAttemptsReboot != 1 ? "s" : "", "\n", colourStatus, aiAlertStatus, colourEnd);
             //send data package to AIDisplayUI
             EventManager.instance.PostNotification(EventType.AISendHackingData, this, data);
         }

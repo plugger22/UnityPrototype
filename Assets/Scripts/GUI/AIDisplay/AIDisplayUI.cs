@@ -165,13 +165,14 @@ public class AIDisplayUI : MonoBehaviour
         topTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(aiSide);
         topTabTooltip.x_offset = 175;
         //hacking bottom tab tooltip
-        bottomTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName(aiSide);
-        bottomTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription(aiSide);
-        bottomTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(aiSide);
+        bottomTabTooltip.tooltipHeader = "Unknown";
+        bottomTabTooltip.tooltipMain = "Unknown";
+        bottomTabTooltip.tooltipDetails = "Unknown";
         bottomTabTooltip.x_offset = 175;
         //side tab tooltip
         sideTabTooltip.tooltipHeader = "Unknown";
         sideTabTooltip.tooltipMain = "Unknown";
+        sideTabTooltip.x_offset = 25;
         //sideTabTooltip.x_offset = 30;
         //top Task tooltip
         topTaskTooltip.tooltipHeader = "Unknown top";
@@ -249,9 +250,20 @@ public class AIDisplayUI : MonoBehaviour
     {
         if (data != null)
         {
+            //bottom tab data
             if (String.IsNullOrEmpty(data.hackingStatus) == false)
             { tabBottomText.text = data.hackingStatus; }
             else { tabBottomText.text = "Unknown Data"; }
+            //bottom tab hacking tooltip
+            if (String.IsNullOrEmpty(data.tooltipHeader) == false)
+            { bottomTabTooltip.tooltipHeader = data.tooltipHeader; }
+            else { bottomTabTooltip.tooltipHeader = "Unknown Data"; }
+            if (String.IsNullOrEmpty(data.tooltipMain) == false)
+            { bottomTabTooltip.tooltipMain = data.tooltipMain; }
+            else { bottomTabTooltip.tooltipMain = "Unknown Data"; }
+            if (String.IsNullOrEmpty(data.tooltipDetails) == false)
+            { bottomTabTooltip.tooltipDetails = data.tooltipDetails; }
+            else { bottomTabTooltip.tooltipDetails = "Unknown Data"; }
         }
         else { Debug.LogWarning("Invalid AIHackingData package (Null)"); }
     }
