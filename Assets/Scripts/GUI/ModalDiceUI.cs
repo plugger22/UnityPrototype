@@ -206,7 +206,7 @@ public class ModalDiceUI : MonoBehaviour
         {
             generic_1_left.tooltipHeader = string.Format("{0}IGNORE{1}", colourResistance, colourEnd);
             generic_1_left.tooltipMain = "It's not important. Let's speed this up";
-            generic_1_left.tooltipEffect = string.Format("{0}If the roll fails there is{1}{2} NO opportunity to use Renown{3}{4} to turn it into a success{5}",
+            generic_1_left.tooltipDetails = string.Format("{0}If the roll fails there is{1}{2} NO opportunity to use Renown{3}{4} to turn it into a success{5}",
                 colourNormal, colourEnd, colourDataBad, colourEnd, colourNormal, colourEnd);
         }
         else { Debug.LogError("Invalid generic_1_left button IGNORE (Null)"); }
@@ -215,7 +215,7 @@ public class ModalDiceUI : MonoBehaviour
         {
             generic_1_middle.tooltipHeader = string.Format("{0}AUTO{1}", colourResistance, colourEnd);
             generic_1_middle.tooltipMain = "Switch to Auto Pilot";
-            generic_1_middle.tooltipEffect = string.Format("{0}If the roll fails, {1}{2}Renown is used AUTOMATICALLY{3}{4} to turn it into a success{5}",
+            generic_1_middle.tooltipDetails = string.Format("{0}If the roll fails, {1}{2}Renown is used AUTOMATICALLY{3}{4} to turn it into a success{5}",
                 colourNormal, colourEnd, colourDataNeutral, colourEnd, colourNormal, colourEnd);
         }
         else { Debug.LogError("Invalid generic_1_middle button AUTO (Null)"); }
@@ -224,7 +224,7 @@ public class ModalDiceUI : MonoBehaviour
         {
             generic_1_right.tooltipHeader = string.Format("{0}ROLL{1}", colourResistance, colourEnd);
             generic_1_right.tooltipMain = "Luck be a Lady tonight";
-            generic_1_right.tooltipEffect = string.Format("{0}If the roll fails {1}{2}you can CHOOSE to use Renown{3}{4} to turn it into a success{5}",
+            generic_1_right.tooltipDetails = string.Format("{0}If the roll fails {1}{2}you can CHOOSE to use Renown{3}{4} to turn it into a success{5}",
                 colourNormal, colourEnd, colourDataGood, colourEnd, colourNormal, colourEnd);
         }
         else { Debug.LogError("Invalid generic_1_right button ROLL (Null)"); }
@@ -240,7 +240,7 @@ public class ModalDiceUI : MonoBehaviour
         {
             generic_3_left.tooltipHeader = string.Format("{0}USE RENOWN{1}", colourResistance, colourEnd);
             generic_3_left.tooltipMain = "Pull strings. Shake it up. Make things happen.";
-            generic_3_left.tooltipEffect = string.Format("{0}Spend Renown to turn the roll into a Success{1}", colourDataNeutral, colourEnd);
+            generic_3_left.tooltipDetails = string.Format("{0}Spend Renown to turn the roll into a Success{1}", colourDataNeutral, colourEnd);
         }
         else { Debug.LogError("Invalid generic_3_left button USE RENOWN (Null)"); }
         //set 3 -> Right
@@ -248,7 +248,7 @@ public class ModalDiceUI : MonoBehaviour
         {
             generic_3_right.tooltipHeader = string.Format("{0}ACCEPT FAILURE{1}", colourResistance, colourEnd);
             generic_3_right.tooltipMain = "It doesn't always go to plan. Adapt. Move on.";
-            generic_3_right.tooltipEffect = string.Format("{0}Your gear will be compromised{1}", colourDataBad, colourEnd);
+            generic_3_right.tooltipDetails = string.Format("{0}Your gear will be compromised{1}", colourDataBad, colourEnd);
         }
         else { Debug.LogError("Invalid generic_3_right button ACCEPT FAILURE (Null)"); }
     }

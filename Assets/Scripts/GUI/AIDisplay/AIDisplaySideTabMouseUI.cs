@@ -4,45 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// attached to shadow (invisible) side tab image that intercepts all mouse calls 
+/// attached to shadow (invisible) side tab image that intercepts all mouse clicks 
 /// </summary>
-public class AIDisplaySideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class AIDisplaySideTabMouseUI : MonoBehaviour, IPointerClickHandler
 {
-
-    private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
-    private float mouseOverDelay;                       //tooltip
-
-
-    public void Start()
-    {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-    }
-
-    /// <summary>
-    /// Mouse over generic tooltip
-    /// </summary>
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //check modal block isn't in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
-        {
-            //Tool tip
-            onMouseFlag = true;
-
-        }
-    }
-
-
-    /// <summary>
-    /// mouse over exit, shut down tooltip
-    /// </summary>
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
-        {
-            onMouseFlag = false;
-        }
-    }
 
 
     /// <summary>

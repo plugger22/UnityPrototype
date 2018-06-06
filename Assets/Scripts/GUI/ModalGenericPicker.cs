@@ -275,7 +275,7 @@ public class ModalGenericPicker : MonoBehaviour
                                         {
                                             tooltipUI.tooltipHeader = details.arrayOfTooltips[i].textHeader;
                                             tooltipUI.tooltipMain = details.arrayOfTooltips[i].textMain;
-                                            tooltipUI.tooltipEffect = details.arrayOfTooltips[i].textDetails;
+                                            tooltipUI.tooltipDetails = details.arrayOfTooltips[i].textDetails;
                                         }
                                         else { Debug.LogError(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                                     }

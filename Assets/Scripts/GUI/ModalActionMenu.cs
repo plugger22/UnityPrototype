@@ -183,7 +183,7 @@ public class ModalActionMenu : MonoBehaviour
                     GenericTooltipUI generic = tempButton.GetComponent<GenericTooltipUI>();
                     generic.tooltipHeader = buttonDetails.buttonTooltipHeader;
                     generic.tooltipMain = buttonDetails.buttonTooltipMain;
-                    generic.tooltipEffect = buttonDetails.buttonTooltipDetail;
+                    generic.tooltipDetails = buttonDetails.buttonTooltipDetail;
                 }
             }
 

@@ -111,6 +111,7 @@ public class TooltipGeneric : MonoBehaviour
         //set new position
         tooltipGenericObject.transform.position = screenPos;
         Debug.Log("UI: Open -> TooltipGeneric" + "\n");
+
     }
 
 

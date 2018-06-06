@@ -70,7 +70,7 @@ public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerEnterHandler, IPoin
         {
             //do once
             Vector3 screenPos = transform.position;
-            screenPos.x += 100;
+            screenPos.x += 200;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 tooltipHeader = GameManager.instance.factionScript.GetFactionName();

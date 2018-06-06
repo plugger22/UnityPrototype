@@ -2613,8 +2613,9 @@ public class AIManager : MonoBehaviour
             isHacked = true;
             //does AI Alert Status increase?
             int rnd = Random.Range(0, 100);
-            if (rnd <= hackingAlertIncreaseChance)
+            if (rnd < hackingAlertIncreaseChance)
             {
+                Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", hackingAlertIncreaseChance, rnd, "\n");
                 //increase alert status
                 switch (aiAlertStatus)
                 {

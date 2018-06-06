@@ -16,6 +16,10 @@ public class FactionManager : MonoBehaviour
 
     private int _supportAuthority;                          //level of faction support (out of 10) enjoyed by authority side (Player/AI)
     private int _supportResistance;                         //level of faction support (out of 10) enjoyed by resistance side (Player/AI)
+    
+    //fast access
+    private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
 
     private string colourRebel;
     private string colourAuthority;
@@ -55,6 +59,11 @@ public class FactionManager : MonoBehaviour
 
     public void Initialise()
     {
+        //fast access
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         //Authority faction -> cityManager decides current authority faction as it depends on mayor's faction
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
         Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
@@ -77,6 +86,8 @@ public class FactionManager : MonoBehaviour
         SupportResistance = 10;
         Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}", 
             factionResistance, factionAuthority, "\n"));
+        //update colours for AI Display tooltip data
+        SetColours();
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
     }
@@ -144,24 +155,28 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current faction for player side in a colour formatted string
+    /// returns current faction for the specified side in a colour formatted string
     /// </summary>
     /// <returns></returns>
-    public string GetFactionName()
+    public string GetFactionName(GlobalSide side)
     {
         string description = "Unknown";
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        if (side != null)
         {
-            case 1:
-                description = string.Format("<b>{0}{1}{2}</b>", colourSide, factionAuthority.name, colourEnd);
-                break;
-            case 2:
-                description = string.Format("<b>{0}{1}{2}</b>", colourSide, factionResistance.name, colourEnd);
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
-                break;
+            switch (side.level)
+            {
+                case 1:
+                    description = string.Format("<b>{0}{1}{2}</b>", colourSide, factionAuthority.name, colourEnd);
+                    break;
+                case 2:
+                    description = string.Format("<b>{0}{1}{2}</b>", colourSide, factionResistance.name, colourEnd);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                    break;
+            }
         }
+        else { Debug.LogWarning("Invalid side (Null)"); }
         return description;
     }
 

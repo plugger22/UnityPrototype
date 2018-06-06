@@ -17,8 +17,9 @@ public class AIDisplayUI : MonoBehaviour
     public Image subMiddlePanel;
     public Image subBottomPanel;
     //mouse elements
-    public Image sideTabMouse;
-    public Image topTabMouse;
+    public Image tabSideMouse;
+    public Image tabTopMouse;
+    public Image tabBottomMouse;
     //text elements
     public TextMeshProUGUI tabTopText;
     public TextMeshProUGUI tabBottomText;
@@ -35,8 +36,9 @@ public class AIDisplayUI : MonoBehaviour
 
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
 
-    private GenericTooltipUI factionTooltip;
-    private GenericTooltipUI innerPanelTooltip;
+    private GenericTooltipUI topTabTooltip;
+    private GenericTooltipUI bottomTabTooltip;
+    private GenericTooltipUI sideTabTooltip;
 
     private static AIDisplayUI aiDisplayUI;
 
@@ -58,10 +60,12 @@ public class AIDisplayUI : MonoBehaviour
 
     public void Awake()
     {
-        /*factionTooltip = topTabMouse.GetComponent<GenericTooltipUI>();*/
-        innerPanelTooltip = innerPanel.GetComponent<GenericTooltipUI>();
-        //Debug.Assert(factionTooltip != null, "Invalid factionTooltip (Null)");
-        Debug.Assert(innerPanelTooltip != null, "Invalid innerPanelTooltip (Null)");
+        topTabTooltip = tabTopMouse.GetComponent<GenericTooltipUI>();
+        bottomTabTooltip = tabBottomMouse.GetComponent<GenericTooltipUI>();
+        sideTabTooltip = tabSideMouse.GetComponent<GenericTooltipUI>();
+        Debug.Assert(topTabTooltip != null, "Invalid topTabTooltip (Null)");
+        Debug.Assert(bottomTabTooltip != null, "Invalid bottomTabPanelTooltip (Null)");
+        Debug.Assert(sideTabTooltip != null, "Invalid sideTabTooltip (Null)");
         
     }
 
@@ -69,13 +73,15 @@ public class AIDisplayUI : MonoBehaviour
 
     public void Initialise()
     {
+        InitialiseTooltips();
         //set all sub compoponents to Active
         SetAllToActive();
-        InitialiseTooltips();
+        
     }
 
     public void Start()
     {
+        
         //event listener
         EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
@@ -129,8 +135,9 @@ public class AIDisplayUI : MonoBehaviour
         subMiddlePanel.gameObject.SetActive(true);
         subBottomPanel.gameObject.SetActive(true);
         tabCloseText.gameObject.SetActive(true);
-        sideTabMouse.gameObject.SetActive(true);
-        topTabMouse.gameObject.SetActive(true);
+        tabSideMouse.gameObject.SetActive(true);
+        tabTopMouse.gameObject.SetActive(true);
+        tabBottomMouse.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -138,13 +145,20 @@ public class AIDisplayUI : MonoBehaviour
     /// </summary>
     public void InitialiseTooltips()
     {
-        /*//faction top tab tooltip
-        factionTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName();
-        factionTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription();
-        factionTooltip.tooltipEffect = GameManager.instance.factionScript.GetFactionDetails();*/
-        //inner panel tooltip
-        innerPanelTooltip.tooltipHeader = "Unknown";
-        innerPanelTooltip.tooltipMain = "Unknown";
+        //faction top tab tooltip
+        topTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName();
+        topTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription();
+        topTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails();
+        topTabTooltip.x_offset = 175;
+        //hacking bottom tab tooltip
+        bottomTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName();
+        bottomTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription();
+        bottomTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails();
+        bottomTabTooltip.x_offset = 175;
+        //side tab tooltip
+        sideTabTooltip.tooltipHeader = "Unknown";
+        sideTabTooltip.tooltipMain = "Unknown";
+        sideTabTooltip.x_offset = 30;
     }
 
     /// <summary>

@@ -192,7 +192,7 @@ public class ModalInventoryUI : MonoBehaviour
                                 {
                                     arrayOfTooltips[i].tooltipHeader = details.arrayOfTooltips[i].textHeader;
                                     arrayOfTooltips[i].tooltipMain = details.arrayOfTooltips[i].textMain;
-                                    arrayOfTooltips[i].tooltipEffect = details.arrayOfTooltips[i].textDetails;
+                                    arrayOfTooltips[i].tooltipDetails = details.arrayOfTooltips[i].textDetails;
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                             }
@@ -308,7 +308,7 @@ public class ModalInventoryUI : MonoBehaviour
                                     {
                                         arrayOfTooltips[i].tooltipHeader = details.arrayOfTooltips[i].textHeader;
                                         arrayOfTooltips[i].tooltipMain = details.arrayOfTooltips[i].textMain;
-                                        arrayOfTooltips[i].tooltipEffect = details.arrayOfTooltips[i].textDetails;
+                                        arrayOfTooltips[i].tooltipDetails = details.arrayOfTooltips[i].textDetails;
                                     }
                                     else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                                 }
