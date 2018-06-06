@@ -136,4 +136,31 @@ public class SideManager : MonoBehaviour
         return isPossible;
     }
 
+    /// <summary>
+    /// returns side controlled by AI (opposite to that of the player). If both sides are AI then returns null. Returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public GlobalSide GetAISide()
+    {
+        GlobalSide aiSide = null;
+        switch (_playerSide.level)
+        {
+            case 0:
+                //AI
+                break;
+            case 1:
+                //Authority
+                aiSide = GameManager.instance.globalScript.sideResistance;
+                break;
+            case 2:
+                //Resistance
+                aiSide = GameManager.instance.globalScript.sideAuthority;
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid _playerSide.level \"{0}\"", _playerSide.level));
+                break;
+        }
+        return aiSide;
+    }
+
 }

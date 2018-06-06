@@ -13,6 +13,7 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
     private float mouseOverDelay;                       //tooltip
     private float mouseOverFade;                        //tooltip
     private Coroutine myCoroutine;
+    private GlobalSide playerSide;
 
 
     [HideInInspector] public string tooltipHeader;
@@ -77,6 +78,7 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
     {
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
+        playerSide = GameManager.instance.sideScript.PlayerSide;
         //activate tool tip if mouse still over button
         if (onMouseFlag == true)
         {
@@ -86,9 +88,9 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             screenPos.y -= 90;
                 while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
                 {
-                    tooltipHeader = GameManager.instance.factionScript.GetFactionName();
-                    tooltipMain = GameManager.instance.factionScript.GetFactionDescription();
-                    tooltipDetails = GameManager.instance.factionScript.GetFactionDetails();
+                    tooltipHeader = GameManager.instance.factionScript.GetFactionName(playerSide);
+                    tooltipMain = GameManager.instance.factionScript.GetFactionDescription(playerSide);
+                    tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(playerSide);
                     GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
                     yield return null;
                 }

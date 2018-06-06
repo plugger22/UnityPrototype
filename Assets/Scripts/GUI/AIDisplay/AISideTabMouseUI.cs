@@ -8,10 +8,10 @@ using gameAPI;
 /// <summary>
 /// attached to AI side tab to handle all mouse interactions
 /// </summary>
-public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerEnterHandler, IPointerExitHandler*/
 {
 
-    private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
+    /*private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
 
 
@@ -44,7 +44,7 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEnt
         {
             onMouseFlag = false;
         }
-    }
+    }*/
 
 
     /// <summary>

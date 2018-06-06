@@ -35,12 +35,14 @@ public class AIDisplayUI : MonoBehaviour
     public TextMeshProUGUI subBottomChance;
 
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
+    private GlobalSide aiSide;                             //side the AI controls (opposite to player)
 
     private GenericTooltipUI topTabTooltip;
     private GenericTooltipUI bottomTabTooltip;
     private GenericTooltipUI sideTabTooltip;
 
     private static AIDisplayUI aiDisplayUI;
+    
 
 
     /// <summary>
@@ -73,6 +75,10 @@ public class AIDisplayUI : MonoBehaviour
 
     public void Initialise()
     {
+        //ai controlled side
+        aiSide = GameManager.instance.sideScript.GetAISide();
+        Debug.Assert(aiSide != null, "Invalid AI side (Null)");
+        //tooltip data
         InitialiseTooltips();
         //set all sub compoponents to Active
         SetAllToActive();
@@ -146,14 +152,14 @@ public class AIDisplayUI : MonoBehaviour
     public void InitialiseTooltips()
     {
         //faction top tab tooltip
-        topTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName();
-        topTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription();
-        topTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails();
+        topTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName(aiSide);
+        topTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription(aiSide);
+        topTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(aiSide);
         topTabTooltip.x_offset = 175;
         //hacking bottom tab tooltip
-        bottomTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName();
-        bottomTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription();
-        bottomTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails();
+        bottomTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName(aiSide);
+        bottomTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription(aiSide);
+        bottomTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(aiSide);
         bottomTabTooltip.x_offset = 175;
         //side tab tooltip
         sideTabTooltip.tooltipHeader = "Unknown";

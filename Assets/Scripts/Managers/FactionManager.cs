@@ -181,86 +181,98 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current faction description for player side in colour formatted string
+    /// returns current faction description for specified side in colour formatted string
     /// </summary>
     /// <returns></returns>
-    public string GetFactionDescription()
+    public string GetFactionDescription(GlobalSide side)
     {
         string description = "Unknown";
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        if (side != null)
         {
-            case 1:
-                description = string.Format("{0}{1}{2}", colourNormal, factionAuthority.descriptor, colourEnd);
-                break;
-            case 2:
-                description = string.Format("{0}{1}{2}", colourNormal, factionResistance.descriptor, colourEnd);
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
-                break;
+            switch (side.level)
+            {
+                case 1:
+                    description = string.Format("{0}{1}{2}", colourNormal, factionAuthority.descriptor, colourEnd);
+                    break;
+                case 2:
+                    description = string.Format("{0}{1}{2}", colourNormal, factionResistance.descriptor, colourEnd);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                    break;
+            }
         }
+        else { Debug.LogWarning("Invalid side (Null)"); }
         return description;
     }
 
     /// <summary>
-    /// returns current faction support level for player side in colour formatted string
+    /// returns current faction support level for specified side in colour formatted string
     /// </summary>
     /// <returns></returns>
-    public string GetFactionSupportLevel()
+    public string GetFactionSupportLevel(GlobalSide side)
     {
         string description = "Unknown";
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        if (side != null)
         {
-            case 1:
-                description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _supportAuthority, colourEnd, maxFactionSupport);
-                break;
-            case 2:
-                description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _supportResistance, colourEnd, maxFactionSupport);
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
-                break;
+            switch (side.level)
+            {
+                case 1:
+                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _supportAuthority, colourEnd, maxFactionSupport);
+                    break;
+                case 2:
+                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _supportResistance, colourEnd, maxFactionSupport);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                    break;
+            }
         }
+        else { Debug.LogWarning("Invalid side (Null)"); }
         return description;
     }
 
     /// <summary>
-    /// returns current faction details for player side in colour formatted string. 'Unknown' if an problem
+    /// returns current faction details for specified side in colour formatted string. 'Unknown' if an problem
     /// </summary>
     /// <returns></returns>
-    public string GetFactionDetails()
+    public string GetFactionDetails(GlobalSide side)
     {
         string colourNode = colourGrey;
         StringBuilder builder = new StringBuilder();
-        NodeArc arc;
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        if (side != null)
         {
-            case 1:
-                arc = factionAuthority.preferredArc;
-                if (arc != null) { colourNode = colourGood; }
+            NodeArc arc;
+            switch (side.level)
+            {
+                case 1:
+                    arc = factionAuthority.preferredArc;
+                    if (arc != null) { colourNode = colourGood; }
                     else { colourNode = colourGrey; }
-                builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                arc = factionAuthority.hostileArc;
-                if (arc != null) { colourNode = colourBad; }
-                else { colourNode = colourGrey; }
-                builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionAuthority.maxTaskPerTurn, colourEnd, colourNormal, colourEnd);
-                break;
-            case 2:
-                arc = factionResistance.preferredArc;
-                if (arc != null) { colourNode = colourGood; }
-                else { colourNode = colourGrey; }
-                builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                arc = factionResistance.hostileArc;
-                if (arc != null) { colourNode = colourBad; }
-                else { colourNode = colourGrey; }
-                builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionResistance.maxTaskPerTurn, colourEnd, colourNormal, colourEnd);
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
-                break;
+                    builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
+                    arc = factionAuthority.hostileArc;
+                    if (arc != null) { colourNode = colourBad; }
+                    else { colourNode = colourGrey; }
+                    builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
+                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionAuthority.maxTaskPerTurn, colourEnd, colourNormal, colourEnd);
+                    break;
+                case 2:
+                    arc = factionResistance.preferredArc;
+                    if (arc != null) { colourNode = colourGood; }
+                    else { colourNode = colourGrey; }
+                    builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
+                    arc = factionResistance.hostileArc;
+                    if (arc != null) { colourNode = colourBad; }
+                    else { colourNode = colourGrey; }
+                    builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
+                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionResistance.maxTaskPerTurn, colourEnd, colourNormal, colourEnd);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                    break;
+            }
         }
+        else { Debug.LogWarning("Invalid side (Null)"); }
         if (builder.Length == 0)
         { builder.Append("Unknown"); }
         return builder.ToString();
