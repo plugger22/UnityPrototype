@@ -116,10 +116,25 @@ public class AISideTabUI : MonoBehaviour
     /// make side tab visibile
     /// </summary>
     public void OpenSideTab()
-    { sideTabImage.gameObject.SetActive(true); }
+    {
+        sideTabImage.gameObject.SetActive(true);
+        //alert flasher
+        if (hackingStatus == HackingStatus.Possible)
+        {
+            if (myCoroutine == null)
+            { myCoroutine = StartCoroutine("ShowAlertFlash"); }
+        }
+    }
 
     public void CloseSideTab()
-    { sideTabImage.gameObject.SetActive(false); }
+    {
+        sideTabImage.gameObject.SetActive(false);
+        if (myCoroutine != null)
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
+        }
+    }
 
 
     /// <summary>
@@ -141,7 +156,7 @@ public class AISideTabUI : MonoBehaviour
             //hacking Status
             hackingStatus = data.status;
             //alert flasher
-            if (hackingStatus == HackingStatus.Possible)
+            if (hackingStatus == HackingStatus.Possible && sideTabImage.gameObject.activeSelf == true)
             {
                 if (myCoroutine == null)
                 { myCoroutine = StartCoroutine("ShowAlertFlash"); }

@@ -17,7 +17,8 @@ public class AIDisplayUI : MonoBehaviour
     public Image subMiddlePanel;
     public Image subBottomPanel;
     //mouse elements
-    public Image sideTabMouse;       
+    public Image sideTabMouse;
+    public Image topTabMouse;
     //text elements
     public TextMeshProUGUI tabTopText;
     public TextMeshProUGUI tabBottomText;
@@ -33,6 +34,9 @@ public class AIDisplayUI : MonoBehaviour
     public TextMeshProUGUI subBottomChance;
 
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
+
+    private GenericTooltipUI factionTooltip;
+    private GenericTooltipUI innerPanelTooltip;
 
     private static AIDisplayUI aiDisplayUI;
 
@@ -52,11 +56,22 @@ public class AIDisplayUI : MonoBehaviour
         return aiDisplayUI;
     }
 
+    public void Awake()
+    {
+        /*factionTooltip = topTabMouse.GetComponent<GenericTooltipUI>();*/
+        innerPanelTooltip = innerPanel.GetComponent<GenericTooltipUI>();
+        //Debug.Assert(factionTooltip != null, "Invalid factionTooltip (Null)");
+        Debug.Assert(innerPanelTooltip != null, "Invalid innerPanelTooltip (Null)");
+        
+    }
+
+
 
     public void Initialise()
     {
         //set all sub compoponents to Active
         SetAllToActive();
+        InitialiseTooltips();
     }
 
     public void Start()
@@ -115,6 +130,21 @@ public class AIDisplayUI : MonoBehaviour
         subBottomPanel.gameObject.SetActive(true);
         tabCloseText.gameObject.SetActive(true);
         sideTabMouse.gameObject.SetActive(true);
+        topTabMouse.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// initialise data for fixed generic tooltips
+    /// </summary>
+    public void InitialiseTooltips()
+    {
+        /*//faction top tab tooltip
+        factionTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName();
+        factionTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription();
+        factionTooltip.tooltipEffect = GameManager.instance.factionScript.GetFactionDetails();*/
+        //inner panel tooltip
+        innerPanelTooltip.tooltipHeader = "Unknown";
+        innerPanelTooltip.tooltipMain = "Unknown";
     }
 
     /// <summary>

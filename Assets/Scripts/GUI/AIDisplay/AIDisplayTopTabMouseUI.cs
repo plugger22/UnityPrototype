@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// handles mouse functionality for AIDisplay top tab (FACTION info)
 /// </summary>
-public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
 
@@ -43,11 +43,6 @@ public class AIDisplayTopTabMouseUI : MonoBehaviour, IPointerEnterHandler, IPoin
             onMouseFlag = true;
             //start tooltip routine
             myCoroutine = StartCoroutine("ShowFactionTooltip");
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("Click!");
     }
 
 
