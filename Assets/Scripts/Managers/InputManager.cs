@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
 
     private GameState _gameState;                   //main game state
     private ModalState _modalState;                 //sub state for when game state is 'ModalUI'
+    private ModalInfo _modalInfoState;              //sub sub state of ModalState.InfoDisplay -> what type of info?
 
     public void Initialise()
     {
@@ -25,7 +26,7 @@ public class InputManager : MonoBehaviour
         set
         {
             _gameState = value;
-            Debug.Log(string.Format("InputManager: GameState now {0}{1}", _gameState, "\n"));
+            Debug.Log(string.Format("[Inp] InputManager: GameState now {0}{1}", _gameState, "\n"));
         }
     }
 
@@ -35,19 +36,31 @@ public class InputManager : MonoBehaviour
         set
         {
             _modalState = value;
-            Debug.Log(string.Format("InputManager: ModalState now {0}{1}", _modalState, "\n"));
+            Debug.Log(string.Format("[Inp] InputManager: ModalState now {0}{1}", _modalState, "\n"));
+        }
+    }
+
+    public ModalInfo ModalInfoState
+    {
+        get { return _modalInfoState; }
+        set
+        {
+            _modalInfoState = value;
+            Debug.Log(string.Format("[Inp] InputManager.cs: ModalInfo now {0}{1}", _modalInfoState, "\n"));
         }
     }
 
     /// <summary>
-    /// Quick way of setting Modal state and Game State (to 'ModalUI')
+    /// Quick way of setting Modal state and Game State (to 'ModalUI'). If Modal state is 'InfoDisplay' provide a setting for ModalInfoState (type of info). Ignore otherwise
     /// </summary>
-    /// <param name="modal"></param>
-    public void SetModalState(ModalState modal)
+    /// <param name="modalState"></param>
+    public void SetModalState(ModalState modalState, ModalInfo modalInfoState = ModalInfo.None)
     {
-        if (modal != ModalState.None)
+        if (modalState != ModalState.None)
         { GameState = GameState.ModalUI; }
-        ModalState = modal;
+        ModalState = modalState;
+        if (ModalState == ModalState.InfoDisplay)
+        { ModalInfoState = modalInfoState; }
     }
 
 
@@ -64,7 +77,10 @@ public class InputManager : MonoBehaviour
         {
             //only reset back to normal if there is no longer a modal state
             if (modal == ModalState.None)
-            { GameState = GameState.Normal; }
+            {
+                GameState = GameState.Normal;
+                ModalInfoState = ModalInfo.None;
+            }
 
         }
     }
@@ -234,6 +250,21 @@ public class InputManager : MonoBehaviour
                             return;
                         }
                         break;
+                    case ModalState.InfoDisplay:
+                        //what type of info display?
+                        switch (_modalInfoState)
+                        {
+                            case ModalInfo.CityInfo:
+                                EventManager.instance.PostNotification(EventType.CityInfoClose, this);
+                                break;
+                            case ModalInfo.AIInfo:
+                                EventManager.instance.PostNotification(EventType.AIDisplayClose, this);
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Invalid _modalInfoState \"{0}\"", _modalInfoState);
+                                break;
+                        }
+                        break;
                 }
                 break;
         }
@@ -252,8 +283,9 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" GameState -> {0}{1}", GameState, "\n");
         builder.AppendFormat(" ModalState -> {0}{1}", ModalState, "\n");
         builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");
+        builder.AppendFormat(" ModalInfo -> {0}{1}", ModalInfoState, "\n");
         builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n");
-        builder.AppendFormat("{0} PlayerSide -> {1}{2}{3}", "\n", GameManager.instance.sideScript.PlayerSide.name, "\n", "\n");
+        builder.AppendFormat(" {0} PlayerSide -> {1}{2}{3}", "\n", GameManager.instance.sideScript.PlayerSide.name, "\n", "\n");
         builder.AppendFormat(" AuthorityCurrent -> {0}{1}", GameManager.instance.sideScript.authorityCurrent, "\n");
         builder.AppendFormat(" ResistanceCurrent -> {0}{1}{2}", GameManager.instance.sideScript.resistanceCurrent, "\n", "\n");
         builder.AppendFormat(" AuthorityOverall -> {0}{1}", GameManager.instance.sideScript.authorityOverall, "\n");

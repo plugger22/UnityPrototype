@@ -70,6 +70,22 @@ public class AIDisplayData
     public string task_3_chance;
     public string task_3_tooltip;
     public string factionDetails;
+    public int nodeID_1;                   //used for highlighting node or connection referred to by task
+    public int connID_1;
+    public int nodeID_2;
+    public int connID_2;
+    public int nodeID_3;
+    public int connID_3;
+
+    public AIDisplayData()
+        {
+        task_1_textUpper = ""; task_1_textLower = ""; task_1_chance = ""; task_1_tooltip = "";
+        task_2_textUpper = ""; task_2_textLower = ""; task_2_chance = ""; task_2_tooltip = "";
+        task_3_textUpper = ""; task_3_textLower = ""; task_3_chance = ""; task_3_tooltip = "";
+        nodeID_1 = -1; nodeID_2 = -1; nodeID_3 = -1;
+        connID_1 = -1; connID_2 = -1; connID_3 = -1;
+        }
+
 }
 
 /// <summary>
@@ -1929,10 +1945,6 @@ public class AIManager : MonoBehaviour
     {
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
-        //zero out data for (prevents previous turns task data from carrying over)
-        data.task_1_textUpper = ""; data.task_1_textLower = ""; data.task_1_chance = ""; data.task_1_tooltip = "";
-        data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = ""; data.task_2_tooltip = "";
-        data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = ""; data.task_3_tooltip = "";
         //pass timer
         data.rebootTimer = rebootTimer;
         //if tasks are present, process into descriptor strings
@@ -1950,7 +1962,7 @@ public class AIManager : MonoBehaviour
                     else if (task.chance < 33) { colourChance = colourBad; }
                     else { colourChance = colourNeutral; }
                     //get upper and lower & tooltip strings
-                    Tuple<string, string, string> results = GetTaskDescriptors(task);
+                    Tuple<string, string, string, int, int> results = GetTaskDescriptors(task);
                     //tooltip text
                     //up to 3 tasks
                     switch (i)
@@ -1960,18 +1972,24 @@ public class AIManager : MonoBehaviour
                             data.task_1_textLower = results.Item2;
                             data.task_1_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
                             data.task_1_tooltip = results.Item3;
+                            data.nodeID_1 = results.Item4;
+                            data.connID_1 = results.Item5;
                             break;
                         case 1:
                             data.task_2_textUpper = results.Item1;
                             data.task_2_textLower = results.Item2;
                             data.task_2_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
                             data.task_2_tooltip = results.Item3;
+                            data.nodeID_2 = results.Item4;
+                            data.connID_2 = results.Item5;
                             break;
                         case 2:
                             data.task_3_textUpper = results.Item1;
                             data.task_3_textLower = results.Item2;
                             data.task_3_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
                             data.task_3_tooltip = results.Item3;
+                            data.nodeID_3 = results.Item4;
+                            data.connID_3 = results.Item5;
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid index {0} for listOfTasksFinal", i);
@@ -1988,15 +2006,18 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// private sub-Method for ProcessTaskDescriptors that takes an AI task and returns two strings that correspond to AIDisplayUI textUpper & textLower & tooltip
+    /// private sub-Method for ProcessTaskDescriptors that takes an AI task and returns three strings that correspond to AIDisplayUI textUpper & textLower & tooltip
+    /// returns two ints that correspond to nodeID and connID if applicable (sends '-1' if not)
     /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>
-    private Tuple<string, string, string> GetTaskDescriptors(AITask task)
+    private Tuple<string, string, string, int, int> GetTaskDescriptors(AITask task)
     {
         string textUpper = "";
         string textLower = "";
         string tooltip = "";
+        int nodeID = -1;
+        int connID = -1;
         if (task != null)
         {
             switch(task.type)
@@ -2008,6 +2029,7 @@ public class AIManager : MonoBehaviour
                     {
                         textLower = string.Format("Deploy to {0}, {1} district", node.nodeName, node.Arc.name);
                         tooltip = string.Format("{0} district \"{1}\" is currently {2}highlighted{3} on the map", node.Arc.name, node.nodeName, colourNeutral, colourEnd);
+                        nodeID = node.nodeID;
                     }
                     else
                     {
@@ -2029,6 +2051,7 @@ public class AIManager : MonoBehaviour
                                 textLower = string.Format("Between {0} and {1}", connection.node1.nodeName, connection.node2.nodeName);
                                 tooltip = string.Format("The connection is currently {0}highlighted{1} on the map and will have it's security {2}increased{3} by one level",
                                     colourNeutral, colourEnd, colourBad, colourEnd);
+                                connID = connection.connID;
                             }
                             else
                             {
@@ -2055,7 +2078,7 @@ public class AIManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid AI task (Null)"); }
-        return new Tuple<string, string, string>(textUpper, textLower, tooltip);
+        return new Tuple<string, string, string, int, int>(textUpper, textLower, tooltip, nodeID, connID);
     }
 
     /// <summary>

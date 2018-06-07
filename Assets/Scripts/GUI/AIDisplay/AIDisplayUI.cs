@@ -282,7 +282,7 @@ public class AIDisplayUI : MonoBehaviour
         //set modal status
         GameManager.instance.guiScript.SetIsBlocked(true);
         //set game state
-        GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay);
+        GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay, ModalInfo.AIInfo);
     }
 
     /// <summary>
@@ -290,6 +290,7 @@ public class AIDisplayUI : MonoBehaviour
     /// </summary>
     private void CloseAIDisplay()
     {
+        GameManager.instance.tooltipGenericScript.CloseTooltip();
         aiDisplayObject.gameObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state

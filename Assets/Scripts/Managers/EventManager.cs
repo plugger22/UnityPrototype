@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 //Event Manager -> Enum defining all possible game events, order independent
+//NOTE: Tooltips are closed by direct method calls for speed, not by events
 public enum EventType
 {
     None,
@@ -19,6 +20,8 @@ public enum EventType
     CloseOutcomeWindow,
     CreateMoveMenu,
     CreateGearNodeMenu,
+    HighlightNode,
+    HighlightConnection,
     //CloseTeamPicker
     ShowTargetNodes,
     NodeDisplay,

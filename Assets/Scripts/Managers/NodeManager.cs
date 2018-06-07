@@ -178,6 +178,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.HighlightNode, OnEvent, "NodeManager");
     }
 
 
@@ -231,6 +232,9 @@ public class NodeManager : MonoBehaviour
                         Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", Param.ToString(), "\n"));
                         break;
                 }
+                break;
+            case EventType.HighlightNode:
+                HighlightNode((int)Param);
                 break;
             case EventType.ActivityDisplay:
                 ActivityUI activityUI = (ActivityUI)Param;
@@ -705,7 +709,6 @@ public class NodeManager : MonoBehaviour
                 }
                 break;
 
-
             //show specific NodeArcTypes
             case NodeUI.NodeArc0: data = 0; nodeTypeFlag = true; break;
             case NodeUI.NodeArc1: data = 1; nodeTypeFlag = true; break;
@@ -796,6 +799,23 @@ public class NodeManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// highlights a specific node
+    /// </summary>
+    /// <param name="nodeID"></param>
+    public void HighlightNode(int nodeID)
+    {
+
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {        
+            //set all nodes to default colour first
+            ResetNodes();
+            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+            node.SetMaterial(nodeMaterial);
+        }
+        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+    }
 
     /// <summary>
     /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
