@@ -20,8 +20,11 @@ public enum EventType
     CloseOutcomeWindow,
     CreateMoveMenu,
     CreateGearNodeMenu,
-    HighlightNode,
-    HighlightConnection,
+    //highlighted node or connection
+    HighlightNodeShow,
+    HighlightConnectionShow,
+    HighlightNodeReset,
+    HighlightConnectionReset,
     //CloseTeamPicker
     ShowTargetNodes,
     NodeDisplay,

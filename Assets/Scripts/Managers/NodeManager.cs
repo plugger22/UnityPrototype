@@ -178,7 +178,8 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.HighlightNode, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.HighlightNodeShow, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.HighlightNodeReset, OnEvent, "NodeManager");
     }
 
 
@@ -233,8 +234,11 @@ public class NodeManager : MonoBehaviour
                         break;
                 }
                 break;
-            case EventType.HighlightNode:
-                HighlightNode((int)Param);
+            case EventType.HighlightNodeShow:
+                HighlightNodeShow((int)Param);
+                break;
+            case EventType.HighlightNodeReset:
+                HighlightNodeReset((int)Param);
                 break;
             case EventType.ActivityDisplay:
                 ActivityUI activityUI = (ActivityUI)Param;
@@ -803,7 +807,7 @@ public class NodeManager : MonoBehaviour
     /// highlights a specific node
     /// </summary>
     /// <param name="nodeID"></param>
-    public void HighlightNode(int nodeID)
+    public void HighlightNodeShow(int nodeID)
     {
 
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
@@ -813,8 +817,26 @@ public class NodeManager : MonoBehaviour
             ResetNodes();
             Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
             node.SetMaterial(nodeMaterial);
+            NodeRedraw = true;
         }
         else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+    }
+
+    /// <summary>
+    /// selectively resets the highlighted node back to zero (the rest should be normal)
+    /// </summary>
+    /// <param name="nodeID"></param>
+    public void HighlightNodeReset(int nodeID)
+    {
+        /*Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
+            node.SetMaterial(nodeMaterial);
+            NodeRedraw = true;
+        }
+        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }*/
+        ResetNodes();
     }
 
     /// <summary>

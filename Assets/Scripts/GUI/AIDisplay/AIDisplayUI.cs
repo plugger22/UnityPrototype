@@ -210,6 +210,8 @@ public class AIDisplayUI : MonoBehaviour
             if (String.IsNullOrEmpty(data.task_1_tooltip) == false)
             { topTaskTooltip.tooltipMain = data.task_1_tooltip; }
             else { topTaskTooltip.tooltipMain = "Unknown Data"; }
+            topTaskTooltip.nodeID = data.nodeID_1;
+            topTaskTooltip.connID = data.connID_1;
             //2nd Task
             if (String.IsNullOrEmpty(data.task_2_textUpper) == false)
             { subMiddleUpper.text = data.task_2_textUpper; }
@@ -223,6 +225,8 @@ public class AIDisplayUI : MonoBehaviour
             if (String.IsNullOrEmpty(data.task_2_tooltip) == false)
             { middleTaskTooltip.tooltipMain = data.task_2_tooltip; }
             else { middleTaskTooltip.tooltipMain = "Unknown Data"; }
+            middleTaskTooltip.nodeID = data.nodeID_2;
+            middleTaskTooltip.connID = data.connID_2;
             //3rd Task
             if (String.IsNullOrEmpty(data.task_3_textUpper) == false)
             { subBottomUpper.text = data.task_3_textUpper; }
@@ -236,6 +240,8 @@ public class AIDisplayUI : MonoBehaviour
             if (String.IsNullOrEmpty(data.task_3_tooltip) == false)
             { bottomTaskTooltip.tooltipMain = data.task_3_tooltip; }
             else { bottomTaskTooltip.tooltipMain = "Unknown Data"; }
+            bottomTaskTooltip.nodeID = data.nodeID_3;
+            bottomTaskTooltip.connID = data.connID_3;
             //Faction
             if (String.IsNullOrEmpty(data.factionDetails) == false)
             { tabTopText.text = data.factionDetails; }
