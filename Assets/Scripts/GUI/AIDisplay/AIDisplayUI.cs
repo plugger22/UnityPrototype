@@ -170,26 +170,19 @@ public class AIDisplayUI : MonoBehaviour
         bottomTabTooltip.tooltipDetails = "Unknown";
         bottomTabTooltip.x_offset = 175;
         //side tab tooltip
-        sideTabTooltip.tooltipHeader = "Unknown";
-        sideTabTooltip.tooltipMain = "Unknown";
+        sideTabTooltip.tooltipMain = GameManager.instance.aiScript.GetCloseAITabTooltip();
         sideTabTooltip.x_offset = 25;
         //sideTabTooltip.x_offset = 30;
         //top Task tooltip
-        topTaskTooltip.tooltipHeader = "Unknown top";
         topTaskTooltip.tooltipMain = "Unknown";
-        topTaskTooltip.tooltipDetails = "Unknown";
         topTaskTooltip.x_offset = 330;
         topTaskTooltip.y_offset = 180;
         //middle Task tooltip
-        middleTaskTooltip.tooltipHeader = "Unknown middle";
         middleTaskTooltip.tooltipMain = "Unknown";
-        middleTaskTooltip.tooltipDetails = "Unknown";
         middleTaskTooltip.x_offset = 330;
         middleTaskTooltip.y_offset = 250;
         //bottom Task tooltip
-        bottomTaskTooltip.tooltipHeader = "Unknown bottom";
         bottomTaskTooltip.tooltipMain = "Unknown";
-        bottomTaskTooltip.tooltipDetails = "Unknown";
         bottomTaskTooltip.x_offset = 330;
         bottomTaskTooltip.y_offset = 310;
     }
@@ -214,6 +207,9 @@ public class AIDisplayUI : MonoBehaviour
             if (String.IsNullOrEmpty(data.task_1_chance) == false)
             { subTopChance.text = data.task_1_chance; }
             else { subTopChance.text = ""; }
+            if (String.IsNullOrEmpty(data.task_1_tooltip) == false)
+            { topTaskTooltip.tooltipMain = data.task_1_tooltip; }
+            else { topTaskTooltip.tooltipMain = "Unknown Data"; }
             //2nd Task
             if (String.IsNullOrEmpty(data.task_2_textUpper) == false)
             { subMiddleUpper.text = data.task_2_textUpper; }
@@ -224,6 +220,9 @@ public class AIDisplayUI : MonoBehaviour
             if (String.IsNullOrEmpty(data.task_2_chance) == false)
             { subMiddleChance.text = data.task_2_chance; }
             else { subMiddleChance.text = ""; }
+            if (String.IsNullOrEmpty(data.task_2_tooltip) == false)
+            { middleTaskTooltip.tooltipMain = data.task_2_tooltip; }
+            else { middleTaskTooltip.tooltipMain = "Unknown Data"; }
             //3rd Task
             if (String.IsNullOrEmpty(data.task_3_textUpper) == false)
             { subBottomUpper.text = data.task_3_textUpper; }
@@ -234,6 +233,9 @@ public class AIDisplayUI : MonoBehaviour
             if (String.IsNullOrEmpty(data.task_3_chance) == false)
             { subBottomChance.text = data.task_3_chance; }
             else { subBottomChance.text = ""; }
+            if (String.IsNullOrEmpty(data.task_3_tooltip) == false)
+            { bottomTaskTooltip.tooltipMain = data.task_3_tooltip; }
+            else { bottomTaskTooltip.tooltipMain = "Unknown Data"; }
             //Faction
             if (String.IsNullOrEmpty(data.factionDetails) == false)
             { tabTopText.text = data.factionDetails; }

@@ -60,14 +60,16 @@ public class AIDisplayData
     public string task_1_textUpper;
     public string task_1_textLower;
     public string task_1_chance;
+    public string task_1_tooltip;
     public string task_2_textUpper;
     public string task_2_textLower;
     public string task_2_chance;
+    public string task_2_tooltip;
     public string task_3_textUpper;
     public string task_3_textLower;
     public string task_3_chance;
+    public string task_3_tooltip;
     public string factionDetails;
-
 }
 
 /// <summary>
@@ -343,6 +345,7 @@ public class AIManager : MonoBehaviour
         SetCentreNodes();
         SetDecisionNodes();
         SetNearNeighbours();
+        SetColours();
         //event listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
     }
@@ -1927,9 +1930,9 @@ public class AIManager : MonoBehaviour
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
         //zero out data for (prevents previous turns task data from carrying over)
-        data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = "";
-        data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = "";
-        data.task_1_textUpper = ""; data.task_1_textLower = ""; data.task_1_chance = "";
+        data.task_1_textUpper = ""; data.task_1_textLower = ""; data.task_1_chance = ""; data.task_1_tooltip = "";
+        data.task_2_textUpper = ""; data.task_2_textLower = ""; data.task_2_chance = ""; data.task_2_tooltip = "";
+        data.task_3_textUpper = ""; data.task_3_textLower = ""; data.task_3_chance = ""; data.task_3_tooltip = "";
         //pass timer
         data.rebootTimer = rebootTimer;
         //if tasks are present, process into descriptor strings
@@ -1946,8 +1949,9 @@ public class AIManager : MonoBehaviour
                     if (task.chance > 66) { colourChance = colourGood; }
                     else if (task.chance < 33) { colourChance = colourBad; }
                     else { colourChance = colourNeutral; }
-                    //get upper and lower strings
-                    Tuple<string, string> results = GetTaskDescriptors(task);
+                    //get upper and lower & tooltip strings
+                    Tuple<string, string, string> results = GetTaskDescriptors(task);
+                    //tooltip text
                     //up to 3 tasks
                     switch (i)
                     {
@@ -1955,16 +1959,19 @@ public class AIManager : MonoBehaviour
                             data.task_1_textUpper = results.Item1;
                             data.task_1_textLower = results.Item2;
                             data.task_1_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
+                            data.task_1_tooltip = results.Item3;
                             break;
                         case 1:
                             data.task_2_textUpper = results.Item1;
                             data.task_2_textLower = results.Item2;
                             data.task_2_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
+                            data.task_2_tooltip = results.Item3;
                             break;
                         case 2:
                             data.task_3_textUpper = results.Item1;
                             data.task_3_textLower = results.Item2;
                             data.task_3_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
+                            data.task_3_tooltip = results.Item3;
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid index {0} for listOfTasksFinal", i);
@@ -1981,14 +1988,15 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// private sub-Method for ProcessTaskDescriptors that takes an AI task and returns two strings that correspond to AIDisplayUI textUpper & textLower
+    /// private sub-Method for ProcessTaskDescriptors that takes an AI task and returns two strings that correspond to AIDisplayUI textUpper & textLower & tooltip
     /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>
-    private Tuple<string, string> GetTaskDescriptors(AITask task)
+    private Tuple<string, string, string> GetTaskDescriptors(AITask task)
     {
         string textUpper = "";
         string textLower = "";
+        string tooltip = "";
         if (task != null)
         {
             switch(task.type)
@@ -1997,7 +2005,10 @@ public class AIManager : MonoBehaviour
                     textUpper = string.Format("Deploy {0} Team", task.name1);
                     Node node = GameManager.instance.dataScript.GetNode(task.data0);
                     if (node != null)
-                    { textLower = string.Format("Deploy to {0}, {1} district", node.nodeName, node.Arc.name); }
+                    {
+                        textLower = string.Format("Deploy to {0}, {1} district", node.nodeName, node.Arc.name);
+                        tooltip = string.Format("{0} district \"{1}\" is currently {2}highlighted{3} on the map", node.Arc.name, node.nodeName, colourNeutral, colourEnd);
+                    }
                     else
                     {
                         Debug.LogWarningFormat("Invalid node (Null) for task.data0 nodeID {0}", task.data0);
@@ -2014,7 +2025,11 @@ public class AIManager : MonoBehaviour
                         {
                             Connection connection = GameManager.instance.dataScript.GetConnection(task.data0);
                             if (connection != null)
-                            { textLower = string.Format("Between {0} and {1}", connection.node1.nodeName, connection.node2.nodeName); }
+                            {
+                                textLower = string.Format("Between {0} and {1}", connection.node1.nodeName, connection.node2.nodeName);
+                                tooltip = string.Format("The connection is currently {0}highlighted{1} on the map and will have it's security {2}increased{3} by one level",
+                                    colourNeutral, colourEnd, colourBad, colourEnd);
+                            }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid connection (Null) for task.data0 connectionID {0}", task.data0);
@@ -2022,7 +2037,11 @@ public class AIManager : MonoBehaviour
                             }
                         }
                         //all other decisions
-                        else { textLower = decisionAI.descriptor; }
+                        else
+                        {
+                            textLower = decisionAI.descriptor;
+                            tooltip = decisionAI.tooltipDescriptor;
+                        }
                     }
                     else
                     {
@@ -2036,7 +2055,7 @@ public class AIManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid AI task (Null)"); }
-        return new Tuple<string, string>(textUpper, textLower);
+        return new Tuple<string, string, string>(textUpper, textLower, tooltip);
     }
 
     /// <summary>
@@ -2687,6 +2706,15 @@ public class AIManager : MonoBehaviour
             //send data package to AIDisplayUI
             EventManager.instance.PostNotification(EventType.AISendHackingData, this, data);
         }
+    }
+
+    /// <summary>
+    /// returns tooltip string for AIDisplayUI close tab
+    /// </summary>
+    /// <returns></returns>
+    public string GetCloseAITabTooltip()
+    {
+        return string.Format("You can access the AI at {0}NO COST{1} for the rest of {2}this turn{3}", colourGood, colourEnd, colourNeutral, colourEnd);
     }
 
     //
