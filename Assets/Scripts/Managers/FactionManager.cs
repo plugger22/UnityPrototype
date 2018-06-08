@@ -41,7 +41,7 @@ public class FactionManager : MonoBehaviour
             _supportAuthority = value;
             //update top widget bar if current side is authority
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportAuthority); }
+            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportAuthority, "FactionManager.cs -> SupportAuthority"); }
         }
     }
 
@@ -53,7 +53,7 @@ public class FactionManager : MonoBehaviour
             _supportResistance = value;
             //update top widget bar if current side is resistance
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportResistance); }
+            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportResistance, "FactionManager.cs -> SupportResistance"); }
         }
     }
 

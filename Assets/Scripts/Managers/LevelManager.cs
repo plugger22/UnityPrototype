@@ -76,7 +76,7 @@ public class LevelManager : MonoBehaviour
         InitialiseArrayOfActiveNodes();
         AssignActorsToNodes(GameManager.instance.globalScript.sideAuthority);
         AssignActorsToNodes(GameManager.instance.globalScript.sideResistance);
-        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw);
+        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
     }
 
 

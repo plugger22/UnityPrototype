@@ -1187,7 +1187,7 @@ public class NodeManager : MonoBehaviour
                                         buttonTooltipMain = moveMain,
                                         buttonTooltipDetail = builderDetail.ToString(),
                                         //use a Lambda to pass arguments to the action
-                                        action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, moveGearDetails); }
+                                        action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, moveGearDetails, "NodeManager.cs -> CreateMoveMenu"); }
                                     };
                                     tempList.Add(eventMoveDetails);
                                 }
@@ -1235,7 +1235,7 @@ public class NodeManager : MonoBehaviour
                     buttonTooltipMain = moveMain,
                     buttonTooltipDetail = moveDetail,
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, moveDetails); }
+                    action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, moveDetails, "NodeManager.cs -> CreateMoveMenu"); }
                 };
                 tempList.Add(eventDetails);
                 //
@@ -1250,7 +1250,7 @@ public class NodeManager : MonoBehaviour
                     buttonTooltipHeader = moveHeader,
                     buttonTooltipMain = "You'd like to think about it",
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateMoveMenu"); }
                 };
                 //add Cancel button to list
                 tempList.Add(cancelDetails);
@@ -1395,7 +1395,7 @@ public class NodeManager : MonoBehaviour
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails); }
+                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails, "NodeManager.cs -> CreateGearNodeMenu"); }
                                         };
                                         tempList.Add(kineticDetails);
                                     }
@@ -1500,7 +1500,7 @@ public class NodeManager : MonoBehaviour
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails); }
+                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails, "NodeManager.cs -> CreateGearNodeMenu"); }
                                         };
                                         tempList.Add(hackingDetails);
                                     }
@@ -1605,7 +1605,7 @@ public class NodeManager : MonoBehaviour
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails); }
+                                            action = () => { EventManager.instance.PostNotification(EventType.NodeGearAction, this, actionDetails, "NodeManager.cs -> CreateGearNodeMenu"); }
                                         };
                                         tempList.Add(persuasionDetails);
                                     }
@@ -1637,7 +1637,7 @@ public class NodeManager : MonoBehaviour
                                 buttonTooltipMain = "There are some limitations preventing gear use",
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                                 //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateGearNodeMenu"); }
                             };
                         }
                         else
@@ -1649,7 +1649,7 @@ public class NodeManager : MonoBehaviour
                                 buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
                                 buttonTooltipMain = "You decide not to use your gear to carry out a Node action",
                                 //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateGearNodeMenu"); }
                             };
                         }
                     }
@@ -1661,7 +1661,7 @@ public class NodeManager : MonoBehaviour
                             buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
                             buttonTooltipMain = "You can only take Gear actions at a Node if you have gear with that capability",
                             //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                            action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateGearNodeMenu"); }
                         };
                 }
                 else
@@ -1673,7 +1673,7 @@ public class NodeManager : MonoBehaviour
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
                         buttonTooltipMain = "You do not have any Gear",
                         //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateGearNodeMenu"); }
                     };
                 }
                 //add Cancel button to list
@@ -1798,10 +1798,10 @@ public class NodeManager : MonoBehaviour
                         diceDetails.passData = passThroughData;
                         //go straight to an outcome dialogue if not enough renown and option set to ignore dice roller
                         if (diceDetails.isEnoughRenown == false && GameManager.instance.optionScript.autoGearResolution == true)
-                        { EventManager.instance.PostNotification(EventType.DiceBypass, this, diceDetails); }
+                        { EventManager.instance.PostNotification(EventType.DiceBypass, this, diceDetails, "NodeManager.cs -> ProcessPlayerMove"); }
                         //roll dice
                         else
-                        { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails); }
+                        { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails, "NodeManager.cs -> ProcessPlayerMove"); }
                     }
                     else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
                 }
@@ -1815,7 +1815,7 @@ public class NodeManager : MonoBehaviour
                         moveData.text = builder.ToString();
                         ProcessMoveOutcome(moveData);
                     }
-                    else { EventManager.instance.PostNotification(EventType.UseAction, this, "Player Move"); }
+                    else { EventManager.instance.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove"); }
                 }
             }
             else
@@ -1838,7 +1838,7 @@ public class NodeManager : MonoBehaviour
         {
             //Player captured!
             captureDetails.effects = string.Format("{0}The move went bad{1}", colourEffectNeutral, colourEnd);
-            EventManager.instance.PostNotification(EventType.Capture, this, captureDetails);
+            EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
         }
         //Normal Move  Outcome
         else
@@ -1849,7 +1849,7 @@ public class NodeManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
             outcomeDetails.reason = "Player Move";
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NodeManager.cs -> ProcessMoveOutcome");
         }
     }
 

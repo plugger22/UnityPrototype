@@ -187,12 +187,12 @@ public class TurnManager : MonoBehaviour
         //increment turn counter
         _turn++;
         Debug.LogFormat("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n");
-        EventManager.instance.PostNotification(EventType.StartTurnEarly, this);
+        EventManager.instance.PostNotification(EventType.StartTurnEarly, this, null, "TurnManager.cs -> StartTurnEarly");
         //reset nodes and connections if not in normal state
         if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
         { GameManager.instance.nodeScript.ResetAll(); }
         //update turn in top widget UI
-        EventManager.instance.PostNotification(EventType.ChangeTurn, this, _turn);
+        EventManager.instance.PostNotification(EventType.ChangeTurn, this, _turn, "TurnManager.cs -> StartTurnEarly");
     }
 
     /// <summary>
@@ -201,7 +201,7 @@ public class TurnManager : MonoBehaviour
     private void StartTurnLate()
     {
         Debug.LogFormat("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n");
-        EventManager.instance.PostNotification(EventType.StartTurnLate, this);
+        EventManager.instance.PostNotification(EventType.StartTurnLate, this, null, "TurnManager.cs -> StartTurnLate");
         UpdateStates();
     }
 
@@ -283,8 +283,8 @@ public class TurnManager : MonoBehaviour
         _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
         _actionsTotal = Mathf.Max(0, _actionsTotal);
         Debug.LogFormat("TurnManager: - - - EndTurnFinal - - - turn {0}{1}", _turn, "\n");
-        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal);
-        EventManager.instance.PostNotification(EventType.EndTurnFinal, this);
+        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> EndTurnFinal");
+        EventManager.instance.PostNotification(EventType.EndTurnFinal, this, null, "TurnManager.cs -> EndTurnFinal");
     }
 
 
@@ -328,7 +328,7 @@ public class TurnManager : MonoBehaviour
         if (remainder < 0)
         { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
         else
-        { EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, remainder); }
+        { EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
     }
 
     /// <summary>
@@ -560,7 +560,7 @@ public class TurnManager : MonoBehaviour
                         text = "Authorities issue a city wide All Points Bulletin";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
-                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);}
+                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");}
                         //set state
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.APB);
                         
@@ -571,7 +571,7 @@ public class TurnManager : MonoBehaviour
                         text = "Authorities issue a city wide Security Alert";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
-                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this); }
+                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SecurityAlert);
                         break;
@@ -581,7 +581,7 @@ public class TurnManager : MonoBehaviour
                         text = "Authorities declare a city wide Survelliance Crackdown";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
-                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this); }
+                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SurveillanceCrackdown);
                         break;
@@ -591,7 +591,7 @@ public class TurnManager : MonoBehaviour
                         text = string.Format("AuthorityState reset to {0}", state);
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text);
                         //stop flashing red alarm
-                        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this);
+                        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");
                         break;
                 }
                 break;
@@ -630,7 +630,7 @@ public class TurnManager : MonoBehaviour
             {
                 GameManager.instance.authorityScript.SetAuthoritySecurityState(text);
                 //switch off flashing red indicator on top widget UI
-                EventManager.instance.PostNotification(EventType.StopSecurityFlash, this);
+                EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> UpdateStates");
             }
         }
     }

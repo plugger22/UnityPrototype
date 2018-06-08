@@ -390,6 +390,6 @@ public class GUIManager : MonoBehaviour
                 details.textTop = "This action is unavailable";
                 break;
         }
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> SetAlertMessage");
     }
 }

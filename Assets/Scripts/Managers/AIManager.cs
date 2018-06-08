@@ -1974,7 +1974,7 @@ public class AIManager : MonoBehaviour
                             data.task_1_tooltip = results.Item3;
                             data.nodeID_1 = results.Item4;
                             data.connID_1 = results.Item5;
-                            Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_1 {0}{1}", data.nodeID_1, "\n");
+                            /*Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_1 {0}{1}", data.nodeID_1, "\n");*/
                             break;
                         case 1:
                             data.task_2_textUpper = results.Item1;
@@ -1983,7 +1983,7 @@ public class AIManager : MonoBehaviour
                             data.task_2_tooltip = results.Item3;
                             data.nodeID_2 = results.Item4;
                             data.connID_2 = results.Item5;
-                            Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_2 {0}{1}", data.nodeID_2, "\n");
+                            /*Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_2 {0}{1}", data.nodeID_2, "\n");*/
                             break;
                         case 2:
                             data.task_3_textUpper = results.Item1;
@@ -1992,7 +1992,7 @@ public class AIManager : MonoBehaviour
                             data.task_3_tooltip = results.Item3;
                             data.nodeID_3 = results.Item4;
                             data.connID_3 = results.Item5;
-                            Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_3 {0}{1}", data.nodeID_3, "\n");
+                            /*Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_3 {0}{1}", data.nodeID_3, "\n");*/
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid index {0} for listOfTasksFinal", i);
@@ -2005,7 +2005,7 @@ public class AIManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksFinal[{0}]", i); }
             }
         }
-        EventManager.instance.PostNotification(EventType.AISendDisplayData, this, data);
+        EventManager.instance.PostNotification(EventType.AISendDisplayData, this, data, "AIManager.cs -> UpdateTaskDisplayData");
     }
 
     /// <summary>
@@ -2388,17 +2388,17 @@ public class AIManager : MonoBehaviour
             if (task.name0.Equals(decisionAPB.name) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, AuthoritySecurityState.APB);
-                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);
+                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.name0.Equals(decisionSecAlert.name) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, AuthoritySecurityState.SecurityAlert);
-                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);
+                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.name0.Equals(decisionCrackdown.name) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, AuthoritySecurityState.SurveillanceCrackdown);
-                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this);
+                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.name0.Equals(decisionConnSec.name) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(); }
@@ -2602,7 +2602,7 @@ public class AIManager : MonoBehaviour
                 break;
         }
         //send data package
-        EventManager.instance.PostNotification(EventType.AISendSideData, this, data);
+        EventManager.instance.PostNotification(EventType.AISendSideData, this, data, "AIManager.cs -> UpdateSideTabData");
     }
 
     /// <summary>
@@ -2730,7 +2730,7 @@ public class AIManager : MonoBehaviour
             data.hackingStatus = string.Format("{0} Hacking Attempt{1}{2}AI Alert Status {3}{4}{5}", hackingAttemptsReboot,
                 hackingAttemptsReboot != 1 ? "s" : "", "\n", colourStatus, aiAlertStatus, colourEnd);
             //send data package to AIDisplayUI
-            EventManager.instance.PostNotification(EventType.AISendHackingData, this, data);
+            EventManager.instance.PostNotification(EventType.AISendHackingData, this, data, "AIManager.cs -> UpdateHackingStatus");
         }
     }
 

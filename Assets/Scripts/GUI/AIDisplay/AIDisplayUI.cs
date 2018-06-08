@@ -213,7 +213,7 @@ public class AIDisplayUI : MonoBehaviour
             topTaskTooltip.nodeID = data.nodeID_1;
             topTaskTooltip.connID = data.connID_1;
             topTaskTooltip.testTag = "Top Task";
-            Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_1 {1}{2}", topTaskTooltip.testTag, data.nodeID_1, "\n");
+            /*Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_1 {1}{2}", topTaskTooltip.testTag, data.nodeID_1, "\n");*/
             //2nd Task
             if (String.IsNullOrEmpty(data.task_2_textUpper) == false)
             { subMiddleUpper.text = data.task_2_textUpper; }
@@ -230,7 +230,7 @@ public class AIDisplayUI : MonoBehaviour
             middleTaskTooltip.nodeID = data.nodeID_2;
             middleTaskTooltip.connID = data.connID_2;
             middleTaskTooltip.testTag = "Middle Task";
-            Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_2 {1}{2}", middleTaskTooltip.testTag, data.nodeID_2, "\n");
+            /*Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_2 {1}{2}", middleTaskTooltip.testTag, data.nodeID_2, "\n");*/
             //3rd Task
             if (String.IsNullOrEmpty(data.task_3_textUpper) == false)
             { subBottomUpper.text = data.task_3_textUpper; }
@@ -247,7 +247,7 @@ public class AIDisplayUI : MonoBehaviour
             bottomTaskTooltip.nodeID = data.nodeID_3;
             bottomTaskTooltip.connID = data.connID_3;
             bottomTaskTooltip.testTag = "Bottom Task";
-            Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_3 {1}{2}", bottomTaskTooltip.testTag, data.nodeID_3, "\n");
+            /*Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_3 {1}{2}", bottomTaskTooltip.testTag, data.nodeID_3, "\n");*/
             //Faction
             if (String.IsNullOrEmpty(data.factionDetails) == false)
             { tabTopText.text = data.factionDetails; }

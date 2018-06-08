@@ -170,7 +170,7 @@ public class CaptureManager : MonoBehaviour
         //set security state back to normal
         GameManager.instance.authorityScript.SetAuthoritySecurityState("Player Captured: Security measures have been cancelled");
         //switch off flashing red indicator on top widget UI
-        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this);
+        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
         //reduce player alpha to show inactive (sprite and text)
         GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
         //AI side tab
@@ -184,7 +184,7 @@ public class CaptureManager : MonoBehaviour
             isAction = false,
             side = GameManager.instance.globalScript.sideResistance
         };
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CapturePlayer");
     }
 
     /// <summary>
@@ -233,7 +233,7 @@ public class CaptureManager : MonoBehaviour
             isAction = false,
             side = GameManager.instance.globalScript.sideResistance
         };
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
     }
 
     /// <summary>
@@ -283,7 +283,7 @@ public class CaptureManager : MonoBehaviour
                 isAction = false,
                 side = GameManager.instance.globalScript.sideResistance
             };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleasePlayer");
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for nodeId {0}", nodeID)); }
     }
@@ -332,7 +332,7 @@ public class CaptureManager : MonoBehaviour
                     isAction = false,
                     side = GameManager.instance.globalScript.sideResistance
                 };
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleaseActor");
             }
             else { Debug.LogWarningFormat("{0}, {1} can't be released as not presently captured", details.actor.arc.name, details.actor.actorName); }
         }

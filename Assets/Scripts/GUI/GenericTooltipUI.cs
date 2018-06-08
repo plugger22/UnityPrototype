@@ -56,7 +56,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //node Highlight?
         if (nodeID > -1 && isHighlightOn == false)
         {
-            Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEnter: {0} nodeID {1}{2}", testTag, nodeID, "\n");
+            /*Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEnter: {0} nodeID {1}{2}", testTag, nodeID, "\n");*/
             EventManager.instance.PostNotification(EventType.HighlightNodeShow, this, nodeID, "GenericTooltipUI.cs -> OnPointerEnter");
             isHighlightOn = true;
         }
@@ -75,7 +75,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //cancel node highlight
         if (nodeID > -1 && isHighlightOn == true)
         {
-            Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEXIT: {0} nodeID {1}{2}", testTag, nodeID, "\n");
+            /*Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEXIT: {0} nodeID {1}{2}", testTag, nodeID, "\n");*/
             EventManager.instance.PostNotification(EventType.HighlightNodeReset, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
             isHighlightOn = false;
         }

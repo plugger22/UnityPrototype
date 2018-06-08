@@ -38,7 +38,7 @@ public class CityManager : MonoBehaviour
         {
             _cityLoyalty = value;
             //update top widget bar
-            EventManager.instance.PostNotification(EventType.ChangeCityBar, this, _cityLoyalty);
+            EventManager.instance.PostNotification(EventType.ChangeCityBar, this, _cityLoyalty, "CityManager.cs -> CityLoyalty");
         }
     }
 

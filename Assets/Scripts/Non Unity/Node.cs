@@ -301,14 +301,14 @@ public class Node : MonoBehaviour
                         GameManager.instance.tooltipNodeScript.CloseTooltip();
                         //Create a Move Menu at the node
                         if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
-                        { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID); }
+                        { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
                         //highlight all possible move options
                         else
                         {
-                            EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move);
+                            EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move, "Node.cs -> OnMouseOver");
                             //if at Player's current node then Gear Node menu
                             if (nodeID == GameManager.instance.nodeScript.nodePlayer)
-                            { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID); }
+                            { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
                         }
                     }
                     else
