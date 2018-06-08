@@ -160,6 +160,7 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="eventType">Event to Listen for</param>
     /// <param name="Listener">Object to listen for event</param>
+    /// <param name="methodName">Optional -> name of method posting notification (for debugging purposes)</param>
     public void AddListener(EventType eventType, OnEvent Listener, string methodName = "Unknown")
     {
         //List of listeners for this event
@@ -178,7 +179,7 @@ public class EventManager : MonoBehaviour
             //Add to internal listeners list
             dictOfListeners.Add(eventType, ListenList); 
         }
-        Debug.Log(string.Format("[Evm] -> Listener Added -> type: {0}  sender: {1}{2}", eventType, methodName, "\n"));
+        Debug.Log(string.Format("[Evm] -> Listener Added -> type: {0},  sender: {1}{2}", eventType, methodName, "\n"));
     }
     
     /// <summary>
@@ -187,7 +188,8 @@ public class EventManager : MonoBehaviour
     /// <param name="eventType">Event to invoke</param>
     /// <param name="Sender">Object invoking event</param>
     /// <param name="Param">Optional argument</param>
-    public void PostNotification(EventType eventType, Component Sender, object Param = null)
+    /// <param name="methodName">Optional -> name of method posting notification (for debugging purposes)</param>
+    public void PostNotification(EventType eventType, Component Sender, object Param = null, string methodName = "Unknown")
     {
         //Notify all listeners of an event
 
@@ -207,7 +209,7 @@ public class EventManager : MonoBehaviour
         {
             if (ListenList[i] != null)
             {
-                Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}{1}", eventType, "\n"));
+                Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, sender: {1}{2}", eventType, methodName, "\n"));
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);
             }

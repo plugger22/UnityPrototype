@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
     {
         //redraw any Nodes where required
         if (nodeScript.NodeRedraw == true)
-        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw); }
+        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
         //Handle Game Input
         if (Input.anyKey == true)
         { inputScript.ProcessInput(); }

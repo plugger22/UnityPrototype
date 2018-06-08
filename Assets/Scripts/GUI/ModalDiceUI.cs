@@ -548,7 +548,7 @@ public class ModalDiceUI : MonoBehaviour
                         MoveReturnData details = new MoveReturnData();
                         details.text = builder.ToString();
                         details.node = node;
-                        EventManager.instance.PostNotification(EventType.DiceReturnMove, this, details);
+                        EventManager.instance.PostNotification(EventType.DiceReturnMove, this, details, "ModalDiceUI.cs -> ProcessDiceOutcome");
                         break;
                     case DiceType.Gear:
                         //all done, combine texts and output
@@ -567,7 +567,7 @@ public class ModalDiceUI : MonoBehaviour
                             outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                         }
                         //generate a create modal window event
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalDiceUI.cs -> ProcessDiceOutcome");
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid passData.type \"{0}\"", passData.type));
@@ -658,7 +658,7 @@ public class ModalDiceUI : MonoBehaviour
             outcomeDetails.textBottom = "Bad, all Bad";
             outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalDiceUI.cs -> ProcessAutoDiceOutcome");
     }
 
 

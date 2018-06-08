@@ -532,7 +532,7 @@ public class ActorManager : MonoBehaviour
                                     buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
                                     buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetID),
                                     //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID); }
+                                    action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID, "ActorManager.cs -> GetNodeActions"); }
                                 };
                                 tempList.Add(targetDetails);
                             }
@@ -689,7 +689,7 @@ public class ActorManager : MonoBehaviour
                                                     buttonTooltipMain = tempAction.tooltipText,
                                                     buttonTooltipDetail = builder.ToString(),
                                                     //use a Lambda to pass arguments to the action
-                                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); }
+                                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
                                                 };
                                             }
                                             //special case, Resistance node actions only
@@ -704,7 +704,7 @@ public class ActorManager : MonoBehaviour
                                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                             buttonTooltipMain = tempAction.tooltipText,
                                                             buttonTooltipDetail = builder.ToString(),
-                                                            action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails); }
+                                                            action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
                                                         };
                                                         break;
                                                     case "GetGear":
@@ -714,7 +714,7 @@ public class ActorManager : MonoBehaviour
                                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                             buttonTooltipMain = tempAction.tooltipText,
                                                             buttonTooltipDetail = builder.ToString(),
-                                                            action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails); }
+                                                            action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
                                                         };
                                                         break;
                                                     case "GetRecruit":
@@ -724,7 +724,7 @@ public class ActorManager : MonoBehaviour
                                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                             buttonTooltipMain = tempAction.tooltipText,
                                                             buttonTooltipDetail = builder.ToString(),
-                                                            action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails); }
+                                                            action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
                                                         };
                                                         break;
                                                     default:
@@ -798,7 +798,7 @@ public class ActorManager : MonoBehaviour
                             buttonTooltipMain = "The following teams can be withdrawn early",
                             buttonTooltipDetail = builder.ToString(),
                             //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.RecallTeamAction, this, node.nodeID); }
+                            action = () => { EventManager.instance.PostNotification(EventType.RecallTeamAction, this, node.nodeID, "ActorManager.cs -> GetNodeActions"); }
                         };
                         tempList.Add(recallDetails);
                     }
@@ -932,10 +932,10 @@ public class ActorManager : MonoBehaviour
                                     UnityAction clickAction = null;
                                     //Team action
                                     if (isAnyTeam)
-                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.InsertTeamAction, this, actionDetails); };  }
+                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.InsertTeamAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); };  }
                                     //Node action
                                     else
-                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails); };  }
+                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); };  }
                                     //pass all relevant details to ModalActionMenu via Node.OnClick()
                                     details = new EventButtonDetails()
                                     {
@@ -981,7 +981,7 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetNodeActions"); }
                 };
             }
             else
@@ -993,7 +993,7 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = cancelText,
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetNodeActions"); }
                 };
             }
             //add Cancel button to list
@@ -1053,7 +1053,7 @@ public class ActorManager : MonoBehaviour
                         title, actor.actorName),
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.ManageActorAction, this, manageActionDetails); }
+                        action = () => { EventManager.instance.PostNotification(EventType.ManageActorAction, this, manageActionDetails, "ActorManager.cs -> GetActorActions"); }
                     };
                     //add Lie Low button to list
                     tempList.Add(dismissDetails);
@@ -1084,7 +1084,7 @@ public class ActorManager : MonoBehaviour
                                     buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
                                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                     //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails); }
+                                    action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
                                 };
                                 //add Lie Low button to list
                                 tempList.Add(lielowDetails);
@@ -1154,7 +1154,7 @@ public class ActorManager : MonoBehaviour
                                             colourEnd, actor.arc.name, actor.actorName),
                                             buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                             //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); }
+                                            action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails, "ActorManager.cs -> GetActorActions"); }
                                         };
                                         //add Lie Low button to list
                                         tempList.Add(gearDetails);
@@ -1203,7 +1203,7 @@ public class ActorManager : MonoBehaviour
                                 buttonTooltipMain = string.Format("{0} {1} will be Immediately Recalled", actor.arc.name, actor.actorName),
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                 //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails); }
+                                action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails, "ActorManager.cs -> GetActorActions"); }
                             };
                             //add Activate button to list
                             tempList.Add(activateDetails);
@@ -1240,7 +1240,7 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
                 };
             }
             else
@@ -1253,7 +1253,7 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}Press Cancel to exit{1}", colourCancel, colourEnd),
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
                 };
             }
         }
@@ -1266,7 +1266,7 @@ public class ActorManager : MonoBehaviour
                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                 buttonTooltipMain = string.Format("{0}Invalid Actor{1}",colourBad, colourEnd),
                 //use a Lambda to pass arguments to the action
-                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
             };
         }
         //add Cancel button to list
@@ -1387,8 +1387,7 @@ public class ActorManager : MonoBehaviour
                         /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
                         buttonTooltipDetail = builder.ToString(),
                         //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails); },
-
+                        action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
                     };
                     //add USE to list
                     eventList.Add(gearDetails);
@@ -1457,8 +1456,7 @@ public class ActorManager : MonoBehaviour
                                 colourEnd, actor.arc.name, actor.actorName),
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                 //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails); },
-                                
+                                action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventoryActions"); }
                             };
                             //add Lie Low button to list
                             eventList.Add(gearDetails);
@@ -1492,7 +1490,7 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
                 };
             }
             else
@@ -1505,7 +1503,7 @@ public class ActorManager : MonoBehaviour
                     buttonTooltipMain = cancelText,
                     buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
                     //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
                 };
             }
         }
@@ -1518,7 +1516,7 @@ public class ActorManager : MonoBehaviour
                 buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
                 buttonTooltipMain = string.Format("{0}Invalid Gear{1}", colourBad, colourEnd),
                 //use a Lambda to pass arguments to the action
-                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
             };
         }
         //add Cancel button to list

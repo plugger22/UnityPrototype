@@ -238,7 +238,7 @@ public class ModalInventoryUI : MonoBehaviour
             outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
             outcomeDetails.textBottom = "The WolfMan has been called";
             outcomeDetails.side = details.side;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
         }
         else
         {
@@ -258,11 +258,6 @@ public class ModalInventoryUI : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
         GameManager.instance.tooltipGenericScript.CloseTooltip();
-
-        /*//deselect all generic options to prevent picker opening next time with a preselected team
-        EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this);
-        SetConfirmButton(false);*/
-
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.Log(string.Format("UI: Close -> ModalInventoryUI{0}", "\n"));

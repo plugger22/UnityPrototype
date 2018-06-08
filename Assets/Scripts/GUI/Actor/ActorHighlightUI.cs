@@ -40,7 +40,7 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
-        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset);
+        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "ActorHighlightUI.cs -> OnPointerExit");
     }
     
 

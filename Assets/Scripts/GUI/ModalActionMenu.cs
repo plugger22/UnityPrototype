@@ -226,7 +226,7 @@ public class ModalActionMenu : MonoBehaviour
             outcomeDetails.sprite = GameManager.instance.guiScript.infoSprite;
             outcomeDetails.modalLevel = details.modalLevel;
             outcomeDetails.modalState = details.modalState;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails);
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalActionMenu.cs -> SetActionMenu");
         }
     }
 

@@ -219,7 +219,7 @@ public class ModalOutcome : MonoBehaviour
         GameManager.instance.inputScript.ResetStates(modalState);
         //end of turn check
         if (isAction == true)
-        { EventManager.instance.PostNotification(EventType.UseAction, this, reason); }
+        { EventManager.instance.PostNotification(EventType.UseAction, this, reason, "ModalOutcome.cs -> CloseModalOutcome"); }
     }
 
 

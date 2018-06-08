@@ -76,7 +76,7 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerE
                             //update hacking status
                             GameManager.instance.aiScript.UpdateHackingStatus();
                             //activate AI Display (auto closes side tab)
-                            EventManager.instance.PostNotification(EventType.AIDisplayOpen, this);
+                            EventManager.instance.PostNotification(EventType.AIDisplayOpen, this, null, "AISideTabMouseUI.cs -> OnPointerClick");
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid aiSideTabUI.cs hackingStatus {0}", GameManager.instance.aiSideTabScript.hackingStatus);

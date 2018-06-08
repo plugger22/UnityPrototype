@@ -435,7 +435,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Most Connected"))
             {
                 Debug.Log("[Dbg] Button -> Show Most Connected Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected);
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected, "DebugGUI.cs -> OnGUI");
             }
 
             //eighth button
@@ -443,14 +443,14 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Centre Nodes");
                 GameManager.instance.debugGraphicsScript.SetCentrePane(true);
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre);
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre, "DebugGUI.cs -> OnGUI");
             }
 
             //ninth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Near Neighbours"))
             {
                 Debug.Log("[Dbg] Button -> NearNeighbours");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours);
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours, "DebugGUI.cs -> OnGUI");
             }
 
             //tenth button
@@ -493,7 +493,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Decision Nodes"))
             {
                 Debug.Log("[Dbg] Button -> Show Decision Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes);
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes, "DebugGUI.cs -> OnGUI");
             }
 
 

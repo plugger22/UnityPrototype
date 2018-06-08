@@ -212,6 +212,8 @@ public class AIDisplayUI : MonoBehaviour
             else { topTaskTooltip.tooltipMain = "Unknown Data"; }
             topTaskTooltip.nodeID = data.nodeID_1;
             topTaskTooltip.connID = data.connID_1;
+            topTaskTooltip.testTag = "Top Task";
+            Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_1 {1}{2}", topTaskTooltip.testTag, data.nodeID_1, "\n");
             //2nd Task
             if (String.IsNullOrEmpty(data.task_2_textUpper) == false)
             { subMiddleUpper.text = data.task_2_textUpper; }
@@ -227,6 +229,8 @@ public class AIDisplayUI : MonoBehaviour
             else { middleTaskTooltip.tooltipMain = "Unknown Data"; }
             middleTaskTooltip.nodeID = data.nodeID_2;
             middleTaskTooltip.connID = data.connID_2;
+            middleTaskTooltip.testTag = "Middle Task";
+            Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_2 {1}{2}", middleTaskTooltip.testTag, data.nodeID_2, "\n");
             //3rd Task
             if (String.IsNullOrEmpty(data.task_3_textUpper) == false)
             { subBottomUpper.text = data.task_3_textUpper; }
@@ -242,6 +246,8 @@ public class AIDisplayUI : MonoBehaviour
             else { bottomTaskTooltip.tooltipMain = "Unknown Data"; }
             bottomTaskTooltip.nodeID = data.nodeID_3;
             bottomTaskTooltip.connID = data.connID_3;
+            bottomTaskTooltip.testTag = "Bottom Task";
+            Debug.LogFormat("[Tst] AIDisplayUI.cs -> ProcessDisplayData: {0} data.nodeID_3 {1}{2}", bottomTaskTooltip.testTag, data.nodeID_3, "\n");
             //Faction
             if (String.IsNullOrEmpty(data.factionDetails) == false)
             { tabTopText.text = data.factionDetails; }
@@ -282,7 +288,7 @@ public class AIDisplayUI : MonoBehaviour
     public void SetAIDisplay()
     {
         //close side tab
-        EventManager.instance.PostNotification(EventType.AISideTabClose, this);
+        EventManager.instance.PostNotification(EventType.AISideTabClose, this, null, "AIDisplayUI.cs -> SetAIDisplay");
         //switch on display
         aiDisplayObject.gameObject.SetActive(true);
         //set modal status
@@ -303,6 +309,6 @@ public class AIDisplayUI : MonoBehaviour
         GameManager.instance.inputScript.ResetStates();
         Debug.Log("UI: Close -> AIDisplayUI" + "\n");
         //open side tab
-        EventManager.instance.PostNotification(EventType.AISideTabOpen, this);
+        EventManager.instance.PostNotification(EventType.AISideTabOpen, this, null, "AIDisplayUI.cs -> CloseAIDisplay");
     }
 }

@@ -19,12 +19,20 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [HideInInspector] public int nodeID;                    //node ID, default -1, if viable ( >= 0) will serve to highlight that node while tooltip is showing
     [HideInInspector] public int connID;                    //connID, default -1, if viable ( >= 0) will serve to highlight that connection while tooltip is showing
 
+    [HideInInspector] public string testTag;                //use for debugging purposes to see where the tooltip originated from
+
     private bool isHighlightOn;                             //true if highlight currently on (node or connection)
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
     private Coroutine myCoroutine;
 
+    private void Awake()
+    {
+        //NOTE: need to initialise here in Awake, doing so in Start causes issues
+        nodeID = -1;
+        connID = -1;
+    }
 
     /// <summary>
     /// constructor -> needs to be Start as GameManager hasn't initialised prior to this (UI elements initialise before normal gameObjects?)
@@ -48,7 +56,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //node Highlight?
         if (nodeID > -1 && isHighlightOn == false)
         {
-            EventManager.instance.PostNotification(EventType.HighlightNodeShow, this, nodeID);
+            Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEnter: {0} nodeID {1}{2}", testTag, nodeID, "\n");
+            EventManager.instance.PostNotification(EventType.HighlightNodeShow, this, nodeID, "GenericTooltipUI.cs -> OnPointerEnter");
             isHighlightOn = true;
         }
     }
@@ -66,7 +75,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //cancel node highlight
         if (nodeID > -1 && isHighlightOn == true)
         {
-            EventManager.instance.PostNotification(EventType.HighlightNodeReset, this, nodeID);
+            Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEXIT: {0} nodeID {1}{2}", testTag, nodeID, "\n");
+            EventManager.instance.PostNotification(EventType.HighlightNodeReset, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
             isHighlightOn = false;
         }
     }

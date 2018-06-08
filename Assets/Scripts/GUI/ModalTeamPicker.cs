@@ -388,7 +388,7 @@ public class ModalTeamPicker : MonoBehaviour
         modalTeamObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //deselect all teams to prevent picker opening next time with a preselected team
-        EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
+        EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this, null, "ModalTeamPicker.cs -> CloseTeamPicker");
         SetConfirmButton(false);
         //set game state
         GameManager.instance.inputScript.ResetStates();
@@ -438,7 +438,7 @@ public class ModalTeamPicker : MonoBehaviour
         modalTeamObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //deselect all teams to prevent picker opening next time with a preselected team
-        EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this);
+        EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this, null, "ModalTeamPicker.cs -> ProcessTeamChoice");
         //set game state
         GameManager.instance.inputScript.GameState = GameState.Normal;
         Debug.Log(string.Format("UI: Close -> ModalTeamPicker" + "\n"));
@@ -485,6 +485,6 @@ public class ModalTeamPicker : MonoBehaviour
             details.reason = "Team Picker";
         }
         //fire up Outcome dialogue
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ModalTeamPicker.cs -> ProcessTeamChoice");
     }
 }

@@ -38,7 +38,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of player
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
-    //used for quick reference by node fields
+    //fast access
     [HideInInspector] public EffectOutcome outcomeNodeSecurity;
     [HideInInspector] public EffectOutcome outcomeNodeStability;
     [HideInInspector] public EffectOutcome outcomeNodeSupport;
@@ -47,11 +47,16 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public EffectOutcome outcomeStatusContacts;
     [HideInInspector] public EffectOutcome outcomeStatusTeams;
     //gear node actions
-    [HideInInspector] public Action actionKinetic;
-    [HideInInspector] public Action actionHacking;
-    [HideInInspector] public Action actionPersuasion;
+    private Action actionKinetic;
+    private Action actionHacking;
+    private Action actionPersuasion;
     //activity
     [HideInInspector] public ActivityUI activityState;
+    //materials
+    private Material materialNormal;
+    private Material materialHighlight;
+    private Material materialActive;
+    private Material materialPlayer;
 
     string colourDefault;
     //string colourNormal;
@@ -169,6 +174,15 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid gearPersuasion actionID (not found)"); }
         //DEBUG
         /*DebugRandomActivityValues();*/
+        //fast access -> Materials
+        materialNormal = GetNodeMaterial(NodeType.Normal);
+        materialHighlight = GetNodeMaterial(NodeType.Highlight);
+        materialActive = GetNodeMaterial(NodeType.Active);
+        materialPlayer = GetNodeMaterial(NodeType.Player);
+        Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
+        Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
+        Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
+        Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent, "NodeManager");
@@ -378,7 +392,7 @@ public class NodeManager : MonoBehaviour
                         Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
                         if (nodeTemp != null)
                         {
-                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                            Material nodeMaterial = materialActive;
                             nodeTemp.SetMaterial(nodeMaterial);
                         }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
@@ -404,7 +418,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node != null)
                                 {
-                                    Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                    Material nodeMaterial = materialActive;
                                     node.SetMaterial(nodeMaterial);
                                 }
                             }
@@ -447,7 +461,7 @@ public class NodeManager : MonoBehaviour
                     {
                         if (node.Value.isSpider == true)
                         {
-                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                            Material nodeMaterial = materialActive;
                             //show all
                             if (proceedFlag == true)
                             {
@@ -501,7 +515,7 @@ public class NodeManager : MonoBehaviour
                     {
                         if (node.Value.isTracerActive == true)
                         {
-                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                            Material nodeMaterial = materialActive;
                             /*node.Value.SetMaterial(nodeMaterial);
                             //count number of tracers, not active tracer nodes
                             if (node.Value.isTracer == true)
@@ -563,7 +577,7 @@ public class NodeManager : MonoBehaviour
                         {
                             if (node.Value.CheckNumOfTeams() > 0)
                             {
-                                Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                Material nodeMaterial = materialActive;
                                 //show all
                                 if (proceedFlag == true)
                                 {
@@ -602,7 +616,7 @@ public class NodeManager : MonoBehaviour
                         {
                             if (node != null)
                             {
-                                Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                Material nodeMaterial = materialActive;
                                 node.SetMaterial(nodeMaterial);
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
@@ -629,7 +643,7 @@ public class NodeManager : MonoBehaviour
                         {
                             if (node != null)
                             {
-                                Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                Material nodeMaterial = materialActive;
                                 node.SetMaterial(nodeMaterial);
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
@@ -658,7 +672,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (nodeTemp != null)
                                 {
-                                    Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                    Material nodeMaterial = materialActive;
                                     nodeTemp.SetMaterial(nodeMaterial);
                                 }
                                 else { Debug.LogWarning("Invalid nodeTemp (Null)"); }
@@ -694,7 +708,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node.Value.isCentreNode == true)
                                 {
-                                    Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                                    Material nodeMaterial = materialActive;
                                     node.Value.SetMaterial(nodeMaterial);
                                     counter++;
                                 }
@@ -740,7 +754,7 @@ public class NodeManager : MonoBehaviour
                     {
                         if (node != null)
                         {
-                            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+                            Material nodeMaterial = materialActive;
                             node.SetMaterial(nodeMaterial);
                         }
                     }
@@ -781,7 +795,7 @@ public class NodeManager : MonoBehaviour
         foreach (GameObject obj in tempList)
         {
             Node nodeTemp = obj.GetComponent<Node>();
-            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+            Material nodeMaterial = materialActive;
             nodeTemp.SetMaterial(nodeMaterial);
         }
         //Get Actor
@@ -815,7 +829,7 @@ public class NodeManager : MonoBehaviour
         {        
             //set all nodes to default colour first
             ResetNodes();
-            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+            Material nodeMaterial = materialActive;
             node.SetMaterial(nodeMaterial);
             NodeRedraw = true;
         }
@@ -831,7 +845,7 @@ public class NodeManager : MonoBehaviour
         /*Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            Material nodeMaterial = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
+            Material nodeMaterial = materialNormal;
             node.SetMaterial(nodeMaterial);
             NodeRedraw = true;
         }
@@ -862,10 +876,10 @@ public class NodeManager : MonoBehaviour
                 if (node != null)
                 {
                     //only do so if it's a normal node, otherwise ignore
-                    if (node.GetMaterial() == GetNodeMaterial(NodeType.Normal))
+                    if (node.GetMaterial() == materialNormal)
                     {
                         nodeRenderer = node.GetComponent<Renderer>();
-                        nodeRenderer.material = GetNodeMaterial(NodeType.Highlight);
+                        nodeRenderer.material = materialHighlight;
                     }
                 }
                 else { Debug.LogError("Invalid Node (null) returned from dictOfNodes"); }
@@ -884,10 +898,10 @@ public class NodeManager : MonoBehaviour
                     if (node != null)
                     {
                         //only do so if it's a normal node, otherwise ignore
-                        if (node.GetMaterial() == GetNodeMaterial(NodeType.Normal))
+                        if (node.GetMaterial() == materialNormal)
                         {
                             nodeRenderer = node.GetComponent<Renderer>();
-                            nodeRenderer.material = GetNodeMaterial(NodeType.Player);
+                            nodeRenderer.material = materialPlayer;
                         }
                     }
                 }
@@ -904,7 +918,7 @@ public class NodeManager : MonoBehaviour
     public void ResetNodes()
     {
         //get default material
-        Material nodeMaterial = GetNodeMaterial(NodeType.Normal);
+        Material nodeMaterial = materialNormal;
         //loop and assign
         Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
         if (tempDict != null)

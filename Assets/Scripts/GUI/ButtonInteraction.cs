@@ -64,12 +64,7 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
         //event 1
         if (eventType != EventType.None)
         {
-            EventManager.instance.PostNotification(eventType, this);
-
-            /*if (isReturn == true)
-            { EventManager.instance.PostNotification(eventType, this, returnData); }
-            else
-            { EventManager.instance.PostNotification(eventType, this); }*/
+            EventManager.instance.PostNotification(eventType, this, null, "ButtonInteraction.cs -> OnPointerClick");
         }
     }
 }
