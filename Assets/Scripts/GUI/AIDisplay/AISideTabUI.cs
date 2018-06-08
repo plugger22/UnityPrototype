@@ -54,8 +54,9 @@ public class AISideTabUI : MonoBehaviour
         tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
         Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
         tooltip.isIgnoreClick = true;
-        tooltip.x_offset = 20;
+        /*tooltip.x_offset = 20;*/
         tooltip.testTag = "AISideTabUI";
+        tooltip.tooltipMain = "We haven't yet broken the AI's Security systems. Resistance HQ are on the job";
         //flashing alert
         flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
         Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
@@ -143,6 +144,8 @@ public class AISideTabUI : MonoBehaviour
             StopCoroutine(myCoroutine);
             myCoroutine = null;
         }
+        //close tooltip if open
+        GameManager.instance.tooltipGenericScript.CloseTooltip();
     }
 
 
