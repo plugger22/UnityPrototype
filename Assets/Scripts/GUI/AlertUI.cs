@@ -29,6 +29,7 @@ public class AlertUI : MonoBehaviour
         return alertUI;
     }
 
+
     /// <summary>
     /// display AlertUI with appropriate text
     /// </summary>

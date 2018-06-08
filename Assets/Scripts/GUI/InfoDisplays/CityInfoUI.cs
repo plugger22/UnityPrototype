@@ -231,9 +231,10 @@ public class CityInfoUI : MonoBehaviour
         if (city != null)
         {
             //exit any generic or node tooltips
-            /*StopCoroutine("ShowTooltip");*/
             GameManager.instance.tooltipGenericScript.CloseTooltip();
             GameManager.instance.tooltipNodeScript.CloseTooltip();
+            //close any Alert Message
+            GameManager.instance.alertScript.CloseAlertUI(true);
             //populate data
             cityName.text = city.name;
             cityArc.text = city.Arc.name;

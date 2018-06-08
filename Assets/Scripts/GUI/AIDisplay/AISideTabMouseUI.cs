@@ -11,40 +11,9 @@ using gameAPI;
 public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerEnterHandler, IPointerExitHandler*/
 {
 
-    /*private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
+    private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
 
-
-    public void Start()
-    {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-    }
-
-    /// <summary>
-    /// Mouse over generic tooltip
-    /// </summary>
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //check modal block isn't in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
-        {
-            //Tool tip
-            onMouseFlag = true;
-
-        }
-    }
-
-
-    /// <summary>
-    /// mouse over exit, shut down tooltip
-    /// </summary>
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
-        {
-            onMouseFlag = false;
-        }
-    }*/
 
 
     /// <summary>

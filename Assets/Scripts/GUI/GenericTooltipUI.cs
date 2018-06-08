@@ -20,6 +20,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [HideInInspector] public int connID;                    //connID, default -1, if viable ( >= 0) will serve to highlight that connection while tooltip is showing
 
     [HideInInspector] public string testTag;                //use for debugging purposes to see where the tooltip originated from
+    [HideInInspector] public bool isIgnoreClick;            //if true then will ignore all mouse clicks
 
     private bool isHighlightOn;                             //true if highlight currently on (node or connection)
     private float mouseOverDelay;
@@ -32,6 +33,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //NOTE: need to initialise here in Awake, doing so in Start causes issues
         nodeID = -1;
         connID = -1;
+        isHighlightOn = false;
+        isIgnoreClick = false;
     }
 
     /// <summary>
@@ -41,7 +44,6 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
-        isHighlightOn = false;
     }
 
     /// <summary>
@@ -56,7 +58,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //node Highlight?
         if (nodeID > -1 && isHighlightOn == false)
         {
-            /*Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEnter: {0} nodeID {1}{2}", testTag, nodeID, "\n");*/
+            Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEnter: {0} x_offset {1}{2}", testTag, x_offset, "\n");
             EventManager.instance.PostNotification(EventType.HighlightNodeShow, this, nodeID, "GenericTooltipUI.cs -> OnPointerEnter");
             isHighlightOn = true;
         }
@@ -75,22 +77,25 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         //cancel node highlight
         if (nodeID > -1 && isHighlightOn == true)
         {
-            /*Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEXIT: {0} nodeID {1}{2}", testTag, nodeID, "\n");*/
+            Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEXIT: {0} x_offset {1}{2}", testTag, x_offset, "\n");
             EventManager.instance.PostNotification(EventType.HighlightNodeReset, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
             isHighlightOn = false;
         }
     }
 
     /// <summary>
-    /// Mouse click on button, don't forget to close tooltip
+    /// Mouse click on button, don't forget to close tooltip. If isIgnoreClick then mouse clicks have no effect for this class
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        onMouseFlag = false;
-        if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
-        GameManager.instance.tooltipGenericScript.CloseTooltip();        
+        if (isIgnoreClick == false)
+        {
+            onMouseFlag = false;
+            if (myCoroutine != null)
+            { StopCoroutine(myCoroutine); }
+            GameManager.instance.tooltipGenericScript.CloseTooltip();
+        }
     }
 
 

@@ -30,6 +30,7 @@ public class AISideTabUI : MonoBehaviour
     private bool isFading;
     private Color tempColour;
     private Coroutine myCoroutine;
+    private GenericTooltipUI tooltip;
 
 
     /// <summary>
@@ -49,8 +50,16 @@ public class AISideTabUI : MonoBehaviour
 
     public void Initialise()
     {
+        //tooltip
+        tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
+        Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
+        tooltip.isIgnoreClick = true;
+        tooltip.x_offset = 20;
+        tooltip.testTag = "AISideTabUI";
+        //flashing alert
         flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
         Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
+        //data
         topText.text = "AI";
         bottomText.text = "-";
         hackingStatus = HackingStatus.Initialising;
@@ -138,7 +147,7 @@ public class AISideTabUI : MonoBehaviour
 
 
     /// <summary>
-    /// update data on side tab (sent from AIManager.cs -> UpdateSideTabData)
+    /// update data on side tab (sent from AIManager.cs -> UpdateSideTabData) & GenericTooltipUI data
     /// </summary>
     /// <param name="data"></param>
     private void UpdateSideTab(AISideTabData data)
@@ -174,6 +183,11 @@ public class AISideTabUI : MonoBehaviour
                     alertFlasher.color = tempColour;
                 }
             }
+            //tooltip data
+            if (string.IsNullOrEmpty(data.tooltipText) == false)
+            { tooltip.tooltipMain = data.tooltipText; }
+            else { tooltip.tooltipMain = "Unknown Data"; }
+            Debug.LogFormat("[Tst] AISideTabUI.cs -> UpdateSideTab: tooltip \"{0}\"{1}", tooltip.tooltipMain, "\n");
         }
         else { Debug.LogWarning("Invalid AISideTabData (Null)"); }
     }

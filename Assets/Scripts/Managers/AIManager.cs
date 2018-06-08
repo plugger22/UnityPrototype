@@ -106,6 +106,7 @@ public class AISideTabData
 {
     public string topText;              //eg. 'A.I' but colour formatted
     public string bottomText;           //eg. Renown cost to hack or 'X' if not possible, greyed out if not enough renown
+    public string tooltipText;          
     public HackingStatus status;        //used to determine what happens when player clicks AI Side Tab UI
 }
 
@@ -2574,6 +2575,8 @@ public class AIManager : MonoBehaviour
                     data.topText = string.Format("{0}A.I{1}", colourBad, colourEnd);
                     data.bottomText = string.Format("{0}X{1}", colourBad, colourEnd);
                     data.status = HackingStatus.Rebooting;
+                    data.tooltipText = string.Format("The AI is {0}Rebooting{1} it's Security systems and {2}cannot be hacked{3}", 
+                        colourBad, colourEnd, colourNeutral, colourEnd);
                 }
                 else
                 {
@@ -2581,16 +2584,26 @@ public class AIManager : MonoBehaviour
                     data.status = HackingStatus.Possible;
                     //renown to spare -> Green
                     if (playerRenown > hackingCurrentCost)
-                    { data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingCurrentCost, colourEnd); }
+                    {
+                        data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingCurrentCost, colourEnd);
+                        data.tooltipText = string.Format("You can hack the AI for {0}{1}{2} Renown (currently {3}{4}{5})", colourGood, hackingCurrentCost, colourEnd,
+                            colourNeutral, playerRenown, colourEnd);
+                    }
                     //just enough renown -> Yellow
                     else if (playerRenown == hackingCurrentCost)
-                    { data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingCurrentCost, colourEnd); }
+                    {
+                        data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingCurrentCost, colourEnd);
+                        data.tooltipText = string.Format("You can hack the AI for {0}{1}{2} Renown (currently {3}{4}{5})", colourNeutral, hackingCurrentCost, colourEnd,
+                             colourNeutral, playerRenown, colourEnd);
+                    }
                     else
                     {
                         //insufficient renown -> Greyed out
                         data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                         data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingCurrentCost, colourEnd);
                         data.status = HackingStatus.InsufficientRenown;
+                        data.tooltipText = string.Format("To hack the AI you require {0}{1}{2} Renown (currently {3}{4}{5})", colourNeutral, hackingCurrentCost, colourEnd,
+                            colourBad, playerRenown, colourEnd);
                     }
                 }
                 break;
@@ -2599,6 +2612,8 @@ public class AIManager : MonoBehaviour
                 data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                 data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingCurrentCost, colourEnd);
                 data.status = HackingStatus.Indisposed;
+                data.tooltipText = string.Format("You are {0}not in a position to Hack the AI{1} at present due to your {2}current circumstances{3}", colourBad, colourEnd,
+                    colourNeutral, colourEnd);
                 break;
         }
         //send data package

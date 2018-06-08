@@ -293,6 +293,8 @@ public class AIDisplayUI : MonoBehaviour
         aiDisplayObject.gameObject.SetActive(true);
         //set modal status
         GameManager.instance.guiScript.SetIsBlocked(true);
+        //turn off any alert message
+        GameManager.instance.alertScript.CloseAlertUI(true);
         //set game state
         GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay, ModalInfo.AIInfo);
     }
