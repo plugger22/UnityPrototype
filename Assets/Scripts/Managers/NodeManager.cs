@@ -38,6 +38,10 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of player
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
+    private bool isFlashOn = false;                                 //used for flashing Node coroutine
+    private int flashTimer = 0;                                     //used for flashing Node coroutine
+    private Coroutine myCoroutine;
+
     //fast access
     [HideInInspector] public EffectOutcome outcomeNodeSecurity;
     [HideInInspector] public EffectOutcome outcomeNodeStability;
@@ -249,10 +253,12 @@ public class NodeManager : MonoBehaviour
                 }
                 break;
             case EventType.HighlightNodeShow:
-                HighlightNodeShow((int)Param);
+                //HighlightNodeShow((int)Param);
+                StartFlashingNode((int)Param);
                 break;
             case EventType.HighlightNodeReset:
-                HighlightNodeReset((int)Param);
+                //HighlightNodeReset((int)Param);
+                StopFlashingNode();
                 break;
             case EventType.ActivityDisplay:
                 ActivityUI activityUI = (ActivityUI)Param;
@@ -391,10 +397,7 @@ public class NodeManager : MonoBehaviour
                     {
                         Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
                         if (nodeTemp != null)
-                        {
-                            Material nodeMaterial = materialActive;
-                            nodeTemp.SetMaterial(nodeMaterial);
-                        }
+                        { nodeTemp.SetMaterial(materialActive); }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                     }
                     displayText = string.Format("{0}{1}{2}{3} Target{4}{5} node{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
@@ -417,10 +420,7 @@ public class NodeManager : MonoBehaviour
                             foreach (Node node in nodeList)
                             {
                                 if (node != null)
-                                {
-                                    Material nodeMaterial = materialActive;
-                                    node.SetMaterial(nodeMaterial);
-                                }
+                                { node.SetMaterial(materialActive); }
                             }
                             displayText = string.Format("{0}{1}{2} {3}valid Move Node{4}{5}", colourDefault, nodeList.Count, colourEnd,
                                 colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
@@ -461,11 +461,10 @@ public class NodeManager : MonoBehaviour
                     {
                         if (node.Value.isSpider == true)
                         {
-                            Material nodeMaterial = materialActive;
                             //show all
                             if (proceedFlag == true)
                             {
-                                node.Value.SetMaterial(nodeMaterial);
+                                node.Value.SetMaterial(materialActive);
                                 count++;
                             }
                             //conditional -> only show if spider is known
@@ -473,7 +472,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node.Value.isSpiderKnown == true)
                                 {
-                                    node.Value.SetMaterial(nodeMaterial);
+                                    node.Value.SetMaterial(materialActive);
                                     count++;
                                 }
                             }
@@ -515,7 +514,6 @@ public class NodeManager : MonoBehaviour
                     {
                         if (node.Value.isTracerActive == true)
                         {
-                            Material nodeMaterial = materialActive;
                             /*node.Value.SetMaterial(nodeMaterial);
                             //count number of tracers, not active tracer nodes
                             if (node.Value.isTracer == true)
@@ -524,7 +522,7 @@ public class NodeManager : MonoBehaviour
                             //show all
                             if (proceedFlag == true)
                             {
-                                node.Value.SetMaterial(nodeMaterial);
+                                node.Value.SetMaterial(materialActive);
                                 count++;
                             }
                             //conditional -> only show if tracer is known
@@ -532,7 +530,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node.Value.isTracerKnown == true)
                                 {
-                                    node.Value.SetMaterial(nodeMaterial);
+                                    node.Value.SetMaterial(materialActive);
                                     count++;
                                 }
                             }
@@ -577,11 +575,10 @@ public class NodeManager : MonoBehaviour
                         {
                             if (node.Value.CheckNumOfTeams() > 0)
                             {
-                                Material nodeMaterial = materialActive;
                                 //show all
                                 if (proceedFlag == true)
                                 {
-                                    node.Value.SetMaterial(nodeMaterial);
+                                    node.Value.SetMaterial(materialActive);
                                     count++;
                                 }
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
@@ -589,7 +586,7 @@ public class NodeManager : MonoBehaviour
                                 {
                                     if (node.Value.isTeamKnown || node.Value.isTracerActive || node.Value.isContactKnown)
                                     {
-                                        node.Value.SetMaterial(nodeMaterial);
+                                        node.Value.SetMaterial(materialActive);
                                         count++;
                                     }
                                 }
@@ -615,10 +612,7 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in connectedList)
                         {
                             if (node != null)
-                            {
-                                Material nodeMaterial = materialActive;
-                                node.SetMaterial(nodeMaterial);
-                            }
+                            { node.SetMaterial(materialActive); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Most Connected Node{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
@@ -642,10 +636,7 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in decisionList)
                         {
                             if (node != null)
-                            {
-                                Material nodeMaterial = materialActive;
-                                node.SetMaterial(nodeMaterial);
-                            }
+                            { node.SetMaterial(materialActive); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Decision Node{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
@@ -672,8 +663,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (nodeTemp != null)
                                 {
-                                    Material nodeMaterial = materialActive;
-                                    nodeTemp.SetMaterial(nodeMaterial);
+                                    nodeTemp.SetMaterial(materialActive);
                                 }
                                 else { Debug.LogWarning("Invalid nodeTemp (Null)"); }
                             }
@@ -708,8 +698,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node.Value.isCentreNode == true)
                                 {
-                                    Material nodeMaterial = materialActive;
-                                    node.Value.SetMaterial(nodeMaterial);
+                                    node.Value.SetMaterial(materialActive);
                                     counter++;
                                 }
                             }
@@ -753,10 +742,7 @@ public class NodeManager : MonoBehaviour
                     foreach (Node node in nodeList)
                     {
                         if (node != null)
-                        {
-                            Material nodeMaterial = materialActive;
-                            node.SetMaterial(nodeMaterial);
-                        }
+                        { node.SetMaterial(materialActive); }
                     }
                     displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, nodeList.Count, colourEnd,
                     colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
@@ -795,8 +781,7 @@ public class NodeManager : MonoBehaviour
         foreach (GameObject obj in tempList)
         {
             Node nodeTemp = obj.GetComponent<Node>();
-            Material nodeMaterial = materialActive;
-            nodeTemp.SetMaterial(nodeMaterial);
+            nodeTemp.SetMaterial(materialActive);
         }
         //Get Actor
         Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
@@ -829,8 +814,8 @@ public class NodeManager : MonoBehaviour
         {        
             //set all nodes to default colour first
             ResetNodes();
-            Material nodeMaterial = materialActive;
-            node.SetMaterial(nodeMaterial);
+            //Material nodeMaterial = materialActive;
+            node.SetMaterial(materialActive);
             NodeRedraw = true;
         }
         else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
@@ -842,14 +827,6 @@ public class NodeManager : MonoBehaviour
     /// <param name="nodeID"></param>
     public void HighlightNodeReset(int nodeID)
     {
-        /*Node node = GameManager.instance.dataScript.GetNode(nodeID);
-        if (node != null)
-        {
-            Material nodeMaterial = materialNormal;
-            node.SetMaterial(nodeMaterial);
-            NodeRedraw = true;
-        }
-        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }*/
         ResetNodes();
     }
 
@@ -917,15 +894,13 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     public void ResetNodes()
     {
-        //get default material
-        Material nodeMaterial = materialNormal;
         //loop and assign
         Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
         if (tempDict != null)
         {
             foreach (var node in tempDict)
             {
-                node.Value.SetMaterial(nodeMaterial);
+                node.Value.SetMaterial(materialNormal);
                 node.Value.faceText.text = "";
             }
             //trigger an automatic redraw
@@ -2001,6 +1976,61 @@ public class NodeManager : MonoBehaviour
         int delay = moveInvisibilityDelay - securityLevel;
         delay = Mathf.Max(0, delay);
         return delay;
+    }
+
+    /// <summary>
+    /// event driven -> start coroutine
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void StartFlashingNode(int nodeID)
+    {
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            flashTimer = 0;
+            isFlashOn = false;
+            myCoroutine = StartCoroutine("FlashingNode", node);
+        }
+        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+    }
+
+    /// <summary>
+    /// event driven -> stop coroutine
+    /// </summary>
+    private void StopFlashingNode()
+    {
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
+        ResetNodes();
+    }
+
+    /// <summary>
+    /// coroutine to flash a node
+    /// NOTE: Node checked for null by calling procedure
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    IEnumerator FlashingNode(Node node)
+    {
+        flashTimer++;
+        Debug.LogFormat("[Tst] NodeManager.cs -> FlashingNode: flashTimer {0}, isFlashOn {1}{2}", flashTimer, isFlashOn, "\n");
+        if (flashTimer % 10 == 1)
+        {
+            flashTimer = 0;
+            if (isFlashOn == false)
+            {
+                node.SetMaterial(materialActive);
+                NodeRedraw = true;
+                isFlashOn = true;
+            }
+            else
+            {
+                node.SetMaterial(materialNormal);
+                NodeRedraw = true;
+                isFlashOn = false;
+            }
+        }
+        yield return null;
     }
 
 

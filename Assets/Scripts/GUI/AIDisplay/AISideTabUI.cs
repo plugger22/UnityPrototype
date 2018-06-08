@@ -190,7 +190,6 @@ public class AISideTabUI : MonoBehaviour
             if (string.IsNullOrEmpty(data.tooltipText) == false)
             { tooltip.tooltipMain = data.tooltipText; }
             else { tooltip.tooltipMain = "Unknown Data"; }
-            Debug.LogFormat("[Tst] AISideTabUI.cs -> UpdateSideTab: tooltip \"{0}\"{1}", tooltip.tooltipMain, "\n");
         }
         else { Debug.LogWarning("Invalid AISideTabData (Null)"); }
     }
