@@ -334,7 +334,7 @@ public class ModalGenericPicker : MonoBehaviour
             bottomText.text = details.textBottom;
             //set game state
             GameManager.instance.inputScript.SetModalState(ModalState.GenericPicker);
-            Debug.Log("UI: Open -> ModalGenericPicker" + "\n");
+            Debug.LogFormat("[UI] ModalGenericPicker.cs -> SetGenericPicker{0}", "\n");
         }
     }
 
@@ -348,13 +348,13 @@ public class ModalGenericPicker : MonoBehaviour
         modalGenericObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
-        GameManager.instance.tooltipGenericScript.CloseTooltip();
+        GameManager.instance.tooltipGenericScript.CloseTooltip("ModalGenericPicker.cs -> CloseGenericPicker");
         //deselect all generic options to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this, null, "ModalGenericPicker.cs -> CloseGenericPicker");
         SetConfirmButton(false);
         //set game state
         GameManager.instance.inputScript.ResetStates();
-        Debug.Log("UI: Close -> ModalGenericPicker" + "\n");
+        Debug.LogFormat("[UI] ModalGenericPicker.cs -> CloseGenericPicker", "\n");
     }
 
     /// <summary>

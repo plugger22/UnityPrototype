@@ -116,7 +116,7 @@ public class TooltipGeneric : MonoBehaviour
 
         //set new position
         tooltipGenericObject.transform.position = screenPos;
-        Debug.Log("UI: Open -> TooltipGeneric" + "\n");
+        Debug.LogFormat("[UI] TooltipGeneric.cs -> SetTooltip{0}", "\n");
 
     }
 
@@ -148,11 +148,11 @@ public class TooltipGeneric : MonoBehaviour
     { return tooltipGenericObject.activeSelf; }
 
     /// <summary>
-    /// close tool tip
+    /// close tool tip. Provide an optional string showing calling method
     /// </summary>
-    public void CloseTooltip()
+    public void CloseTooltip(string text = "Unknown")
     {
-        Debug.Log("UI: Close -> TooltipGeneric" + "\n");
+        Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: sender {0}{1}", text, "\n");
         tooltipGenericObject.SetActive(false);
     }
 

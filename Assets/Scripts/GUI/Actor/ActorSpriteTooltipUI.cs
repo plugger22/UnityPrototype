@@ -115,7 +115,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
 
-        GameManager.instance.tooltipGenericScript.CloseTooltip();
+        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorSpriteTooltipUI.cs -> OnPointerExit");
     }
 
 

@@ -62,7 +62,7 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipGenericScript.CloseTooltip("WidgetBarRightMouseUI.cs -> OnPointerExit");
         }
     }
 

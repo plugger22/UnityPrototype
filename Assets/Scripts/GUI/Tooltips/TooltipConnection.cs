@@ -106,6 +106,7 @@ public class TooltipConnection : MonoBehaviour
     /// <param name="textMiddle"></param>
     public void SetTooltip(Vector3 tooltipPos, int connID, ConnectionType securityLevel, List<EffectDataOngoing> listOfOngoingEffects, string textMain = null)
     {
+        Debug.LogFormat("[UI] TooltipConnection -> SetTooltip{0}", "\n");
         //open panel at start
         tooltipConnectionObject.SetActive(true);
         //set opacity to zero (invisible)
@@ -247,7 +248,7 @@ public class TooltipConnection : MonoBehaviour
     /// </summary>
     public void CloseTooltip()
     {
-        Debug.Log("UI: Close -> TooltipConnection" + "\n");
+        Debug.LogFormat("[UI] TooltipConnection -> CloseTooltip{0}", "\n");
         tooltipConnectionObject.SetActive(false);
     }
 

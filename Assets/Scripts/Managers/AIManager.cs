@@ -1975,7 +1975,6 @@ public class AIManager : MonoBehaviour
                             data.task_1_tooltip = results.Item3;
                             data.nodeID_1 = results.Item4;
                             data.connID_1 = results.Item5;
-                            /*Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_1 {0}{1}", data.nodeID_1, "\n");*/
                             break;
                         case 1:
                             data.task_2_textUpper = results.Item1;
@@ -1984,7 +1983,6 @@ public class AIManager : MonoBehaviour
                             data.task_2_tooltip = results.Item3;
                             data.nodeID_2 = results.Item4;
                             data.connID_2 = results.Item5;
-                            /*Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_2 {0}{1}", data.nodeID_2, "\n");*/
                             break;
                         case 2:
                             data.task_3_textUpper = results.Item1;
@@ -1993,7 +1991,6 @@ public class AIManager : MonoBehaviour
                             data.task_3_tooltip = results.Item3;
                             data.nodeID_3 = results.Item4;
                             data.connID_3 = results.Item5;
-                            /*Debug.LogFormat("[Tst] AIManager.cs -> UpdateTaskDisplayData: data.nodeID_3 {0}{1}", data.nodeID_3, "\n");*/
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid index {0} for listOfTasksFinal", i);

@@ -61,7 +61,7 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipGenericScript.CloseTooltip("WidgetTurnMouseUI.cs -> OnPointerExit");
         }
     }
 

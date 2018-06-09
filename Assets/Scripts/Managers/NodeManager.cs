@@ -39,7 +39,6 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
     private bool isFlashOn = false;                                 //used for flashing Node coroutine
-    private int flashTimer = 0;                                     //used for flashing Node coroutine
     private Coroutine myCoroutine;
 
     //fast access
@@ -1987,7 +1986,6 @@ public class NodeManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            flashTimer = 0;
             isFlashOn = false;
             myCoroutine = StartCoroutine("FlashingNode", node);
         }
@@ -2012,25 +2010,23 @@ public class NodeManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator FlashingNode(Node node)
     {
-        flashTimer++;
-        Debug.LogFormat("[Tst] NodeManager.cs -> FlashingNode: flashTimer {0}, isFlashOn {1}{2}", flashTimer, isFlashOn, "\n");
-        if (flashTimer % 10 == 1)
+        for (; ; )
         {
-            flashTimer = 0;
             if (isFlashOn == false)
             {
                 node.SetMaterial(materialActive);
                 NodeRedraw = true;
                 isFlashOn = true;
+                yield return new WaitForSecondsRealtime(0.5f);
             }
             else
             {
                 node.SetMaterial(materialNormal);
                 NodeRedraw = true;
                 isFlashOn = false;
+                yield return new WaitForSecondsRealtime(0.5f);
             }
         }
-        yield return null;
     }
 
 

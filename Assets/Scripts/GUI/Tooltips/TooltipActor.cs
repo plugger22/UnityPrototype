@@ -250,7 +250,7 @@ public class TooltipActor : MonoBehaviour
 
         //set new position
         tooltipActorObject.transform.position = worldPos;
-        Debug.Log("UI: Open -> TooltipActor" + "\n");
+        Debug.LogFormat("[UI] TooltipActor.cs -> SetTooltip{0}", "\n");
     }
 
 
@@ -285,7 +285,7 @@ public class TooltipActor : MonoBehaviour
     /// </summary>
     public void CloseTooltip()
     {
-        Debug.Log("UI: Close -> TooltipActor" + "\n");
+        Debug.LogFormat("[UI] TooltipActor.cs -> CloseTooltip{0}", "\n");
         tooltipActorObject.SetActive(false);
     }
 

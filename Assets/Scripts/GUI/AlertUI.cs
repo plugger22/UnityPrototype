@@ -45,13 +45,13 @@ public class AlertUI : MonoBehaviour
                     alertText.text = text;
                     //show on screen
                     alertObject.SetActive(true);
-                    Debug.Log(string.Format("UI: Open -> AlertUI{0}", "\n"));
+                    Debug.LogFormat("[UI] AlertUI.cs -> SetAlertUI{0}", "\n");
                 }
-                else { Debug.LogError(string.Format("Invalid text parameter (Null or empty){0}", "\n")); }
+                else { Debug.LogErrorFormat("Invalid text parameter (Null or empty){0}", "\n"); }
             }
-            else { Debug.LogError(string.Format("Invalid alertText (Null){0}", "\n")); }
+            else { Debug.LogErrorFormat("Invalid alertText (Null){0}", "\n"); }
         }
-        else { Debug.LogError(string.Format("Invalid GameObject alertObject (Null){0}", "\n")); }
+        else { Debug.LogErrorFormat("Invalid GameObject alertObject (Null){0}", "\n"); }
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class AlertUI : MonoBehaviour
     /// </summary>
     public void CloseAlertUI(bool resetFlag = false)
     {
-        Debug.Log("UI: Close -> AlertUI" + "\n");
+        Debug.LogFormat("[UI] AlertUI.cs -> CloseAlertUI{0}", "\n");
         alertObject.SetActive(false);
         GameManager.instance.nodeScript.NodeShowFlag = 0;
         if (resetFlag == true)

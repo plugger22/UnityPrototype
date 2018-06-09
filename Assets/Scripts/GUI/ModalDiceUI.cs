@@ -299,7 +299,7 @@ public class ModalDiceUI : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.SetModalState(ModalState.DiceRoller);
         GameManager.instance.guiScript.SetIsBlocked(true);
-        Debug.Log("UI: Open -> ModalDiceUI" + "\n");
+        Debug.LogFormat("[UI] ModalDiceUI.cs -> SetModalDiceUI{0}", "\n");
     }
 
     /// <summary>
@@ -311,7 +311,7 @@ public class ModalDiceUI : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state
         GameManager.instance.inputScript.ResetStates();
-        Debug.Log("UI: Close -> ModalDiceUI" + "\n");
+        Debug.LogFormat("[UI] ModalDiceUI.cs -> CloseDiceUI{0}", "\n");
     }
 
 

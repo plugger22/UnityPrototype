@@ -66,7 +66,7 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipGenericScript.CloseTooltip("WidgetFactionMouseUI.cs -> OnPointerExit");
         }
     }
 

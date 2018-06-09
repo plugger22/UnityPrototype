@@ -87,7 +87,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 GameManager.instance.tooltipActorScript.CloseTooltip();
                 break;
             case ActionMenuType.Gear:
-                GameManager.instance.tooltipGenericScript.CloseTooltip();
+                GameManager.instance.tooltipGenericScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
                 break;
         }
     }

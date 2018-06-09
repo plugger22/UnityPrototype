@@ -175,7 +175,7 @@ public class ModalOutcome : MonoBehaviour
             //pass through data for when the outcome window is closed
             modalLevel = details.modalLevel;
             modalState = details.modalState;
-            Debug.Log("UI: Open -> ModalOutcome window" + "\n");
+            Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcome{0}", "\n");
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
     }
@@ -210,7 +210,7 @@ public class ModalOutcome : MonoBehaviour
     /// </summary>
     public void CloseModalOutcome()
     {
-        Debug.Log("UI: Close -> ModalOutcome window" + "\n");
+        Debug.LogFormat("[UI] ModalOutcome.cs -> CloseModalOutcome{0}", "\n");
         //modalOutcomeObject.SetActive(false);
         modalOutcomeWindow.SetActive(false);
         //set modal false

@@ -443,7 +443,7 @@ public class TooltipNode : MonoBehaviour
         { screenPos.x += width / 2 - screenPos.x; }
         //set new position
         tooltipNodeObject.transform.position = screenPos;
-        Debug.Log(string.Format("UI: Open -> TooltipNode \"{0}\"{1}", data.nodeName, "\n"));
+        Debug.LogFormat("[UI] TooltipNode.cs -> SetTooltip{0}",  "\n");
     }
 
     /// <summary>
@@ -500,7 +500,7 @@ public class TooltipNode : MonoBehaviour
     /// </summary>
     public void CloseTooltip()
     {
-        Debug.Log("UI: Close -> TooltipNode" + "\n");
+        Debug.LogFormat("[UI] TooltipNode.cs -> CloseTooltip{0}", "\n");
         tooltipNodeObject.SetActive(false);
     }
 

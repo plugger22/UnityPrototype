@@ -215,7 +215,7 @@ public class ModalActionMenu : MonoBehaviour
             GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
             modalLevel = details.modalLevel;
             modalState = details.modalState;
-            Debug.Log("UI: Open -> ModalActionMenu" + "\n");
+            Debug.LogFormat("[UI] ModalActionMenu.cs -> SetActionMenu{0}", "\n");
         }
         else
         {
@@ -243,7 +243,7 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.instance.nodeScript.ToggleNodeHighlight();
         //set game state
         GameManager.instance.inputScript.ResetStates(modalState);
-        Debug.Log("UI: Close -> ModalActionMenu" + "\n");
+        Debug.LogFormat("[UI] ModalActionMenu.cs -> CloseActionMenu{0}", "\n");
     }
 }
 

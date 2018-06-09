@@ -145,7 +145,7 @@ public class AISideTabUI : MonoBehaviour
             myCoroutine = null;
         }
         //close tooltip if open
-        GameManager.instance.tooltipGenericScript.CloseTooltip();
+        GameManager.instance.tooltipGenericScript.CloseTooltip("AISideTabUI.cs -> CloseSideTab");
     }
 
 

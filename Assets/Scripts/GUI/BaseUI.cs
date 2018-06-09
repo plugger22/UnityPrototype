@@ -10,11 +10,15 @@ using UnityEngine.EventSystems;
 public class BaseUI : MonoBehaviour, IPointerClickHandler
 {
 
-    public void OnPointerClick (PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-           Debug.Log(string.Format("BaseUI: Right Mouse Button clicked -> {0} object{1}", eventData.pointerPress.name, "\n"));
+            Debug.LogFormat("[UI] BaseUI.cs -> OnPointerClick: Left Mouse Button clicked -> {0} object{1}", eventData.pointerPress.name, "\n");
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Debug.LogFormat("[UI] BaseUI.cs -> OnPointerClick: Right Mouse Button clicked -> {0} object{1}", eventData.pointerPress.name, "\n");
         }
     }
 }

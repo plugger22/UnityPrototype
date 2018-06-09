@@ -231,7 +231,7 @@ public class CityInfoUI : MonoBehaviour
         if (city != null)
         {
             //exit any generic or node tooltips
-            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipGenericScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
             GameManager.instance.tooltipNodeScript.CloseTooltip();
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
@@ -283,7 +283,7 @@ public class CityInfoUI : MonoBehaviour
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
             GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay, ModalInfo.CityInfo);
-            Debug.Log("UI: Open -> Open City Info Display" + "\n");
+            Debug.LogFormat("[UI] CityInfoUI.cs -> SetCityInfo{0}", "\n");
         }
         else { Debug.LogWarning("Invalid city (Null) -> tooltip cancelled"); }
     }
@@ -293,12 +293,12 @@ public class CityInfoUI : MonoBehaviour
     /// </summary>
     private void CloseCityInfo()
     {
-        GameManager.instance.tooltipGenericScript.CloseTooltip();
+        GameManager.instance.tooltipGenericScript.CloseTooltip("CityInfoUI.cs -> CloseCityInfo");
         cityInfoObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state
         GameManager.instance.inputScript.ResetStates();
-        Debug.Log("UI: Close -> CityInfoDisplay" + "\n");
+        Debug.LogFormat("[UI] CityInfoUI.cs -> CloseCityInfo{0}", "\n");
     }
 
     /// <summary>

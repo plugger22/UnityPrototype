@@ -59,7 +59,7 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipGenericScript.CloseTooltip("WidgetStarsMouseUI.cs -> OnPointerExit");
         }
     }
 

@@ -244,7 +244,7 @@ public class ModalInventoryUI : MonoBehaviour
         {
             //all good, inventory window displayed
             GameManager.instance.inputScript.SetModalState(ModalState.Inventory);
-            Debug.Log("UI: Open -> ModalInventoryUI" + "\n");
+            Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
         }
     }
 
@@ -257,10 +257,10 @@ public class ModalInventoryUI : MonoBehaviour
         modalInventoryObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
-        GameManager.instance.tooltipGenericScript.CloseTooltip();
+        GameManager.instance.tooltipGenericScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
         //set game state
         GameManager.instance.inputScript.ResetStates();
-        Debug.Log(string.Format("UI: Close -> ModalInventoryUI{0}", "\n"));
+        Debug.LogFormat("[UI] ModalInventoryUI.cs -> CloseInventoryUI{0}", "\n");
     }
 
 
@@ -271,7 +271,7 @@ public class ModalInventoryUI : MonoBehaviour
     {
         if (handler != null)
         {
-            Debug.Log("ModalInventoryUI: RefreshInventoryUI");
+            Debug.LogFormat("[UI] ModalInventoryUI.cs -> RefreshInventoryUI{0}", "\n");
             //call specific method to refresh data
             InventoryInputData details = handler();
             if (details != null)

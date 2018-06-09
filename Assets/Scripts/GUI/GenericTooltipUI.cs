@@ -55,7 +55,6 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         onMouseFlag = true;
         if (string.IsNullOrEmpty(tooltipMain) == false)
         { myCoroutine = StartCoroutine("ShowGenericTooltip"); }
-        Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEnter: {0} x_offset {1}{2}", testTag, x_offset, "\n");
         //node Highlight?
         if (nodeID > -1 && isHighlightOn == false)
         {
@@ -73,8 +72,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         onMouseFlag = false;
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
-        GameManager.instance.tooltipGenericScript.CloseTooltip();
-        Debug.LogFormat("[Tst] GenericTooltipUI.cs -> OnPointerEXIT: {0} x_offset {1}{2}", testTag, x_offset, "\n");
+        GameManager.instance.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerExit");
         //cancel node highlight
         if (nodeID > -1 && isHighlightOn == true)
         {
@@ -94,7 +92,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip();
+            GameManager.instance.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerClick");
         }
     }
 
