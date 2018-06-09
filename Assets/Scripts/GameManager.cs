@@ -206,6 +206,7 @@ public class GameManager : MonoBehaviour
         playerScript.Initialise(); 
         debugGraphicsScript.Initialise();
         traitScript.Initialise();
+        connScript.Initialise();
         cityInfoScript.Initialise();
         aiDisplayScript.Initialise();
         aiSideTabScript.Initialise();
