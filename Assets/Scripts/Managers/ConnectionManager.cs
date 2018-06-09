@@ -9,8 +9,52 @@ using gameAPI;
 /// </summary>
 public class ConnectionManager : MonoBehaviour
 {
-    [HideInInspector] public bool resetNeeded;                      //used for temp changes in connection states, if true run RestoreConnections
+   
+    [Tooltip("In order -> None, HIGH, MEDIUM, LOW, Active")]
     public Material[] arrayOfConnectionTypes;
+
+    [HideInInspector] public bool resetConnections;                      //used for temp changes in connection states, if true run RestoreConnections
+
+    private bool isFlashOn = false;                                 //used for flashing Connection coroutine
+    private ConnectionType secLvl;                                  //used to save existing security level of connection prior to flashing
+    private Coroutine myCoroutine;
+
+    //fast access
+    private float flashConnectionTime;
+
+    public void Initialise()
+    {
+        //flash
+        flashConnectionTime = GameManager.instance.guiScript.flashNodeTime;
+        Debug.Assert(flashConnectionTime > 0, "Invalid flashConnectionTime (zero)");
+        //register listener
+        EventManager.instance.AddListener(EventType.FlashConnectionStart, OnEvent, "ConnectionManager");
+        EventManager.instance.AddListener(EventType.FlashConnectionStop, OnEvent, "ConnectionManager");
+    }
+
+    /// <summary>
+    /// event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //detect event type
+        switch (eventType)
+        {
+            case EventType.FlashConnectionStart:
+                StartFlashingConnection((int)Param);
+                break;
+            case EventType.FlashConnectionStop:
+                StopFlashingConnection((int)Param);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
 
     /// <summary>
     /// returns a connection material type based on security level
@@ -61,7 +105,7 @@ public class ConnectionManager : MonoBehaviour
         Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
         if (dictOfConnections != null)
         {
-            resetNeeded = true;
+            resetConnections = true;
             //loop all connections regardless
             foreach (var conn in dictOfConnections)
             {
@@ -279,6 +323,69 @@ public class ConnectionManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid node (Null)"); }
         return isSuccessful;
+    }
+
+    /// <summary>
+    /// event driven -> start coroutine
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void StartFlashingConnection(int connID)
+    {
+        Connection connection = GameManager.instance.dataScript.GetConnection(connID);
+        if (connection != null)
+        {
+            isFlashOn = false;
+            secLvl = connection.SecurityLevel;
+
+            myCoroutine = StartCoroutine("FlashingConnection", connection);
+        }
+        else { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
+    }
+
+    /// <summary>
+    /// event driven -> stop coroutine
+    /// </summary>
+    private void StopFlashingConnection(int connID)
+    {
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
+        //resture original security level material
+        Connection connection = GameManager.instance.dataScript.GetConnection(connID);
+        if (connection != null)
+        {
+            //connection.ChangeSecurityLevel(secLvl);
+            connection.SetMaterial(secLvl);
+        }
+        else { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
+    }
+
+
+    /// <summary>
+    /// coroutine to flash a connection
+    /// NOTE: Connection checked for null by calling procedure
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <returns></returns>
+    IEnumerator FlashingConnection(Connection connection)
+    {
+        //forever loop
+        for (; ; )
+        {
+            if (isFlashOn == false)
+            {
+                connection.SetMaterial(ConnectionType.Active);
+                //NodeRedraw = true;
+                isFlashOn = true;
+                yield return new WaitForSecondsRealtime(flashConnectionTime);
+            }
+            else
+            {
+                connection.SetMaterial(secLvl);
+                //NodeRedraw = true;
+                isFlashOn = false;
+                yield return new WaitForSecondsRealtime(flashConnectionTime);
+            }
+        }
     }
 
     //new methods above here

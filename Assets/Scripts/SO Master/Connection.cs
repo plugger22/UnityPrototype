@@ -128,7 +128,7 @@ public class Connection : MonoBehaviour
         if (secLvl != SecurityLevel)
         {
             SecurityLevel = secLvl;
-            SetConnectionMaterial(secLvl);
+            SetMaterial(secLvl);
         }
     }
 
@@ -217,7 +217,7 @@ public class Connection : MonoBehaviour
             }
             //change material if different
             if (originalLevel != SecurityLevel)
-            { SetConnectionMaterial(SecurityLevel); }
+            { SetMaterial(SecurityLevel); }
         }
     }
 
@@ -233,14 +233,14 @@ public class Connection : MonoBehaviour
     public void RestoreSecurityLevel()
     {
         SecurityLevel = securityLevelSave;
-        SetConnectionMaterial(SecurityLevel);
+        SetMaterial(SecurityLevel);
     }
 
     /// <summary>
     /// sub method to change connections material (colour)
     /// </summary>
     /// <param name="secLvl"></param>
-    public void SetConnectionMaterial(ConnectionType secLvl)
+    public void SetMaterial(ConnectionType secLvl)
     {
         Renderer renderer = GetComponent<Renderer>();
         renderer.material = GameManager.instance.connScript.GetConnectionMaterial(secLvl);
@@ -350,7 +350,7 @@ public class Connection : MonoBehaviour
             }
             //reset colour to take into account the new security level
             if (isRemoved == true)
-            { SetConnectionMaterial(SecurityLevel); }
+            { SetMaterial(SecurityLevel); }
         }
     }
 
@@ -363,7 +363,7 @@ public class Connection : MonoBehaviour
         //check modal block isn't in place
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
-            //Right click node -> Show either move options (node highlights) or Move Menu
+            //Right click connection
             if (Input.GetMouseButtonDown(1) == true)
             {
             }
@@ -374,7 +374,6 @@ public class Connection : MonoBehaviour
                 if (GameManager.instance.optionScript.connectorTooltips == true)
                 {
                     //exit any node tooltip that might be open
-                    /*StopCoroutine("ShowTooltip");*/
                     GameManager.instance.tooltipNodeScript.CloseTooltip();
                     //start tooltip routine
                     myCoroutine = StartCoroutine("ShowTooltip");

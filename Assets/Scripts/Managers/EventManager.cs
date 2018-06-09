@@ -21,10 +21,10 @@ public enum EventType
     CreateMoveMenu,
     CreateGearNodeMenu,
     //highlighted node or connection
-    HighlightNodeShow,
-    HighlightConnectionShow,
-    HighlightNodeReset,
-    HighlightConnectionReset,
+    FlashNodeStart,
+    FlashConnectionStart,
+    FlashNodeStop,
+    FlashConnectionStop,
     //CloseTeamPicker
     ShowTargetNodes,
     NodeDisplay,

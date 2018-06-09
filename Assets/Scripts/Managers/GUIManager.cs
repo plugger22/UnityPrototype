@@ -17,10 +17,17 @@ public class GUIManager : MonoBehaviour
     [Range(0f, 1f)] public float alphaInactive = 0.45f;
     [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]
     [Range(1,2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'
+
+    [Header("Flashing")]
     [Tooltip("How long it takes, in seconds, for the flashing red security alert (WidgetTopUI) to go from zero to full opacity")]
     [Range(0.5f, 2.0f)] public float flashRedTime = 1.0f;
     [Tooltip("How long it takes, in seconds, for the flashing white alert to go from zero to full opacity")]
     [Range(0.5f, 2.0f)] public float flashAlertTime = 1.0f;
+    [Tooltip("Flash interval (in real seconds) for nodes")]
+    [Range(0.1f, 1.0f)] public float flashNodeTime = 0.4f;
+    [Tooltip("Flash interval (in real seconds) for connections")]
+    [Range(0.1f, 1.0f)] public float flashConnectiontTime = 0.4f; 
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantAuthorityActor;

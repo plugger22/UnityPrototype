@@ -12,14 +12,17 @@ using System.Text;
 /// </summary>
 public class NodeManager : MonoBehaviour
 {
+    [Tooltip("Node Colour Types")]
+    public Material[] arrayOfNodeMaterials;
+
     [Tooltip("% chance times actor.Ability of a primary node being active for an Actor, halved for secondary node")]
     [Range(10,40)] public int nodePrimaryChance = 20;                                
     [Tooltip("Minimum number of active nodes on a map for any actor type")]
     [Range(0,4)] public int nodeActiveMinimum = 3;
-    [Tooltip("Node Colour Types")]
-    public Material[] arrayOfNodeMaterials;
     [Tooltip("The base factor used for calculating ('factor - (gear - seclvl [High is 3, Low is 1])') the delay in notifying the Authority player that move activity has occurred ")]
     [Range(0,10)]public int moveInvisibilityDelay = 4;
+
+    [Header("Spiders and Tracers")]
     [Tooltip("The standard time delay, in turns, before Authority notification for any node activity that results in a loss of invisibility with no spider present")]
     [Range(0, 10)] public int nodeNoSpiderDelay = 2;
     [Tooltip("The standard time delay before Authority notification for any node activity that results in a loss of invisibility with a spider present. Make sure that this is less than the NoSpider delay")]
@@ -27,6 +30,7 @@ public class NodeManager : MonoBehaviour
     [Tooltip("The amount of turns that a Spider or Tracer stay onMap for, once placed, before being automatically removed")]
     [Range(0, 10)] public int observerTimer = 3;
 
+    [Header("Datapoints")]
     [Tooltip("Maximum value of a node datapoint")]
     [Range(2,4)] public int maxNodeValue = 3;
     [Tooltip("Minimum value of a node datapoint")]
@@ -60,7 +64,10 @@ public class NodeManager : MonoBehaviour
     private Material materialHighlight;
     private Material materialActive;
     private Material materialPlayer;
+    //flash
+    private float flashNodeTime;
 
+    //colours
     string colourDefault;
     //string colourNormal;
     string colourAlert;
@@ -186,6 +193,9 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
         Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
+        //flash
+        flashNodeTime = GameManager.instance.guiScript.flashNodeTime;
+        Debug.Assert(flashNodeTime > 0, "Invalid flashNodeTime (zero)");
         //register listener
         EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent, "NodeManager");
@@ -195,8 +205,8 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.HighlightNodeShow, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.HighlightNodeReset, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
     }
 
 
@@ -251,12 +261,10 @@ public class NodeManager : MonoBehaviour
                         break;
                 }
                 break;
-            case EventType.HighlightNodeShow:
-                //HighlightNodeShow((int)Param);
+            case EventType.FlashNodeStart:
                 StartFlashingNode((int)Param);
                 break;
-            case EventType.HighlightNodeReset:
-                //HighlightNodeReset((int)Param);
+            case EventType.FlashNodeStop:
                 StopFlashingNode();
                 break;
             case EventType.ActivityDisplay:
@@ -364,11 +372,11 @@ public class NodeManager : MonoBehaviour
         string displayText = null;
         //set all nodes to default colour first
         ResetNodes();
-        if (GameManager.instance.connScript.resetNeeded == true)
+        if (GameManager.instance.connScript.resetConnections == true)
         {
             //return to previously saved state prior to any changes
             GameManager.instance.connScript.RestoreConnections();
-            GameManager.instance.connScript.resetNeeded = false;
+            GameManager.instance.connScript.resetConnections = false;
         }
         //set nodes depending on critera
         switch (nodeUI)
@@ -802,34 +810,6 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// highlights a specific node
-    /// </summary>
-    /// <param name="nodeID"></param>
-    public void HighlightNodeShow(int nodeID)
-    {
-
-        Node node = GameManager.instance.dataScript.GetNode(nodeID);
-        if (node != null)
-        {        
-            //set all nodes to default colour first
-            ResetNodes();
-            //Material nodeMaterial = materialActive;
-            node.SetMaterial(materialActive);
-            NodeRedraw = true;
-        }
-        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
-    }
-
-    /// <summary>
-    /// selectively resets the highlighted node back to zero (the rest should be normal)
-    /// </summary>
-    /// <param name="nodeID"></param>
-    public void HighlightNodeReset(int nodeID)
-    {
-        ResetNodes();
-    }
-
-    /// <summary>
     /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
     /// </summary>
     public void RedrawNodes()
@@ -1049,11 +1029,11 @@ public class NodeManager : MonoBehaviour
         if (NodeShowFlag > 0)
         {
             GameManager.instance.alertScript.CloseAlertUI();
-            if (GameManager.instance.connScript.resetNeeded == true)
+            if (GameManager.instance.connScript.resetConnections == true)
             {
                 //return Connections to previously saved state prior to any changes
                 GameManager.instance.connScript.RestoreConnections();
-                GameManager.instance.connScript.resetNeeded = false;
+                GameManager.instance.connScript.resetConnections = false;
             }
             NodeShowFlag = 0;
             //reset state
@@ -2010,21 +1990,22 @@ public class NodeManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator FlashingNode(Node node)
     {
-        for (; ; )
+        //forever loop
+        for (; ;)
         {
             if (isFlashOn == false)
             {
                 node.SetMaterial(materialActive);
                 NodeRedraw = true;
                 isFlashOn = true;
-                yield return new WaitForSecondsRealtime(0.5f);
+                yield return new WaitForSecondsRealtime(flashNodeTime);
             }
             else
             {
                 node.SetMaterial(materialNormal);
                 NodeRedraw = true;
                 isFlashOn = false;
-                yield return new WaitForSecondsRealtime(0.5f);
+                yield return new WaitForSecondsRealtime(flashNodeTime);
             }
         }
     }

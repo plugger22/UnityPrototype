@@ -33,7 +33,7 @@
     //
     // - - - Connections - - - 
     //
-    public enum ConnectionType { None, HIGH, MEDIUM, LOW, Count }
+    public enum ConnectionType { None, HIGH, MEDIUM, LOW, Active, Count }   //NOTE: keep first four entries as is (none -> Low)
 
     //
     // - - - Nodes - - -

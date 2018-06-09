@@ -1007,7 +1007,7 @@ public class Node : MonoBehaviour
                     if (isOngoingAndOK == true)
                     {
                         //update material to reflect any change
-                        connection.SetConnectionMaterial(connection.SecurityLevel);
+                        connection.SetMaterial(connection.SecurityLevel);
                         //set flag to true (only has to be true once for the node to get an ongoing effect)
                         isAtLeastOneOngoing = true;
                     }
