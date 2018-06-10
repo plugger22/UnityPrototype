@@ -202,10 +202,10 @@ public class ConnectionManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Permanently raises the security level (+1) of a randomly (some logic here) chosen connection due to an Authority decision. Returns true if successful
+    /*/// <summary>
+    /// Permanently raises the security level (+1) of a specific (some logic here) chosen connection due to an Authority decision. Returns true if successful
     /// </summary>
-    public bool ProcessConnectionSecurityDecision()
+    public bool ProcessConnectionSecurityDecisionKKK()
     {
         bool isDone = false;
         int index;
@@ -213,7 +213,7 @@ public class ConnectionManager : MonoBehaviour
         List<Node> tempList = new List<Node>();
         if (listOfDecisionNodes != null)
         {
-            /*Debug.LogFormat("ListOfDecisionNodes -> Start -> {0}  Turn {1}", listOfDecisionNodes.Count, GameManager.instance.turnScript.Turn);*/
+            //Debug.LogFormat("ListOfDecisionNodes -> Start -> {0}  Turn {1}", listOfDecisionNodes.Count, GameManager.instance.turnScript.Turn);
             Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
             if (factionAuthority != null)
             {
@@ -233,7 +233,7 @@ public class ConnectionManager : MonoBehaviour
                     //found any suitable nodes and do they have suitable connections?
                     if (tempList.Count > 0)
                     {
-                        /*Debug.LogFormat("ListOfDecisionNodes -> TempList.Count {0}", tempList.Count);*/
+                        //Debug.LogFormat("ListOfDecisionNodes -> TempList.Count {0}", tempList.Count);
                         do
                         {
                             index = Random.Range(0, tempList.Count);
@@ -246,11 +246,11 @@ public class ConnectionManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
-                /*Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);*/
+                //Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);
                 //keep looking if not yet successful. List should have all preferred nodes stripped out.
                 if (isDone == false)
                 {
-                    /*Debug.Log("ListOfDecisionNodes -> Look for a Random Node");*/
+                    //Debug.Log("ListOfDecisionNodes -> Look for a Random Node");
                     //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
                     if (listOfDecisionNodes.Count > 0)
                     {
@@ -323,13 +323,35 @@ public class ConnectionManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid node (Null)"); }
         return isSuccessful;
-    }
+    }*/
 
     /// <summary>
-    /// event driven -> start coroutine
+    /// Permanently raises the security level (+1) of a specific (some logic here) chosen connection due to an Authority decision. Returns true if successful
     /// </summary>
-    /// <param name="nodeID"></param>
-    private void StartFlashingConnection(int connID)
+    public bool ProcessConnectionSecurityDecision(int connID)
+    {
+        bool isSuccess = false;
+        Connection connection = GameManager.instance.dataScript.GetConnection(connID);
+        if (connection != null)
+        {
+            connection.ChangeSecurityLevel(ConnectionType.LOW);
+            isSuccess = true;
+            //message
+            string descriptor = string.Format("ConnID {0}, Security Level now LOW (btwn nodeID's {1} & {2})",
+                connection.connID, connection.node1.nodeID, connection.node2.nodeID);
+            Message message = GameManager.instance.messageScript.DecisionConnection(descriptor, connection.connID, (int)ConnectionType.LOW);
+            GameManager.instance.dataScript.AddMessage(message);
+        }
+        else
+        { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
+        return isSuccess;
+    }
+
+        /// <summary>
+        /// event driven -> start coroutine
+        /// </summary>
+        /// <param name="nodeID"></param>
+        private void StartFlashingConnection(int connID)
     {
         Connection connection = GameManager.instance.dataScript.GetConnection(connID);
         if (connection != null)

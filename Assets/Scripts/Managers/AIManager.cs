@@ -27,8 +27,9 @@ public class AINodeData
 public class AITask
 {
     public int taskID;                     //automatically assigned
-    public int data0;                      //could be node, connection ID or aiDecID
+    public int data0;                      //could be node, connection ID or teamID
     public int data1;                      //teamArcID, decision cost in resources
+    public int data2;                      //aiDeciID if a decision, otherwise ignored
     public string name0;                   //node arc name, decision name
     public string name1;                   //could be team arc name, eg. 'CIVIL'
     public Priority priority;
@@ -60,15 +61,18 @@ public class AIDisplayData
     public string task_1_textUpper;
     public string task_1_textLower;
     public string task_1_chance;
-    public string task_1_tooltip;
+    public string task_1_tooltipMain;
+    public string task_1_tooltipDetails;
     public string task_2_textUpper;
     public string task_2_textLower;
     public string task_2_chance;
-    public string task_2_tooltip;
+    public string task_2_tooltipMain;
+    public string task_2_tooltipDetails;
     public string task_3_textUpper;
     public string task_3_textLower;
     public string task_3_chance;
-    public string task_3_tooltip;
+    public string task_3_tooltipMain;
+    public string task_3_tooltipDetails;
     public string factionDetails;
     public int nodeID_1;                   //used for highlighting node or connection referred to by task
     public int connID_1;
@@ -79,9 +83,9 @@ public class AIDisplayData
 
     public AIDisplayData()
         {
-        task_1_textUpper = ""; task_1_textLower = ""; task_1_chance = ""; task_1_tooltip = "";
-        task_2_textUpper = ""; task_2_textLower = ""; task_2_chance = ""; task_2_tooltip = "";
-        task_3_textUpper = ""; task_3_textLower = ""; task_3_chance = ""; task_3_tooltip = "";
+        task_1_textUpper = ""; task_1_textLower = ""; task_1_chance = ""; task_1_tooltipMain = ""; task_1_tooltipDetails = "";
+        task_2_textUpper = ""; task_2_textLower = ""; task_2_chance = ""; task_2_tooltipMain = ""; task_2_tooltipDetails = "";
+        task_3_textUpper = ""; task_3_textLower = ""; task_3_chance = ""; task_3_tooltipMain = ""; task_3_tooltipDetails = "";
         nodeID_1 = -1; nodeID_2 = -1; nodeID_3 = -1;
         connID_1 = -1; connID_2 = -1; connID_3 = -1;
         }
@@ -443,7 +447,7 @@ public class AIManager : MonoBehaviour
         ProcessErasureTask();
         ProcessDecisionTask();
         //choose tasks for the following turn
-        ProcessTasksFinal(authorityMaxTasksPerTurn);
+        ProcessFinalTasks(authorityMaxTasksPerTurn);
         //send data to UI's
         UpdateTaskDisplayData();
         UpdateSideTabData();
@@ -1651,8 +1655,8 @@ public class AIManager : MonoBehaviour
             {
                 AITask taskAPB = new AITask()
                 {
-                    data0 = decisionAPB.aiDecID,
                     data1 = decisionAPB.cost,
+                    data2 = decisionAPB.aiDecID,
                     name0 = decisionAPB.name,
                     type = AIType.Decision,
                     priority = Priority.Critical
@@ -1664,8 +1668,8 @@ public class AIManager : MonoBehaviour
             {
                 AITask taskSecAlert = new AITask()
                 {
-                    data0 = decisionSecAlert.aiDecID,
                     data1 = decisionSecAlert.cost,
+                    data2 = decisionSecAlert.aiDecID,
                     name0 = decisionSecAlert.name,
                     type = AIType.Decision,
                     priority = Priority.Critical
@@ -1677,8 +1681,8 @@ public class AIManager : MonoBehaviour
             {
                 AITask taskCrackdown = new AITask()
                 {
-                    data0 = decisionCrackdown.aiDecID,
                     data1 = decisionCrackdown.cost,
+                    data2 = decisionCrackdown.aiDecID,
                     name0 = decisionCrackdown.name,
                     type = AIType.Decision,
                     priority = Priority.Critical
@@ -1689,24 +1693,30 @@ public class AIManager : MonoBehaviour
         //Connections -> Medium priority
         if (connSecRatio < connectionRatioThreshold )
         {
-            AITask taskConnSec = new AITask()
+            int connID = ProcessConnectionSelection();
+            if (connID > -1)
             {
-                data0 = decisionConnSec.aiDecID,
-                data1 = decisionConnSec.cost,
-                name0 = decisionConnSec.name,
-                type = AIType.Decision,
-                priority = Priority.Medium
-            };
-            for (int i = 0; i < priorityMediumWeight; i++)
-            { listOfDecisionTasksNonCritical.Add(taskConnSec); }
+                AITask taskConnSec = new AITask()
+                {
+                    data0 = connID,
+                    data1 = decisionConnSec.cost,
+                    data2 = decisionConnSec.aiDecID,
+                    name0 = decisionConnSec.name,
+                    type = AIType.Decision,
+                    priority = Priority.Medium
+                };
+                for (int i = 0; i < priorityMediumWeight; i++)
+                { listOfDecisionTasksNonCritical.Add(taskConnSec); }
+            }
+            else { Debug.LogWarning("Invalid connID (-1). Connection Decision Deleted"); }
         }
         //Team request -> medium priority
         if (teamRatio < teamRatioThreshold)
         {
             AITask taskTeam = new AITask()
             {
-                data0 = decisionRequestTeam.aiDecID,
                 data1 = decisionRequestTeam.cost,
+                data2 = decisionRequestTeam.aiDecID,
                 name0 = decisionRequestTeam.name,
                 type = AIType.Decision,
                 priority = Priority.Medium
@@ -1720,8 +1730,8 @@ public class AIManager : MonoBehaviour
         {
             AITask taskResources = new AITask()
             {
-                data0 = decisionResources.aiDecID,
                 data1 = decisionResources.cost,
+                data2 = decisionResources.aiDecID,
                 name0 = decisionResources.name,
                 type = AIType.Decision,
                 priority = Priority.Critical
@@ -1749,9 +1759,126 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Chooses a connection for a 'raise Connection Security Level' decision. Returns connID of connection, or '-1' if no suitable connection found
+    /// </summary>
+    public int ProcessConnectionSelection()
+    {
+        bool isDone = false;
+        int connID = -1;
+        int index;
+        List<Node> listOfDecisionNodes = GameManager.instance.dataScript.GetListOfDecisionNodes();
+        List<Node> tempList = new List<Node>();
+        if (listOfDecisionNodes != null)
+        {
+            /*Debug.LogFormat("ListOfDecisionNodes -> Start -> {0}  Turn {1}", listOfDecisionNodes.Count, GameManager.instance.turnScript.Turn);*/
+            Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
+            if (factionAuthority != null)
+            {
+                NodeArc preferredNodeArc = factionAuthority.preferredArc;
+                if (preferredNodeArc != null)
+                {
+                    //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)
+                    for (int i = listOfDecisionNodes.Count - 1; i >= 0; i--)
+                    {
+                        if (listOfDecisionNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
+                        {
+                            //add to tempList and remove from decision List
+                            tempList.Add(listOfDecisionNodes[i]);
+                            listOfDecisionNodes.RemoveAt(i);
+                        }
+                    }
+                    //found any suitable nodes and do they have suitable connections?
+                    if (tempList.Count > 0)
+                    {
+                        /*Debug.LogFormat("ListOfDecisionNodes -> TempList.Count {0}", tempList.Count);*/
+                        do
+                        {
+                            index = Random.Range(0, tempList.Count);
+                            connID = ProcessConnectionSelectionNode(tempList[index]);
+                            if (connID == -1)
+                            { tempList.RemoveAt(index); }
+                            else { break; }
+                        }
+                        while (tempList.Count > 0);
+                    }
+                }
+                else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
+                /*Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);*/
+                //keep looking if not yet successful. List should have all preferred nodes stripped out.
+                if (connID == -1)
+                {
+                    /*Debug.Log("ListOfDecisionNodes -> Look for a Random Node");*/
+                    //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
+                    if (listOfDecisionNodes.Count > 0)
+                    {
+                        do
+                        {
+                            index = Random.Range(0, listOfDecisionNodes.Count);
+                            Node nodeTemp = listOfDecisionNodes[index];
+                            connID = ProcessConnectionSelectionNode(nodeTemp);
+                            if (connID == -1)
+                            { listOfDecisionNodes.RemoveAt(index); } //not needed with refactored code but left in anyway
+                            else { break; }
+                        }
+                        while (listOfDecisionNodes.Count > 0);
+                    }
+                }
+            }
+            else { Debug.LogWarning("Invalid factionAuthority (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
+        if (isDone != true)
+        { Debug.LogWarningFormat("ConnectionManager.cs -> ProcessConnectionSecurityDecision: FAILED TO FIND suitable connection for nodeID {0}", "\n"); }
+        else
+        {
+            //update listOfDecisionNodes
+            GameManager.instance.aiScript.SetDecisionNodes();
+        }
+        return connID;
+    }
+
+    /// <summary>
+    /// sub-Method for ProcessConnectionSelection that takes a node, checks for a Securitylevel.None connection, returns connID or '-1' if not round
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private int ProcessConnectionSelectionNode(Node node)
+    {
+        int connID = -1;
+        if (node != null)
+        {
+            List<Connection> listOfConnections = node.GetListOfConnections();
+            if (listOfConnections != null)
+            {
+                Node nodeFar = null;
+                //loop connections and take first one with no security
+                foreach (Connection connection in listOfConnections)
+                {
+                    if (connection.SecurityLevel == ConnectionType.None)
+                    {
+                        nodeFar = connection.node1;
+                        //check that we've got the correct connection end
+                        if (nodeFar.nodeID == node.nodeID)
+                        { nodeFar = connection.node2; }
+                        //check that the far node has at least 2 connections (ignore single dead end connections)
+                        if (nodeFar.CheckNumOfConnections() > 1)
+                        {
+                            connID = connection.connID;
+                            break;
+                        }
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.nodeID); }
+        }
+        else { Debug.LogWarning("Invalid node (Null)"); }
+        return connID;
+    }
+
+    /// <summary>
     /// Selects tasks from pool of potential tasks for this turn
     /// </summary>
-    private void ProcessTasksFinal(int numOfFactionTasks)
+    private void ProcessFinalTasks(int numOfFactionTasks)
     {
         int numTasks = listOfTasksPotential.Count;
         int index, remainingChoices;
@@ -1963,7 +2090,7 @@ public class AIManager : MonoBehaviour
                     else if (task.chance < 33) { colourChance = colourBad; }
                     else { colourChance = colourNeutral; }
                     //get upper and lower & tooltip strings
-                    Tuple<string, string, string, int, int> results = GetTaskDescriptors(task);
+                    Tuple<string, string, string, string, int, int> results = GetTaskDescriptors(task);
                     //tooltip text
                     //up to 3 tasks
                     switch (i)
@@ -1972,25 +2099,28 @@ public class AIManager : MonoBehaviour
                             data.task_1_textUpper = results.Item1;
                             data.task_1_textLower = results.Item2;
                             data.task_1_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
-                            data.task_1_tooltip = results.Item3;
-                            data.nodeID_1 = results.Item4;
-                            data.connID_1 = results.Item5;
+                            data.task_1_tooltipMain = results.Item3;
+                            data.task_1_tooltipDetails = results.Item4;
+                            data.nodeID_1 = results.Item5;
+                            data.connID_1 = results.Item6;
                             break;
                         case 1:
                             data.task_2_textUpper = results.Item1;
                             data.task_2_textLower = results.Item2;
                             data.task_2_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
-                            data.task_2_tooltip = results.Item3;
-                            data.nodeID_2 = results.Item4;
-                            data.connID_2 = results.Item5;
+                            data.task_2_tooltipMain = results.Item3;
+                            data.task_2_tooltipDetails = results.Item4;
+                            data.nodeID_2 = results.Item5;
+                            data.connID_2 = results.Item6;
                             break;
                         case 2:
                             data.task_3_textUpper = results.Item1;
                             data.task_3_textLower = results.Item2;
                             data.task_3_chance = string.Format("{0}{1}%{2}", colourChance, task.chance, colourEnd);
-                            data.task_3_tooltip = results.Item3;
-                            data.nodeID_3 = results.Item4;
-                            data.connID_3 = results.Item5;
+                            data.task_3_tooltipMain = results.Item3;
+                            data.task_3_tooltipDetails = results.Item4;
+                            data.nodeID_3 = results.Item5;
+                            data.connID_3 = results.Item6;
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid index {0} for listOfTasksFinal", i);
@@ -2012,15 +2142,30 @@ public class AIManager : MonoBehaviour
     /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>
-    private Tuple<string, string, string, int, int> GetTaskDescriptors(AITask task)
+    private Tuple<string, string, string, string, int, int> GetTaskDescriptors(AITask task)
     {
         string textUpper = "";
         string textLower = "";
-        string tooltip = "";
+        string tooltipMain = "";
+        string tooltipDetails = "";
         int nodeID = -1;
         int connID = -1;
         if (task != null)
         {
+            //tooltip Details (chance)
+            switch(task.chance)
+            {
+                case 100:
+                    tooltipDetails = string.Format("{0}Automatically{1} implemented at the {2}end of your turn{3}", colourAlert, colourEnd, colourNeutral, colourEnd);
+                    break;
+                case 0:
+                    tooltipDetails = string.Format("{0}No chance{1} of being implemented at the {2}end of your turn{3}", colourAlert, colourEnd, colourNeutral, colourEnd);
+                    break;
+                default:
+                    tooltipDetails = string.Format("{0}{1} %{2} chance of being implemented at the {3}end of your turn{4}", colourAlert, task.chance, colourEnd, colourNeutral, colourEnd);
+                    break;
+            }
+            //tooltip Main
             switch(task.type)
             {
                 case AIType.Team:
@@ -2029,7 +2174,7 @@ public class AIManager : MonoBehaviour
                     if (node != null)
                     {
                         textLower = string.Format("Deploy to {0}, {1} district", node.nodeName, node.Arc.name);
-                        tooltip = string.Format("{0} district \"{1}\" is currently {2}highlighted{3} on the map", node.Arc.name, node.nodeName, colourNeutral, colourEnd);
+                        tooltipMain = string.Format("{0} district \"{1}\" is currently {2}highlighted{3} on the map", node.Arc.name, node.nodeName, colourNeutral, colourEnd);
                         nodeID = node.nodeID;
                     }
                     else
@@ -2040,7 +2185,7 @@ public class AIManager : MonoBehaviour
                     break;
                 case AIType.Decision:
                     textUpper = string.Format("{0} DECISION", task.name0);
-                    DecisionAI decisionAI = GameManager.instance.dataScript.GetAIDecision(task.data0);
+                    DecisionAI decisionAI = GameManager.instance.dataScript.GetAIDecision(task.data2);
                     if (decisionAI != null)
                     {
                         //Connection decision
@@ -2050,7 +2195,7 @@ public class AIManager : MonoBehaviour
                             if (connection != null)
                             {
                                 textLower = string.Format("Between {0} and {1}", connection.node1.nodeName, connection.node2.nodeName);
-                                tooltip = string.Format("The connection is currently {0}highlighted{1} on the map and will have it's security {2}increased{3} by one level",
+                                tooltipMain = string.Format("The connection is currently {0}highlighted{1} on the map and will have it's security {2}increased{3} by one level",
                                     colourNeutral, colourEnd, colourBad, colourEnd);
                                 connID = connection.connID;
                             }
@@ -2064,12 +2209,12 @@ public class AIManager : MonoBehaviour
                         else
                         {
                             textLower = decisionAI.descriptor;
-                            tooltip = decisionAI.tooltipDescriptor;
+                            tooltipMain = decisionAI.tooltipDescriptor;
                         }
                     }
                     else
                     {
-                        Debug.LogWarningFormat("Invalid decisionAI (Null) for task.data0 aiDecID {0}", task.data0);
+                        Debug.LogWarningFormat("Invalid decisionAI (Null) for task.data2 aiDecID {0}", task.data2);
                         textLower = "Details unknown";
                     }
                     break;
@@ -2079,7 +2224,7 @@ public class AIManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid AI task (Null)"); }
-        return new Tuple<string, string, string, int, int>(textUpper, textLower, tooltip, nodeID, connID);
+        return new Tuple<string, string, string, string, int, int>(textUpper, textLower, tooltipMain, tooltipDetails, nodeID, connID);
     }
 
     /// <summary>
@@ -2399,7 +2544,7 @@ public class AIManager : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.name0.Equals(decisionConnSec.name) == true)
-            { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(); }
+            { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(task.data0); }
             else if (task.name0.Equals(decisionRequestTeam.name) == true)
             { isSuccess = ProcessAITeamRequest(); }
             else if (task.name0.Equals(decisionResources.name) == true)
