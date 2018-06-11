@@ -17,12 +17,16 @@ public class AIDisplayUI : MonoBehaviour
     public Image subMiddlePanel;
     public Image subBottomPanel;
     public Image renownPanel;
+    public Image buttonPanel;
     public Button cancelButton;
     public Button proceedButton;
     //mouse elements
     public Image tabSideMouse;
     public Image tabTopMouse;
     public Image tabBottomMouse;
+    //flashers (if detected)
+    public Image flasherLeft;
+    public Image flasherRight;
     //text elements
     public TextMeshProUGUI tabTopText;
     public TextMeshProUGUI tabBottomText;
@@ -178,6 +182,10 @@ public class AIDisplayUI : MonoBehaviour
         decisionText.gameObject.SetActive(true);
         cancelButton.gameObject.SetActive(true);
         proceedButton.gameObject.SetActive(true);
+        buttonPanel.gameObject.SetActive(true);
+        //switch off flashers
+        flasherLeft.gameObject.SetActive(false);
+        flasherRight.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -363,7 +371,20 @@ public class AIDisplayUI : MonoBehaviour
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
         GameManager.instance.playerScript.Renown = renown;
         //update hacking status
-        GameManager.instance.aiScript.UpdateHackingStatus();
+        if (GameManager.instance.aiScript.UpdateHackingStatus() == true)
+        {
+            //switch on flashers
+            flasherLeft.gameObject.SetActive(true);
+            flasherRight.gameObject.SetActive(true);
+            //change bottom tab text
+            tabBottomText.text = string.Format("Attempt{0}<b>DETECTED</b>", "\n");
+        }
+        else
+        {
+            //switch off flashers
+            flasherLeft.gameObject.SetActive(false);
+            flasherRight.gameObject.SetActive(false);
+        }
         //message
         Message message = GameManager.instance.messageScript.AIHacked("AI has been Hacked", renownCost, true);
         GameManager.instance.dataScript.AddMessage(message);
@@ -377,6 +398,9 @@ public class AIDisplayUI : MonoBehaviour
         GameManager.instance.tooltipGenericScript.CloseTooltip("AIDisplayUI.cs -> CloseAIDisplay");
         aiDisplayObject.gameObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
+        //switch off flashers
+        flasherLeft.gameObject.SetActive(false);
+        flasherRight.gameObject.SetActive(false);
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] AIDisplay.cs -> CloseAIDisplay{0}", "\n");

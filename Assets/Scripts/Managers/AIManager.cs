@@ -838,6 +838,7 @@ public class AIManager : MonoBehaviour
                         break;
                     case MessageSubType.AI_Reboot:
                     case MessageSubType.AI_Alert:
+                    case MessageSubType.AI_Hacked:
                         //not applicable
                         break;
                     default:
@@ -1829,10 +1830,8 @@ public class AIManager : MonoBehaviour
             else { Debug.LogWarning("Invalid factionAuthority (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
-        if (isDone != true)
-        { Debug.LogWarningFormat("ConnectionManager.cs -> ProcessConnectionSecurityDecision: FAILED TO FIND suitable connection for nodeID {0}", "\n"); }
-        else
-        {
+        if (isDone == true)
+        { 
             //update listOfDecisionNodes
             GameManager.instance.aiScript.SetDecisionNodes();
         }
@@ -2815,11 +2814,12 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// called everytime Player hacks AI. Updates Alert Status and checks for reboots. Updates data and sends package to AIDisplay
+    /// called everytime Player hacks AI. Updates Alert Status and checks for reboots. Updates data and sends package to AIDisplay. Returns true if player detected
     /// NOTE: data is dynamic
     /// </summary>
-    public void UpdateHackingStatus()
+    public bool UpdateHackingStatus()
     {
+        bool isDetected = false;
         //ignore if Player has already hacked AI this turn
         if (isHacked == false)
         {
@@ -2835,6 +2835,7 @@ public class AIManager : MonoBehaviour
             if (rnd < chance)
             {
                 Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", chance, rnd, "\n");
+                isDetected = true;
                 hackingAttemptsDetected++;
                 //increase alert status
                 switch (aiAlertStatus)
@@ -2879,7 +2880,6 @@ public class AIManager : MonoBehaviour
                 }
             }
             //tooltip string
-            
             data.tooltipHeader = string.Format("There is a {0}{1} %{2} chance of being {3}Detected{4}", colourNeutral, chance, colourEnd, colourBad, colourEnd);
             data.tooltipMain = string.Format("{0}Alert Status increases whenever hacking detected. AI will {1}{2}Reboot{3}{4} at status {5}{6}Critical{7}", 
                 colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);
@@ -2894,6 +2894,7 @@ public class AIManager : MonoBehaviour
             //send data package to AIDisplayUI
             EventManager.instance.PostNotification(EventType.AISendHackingData, this, data, "AIManager.cs -> UpdateHackingStatus");
         }
+        return isDetected;
     }
 
     /// <summary>
