@@ -2902,9 +2902,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetCloseAITabTooltip()
-    {
-        return string.Format("You can access the AI at {0}NO COST{1} for the rest of {2}this turn{3}", colourGood, colourEnd, colourNeutral, colourEnd);
-    }
+    { return string.Format("You can access the AI at {0}NO COST{1} for the rest of {2}this turn{3}", colourGood, colourEnd, colourNeutral, colourEnd); }
 
 
     //

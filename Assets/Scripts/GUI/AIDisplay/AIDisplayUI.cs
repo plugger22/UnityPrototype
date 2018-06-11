@@ -82,6 +82,7 @@ public class AIDisplayUI : MonoBehaviour
     public void Awake()
     {
         hackingDetected = string.Format("Hacking Attempt{0}<b>DETECTED</b>", "\n");
+        tabBottomText.text = string.Format("Hacking Status{0}<b>UNKNOWN</b>", "\n");
         //tabs
         topTabTooltip = tabTopMouse.GetComponent<GenericTooltipUI>();
         bottomTabTooltip = tabBottomMouse.GetComponent<GenericTooltipUI>();
@@ -206,9 +207,9 @@ public class AIDisplayUI : MonoBehaviour
         topTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(aiSide);
         topTabTooltip.x_offset = 175;
         //hacking bottom tab tooltip
-        bottomTabTooltip.tooltipHeader = "Unknown";
-        bottomTabTooltip.tooltipMain = "Unknown";
-        bottomTabTooltip.tooltipDetails = "Unknown";
+        bottomTabTooltip.tooltipHeader = "";
+        bottomTabTooltip.tooltipMain = string.Format("Hacking attempts <i>may</i> be{0}detected by the AI", "\n");
+        bottomTabTooltip.tooltipDetails = string.Format("Check back for detailed information{0}once you've{1}<b>HACKED the AI</b>", "\n", "\n");
         bottomTabTooltip.x_offset = 175;
         //side tab tooltip
         sideTabTooltip.tooltipMain = GameManager.instance.aiScript.GetCloseAITabTooltip();
@@ -337,13 +338,13 @@ public class AIDisplayUI : MonoBehaviour
             //bottom tab hacking tooltip
             if (String.IsNullOrEmpty(data.tooltipHeader) == false)
             { bottomTabTooltip.tooltipHeader = data.tooltipHeader; }
-            else { bottomTabTooltip.tooltipHeader = "Unknown Data"; }
+            else { bottomTabTooltip.tooltipHeader = ""; }
             if (String.IsNullOrEmpty(data.tooltipMain) == false)
             { bottomTabTooltip.tooltipMain = data.tooltipMain; }
-            else { bottomTabTooltip.tooltipMain = "Unknown Data"; }
+            else { bottomTabTooltip.tooltipMain = ""; }
             if (String.IsNullOrEmpty(data.tooltipDetails) == false)
             { bottomTabTooltip.tooltipDetails = data.tooltipDetails; }
-            else { bottomTabTooltip.tooltipDetails = "Unknown Data"; }
+            else { bottomTabTooltip.tooltipDetails = ""; }
         }
         else { Debug.LogWarning("Invalid AIHackingData package (Null)"); }
     }
