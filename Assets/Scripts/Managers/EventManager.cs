@@ -97,7 +97,7 @@ public enum EventType
     InventoryLetGo,
     InventoryFire,
     InventoryActiveDuty,
-    //dice UI
+    //Dice UI
     OpenDiceUI,
     CloseDiceUI,
     DiceIgnore,
@@ -114,6 +114,7 @@ public enum EventType
     CityInfoClose,
     //AI Info Display
     AIDisplayOpen,
+    AIDisplayPanelOpen,
     AIDisplayClose,
     AISideTabOpen,
     AISideTabClose,

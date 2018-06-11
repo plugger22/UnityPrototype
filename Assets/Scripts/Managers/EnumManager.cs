@@ -112,6 +112,7 @@
         AI_Immediate,
         AI_Capture,
         AI_Release,
+        AI_Hacked,
         AI_Reboot,
         AI_Alert,
         //Decision

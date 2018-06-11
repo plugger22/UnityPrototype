@@ -58,6 +58,7 @@ public class AITracker
 public class AIDisplayData
 {
     public int rebootTimer;                 //AIDisplayUI will only open (allow hacking attempts) if timer = 0 (which infers that isRebooting = false)
+    public int renownCost;                  //cost to view hack AI
     public string task_1_textUpper;
     public string task_1_textLower;
     public string task_1_chance;
@@ -74,6 +75,7 @@ public class AIDisplayData
     public string task_3_tooltipMain;
     public string task_3_tooltipDetails;
     public string factionDetails;
+    public string renownDecision;
     public int nodeID_1;                   //used for highlighting node or connection referred to by task
     public int connID_1;
     public int nodeID_2;
@@ -2073,8 +2075,11 @@ public class AIManager : MonoBehaviour
     {
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
-        //pass timer
+        //pass timer & cost
         data.rebootTimer = rebootTimer;
+        data.renownCost = hackingCurrentCost;
+        //decision test
+        data.renownDecision = string.Format("Hack AI{0}for {1}{2}{3} Renown", "\n", colourNeutral, hackingCurrentCost, colourEnd);
         //if tasks are present, process into descriptor strings
         if (count > 0)
         {

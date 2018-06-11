@@ -396,6 +396,32 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// AI notification to one or both sides of AI being hacked
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="currentRenownCost"></param>
+    /// <param name="isDetected"></param>
+    /// <returns></returns>
+    public Message AIHacked(string text, int currentRenownCost, bool isDetected)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Hacked;
+            if (isDetected == true)
+            { message.side = globalBoth; message.data1 = 1; message.isPublic = true; }
+            else
+            { message.side = globalResistance; message.data1 = 0; message.isPublic = false; }
+            message.data0 = currentRenownCost;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// AI notification to both sides of an AI Security System Reboot (commence / complete)
     /// </summary>
     /// <param name="text"></param>

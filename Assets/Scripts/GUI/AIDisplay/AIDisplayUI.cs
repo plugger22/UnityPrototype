@@ -41,6 +41,7 @@ public class AIDisplayUI : MonoBehaviour
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
     private GlobalSide aiSide;                             //side the AI controls (opposite to player)
     private bool isFree;                                    //true once renown cost paid. Reset to false each turn.
+    private int renownCost;                                 //current renown cost to hack AI
 
     private GenericTooltipUI topTabTooltip;
     private GenericTooltipUI bottomTabTooltip;
@@ -48,6 +49,8 @@ public class AIDisplayUI : MonoBehaviour
     private GenericTooltipUI topTaskTooltip;
     private GenericTooltipUI middleTaskTooltip;
     private GenericTooltipUI bottomTaskTooltip;
+    private ButtonInteraction cancelInteraction;
+    private ButtonInteraction proceedInteraction;
 
     private static AIDisplayUI aiDisplayUI;
     
@@ -70,6 +73,7 @@ public class AIDisplayUI : MonoBehaviour
 
     public void Awake()
     {
+        //tabs
         topTabTooltip = tabTopMouse.GetComponent<GenericTooltipUI>();
         bottomTabTooltip = tabBottomMouse.GetComponent<GenericTooltipUI>();
         sideTabTooltip = tabSideMouse.GetComponent<GenericTooltipUI>();
@@ -82,6 +86,13 @@ public class AIDisplayUI : MonoBehaviour
         Debug.Assert(topTaskTooltip != null, "Invalid topTaskTooltip (Null)");
         Debug.Assert(middleTaskTooltip != null, "Invalid middleTaskTooltip (Null)");
         Debug.Assert(bottomTaskTooltip != null, "Invalid bottomTaskTooltip (Null)");
+        //buttons
+        cancelInteraction = cancelButton.GetComponent<ButtonInteraction>();
+        proceedInteraction = proceedButton.GetComponent<ButtonInteraction>();
+        Debug.Assert(cancelInteraction != null, "Invalid cancelInteraction (Null)");
+        Debug.Assert(proceedInteraction != null, "Invalid proceedInteraction (Null)");
+        cancelInteraction.SetEvent(EventType.AIDisplayClose);
+        proceedInteraction.SetEvent(EventType.AIDisplayPanelOpen);
     }
 
 
@@ -95,7 +106,9 @@ public class AIDisplayUI : MonoBehaviour
         InitialiseTooltips();
         //set all sub compoponents to Active
         SetAllToActive();
-        
+        //set button sprites
+        cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+        proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
     }
 
     public void Start()
@@ -106,6 +119,7 @@ public class AIDisplayUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AISendDisplayData, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AISendHackingData, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AIDisplayPanelOpen, OnEvent, "AIDisplayUI");
     }
 
 
@@ -123,6 +137,9 @@ public class AIDisplayUI : MonoBehaviour
             case EventType.AIDisplayOpen:
                 if (rebootTimer == 0)
                 { SetAIDisplay(); }
+                break;
+            case EventType.AIDisplayPanelOpen:
+                OpenAIDisplayPanel();
                 break;
             case EventType.AIDisplayClose:
                 CloseAIDisplay();
@@ -204,8 +221,10 @@ public class AIDisplayUI : MonoBehaviour
     {
         if (data != null)
         {
-            //timer
+            //timer & renown details
             rebootTimer = data.rebootTimer;
+            renownCost = data.renownCost;
+            decisionText.text = data.renownDecision;
             //reset isFree at beginning of each turn
             isFree = false;
             //
@@ -222,10 +241,12 @@ public class AIDisplayUI : MonoBehaviour
             else { subTopChance.text = ""; }
             //1st task -> tooltip
             if (String.IsNullOrEmpty(data.task_1_tooltipMain) == false)
-            { topTaskTooltip.tooltipMain = data.task_1_tooltipMain; }
-            else { topTaskTooltip.tooltipMain = "Unknown Data"; }
-            if (String.IsNullOrEmpty(data.task_1_tooltipDetails) == false)
-            { topTaskTooltip.tooltipDetails = data.task_1_tooltipDetails; }
+            {
+                topTaskTooltip.tooltipMain = data.task_1_tooltipMain;
+                if (String.IsNullOrEmpty(data.task_1_tooltipDetails) == false)
+                { topTaskTooltip.tooltipDetails = data.task_1_tooltipDetails; }
+            }
+            else { topTaskTooltip.tooltipMain = ""; }
             topTaskTooltip.nodeID = data.nodeID_1;
             topTaskTooltip.connID = data.connID_1;
             topTaskTooltip.testTag = "Top Task";
@@ -243,10 +264,12 @@ public class AIDisplayUI : MonoBehaviour
             else { subMiddleChance.text = ""; }
             //2nd Task -> tooltip
             if (String.IsNullOrEmpty(data.task_2_tooltipMain) == false)
-            { middleTaskTooltip.tooltipMain = data.task_2_tooltipMain; }
-            else { middleTaskTooltip.tooltipMain = "Unknown Data"; }
-            if (String.IsNullOrEmpty(data.task_2_tooltipDetails) == false)
-            { middleTaskTooltip.tooltipDetails = data.task_2_tooltipDetails; }
+            {
+                middleTaskTooltip.tooltipMain = data.task_2_tooltipMain;
+                if (String.IsNullOrEmpty(data.task_2_tooltipDetails) == false)
+                { middleTaskTooltip.tooltipDetails = data.task_2_tooltipDetails; }
+            }
+            else { middleTaskTooltip.tooltipMain = ""; }
             middleTaskTooltip.nodeID = data.nodeID_2;
             middleTaskTooltip.connID = data.connID_2;
             middleTaskTooltip.testTag = "Middle Task";
@@ -264,10 +287,12 @@ public class AIDisplayUI : MonoBehaviour
             else { subBottomChance.text = ""; }
             //3rd Task -> tooltip
             if (String.IsNullOrEmpty(data.task_3_tooltipMain) == false)
-            { bottomTaskTooltip.tooltipMain = data.task_3_tooltipMain; }
-            else { bottomTaskTooltip.tooltipMain = "Unknown Data"; }
-            if (String.IsNullOrEmpty(data.task_3_tooltipDetails) == false)
-            { bottomTaskTooltip.tooltipDetails = data.task_3_tooltipDetails; }
+            {
+                bottomTaskTooltip.tooltipMain = data.task_3_tooltipMain;
+                if (String.IsNullOrEmpty(data.task_3_tooltipDetails) == false)
+                { bottomTaskTooltip.tooltipDetails = data.task_3_tooltipDetails; }
+            }
+            else { bottomTaskTooltip.tooltipMain = ""; }
             bottomTaskTooltip.nodeID = data.nodeID_3;
             bottomTaskTooltip.connID = data.connID_3;
             bottomTaskTooltip.testTag = "Bottom Task";
@@ -323,6 +348,25 @@ public class AIDisplayUI : MonoBehaviour
         GameManager.instance.alertScript.CloseAlertUI(true);
         //set game state
         GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay, ModalInfo.AIInfo);
+    }
+
+    /// <summary>
+    /// 'Proceed' clicked on renown panel. Panel 'opened' to reveal AI data underneath
+    /// </summary>
+    public void OpenAIDisplayPanel()
+    {
+        renownPanel.gameObject.SetActive(false);
+        isFree = true;
+        //deduct cost
+        int renown = GameManager.instance.playerScript.Renown;
+        renown -= renownCost;
+        Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
+        GameManager.instance.playerScript.Renown = renown;
+        //update hacking status
+        GameManager.instance.aiScript.UpdateHackingStatus();
+        //message
+        Message message = GameManager.instance.messageScript.AIHacked("AI has been Hacked", renownCost, true);
+        GameManager.instance.dataScript.AddMessage(message);
     }
 
     /// <summary>

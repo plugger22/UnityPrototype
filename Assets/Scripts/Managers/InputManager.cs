@@ -255,10 +255,18 @@ public class InputManager : MonoBehaviour
                         switch (_modalInfoState)
                         {
                             case ModalInfo.CityInfo:
-                                EventManager.instance.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessInput");
+                                if (Input.GetButtonDown("Cancel") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }
                                 break;
                             case ModalInfo.AIInfo:
-                                EventManager.instance.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessInput");
+                                if (Input.GetButtonDown("Cancel") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }
                                 break;
                             default:
                                 Debug.LogWarningFormat("Invalid _modalInfoState \"{0}\"", _modalInfoState);

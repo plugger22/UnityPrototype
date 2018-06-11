@@ -56,18 +56,20 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         onMouseFlag = true;
         if (string.IsNullOrEmpty(tooltipMain) == false)
-        { myCoroutine = StartCoroutine("ShowGenericTooltip"); }
-        //node Highlight?
-        if (nodeID > -1 && isNodeHighlightOn == false)
         {
-            EventManager.instance.PostNotification(EventType.FlashNodeStart, this, nodeID, "GenericTooltipUI.cs -> OnPointerEnter");
-            isNodeHighlightOn = true;
-        }
-        //connection Highlight?
-        if (connID > -1 && isConnectionHighlightOn == false)
-        {
-            EventManager.instance.PostNotification(EventType.FlashConnectionStart, this, connID, "GenericTooltipUI.cs -> OnPointerEnter");
-            isConnectionHighlightOn = true;
+            myCoroutine = StartCoroutine("ShowGenericTooltip");
+            //node Highlight?
+            if (nodeID > -1 && isNodeHighlightOn == false)
+            {
+                EventManager.instance.PostNotification(EventType.FlashNodeStart, this, nodeID, "GenericTooltipUI.cs -> OnPointerEnter");
+                isNodeHighlightOn = true;
+            }
+            //connection Highlight?
+            if (connID > -1 && isConnectionHighlightOn == false)
+            {
+                EventManager.instance.PostNotification(EventType.FlashConnectionStart, this, connID, "GenericTooltipUI.cs -> OnPointerEnter");
+                isConnectionHighlightOn = true;
+            }
         }
     }
 
@@ -79,19 +81,21 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         onMouseFlag = false;
         if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
-        GameManager.instance.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerExit");
-        //cancel node highlight
-        if (nodeID > -1 && isNodeHighlightOn == true)
         {
-            EventManager.instance.PostNotification(EventType.FlashNodeStop, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
-            isNodeHighlightOn = false;
-        }
-        //cancel connection highlight
-        if (connID > -1 && isConnectionHighlightOn == true)
-        {
-            EventManager.instance.PostNotification(EventType.FlashConnectionStop, this, connID, "GenericTooltipUI.cs -> OnPointerExit");
-            isConnectionHighlightOn = false;
+            StopCoroutine(myCoroutine);
+            GameManager.instance.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerExit");
+            //cancel node highlight
+            if (nodeID > -1 && isNodeHighlightOn == true)
+            {
+                EventManager.instance.PostNotification(EventType.FlashNodeStop, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
+                isNodeHighlightOn = false;
+            }
+            //cancel connection highlight
+            if (connID > -1 && isConnectionHighlightOn == true)
+            {
+                EventManager.instance.PostNotification(EventType.FlashConnectionStop, this, connID, "GenericTooltipUI.cs -> OnPointerExit");
+                isConnectionHighlightOn = false;
+            }
         }
     }
 
