@@ -25,8 +25,7 @@ public class AIDisplayUI : MonoBehaviour
     public Image tabTopMouse;
     public Image tabBottomMouse;
     //flashers (if detected)
-    public Image flasherLeft;
-    public Image flasherRight;
+    public Image detectedFlasher;
     //text elements
     public TextMeshProUGUI tabTopText;
     public TextMeshProUGUI tabBottomText;
@@ -46,6 +45,11 @@ public class AIDisplayUI : MonoBehaviour
     private GlobalSide aiSide;                             //side the AI controls (opposite to player)
     private bool isFree;                                    //true once renown cost paid. Reset to false each turn.
     private int renownCost;                                 //current renown cost to hack AI
+    private string tabBottomTextCache;                      //needed for hacking detected text swap
+    private string hackingDetected;
+    private Coroutine myCoroutine;                          //used for flashing red alert if hacking attempt detected
+    private bool isFading;
+    private float flashRedTime;
 
     private GenericTooltipUI topTabTooltip;
     private GenericTooltipUI bottomTabTooltip;
@@ -77,6 +81,7 @@ public class AIDisplayUI : MonoBehaviour
 
     public void Awake()
     {
+        hackingDetected = string.Format("Hacking Attempt{0}<b>DETECTED</b>", "\n");
         //tabs
         topTabTooltip = tabTopMouse.GetComponent<GenericTooltipUI>();
         bottomTabTooltip = tabBottomMouse.GetComponent<GenericTooltipUI>();
@@ -108,8 +113,11 @@ public class AIDisplayUI : MonoBehaviour
         Debug.Assert(aiSide != null, "Invalid AI side (Null)");
         //tooltip data
         InitialiseTooltips();
+        flashRedTime = GameManager.instance.guiScript.flashRedTime;
+        Debug.Assert(flashRedTime > 0, "Invalid flashRedTime ( <= 0 )");
         //set all sub compoponents to Active
         SetAllToActive();
+        Debug.Assert(string.IsNullOrEmpty(hackingDetected) == false, "Invalid hackingDetected (Null or Empty)");
         //set button sprites
         cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
         proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
@@ -184,8 +192,7 @@ public class AIDisplayUI : MonoBehaviour
         proceedButton.gameObject.SetActive(true);
         buttonPanel.gameObject.SetActive(true);
         //switch off flashers
-        flasherLeft.gameObject.SetActive(false);
-        flasherRight.gameObject.SetActive(false);
+        detectedFlasher.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -322,7 +329,10 @@ public class AIDisplayUI : MonoBehaviour
         {
             //bottom tab data
             if (String.IsNullOrEmpty(data.hackingStatus) == false)
-            { tabBottomText.text = data.hackingStatus; }
+            {
+                tabBottomText.text = data.hackingStatus;
+                tabBottomTextCache = data.hackingStatus;
+            }
             else { tabBottomText.text = "Unknown Data"; }
             //bottom tab hacking tooltip
             if (String.IsNullOrEmpty(data.tooltipHeader) == false)
@@ -346,7 +356,12 @@ public class AIDisplayUI : MonoBehaviour
         //close side tab
         EventManager.instance.PostNotification(EventType.AISideTabClose, this, null, "AIDisplayUI.cs -> SetAIDisplay");
         //renown panel on/off
-        if (isFree == true) { renownPanel.gameObject.SetActive(false); }
+        if (isFree == true)
+        {
+            renownPanel.gameObject.SetActive(false);
+            tabBottomText.text = tabBottomTextCache;
+            SetDetectedFlasher(false);
+        }
         else { renownPanel.gameObject.SetActive(true); }
         //switch on display
         aiDisplayObject.gameObject.SetActive(true);
@@ -374,16 +389,15 @@ public class AIDisplayUI : MonoBehaviour
         if (GameManager.instance.aiScript.UpdateHackingStatus() == true)
         {
             //switch on flashers
-            flasherLeft.gameObject.SetActive(true);
-            flasherRight.gameObject.SetActive(true);
+            detectedFlasher.gameObject.SetActive(true);
             //change bottom tab text
-            tabBottomText.text = string.Format("Attempt{0}<b>DETECTED</b>", "\n");
+            tabBottomText.text = hackingDetected;
+            SetDetectedFlasher(true);
         }
         else
         {
             //switch off flashers
-            flasherLeft.gameObject.SetActive(false);
-            flasherRight.gameObject.SetActive(false);
+            detectedFlasher.gameObject.SetActive(false);
         }
         //message
         Message message = GameManager.instance.messageScript.AIHacked("AI has been Hacked", renownCost, true);
@@ -399,12 +413,65 @@ public class AIDisplayUI : MonoBehaviour
         aiDisplayObject.gameObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //switch off flashers
-        flasherLeft.gameObject.SetActive(false);
-        flasherRight.gameObject.SetActive(false);
+        detectedFlasher.gameObject.SetActive(false);
+        SetDetectedFlasher(false);
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] AIDisplay.cs -> CloseAIDisplay{0}", "\n");
         //open side tab
         EventManager.instance.PostNotification(EventType.AISideTabOpen, this, null, "AIDisplayUI.cs -> CloseAIDisplay");
     }
+
+    /// <summary>
+    /// Start (true) or Stop  (false) the flashing red indicator for a detected hacking attempt
+    /// </summary>
+    /// <param name="isStart"></param>
+    private void SetDetectedFlasher(bool isStart)
+    {
+        switch (isStart)
+        {
+            case true:
+                if (myCoroutine == null)
+                { myCoroutine = StartCoroutine("ShowDetected"); }
+                break;
+            case false:
+                if (myCoroutine != null)
+                {
+                    StopCoroutine(myCoroutine);
+                    myCoroutine = null;
+                    isFading = false;
+                    //reset opacity back to zero
+                    Color tempColor = detectedFlasher.color;
+                    tempColor.a = 0.0f;
+                    detectedFlasher.color = tempColor;
+                }
+                break;
+        }
+    }
+
+    
+    IEnumerator ShowDetected()
+    {
+        //infinite loop
+        while (true)
+        {
+            Color tempColor = detectedFlasher.color;
+            if (isFading == false)
+            {
+                tempColor.a += Time.deltaTime / flashRedTime;
+                if (tempColor.a >= 1.0f)
+                { isFading = true; }
+            }
+            else
+            {
+                tempColor.a -= Time.deltaTime / flashRedTime;
+                if (tempColor.a <= 0.0f)
+                { isFading = false; }
+            }
+            detectedFlasher.color = tempColor;
+            yield return null;
+        }
+    }
+
+    //new methods above here
 }

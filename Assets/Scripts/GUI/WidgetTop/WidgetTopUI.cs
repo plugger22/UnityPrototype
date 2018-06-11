@@ -128,10 +128,10 @@ public class WidgetTopUI : MonoBehaviour
                 SetStar((float)Param, UIPosition.Right);
                 break;
             case EventType.StartSecurityFlash:
-                SetSecurityFlash(true);
+                SetSecurityFlasher(true);
                 break;
             case EventType.StopSecurityFlash:
-                SetSecurityFlash(false);
+                SetSecurityFlasher(false);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -258,7 +258,7 @@ public class WidgetTopUI : MonoBehaviour
     /// Start (true) or Stop (false) the Action button red flash indicating that Security Measures are in place
     /// </summary>
     /// <param name="isStart"></param>
-    private void SetSecurityFlash(bool isStart)
+    private void SetSecurityFlasher(bool isStart)
     {
         switch (isStart)
         {
@@ -268,16 +268,19 @@ public class WidgetTopUI : MonoBehaviour
                 break;
             case false:
                 if (myCoroutine != null)
-                { StopCoroutine(myCoroutine); myCoroutine = null;}
-                isFading = false;
-                //reset opacity back to zero -> inner
-                Color tempColor = flashRedInner.color;
-                tempColor.a = 0.0f;
-                flashRedInner.color = tempColor;
-                //reset opacity back to zero -> outer
-                tempColor = flashRedOuter.color;
-                tempColor.a = 0.0f;
-                flashRedOuter.color = tempColor;
+                {
+                    StopCoroutine(myCoroutine);
+                    myCoroutine = null;
+                    isFading = false;
+                    //reset opacity back to zero -> inner
+                    Color tempColor = flashRedInner.color;
+                    tempColor.a = 0.0f;
+                    flashRedInner.color = tempColor;
+                    //reset opacity back to zero -> outer
+                    tempColor = flashRedOuter.color;
+                    tempColor.a = 0.0f;
+                    flashRedOuter.color = tempColor;
+                }
                 break;
         }
     }
