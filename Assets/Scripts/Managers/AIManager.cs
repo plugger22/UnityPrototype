@@ -2078,7 +2078,7 @@ public class AIManager : MonoBehaviour
         //pass timer
         data.rebootTimer = rebootTimer;
         //decision test
-        data.renownDecision = string.Format("Hack AI{0}for {1}{2}{3} Renown", "\n", colourNeutral, hackingCurrentCost, colourEnd);
+        data.renownDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, hackingCurrentCost, colourEnd);
         //if tasks are present, process into descriptor strings
         if (count > 0)
         {
@@ -2961,6 +2961,24 @@ public class AIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// returns a colour formatted string showing any gear related effects to AI hacking
+    /// </summary>
+    /// <returns></returns>
+    public string UpdateGearText()
+    {
+        StringBuilder builder = new StringBuilder();
+        int numOfEffects = listOfPlayerEffectDescriptors.Count;
+        if (numOfEffects == 0)
+        { builder.AppendFormat("{0}Gear Effects{1}None{2}", colourGrey, "\n", colourEnd); }
+        else
+        {
+            builder.AppendFormat("{0}Gear Effects{1}{2}", colourNeutral, colourEnd, "\n");
+            foreach(string text in listOfPlayerEffectDescriptors)
+            { builder.AppendFormat("{0}{1}", "/n", text); }
+        }
+        return builder.ToString();
+    }
 
     /// <summary>
     /// returns tooltip string for AIDisplayUI close tab

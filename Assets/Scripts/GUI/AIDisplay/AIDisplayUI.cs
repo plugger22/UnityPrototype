@@ -17,6 +17,7 @@ public class AIDisplayUI : MonoBehaviour
     public Image subMiddlePanel;
     public Image subBottomPanel;
     public Image renownPanel;
+    public Image textPanel;
     public Image buttonPanel;
     public Button cancelButton;
     public Button proceedButton;
@@ -40,6 +41,7 @@ public class AIDisplayUI : MonoBehaviour
     public TextMeshProUGUI subBottomLower;
     public TextMeshProUGUI subBottomChance;
     public TextMeshProUGUI decisionText;
+    public TextMeshProUGUI gearText;
 
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
     private GlobalSide aiSide;                             //side the AI controls (opposite to player)
@@ -188,6 +190,7 @@ public class AIDisplayUI : MonoBehaviour
         tabBottomMouse.gameObject.SetActive(true);
         renownPanel.gameObject.SetActive(true);
         decisionText.gameObject.SetActive(true);
+        gearText.gameObject.SetActive(true);
         cancelButton.gameObject.SetActive(true);
         proceedButton.gameObject.SetActive(true);
         buttonPanel.gameObject.SetActive(true);
@@ -361,7 +364,12 @@ public class AIDisplayUI : MonoBehaviour
             tabBottomText.text = tabBottomTextCache;
             SetDetectedFlasher(false);
         }
-        else { renownPanel.gameObject.SetActive(true); }
+        else
+        {
+            //gear text
+            gearText.text = GameManager.instance.aiScript.UpdateGearText();
+            renownPanel.gameObject.SetActive(true);
+        }
         //switch on display
         aiDisplayObject.gameObject.SetActive(true);
         //set modal status

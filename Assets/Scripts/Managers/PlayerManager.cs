@@ -175,7 +175,7 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public List<int> CheckAIGearPresent()
     {
-        List<int> tempList = null;
+        List<int> tempList = new List<int>();
         //loop through looking for best piece of gear that matches the type
         for (int i = 0; i < listOfGear.Count; i++)
         {
