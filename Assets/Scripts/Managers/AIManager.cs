@@ -2075,10 +2075,12 @@ public class AIManager : MonoBehaviour
     {
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
+        Tuple<int, string> resultsCost = GetHackingCost();
+        int tempCost = resultsCost.Item1;
         //pass timer
         data.rebootTimer = rebootTimer;
         //decision test
-        data.renownDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, hackingCurrentCost, colourEnd);
+        data.renownDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, tempCost, colourEnd);
         //if tasks are present, process into descriptor strings
         if (count > 0)
         {
@@ -2709,6 +2711,10 @@ public class AIManager : MonoBehaviour
     public void UpdateSideTabData(int renown = 0)
     {
         AISideTabData data = new AISideTabData();
+        //ai gear effects?
+        Tuple<int, string> results = GetHackingCost();
+        int tempCost = results.Item1;
+        string gearEffect = results.Item2;
         switch (GameManager.instance.playerScript.status)
         {
             case ActorStatus.Active:
@@ -2729,34 +2735,34 @@ public class AIManager : MonoBehaviour
                     data.topText = "A.I";
                     data.status = HackingStatus.Possible;
                     //renown to spare -> Green
-                    if (playerRenown > hackingCurrentCost)
+                    if (playerRenown > tempCost)
                     {
-                        data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingCurrentCost, colourEnd);
-                        data.tooltipText = string.Format("You can hack the AI for {0}{1}{2} Renown (currently {3}{4}{5})", colourGood, hackingCurrentCost, colourEnd,
-                            colourNeutral, playerRenown, colourEnd);
+                        data.bottomText = string.Format("{0}{1}{2}", colourGood, tempCost, colourEnd);
+                        data.tooltipText = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourGood, tempCost, colourEnd,
+                            gearEffect, colourNeutral, playerRenown, colourEnd);
                     }
                     //just enough renown -> Yellow
-                    else if (playerRenown == hackingCurrentCost)
+                    else if (playerRenown == tempCost)
                     {
-                        data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingCurrentCost, colourEnd);
-                        data.tooltipText = string.Format("You can hack the AI for {0}{1}{2} Renown (currently {3}{4}{5})", colourNeutral, hackingCurrentCost, colourEnd,
-                             colourNeutral, playerRenown, colourEnd);
+                        data.bottomText = string.Format("{0}{1}{2}", colourNeutral, tempCost, colourEnd);
+                        data.tooltipText = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
+                             gearEffect, colourNeutral, playerRenown, colourEnd);
                     }
                     else
                     {
                         //insufficient renown -> Greyed out
                         data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                        data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingCurrentCost, colourEnd);
+                        data.bottomText = string.Format("{0}{1}{2}", colourGrey, tempCost, colourEnd);
                         data.status = HackingStatus.InsufficientRenown;
-                        data.tooltipText = string.Format("To hack the AI you require {0}{1}{2} Renown (currently {3}{4}{5})", colourNeutral, hackingCurrentCost, colourEnd,
-                            colourBad, playerRenown, colourEnd);
+                        data.tooltipText = string.Format("To hack the AI you require {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
+                            gearEffect, colourBad, playerRenown, colourEnd);
                     }
                 }
                 break;
             default:
                 //player indisposed -> Greyed out
                 data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingCurrentCost, colourEnd);
+                data.bottomText = string.Format("{0}{1}{2}", colourGrey, tempCost, colourEnd);
                 data.status = HackingStatus.Indisposed;
                 data.tooltipText = string.Format("You are {0}not in a position to Hack the AI{1} at present due to your {2}current circumstances{3}", colourBad, colourEnd,
                     colourNeutral, colourEnd);
@@ -2832,43 +2838,63 @@ public class AIManager : MonoBehaviour
             //does AI Alert Status increase?
             int rnd = Random.Range(0, 100);
             int chance = hackingAlertIncreaseChance;
-            if (rnd < chance)
+            if (CheckAIGearEffectPresent("Invisible Hacking") == false)
             {
-                Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", chance, rnd, "\n");
-                isDetected = true;
-                hackingAttemptsDetected++;
-                //increase alert status
-                switch (aiAlertStatus)
+                //tooltip
+                data.tooltipHeader = string.Format("There is a {0}{1} %{2} chance of being {3}Detected{4}", colourNeutral, chance, colourEnd, colourBad, colourEnd);
+                if (rnd < chance)
                 {
-                    case Priority.Low:
-                        aiAlertStatus = Priority.Medium;
-                        colourStatus = colourNeutral;
-                        //Message
-                        string textLow = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                        Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, hackingAlertIncreaseChance, rnd);
-                        GameManager.instance.dataScript.AddMessage(messageLow);
-                        break;
-                    case Priority.Medium:
-                        aiAlertStatus = Priority.High;
-                        colourStatus = colourBad;
-                        //Message
-                        string textMedium = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                        Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, hackingAlertIncreaseChance, rnd);
-                        GameManager.instance.dataScript.AddMessage(messageMedium);
-                        break;
-                    case Priority.High:
-                        //stays High (auto reset to Low by RebootComplete) -> Trigger Reboot 
-                        colourStatus = colourBad;
-                        RebootCommence();
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
-                        break;
+                    Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", chance, rnd, "\n");
+                    isDetected = true;
+                    hackingAttemptsDetected++;
+                    //increase alert status
+                    switch (aiAlertStatus)
+                    {
+                        case Priority.Low:
+                            aiAlertStatus = Priority.Medium;
+                            colourStatus = colourNeutral;
+                            //Message
+                            string textLow = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
+                            Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, hackingAlertIncreaseChance, rnd);
+                            GameManager.instance.dataScript.AddMessage(messageLow);
+                            break;
+                        case Priority.Medium:
+                            aiAlertStatus = Priority.High;
+                            colourStatus = colourBad;
+                            //Message
+                            string textMedium = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
+                            Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, hackingAlertIncreaseChance, rnd);
+                            GameManager.instance.dataScript.AddMessage(messageMedium);
+                            break;
+                        case Priority.High:
+                            //stays High (auto reset to Low by RebootComplete) -> Trigger Reboot 
+                            colourStatus = colourBad;
+                            RebootCommence();
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
+                            break;
+                    }
+                }
+                else
+                {
+                    //no change to status
+                    switch (aiAlertStatus)
+                    {
+                        case Priority.Low: colourStatus = colourGood; break;
+                        case Priority.Medium: colourStatus = colourNeutral; break;
+                        case Priority.High: colourStatus = colourBad; break;
+                        default:
+                            Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
+                            break;
+                    }
                 }
             }
             else
             {
-                //no change to status
+                //Invisible Hacking gear present -> Player can't be detected -> no change to status
+                data.tooltipHeader = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to Gear", colourGood, colourEnd, colourBad, colourEnd);
+                Debug.LogFormat("[Aim] AIManager.cs -> UpdateHackingStatus: Hacking attempt INVISIBLE due to gear{0}", "\n");
                 switch (aiAlertStatus)
                 {
                     case Priority.Low: colourStatus = colourGood; break;
@@ -2880,7 +2906,6 @@ public class AIManager : MonoBehaviour
                 }
             }
             //tooltip string
-            data.tooltipHeader = string.Format("There is a {0}{1} %{2} chance of being {3}Detected{4}", colourNeutral, chance, colourEnd, colourBad, colourEnd);
             data.tooltipMain = string.Format("{0}Alert Status increases whenever hacking detected. AI will {1}{2}Reboot{3}{4} at status {5}{6}Critical{7}", 
                 colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);
             data.tooltipDetails = string.Format("{0}The AI has detected{1}{2}{3}{4} hacking attempt{5}{6}{7}{8}since its last Reboot{9}", colourNormal, colourEnd, "\n",
@@ -2904,13 +2929,19 @@ public class AIManager : MonoBehaviour
     {
         //deduct cost
         int renown = GameManager.instance.playerScript.Renown;
-        renown -= hackingCurrentCost;
+        //ai gear effects?
+        Tuple <int, string> results = GetHackingCost();
+        int tempCost = results.Item1;
+        string gearEffect = results.Item2;
+        //update Player renown
+        renown -= tempCost;
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
         GameManager.instance.playerScript.Renown = renown;
         //message
-        Message message = GameManager.instance.messageScript.AIHacked("AI has been Hacked", hackingCurrentCost, true);
+        Message message = GameManager.instance.messageScript.AIHacked(string.Format("AI has been Hacked{0}", gearEffect), tempCost, true);
         GameManager.instance.dataScript.AddMessage(message);
     }
+
 
     /// <summary>
     /// gets all gear AI hacking related effects. Run every time player hacks AI for first time each turn. Run at time of hacking so is Dynamic
@@ -2940,10 +2971,10 @@ public class AIManager : MonoBehaviour
                                 {
                                     case "Common":
                                     case "Rare":
-                                        listOfPlayerEffectDescriptors.Add(string.Format("{0}{1}{2} -> {3}", colourNeutral, effect.name, colourEnd, effect.description));
+                                        listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", effect.description, colourNeutral, gear.name, colourEnd));
                                         break;
                                     case "Unique":
-                                        listOfPlayerEffectDescriptors.Add(string.Format("{0}{1}{2} -> {3}", colourGood, effect.name, colourEnd, effect.description));
+                                        listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", effect.description, colourGood, gear.name, colourEnd));
                                         break;
                                     default:
                                         Debug.LogWarningFormat("Invalid gear.rarity.name \"{0}\"", gear.rarity.name);
@@ -2971,11 +3002,40 @@ public class AIManager : MonoBehaviour
         { builder.AppendFormat("{0}Gear Effects{1}None{2}", colourGrey, "\n", colourEnd); }
         else
         {
-            builder.AppendFormat("{0}Gear Effects{1}{2}", colourNeutral, colourEnd, "\n");
+            builder.AppendFormat("{0}Gear Effects{1}", colourAlert, colourEnd);
             foreach(string text in listOfPlayerEffectDescriptors)
             { builder.AppendFormat("{0}{1}", "\n", text); }
         }
         return builder.ToString();
+    }
+
+    //
+    // - - - SubMethods - - -
+    //
+
+    /// <summary>
+    /// returns hacking cost Tuple and a string descriptor of cost at present taking into account gear effects. String is "" and cost is currentHackingCost if there are no gear effects present
+    /// </summary>
+    /// <returns></returns>
+    public Tuple<int, string> GetHackingCost()
+    {
+        int tempCost = 0;
+        string gearEffect = "";
+        //deduct cost
+        int renown = GameManager.instance.playerScript.Renown;
+        //ai gear effects?
+        if (CheckAIGearEffectPresent("Cheap Hacking") == true)
+        {
+            tempCost = hackingCurrentCost / 2;
+            gearEffect = " (Half cost due to Gear)";
+        }
+        else if (CheckAIGearEffectPresent("Free Hacking") == true)
+        {
+            tempCost = 0;
+            gearEffect = " (No cost due to Gear)";
+        }
+        else { tempCost = hackingCurrentCost; }
+        return new Tuple<int, string>(tempCost, gearEffect);
     }
 
     /// <summary>
@@ -2985,6 +3045,18 @@ public class AIManager : MonoBehaviour
     public string GetCloseAITabTooltip()
     { return string.Format("You can access the AI at {0}NO COST{1} for the rest of {2}this turn{3}", colourGood, colourEnd, colourNeutral, colourEnd); }
 
+
+    /// <summary>
+    /// input an AI effect name, eg. "Invisibile Hacking" and, if present (Player's gear) will return true, false otherwise
+    /// </summary>
+    /// <param name="effectName"></param>
+    /// <returns></returns>
+    public bool CheckAIGearEffectPresent(string effectName)
+    {
+        if (listOfPlayerEffects != null && listOfPlayerEffects.Count > 0)
+        { return listOfPlayerEffects.Exists(x => x == effectName); }
+        return false;
+    }
 
     //
     // - - - Debug - - -
