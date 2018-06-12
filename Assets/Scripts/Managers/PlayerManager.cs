@@ -168,6 +168,34 @@ public class PlayerManager : MonoBehaviour
         else { return -1; }
     }
 
+
+    /// <summary>
+    /// returns list of AI(Hacking) gearID's of all gear capable of doing so in Player's inventory. Returns null if none
+    /// </summary>
+    /// <returns></returns>
+    public List<int> CheckAIGearPresent()
+    {
+        List<int> tempList = null;
+        //loop through looking for best piece of gear that matches the type
+        for (int i = 0; i < listOfGear.Count; i++)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+            if (gear != null)
+            {
+                //hacking gear
+                if (gear.type.name.Equals("Hacking") == true)
+                {
+                    //has AI effects
+                    if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+                    { tempList.Add(gear.gearID); }
+                }
+            }
+            else
+            { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+        }
+        return tempList;
+    }
+
     /// <summary>
     /// returns the amount of gear the player has in their inventory
     /// </summary>
@@ -224,12 +252,12 @@ public class PlayerManager : MonoBehaviour
             if (CheckGearPresent(gearID) == false)
             {
                 listOfGear.Add(gearID);
-                Debug.Log(string.Format("PlayerManager: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n"));
+                Debug.LogFormat("PlayerManager: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
                 return true;
             }
             else
             {
-                Debug.LogWarning(string.Format("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID));
+                Debug.LogWarningFormat("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID);
                 return false;
             }
         }

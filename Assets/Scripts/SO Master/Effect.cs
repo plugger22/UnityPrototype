@@ -19,7 +19,7 @@ public class Effect : ScriptableObject
     //result of effect
     [Tooltip("Applies to the current node, the current plus all neighbouring nodes, all nodes or nodes of the same type as the current one")]
     public EffectApply apply;                                   //who does the effect apply to?
-    [Tooltip("What the effect applies to")]
+    [Tooltip("What the effect applies to. If none use the 'No Outcome' outcome as a default 'None' will generate a Null error on import")]
     public EffectOutcome outcome;
     [Tooltip("Use Add or Subtract if appropriate, otherwise ignore")]
     public EffectOperator operand;                              //leave as 'None' if there is no specific stat adjustment
@@ -31,7 +31,7 @@ public class Effect : ScriptableObject
     [Tooltip("Value is always POSITIVE. Use operand 'Subtract' to handle negative numbers")]
     public int value;                                           //leave as '0' if there is no specific stat adjustment
 
-    [Tooltip("True only for cases where a ModalGenericPicker is needed rather than a straight ProcessEffect. False by default. Negates normal effect processing")]
+    [Tooltip("True  for cases where a ModalGenericPicker is needed rather than a straight ProcessEffect & when effect is used as an SO enum. False by default. Negates normal effect processing")]
     public bool ignoreEffect;                           
 
 

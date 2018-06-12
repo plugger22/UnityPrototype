@@ -912,7 +912,7 @@ public class GearManager : MonoBehaviour
             details = new GenericTooltipDetails();
             StringBuilder builderHeader = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
-            builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
+            builderHeader.Append(string.Format("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd));
             string colourGearEffect = colourEffectNeutral;
             if (gear.data == 3) { colourGearEffect = colourEffectGood; }
             else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
@@ -930,10 +930,10 @@ public class GearManager : MonoBehaviour
                 case "Hacking":
                 case "Kinetic":
                 case "Persuasion":
-                    builderHeader.Append(string.Format("{0}<size=90%>Node use? Yes{1}", colourAlert, colourEnd));
+                    builderHeader.Append(string.Format("{0}<size=90%>District use? Yes{1}", colourAlert, colourEnd));
                     break;
                 default:
-                    builderHeader.Append(string.Format("{0}<size=80%>Node use? No{1}", colourGrey, colourEnd));
+                    builderHeader.Append(string.Format("{0}<size=80%>District use? No{1}", colourGrey, colourEnd));
                     break;
             }
             //gear use
@@ -945,6 +945,12 @@ public class GearManager : MonoBehaviour
             { builderHeader.Append(string.Format("{0}Personal use? Yes{1}", colourAlert, colourEnd)); }
             else
             { builderHeader.Append(string.Format("{0}Personal use? No{1}", colourGrey, colourEnd)); }
+            //AI use
+            builderHeader.AppendLine();
+            if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+            { builderHeader.Append(string.Format("{0}AI use? Yes{1}", colourAlert, colourEnd)); }
+            else
+            { builderHeader.Append(string.Format("{0}AI use? No{1}", colourGrey, colourEnd)); }
             //details
             builderDetails.Append(string.Format("{0}{1}{2}", colourEffectGood, gear.rarity.name, colourEnd));
             builderDetails.AppendLine();

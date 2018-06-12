@@ -44,7 +44,6 @@ public class AIDisplayUI : MonoBehaviour
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
     private GlobalSide aiSide;                             //side the AI controls (opposite to player)
     private bool isFree;                                    //true once renown cost paid. Reset to false each turn.
-    private int renownCost;                                 //current renown cost to hack AI
     private string tabBottomTextCache;                      //needed for hacking detected text swap
     private string hackingDetected;
     private Coroutine myCoroutine;                          //used for flashing red alert if hacking attempt detected
@@ -239,7 +238,6 @@ public class AIDisplayUI : MonoBehaviour
         {
             //timer & renown details
             rebootTimer = data.rebootTimer;
-            renownCost = data.renownCost;
             decisionText.text = data.renownDecision;
             //reset isFree at beginning of each turn
             isFree = false;
@@ -382,10 +380,7 @@ public class AIDisplayUI : MonoBehaviour
         renownPanel.gameObject.SetActive(false);
         isFree = true;
         //deduct cost
-        int renown = GameManager.instance.playerScript.Renown;
-        renown -= renownCost;
-        Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
-        GameManager.instance.playerScript.Renown = renown;
+        GameManager.instance.aiScript.UpdateHackingCost();
         //update hacking status
         if (GameManager.instance.aiScript.UpdateHackingStatus() == true)
         {
@@ -400,9 +395,6 @@ public class AIDisplayUI : MonoBehaviour
             //switch off flashers
             detectedFlasher.gameObject.SetActive(false);
         }
-        //message
-        Message message = GameManager.instance.messageScript.AIHacked("AI has been Hacked", renownCost, true);
-        GameManager.instance.dataScript.AddMessage(message);
     }
 
     /// <summary>

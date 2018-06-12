@@ -58,7 +58,6 @@ public class AITracker
 public class AIDisplayData
 {
     public int rebootTimer;                 //AIDisplayUI will only open (allow hacking attempts) if timer = 0 (which infers that isRebooting = false)
-    public int renownCost;                  //cost to view hack AI
     public string task_1_textUpper;
     public string task_1_textLower;
     public string task_1_chance;
@@ -285,6 +284,8 @@ public class AIManager : MonoBehaviour
     List<AINodeData> listOfErasureNodes = new List<AINodeData>();
     //other
     List<string> listOfErasureAILog = new List<string>();
+    List<string> listOfPlayerEffects = new List<string>();
+    List<string> listOfPlayerEffectDescriptors = new List<string>();
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
     List<AITask> listOfTasksFinal = new List<AITask>();
@@ -2074,9 +2075,8 @@ public class AIManager : MonoBehaviour
     {
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
-        //pass timer & cost
+        //pass timer
         data.rebootTimer = rebootTimer;
-        data.renownCost = hackingCurrentCost;
         //decision test
         data.renownDecision = string.Format("Hack AI{0}for {1}{2}{3} Renown", "\n", colourNeutral, hackingCurrentCost, colourEnd);
         //if tasks are present, process into descriptor strings
@@ -2896,6 +2896,71 @@ public class AIManager : MonoBehaviour
         }
         return isDetected;
     }
+
+    /// <summary>
+    /// Player is hacking AI -> pays cost in renown, called from AIDisplayUI.cs -> OpenAIDisplayPanel
+    /// </summary>
+    public void UpdateHackingCost()
+    {
+        //get any relevant player modifiers
+        UpdatePlayerHackingModifiers();
+        //deduct cost
+        int renown = GameManager.instance.playerScript.Renown;
+        renown -= hackingCurrentCost;
+        Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
+        GameManager.instance.playerScript.Renown = renown;
+        //message
+        Message message = GameManager.instance.messageScript.AIHacked("AI has been Hacked", hackingCurrentCost, true);
+        GameManager.instance.dataScript.AddMessage(message);
+    }
+
+    /// <summary>
+    /// gets all gear AI hacking related effects. Run every time player hacks AI for first time each turn. Run at time of hacking so is Dynamic
+    /// </summary>
+    public void UpdatePlayerHackingModifiers()
+    {
+        List<int> tempList = GameManager.instance.playerScript.CheckAIGearPresent();
+        listOfPlayerEffects.Clear();
+        listOfPlayerEffectDescriptors.Clear();
+        if (tempList != null)
+        {
+            //AI hacking gear present
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                //gear is already checked to be hacking and have AI effects by playerManager.cs -> CheckAIGearPresent
+                Gear gear = GameManager.instance.dataScript.GetGear(tempList[i]);
+                if (gear != null)
+                {
+                    if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+                    {
+                        foreach(Effect effect in gear.listOfAIEffects)
+                        {
+                            if (effect != null)
+                            {
+                                listOfPlayerEffects.Add(effect.name);
+                                switch (effect.typeOfEffect.name)
+                                {
+                                    case "Common":
+                                    case "Rare":
+                                        listOfPlayerEffectDescriptors.Add(string.Format("{0}{1}{2} -> {3}", colourNeutral, effect.name, colourEnd, effect.description));
+                                        break;
+                                    case "Unique":
+                                        listOfPlayerEffectDescriptors.Add(string.Format("{0}{1}{2} -> {3}", colourGood, effect.name, colourEnd, effect.description));
+                                        break;
+                                    default:
+                                        Debug.LogWarningFormat("Invalid effect.TypeOfEffect.name \"{0}\"", effect.typeOfEffect.name);
+                                        break;
+                                }
+                            }
+                            else { Debug.LogWarning("Invalid gear.listOfAIEffects effect (Null)"); }
+                        }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", tempList[i]); }
+            }
+        }
+    }
+
 
     /// <summary>
     /// returns tooltip string for AIDisplayUI close tab
