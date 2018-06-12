@@ -2902,8 +2902,6 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void UpdateHackingCost()
     {
-        //get any relevant player modifiers
-        UpdatePlayerHackingModifiers();
         //deduct cost
         int renown = GameManager.instance.playerScript.Renown;
         renown -= hackingCurrentCost;
@@ -2938,7 +2936,7 @@ public class AIManager : MonoBehaviour
                             if (effect != null)
                             {
                                 listOfPlayerEffects.Add(effect.name);
-                                switch (effect.typeOfEffect.name)
+                                switch (gear.rarity.name)
                                 {
                                     case "Common":
                                     case "Rare":
@@ -2948,7 +2946,7 @@ public class AIManager : MonoBehaviour
                                         listOfPlayerEffectDescriptors.Add(string.Format("{0}{1}{2} -> {3}", colourGood, effect.name, colourEnd, effect.description));
                                         break;
                                     default:
-                                        Debug.LogWarningFormat("Invalid effect.TypeOfEffect.name \"{0}\"", effect.typeOfEffect.name);
+                                        Debug.LogWarningFormat("Invalid gear.rarity.name \"{0}\"", gear.rarity.name);
                                         break;
                                 }
                             }
@@ -2975,7 +2973,7 @@ public class AIManager : MonoBehaviour
         {
             builder.AppendFormat("{0}Gear Effects{1}{2}", colourNeutral, colourEnd, "\n");
             foreach(string text in listOfPlayerEffectDescriptors)
-            { builder.AppendFormat("{0}{1}", "/n", text); }
+            { builder.AppendFormat("{0}{1}", "\n", text); }
         }
         return builder.ToString();
     }

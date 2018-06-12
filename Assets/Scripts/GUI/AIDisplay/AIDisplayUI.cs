@@ -366,8 +366,11 @@ public class AIDisplayUI : MonoBehaviour
         }
         else
         {
+            //get any relevant player modifiers
+            GameManager.instance.aiScript.UpdatePlayerHackingModifiers();
             //gear text
             gearText.text = GameManager.instance.aiScript.UpdateGearText();
+            //open UI
             renownPanel.gameObject.SetActive(true);
         }
         //switch on display
