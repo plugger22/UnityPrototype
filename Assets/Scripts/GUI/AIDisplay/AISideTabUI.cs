@@ -56,7 +56,8 @@ public class AISideTabUI : MonoBehaviour
         tooltip.isIgnoreClick = true;
         /*tooltip.x_offset = 20;*/
         tooltip.testTag = "AISideTabUI";
-        tooltip.tooltipMain = "We haven't yet broken the AI's Security systems. Resistance HQ are on the job";
+        tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
+        tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
         //flashing alert
         flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
         Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
@@ -187,8 +188,12 @@ public class AISideTabUI : MonoBehaviour
                 }
             }
             //tooltip data
-            if (string.IsNullOrEmpty(data.tooltipText) == false)
-            { tooltip.tooltipMain = data.tooltipText; }
+            if (string.IsNullOrEmpty(data.tooltipMain) == false)
+            {
+                tooltip.tooltipMain = data.tooltipMain;
+                if (string.IsNullOrEmpty(data.tooltipDetails) == false)
+                { tooltip.tooltipDetails = data.tooltipDetails; }
+            }
             else { tooltip.tooltipMain = "Unknown Data"; }
         }
         else { Debug.LogWarning("Invalid AISideTabData (Null)"); }

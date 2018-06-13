@@ -253,6 +253,7 @@ public class PlayerManager : MonoBehaviour
             {
                 listOfGear.Add(gearID);
                 Debug.LogFormat("PlayerManager: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
+                CheckForAIUpdate(gear);
                 return true;
             }
             else
@@ -283,6 +284,7 @@ public class PlayerManager : MonoBehaviour
             {
                 listOfGear.Remove(gearID);
                 Debug.Log(string.Format("PlayerManager: Gear \"{0}\", gearID {1}, removed from inventory{2}", gear.name, gearID, "\n"));
+                CheckForAIUpdate(gear);
                 return true;
             }
             else
@@ -295,6 +297,25 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
             return false;
+        }
+    }
+
+    /// <summary>
+    /// subMethod for Add / Remove gear that checks and updates AIManager.cs when required for presence, or absence, of AI Hacking gear
+    /// NOTE: Gear checked for Null by calling methods
+    /// </summary>
+    /// <param name="gear"></param>
+    private void CheckForAIUpdate(Gear gear)
+    {
+        //check for AI hacking gear
+        if (gear.type.name.Equals("Hacking") == true)
+        {
+            //has AI effects
+            if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+            {
+                //update AI to reflect this
+                GameManager.instance.aiScript.UpdateAIGearStatus();
+            }
         }
     }
 
