@@ -285,7 +285,14 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
-
+    /// <summary>
+    /// AI notification of Node Activity
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="actorID"></param>
+    /// <param name="delay"></param>
+    /// <returns></returns>
     public Message AINodeActivity(string text, int nodeID, int actorID, int delay)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid NodeID {0}", nodeID));
@@ -302,6 +309,35 @@ public Message PlayerMove(string text, int nodeID)
             message.displayDelay = delay;
             message.data0 = nodeID;
             message.data1 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// AI detects player hacking the AI (TraceBack is On)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="actorID"></param>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    public Message AIDetected(string text, int nodeID, int delay)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid NodeID {0}", nodeID));
+        Debug.Assert(delay >= 0, string.Format("Invalid delay {0}", delay));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Detected;
+            message.side = globalAuthority;
+            message.isPublic = true;
+            message.displayDelay = delay;
+            message.data0 = nodeID;
+            message.data1 = 999;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

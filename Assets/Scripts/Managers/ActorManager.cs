@@ -2405,7 +2405,7 @@ public class ActorManager : MonoBehaviour
                                 if (listOfEffects.Count > 0)
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
-
+                                    dataInput.textOrigin = "Recruit Actor";
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)

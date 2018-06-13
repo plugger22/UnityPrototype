@@ -35,6 +35,9 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerE
                         case HackingStatus.Rebooting:
                             GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingRebootInProgress);
                             break;
+                        case HackingStatus.Offline:
+                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingOffline);
+                            break;
                         case HackingStatus.InsufficientRenown:
                             GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingInsufficientRenown);
                             break;

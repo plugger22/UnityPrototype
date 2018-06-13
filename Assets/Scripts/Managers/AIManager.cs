@@ -203,8 +203,8 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int hackingBaseCost = 2;
     [Tooltip("Amount that the hackingBaseCost increases everytime AI Reboots")]
     [Range(0, 3)] public int hackingIncrement = 1;
-    [Tooltip("% chance that each hacking attempt will lead to an increase in AI Alert Level")]
-    [Range(1, 100)] public int hackingAlertIncreaseChance = 50;
+    [Tooltip("% base chance that each hacking attempt will lead to an increase in AI Alert Level")]
+    [Range(1, 100)] public int hackingDetectedBaseChance = 50;
     [Tooltip("How many turns (inclusive of current) does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
     [Range(0, 10)] public int hackingRebootTimer = 2;
     
@@ -223,6 +223,13 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public Priority aiAlertStatus;
     [HideInInspector] public bool isRebooting;                          //true if AI Security System is rebooting and hacking not possible (external access cut)
     [HideInInspector] public int rebootTimer;                           //how many times does it take to reboot, (rebooted when timer reaches zero)
+    
+    //global flags
+    private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
+    private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility
+    //hacking
+    private int detectChanceMayor;
+    private int detectChanceFaction;
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -495,6 +502,28 @@ public class AIManager : MonoBehaviour
         listOfDecisionTasksNonCritical.Clear();
         listOfDecisionTasksCritical.Clear();
     }
+    
+    //
+    // - - - Global Flags - - -
+    //
+
+    public void SetAIOffline(bool status)
+    {
+        isOffline = status;
+        Debug.LogFormat("[Aim] -> SetAIOffline: isOffLine {0}{1}", isOffline, "\n");
+    }
+
+    public void SetAITraceBack(bool status)
+    {
+        isTraceBack = status;
+        Debug.LogFormat("[Aim] -> SetAITraceBack: isTraceBack {0}{1}", isTraceBack, "\n");
+    }
+
+    public bool CheckAIOffLineStatus()
+    { return isOffline; }
+
+    public bool CheckAITraceBackStatus()
+    { return isTraceBack; }
 
     //
     // - - - Game Start Setup - - -
@@ -823,6 +852,7 @@ public class AIManager : MonoBehaviour
                         else { Debug.LogWarning(string.Format("Invalid connection (Null) for connID {0} -> AI data NOT extracted", message.data1)); }
                         break;
                     case MessageSubType.AI_Node:
+                    case MessageSubType.AI_Detected:
                         //Get Node and add Activity data
                         Node node = GameManager.instance.dataScript.GetNode(message.data0);
                         if (node != null)
@@ -2738,30 +2768,43 @@ public class AIManager : MonoBehaviour
                 }
                 else
                 {
-                    data.topText = "A.I";
-                    data.status = HackingStatus.Possible;
-                    //renown to spare -> Green
-                    if (playerRenown > tempCost)
+                    //AI online and available to be hacked
+                    if (isOffline == false)
                     {
-                        data.bottomText = string.Format("{0}{1}{2}", colourGood, tempCost, colourEnd);
-                        data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourGood, tempCost, colourEnd,
-                            gearEffect, colourNeutral, playerRenown, colourEnd);
-                    }
-                    //just enough renown -> Yellow
-                    else if (playerRenown == tempCost)
-                    {
-                        data.bottomText = string.Format("{0}{1}{2}", colourNeutral, tempCost, colourEnd);
-                        data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
-                             gearEffect, colourNeutral, playerRenown, colourEnd);
+                        data.topText = "A.I";
+                        data.status = HackingStatus.Possible;
+                        //renown to spare -> Green
+                        if (playerRenown > tempCost)
+                        {
+                            data.bottomText = string.Format("{0}{1}{2}", colourGood, tempCost, colourEnd);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourGood, tempCost, colourEnd,
+                                gearEffect, colourNeutral, playerRenown, colourEnd);
+                        }
+                        //just enough renown -> Yellow
+                        else if (playerRenown == tempCost)
+                        {
+                            data.bottomText = string.Format("{0}{1}{2}", colourNeutral, tempCost, colourEnd);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
+                                 gearEffect, colourNeutral, playerRenown, colourEnd);
+                        }
+                        else
+                        {
+                            //insufficient renown -> Greyed out
+                            data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
+                            data.bottomText = string.Format("{0}{1}{2}", colourGrey, tempCost, colourEnd);
+                            data.status = HackingStatus.InsufficientRenown;
+                            data.tooltipMain = string.Format("To hack the AI you require {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
+                                gearEffect, colourBad, playerRenown, colourEnd);
+                        }
                     }
                     else
                     {
-                        //insufficient renown -> Greyed out
+                        //AI Offline and can't be hacked
                         data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                        data.bottomText = string.Format("{0}{1}{2}", colourGrey, tempCost, colourEnd);
-                        data.status = HackingStatus.InsufficientRenown;
-                        data.tooltipMain = string.Format("To hack the AI you require {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
-                            gearEffect, colourBad, playerRenown, colourEnd);
+                        data.bottomText = string.Format("{0}X{1}", colourGrey, colourEnd);
+                        data.status = HackingStatus.Offline;
+                        data.tooltipMain = string.Format("The AI is {0}Isolated{1} from external access and {2}cannot be hacked{3}",
+                            colourBad, colourEnd, colourNeutral, colourEnd);
                     }
                 }
                 break;
@@ -2774,7 +2817,7 @@ public class AIManager : MonoBehaviour
                     colourNeutral, colourEnd);
                 break;
         }
-        data.tooltipDetails = string.Format("Hacking the AI does {0}NOT{1} cost an Action", colourNeutral, colourEnd);
+        data.tooltipDetails = string.Format("Hacking the AI does{0}{1}NOT{2}{3}cost an Action", "\n", colourNeutral, colourEnd, "\n");
         //send data package
         EventManager.instance.PostNotification(EventType.AISendSideData, this, data, "AIManager.cs -> UpdateSideTabData");
     }
@@ -2828,12 +2871,13 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// called everytime Player hacks AI. Updates Alert Status and checks for reboots. Updates data and sends package to AIDisplay. Returns true if player detected
+    /// called from AIDisplayUI.cs -> OpenAIDisplayPanel
     /// NOTE: data is dynamic
     /// </summary>
     public bool UpdateHackingStatus()
     {
         bool isDetected = false;
-        int numOfTurns = 0;         
+        int traceBackDelay = 0;         
         //ignore if Player has already hacked AI this turn
         if (isHacked == false)
         {
@@ -2845,13 +2889,17 @@ public class AIManager : MonoBehaviour
             isHacked = true;
             //does AI Alert Status increase?
             int rnd = Random.Range(0, 100);
-            int chance = hackingAlertIncreaseChance;
+            int chance = hackingDetectedBaseChance;
             if (CheckAIGearEffectPresent("Invisible Hacking") == false)
             {
                 //tooltip
                 data.tooltipHeader = string.Format("There is a {0}{1} %{2} chance of being {3}Detected{4}", colourNeutral, chance, colourEnd, colourBad, colourEnd);
+                //
+                // - - - Detected ? - - -
+                //
                 if (rnd < chance)
                 {
+                    //AI DETECTS hacking attempt
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", chance, rnd, "\n");
                     isDetected = true;
                     hackingAttemptsDetected++;
@@ -2861,24 +2909,24 @@ public class AIManager : MonoBehaviour
                         case Priority.Low:
                             aiAlertStatus = Priority.Medium;
                             colourStatus = colourNeutral;
-                            numOfTurns = 2;
+                            traceBackDelay = 2;
                             //Message
                             string textLow = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, hackingAlertIncreaseChance, rnd);
+                            Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, hackingDetectedBaseChance, rnd);
                             GameManager.instance.dataScript.AddMessage(messageLow);
                             break;
                         case Priority.Medium:
                             aiAlertStatus = Priority.High;
                             colourStatus = colourBad;
-                            numOfTurns = 1;
+                            traceBackDelay = 1;
                             //Message
                             string textMedium = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, hackingAlertIncreaseChance, rnd);
+                            Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, hackingDetectedBaseChance, rnd);
                             GameManager.instance.dataScript.AddMessage(messageMedium);
                             break;
                         case Priority.High:
                             //stays High (auto reset to Low by RebootComplete) -> Trigger Reboot 
-                            numOfTurns = 0;
+                            traceBackDelay = 0;
                             colourStatus = colourBad;
                             RebootCommence();
                             break;
@@ -2886,6 +2934,36 @@ public class AIManager : MonoBehaviour
                             Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
                             break;
                     }
+                    //
+                    // - - - Traceback - - -
+                    //
+                    if (isTraceBack == true)
+                    {
+                        //Player loses a level of invisiblity
+                        int invisibility = GameManager.instance.playerScript.invisibility;
+                        invisibility -= 1;
+                        if (invisibility < 0)
+                        {
+                            //AI knows immediately
+                            traceBackDelay = 0;
+                            invisibility = 0;
+                        }
+                        GameManager.instance.playerScript.invisibility = invisibility;
+                        //immediate flag activity
+                        string text;
+                        if (traceBackDelay == 0)
+                        {
+                            immediateFlagResistance = true;
+                            text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
+                            Message messageImmediate = GameManager.instance.messageScript.AIImmediateActivity(text, globalResistance, GameManager.instance.nodeScript.nodePlayer, -1);
+                            GameManager.instance.dataScript.AddMessage(messageImmediate);
+                        }
+                        //AI notification
+                        text = "AI Hacking attempt detected (TraceBack)";
+                        Message messageDetected = GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);
+                        GameManager.instance.dataScript.AddMessage(messageDetected);
+                    }
+               
                 }
                 else
                 {
@@ -2916,20 +2994,42 @@ public class AIManager : MonoBehaviour
                         break;
                 }
             }
-            //tooltip string
+            //
+            // - - - Tooltip - - - 
+            //
             if (isDetected == true)
             {
                 //ai has detected a hacking attempt
-                if (numOfTurns > 0)
+                if (isTraceBack == true)
                 {
-                    data.tooltipMain = string.Format("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}{7}Authority will know of your location in {8}{9}{10}{11}{12} turn{13}{14}",
-                        colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n", colourAlert, colourEnd, colourNeutral, numOfTurns, colourEnd, colourAlert,
-                        numOfTurns != 1 ? "s" : "", colourEnd);
+                    //TRACEBACK
+                    if (traceBackDelay > 0)
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
+                        builder.AppendFormat("{0}Authority will know your location in {1}{2}{3}{4}{5} turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral, traceBackDelay,
+                            colourEnd, colourAlert, traceBackDelay != 1 ? "s" : "", colourEnd, "\n");
+                        builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
+                        data.tooltipMain = builder.ToString();
+
+                        /*data.tooltipMain = string.Format("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}{7}Authority will know your location in {8}{9}{10}{11}{12} turn{13}{14}",
+                            colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n", colourAlert, colourEnd, colourNeutral, traceBackDelay, colourEnd, colourAlert,
+                            traceBackDelay != 1 ? "s" : "", colourEnd);*/
+                    }
+                    else
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
+                        builder.AppendFormat("{0}Authority will know your location {1}{2}IMMEDIATELY{3}{4}", colourAlert, colourEnd, colourBad, colourEnd, "\n");
+                        builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
+                        data.tooltipMain = builder.ToString();
+                    }
                 }
                 else
                 {
-                    data.tooltipMain = string.Format("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}{7}Authority will know of your location {8}{9}IMMEDIATELY{10}",
-                        colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n", colourAlert, colourEnd, colourBad, colourEnd);
+                    //Normal
+                    data.tooltipMain = string.Format("{0}<size=110%>DETECTED</size>{1}{2}AI Alert Status has increased to {3}{4}{5}{6}", colourBad, colourEnd, "\n", "\n",
+                        colourStatus, aiAlertStatus, colourEnd);
                 }
             }
             else
@@ -2948,7 +3048,9 @@ public class AIManager : MonoBehaviour
             }
             data.tooltipDetails = string.Format("{0}The AI has detected{1}{2}{3}{4} hacking attempt{5}{6}{7}{8}since its last Reboot{9}", colourNormal, colourEnd, "\n",
                 colourNeutral, hackingAttemptsDetected,  hackingAttemptsDetected != 1 ? "s" : "", colourEnd, "\n", colourNormal, colourEnd);
-            //log entries
+            //
+            // - - -admin - - - 
+            //
             Debug.LogFormat("[Aim] -> UpdateHackingStatus: hackingAttemptsTotal now {0}{1}", hackingAttemptsTotal, "\n");
             Debug.LogFormat("[Aim] -> UpdateHackingStatus: AI Alert Status {0}{1}", aiAlertStatus, "\n");
             //data package
@@ -2967,7 +3069,7 @@ public class AIManager : MonoBehaviour
     {
         AIHackingData data = new AIHackingData();
         string colourStatus = colourNormal;
-        int chance = hackingAlertIncreaseChance;
+        int chance = hackingDetectedBaseChance;
         switch (aiAlertStatus)
         {
             case Priority.Low: colourStatus = colourGood; break;
@@ -3168,6 +3270,9 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("- Resource Pools{0}", "\n");
         builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
+        builder.AppendFormat("- Options{0}", "\n");
+        builder.AppendFormat(" isOffline -> {0}{1}", isOffline, "\n");
+        builder.AppendFormat(" isTraceBack -> {0}{1}{2}", isTraceBack, "\n", "\n");
         builder.AppendFormat("- listOfTasksFinal{0}", "\n");
         builder.Append(DebugTaskList(listOfTasksFinal));
         builder.AppendFormat("{0}{1}- listOfTasksPotential{2}", "\n", "\n", "\n");

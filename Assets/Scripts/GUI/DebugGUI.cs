@@ -40,6 +40,8 @@ public class DebugGUI : MonoBehaviour
     private string optionConnectorTooltips;
     private string optionDebugData;
     private string optionNoAI;
+    private string optionAIOffline;
+    private string optionAITraceback;
 
     private void Awake()
     {
@@ -52,6 +54,8 @@ public class DebugGUI : MonoBehaviour
         optionConnectorTooltips = "Conn tooltips ON";
         optionDebugData = "Debug Data ON";
         optionNoAI = "NO AI ON";
+        optionAIOffline = "AIOffline ON";
+        optionAITraceback = "AITraceback ON";
     }
 
     // Update is called once per frame
@@ -353,6 +357,38 @@ public class DebugGUI : MonoBehaviour
                             GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
                         }
                     }
+                }
+            }
+
+            //seventh button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionAIOffline))
+            {
+                Debug.Log("[Dbg] Button -> Toggle AI Offline");
+                if (GameManager.instance.aiScript.CheckAIOffLineStatus() == true)
+                {
+                    GameManager.instance.aiScript.SetAIOffline(false);
+                    optionAIOffline = "AIOffline ON";
+                }
+                else
+                {
+                    GameManager.instance.aiScript.SetAIOffline(true);
+                    optionAIOffline = "AIOffline OFF";
+                }
+            }
+
+            //eigth button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionAITraceback))
+            {
+                Debug.Log("[Dbg] Button -> Toggle AI TraceBack");
+                if (GameManager.instance.aiScript.CheckAITraceBackStatus() == true)
+                {
+                    GameManager.instance.aiScript.SetAITraceBack(false);
+                    optionAITraceback = "AITraceBack ON";
+                }
+                else
+                {
+                    GameManager.instance.aiScript.SetAITraceBack(true);
+                    optionAITraceback = "AITraceback OFF";
                 }
             }
 

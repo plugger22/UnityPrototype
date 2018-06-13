@@ -63,6 +63,8 @@ public class OptionManager : MonoBehaviour
         builder.AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n");
         builder.AppendFormat(" Debug Data -> {0}{1}", debugData, "\n");
         builder.AppendFormat(" NO AI -> {0}{1}", noAI, "\n");
+        builder.AppendFormat(" AI Offline -> {0}{1}", GameManager.instance.aiScript.CheckAIOffLineStatus(), "\n");
+        builder.AppendFormat(" AI TraceBack -> {0}{1}", GameManager.instance.aiScript.CheckAITraceBackStatus(), "\n");
         return builder.ToString();
     }
 
