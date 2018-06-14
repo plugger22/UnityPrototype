@@ -1935,7 +1935,7 @@ public class ActionManager : MonoBehaviour
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
                     details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID);
-                    if (GameManager.instance.playerScript.invisibility == 0)
+                    if (GameManager.instance.playerScript.Invisibility == 0)
                     { isZeroInvisibility = true; }
                 }
                 //Actor

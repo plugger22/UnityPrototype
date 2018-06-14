@@ -164,7 +164,7 @@ public class CaptureManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfGear (Null)"); }
         }
         //invisibility set to zero (most likely already is)
-        GameManager.instance.playerScript.invisibility = 0;
+        GameManager.instance.playerScript.Invisibility = 0;
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //set security state back to normal
@@ -259,7 +259,7 @@ public class CaptureManager : MonoBehaviour
         builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
         //invisibility
         int invisibilityNew = releaseInvisibility;
-        GameManager.instance.playerScript.invisibility = invisibilityNew;
+        GameManager.instance.playerScript.Invisibility = invisibilityNew;
         builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
         //update Player alpha
         GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
@@ -364,7 +364,7 @@ public class CaptureManager : MonoBehaviour
                     if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                     {
                         //Erasure team picks up player/actor immediately if invisibility low enough
-                        if (CheckCaptureVisibility(GameManager.instance.playerScript.invisibility) == true)
+                        if (CheckCaptureVisibility(GameManager.instance.playerScript.Invisibility) == true)
                         {
                             int teamID = node.CheckTeamPresent(teamErasureID);
                             if (teamID > -1)

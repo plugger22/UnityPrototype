@@ -227,6 +227,7 @@ public class AIManager : MonoBehaviour
     //global flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
     private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility
+    private bool isScreamer;                           //if true AI has ability to give Player STRESSED condition whenever they detect a hacking attempt
     //hacking
     private int detectChanceMayor;
     private int detectChanceFaction;
@@ -259,6 +260,7 @@ public class AIManager : MonoBehaviour
     private GlobalSide globalResistance;
     private int totalNodes;
     private int totalConnections;
+    private Condition conditionStressed;
     //decisions Authority
     private DecisionAI decisionAPB;
     private DecisionAI decisionConnSec;
@@ -267,7 +269,8 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionCrackdown;
     private DecisionAI decisionResources;
     //text strings
-    private string tracebackText;
+    private string traceBackText;
+    private string screamerText;
 
     //colour palette 
     private string colourGood;
@@ -338,8 +341,10 @@ public class AIManager : MonoBehaviour
         //sides
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         //get names of node arcs (name or null, if none)
         if (factionAuthority.preferredArc != null) { authorityPreferredArc = factionAuthority.preferredArc.name; }
         if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
@@ -365,7 +370,8 @@ public class AIManager : MonoBehaviour
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
         //text strings
-        tracebackText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>TRACEBACK</size></cspace></font>";
+        traceBackText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>TRACEBACK</size></cspace></font>";
+        screamerText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>SCREAMER</size></cspace></font>";
         //Hacking
         hackingAttemptsTotal = 0;
         hackingAttemptsReboot = 0;
@@ -374,6 +380,9 @@ public class AIManager : MonoBehaviour
         aiAlertStatus = Priority.Low;
         isRebooting = false;
         rebootTimer = 0;
+        isOffline = false;
+        isTraceBack = false;
+        isScreamer = false;
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
@@ -519,11 +528,20 @@ public class AIManager : MonoBehaviour
         Debug.LogFormat("[Aim] -> SetAITraceBack: isTraceBack {0}{1}", isTraceBack, "\n");
     }
 
+    public void SetAIScreamer(bool status)
+    {
+        isScreamer = status;
+        Debug.LogFormat("[Aim] -> SetAIScreamer: isScreamer {0}{1}", isScreamer, "\n");
+    }
+
     public bool CheckAIOffLineStatus()
     { return isOffline; }
 
     public bool CheckAITraceBackStatus()
     { return isTraceBack; }
+
+    public bool CheckAIScreamerStatus()
+    { return isScreamer; }
 
     //
     // - - - Game Start Setup - - -
@@ -2878,8 +2896,10 @@ public class AIManager : MonoBehaviour
     {
         bool isDetected = false;
         bool isTraceBackMasker = false;
+        bool isScreamerMasker = false;
         int traceBackDelay = 0;
-        string text, hackingGearName;
+        string text, traceBackGearName;
+        string screamerGearName = "Screamer Gear";
         //ignore if Player has already hacked AI this turn
         if (isHacked == false)
         {
@@ -2942,10 +2962,10 @@ public class AIManager : MonoBehaviour
                     if (isTraceBack == true)
                     {
                         //gear can negate tracebacks
-                        if (CheckAIGearEffectPresent("TraceBack Masker") == false)
+                        if (CheckAIGearEffectPresent("TraceBack Mask") == false)
                         {
                             //Player loses a level of invisiblity
-                            int invisibility = GameManager.instance.playerScript.invisibility;
+                            int invisibility = GameManager.instance.playerScript.Invisibility;
                             invisibility -= 1;
                             if (invisibility < 0)
                             {
@@ -2953,9 +2973,9 @@ public class AIManager : MonoBehaviour
                                 traceBackDelay = 0;
                                 invisibility = 0;
                             }
-                            GameManager.instance.playerScript.invisibility = invisibility;
+                            GameManager.instance.playerScript.Invisibility = invisibility;
                             //immediate flag activity
-                            
+
                             if (traceBackDelay == 0)
                             {
                                 immediateFlagResistance = true;
@@ -2972,10 +2992,27 @@ public class AIManager : MonoBehaviour
                         {
                             // AI TraceBack defeated by Hacking Gear
                             isTraceBackMasker = true;
-                            Debug.Log("[Aim] -> UpdateHackingStatus: AI TraceBack defeated by Hacking Gear (TraceBack Masker)");
+                            Debug.Log("[Aim] -> UpdateHackingStatus: AI TraceBack defeated by Hacking Gear (TraceBack Mask)");
                         }
                     }
-               
+                    //
+                    // - - - Screamer - - -
+                    //
+                    if (isScreamer == true)
+                    {
+                        //gear can negate Screamer
+                        if (CheckAIGearEffectPresent("Screamer Mask") == false)
+                        {
+                            GameManager.instance.playerScript.AddCondition(conditionStressed);
+                        }
+                        else
+                        {
+                            isScreamerMasker = true;
+                            screamerGearName = GameManager.instance.playerScript.GetAIGearName("Screamer Mask");
+                            if (screamerGearName == null) { screamerGearName = "Screamer Gear"; }
+                            Debug.Log("[Aim] -> UpdateHackingStatus: AI Screamer defeated by Hacking Gear (Screamer Mask)");
+                        }
+                    }
                 }
                 else
                 {
@@ -3020,7 +3057,15 @@ public class AIManager : MonoBehaviour
                         if (traceBackDelay > 0)
                         {
                             StringBuilder builder = new StringBuilder();
-                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
+                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
+                            if (isScreamer == true)
+                            {
+                                builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
+                                if (isScreamerMasker == false)
+                                { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                                else
+                                { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
+                            }
                             builder.AppendFormat("{0}Authority will know your location in {1}{2}{3}{4}{5} turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral, traceBackDelay,
                                 colourEnd, colourAlert, traceBackDelay != 1 ? "s" : "", colourEnd, "\n");
                             builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
@@ -3029,7 +3074,15 @@ public class AIManager : MonoBehaviour
                         else
                         {
                             StringBuilder builder = new StringBuilder();
-                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
+                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
+                            if (isScreamer == true)
+                            {
+                                builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
+                                if (isScreamerMasker == false)
+                                { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                                else
+                                { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
+                            }
                             builder.AppendFormat("{0}Authority will know your location {1}{2}IMMEDIATELY{3}{4}", colourAlert, colourEnd, colourBad, colourEnd, "\n");
                             builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
                             data.tooltipMain = builder.ToString();
@@ -3037,12 +3090,20 @@ public class AIManager : MonoBehaviour
                     }
                     else
                     {
-                        //TraceBack Masker
-                        hackingGearName = GameManager.instance.playerScript.GetAIGearName("TraceBack Masker");
-                        if (hackingGearName == null) { hackingGearName = "Hacking Gear"; }
+                        //TraceBack Mask
+                        traceBackGearName = GameManager.instance.playerScript.GetAIGearName("TraceBack Mask");
+                        if (traceBackGearName == null) { traceBackGearName = "Hacking Gear"; }
                         StringBuilder builder = new StringBuilder();
-                        builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
-                        builder.AppendFormat("{0}{1}{2}{3} defeats the TraceBack{4}{5}", colourNeutral, hackingGearName, colourEnd, colourGood, colourEnd, "\n");
+                        builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
+                        if (isScreamer == true)
+                        {
+                            builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
+                            if (isScreamerMasker == false)
+                            { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                            else
+                            { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
+                        }
+                        builder.AppendFormat("{0}{1}{2}{3} defeats the TraceBack{4}{5}", colourNeutral, traceBackGearName, colourEnd, colourGood, colourEnd, "\n");
                         builder.AppendFormat("No Loss of Invisibility and your position is not revealed");
                         data.tooltipMain = builder.ToString();
                     }
@@ -3059,13 +3120,33 @@ public class AIManager : MonoBehaviour
                 //no detection but change message if just about to trigger a reboot
                 if (aiAlertStatus == Priority.High)
                 {
-                    data.tooltipMain = string.Format("{0}The AI will {1}{2}REBOOT{3}{4} it's Security Systems {5}{6}{7}next time{8}{9}{10} it detects a hacking attempt{11}", colourAlert, colourEnd,
+                    StringBuilder builder = new StringBuilder();
+                    if (isScreamer == true)
+                    {
+                        builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
+                        if (isScreamerMasker == false)
+                        { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                        else
+                        { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
+                    }
+                    builder.AppendFormat("{0}The AI will {1}{2}REBOOT{3}{4} it's Security Systems {5}{6}{7}next time{8}{9}{10} it detects a hacking attempt{11}", colourAlert, colourEnd,
                         colourBad, colourEnd, colourAlert, colourEnd, "\n", colourNeutral, colourEnd, "\n", colourAlert, colourEnd);
+                    data.tooltipMain = builder.ToString();
                 }
                 else
                 {
-                    data.tooltipMain = string.Format("{0}Alert Status increases whenever hacking detected. AI will {1}{2}Reboot{3}{4} at status {5}{6}Critical{7}",
+                    StringBuilder builder = new StringBuilder();
+                    if (isScreamer == true)
+                    {
+                        builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
+                        if (isScreamerMasker == false)
+                        { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                        else
+                        { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
+                    }
+                    builder.AppendFormat("{0}Alert Status increases whenever hacking detected. AI will {1}{2}Reboot{3}{4} at status {5}{6}Critical{7}",
                         colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);
+                    data.tooltipMain = builder.ToString();
                 }
             }
             data.tooltipDetails = string.Format("{0}The AI has detected{1}{2}{3}{4} hacking attempt{5}{6}{7}{8}since its last Reboot{9}", colourNormal, colourEnd, "\n",
@@ -3289,6 +3370,7 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
         builder.AppendFormat("- Options{0}", "\n");
         builder.AppendFormat(" isOffline -> {0}{1}", isOffline, "\n");
+        builder.AppendFormat(" isScreamer -> {0}{1}", isScreamer, "\n");
         builder.AppendFormat(" isTraceBack -> {0}{1}{2}", isTraceBack, "\n", "\n");
         builder.AppendFormat("- listOfTasksFinal{0}", "\n");
         builder.Append(DebugTaskList(listOfTasksFinal));

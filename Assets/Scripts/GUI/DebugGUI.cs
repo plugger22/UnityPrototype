@@ -42,6 +42,7 @@ public class DebugGUI : MonoBehaviour
     private string optionNoAI;
     private string optionAIOffline;
     private string optionAITraceback;
+    private string optionAIScreamer;
 
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class DebugGUI : MonoBehaviour
         optionNoAI = "NO AI ON";
         optionAIOffline = "AIOffline ON";
         optionAITraceback = "AITraceback ON";
+        optionAIScreamer = "AIScreamer ON";
     }
 
     // Update is called once per frame
@@ -389,6 +391,22 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.aiScript.SetAITraceBack(true);
                     optionAITraceback = "AITraceback OFF";
+                }
+            }
+
+            //ninth button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), optionAIScreamer))
+            {
+                Debug.Log("[Dbg] Button -> Toggle AI Screamer");
+                if (GameManager.instance.aiScript.CheckAIScreamerStatus() == true)
+                {
+                    GameManager.instance.aiScript.SetAIScreamer(false);
+                    optionAIScreamer = "AIScreamer ON";
+                }
+                else
+                {
+                    GameManager.instance.aiScript.SetAIScreamer(true);
+                    optionAIScreamer = "AIScreamer OFF";
                 }
             }
 

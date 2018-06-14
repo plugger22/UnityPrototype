@@ -65,6 +65,7 @@ public class OptionManager : MonoBehaviour
         builder.AppendFormat(" NO AI -> {0}{1}", noAI, "\n");
         builder.AppendFormat(" AI Offline -> {0}{1}", GameManager.instance.aiScript.CheckAIOffLineStatus(), "\n");
         builder.AppendFormat(" AI TraceBack -> {0}{1}", GameManager.instance.aiScript.CheckAITraceBackStatus(), "\n");
+        builder.AppendFormat(" AI Screamer -> {0}{1}", GameManager.instance.aiScript.CheckAIScreamerStatus(), "\n");
         return builder.ToString();
     }
 

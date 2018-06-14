@@ -135,7 +135,7 @@ public class TooltipPlayer : MonoBehaviour
                     switch (GameManager.instance.playerScript.inactiveStatus)
                     {
                         case ActorInactive.LieLow:
-                            int numOfTurns = GameManager.instance.actorScript.maxStatValue + 1 - GameManager.instance.playerScript.invisibility;
+                            int numOfTurns = GameManager.instance.actorScript.maxStatValue + 1 - GameManager.instance.playerScript.Invisibility;
                             playerStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
                                 numOfTurns != 1 ? "s" : "");
                             break;
@@ -222,7 +222,7 @@ public class TooltipPlayer : MonoBehaviour
                 builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(renown), renown, colourEnd, "\n");
                 builderStats.Append("0");
                 builderStats.AppendLine();
-                int invisibility = GameManager.instance.playerScript.invisibility;
+                int invisibility = GameManager.instance.playerScript.Invisibility;
                 builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
                 playerStats.text = builderStats.ToString();
                 //Resistance Qualities

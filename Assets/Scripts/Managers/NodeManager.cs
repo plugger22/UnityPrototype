@@ -1102,7 +1102,7 @@ public class NodeManager : MonoBehaviour
                                     {
                                         //gear falls short of security level
                                         adjustInvisibility = -1;
-                                        if (GameManager.instance.playerScript.invisibility <= 1)
+                                        if (GameManager.instance.playerScript.Invisibility <= 1)
                                         {
                                             //invisibility will be zero, or less, if move. Immediate notification
                                             builderDetail.Append(string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourEffectBad, "\n",
@@ -1159,7 +1159,7 @@ public class NodeManager : MonoBehaviour
                 {
                     //player loses one level of invisibility each time they traverse a security rated connection
                     adjustInvisibility = -1;
-                    if (GameManager.instance.playerScript.invisibility <= 1)
+                    if (GameManager.instance.playerScript.Invisibility <= 1)
                     {
                         //invisibility will be zero, or less, if move. Immediate notification
                         moveDetail = string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourEffectBad, "\n",
@@ -1684,7 +1684,7 @@ public class NodeManager : MonoBehaviour
                     builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourEffectBad, moveDetails.changeInvisibility > 0 ? "+" : "",
                         moveDetails.changeInvisibility, colourEnd);
                     //player invisibility
-                    int invisibility = GameManager.instance.playerScript.invisibility;
+                    int invisibility = GameManager.instance.playerScript.Invisibility;
                     if (invisibility == 0)
                     {
                         //moving while invis already 0 triggers immediate alert flag
@@ -1701,7 +1701,7 @@ public class NodeManager : MonoBehaviour
                     //update invisibility
                     invisibility += moveDetails.changeInvisibility;
                     invisibility = Mathf.Max(0, invisibility);
-                    GameManager.instance.playerScript.invisibility = invisibility;
+                    GameManager.instance.playerScript.Invisibility = invisibility;
                     //AI message
                     Connection connection = GameManager.instance.dataScript.GetConnection(moveDetails.connectionID);
                     if (connection != null)

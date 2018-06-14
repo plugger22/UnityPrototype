@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     public string playerNameAuthority;
     
     [HideInInspector] public int numOfRecruits;
-    [HideInInspector] public int invisibility;
+    //[HideInInspector] public int Invisibility;
     [HideInInspector] public int actorID = 999;
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
@@ -30,10 +30,12 @@ public class PlayerManager : MonoBehaviour
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
     private int _renownAuthority;
+    private int _invisibility;
 
     //for fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
+    private string hackingGear;
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
@@ -69,12 +71,20 @@ public class PlayerManager : MonoBehaviour
         {
             if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
             {
+                Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+                Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Renown changed from {0} to {1}{2}", _renownResistance, value, "\n");
                 _renownResistance = value;
+                
                 //update AI side tab (not using an Event here) -> no updates for the first turn
                 if (GameManager.instance.turnScript.Turn > 0)
                 { GameManager.instance.aiScript.UpdateSideTabData(_renownResistance); }
             }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { _renownAuthority = value; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+            {
+                Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+                Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Renown changed from {0} to {1}{2}", _renownAuthority, value, "\n");
+                _renownAuthority = value;
+            }
             else
             {
                 //AI control of both side
@@ -84,6 +94,16 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public int Invisibility
+    {
+        get { return _invisibility; }
+        set
+        {
+            Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+            Debug.LogFormat("[Sta] -> PlayerManager.cs:  Player Invisibility changed from {0} to {1}{2}", _invisibility, value, "\n");
+            _invisibility = value;
+        }
+    }
 
 
     /// <summary>
@@ -108,11 +128,13 @@ public class PlayerManager : MonoBehaviour
         //fast acess fields (BEFORE set stats below)
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        hackingGear = GameManager.instance.gearScript.typeHacking.name;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
         //set stats
         Renown = 0;
-        invisibility = 3;
+        Invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
         //message
@@ -183,7 +205,7 @@ public class PlayerManager : MonoBehaviour
             if (gear != null)
             {
                 //hacking gear
-                if (gear.type.name.Equals("Hacking") == true)
+                if (gear.type.name.Equals(hackingGear) == true)
                 {
                     //has AI effects
                     if (gear.aiHackingEffect != null)
@@ -197,7 +219,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns name of gear that has the specified aiHackingEffect.name, eg. "TraceBack Masker". Returns null if not found
+    /// returns name of gear that has the specified aiHackingEffect.name, eg. "TraceBack Mask". Returns null if not found
     /// </summary>
     /// <param name="effectName"></param>
     /// <returns></returns>
@@ -211,7 +233,7 @@ public class PlayerManager : MonoBehaviour
             if (gear != null)
             {
                 //hacking gear
-                if (gear.type.name.Equals("Hacking") == true)
+                if (gear.type.name.Equals(hackingGear) == true)
                 {
                     //has AI effects -> return first instance found as should be unique 
                     if (gear.aiHackingEffect != null)
@@ -339,7 +361,7 @@ public class PlayerManager : MonoBehaviour
     private void CheckForAIUpdate(Gear gear)
     {
         //check for AI hacking gear
-        if (gear.type.name.Equals("Hacking") == true)
+        if (gear.type.name.Equals(hackingGear) == true)
         {
             //has AI effects
             if (gear.aiHackingEffect != null)
@@ -512,7 +534,7 @@ public class PlayerManager : MonoBehaviour
         builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
         builder.Append(string.Format("- Stats{0}", "\n"));
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
-        { builder.Append(string.Format(" Invisibility {0}{1}", invisibility, "\n")); }
+        { builder.Append(string.Format(" Invisibility {0}{1}", Invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
         builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
         if (listOfConditions.Count > 0)

@@ -236,7 +236,7 @@ namespace modalAPI
     public class InventoryOptionData
     {
         public Sprite sprite;
-        public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'SCREAMER'
+        public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'CHAOS CRITTER'
         public string textLower;                //details that go below name, eg. "Unhappy in 2 turns"
         public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
     }

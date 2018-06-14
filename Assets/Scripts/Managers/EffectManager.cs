@@ -607,7 +607,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     public EffectDataReturn ProcessEffect(Effect effect, Node node, EffectDataInput dataInput, Actor actor = null)
     {
-        int teamID, teamArcID;
+        int teamID, teamArcID, dataBefore;
         EffectDataReturn effectReturn = new EffectDataReturn();
         //set default values
         effectReturn.errorFlag = false;
@@ -921,13 +921,13 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Add":
-                                    if (GameManager.instance.playerScript.invisibility < GameManager.instance.actorScript.maxStatValue)
+                                    if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
                                     {
                                         //adds a variable amount
-                                        int invis = GameManager.instance.playerScript.invisibility;
+                                        int invis = GameManager.instance.playerScript.Invisibility;
                                         invis += effect.value;
                                         invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
-                                        GameManager.instance.playerScript.invisibility = invis;
+                                        GameManager.instance.playerScript.Invisibility = invis;
                                     }
                                     effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd);
                                     break;
@@ -968,8 +968,8 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 case 1:
                                                     //negates invisibility and increases it by +1 at the same time
-                                                    if (GameManager.instance.playerScript.invisibility < GameManager.instance.actorScript.maxStatValue)
-                                                    { GameManager.instance.playerScript.invisibility++; }
+                                                    if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
+                                                    { GameManager.instance.playerScript.Invisibility++; }
                                                     effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText,
                                                         "\n", "\n", colourEffect, gear.name, colourEnd);
                                                     break;
@@ -980,7 +980,7 @@ public class EffectManager : MonoBehaviour
                                     else
                                     {
                                         //No gear present
-                                        int invisibility = GameManager.instance.playerScript.invisibility;
+                                        int invisibility = GameManager.instance.playerScript.Invisibility;
                                         //double effect if spider is present
                                         if (node.isSpider == true)
                                         {
@@ -1012,7 +1012,7 @@ public class EffectManager : MonoBehaviour
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
-                                        GameManager.instance.playerScript.invisibility = invisibility;
+                                        GameManager.instance.playerScript.Invisibility = invisibility;
                                     }
                                     //AI activity message
                                     if (isGearUsed == false)
@@ -1041,19 +1041,23 @@ public class EffectManager : MonoBehaviour
                             //
                             if (actor != null)
                             {
+                                int invisibility = actor.datapoint2;
+                                dataBefore = actor.datapoint2;
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
                                         if (actor.datapoint2 < GameManager.instance.actorScript.maxStatValue)
                                         {
                                             //adds a variable amount
-                                            actor.datapoint2 += effect.value;
-                                            actor.datapoint2 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint2);
+                                            invisibility += effect.value;
+                                            invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
+                                            actor.datapoint2 = invisibility;
+                                            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name, 
+                                                dataBefore, invisibility, "\n");
                                         }
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                     case "Subtract":
-                                        int invisibility = actor.datapoint2;
                                         //double effect if spider is present
                                         if (node.isSpider == true)
                                         {
@@ -1084,6 +1088,8 @@ public class EffectManager : MonoBehaviour
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
                                         actor.datapoint2 = invisibility;
+                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                                            dataBefore, invisibility, "\n");
                                         //AI activity message
                                         int delay;
                                         if (node.isSpider == true) { delay = delayYesSpider; }
@@ -1163,6 +1169,7 @@ public class EffectManager : MonoBehaviour
                             //Actor effect
                             if (actor != null)
                             {
+                                dataBefore = actor.renown;
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
@@ -1175,6 +1182,7 @@ public class EffectManager : MonoBehaviour
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                 }
+                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.renown, "\n");
                             }
                             else
                             {
