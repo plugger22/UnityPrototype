@@ -2795,15 +2795,13 @@ public class AIManager : MonoBehaviour
                         if (playerRenown > tempCost)
                         {
                             data.bottomText = string.Format("{0}{1}{2}", colourGood, tempCost, colourEnd);
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourGood, tempCost, colourEnd,
-                                gearEffect, colourNeutral, playerRenown, colourEnd);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourGood, tempCost, colourEnd, "\n", gearEffect);
                         }
                         //just enough renown -> Yellow
                         else if (playerRenown == tempCost)
                         {
                             data.bottomText = string.Format("{0}{1}{2}", colourNeutral, tempCost, colourEnd);
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
-                                 gearEffect, colourNeutral, playerRenown, colourEnd);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourNeutral, tempCost, colourEnd, "\n", gearEffect);
                         }
                         else
                         {
@@ -2811,8 +2809,7 @@ public class AIManager : MonoBehaviour
                             data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                             data.bottomText = string.Format("{0}{1}{2}", colourGrey, tempCost, colourEnd);
                             data.status = HackingStatus.InsufficientRenown;
-                            data.tooltipMain = string.Format("To hack the AI you require {0}{1}{2}{3} Renown (currently {4}{5}{6})", colourNeutral, tempCost, colourEnd,
-                                gearEffect, colourBad, playerRenown, colourEnd);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourBad, tempCost, colourEnd, "\n", gearEffect);
                         }
                     }
                     else
@@ -3062,7 +3059,7 @@ public class AIManager : MonoBehaviour
                             {
                                 builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
                                 if (isScreamerMasker == false)
-                                { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                                { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
                                 else
                                 { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                             }
@@ -3079,7 +3076,7 @@ public class AIManager : MonoBehaviour
                             {
                                 builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
                                 if (isScreamerMasker == false)
-                                { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                                { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
                                 else
                                 { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                             }
@@ -3099,7 +3096,7 @@ public class AIManager : MonoBehaviour
                         {
                             builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
                             if (isScreamerMasker == false)
-                            { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
+                            { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
                             else
                             { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                         }
@@ -3110,9 +3107,19 @@ public class AIManager : MonoBehaviour
                 }
                 else
                 {
-                    //Normal
-                    data.tooltipMain = string.Format("{0}<size=110%>DETECTED</size>{1}{2}AI Alert Status has increased to {3}{4}{5}{6}", colourBad, colourEnd, "\n", "\n",
-                        colourStatus, aiAlertStatus, colourEnd);
+                    //Normal detection, no traceback, possible screamer
+                    StringBuilder builder = new StringBuilder();
+                    builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}", colourBad, colourEnd, "\n");
+                    if (isScreamer == true)
+                    {
+                        builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
+                        if (isScreamerMasker == false)
+                        { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                        else
+                        { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
+                    }
+                    builder.AppendFormat("AI Alert Status has increased to {0}{1}{2}", colourStatus, aiAlertStatus, colourEnd);
+                    data.tooltipMain = builder.ToString();
                 }
             }
             else
@@ -3120,33 +3127,13 @@ public class AIManager : MonoBehaviour
                 //no detection but change message if just about to trigger a reboot
                 if (aiAlertStatus == Priority.High)
                 {
-                    StringBuilder builder = new StringBuilder();
-                    if (isScreamer == true)
-                    {
-                        builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
-                        if (isScreamerMasker == false)
-                        { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
-                        else
-                        { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
-                    }
-                    builder.AppendFormat("{0}The AI will {1}{2}REBOOT{3}{4} it's Security Systems {5}{6}{7}next time{8}{9}{10} it detects a hacking attempt{11}", colourAlert, colourEnd,
+                    data.tooltipMain = string.Format("{0}The AI will {1}{2}REBOOT{3}{4} it's Security Systems {5}{6}{7}next time{8}{9}{10} it detects a hacking attempt{11}", colourAlert, colourEnd,
                         colourBad, colourEnd, colourAlert, colourEnd, "\n", colourNeutral, colourEnd, "\n", colourAlert, colourEnd);
-                    data.tooltipMain = builder.ToString();
                 }
                 else
                 {
-                    StringBuilder builder = new StringBuilder();
-                    if (isScreamer == true)
-                    {
-                        builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
-                        if (isScreamerMasker == false)
-                        { builder.AppendFormat("Player gains {0}STRESSED{1}Condition{2}", colourAlert, colourEnd, "\n"); }
-                        else
-                        { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
-                    }
-                    builder.AppendFormat("{0}Alert Status increases whenever hacking detected. AI will {1}{2}Reboot{3}{4} at status {5}{6}Critical{7}",
+                    data.tooltipMain = string.Format("{0}Alert Status increases whenever hacking detected. AI will {1}{2}Reboot{3}{4} at status {5}{6}Critical{7}",
                         colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);
-                    data.tooltipMain = builder.ToString();
                 }
             }
             data.tooltipDetails = string.Format("{0}The AI has detected{1}{2}{3}{4} hacking attempt{5}{6}{7}{8}since its last Reboot{9}", colourNormal, colourEnd, "\n",
@@ -3318,13 +3305,17 @@ public class AIManager : MonoBehaviour
         //ai gear effects?
         if (CheckAIGearEffectPresent("Cheap Hacking") == true)
         {
+            string textGear = GameManager.instance.playerScript.GetAIGearName("Cheap Hacking");
+            if (textGear == null) { textGear = "Hacking"; }
             tempCost = hackingCurrentCost / 2;
-            gearEffect = string.Format("{0} (Half cost due to Gear){1}", colourAlert, colourEnd);
+            gearEffect = string.Format("{0} (Half cost due to {1}{2}{3}{4} {5}gear){6}{7}", colourAlert, colourEnd, colourNeutral, textGear, colourEnd, colourAlert, colourEnd, "\n");
         }
         else if (CheckAIGearEffectPresent("Free Hacking") == true)
         {
+            string textGear = GameManager.instance.playerScript.GetAIGearName("Free Hacking");
+            if (textGear == null) { textGear = "Hacking"; }
             tempCost = 0;
-            gearEffect = string.Format("{0} (No cost due to Gear){1}", colourAlert, colourEnd);
+            gearEffect = string.Format("{0} (No cost due to {1}{2}{3}{4} {5}gear){6}{7}", colourAlert, colourEnd, colourNeutral, textGear, colourEnd, colourAlert, colourEnd, "\n");
         }
         else { tempCost = hackingCurrentCost; }
         return new Tuple<int, string>(tempCost, gearEffect);
