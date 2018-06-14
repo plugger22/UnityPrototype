@@ -116,7 +116,7 @@ public class ModalOutcome : MonoBehaviour
     {
         if (details != null)
         {
-            Debug.Log(string.Format("Outcome: {0}{1}", details.textTop, "\n"));
+            Debug.Log(string.Format("ModalOutcome.cs -> SetModalOutcome:  {0}{1}", "\n", details.textTop));
             reason = details.reason;
             //set modal true
             GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);

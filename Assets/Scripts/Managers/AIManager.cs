@@ -2877,7 +2877,9 @@ public class AIManager : MonoBehaviour
     public bool UpdateHackingStatus()
     {
         bool isDetected = false;
-        int traceBackDelay = 0;         
+        bool isTraceBackMasker = false;
+        int traceBackDelay = 0;
+        string text, hackingGearName;
         //ignore if Player has already hacked AI this turn
         if (isHacked == false)
         {
@@ -2939,29 +2941,39 @@ public class AIManager : MonoBehaviour
                     //
                     if (isTraceBack == true)
                     {
-                        //Player loses a level of invisiblity
-                        int invisibility = GameManager.instance.playerScript.invisibility;
-                        invisibility -= 1;
-                        if (invisibility < 0)
+                        //gear can negate tracebacks
+                        if (CheckAIGearEffectPresent("TraceBack Masker") == false)
                         {
-                            //AI knows immediately
-                            traceBackDelay = 0;
-                            invisibility = 0;
+                            //Player loses a level of invisiblity
+                            int invisibility = GameManager.instance.playerScript.invisibility;
+                            invisibility -= 1;
+                            if (invisibility < 0)
+                            {
+                                //AI knows immediately
+                                traceBackDelay = 0;
+                                invisibility = 0;
+                            }
+                            GameManager.instance.playerScript.invisibility = invisibility;
+                            //immediate flag activity
+                            
+                            if (traceBackDelay == 0)
+                            {
+                                immediateFlagResistance = true;
+                                text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
+                                Message messageImmediate = GameManager.instance.messageScript.AIImmediateActivity(text, globalResistance, GameManager.instance.nodeScript.nodePlayer, -1);
+                                GameManager.instance.dataScript.AddMessage(messageImmediate);
+                            }
+                            //AI notification
+                            text = "AI Hacking attempt detected (TraceBack)";
+                            Message messageDetected = GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);
+                            GameManager.instance.dataScript.AddMessage(messageDetected);
                         }
-                        GameManager.instance.playerScript.invisibility = invisibility;
-                        //immediate flag activity
-                        string text;
-                        if (traceBackDelay == 0)
+                        else
                         {
-                            immediateFlagResistance = true;
-                            text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
-                            Message messageImmediate = GameManager.instance.messageScript.AIImmediateActivity(text, globalResistance, GameManager.instance.nodeScript.nodePlayer, -1);
-                            GameManager.instance.dataScript.AddMessage(messageImmediate);
+                            // AI TraceBack defeated by Hacking Gear
+                            isTraceBackMasker = true;
+                            Debug.Log("[Aim] -> UpdateHackingStatus: AI TraceBack defeated by Hacking Gear (TraceBack Masker)");
                         }
-                        //AI notification
-                        text = "AI Hacking attempt detected (TraceBack)";
-                        Message messageDetected = GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);
-                        GameManager.instance.dataScript.AddMessage(messageDetected);
                     }
                
                 }
@@ -3002,26 +3014,36 @@ public class AIManager : MonoBehaviour
                 //ai has detected a hacking attempt
                 if (isTraceBack == true)
                 {
-                    //TRACEBACK
-                    if (traceBackDelay > 0)
+                    if (isTraceBackMasker == false)
                     {
-                        StringBuilder builder = new StringBuilder();
-                        builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
-                        builder.AppendFormat("{0}Authority will know your location in {1}{2}{3}{4}{5} turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral, traceBackDelay,
-                            colourEnd, colourAlert, traceBackDelay != 1 ? "s" : "", colourEnd, "\n");
-                        builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
-                        data.tooltipMain = builder.ToString();
-
-                        /*data.tooltipMain = string.Format("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}{7}Authority will know your location in {8}{9}{10}{11}{12} turn{13}{14}",
-                            colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n", colourAlert, colourEnd, colourNeutral, traceBackDelay, colourEnd, colourAlert,
-                            traceBackDelay != 1 ? "s" : "", colourEnd);*/
+                        //TRACEBACK
+                        if (traceBackDelay > 0)
+                        {
+                            StringBuilder builder = new StringBuilder();
+                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
+                            builder.AppendFormat("{0}Authority will know your location in {1}{2}{3}{4}{5} turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral, traceBackDelay,
+                                colourEnd, colourAlert, traceBackDelay != 1 ? "s" : "", colourEnd, "\n");
+                            builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
+                            data.tooltipMain = builder.ToString();
+                        }
+                        else
+                        {
+                            StringBuilder builder = new StringBuilder();
+                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
+                            builder.AppendFormat("{0}Authority will know your location {1}{2}IMMEDIATELY{3}{4}", colourAlert, colourEnd, colourBad, colourEnd, "\n");
+                            builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
+                            data.tooltipMain = builder.ToString();
+                        }
                     }
                     else
                     {
+                        //TraceBack Masker
+                        hackingGearName = GameManager.instance.playerScript.GetAIGearName("TraceBack Masker");
+                        if (hackingGearName == null) { hackingGearName = "Hacking Gear"; }
                         StringBuilder builder = new StringBuilder();
                         builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, tracebackText, colourEnd, "\n");
-                        builder.AppendFormat("{0}Authority will know your location {1}{2}IMMEDIATELY{3}{4}", colourAlert, colourEnd, colourBad, colourEnd, "\n");
-                        builder.AppendFormat("{0}Player Invisibility -1{1}", colourBad, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}{3} defeats the TraceBack{4}{5}", colourNeutral, hackingGearName, colourEnd, colourGood, colourEnd, "\n");
+                        builder.AppendFormat("No Loss of Invisibility and your position is not revealed");
                         data.tooltipMain = builder.ToString();
                     }
                 }
@@ -3154,29 +3176,24 @@ public class AIManager : MonoBehaviour
                 Gear gear = GameManager.instance.dataScript.GetGear(tempList[i]);
                 if (gear != null)
                 {
-                    if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+                    if (gear.aiHackingEffect != null)
                     {
-                        foreach(Effect effect in gear.listOfAIEffects)
+
+                        listOfPlayerEffects.Add(gear.aiHackingEffect.name);
+                        switch (gear.rarity.name)
                         {
-                            if (effect != null)
-                            {
-                                listOfPlayerEffects.Add(effect.name);
-                                switch (gear.rarity.name)
-                                {
-                                    case "Common":
-                                    case "Rare":
-                                        listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", effect.description, colourNeutral, gear.name, colourEnd));
-                                        break;
-                                    case "Unique":
-                                        listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", effect.description, colourGood, gear.name, colourEnd));
-                                        break;
-                                    default:
-                                        Debug.LogWarningFormat("Invalid gear.rarity.name \"{0}\"", gear.rarity.name);
-                                        break;
-                                }
-                            }
-                            else { Debug.LogWarning("Invalid gear.listOfAIEffects effect (Null)"); }
+                            case "Common":
+                            case "Rare":
+                                listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", gear.aiHackingEffect.description, colourNeutral, gear.name, colourEnd));
+                                break;
+                            case "Unique":
+                                listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", gear.aiHackingEffect.description, colourGood, gear.name, colourEnd));
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Invalid gear.rarity.name \"{0}\"", gear.rarity.name);
+                                break;
                         }
+
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", tempList[i]); }

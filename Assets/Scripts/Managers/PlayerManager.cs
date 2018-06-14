@@ -186,7 +186,7 @@ public class PlayerManager : MonoBehaviour
                 if (gear.type.name.Equals("Hacking") == true)
                 {
                     //has AI effects
-                    if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+                    if (gear.aiHackingEffect != null)
                     { tempList.Add(gear.gearID); }
                 }
             }
@@ -194,6 +194,37 @@ public class PlayerManager : MonoBehaviour
             { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
         }
         return tempList;
+    }
+
+    /// <summary>
+    /// returns name of gear that has the specified aiHackingEffect.name, eg. "TraceBack Masker". Returns null if not found
+    /// </summary>
+    /// <param name="effectName"></param>
+    /// <returns></returns>
+    public string GetAIGearName(string effectName)
+    {
+        string aiGearName = null;
+        //loop through looking for ai Hacking gear
+        for (int i = 0; i < listOfGear.Count; i++)
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+            if (gear != null)
+            {
+                //hacking gear
+                if (gear.type.name.Equals("Hacking") == true)
+                {
+                    //has AI effects -> return first instance found as should be unique 
+                    if (gear.aiHackingEffect != null)
+                    {
+                        if (gear.aiHackingEffect.name.Equals(effectName) == true)
+                        { return gear.name; }
+                    }
+                }
+            }
+            else
+            { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+        }
+        return aiGearName;
     }
 
     /// <summary>
@@ -311,7 +342,7 @@ public class PlayerManager : MonoBehaviour
         if (gear.type.name.Equals("Hacking") == true)
         {
             //has AI effects
-            if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+            if (gear.aiHackingEffect != null)
             {
                 //update AI to reflect this
                 GameManager.instance.aiScript.UpdateAIGearStatus();

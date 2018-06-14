@@ -947,7 +947,7 @@ public class GearManager : MonoBehaviour
             { builderHeader.Append(string.Format("{0}Personal use? No{1}", colourGrey, colourEnd)); }
             //AI use
             builderHeader.AppendLine();
-            if (gear.listOfAIEffects != null && gear.listOfAIEffects.Count > 0)
+            if (gear.aiHackingEffect != null)
             { builderHeader.Append(string.Format("{0}AI use? Yes{1}", colourAlert, colourEnd)); }
             else
             { builderHeader.Append(string.Format("{0}AI use? No{1}", colourGrey, colourEnd)); }

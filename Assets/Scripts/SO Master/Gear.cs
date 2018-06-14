@@ -26,9 +26,8 @@ public class Gear : ScriptableObject
     [Header("Special Cases")]
     [Tooltip("Any effects for when gear is Used by the player within Inventory. Ignore if none")]
     public List<Effect> listOfPersonalEffects;
-    [Tooltip("Any effects for when gear is used by the Player while hacking AI. Ignore if none")]
-    public List<Effect> listOfAIEffects;
-    
+    [Tooltip("Any effect for when gear is used by the Player while hacking AI. Ignore if none")]
+    public Effect aiHackingEffect;
 
 
 }
