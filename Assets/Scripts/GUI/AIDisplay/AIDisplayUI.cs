@@ -172,6 +172,7 @@ public class AIDisplayUI : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// set all UI components (apart from main) to active. Run at level start to ensure no problems (something hasn't been switched off in the editor)
     /// </summary>
@@ -367,7 +368,7 @@ public class AIDisplayUI : MonoBehaviour
         else
         {
             //get any relevant player modifiers
-            GameManager.instance.aiScript.UpdatePlayerHackingModifiers();
+            GameManager.instance.aiScript.UpdatePlayerHackingLists();
             //gear text
             gearText.text = GameManager.instance.aiScript.UpdateGearText();
             //open UI

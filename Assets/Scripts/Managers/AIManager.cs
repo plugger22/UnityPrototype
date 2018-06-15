@@ -204,7 +204,7 @@ public class AIManager : MonoBehaviour
     [Tooltip("Amount that the hackingBaseCost increases everytime AI Reboots")]
     [Range(0, 3)] public int hackingIncrement = 1;
     [Tooltip("% base chance that each hacking attempt will lead to an increase in AI Alert Level")]
-    [Range(1, 100)] public int hackingDetectedBaseChance = 50;
+    [Range(1, 100)] public int hackingDetectBaseChance = 50;
     [Tooltip("How many turns (inclusive of current) does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
     [Range(0, 10)] public int hackingRebootTimer = 2;
     
@@ -218,7 +218,8 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public int hackingAttemptsTotal;                  //number of hacking attempts overall
     [HideInInspector] public int hackingAttemptsReboot;                 //number of hacking attempts since last reboot
     [HideInInspector] public int hackingAttemptsDetected;               //number of times hacking detected by AI since last reboot
-    [HideInInspector] public int hackingCurrentCost;
+    [HideInInspector] public int hackingCurrentCost;                    //base current cost to hack
+    [HideInInspector] public int hackingModifiedCost;                   //base cost to hack modified by gear, etc.
     [HideInInspector] public bool isHacked;                             //true if player has already hacked AI this turn, reset each turn
     [HideInInspector] public Priority aiAlertStatus;
     [HideInInspector] public bool isRebooting;                          //true if AI Security System is rebooting and hacking not possible (external access cut)
@@ -229,8 +230,9 @@ public class AIManager : MonoBehaviour
     private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility
     private bool isScreamer;                           //if true AI has ability to give Player STRESSED condition whenever they detect a hacking attempt
     //hacking
-    private int detectChanceMayor;
-    private int detectChanceFaction;
+    private int detectModifierMayor;                    //modifiers to base chance of AI detecting an hacking attempt (HackingDetectBaseChance)
+    private int detectModifierFaction;
+    private int detectModifierGear;
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -392,6 +394,7 @@ public class AIManager : MonoBehaviour
         SetColours();
         //event listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "AIManager");
     }
 
     /// <summary>
@@ -407,6 +410,9 @@ public class AIManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.StartTurnEarly:
+                StartTurnEarly();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -471,10 +477,7 @@ public class AIManager : MonoBehaviour
         ProcessDecisionTask();
         //choose tasks for the following turn
         ProcessFinalTasks(authorityMaxTasksPerTurn);
-        //send data to UI's
-        UpdateTaskDisplayData();
-        UpdateSideTabData();
-        UpdateBottomTabData();
+
         //reset flags
         immediateFlagResistance = false;
         isHacked = false;
@@ -510,6 +513,22 @@ public class AIManager : MonoBehaviour
         listOfErasureTasks.Clear();
         listOfDecisionTasksNonCritical.Clear();
         listOfDecisionTasksCritical.Clear();
+    }
+
+    /// <summary>
+    /// Start Turn Early
+    /// </summary>
+    private void StartTurnEarly()
+    {
+        if (GameManager.instance.turnScript.Turn > 0)
+        {
+            //update lists for gear hacking effects
+            UpdatePlayerHackingLists();
+            //send data to AI Display UI elements
+            UpdateTaskDisplayData();
+            UpdateSideTabData();
+            UpdateBottomTabData();
+        }
     }
     
     //
@@ -2129,11 +2148,11 @@ public class AIManager : MonoBehaviour
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
         Tuple<int, string> resultsCost = GetHackingCost();
-        int tempCost = resultsCost.Item1;
+        hackingModifiedCost = resultsCost.Item1;
         //pass timer
         data.rebootTimer = rebootTimer;
         //decision test
-        data.renownDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, tempCost, colourEnd);
+        data.renownDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, hackingModifiedCost, colourEnd);
         //if tasks are present, process into descriptor strings
         if (count > 0)
         {
@@ -2767,7 +2786,7 @@ public class AIManager : MonoBehaviour
         AISideTabData data = new AISideTabData();
         //ai gear effects?
         Tuple<int, string> results = GetHackingCost();
-        int tempCost = results.Item1;
+        hackingModifiedCost = results.Item1;
         string gearEffect = results.Item2;
         switch (GameManager.instance.playerScript.status)
         {
@@ -2792,24 +2811,24 @@ public class AIManager : MonoBehaviour
                         data.topText = "A.I";
                         data.status = HackingStatus.Possible;
                         //renown to spare -> Green
-                        if (playerRenown > tempCost)
+                        if (playerRenown > hackingModifiedCost)
                         {
-                            data.bottomText = string.Format("{0}{1}{2}", colourGood, tempCost, colourEnd);
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourGood, tempCost, colourEnd, "\n", gearEffect);
+                            data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingModifiedCost, colourEnd);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourGood, hackingModifiedCost, colourEnd, "\n", gearEffect);
                         }
                         //just enough renown -> Yellow
-                        else if (playerRenown == tempCost)
+                        else if (playerRenown == hackingModifiedCost)
                         {
-                            data.bottomText = string.Format("{0}{1}{2}", colourNeutral, tempCost, colourEnd);
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourNeutral, tempCost, colourEnd, "\n", gearEffect);
+                            data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingModifiedCost, colourEnd);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourNeutral, hackingModifiedCost, colourEnd, "\n", gearEffect);
                         }
                         else
                         {
                             //insufficient renown -> Greyed out
                             data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                            data.bottomText = string.Format("{0}{1}{2}", colourGrey, tempCost, colourEnd);
+                            data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
                             data.status = HackingStatus.InsufficientRenown;
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourBad, tempCost, colourEnd, "\n", gearEffect);
+                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
                         }
                     }
                     else
@@ -2826,7 +2845,7 @@ public class AIManager : MonoBehaviour
             default:
                 //player indisposed -> Greyed out
                 data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                data.bottomText = string.Format("{0}{1}{2}", colourGrey, tempCost, colourEnd);
+                data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
                 data.status = HackingStatus.Indisposed;
                 data.tooltipMain = string.Format("You are {0}not in a position to Hack the AI{1} at present due to your {2}current circumstances{3}", colourBad, colourEnd,
                     colourNeutral, colourEnd);
@@ -2908,11 +2927,13 @@ public class AIManager : MonoBehaviour
             isHacked = true;
             //does AI Alert Status increase?
             int rnd = Random.Range(0, 100);
-            int chance = hackingDetectedBaseChance;
+            //int chance = hackingDetectBaseChance;
+            Tuple<int, string> results = GetChanceOfDetection();
+            int chance = results.Item1;
             if (CheckAIGearEffectPresent("Invisible Hacking") == false)
             {
                 //tooltip
-                data.tooltipHeader = string.Format("There is a {0}{1} %{2} chance of being {3}Detected{4}", colourNeutral, chance, colourEnd, colourBad, colourEnd);
+                data.tooltipHeader = results.Item2;
                 //
                 // - - - Detected ? - - -
                 //
@@ -2931,7 +2952,7 @@ public class AIManager : MonoBehaviour
                             traceBackDelay = 2;
                             //Message
                             string textLow = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, hackingDetectedBaseChance, rnd);
+                            Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, chance, rnd);
                             GameManager.instance.dataScript.AddMessage(messageLow);
                             break;
                         case Priority.Medium:
@@ -2940,7 +2961,7 @@ public class AIManager : MonoBehaviour
                             traceBackDelay = 1;
                             //Message
                             string textMedium = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, hackingDetectedBaseChance, rnd);
+                            Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, chance, rnd);
                             GameManager.instance.dataScript.AddMessage(messageMedium);
                             break;
                         case Priority.High:
@@ -3011,6 +3032,7 @@ public class AIManager : MonoBehaviour
                         }
                     }
                 }
+                // NOT Detected
                 else
                 {
                     //no change to status
@@ -3054,12 +3076,13 @@ public class AIManager : MonoBehaviour
                         if (traceBackDelay > 0)
                         {
                             StringBuilder builder = new StringBuilder();
-                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
+                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourBad, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
                             if (isScreamer == true)
                             {
                                 builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
                                 if (isScreamerMasker == false)
-                                { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                                { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n", 
+                                    colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
                                 else
                                 { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                             }
@@ -3071,12 +3094,13 @@ public class AIManager : MonoBehaviour
                         else
                         {
                             StringBuilder builder = new StringBuilder();
-                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
+                            builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourBad, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
                             if (isScreamer == true)
                             {
                                 builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
                                 if (isScreamerMasker == false)
-                                { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                                { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
+                                      colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
                                 else
                                 { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                             }
@@ -3091,12 +3115,13 @@ public class AIManager : MonoBehaviour
                         traceBackGearName = GameManager.instance.playerScript.GetAIGearName("TraceBack Mask");
                         if (traceBackGearName == null) { traceBackGearName = "Hacking Gear"; }
                         StringBuilder builder = new StringBuilder();
-                        builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
+                        builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourBad, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
                         if (isScreamer == true)
                         {
                             builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
                             if (isScreamerMasker == false)
-                            { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                            { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
+                                colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
                             else
                             { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                         }
@@ -3114,7 +3139,8 @@ public class AIManager : MonoBehaviour
                     {
                         builder.AppendFormat("{0}{1}{2}{3}", colourBad, screamerText, colourEnd, "\n");
                         if (isScreamerMasker == false)
-                        { builder.AppendFormat("{0}Player gains {1}{2}STRESSED{3}{4} Condition{5}{6}", colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
+                        { builder.AppendFormat("{0}Player gains{1}{2}{3}STRESSED{4}{5} Condition{6}{7}", colourBad, colourEnd, "\n",
+                            colourNeutral, colourEnd, colourBad, colourEnd, "\n"); }
                         else
                         { builder.AppendFormat("{0}{1}{2}{3} defeats the Screamer{4}{5}", colourNeutral, screamerGearName, colourEnd, colourGood, colourEnd, "\n"); }
                     }
@@ -3159,7 +3185,8 @@ public class AIManager : MonoBehaviour
     {
         AIHackingData data = new AIHackingData();
         string colourStatus = colourNormal;
-        int chance = hackingDetectedBaseChance;
+        Tuple<int, string> results = GetChanceOfDetection();
+        int chance = results.Item1;
         switch (aiAlertStatus)
         {
             case Priority.Low: colourStatus = colourGood; break;
@@ -3200,16 +3227,17 @@ public class AIManager : MonoBehaviour
         int renown = GameManager.instance.playerScript.Renown;
         //ai gear effects?
         Tuple <int, string> results = GetHackingCost();
-        int tempCost = results.Item1;
+        hackingModifiedCost = results.Item1;
         string gearEffect = results.Item2;
         //update Player renown
-        renown -= tempCost;
+        renown -= hackingModifiedCost;
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
         GameManager.instance.playerScript.Renown = renown;
         //message
-        Message message = GameManager.instance.messageScript.AIHacked(string.Format("AI has been Hacked{0}", gearEffect), tempCost, true);
+        Message message = GameManager.instance.messageScript.AIHacked(string.Format("AI has been Hacked{0}", gearEffect), hackingModifiedCost, true);
         GameManager.instance.dataScript.AddMessage(message);
     }
+
 
 
     /// <summary>
@@ -3220,7 +3248,7 @@ public class AIManager : MonoBehaviour
         //no update during first turn (player shouldn't be able to open side tab yet).
         if (GameManager.instance.turnScript.Turn > 0)
         {
-            UpdatePlayerHackingModifiers();
+            UpdatePlayerHackingLists();
             UpdateSideTabData();
             UpdateTaskDisplayData();
         }
@@ -3230,7 +3258,7 @@ public class AIManager : MonoBehaviour
     /// <summary>
     /// gets all gear AI hacking related effects. Run every time player hacks AI for first time each turn. Run at time of hacking so is Dynamic
     /// </summary>
-    public void UpdatePlayerHackingModifiers()
+    public void UpdatePlayerHackingLists()
     {
         List<int> tempList = GameManager.instance.playerScript.CheckAIGearPresent();
         listOfPlayerEffects.Clear();
@@ -3310,7 +3338,8 @@ public class AIManager : MonoBehaviour
             tempCost = hackingCurrentCost / 2;
             gearEffect = string.Format("{0} (Half cost due to {1}{2}{3}{4} {5}gear){6}{7}", colourAlert, colourEnd, colourNeutral, textGear, colourEnd, colourAlert, colourEnd, "\n");
         }
-        else if (CheckAIGearEffectPresent("Free Hacking") == true)
+        //Free Hacking will override Cheap Hacking if both are present
+        if (CheckAIGearEffectPresent("Free Hacking") == true)
         {
             string textGear = GameManager.instance.playerScript.GetAIGearName("Free Hacking");
             if (textGear == null) { textGear = "Hacking"; }
@@ -3319,6 +3348,28 @@ public class AIManager : MonoBehaviour
         }
         else { tempCost = hackingCurrentCost; }
         return new Tuple<int, string>(tempCost, gearEffect);
+    }
+
+    /// <summary>
+    /// subMethod to return modified chance (%) of any given hacking attempt being detected as well as a colour formatted tooltip string detailing a breakdown of chance factors
+    /// </summary>
+    /// <returns></returns>
+    private Tuple<int, string> GetChanceOfDetection()
+    {
+        //base chance
+        int chance = hackingDetectBaseChance;
+        string detectText = "";
+        StringBuilder builder = new StringBuilder();
+        //Mayor modifier
+        string modiferMayor = "";
+        //AI security protocols 
+        string modifierProtocols = "";
+        //Gear modifiers
+        string modifierGear = "";
+        //put together tooltip string
+        builder.AppendFormat("{0}<size=110%>{1} %</size>{2}{3}Chance of being Detected", colourNeutral, chance, colourEnd, "\n");
+        detectText = builder.ToString();
+        return new Tuple<int, string>(chance, detectText);
     }
 
     /// <summary>

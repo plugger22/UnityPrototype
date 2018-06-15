@@ -536,9 +536,9 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
             //thirteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Set State"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Set Sec State"))
             {
-                Debug.Log("[Dbg] Button -> Set State");
+                Debug.Log("[Dbg] Button -> Set Security State");
                 if (debugDisplay != 22)
                 { debugDisplay = 22; }
                 else { debugDisplay = 0; }

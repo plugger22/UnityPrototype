@@ -142,8 +142,6 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void ProcessNewTurn()
     {
-        Debug.LogFormat("[Trn] TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
-            _turn, GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n");
         bool finishedProcessing = false;
         int safetyCircuit = 0;
         //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
@@ -186,6 +184,8 @@ public class TurnManager : MonoBehaviour
     {
         //increment turn counter
         _turn++;
+        Debug.LogFormat("[Trn] TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
+            _turn, GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n");
         Debug.LogFormat("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.StartTurnEarly, this, null, "TurnManager.cs -> StartTurnEarly");
         //reset nodes and connections if not in normal state
