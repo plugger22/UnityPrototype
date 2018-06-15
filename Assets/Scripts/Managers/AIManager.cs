@@ -210,7 +210,9 @@ public class AIManager : MonoBehaviour
     [Tooltip("How much of a modifier is a 'Lower Detection' gear effect have on your chances of being detected while hacking AI")]
     [Range(0, 50)] public int hackingLowDetectionEffect = 20;
     [Tooltip("Each level of AI Security Protocol increases the chance of detecting a hacking attempt by this much")]
-    [Range(0, 50)] public int hackingSecurityProtocolFactor = 20;
+    [Range(0, 50)] public int hackingSecurityProtocolFactor = 15;
+    [Tooltip("Mayoral Traits that increase / decrease the chance of detecting an AI hacking attempt are adjusted by this amount")]
+    [Range(0, 50)] public int hackingTraitDetectionFactor = 20;
     
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
@@ -245,6 +247,7 @@ public class AIManager : MonoBehaviour
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
+    
 
     //decision data
     private float connSecRatio;
@@ -262,9 +265,13 @@ public class AIManager : MonoBehaviour
     private int teamArcDamage = -1;
     private int teamArcErasure = -1;
     private int maxTeamsAtNode = -1;
+    //fast access -> traits
+    private int aiDetectionChanceHigher;
+    private int aiDetectionChanceLower;
     //sides
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
+    private City city;
     private int totalNodes;
     private int totalConnections;
     private Condition conditionStressed;
@@ -345,13 +352,21 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionSecAlert != null, "Invalid decisionSecAlert (Null)");
         Debug.Assert(decisionCrackdown != null, "Invalid decisionCrackdown (Null)");
         Debug.Assert(decisionResources != null, "Invalid decisionResources (Null)");
+
         //sides
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        city = GameManager.instance.cityScript.GetCity();
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(city != null, "Invalid City (Null)");
+        //cached TraitEffects
+        aiDetectionChanceHigher = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceHigher");
+        aiDetectionChanceLower = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceLower");
+        Debug.Assert(aiDetectionChanceHigher > -1, "Invalid aiDetectionChanceHigher (-1)");
+        Debug.Assert(aiDetectionChanceLower > -1, "Invalid aiDetectionChanceLower (-1)");
         //get names of node arcs (name or null, if none)
         if (factionAuthority.preferredArc != null) { authorityPreferredArc = factionAuthority.preferredArc.name; }
         if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
@@ -3041,6 +3056,7 @@ public class AIManager : MonoBehaviour
                 // NOT Detected
                 else
                 {
+                    Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt Undetected, need {0}, rolled {1}{2}", chance, rnd, "\n");
                     //no change to status
                     switch (aiAlertStatus)
                     {
@@ -3364,30 +3380,48 @@ public class AIManager : MonoBehaviour
     {
         //base chance
         int chance = hackingDetectBaseChance;
+        bool showBase = false;
         string detectText = "";
         string gearName = GameManager.instance.playerScript.GetAIGearName("Invisible Hacking");
         if (gearName == null)
         {
             StringBuilder builder = new StringBuilder();
-            //Mayor modifier
+            //Mayor modifier -> traits
             string textMayor = "";
+            if (city.mayor.CheckTraitEffect(aiDetectionChanceHigher) == true)
+            {
+                chance += hackingTraitDetectionFactor;
+                showBase = true;
+                textMayor = string.Format("{0}<size=90%>{1}Mayor effect +{2}{3}</size>", "\n", colourBad, hackingTraitDetectionFactor, colourEnd);
+            }
+            else if (city.mayor.CheckTraitEffect(aiDetectionChanceLower) == true)
+            {
+                chance -= hackingTraitDetectionFactor;
+                showBase = true;
+                textMayor = string.Format("{0}<size=90%>{1}Mayor effect -{2}{3}</size>", "\n", colourGood, hackingTraitDetectionFactor, colourEnd);
+            }
             //AI security protocols 
             string textProtocols = "";
             if (aiSecurityProtocolLevel > 0)
             {
                 int protocolEffect = aiSecurityProtocolLevel * hackingSecurityProtocolFactor;
                 chance += protocolEffect;
-                textProtocols = string.Format("{0}<size=90%>{1}AI Security Protocol effect +{2}{3}</size>", "\n", colourBad, protocolEffect, colourEnd);
+                showBase = true;
+                textProtocols = string.Format("{0}<size=90%>{1}AI Protocol effect +{2}{3}</size>", "\n", colourBad, protocolEffect, colourEnd);
             }
             //Gear modifiers
             string textGear = "";
             if (GameManager.instance.playerScript.GetAIGearName("Lower Detection") != null)
             {
                 chance -= hackingLowDetectionEffect;
+                showBase = true;
                 textGear = string.Format("{0}<size=90%>{1}Gear effect -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect, colourEnd);
             }
+            //keep within acceptable parameters
+            Mathf.Clamp(chance, 0, 100);
             //put together tooltip string
             builder.AppendFormat("{0}<size=110%>{1} %</size>{2}{3}Chance of being Detected", colourNeutral, chance, colourEnd, "\n");
+            if (showBase == true) { builder.AppendFormat("{0}{1}<size=90%>Base {2} %</size>{3}", "\n", colourNeutral, hackingDetectBaseChance, colourEnd); }
             if (textMayor.Length > 0) { builder.Append(textMayor); }
             if (textProtocols.Length > 0) { builder.Append(textProtocols); }
             if (textGear.Length > 0) { builder.Append(textGear); }

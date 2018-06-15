@@ -15,7 +15,8 @@ public class Mayor : ScriptableObject
 
     [HideInInspector] public int mayorID;
 
-    private Trait trait;
+    public Trait trait;
+
     private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
 
     //

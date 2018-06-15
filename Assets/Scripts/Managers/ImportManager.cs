@@ -936,7 +936,12 @@ public class ImportManager : MonoBehaviour
                 mayor.mayorID = counter++;
                 //add to dictionary
                 try
-                { dictOfMayors.Add(mayor.mayorID, mayor); }
+                {
+                    dictOfMayors.Add(mayor.mayorID, mayor);
+                    //initialise trait
+                    if (mayor.trait != null)
+                    { mayor.AddTrait(mayor.trait); }
+                }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Mayor (Null)"); counter--; }
                 catch (ArgumentException)
