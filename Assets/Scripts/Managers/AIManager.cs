@@ -207,6 +207,10 @@ public class AIManager : MonoBehaviour
     [Range(1, 100)] public int hackingDetectBaseChance = 50;
     [Tooltip("How many turns (inclusive of current) does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
     [Range(0, 10)] public int hackingRebootTimer = 2;
+    [Tooltip("How much of a modifier is a 'Lower Detection' gear effect have on your chances of being detected while hacking AI")]
+    [Range(0, 50)] public int hackingLowDetectionEffect = 20;
+    [Tooltip("Each level of AI Security Protocol increases the chance of detecting a hacking attempt by this much")]
+    [Range(0, 50)] public int hackingSecurityProtocolFactor = 20;
     
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
@@ -233,6 +237,7 @@ public class AIManager : MonoBehaviour
     private int detectModifierMayor;                    //modifiers to base chance of AI detecting an hacking attempt (HackingDetectBaseChance)
     private int detectModifierFaction;
     private int detectModifierGear;
+    private int aiSecurityProtocolLevel;                //each level of security provides a 'HackingSecurityProtocolFactor' * level increased risk of hacking attempt detection
 
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -380,6 +385,7 @@ public class AIManager : MonoBehaviour
         hackingAttemptsDetected = 0;
         hackingCurrentCost = hackingBaseCost;
         aiAlertStatus = Priority.Low;
+        aiSecurityProtocolLevel = 0;
         isRebooting = false;
         rebootTimer = 0;
         isOffline = false;
@@ -3200,7 +3206,7 @@ public class AIManager : MonoBehaviour
         data.hackingStatus = string.Format("{0} Hacking Attempt{1}{2}AI Alert Status {3}{4}{5}", hackingAttemptsReboot,
             hackingAttemptsReboot != 1 ? "s" : "", "\n", colourStatus, aiAlertStatus, colourEnd);
         //tooltip
-        data.tooltipHeader = string.Format("There is a {0}{1} %{2} chance of being {3}Detected{4}", colourNeutral, chance, colourEnd, colourBad, colourEnd);
+        data.tooltipHeader = results.Item2;
         if (aiAlertStatus == Priority.High)
         {
             data.tooltipMain = string.Format("{0}The AI will {1}{2}REBOOT{3}{4} it's Security Systems {5}{6}{7}next time{8}{9}{10} it detects a hacking attempt{11}", colourAlert, colourEnd,
@@ -3359,16 +3365,40 @@ public class AIManager : MonoBehaviour
         //base chance
         int chance = hackingDetectBaseChance;
         string detectText = "";
-        StringBuilder builder = new StringBuilder();
-        //Mayor modifier
-        string modiferMayor = "";
-        //AI security protocols 
-        string modifierProtocols = "";
-        //Gear modifiers
-        string modifierGear = "";
-        //put together tooltip string
-        builder.AppendFormat("{0}<size=110%>{1} %</size>{2}{3}Chance of being Detected", colourNeutral, chance, colourEnd, "\n");
-        detectText = builder.ToString();
+        string gearName = GameManager.instance.playerScript.GetAIGearName("Invisible Hacking");
+        if (gearName == null)
+        {
+            StringBuilder builder = new StringBuilder();
+            //Mayor modifier
+            string textMayor = "";
+            //AI security protocols 
+            string textProtocols = "";
+            if (aiSecurityProtocolLevel > 0)
+            {
+                int protocolEffect = aiSecurityProtocolLevel * hackingSecurityProtocolFactor;
+                chance += protocolEffect;
+                textProtocols = string.Format("{0}<size=90%>{1}AI Security Protocol effect +{2}{3}</size>", "\n", colourBad, protocolEffect, colourEnd);
+            }
+            //Gear modifiers
+            string textGear = "";
+            if (GameManager.instance.playerScript.GetAIGearName("Lower Detection") != null)
+            {
+                chance -= hackingLowDetectionEffect;
+                textGear = string.Format("{0}<size=90%>{1}Gear effect -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect, colourEnd);
+            }
+            //put together tooltip string
+            builder.AppendFormat("{0}<size=110%>{1} %</size>{2}{3}Chance of being Detected", colourNeutral, chance, colourEnd, "\n");
+            if (textMayor.Length > 0) { builder.Append(textMayor); }
+            if (textProtocols.Length > 0) { builder.Append(textProtocols); }
+            if (textGear.Length > 0) { builder.Append(textGear); }
+            detectText = builder.ToString();
+        }
+        else
+        {
+            //Invisible Hacking gear present -> Player can't be detected -> no change to status
+            detectText = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd, 
+                colourNeutral, gearName, colourEnd);
+        }
         return new Tuple<int, string>(chance, detectText);
     }
 
@@ -3379,6 +3409,11 @@ public class AIManager : MonoBehaviour
     public string GetCloseAITabTooltip()
     { return string.Format("You can access the AI at {0}NO COST{1} for the rest of {2}this turn{3}", colourGood, colourEnd, colourNeutral, colourEnd); }
 
+    /// <summary>
+    /// Increase level by one notch
+    /// </summary>
+    public void IncreaseAISecurityProtocolLevel()
+    { aiSecurityProtocolLevel++; }
 
     /// <summary>
     /// input an AI effect name, eg. "Invisibile Hacking" and, if present (Player's gear) will return true, false otherwise
@@ -3411,6 +3446,7 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
         builder.AppendFormat("- Options{0}", "\n");
+        builder.AppendFormat(" AI Security Protocol level {0}{1}", aiSecurityProtocolLevel, "\n");
         builder.AppendFormat(" isOffline -> {0}{1}", isOffline, "\n");
         builder.AppendFormat(" isScreamer -> {0}{1}", isScreamer, "\n");
         builder.AppendFormat(" isTraceBack -> {0}{1}{2}", isTraceBack, "\n", "\n");

@@ -198,7 +198,7 @@ public class PlayerManager : MonoBehaviour
     public List<int> CheckAIGearPresent()
     {
         List<int> tempList = new List<int>();
-        //loop through looking for best piece of gear that matches the type
+        //loop through looking for all AI hacking capable gear
         for (int i = 0; i < listOfGear.Count; i++)
         {
             Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
@@ -235,7 +235,7 @@ public class PlayerManager : MonoBehaviour
                 //hacking gear
                 if (gear.type.name.Equals(hackingGear) == true)
                 {
-                    //has AI effects -> return first instance found as should be unique 
+                    //has AI effects -> return first instance found
                     if (gear.aiHackingEffect != null)
                     {
                         if (gear.aiHackingEffect.name.Equals(effectName) == true)

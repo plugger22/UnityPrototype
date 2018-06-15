@@ -410,6 +410,13 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+            //tenth button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "AISecProtocol +"))
+            {
+                Debug.Log("[Dbg] Button -> Increase AI Security Protocol");
+                GameManager.instance.aiScript.IncreaseAISecurityProtocolLevel();
+            }
+
             //
             // - - - Actions (third box)
             //
@@ -549,6 +556,7 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("[Dbg] Button -> Show Decision Nodes");
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes, "DebugGUI.cs -> OnGUI");
             }
+
 
 
             //
@@ -770,6 +778,10 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
+                        break;
+                    //
+                    case 24:
+                        
                         break;
                 }
             }
