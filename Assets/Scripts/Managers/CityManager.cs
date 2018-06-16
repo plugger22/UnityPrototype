@@ -73,9 +73,7 @@ public class CityManager : MonoBehaviour
         if (city.mayor != null)
         {
             city.faction = city.mayor.faction;
-            /*Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryMayor);
-            Debug.Assert(trait != null, "Invalid Mayoral trait (Null)");
-            city.mayor.AddTrait(trait);*/
+            Debug.LogFormat("CityManager.cs -> City {0}, {1},  Trait {2}, Faction {3}{4}", city.name, city.mayor.name, city.mayor.trait.tag, city.mayor.faction.name, "\n");
             //initialise authority faction (determined by mayor's faction
             GameManager.instance.factionScript.factionAuthority = city.mayor.faction;
         }

@@ -48,7 +48,7 @@ public class Connection : MonoBehaviour
                 //raise level
                 if (tempValue > 0)
                 {
-                    Mathf.Clamp(tempValue, 1, 3);
+                    tempValue = Mathf.Clamp(tempValue, 1, 3);
                     tempValue = 4 - tempValue;
                 }
                 //lower but can't go any lower than None

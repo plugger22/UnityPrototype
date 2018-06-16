@@ -71,7 +71,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
             {
-                Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+                value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Renown changed from {0} to {1}{2}", _renownResistance, value, "\n");
                 _renownResistance = value;
                 
@@ -81,7 +81,7 @@ public class PlayerManager : MonoBehaviour
             }
             else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
             {
-                Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+                value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Renown changed from {0} to {1}{2}", _renownAuthority, value, "\n");
                 _renownAuthority = value;
             }
@@ -99,7 +99,7 @@ public class PlayerManager : MonoBehaviour
         get { return _invisibility; }
         set
         {
-            Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+            value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
             Debug.LogFormat("[Sta] -> PlayerManager.cs:  Player Invisibility changed from {0} to {1}{2}", _invisibility, value, "\n");
             _invisibility = value;
         }

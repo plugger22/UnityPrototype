@@ -85,20 +85,20 @@ public class Node : MonoBehaviour
     public int Security
     {
         get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSecurity) + GetTeamEffect(NodeData.Security), minValue, maxValue); }
-        set { _security = value; Mathf.Clamp(_security, 0, 3); }
+        set { _security = value; _security = Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
         get
         { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeStability) + GetTeamEffect(NodeData.Stability), minValue, maxValue); }
-        set { _stability = value; Mathf.Clamp(_stability, 0, 3); }
+        set { _stability = value; _stability = Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
         get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSupport) + GetTeamEffect(NodeData.Support), minValue, maxValue); }
-        set { _support = value; Mathf.Clamp(_support, 0, 3); }
+        set { _support = value; _support = Mathf.Clamp(_support, 0, 3); }
     }
 
     public bool isTracerKnown

@@ -685,9 +685,9 @@ public class LevelManager : MonoBehaviour
             node.Security = node.Arc.Security;
             //keep within range of 0 to 3
             int maxNodeValue = GameManager.instance.nodeScript.maxNodeValue;
-            Mathf.Clamp(node.Stability, 0, maxNodeValue);
-            Mathf.Clamp(node.Security, 0, maxNodeValue);
-            Mathf.Clamp(node.Support, 0, maxNodeValue);
+            node.Stability = Mathf.Clamp(node.Stability, 0, maxNodeValue);
+            node.Security = Mathf.Clamp(node.Security, 0, maxNodeValue);
+            node.Support = Mathf.Clamp(node.Support, 0, maxNodeValue);
             //position
             node.nodePosition = obj.transform.position;
             //target -> none

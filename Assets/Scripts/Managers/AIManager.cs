@@ -209,8 +209,10 @@ public class AIManager : MonoBehaviour
     [Range(0, 10)] public int hackingRebootTimer = 2;
     [Tooltip("How much of a modifier is a 'Lower Detection' gear effect have on your chances of being detected while hacking AI")]
     [Range(0, 50)] public int hackingLowDetectionEffect = 20;
+    [Tooltip("How much of a modifier does the Player being STRESSED have on their chances of being detected while hacking AI")]
+    [Range(0, 50)] public int hackingStressedDetectionEffect = 25;
     [Tooltip("Each level of AI Security Protocol increases the chance of detecting a hacking attempt by this much")]
-    [Range(0, 50)] public int hackingSecurityProtocolFactor = 15;
+    [Range(0, 50)] public int hackingSecurityProtocolFactor = 10;
     [Tooltip("Mayoral Traits that increase / decrease the chance of detecting an AI hacking attempt are adjusted by this amount")]
     [Range(0, 50)] public int hackingTraitDetectionFactor = 20;
     
@@ -268,6 +270,8 @@ public class AIManager : MonoBehaviour
     //fast access -> traits
     private int aiDetectionChanceHigher;
     private int aiDetectionChanceLower;
+    //conditions
+    private Condition stressedCondition;
     //sides
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -352,7 +356,9 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionSecAlert != null, "Invalid decisionSecAlert (Null)");
         Debug.Assert(decisionCrackdown != null, "Invalid decisionCrackdown (Null)");
         Debug.Assert(decisionResources != null, "Invalid decisionResources (Null)");
-
+        //conditions
+        stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
+        Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
         //sides
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -3392,13 +3398,13 @@ public class AIManager : MonoBehaviour
             {
                 chance += hackingTraitDetectionFactor;
                 showBase = true;
-                textMayor = string.Format("{0}<size=90%>{1}Mayor effect +{2}{3}</size>", "\n", colourBad, hackingTraitDetectionFactor, colourEnd);
+                textMayor = string.Format("{0}<size=90%>{1}Mayor +{2}{3}</size>", "\n", colourBad, hackingTraitDetectionFactor, colourEnd);
             }
             else if (city.mayor.CheckTraitEffect(aiDetectionChanceLower) == true)
             {
                 chance -= hackingTraitDetectionFactor;
                 showBase = true;
-                textMayor = string.Format("{0}<size=90%>{1}Mayor effect -{2}{3}</size>", "\n", colourGood, hackingTraitDetectionFactor, colourEnd);
+                textMayor = string.Format("{0}<size=90%>{1}Mayor -{2}{3}</size>", "\n", colourGood, hackingTraitDetectionFactor, colourEnd);
             }
             //AI security protocols 
             string textProtocols = "";
@@ -3407,7 +3413,7 @@ public class AIManager : MonoBehaviour
                 int protocolEffect = aiSecurityProtocolLevel * hackingSecurityProtocolFactor;
                 chance += protocolEffect;
                 showBase = true;
-                textProtocols = string.Format("{0}<size=90%>{1}AI Protocol effect +{2}{3}</size>", "\n", colourBad, protocolEffect, colourEnd);
+                textProtocols = string.Format("{0}<size=90%>{1}AI Protocol +{2}{3}</size>", "\n", colourBad, protocolEffect, colourEnd);
             }
             //Gear modifiers
             string textGear = "";
@@ -3415,16 +3421,26 @@ public class AIManager : MonoBehaviour
             {
                 chance -= hackingLowDetectionEffect;
                 showBase = true;
-                textGear = string.Format("{0}<size=90%>{1}Gear effect -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect, colourEnd);
+                textGear = string.Format("{0}<size=90%>{1}Gear -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect, colourEnd);
+            }
+            //Player Stressed
+            string textStressed = "";
+            stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
+            if (GameManager.instance.playerScript.CheckConditionPresent(stressedCondition) == true)
+            {
+                chance += hackingStressedDetectionEffect;
+                showBase = true;
+                textStressed = string.Format("{0}<size=90%>{1}STRESSED +{2}{3}</size>", "\n", colourBad, hackingStressedDetectionEffect, colourEnd);
             }
             //keep within acceptable parameters
-            Mathf.Clamp(chance, 0, 100);
+            chance = Mathf.Clamp(chance, 0, 100);
             //put together tooltip string
-            builder.AppendFormat("{0}<size=110%>{1} %</size>{2}{3}Chance of being Detected", colourNeutral, chance, colourEnd, "\n");
+            builder.AppendFormat("{0}<size=110%> {1} %</size>{2} {3}Chance of being Detected", "<mark=#FFFFFF4D>", chance, "</mark>", "\n");
             if (showBase == true) { builder.AppendFormat("{0}{1}<size=90%>Base {2} %</size>{3}", "\n", colourNeutral, hackingDetectBaseChance, colourEnd); }
             if (textMayor.Length > 0) { builder.Append(textMayor); }
             if (textProtocols.Length > 0) { builder.Append(textProtocols); }
             if (textGear.Length > 0) { builder.Append(textGear); }
+            if (textStressed.Length > 0) { builder.Append(textStressed); }
             detectText = builder.ToString();
         }
         else

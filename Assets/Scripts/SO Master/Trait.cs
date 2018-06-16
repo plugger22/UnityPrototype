@@ -13,7 +13,7 @@ public class Trait : ScriptableObject
     public string tag;
     [Tooltip("Used as a description in the trait tooltip")]
     public string description;
-    [Tooltip("Is the trait good, neutral or bad (value assigned dynamically 2 / 1 / 0)")]
+    [Tooltip("Is the trait good, neutral or bad from Point of View of Resistance (value assigned dynamically  2 / 1 / 0)")]
     public GlobalType typeOfTrait;
     [Tooltip("Only add a side if the trait is specific to a particular side, otherwise leave as 'None'")]
     public GlobalSide side;
