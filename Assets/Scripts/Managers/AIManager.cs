@@ -215,6 +215,12 @@ public class AIManager : MonoBehaviour
     [Range(0, 50)] public int hackingSecurityProtocolFactor = 10;
     [Tooltip("Mayoral Traits that increase / decrease the chance of detecting an AI hacking attempt are adjusted by this amount")]
     [Range(0, 50)] public int hackingTraitDetectionFactor = 20;
+
+    [Header("AI Countermeasures")]
+    [Tooltip("When the AI instigates Hacking counter measures they will stay in place for this number of turns")]
+    [Range(1, 10)] public int aiCounterMeasureTimer = 5;
+    [Tooltip("The highest level that the AI can raise it's Security Protocols to in order to increase the chances of detecting Hacking")]
+    [Range(1, 5)] public int aiSecurityProtocolMaxLevel = 3;
     
 
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
@@ -233,16 +239,20 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public bool isRebooting;                          //true if AI Security System is rebooting and hacking not possible (external access cut)
     [HideInInspector] public int rebootTimer;                           //how many times does it take to reboot, (rebooted when timer reaches zero)
     
-    //global flags
+    //ai countermeasure flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
     private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility
     private bool isScreamer;                           //if true AI has ability to give Player STRESSED condition whenever they detect a hacking attempt
+    //ai countermeasures
+    private int timerTraceBack;
+    private int timerScreamer;
+    private int timerOffline;
     //hacking
     private int detectModifierMayor;                    //modifiers to base chance of AI detecting an hacking attempt (HackingDetectBaseChance)
     private int detectModifierFaction;
     private int detectModifierGear;
     private int aiSecurityProtocolLevel;                //each level of security provides a 'HackingSecurityProtocolFactor' * level increased risk of hacking attempt detection
-
+    //factions
     private Faction factionAuthority;
     private Faction factionResistance;
     private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
@@ -270,6 +280,8 @@ public class AIManager : MonoBehaviour
     //fast access -> traits
     private int aiDetectionChanceHigher;
     private int aiDetectionChanceLower;
+    private int aiCounterMeasurePriorityRaise;
+    private int aiCounterMeasureTimerDoubled;
     //conditions
     private Condition stressedCondition;
     //sides
@@ -286,6 +298,10 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionSecAlert;
     private DecisionAI decisionCrackdown;
     private DecisionAI decisionResources;
+    private DecisionAI decisionTraceBack;
+    private DecisionAI decisionScreamer;
+    private DecisionAI decisionProtocol;
+    private DecisionAI decisionOffline;
     //text strings
     private string traceBackText;
     private string screamerText;
@@ -350,12 +366,24 @@ public class AIManager : MonoBehaviour
         decisionCrackdown = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
         decisionResources = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("TraceBack");
+        decisionTraceBack = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Screamer");
+        decisionScreamer = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Offline");
+        decisionOffline = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Protocol");
+        decisionProtocol = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
         Debug.Assert(decisionSecAlert != null, "Invalid decisionSecAlert (Null)");
         Debug.Assert(decisionCrackdown != null, "Invalid decisionCrackdown (Null)");
         Debug.Assert(decisionResources != null, "Invalid decisionResources (Null)");
+        Debug.Assert(decisionTraceBack != null, "Invalid decisionTraceBack (Null)");
+        Debug.Assert(decisionScreamer != null, "Invalid decisionScreamer (Null)");
+        Debug.Assert(decisionOffline != null, "Invalid decisionOffline (Null)");
+        Debug.Assert(decisionProtocol != null, "Invalid decisionProtocol (Null)");
         //conditions
         stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
@@ -371,8 +399,12 @@ public class AIManager : MonoBehaviour
         //cached TraitEffects
         aiDetectionChanceHigher = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceHigher");
         aiDetectionChanceLower = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceLower");
+        aiCounterMeasurePriorityRaise = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasurePriorityRaise");
+        aiCounterMeasureTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasureTimerDoubled");
         Debug.Assert(aiDetectionChanceHigher > -1, "Invalid aiDetectionChanceHigher (-1)");
         Debug.Assert(aiDetectionChanceLower > -1, "Invalid aiDetectionChanceLower (-1)");
+        Debug.Assert(aiCounterMeasurePriorityRaise > -1, "Invalid aiCounterMeasurePriorityRaise (-1)");
+        Debug.Assert(aiCounterMeasureTimerDoubled > -1, "Invalid aiCounterMeasuresTimerDoubled (-1)");
         //get names of node arcs (name or null, if none)
         if (factionAuthority.preferredArc != null) { authorityPreferredArc = factionAuthority.preferredArc.name; }
         if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
@@ -1748,7 +1780,9 @@ public class AIManager : MonoBehaviour
     {
         Debug.Assert(listOfDecisionTasksNonCritical != null, "Invalid listOfDecisionTasksNonCritical (Null)");
         Debug.Assert(listOfDecisionTasksCritical != null, "Invalid listOfDecisionTasksCritical (Null)");
-        //Security -> Critical priority
+        //
+        // - - - OnMap Security -> Critical priority - - -
+        //
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         {
             //generate a security decision, choose which one (random choice but exclude ones where the cost can't be covered by the resource pool)
@@ -1813,6 +1847,9 @@ public class AIManager : MonoBehaviour
             }
             else { Debug.LogWarning("Invalid connID (-1). Connection Decision Deleted"); }
         }
+        //
+        // - - - Logistics - - -
+        //
         //Team request -> medium priority
         if (teamRatio < teamRatioThreshold)
         {
@@ -1828,7 +1865,6 @@ public class AIManager : MonoBehaviour
             { listOfDecisionTasksNonCritical.Add(taskTeam); }
         }
         //Resource request -> once made can be Approved or Denied by higher authority. NOTE: make sure it is '<=' to avoid getting stuck in dead end with '<'
-        /*Debug.LogFormat("[Aim] ProcessDecisionTask: isInsufficientResources {0}{1}", isInsufficientResources, "\n");*/
         if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) <= lowResourcesThreshold || isInsufficientResources == true)
         {
             AITask taskResources = new AITask()
@@ -1842,7 +1878,121 @@ public class AIManager : MonoBehaviour
             listOfDecisionTasksCritical.Add(taskResources);
         }
         isInsufficientResources = false;
-        //Select task -> Critical have priority
+        //
+        // - - - AI CounterMeasures - - - 
+        //
+        // No countermeasure options are valid if rebooting or offline
+        if (isRebooting == false && isOffline == false)
+        {
+            //priority depends on how many times hacking has been detected since last reboot
+            Priority priorityDetect = Priority.Low;
+            int priorityWeight = 0;
+            // Determine priority -> applies to all AI countermeasures (priority up a notch if Mayor has 'Tech Savvy' trait
+            switch (hackingAttemptsDetected)
+            {
+                case 0:
+                    if (city.mayor.CheckTraitEffect(aiCounterMeasurePriorityRaise) == false)
+                    { priorityDetect = Priority.Low; priorityWeight = priorityLowWeight; }
+                    else
+                    { priorityDetect = Priority.Medium; priorityWeight = priorityMediumWeight; }
+                    break;
+                case 1:
+                    if (city.mayor.CheckTraitEffect(aiCounterMeasurePriorityRaise) == false)
+                    { priorityDetect = Priority.Medium; priorityWeight = priorityMediumWeight; }
+                    else
+                    { priorityDetect = Priority.High; priorityWeight = priorityHighWeight; }
+                    break;
+                case 2:
+                    if (city.mayor.CheckTraitEffect(aiCounterMeasurePriorityRaise) == false)
+                    { priorityDetect = Priority.High; priorityWeight = priorityHighWeight; }
+                    else
+                    { priorityDetect = Priority.Critical; priorityWeight = 0; }
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid hackingAttemptsDetected {0}", hackingAttemptsDetected);
+                    break;
+            }
+            Debug.Assert(priorityWeight > 0, "Invalid priorityWeight (zero)");
+            //AI Security Protocols -> increase chance of detection
+            if (aiSecurityProtocolLevel < aiSecurityProtocolMaxLevel)
+            {
+                AITask taskProtocol = new AITask()
+                {
+                    data1 = decisionProtocol.cost,
+                    data2 = decisionProtocol.aiDecID,
+                    name0 = decisionProtocol.name,
+                    type = AIType.Decision,
+                    priority = priorityDetect
+                };
+                if (priorityDetect == Priority.Critical)
+                { listOfDecisionTasksCritical.Add(taskProtocol); }
+                else
+                {
+                    for (int i = 0; i < priorityWeight; i++)
+                    { listOfDecisionTasksNonCritical.Add(taskProtocol); }
+                }
+            }
+            //AI TraceBack
+            if (isTraceBack == false)
+            {
+                AITask taskTraceBack = new AITask()
+                {
+                    data1 = decisionTraceBack.cost,
+                    data2 = decisionTraceBack.aiDecID,
+                    name0 = decisionTraceBack.name,
+                    type = AIType.Decision,
+                    priority = priorityDetect
+                };
+                if (priorityDetect == Priority.Critical)
+                { listOfDecisionTasksCritical.Add(taskTraceBack); }
+                else
+                {
+                    for (int i = 0; i < priorityWeight; i++)
+                    { listOfDecisionTasksNonCritical.Add(taskTraceBack); }
+                }
+            }
+            //AI Screamer
+            if (isScreamer == false)
+            {
+                AITask taskScreamer = new AITask()
+                {
+                    data1 = decisionScreamer.cost,
+                    data2 = decisionScreamer.aiDecID,
+                    name0 = decisionScreamer.name,
+                    type = AIType.Decision,
+                    priority = priorityDetect
+                };
+                if (priorityDetect == Priority.Critical)
+                { listOfDecisionTasksCritical.Add(taskScreamer); }
+                else
+                {
+                    for (int i = 0; i < priorityWeight; i++)
+                    { listOfDecisionTasksNonCritical.Add(taskScreamer); }
+                }
+            }
+            //AI Offline
+            if (isTraceBack == false && isScreamer == false)
+            {
+                AITask taskOffline = new AITask()
+                {
+                    data1 = decisionOffline.cost,
+                    data2 = decisionOffline.aiDecID,
+                    name0 = decisionOffline.name,
+                    type = AIType.Decision,
+                    priority = priorityDetect
+                };
+                if (priorityDetect == Priority.Critical)
+                { listOfDecisionTasksCritical.Add(taskOffline); }
+                else
+                {
+                    for (int i = 0; i < priorityWeight; i++)
+                    { listOfDecisionTasksNonCritical.Add(taskOffline); }
+                }
+            }
+        }
+        //
+        // - - - Select task -> Critical have priority - - - 
+        //
         Debug.LogFormat("[Aim] -> ProcessDecisionTask: {0} Critical tasks available{1}", listOfDecisionTasksCritical.Count, "\n");
         Debug.LogFormat("[Aim] -> ProcessDecisionTask: {0} Non-Critical tasks available{1}", listOfDecisionTasksNonCritical.Count, "\n");
         if (listOfDecisionTasksCritical.Count > 0)
