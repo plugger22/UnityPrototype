@@ -247,11 +247,11 @@ public class AIManager : MonoBehaviour
     private int timerTraceBack;
     private int timerScreamer;
     private int timerOffline;
+    private int aiSecurityProtocolLevel;                //each level of security provides a 'HackingSecurityProtocolFactor' * level increased risk of hacking attempt detection
     //hacking
     private int detectModifierMayor;                    //modifiers to base chance of AI detecting an hacking attempt (HackingDetectBaseChance)
     private int detectModifierFaction;
     private int detectModifierGear;
-    private int aiSecurityProtocolLevel;                //each level of security provides a 'HackingSecurityProtocolFactor' * level increased risk of hacking attempt detection
     //factions
     private Faction factionAuthority;
     private Faction factionResistance;
@@ -519,8 +519,9 @@ public class AIManager : MonoBehaviour
         ExecuteTasks(authorityMaxTasksPerTurn);
         ClearAICollections();
         UpdateResources(globalAuthority);
-        //Reboot check
+        //AI Status checks
         UpdateRebootStatus();
+        UpdateCounterMeasureTimers();
         //Info Gathering      
         GetAINodeData();
         ProcessNodeData();
@@ -2801,10 +2802,20 @@ public class AIManager : MonoBehaviour
             }
             else if (task.name0.Equals(decisionConnSec.name) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(task.data0); }
+            //logistics
             else if (task.name0.Equals(decisionRequestTeam.name) == true)
             { isSuccess = ProcessAITeamRequest(); }
             else if (task.name0.Equals(decisionResources.name) == true)
             { isSuccess = ProcessAIResourceRequest(); }
+            //countermeasures
+            else if (task.name0.Equals(decisionTraceBack.name) == true)
+            { isSuccess = ProcessAITraceBack(); }
+            else if (task.name0.Equals(decisionScreamer.name) == true)
+            { isSuccess = ProcessAIScreamer(); }
+            else if (task.name0.Equals(decisionProtocol.name) == true)
+            { isSuccess = ProcessAIProtocol(); }
+            else if (task.name0.Equals(decisionOffline.name) == true)
+            { isSuccess = ProcessAIOffline(); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
             //debug logs
@@ -2947,6 +2958,72 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Implements TraceBack AI Countermeasure. Returns true if successful
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessAITraceBack()
+    {
+        isTraceBack = true;
+        //countermeasure last for a set period of time (2 x if mayor has 'Daemon' trait)
+        if (city.mayor.CheckTraitEffect(aiCounterMeasureTimerDoubled) == true)
+        { timerTraceBack = aiCounterMeasureTimer * 2; }
+        else { timerTraceBack = aiCounterMeasureTimer; }
+        //Message
+        Message message = GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack), timerTraceBack);
+        GameManager.instance.dataScript.AddMessage(message);
+        return isTraceBack;
+    }
+
+    /// <summary>
+    /// Implements Screamer AI Countermeasure. Returns true if successful
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessAIScreamer()
+    {
+        isScreamer = true;
+        //countermeasure last for a set period of time (2 x if mayor has 'Daemon' trait)
+        if (city.mayor.CheckTraitEffect(aiCounterMeasureTimerDoubled) == true)
+        { timerScreamer = aiCounterMeasureTimer * 2; }
+        else { timerScreamer = aiCounterMeasureTimer; }
+        //Message
+        Message message = GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer), timerScreamer);
+        GameManager.instance.dataScript.AddMessage(message);
+        return isScreamer;
+    }
+
+    /// <summary>
+    /// Implements Offline AI Countermeasures. Returns true if successful
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessAIOffline()
+    {
+        isOffline = true;
+        //countermeasure last for a set period of time (2 x if mayor has 'Daemon' trait)
+        if (city.mayor.CheckTraitEffect(aiCounterMeasureTimerDoubled) == true)
+        { timerOffline = aiCounterMeasureTimer * 2; }
+        else { timerOffline = aiCounterMeasureTimer; }
+        //Message
+        Message message = GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline), timerOffline);
+        GameManager.instance.dataScript.AddMessage(message);
+        return isOffline;
+    }
+
+    /// <summary>
+    /// Implements increase AI Security Protocol level countermeasure. Returns true if successful.
+    /// NOTE: calling method has already checked that there is scope for an increase
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessAIProtocol()
+    {
+        aiSecurityProtocolLevel++;
+        //Message
+        string msgText = string.Format("AI increase SECURITY PROTOCOLS to level {0}", aiSecurityProtocolLevel);
+        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText, -1, aiSecurityProtocolLevel);
+        GameManager.instance.dataScript.AddMessage(message);
+        return true;
+    }
+
+    /// <summary>
     /// returns true if there is space available for a new team (team ratio < team ratio Threshold)
     /// </summary>
     /// <returns></returns>
@@ -3077,6 +3154,55 @@ public class AIManager : MonoBehaviour
             if (rebootTimer <= 0)
             { RebootComplete(); }
             Debug.LogFormat("[Aim] AIManager.cs -> UpdateRebootStatus: rebootTimer now {0}{1}", rebootTimer, "\n");
+        }
+    }
+
+    /// <summary>
+    /// Decrement any active countermeasure timers and 
+    /// </summary>
+    private void UpdateCounterMeasureTimers()
+    {
+        //TraceBack
+        if (timerTraceBack > 0)
+        {
+            timerTraceBack--;
+            if (timerTraceBack == 0)
+            {
+                //remove TraceBack
+                isTraceBack = false;
+                //message
+                Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure TRACEBACK Cancelled");
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerTraceBack now {0}{1}", timerTraceBack, "\n"); }
+        }
+        //Screamer
+        if (timerScreamer > 0)
+        {
+            timerScreamer--;
+            if (timerScreamer == 0)
+            {
+                //remove Screamer
+                isScreamer = false;
+                //message
+                Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure SCREAMER Cancelled");
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerScreamer now {0}{1}", timerScreamer, "\n"); }
+        }
+        //Offline
+        if (timerOffline > 0)
+        {
+            timerOffline--;
+            if (timerOffline == 0)
+            {
+                //remove Offline
+                isOffline = false;
+                //message
+                Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure OFFLINE Cancelled");
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerOffline now {0}{1}", timerOffline, "\n"); }
         }
     }
 

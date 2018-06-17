@@ -483,6 +483,31 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// AI notification of countermeasures commenced / finished
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="timer"></param>
+    /// <param name="protocolLevel"></param>
+    /// <returns></returns>
+    public Message AICounterMeasure(string text, int timerStartValue = -1, int protocolLevelNew = -1)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Countermeasure;
+            message.side = globalBoth;
+            message.isPublic = true;
+            message.data0 = timerStartValue;
+            message.data1 = protocolLevelNew;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// AI notification to both sides of a change in AI Alert Status
     /// </summary>
     /// <param name="text"></param>

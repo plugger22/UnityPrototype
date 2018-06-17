@@ -114,6 +114,7 @@
         AI_Release,
         AI_Hacked,
         AI_Reboot,
+        AI_Countermeasure,
         AI_Alert,
         AI_Detected,
         //Decision

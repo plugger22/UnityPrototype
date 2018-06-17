@@ -71,7 +71,6 @@ public class PlayerManager : MonoBehaviour
         {
             if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
             {
-                value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Renown changed from {0} to {1}{2}", _renownResistance, value, "\n");
                 _renownResistance = value;
                 
