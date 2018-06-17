@@ -267,6 +267,7 @@ public class AIManager : MonoBehaviour
     private int erasureTeamsOnMap;
     private bool isInsufficientResources;                               //true whenever not enough resources to implement a decision (triggers 'Request Resources')
     private int numOfUnsuccessfulResourceRequests;                      //running tally, reset back to zero once a request is APPROVED
+    private int numOfSuccessfulResourceRequests;
 
     //fast access -> teams
     private int teamArcCivil = -1;
@@ -357,6 +358,7 @@ public class AIManager : MonoBehaviour
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
         numOfUnsuccessfulResourceRequests = 0;
+        numOfSuccessfulResourceRequests = 0;
         isInsufficientResources = false;
         //decision ID's
         int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
@@ -2853,23 +2855,25 @@ public class AIManager : MonoBehaviour
     private bool ProcessAIResourceRequest()
     {
         bool isSuccess = false;
+        int amount = 0;
         //each faction has a % chance of the request being approved (acts as a friction limiter on faction efficiency as resources drive everything)
         int rnd = Random.Range(0, 100);
         int adjustedChance = resourcesChance + numOfUnsuccessfulResourceRequests * resourcesBoost;
         if (rnd < resourcesChance)
         {
-            int resourcePool = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) + factionAuthority.resourcesStarting;
-            //add faction starting resources amount to their resource pool
+            amount = factionAuthority.resourcesStarting + numOfSuccessfulResourceRequests;
+            numOfSuccessfulResourceRequests++;
+            int resourcePool = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) + amount;
+            //add faction starting resources amount to their resource pool + 1 for each successful request
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resourcePool);
             isSuccess = true;
             Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: APPROVED need {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
         }
         //message & request counter
         string text = "";
-        int amount = 0;
         if (isSuccess == true)
         {
-            amount = factionAuthority.resourcesStarting;
+            Debug.Assert(amount > 0, "Invalid amount (zero)");
             text = string.Format("Request for Resources APPROVED ({0} added to pool)", amount);
             //reset counter back to zero
             numOfUnsuccessfulResourceRequests = 0;
@@ -3074,7 +3078,7 @@ public class AIManager : MonoBehaviour
                         colourBad, colourEnd, colourNeutral, colourEnd);
                 }
                 else
-                {
+                { 
                     //AI online and available to be hacked
                     if (isOffline == false)
                     {
