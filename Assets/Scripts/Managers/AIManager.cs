@@ -303,8 +303,10 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionProtocol;
     private DecisionAI decisionOffline;
     //text strings
-    private string traceBackText;
+    private string traceBackText;                                   //specially formatted string (uncoloured) for tooltips
     private string screamerText;
+    private string traceBackMaskText;                               //effect name, eg. "TraceBack Mask"
+    private string screamerMaskText;
 
     //colour palette 
     private string colourGood;
@@ -429,9 +431,11 @@ public class AIManager : MonoBehaviour
         Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
-        //text strings
+        //text strings (uncoloured)
         traceBackText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>TRACEBACK</size></cspace></font>";
         screamerText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>SCREAMER</size></cspace></font>";
+        traceBackMaskText = "TraceBack Mask";
+        screamerMaskText = "Screamer Mask";
         //Hacking
         hackingAttemptsTotal = 0;
         hackingAttemptsReboot = 0;
@@ -444,6 +448,9 @@ public class AIManager : MonoBehaviour
         isOffline = false;
         isTraceBack = false;
         isScreamer = false;
+        timerTraceBack = -1;
+        timerScreamer = -1;
+        timerOffline = -1;
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
@@ -972,6 +979,7 @@ public class AIManager : MonoBehaviour
                     case MessageSubType.AI_Reboot:
                     case MessageSubType.AI_Alert:
                     case MessageSubType.AI_Hacked:
+                    case MessageSubType.AI_Countermeasure:
                         //not applicable
                         break;
                     default:
@@ -1883,7 +1891,7 @@ public class AIManager : MonoBehaviour
         // - - - AI CounterMeasures - - - 
         //
         // No countermeasure options are valid if rebooting or offline
-        if (isRebooting == false && isOffline == false)
+        if (isRebooting == false || isOffline == false)
         {
             //priority depends on how many times hacking has been detected since last reboot
             Priority priorityDetect = Priority.Low;
@@ -1907,13 +1915,14 @@ public class AIManager : MonoBehaviour
                     if (city.mayor.CheckTraitEffect(aiCounterMeasurePriorityRaise) == false)
                     { priorityDetect = Priority.High; priorityWeight = priorityHighWeight; }
                     else
-                    { priorityDetect = Priority.Critical; priorityWeight = 0; }
+                    { priorityDetect = Priority.Critical; }
                     break;
                 default:
                     Debug.LogWarningFormat("Invalid hackingAttemptsDetected {0}", hackingAttemptsDetected);
                     break;
             }
-            Debug.Assert(priorityWeight > 0, "Invalid priorityWeight (zero)");
+            if (priorityDetect != Priority.Critical)
+            { Debug.Assert(priorityWeight > 0, string.Format("Invalid priorityWeight (zero) -> hackingAttemptsDetected {0}", hackingAttemptsDetected)); }
             //AI Security Protocols -> increase chance of detection
             if (aiSecurityProtocolLevel < aiSecurityProtocolMaxLevel)
             {
@@ -2185,7 +2194,7 @@ public class AIManager : MonoBehaviour
                         //remove entry from list to prevent future selection
                         listOfTasksCritical.RemoveAt(index);
                     }
-                    while (numTasksSelected < numOfFinalTasks);
+                    while (numTasksSelected < numOfFinalTasks || listOfTasksCritical.Count == 0);
                 }
             }
             //still room 
@@ -3032,7 +3041,7 @@ public class AIManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sends a colour formatted data package to AISideTabUI indicating cost and status to hack AI. Ignore renown (it's used by PlayerManager.cs -> Renown Set property)
+    /// Sends a colour formatted data package to AISideTabUI indicating cost and status to hack AI. Ignore renown parameter (it's used by PlayerManager.cs -> Renown Set property)
     /// NOTE: data is dynamic
     /// </summary>
     public void UpdateSideTabData(int renown = 0)
@@ -3054,7 +3063,7 @@ public class AIManager : MonoBehaviour
                     data.topText = string.Format("{0}A.I{1}", colourBad, colourEnd);
                     data.bottomText = string.Format("{0}X{1}", colourBad, colourEnd);
                     data.status = HackingStatus.Rebooting;
-                    data.tooltipMain = string.Format("The AI is {0}Rebooting{1} it's Security systems and {2}cannot be hacked{3}",
+                    data.tooltipMain = string.Format("The AI is {0}REBOOTING{1} it's Security systems and {2}cannot be hacked{3}",
                         colourBad, colourEnd, colourNeutral, colourEnd);
                 }
                 else
@@ -3064,17 +3073,18 @@ public class AIManager : MonoBehaviour
                     {
                         data.topText = "A.I";
                         data.status = HackingStatus.Possible;
+                        StringBuilder builder = new StringBuilder();
                         //renown to spare -> Green
                         if (playerRenown > hackingModifiedCost)
                         {
                             data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingModifiedCost, colourEnd);
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourGood, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                            builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourGood, hackingModifiedCost, colourEnd, "\n", gearEffect);
                         }
                         //just enough renown -> Yellow
                         else if (playerRenown == hackingModifiedCost)
                         {
                             data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingModifiedCost, colourEnd);
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourNeutral, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                            builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourNeutral, hackingModifiedCost, colourEnd, "\n", gearEffect);
                         }
                         else
                         {
@@ -3082,8 +3092,29 @@ public class AIManager : MonoBehaviour
                             data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                             data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
                             data.status = HackingStatus.InsufficientRenown;
-                            data.tooltipMain = string.Format("You can hack the AI for {0}{1}{2} Renown{3}{4}", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                            builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
                         }
+                        //AI countermeasures
+                        if (isTraceBack == true || isScreamer == true)
+                        {
+                            builder.AppendFormat("{0}o o o{1}{2}{3}AI Countermeasures{4}", colourGrey, colourEnd, "\n", colourAlert, colourEnd);
+                            if (isTraceBack == true)
+                            {
+                                if (CheckAIGearEffectPresent(traceBackMaskText) == true)
+                                { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, traceBackText, colourEnd); }
+                                else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, traceBackText, colourEnd); }
+                                builder.AppendFormat("{0}duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerTraceBack, colourEnd, timerTraceBack != 1 ? "s" : "");
+                            }
+                            if (isScreamer == true)
+                            {
+                                if (CheckAIGearEffectPresent(screamerMaskText) == true)
+                                { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, screamerText, colourEnd); }
+                                else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, screamerText, colourEnd); }
+                                builder.AppendFormat("{0}duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerScreamer, colourEnd, timerScreamer != 1 ? "s" : "");
+                            }
+                        }
+                        //finalise main tooltip text
+                        data.tooltipMain = builder.ToString();
                     }
                     else
                     {
@@ -3091,8 +3122,11 @@ public class AIManager : MonoBehaviour
                         data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                         data.bottomText = string.Format("{0}X{1}", colourGrey, colourEnd);
                         data.status = HackingStatus.Offline;
-                        data.tooltipMain = string.Format("The AI is {0}Isolated{1} from external access and {2}cannot be hacked{3}",
-                            colourBad, colourEnd, colourNeutral, colourEnd);
+                        StringBuilder builder = new StringBuilder();
+                        builder.AppendFormat("The AI is {0}ISOLATED{1} from external access{2}{3}Cannot be hacked{4}",
+                            colourBad, colourEnd, "\n", colourNeutral, colourEnd);
+                        builder.AppendFormat("{0}Duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerOffline, colourEnd, timerOffline != 1 ? "s" : "");
+                        data.tooltipMain = builder.ToString();
                     }
                 }
                 break;
@@ -3123,6 +3157,13 @@ public class AIManager : MonoBehaviour
         Debug.LogFormat("[Aim] AIManager.cs -> RebootCommence: rebootTimer set to {0}{1}", rebootTimer, "\n");
         Message message = GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer);
         GameManager.instance.dataScript.AddMessage(message);
+        //reset any active ai countermeasures
+        if (isTraceBack == true)
+        { CancelTraceBack(); }
+        if (isScreamer == true)
+        { CancelScreamer(); }
+        if (isOffline == true)
+        { CancelOffline(); }
     }
 
     /// <summary>
@@ -3167,13 +3208,7 @@ public class AIManager : MonoBehaviour
         {
             timerTraceBack--;
             if (timerTraceBack == 0)
-            {
-                //remove TraceBack
-                isTraceBack = false;
-                //message
-                Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure TRACEBACK Cancelled");
-                GameManager.instance.dataScript.AddMessage(message);
-            }
+            { CancelTraceBack(); }
             else { Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerTraceBack now {0}{1}", timerTraceBack, "\n"); }
         }
         //Screamer
@@ -3181,13 +3216,7 @@ public class AIManager : MonoBehaviour
         {
             timerScreamer--;
             if (timerScreamer == 0)
-            {
-                //remove Screamer
-                isScreamer = false;
-                //message
-                Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure SCREAMER Cancelled");
-                GameManager.instance.dataScript.AddMessage(message);
-            }
+            { CancelScreamer(); }
             else { Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerScreamer now {0}{1}", timerScreamer, "\n"); }
         }
         //Offline
@@ -3195,13 +3224,7 @@ public class AIManager : MonoBehaviour
         {
             timerOffline--;
             if (timerOffline == 0)
-            {
-                //remove Offline
-                isOffline = false;
-                //message
-                Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure OFFLINE Cancelled");
-                GameManager.instance.dataScript.AddMessage(message);
-            }
+            { CancelOffline(); }
             else { Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerOffline now {0}{1}", timerOffline, "\n"); }
         }
     }
@@ -3271,6 +3294,11 @@ public class AIManager : MonoBehaviour
                             //stays High (auto reset to Low by RebootComplete) -> Trigger Reboot 
                             traceBackDelay = 0;
                             colourStatus = colourBad;
+                            aiAlertStatus = Priority.Critical;
+                            //Message
+                            string textHigh = "AI detects hacking activity. AlertStatus now CRITICAL";
+                            Message messageHigh = GameManager.instance.messageScript.AIAlertStatus(textHigh, chance, rnd);
+                            GameManager.instance.dataScript.AddMessage(messageHigh);
                             RebootCommence();
                             break;
                         default:
@@ -3283,7 +3311,7 @@ public class AIManager : MonoBehaviour
                     if (isTraceBack == true)
                     {
                         //gear can negate tracebacks
-                        if (CheckAIGearEffectPresent("TraceBack Mask") == false)
+                        if (CheckAIGearEffectPresent(traceBackMaskText) == false)
                         {
                             //Player loses a level of invisiblity
                             int invisibility = GameManager.instance.playerScript.Invisibility;
@@ -3322,14 +3350,14 @@ public class AIManager : MonoBehaviour
                     if (isScreamer == true)
                     {
                         //gear can negate Screamer
-                        if (CheckAIGearEffectPresent("Screamer Mask") == false)
+                        if (CheckAIGearEffectPresent(screamerMaskText) == false)
                         {
                             GameManager.instance.playerScript.AddCondition(conditionStressed);
                         }
                         else
                         {
                             isScreamerMasker = true;
-                            screamerGearName = GameManager.instance.playerScript.GetAIGearName("Screamer Mask");
+                            screamerGearName = GameManager.instance.playerScript.GetAIGearName(screamerMaskText);
                             if (screamerGearName == null) { screamerGearName = "Screamer Gear"; }
                             Debug.Log("[Aim] -> UpdateHackingStatus: AI Screamer defeated by Hacking Gear (Screamer Mask)");
                         }
@@ -3416,7 +3444,7 @@ public class AIManager : MonoBehaviour
                     else
                     {
                         //TraceBack Mask
-                        traceBackGearName = GameManager.instance.playerScript.GetAIGearName("TraceBack Mask");
+                        traceBackGearName = GameManager.instance.playerScript.GetAIGearName(traceBackMaskText);
                         if (traceBackGearName == null) { traceBackGearName = "Hacking Gear"; }
                         StringBuilder builder = new StringBuilder();
                         builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourBad, colourEnd, "\n", colourBad, traceBackText, colourEnd, "\n");
@@ -3639,6 +3667,7 @@ public class AIManager : MonoBehaviour
         {
             string textGear = GameManager.instance.playerScript.GetAIGearName("Cheap Hacking");
             if (textGear == null) { textGear = "Hacking"; }
+            //tempCost = (int)Math.Floor(hackingCurrentCost / 2.0f);
             tempCost = hackingCurrentCost / 2;
             gearEffect = string.Format("{0} (Half cost due to {1}{2}{3}{4} {5}gear){6}{7}", colourAlert, colourEnd, colourNeutral, textGear, colourEnd, colourAlert, colourEnd, "\n");
         }
@@ -3650,7 +3679,8 @@ public class AIManager : MonoBehaviour
             tempCost = 0;
             gearEffect = string.Format("{0} (No cost due to {1}{2}{3}{4} {5}gear){6}{7}", colourAlert, colourEnd, colourNeutral, textGear, colourEnd, colourAlert, colourEnd, "\n");
         }
-        else { tempCost = hackingCurrentCost; }
+        if (gearEffect.Length == 0)
+        { tempCost = hackingCurrentCost; }
         return new Tuple<int, string>(tempCost, gearEffect);
     }
 
@@ -3751,6 +3781,45 @@ public class AIManager : MonoBehaviour
         if (listOfPlayerEffects != null && listOfPlayerEffects.Count > 0)
         { return listOfPlayerEffects.Exists(x => x == effectName); }
         return false;
+    }
+
+    /// <summary>
+    /// subMethod to cancel TraceBack AI countermeasure
+    /// </summary>
+    private void CancelTraceBack()
+    {
+        //remove TraceBack
+        isTraceBack = false;
+        timerTraceBack = -1;
+        //message
+        Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure TRACEBACK Cancelled");
+        GameManager.instance.dataScript.AddMessage(message);
+    }
+
+    /// <summary>
+    /// subMethod to cancel Screamer AI countermeasure
+    /// </summary>
+    private void CancelScreamer()
+    {
+        //remove Screamer
+        isScreamer = false;
+        timerScreamer = -1;
+        //message
+        Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure SCREAMER Cancelled");
+        GameManager.instance.dataScript.AddMessage(message);
+    }
+
+    /// <summary>
+    /// subMethod to cancel Offline countermeasure
+    /// </summary>
+    private void CancelOffline()
+    {
+        //remove Offline
+        isOffline = false;
+        timerOffline = -1;
+        //message
+        Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure OFFLINE Cancelled");
+        GameManager.instance.dataScript.AddMessage(message);
     }
 
     //
