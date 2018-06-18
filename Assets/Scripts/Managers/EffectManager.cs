@@ -940,7 +940,9 @@ public class EffectManager : MonoBehaviour
                                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                         if (gear != null)
                                         {
-                                            isGearUsed = true;
+                                            GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
+                                            effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.name, colourEnd, colourGood, colourEnd);
+                                            /*isGearUsed = true;
                                             int chance = GameManager.instance.gearScript.GetChanceOfCompromise(gearID);
                                             if (Random.Range(0, 100) <= chance)
                                             {
@@ -973,7 +975,7 @@ public class EffectManager : MonoBehaviour
                                                     effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText,
                                                         "\n", "\n", colourEffect, gear.name, colourEnd);
                                                     break;
-                                            }
+                                            }*/
                                         }
                                         else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
                                     }

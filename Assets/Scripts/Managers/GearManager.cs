@@ -854,7 +854,7 @@ public class GearManager : MonoBehaviour
 
 
 
-    /// <summary>
+    /*/// <summary>
     /// submethod to handle gear comprised for ProcessPlayerMove & others (node and Gear not tested for null as already checked in calling method)
     /// </summary>
     /// <param name="gear"></param>
@@ -877,7 +877,7 @@ public class GearManager : MonoBehaviour
     /// <param name="gear"></param>
     /// <param name="node"></param>
     public string GearUsed(Gear gear, Node node)
-    { return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd); }
+    { return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd); }*/
 
     /// <summary>
     /// call this whenever gear is used

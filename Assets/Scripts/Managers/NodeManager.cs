@@ -73,9 +73,9 @@ public class NodeManager : MonoBehaviour
     string colourAlert;
     string colourHighlight;
     string colourResistance;
-    string colourEffectBad;
-    string colourEffectNeutral;
-    string colourEffectGood;
+    string colourBad;
+    string colourNeutral;
+    string colourGood;
     string colourError;
     string colourInvalid;
     string colourCancel;
@@ -315,9 +315,9 @@ public class NodeManager : MonoBehaviour
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourEffectBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-        colourEffectNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourEffectGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
@@ -917,10 +917,10 @@ public class NodeManager : MonoBehaviour
         switch (activityUI)
         {
             case ActivityUI.Count:
-                displayText = string.Format("{0}Resistance Activity by Count{1}", colourEffectNeutral, colourEnd);
+                displayText = string.Format("{0}Resistance Activity by Count{1}", colourNeutral, colourEnd);
                 break;
             case ActivityUI.Time:
-                displayText = string.Format("{0}Resistance Activity by Time{1}", colourEffectNeutral, colourEnd);
+                displayText = string.Format("{0}Resistance Activity by Time{1}", colourNeutral, colourEnd);
                 break;
         }
         //active AlertUI
@@ -1096,7 +1096,7 @@ public class NodeManager : MonoBehaviour
                                     {
                                         //gear handles security level
                                         adjustInvisibility = 0;
-                                        builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourEffectGood, colourEnd));
+                                        builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd));
                                     }
                                     else
                                     {
@@ -1105,7 +1105,7 @@ public class NodeManager : MonoBehaviour
                                         if (GameManager.instance.playerScript.Invisibility <= 1)
                                         {
                                             //invisibility will be zero, or less, if move. Immediate notification
-                                            builderDetail.Append(string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourEffectBad, "\n",
+                                            builderDetail.Append(string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",
                                               colourEnd));
                                             moveGearDetails.ai_Delay = 0;
                                         }
@@ -1115,14 +1115,13 @@ public class NodeManager : MonoBehaviour
                                             int delay = moveInvisibilityDelay - Mathf.Abs(gear.data - secLevel);
                                             delay = Mathf.Max(0, delay);
                                             moveGearDetails.ai_Delay = delay; 
-                                            builderDetail.Append(string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
-                                              moveGearDetails.ai_Delay, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd));
-
+                                            builderDetail.AppendFormat("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd,
+                                                colourNeutral, moveGearDetails.ai_Delay, colourEnd, colourBad, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd);
                                         }
                                     }
                                     //add gear chance of compromise
-                                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}% chance of being compromised{3}", "\n", colourAlert,
-                                        GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID), colourEnd));
+                                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}{3}{4} %{5}{6} chance of being compromised{7}", "\n", colourAlert, colourEnd, colourNeutral,
+                                        GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID), colourEnd, colourAlert, colourEnd));
 
                                     //Move details
                                     moveGearDetails.nodeID = nodeID;
@@ -1130,13 +1129,13 @@ public class NodeManager : MonoBehaviour
                                     moveGearDetails.changeInvisibility = adjustInvisibility;
                                     moveGearDetails.gearID = gear.gearID;
                                     //button target details (red for High security to match red connection security colour on map)
-                                    string colourGearLevel = colourEffectNeutral;
-                                    if (gear.data == 3) { colourGearLevel = colourEffectGood; }
-                                    else if (gear.data == 1) { colourGearLevel = colourEffectBad; }
+                                    string colourGearLevel = colourNeutral;
+                                    if (gear.data == 3) { colourGearLevel = colourGood; }
+                                    else if (gear.data == 1) { colourGearLevel = colourBad; }
                                     EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                     {
                                         buttonTitle = string.Format("{0} Move", gear.name),
-                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourEffectNeutral, gear.name, colourEnd,
+                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourNeutral, gear.name, colourEnd,
                                         "\n", colourGearLevel, (ConnectionType)gear.data, colourEnd),
                                         buttonTooltipMain = moveMain,
                                         buttonTooltipDetail = builderDetail.ToString(),
@@ -1162,7 +1161,7 @@ public class NodeManager : MonoBehaviour
                     if (GameManager.instance.playerScript.Invisibility <= 1)
                     {
                         //invisibility will be zero, or less, if move. Immediate notification
-                        moveDetail = string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourEffectBad, "\n",
+                        moveDetail = string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",
                           colourEnd);
                         moveDetails.ai_Delay = 0;
                     }
@@ -1170,11 +1169,11 @@ public class NodeManager : MonoBehaviour
                     {
                         //invisibility reduces, still above zero
                         moveDetails.ai_Delay = secLevel;
-                        moveDetail = string.Format("{0}Invisibility -1{1}Authorities will know in {2} turn{3}{4}", colourEffectBad, "\n",
-                          moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                        moveDetail = string.Format("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd, colourNeutral,
+                          moveDetails.ai_Delay, colourEnd, colourBad, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
                     }
                 }
-                else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourEffectGood, colourEnd); }
+                else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd); }
 
                 //Move details
                 moveDetails.nodeID = nodeID;
@@ -1185,7 +1184,7 @@ public class NodeManager : MonoBehaviour
                 EventButtonDetails eventDetails = new EventButtonDetails()
                 {
                     buttonTitle = "Move",
-                    buttonTooltipHeader = string.Format("{0}Move (no gear){1}", colourEffectNeutral, colourEnd),
+                    buttonTooltipHeader = string.Format("{0}Move (no gear){1}", colourNeutral, colourEnd),
                     buttonTooltipMain = moveMain,
                     buttonTooltipDetail = moveDetail,
                     //use a Lambda to pass arguments to the action
@@ -1287,13 +1286,13 @@ public class NodeManager : MonoBehaviour
                                                 switch (effect.typeOfEffect.name)
                                                 {
                                                     case "Good":
-                                                        colourEffect = colourEffectGood;
+                                                        colourEffect = colourGood;
                                                         break;
                                                     case "Neutral":
-                                                        colourEffect = colourEffectNeutral;
+                                                        colourEffect = colourNeutral;
                                                         break;
                                                     case "Bad":
-                                                        colourEffect = colourEffectBad;
+                                                        colourEffect = colourBad;
                                                         break;
                                                 }
                                             }
@@ -1314,9 +1313,9 @@ public class NodeManager : MonoBehaviour
                                                 {
                                                     //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
                                                     if (effect.outcome.name.Equals("Renown"))
-                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectGood, effect.textTag, colourEnd)); }
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd)); }
                                                     else
-                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectBad, effect.textTag, colourEnd)); }
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd)); }
                                                 }
                                             }
                                             else
@@ -1392,13 +1391,13 @@ public class NodeManager : MonoBehaviour
                                                 switch (effect.typeOfEffect.name)
                                                 {
                                                     case "Good":
-                                                        colourEffect = colourEffectGood;
+                                                        colourEffect = colourGood;
                                                         break;
                                                     case "Neutral":
-                                                        colourEffect = colourEffectNeutral;
+                                                        colourEffect = colourNeutral;
                                                         break;
                                                     case "Bad":
-                                                        colourEffect = colourEffectBad;
+                                                        colourEffect = colourBad;
                                                         break;
                                                 }
                                             }
@@ -1419,9 +1418,9 @@ public class NodeManager : MonoBehaviour
                                                 {
                                                     //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
                                                     if (effect.outcome.name.Equals("Renown"))
-                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectGood, effect.textTag, colourEnd)); }
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd)); }
                                                     else
-                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectBad, effect.textTag, colourEnd)); }
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd)); }
                                                 }
                                             }
                                             else
@@ -1497,13 +1496,13 @@ public class NodeManager : MonoBehaviour
                                                 switch (effect.typeOfEffect.name)
                                                 {
                                                     case "Good":
-                                                        colourEffect = colourEffectGood;
+                                                        colourEffect = colourGood;
                                                         break;
                                                     case "Neutral":
-                                                        colourEffect = colourEffectNeutral;
+                                                        colourEffect = colourNeutral;
                                                         break;
                                                     case "Bad":
-                                                        colourEffect = colourEffectBad;
+                                                        colourEffect = colourBad;
                                                         break;
                                                 }
                                             }
@@ -1524,9 +1523,9 @@ public class NodeManager : MonoBehaviour
                                                 {
                                                     //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
                                                     if (effect.outcome.name.Equals("Renown"))
-                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectGood, effect.textTag, colourEnd)); }
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd)); }
                                                     else
-                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourEffectBad, effect.textTag, colourEnd)); }
+                                                    { builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd)); }
                                                 }
                                             }
                                             else
@@ -1681,23 +1680,23 @@ public class NodeManager : MonoBehaviour
                 {
                     //display
                     builder.AppendLine();
-                    builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourEffectBad, moveDetails.changeInvisibility > 0 ? "+" : "",
+                    builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourBad, moveDetails.changeInvisibility > 0 ? "+" : "",
                         moveDetails.changeInvisibility, colourEnd);
                     //player invisibility
                     int invisibility = GameManager.instance.playerScript.Invisibility;
                     if (invisibility == 0)
                     {
-                        //moving while invis already 0 triggers immediate alert flag
+                        //moving while invisibility already 0 triggers immediate alert flag
                         GameManager.instance.aiScript.immediateFlagResistance = true;
-                        builder.AppendFormat("{0}{1}{2}Authority will know immediately{3}", "\n", "\n", colourEffectBad, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}Authority will know immediately{3}", "\n", "\n", colourBad, colourEnd);
                     }
                     else if (invisibility > 1)
                     {
-                        builder.AppendFormat("{0}{1}{2}Authority will know in {3} turn{4}{5}", "\n", "\n", colourAlert,
-                            moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                        builder.AppendFormat("{0}{1}{2}Authority will know in {3}{4}{5}{6}{7} turn{8}{9}", "\n", "\n", colourAlert, colourEnd, colourNeutral,
+                            moveDetails.ai_Delay, colourEnd, colourAlert, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
                     }
                     else
-                    { builder.AppendFormat("{0}{1}{2}Authority will know next turn{3}", "\n", "\n", colourEffectBad, colourEnd); }
+                    { builder.AppendFormat("{0}{1}{2}Authority will know next turn{3}", "\n", "\n", colourBad, colourEnd); }
                     //update invisibility
                     invisibility += moveDetails.changeInvisibility;
                     invisibility = Mathf.Max(0, invisibility);
@@ -1723,7 +1722,7 @@ public class NodeManager : MonoBehaviour
                 else
                 {
                     builder.AppendLine();
-                    builder.Append(string.Format("{0}Player not spotted{1}", colourEffectGood, colourEnd));
+                    builder.Append(string.Format("{0}Player not spotted{1}", colourGood, colourEnd));
                 }
                 //
                 // - - - Gear - - -
@@ -1734,7 +1733,14 @@ public class NodeManager : MonoBehaviour
                     int renownCost = GameManager.instance.actorScript.renownCostGear;
                     if (gear != null)
                     {
-                        //chance of Gear being Compromised
+                        builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd);
+                        GameManager.instance.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
+                        MoveReturnData moveData = new MoveReturnData();
+                        moveData.node = node;
+                        moveData.text = builder.ToString();
+                        ProcessMoveOutcome(moveData);
+
+                        /*//chance of Gear being Compromised
                         ModalDiceDetails diceDetails = new ModalDiceDetails();
                         diceDetails.chance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                         diceDetails.renownCost = renownCost;
@@ -1755,7 +1761,7 @@ public class NodeManager : MonoBehaviour
                         { EventManager.instance.PostNotification(EventType.DiceBypass, this, diceDetails, "NodeManager.cs -> ProcessPlayerMove"); }
                         //roll dice
                         else
-                        { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails, "NodeManager.cs -> ProcessPlayerMove"); }
+                        { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails, "NodeManager.cs -> ProcessPlayerMove"); }*/
                     }
                     else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
                 }
@@ -1791,7 +1797,7 @@ public class NodeManager : MonoBehaviour
         if (captureDetails != null)
         {
             //Player captured!
-            captureDetails.effects = string.Format("{0}The move went bad{1}", colourEffectNeutral, colourEnd);
+            captureDetails.effects = string.Format("{0}The move went bad{1}", colourNeutral, colourEnd);
             EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
         }
         //Normal Move  Outcome

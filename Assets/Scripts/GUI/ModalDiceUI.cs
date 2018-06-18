@@ -13,6 +13,7 @@ using UnityEngine.UI;
 /// </summary>
 public class ModalDiceUI : MonoBehaviour
 {
+    /*
     public GameObject modalDiceObject;
     public GameObject modalPanelObject;
     public GameObject buttonSet_1;
@@ -659,7 +660,7 @@ public class ModalDiceUI : MonoBehaviour
             outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalDiceUI.cs -> ProcessAutoDiceOutcome");
-    }
+    }*/
 
 
 
