@@ -218,13 +218,12 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns name of gear that has the specified aiHackingEffect.name, eg. "TraceBack Mask". Returns null if not found
+    /// returns Gear that has the specified aiHackingEffect.name, eg. "TraceBack Mask". Returns null if not found
     /// </summary>
     /// <param name="effectName"></param>
     /// <returns></returns>
-    public string GetAIGearName(string effectName)
+    public Gear GetAIGearName(string effectName)
     {
-        string aiGearName = null;
         //loop through looking for ai Hacking gear
         for (int i = 0; i < listOfGear.Count; i++)
         {
@@ -238,14 +237,14 @@ public class PlayerManager : MonoBehaviour
                     if (gear.aiHackingEffect != null)
                     {
                         if (gear.aiHackingEffect.name.Equals(effectName) == true)
-                        { return gear.name; }
+                        { return gear; }
                     }
                 }
             }
             else
             { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
         }
-        return aiGearName;
+        return null;
     }
 
     /// <summary>

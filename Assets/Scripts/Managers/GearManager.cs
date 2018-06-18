@@ -884,12 +884,20 @@ public class GearManager : MonoBehaviour
     /// call this whenever gear is used
     /// </summary>
     /// <param name="gear"></param>
-    /// <param name="descriptor"></param>
-    public void SetGearUsed(Gear gear, string descriptor)
+    /// <param name="descriptor">In format 'gear name' used to .... ('start a Riot')</param>
+    public void SetGearUsed(Gear gear, string descriptorUsedTo)
     {
         if (gear != null)
         {
-            gear.timesUsed++;
+            if (string.IsNullOrEmpty(descriptorUsedTo) == false)
+            {
+                gear.timesUsed++;
+                //message
+                string msgText = string.Format("{0} used to {1}", gear.name, descriptorUsedTo);
+                Message message = GameManager.instance.messageScript.GearUsed(msgText, gear.gearID);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogWarning("Invalid descriptorUsedTo parameter (Null)"); }
         }
         else { Debug.LogWarning("Invalid gear (Null)"); }
     }

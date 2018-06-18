@@ -152,6 +152,9 @@ namespace packageAPI
         public GlobalType type;
     }
 
+    //
+    // - - - Other Packages - - -
+    //
 
     /// <summary>
     /// used to return data from ModalDiceUI.cs -> ProcessDiceOutcome to NodeManager.cs -> ProcessMoveOutcome
@@ -186,5 +189,6 @@ namespace packageAPI
         public Actor actor;
         public string effects;                  //carry over effects for a combined outcome window, eg insert tracer and then get captured
     }
+
 
 }
