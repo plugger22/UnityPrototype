@@ -955,34 +955,66 @@ public class Node : MonoBehaviour
                 {
                     case "NodeSecurity":
                         Security += process.value;
-                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Security now {3} ({4}{5}){6}", nodeName, Arc.name, nodeID, Security,
+                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Security now {3} (changed by {4}{5}){6}", nodeName, Arc.name, nodeID, Security,
                             process.value > 0 ? "+" : "", process.value, "\n");
                         break;
                     case "NodeStability":
                         Stability += process.value;
-                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Stability now {3} ({4}{5}){6}", nodeName, Arc.name, nodeID, Stability,
+                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Stability now {3} (changed by {4}{5}){6}", nodeName, Arc.name, nodeID, Stability,
                             process.value > 0 ? "+" : "", process.value, "\n");
                         break;
                     case "NodeSupport":
                         Support += process.value;
-                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Support now {3} ({4}{5}){6}", nodeName, Arc.name, nodeID, Support,
+                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Support now {3} (changed by {4}{5}){6}", nodeName, Arc.name, nodeID, Support,
                             process.value > 0 ? "+" : "", process.value, "\n");
                         break;
                     case "StatusTracers":
-                        if (process.value <= 0) { isTracerKnown = false; }
-                        else { isTracerKnown = true; }
+                        if (process.value <= 0)
+                        {
+                            isTracerKnown = false;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TRACER removed{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
+                        else
+                        {
+                            isTracerKnown = true;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TRACER inserted{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
                         break;
                     case "StatusSpiders":
-                        if (process.value <= 0) { isSpiderKnown = false; }
-                        else { isSpiderKnown = true; }
+                        if (process.value <= 0)
+                        {
+                            isSpiderKnown = false;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, SPIDER removed{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
+                        else
+                        {
+                            isSpiderKnown = true;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, SPIDER inserted{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
                         break;
                     case "StatusTeams":
-                        if (process.value <= 0) { isTeamKnown = false; }
-                        else { isTeamKnown = true; }
+                        if (process.value <= 0)
+                        {
+                            isTeamKnown = false;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TEAM info NO longer available{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
+                        else
+                        {
+                            isTeamKnown = true;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TEAM info is available{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
                         break;
                     case "StatusContacts":
-                        if (process.value <= 0) { isContactKnown = false; }
-                        else { isContactKnown = true; }
+                        if (process.value <= 0)
+                        {
+                            isContactKnown = false;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info no longer available{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
+                        else
+                        {
+                            isContactKnown = true;
+                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info is available{3}", nodeName, Arc.name, nodeID, "\n");
+                        }
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid process.outcome \"{0}\"", process.outcome.name));
