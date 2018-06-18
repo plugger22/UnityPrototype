@@ -167,7 +167,7 @@ public class WidgetTopUI : MonoBehaviour
     /// <param name="points"></param>
     private void SetActionPoints(int points)
     {
-        Debug.Assert(points > -1 && points < 5, "Invalid action points");
+        Debug.Assert(points > -1 && points < 6, "Invalid action points");
         actionPoints.text = Convert.ToString(points);
     }
 

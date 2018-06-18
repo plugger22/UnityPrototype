@@ -955,12 +955,18 @@ public class Node : MonoBehaviour
                 {
                     case "NodeSecurity":
                         Security += process.value;
+                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Security now {3} ({4}{5}){6}", nodeName, Arc.name, nodeID, Security,
+                            process.value > 0 ? "+" : "", process.value, "\n");
                         break;
                     case "NodeStability":
                         Stability += process.value;
+                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Stability now {3} ({4}{5}){6}", nodeName, Arc.name, nodeID, Stability,
+                            process.value > 0 ? "+" : "", process.value, "\n");
                         break;
                     case "NodeSupport":
                         Support += process.value;
+                        Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, Support now {3} ({4}{5}){6}", nodeName, Arc.name, nodeID, Support,
+                            process.value > 0 ? "+" : "", process.value, "\n");
                         break;
                     case "StatusTracers":
                         if (process.value <= 0) { isTracerKnown = false; }

@@ -452,14 +452,17 @@ public class ActionManager : MonoBehaviour
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
-        { outcomeDetails.isAction = true; }
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Use Gear (Node Action)";
+        }
         //no error -> PROCEED to some form of dice outcome for gear use
         if (errorFlag == false)
         {
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
             if (gear != null)
             {
-                //message
+                /*//message
                 Message message = GameManager.instance.messageScript.GearUsed(string.Format("{0} used at {1}", gear.name, node.nodeName), node.nodeID, gear.gearID);
                 GameManager.instance.dataScript.AddMessage(message);
                 //chance of Gear being Compromised
@@ -481,7 +484,6 @@ public class ActionManager : MonoBehaviour
                 passThroughData.nodeID = node.nodeID;
                 passThroughData.gearID = gear.gearID;
                 passThroughData.renownCost = renownCost;
-                /*passThroughData.text = builder.ToString();*/
                 passThroughData.type = DiceType.Gear;
                 passThroughData.outcome = outcomeDetails;
                 diceDetails.passData = passThroughData;
@@ -490,7 +492,10 @@ public class ActionManager : MonoBehaviour
                 { EventManager.instance.PostNotification(EventType.DiceBypass, this, diceDetails, "ActionManager.cs -> ProcessNodeGearAction"); }
                 //roll dice
                 else
-                { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails, "ActionManager.cs -> ProcessNodeGearAction"); }
+                { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails, "ActionManager.cs -> ProcessNodeGearAction"); }*/
+                GameManager.instance.gearScript.SetGearUsed(gear, string.Format("affect district {0}", node.nodeName));
+                //generate a create modal outcome dialogue
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction");
             }
             else
             {
@@ -499,9 +504,9 @@ public class ActionManager : MonoBehaviour
             }
         }
         //ERROR ->  go straight to outcome window
-        if (errorFlag == true)
+        else
         {
-            //fault, pass default data to Outcome window
+            //fault, pass default data to a modal outcome dialogue
             outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
             outcomeDetails.textBottom = "Bad, all Bad";
             outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
@@ -1276,22 +1281,20 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Give Gear";
             //is there a delegate method that needs processing?
-            if (details.handler != null)
-            { details.handler(); }
+            details.handler?.Invoke();
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
     }
 
     /// <summary>
-    /// Process Use Gear Player action (Resistance only)
+    /// Process Use Gear (Player use) action (Resistance only)
     /// </summary>
     /// <param name="details"></param>
     public void ProcessUseGearAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         bool isAction = false;
-        string returnText;
         //two builders for top and bottom texts
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -1397,16 +1400,20 @@ public class ActionManager : MonoBehaviour
         {
             //action (if valid) expended -> must be BEFORE outcome window event
             if (isAction == true)
-            { outcomeDetails.isAction = true; }
+            {
+                outcomeDetails.isAction = true;
+                outcomeDetails.reason = "Use Gear (Personal Use)";
+            }
             //Gear Used            
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
             if (gear != null)
             {
-                //message
+                /*//message
                 string text = string.Format("{0} used (Personal)", gear.name);
                 Message message = GameManager.instance.messageScript.GearUsed(text, node.nodeID, gear.gearID);
-                GameManager.instance.dataScript.AddMessage(message);
-                //chance of Gear being Compromised
+                GameManager.instance.dataScript.AddMessage(message);*/
+                GameManager.instance.gearScript.SetGearUsed(gear, "provide Player with a benefit");
+                /*//chance of Gear being Compromised
                 int rndNum = Random.Range(0, 100);
                 int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                 if (rndNum < compromiseChance)
@@ -1419,7 +1426,7 @@ public class ActionManager : MonoBehaviour
                     //gear not compromised
                     returnText = GameManager.instance.gearScript.GearUsed(gear, node);
                 }
-                builderBottom.Append(returnText);
+                builderBottom.Append(returnText);*/
             }
             else
             {
@@ -1429,8 +1436,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = builderTop.ToString();
             outcomeDetails.textBottom = builderBottom.ToString();
             //is there a delegate method that needs processing?
-            if (details.handler != null)
-            { details.handler(); }
+            details.handler?.Invoke();
         }            
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessUseGearAction");
@@ -1490,8 +1496,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Reassure Actor";
             //is there a delegate method that needs processing?
-            if (details.handler != null)
-            { details.handler(); }
+            details.handler?.Invoke();
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessReassureActor");
@@ -1558,8 +1563,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Threaten Actor";
             //is there a delegate method that needs processing?
-            if (details.handler != null)
-            { details.handler(); }
+            details.handler?.Invoke();
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessThreatenActor");
@@ -1656,8 +1660,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Let Actor Go";
             //is there a delegate method that needs processing?
-            if (details.handler != null)
-            { details.handler(); }
+            details.handler?.Invoke();
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLetGoActor");
@@ -1769,8 +1772,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Fire Actor";
             //is there a delegate method that needs processing?
-            if (details.handler != null)
-            { details.handler(); }
+            details.handler?.Invoke();
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessFireActor");
@@ -1893,8 +1895,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Active Duty";
             //is there a delegate method that needs processing?
-            if (details.handler != null)
-            { details.handler(); }
+            details.handler?.Invoke();
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActiveDutyActor");

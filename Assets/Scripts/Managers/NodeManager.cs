@@ -407,7 +407,7 @@ public class NodeManager : MonoBehaviour
                         { nodeTemp.SetMaterial(materialActive); }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                     }
-                    displayText = string.Format("{0}{1}{2}{3} Target{4}{5} node{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
+                    displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
                         colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
                 }
                 else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
@@ -429,13 +429,13 @@ public class NodeManager : MonoBehaviour
                                 if (node != null)
                                 { node.SetMaterial(materialActive); }
                             }
-                            displayText = string.Format("{0}{1}{2} {3}valid Move Node{4}{5}", colourDefault, nodeList.Count, colourEnd,
+                            displayText = string.Format("{0}{1}{2} {3}valid Move district{4}{5}", colourDefault, nodeList.Count, colourEnd,
                                 colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
                         }
                         else
                         {
                             if (nodeArc != null)
-                            { displayText = string.Format("{0}There are no {1} nodes{2}", colourError, nodeArc.name, colourEnd); }
+                            { displayText = string.Format("{0}There are no {1} districts{2}", colourError, nodeArc.name, colourEnd); }
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid nodeList (null) for NodeArcID {0}{1}", data, "\n")); }
@@ -487,11 +487,11 @@ public class NodeManager : MonoBehaviour
                     }
                     if (count > 0)
                     {
-                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, count, colourEnd,
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, count, colourEnd,
                             colourHighlight, "Spider", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
                     }
                     else
-                    { displayText = string.Format("{0}There are no Spider nodes{1}", colourError, colourEnd); }
+                    { displayText = string.Format("{0}There are no Spider districts{1}", colourError, colourEnd); }
                 }
                 else { Debug.LogError("Invalid dictOfSpiderNodes (Null)"); }
                 break;
@@ -545,11 +545,11 @@ public class NodeManager : MonoBehaviour
                     }
                     if (count > 0)
                     {
-                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, count, colourEnd,
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, count, colourEnd,
                             colourHighlight, "Tracer", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
                     }
                     else
-                    { displayText = string.Format("{0}There are no Tracer nodes{1}", colourError, colourEnd); }
+                    { displayText = string.Format("{0}There are no Tracer districts{1}", colourError, colourEnd); }
                 }
                 else { Debug.LogError("Invalid dictOfTracerNodes (Null)"); }
                 break;
@@ -603,7 +603,7 @@ public class NodeManager : MonoBehaviour
                     else { Debug.LogError("Invalid dictOfNodes (Null)"); }
                     if (count > 0)
                     {
-                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, count, colourEnd,
+                        displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, count, colourEnd,
                             colourHighlight, "Team", colourEnd, colourDefault, count != 1 ? "s" : "", colourEnd);
                     }
                     else
@@ -622,7 +622,7 @@ public class NodeManager : MonoBehaviour
                             { node.SetMaterial(materialActive); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Most Connected Node{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Most Connected district{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
                             connectedList.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
@@ -630,7 +630,7 @@ public class NodeManager : MonoBehaviour
                 else
                 {
                     Debug.LogWarning("Invalid connectedList (Null)");
-                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Connected Nodes", colourEnd);
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Connected districts", colourEnd);
                 }
                 break;
             case NodeUI.DecisionNodes:
@@ -646,7 +646,7 @@ public class NodeManager : MonoBehaviour
                             { node.SetMaterial(materialActive); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Decision Node{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Decision district{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
                             decisionList.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
@@ -654,7 +654,7 @@ public class NodeManager : MonoBehaviour
                 else
                 {
                     Debug.LogWarning("Invalid decisionList (Null)");
-                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Decision Nodes", colourEnd);
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Decision districts", colourEnd);
                 }
                 break;
             case NodeUI.NearNeighbours:
@@ -674,7 +674,7 @@ public class NodeManager : MonoBehaviour
                                 }
                                 else { Debug.LogWarning("Invalid nodeTemp (Null)"); }
                             }
-                            displayText = string.Format("{0}{1}{2}{3} Near Neighbouring Node{4}{5}", colourDefault, listOfNearNeighbours.Count, colourEnd, colourHighlight,
+                            displayText = string.Format("{0}{1}{2}{3} Near Neighbouring district{4}{5}", colourDefault, listOfNearNeighbours.Count, colourEnd, colourHighlight,
                                 listOfNearNeighbours.Count != 1 ? "s" : "", colourEnd);
                         }
                         else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
@@ -682,13 +682,13 @@ public class NodeManager : MonoBehaviour
                     else
                     {
                         Debug.LogWarning("Invalid listOfNearNeighbours (Null)");
-                        displayText = string.Format("{0}ERROR: Can't find Neighbouring Nodes{1}", colourError, colourEnd);
+                        displayText = string.Format("{0}ERROR: Can't find Neighbouring districts{1}", colourError, colourEnd);
                     }
                 }
                 else
                 {
                     Debug.LogWarning("Invalid playerNode (Null)");
-                    displayText = string.Format("{0}ERROR: Player Node not found{1}", colourError, colourEnd);
+                    displayText = string.Format("{0}ERROR: Player district not found{1}", colourError, colourEnd);
                 }
                 break;
             case NodeUI.Centre:
@@ -711,7 +711,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Centred Node{4}{5}", colourDefault, counter, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Centred district{4}{5}", colourDefault, counter, colourEnd, colourHighlight,
                             dictOfCentreNodes.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
@@ -751,13 +751,13 @@ public class NodeManager : MonoBehaviour
                         if (node != null)
                         { node.SetMaterial(materialActive); }
                     }
-                    displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}node{7}{8}", colourDefault, nodeList.Count, colourEnd,
+                    displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, nodeList.Count, colourEnd,
                     colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
                 }
                 else
                 {
                     if (nodeArc != null)
-                    { displayText = string.Format("{0}There are no {1} nodes{2}", colourError, nodeArc.name, colourEnd); }
+                    { displayText = string.Format("{0}There are no {1} districts{2}", colourError, nodeArc.name, colourEnd); }
                 }
             }
             else { Debug.LogError(string.Format("Invalid nodeList (null) for NodeArcID {0}{1}", data, "\n")); }
@@ -800,7 +800,7 @@ public class NodeManager : MonoBehaviour
         else { minionTitle = "Rebel "; }
         if (actor != null)
         {
-            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} node{11}{12}", colourHighlight, actor.actorName, colourEnd,
+            displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} district{11}{12}", colourHighlight, actor.actorName, colourEnd,
                 colourDefault, minionTitle, colourEnd,
                 colourHighlight, actor.arc.name, colourEnd,
                 colourDefault, tempList.Count, tempList.Count != 1 ? "s" : "", colourEnd);
@@ -1234,7 +1234,7 @@ public class NodeManager : MonoBehaviour
     /// <param name="nodeID"></param>
     private void CreateGearNodeMenu(int nodeID)
     {
-        Debug.Log("CreateSpecialNodeMenu");
+        Debug.LogFormat("[UI] NodeManager.cs -> CreateGearNodeMenu{0}", "\n");
         int counter = 0;                    //num of gear that can be used
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
 

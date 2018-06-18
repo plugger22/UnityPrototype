@@ -154,7 +154,8 @@ public class FactionManager : MonoBehaviour
                     threshold = _supportAuthority * 10;
                     if (rnd <= threshold)
                     {
-                        //message
+                        //Support Provided
+                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: Provided need {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
                         message = GameManager.instance.messageScript.FactionSupport(msgText, _supportAuthority, GameManager.instance.playerScript.Renown, 1);
                         //Support given
@@ -172,7 +173,8 @@ public class FactionManager : MonoBehaviour
                     threshold = _supportResistance * 10;
                     if (rnd <= threshold)
                     {
-                        //message
+                        //Support Provided
+                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: Provided need {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
                         message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown, 1);
                         //Support given

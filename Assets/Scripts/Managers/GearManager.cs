@@ -831,7 +831,6 @@ public class GearManager : MonoBehaviour
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
         if (gear != null)
         {
-            
             //chance of compromise varies depending on gear rarity
             switch (gear.rarity.name)
             {

@@ -3039,7 +3039,7 @@ public class AIManager : MonoBehaviour
     {
         aiSecurityProtocolLevel++;
         //Message
-        string msgText = string.Format("AI increase SECURITY PROTOCOLS to level {0}", aiSecurityProtocolLevel);
+        string msgText = string.Format("AI increases SECURITY PROTOCOL to level {0}", aiSecurityProtocolLevel);
         Message message = GameManager.instance.messageScript.AICounterMeasure(msgText, -1, aiSecurityProtocolLevel);
         GameManager.instance.dataScript.AddMessage(message);
         return true;
@@ -3117,7 +3117,7 @@ public class AIManager : MonoBehaviour
                                 {
                                     //show as grey if masked and indicate why
                                     builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, traceBackFormattedText, colourEnd);
-                                    Gear gear = GameManager.instance.playerScript.GetAIGearName(traceBackEffectText);
+                                    Gear gear = GameManager.instance.playerScript.GetAIGear(traceBackEffectText);
                                     if (gear != null)
                                     { builder.AppendFormat("{0}{1}{2}{3}{4} defeats TraceBack{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
                                     else { Debug.LogWarning("Invalid gear (Null) for TraceBack"); }
@@ -3131,7 +3131,7 @@ public class AIManager : MonoBehaviour
                                 {
                                     //show as grey if masked and indicate why
                                     builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, screamerFormattedText, colourEnd);
-                                    Gear gear = GameManager.instance.playerScript.GetAIGearName(screamerEffectText);
+                                    Gear gear = GameManager.instance.playerScript.GetAIGear(screamerEffectText);
                                     if (gear != null)
                                     { builder.AppendFormat("{0}{1}{2}{3}{4} defeats Screamer{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
                                     else { Debug.LogWarning("Invalid gear (Null) for Screamer"); }
@@ -3281,7 +3281,7 @@ public class AIManager : MonoBehaviour
             //does AI Alert Status increase?
             int rnd = Random.Range(0, 100);
             //int chance = hackingDetectBaseChance;
-            Tuple<int, string> results = GetChanceOfDetection();
+            Tuple<int, string> results = GetChanceOfDetection(true);
             int chance = results.Item1;
             if (CheckAIGearEffectPresent(invisibileHackingEffectText) == false)
             {
@@ -3386,7 +3386,7 @@ public class AIManager : MonoBehaviour
                         {
                             //screamer masker present
                             isScreamerMasker = true;
-                            Gear gear = GameManager.instance.playerScript.GetAIGearName(screamerEffectText);
+                            Gear gear = GameManager.instance.playerScript.GetAIGear(screamerEffectText);
                             if (gear == null)
                             {
                                 screamerGearName = "Screamer Gear";
@@ -3421,7 +3421,17 @@ public class AIManager : MonoBehaviour
             else
             {
                 //Invisible Hacking gear present -> Player can't be detected -> no change to status
-                data.tooltipHeader = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to Gear", colourGood, colourEnd, colourBad, colourEnd);
+                Gear gear = GameManager.instance.playerScript.GetAIGear(invisibileHackingEffectText);
+                if (gear != null)
+                {
+                    data.tooltipHeader = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd,
+                        colourNeutral, gear.name, colourEnd);
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid gear (Null) from invisibleHackingEffectText");
+                    data.tooltipHeader = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to Gear", colourGood, colourEnd, colourBad, colourEnd);
+                }
                 Debug.LogFormat("[Aim] -> UpdateHackingStatus: Hacking attempt INVISIBLE due to gear{0}", "\n");
                 switch (aiAlertStatus)
                 {
@@ -3483,7 +3493,7 @@ public class AIManager : MonoBehaviour
                     else
                     {
                         //TraceBack Mask
-                        Gear gear = GameManager.instance.playerScript.GetAIGearName(traceBackEffectText);
+                        Gear gear = GameManager.instance.playerScript.GetAIGear(traceBackEffectText);
                         if (gear == null)
                         {
                             traceBackGearName = "Hacking Gear";
@@ -3615,7 +3625,7 @@ public class AIManager : MonoBehaviour
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
         GameManager.instance.playerScript.Renown = renown;
         //message
-        Message message = GameManager.instance.messageScript.AIHacked("AI has been Hacked", hackingModifiedCost, true);
+        Message message = GameManager.instance.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, true);
         GameManager.instance.dataScript.AddMessage(message);
     }
 
@@ -3703,10 +3713,10 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// returns hacking cost Tuple and a string descriptor of cost at present taking into account gear effects. String is "" and cost is currentHackingCost if there are no gear effects present
-    /// isGearUsed set true only when you want to check gear use, ignore otherwise
+    /// isGearUsed set true only when you want to log gear use, ignore otherwise
     /// </summary>
     /// <returns></returns>
-    public Tuple<int, string> GetHackingCost(bool isGearUsed = false)
+    public Tuple<int, string> GetHackingCost(bool logGearUse = false)
     {
         int tempCost = 0;
         string gearEffect = "";
@@ -3716,11 +3726,11 @@ public class AIManager : MonoBehaviour
         //ai gear effects?
         if (CheckAIGearEffectPresent(cheapHackingEffectText) == true && CheckAIGearEffectPresent(freeHackingEffectText) == false)
         {
-            Gear gear = GameManager.instance.playerScript.GetAIGearName(cheapHackingEffectText);
+            Gear gear = GameManager.instance.playerScript.GetAIGear(cheapHackingEffectText);
             if (gear != null)
             {
                 textGear = gear.name;
-                if (isGearUsed == true)
+                if (logGearUse == true)
                 { GameManager.instance.gearScript.SetGearUsed(gear, "provide half cost AI Hacking"); }
             }
             else
@@ -3735,11 +3745,11 @@ public class AIManager : MonoBehaviour
         //Free Hacking will override Cheap Hacking if both are present
         if (CheckAIGearEffectPresent(freeHackingEffectText) == true)
         {
-            Gear gear = GameManager.instance.playerScript.GetAIGearName(freeHackingEffectText);
+            Gear gear = GameManager.instance.playerScript.GetAIGear(freeHackingEffectText);
             if (gear != null)
             {
                 textGear = gear.name;
-                if (isGearUsed == true)
+                if (logGearUse == true)
                 { GameManager.instance.gearScript.SetGearUsed(gear, "provide free AI Hacking"); }
             }
             else
@@ -3757,16 +3767,17 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// subMethod to return modified chance (%) of any given hacking attempt being detected as well as a colour formatted tooltip string detailing a breakdown of chance factors
+    /// isGearUsed set to true if you want to log gear effects, otherwise ignore
     /// </summary>
     /// <returns></returns>
-    private Tuple<int, string> GetChanceOfDetection()
+    private Tuple<int, string> GetChanceOfDetection(bool logGearUse = false)
     {
         //base chance
         int chance = hackingDetectBaseChance;
         bool showBase = false;
         string detectText = "";
         string gearName;
-        Gear gear = GameManager.instance.playerScript.GetAIGearName(invisibileHackingEffectText);
+        Gear gear = GameManager.instance.playerScript.GetAIGear(invisibileHackingEffectText);
         if (gear == null)
         {
             StringBuilder builder = new StringBuilder();
@@ -3795,11 +3806,14 @@ public class AIManager : MonoBehaviour
             }
             //Gear modifiers
             string textGear = "";
-            if (GameManager.instance.playerScript.GetAIGearName(lowerDetectionEffectText) != null)
+            Gear gearDetect = GameManager.instance.playerScript.GetAIGear(lowerDetectionEffectText);
+            if (gearDetect != null)
             {
                 chance -= hackingLowDetectionEffect;
                 showBase = true;
                 textGear = string.Format("{0}<size=90%>{1}Gear -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect, colourEnd);
+                if (logGearUse == true)
+                { GameManager.instance.gearScript.SetGearUsed(gearDetect, "lower the chance of being Detected while Hacking"); }
             }
             //Player Stressed
             string textStressed = "";
@@ -3824,7 +3838,8 @@ public class AIManager : MonoBehaviour
         else
         {
             gearName = gear.name;
-            GameManager.instance.gearScript.SetGearUsed(gear, "provide Invisibile AI Hacking");
+            if (logGearUse == true)
+            { GameManager.instance.gearScript.SetGearUsed(gear, "provide Invisibile AI Hacking"); }
             //Invisible Hacking gear present -> Player can't be detected -> no change to status
             detectText = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd, 
                 colourNeutral, gearName, colourEnd);

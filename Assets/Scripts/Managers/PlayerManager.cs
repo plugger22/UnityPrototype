@@ -222,7 +222,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="effectName"></param>
     /// <returns></returns>
-    public Gear GetAIGearName(string effectName)
+    public Gear GetAIGear(string effectName)
     {
         //loop through looking for ai Hacking gear
         for (int i = 0; i < listOfGear.Count; i++)

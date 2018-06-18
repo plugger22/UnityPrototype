@@ -70,6 +70,8 @@ public class DebugGUI : MonoBehaviour
             { showGUI = true; }
             else { showGUI = false; }
         }
+        else if (Input.GetKeyDown(KeyCode.Escape) == true && showGUI == true)
+        { showGUI = false; }
 
     }
 
