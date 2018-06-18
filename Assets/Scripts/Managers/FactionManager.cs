@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -82,14 +83,15 @@ public class FactionManager : MonoBehaviour
         GameManager.instance.aiScript.resourcesGainResistance = factionResistance.resourcesAllowance;
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);
         //support levels
-        SupportAuthority = 10;
-        SupportResistance = 10;
+        SupportAuthority = Random.Range(0, 10);
+        SupportResistance = Random.Range(0, 10);
         Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}", 
             factionResistance, factionAuthority, "\n"));
         //update colours for AI Display tooltip data
         SetColours();
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "FactionManager");
     }
 
     /// <summary>
@@ -105,6 +107,9 @@ public class FactionManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.StartTurnEarly:
+                CheckFactionSupport();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -130,6 +135,61 @@ public class FactionManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
+    }
+
+    /// <summary>
+    /// checks if player given support (+1 renown) from faction based on a random roll vs. level of faction support
+    /// </summary>
+    private void CheckFactionSupport()
+    {
+        int side = GameManager.instance.sideScript.PlayerSide.level;
+        if (side > 0)
+        {
+            int rnd = Random.Range(0, 100);
+            int threshold;
+            Message message = null;
+            switch (side)
+            {
+                case 1:
+                    threshold = _supportAuthority * 10;
+                    if (rnd <= threshold)
+                    {
+                        //message
+                        string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
+                        message = GameManager.instance.messageScript.FactionSupport(msgText, _supportAuthority, GameManager.instance.playerScript.Renown, 1);
+                        //Support given
+                        GameManager.instance.playerScript.Renown++;
+                    }
+                    else
+                    {
+                        //Support declined
+                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need {0}, rolled {1}{2}", threshold, rnd, "\n");
+                        string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
+                        message = GameManager.instance.messageScript.FactionSupport(msgText, _supportAuthority, GameManager.instance.playerScript.Renown);
+                    }
+                    break;
+                case 2:
+                    threshold = _supportResistance * 10;
+                    if (rnd <= threshold)
+                    {
+                        //message
+                        string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
+                        message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown, 1);
+                        //Support given
+                        GameManager.instance.playerScript.Renown++;
+                    }
+                    else
+                    {
+                        //Support declined
+                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need {0}, rolled {1}{2}", threshold, rnd, "\n");
+                        string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
+                        message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown);
+                    }
+                    break;
+            }
+            if  (message != null)
+            { GameManager.instance.dataScript.AddMessage(message); }
+        }
     }
 
     /// <summary>

@@ -10,6 +10,7 @@ using gameAPI;
 public class Gear : ScriptableObject
 {
     [HideInInspector] public int gearID;
+    [HideInInspector] public int timesUsed;               //# of times used in any given turn (reset to zero each turn)
 
     public string description;
 

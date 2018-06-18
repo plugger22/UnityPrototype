@@ -1074,5 +1074,34 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
+    /// <summary>
+    /// Faction support (renown) that is given/declined at the beginning of each turn
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="factionSupportLevel"></param>
+    /// <param name="playerRenownBefore"></param>
+    /// <param name="supportGiven"></param>
+    /// <returns></returns>
+    public Message FactionSupport(string text, int factionSupportLevel, int playerRenownBefore, int supportGiven = -1)
+    {
+        Debug.Assert(factionSupportLevel > -1, "Invalid factionSupportLevel ( < zero)");
+        Debug.Assert(playerRenownBefore > -1, "Invalid playerRenownBefore ( < zero)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.FACTION;
+            message.subType = MessageSubType.Faction_Support;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = factionSupportLevel;
+            message.data1 = playerRenownBefore;
+            message.data2 = supportGiven;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //new methods above here
 }

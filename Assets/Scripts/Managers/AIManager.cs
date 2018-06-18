@@ -3330,6 +3330,7 @@ public class AIManager : MonoBehaviour
                             Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
                             break;
                     }
+                    Debug.LogFormat("[Aim] -> UpdateHackingStatus: AI detects Hacking. AlertStatus increased to {0}{1}", aiAlertStatus, "\n");
                     //
                     // - - - Traceback - - -
                     //

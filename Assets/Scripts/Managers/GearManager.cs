@@ -881,6 +881,20 @@ public class GearManager : MonoBehaviour
     { return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd); }
 
     /// <summary>
+    /// call this whenever gear is used
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <param name="descriptor"></param>
+    public void SetGearUsed(Gear gear, string descriptor)
+    {
+        if (gear != null)
+        {
+            gear.timesUsed++;
+        }
+        else { Debug.LogWarning("Invalid gear (Null)"); }
+    }
+
+    /// <summary>
     /// subMethod to handle admin for Player renown expenditure
     /// </summary>
     /// <param name="amount"></param>
