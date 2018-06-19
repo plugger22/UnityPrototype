@@ -177,6 +177,7 @@ public class GearManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
+        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "GearManager");
     }
 
 
@@ -193,6 +194,9 @@ public class GearManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.EndTurnFinal:
+                EndTurnFinal();
                 break;
             case EventType.GearAction:
                 ModalActionDetails details = Param as ModalActionDetails;
@@ -229,6 +233,62 @@ public class GearManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
+    /// <summary>
+    /// End turn final events
+    /// </summary>
+    private void EndTurnFinal()
+    {
+        CheckForCompromisedGear();
+    }
+
+    /// <summary>
+    /// run at turn end to check all gear that has been used to see if it's compromised. Generates Generic Picker for player choice (use renown to keep gear) if so
+    /// </summary>
+    public void CheckForCompromisedGear()
+    {
+        int chance, rnd;
+        bool isCompromisedGear = false;
+        List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        if (listOfGear == null)
+        {
+            if (listOfGear.Count > 0)
+            {
+                for (int i = 0; i < listOfGear.Count; i++)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                    if (gear != null)
+                    {
+                        //gear has been used?
+                        if (gear.timesUsed > 0)
+                        {
+                            //check to see if compromised
+                            chance = GetChanceOfCompromise(gear.gearID);
+                            for (int j = 0; j < gear.timesUsed; j++)
+                            {
+                                rnd = Random.Range(0, 100);
+                                if ( rnd < chance)
+                                {
+                                    //gear compromised
+                                    gear.isCompromised = true;
+                                    isCompromisedGear = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[i]); }
+                }
+                //any compromised gear?
+                if (isCompromisedGear == true)
+                {
+                    //initialise generic picker
+
+                    //open generic picker
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfGear (Null"); }
+    }
 
 
     /// <summary>

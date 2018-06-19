@@ -203,7 +203,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");
+        /*EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");*/
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
@@ -292,10 +292,10 @@ public class NodeManager : MonoBehaviour
                 ModalMoveDetails details = Param as ModalMoveDetails;
                 ProcessPlayerMove(details);
                 break;
-            case EventType.DiceReturnMove:
+            /*case EventType.DiceReturnMove:
                 MoveReturnData data = Param as MoveReturnData;
                 ProcessMoveOutcome(data);
-                break;
+                break;*/
             case EventType.StartTurnLate:
                 ProcessNodeTimers();
                 break;

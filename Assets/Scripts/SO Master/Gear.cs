@@ -11,6 +11,7 @@ public class Gear : ScriptableObject
 {
     [HideInInspector] public int gearID;
     [HideInInspector] public int timesUsed = 0;               //# of times used in any given turn (reset to zero each turn)
+    [HideInInspector] public bool isCompromised = false;      //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
 
     public string description;
 
