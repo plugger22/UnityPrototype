@@ -158,7 +158,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                     if (gear != null)
                     {
-                        GenericTooltipDetails details = GameManager.instance.gearScript.GetGearTooltipDetails(gear);
+                        GenericTooltipDetails details = GameManager.instance.gearScript.GetGearTooltip(gear);
                         if (details != null)
                         {
                             //do once

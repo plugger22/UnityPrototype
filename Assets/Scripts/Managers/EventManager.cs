@@ -81,6 +81,7 @@ public enum EventType
     GenericTeamRecall,
     GenericNeutraliseTeam,
     GenericGearChoice,
+    GenericCompromisedGear,
     GenericRecruitActorResistance,
     GenericRecruitActorAuthority,
     GenericHandleActor,

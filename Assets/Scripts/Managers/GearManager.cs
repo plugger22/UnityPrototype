@@ -43,6 +43,10 @@ public class GearManager : MonoBehaviour
     private GenericPickerDetails cachedActorDetails;                          //last actor gear selection this action
     private bool isNewActionPlayer;                                           //set to true after player makes a gear choice at own node
     private bool isNewActionActor;                                            //set to true after player makes a gear choice at an actor contact's node
+
+    //fast access
+    private GlobalSide globalResistance;
+    private GlobalSide globalAuthority;
     
 
     private string colourGood;
@@ -101,6 +105,12 @@ public class GearManager : MonoBehaviour
         isNewActionActor = true;
         //initialise fast access variables -> type
         List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
+        Debug.Assert(listOfGearType != null, "Invalid listOfGearType (Null)");
+        //fast access -> sides
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         if (listOfGearType != null)
         {
             foreach (GearType gearType in listOfGearType)
@@ -176,8 +186,10 @@ public class GearManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
+        EventManager.instance.AddListener(EventType.GenericCompromisedGear, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "GearManager");
+        
     }
 
 
@@ -205,6 +217,10 @@ public class GearManager : MonoBehaviour
             case EventType.GenericGearChoice:
                 GenericReturnData returnDataGear = Param as GenericReturnData;
                 ProcessGearChoice(returnDataGear);
+                break;
+            case EventType.GenericCompromisedGear:
+                GenericReturnData returnDataCompromised = Param as GenericReturnData;
+                ProcessCompromisedGear(returnDataCompromised);
                 break;
             case EventType.InventorySetGear:
                 InitialiseGearInventoryDisplay();
@@ -249,7 +265,7 @@ public class GearManager : MonoBehaviour
         int chance, rnd;
         bool isCompromisedGear = false;
         List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
-        if (listOfGear == null)
+        if (listOfGear != null)
         {
             if (listOfGear.Count > 0)
             {
@@ -268,10 +284,18 @@ public class GearManager : MonoBehaviour
                                 rnd = Random.Range(0, 100);
                                 if ( rnd < chance)
                                 {
-                                    //gear compromised
+                                    //gear COMPROMISED
                                     gear.isCompromised = true;
                                     isCompromisedGear = true;
+                                    gear.chanceOfCompromise = chance;
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
+                                    Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
                                     break;
+                                }
+                                else
+                                {
+                                    //gear not compromised
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} Not compromised, need {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                 }
                             }
                         }
@@ -282,12 +306,65 @@ public class GearManager : MonoBehaviour
                 if (isCompromisedGear == true)
                 {
                     //initialise generic picker
-
-                    //open generic picker
+                    InitialiseCompromisedGearPicker();
                 }
             }
         }
-        else { Debug.LogError("Invalid listOfGear (Null"); }
+        else { Debug.LogError("Invalid listOfGear (Null)"); }
+    }
+
+    /// <summary>
+    /// sets up and triggers generic picker for end of turn compromised gear decision 
+    /// </summary>
+    private void InitialiseCompromisedGearPicker()
+    {
+        GenericPickerDetails genericDetails = new GenericPickerDetails();
+        //Obtain Gear
+        genericDetails.returnEvent = EventType.GenericCompromisedGear;
+        genericDetails.side = globalResistance;
+        //picker text
+        genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
+        genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
+            colourNormal, colourEnd);
+        genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
+        //get all compromised gear
+        List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        if (listOfGear != null && listOfGear.Count > 0)
+        {
+            //loop gear (max 3 pieces of gear / max 3 options)
+            for (int index = 0; index < listOfGear.Count; index++)
+            {
+                Debug.Assert(index < 3, "Invalid index (max. of 3 gear and 3 options)");
+                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[index]);
+                if (gear != null)
+                {
+                    //is gear compromised?
+                    if (gear.isCompromised == true)
+                    {
+                        //generate an option for picker
+                        GenericTooltipDetails tooltipDetails = GetCompromisedGearTooltipDetails(gear);
+                        if (tooltipDetails != null)
+                        {
+                            //option details
+                            GenericOptionDetails optionDetails = new GenericOptionDetails();
+                            optionDetails.optionID = gear.gearID;
+                            optionDetails.text = gear.name.ToUpper();
+                            optionDetails.sprite = gear.sprite;
+                            optionDetails.isOptionActive = false;
+                            //add to master arrays
+                            genericDetails.arrayOfOptions[index] = optionDetails;
+                            genericDetails.arrayOfTooltips[index] = tooltipDetails;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
+                }
+            }
+            //open picker
+            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "GearManager.cs -> InitialiseGenericPickerGear");
+        }
+        else
+        { Debug.LogWarning("Invalid listOfGear (Null or Empty). Compromised Gear Picker cancelled"); }
+
     }
 
 
@@ -305,7 +382,6 @@ public class GearManager : MonoBehaviour
         bool isIgnoreCache = false;
         bool isPlayer = false;
         int gearID, index;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
         if (node != null)
@@ -459,7 +535,7 @@ public class GearManager : MonoBehaviour
                         if (gear != null)
                         {
                             //tooltip 
-                            GenericTooltipDetails tooltipDetails = GetGearTooltipDetails(gear);
+                            GenericTooltipDetails tooltipDetails = GetGearTooltip(gear);
                             if (tooltipDetails != null)
                             {
                                 //option details
@@ -575,7 +651,7 @@ public class GearManager : MonoBehaviour
                         Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                         if (gear != null)
                         {
-                            GenericTooltipDetails tooltipDetails = GameManager.instance.gearScript.GetGearTooltipDetails(gear);
+                            GenericTooltipDetails tooltipDetails = GameManager.instance.gearScript.GetGearTooltip(gear);
                             if (tooltipDetails != null)
                             {
                                 InventoryOptionData optionData = new InventoryOptionData();
@@ -690,7 +766,7 @@ public class GearManager : MonoBehaviour
                     Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                     if (gear != null)
                     {
-                        GenericTooltipDetails tooltipDetails = GameManager.instance.gearScript.GetGearTooltipDetails(gear);
+                        GenericTooltipDetails tooltipDetails = GameManager.instance.gearScript.GetGearTooltip(gear);
                         if (tooltipDetails != null)
                         {
                             InventoryOptionData optionData = new InventoryOptionData();
@@ -742,6 +818,15 @@ public class GearManager : MonoBehaviour
             { Debug.LogError("Invalid listOfGear (Null)"); }
         }
         return data;
+    }
+
+    /// <summary>
+    /// Process end of turn Compromised Gear choices
+    /// </summary>
+    /// <param name="data"></param>
+    public void ProcessCompromisedGear(GenericReturnData data)
+    {
+
     }
 
     /// <summary>
@@ -925,6 +1010,7 @@ public class GearManager : MonoBehaviour
             if (string.IsNullOrEmpty(descriptorUsedTo) == false)
             {
                 gear.timesUsed++;
+                gear.reasonUsed = string.Format("Used to {0}", descriptorUsedTo);
                 //message
                 string msgText = string.Format("{0} used to {1}", gear.name, descriptorUsedTo);
                 Message message = GameManager.instance.messageScript.GearUsed(msgText, gear.gearID);
@@ -959,7 +1045,7 @@ public class GearManager : MonoBehaviour
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public GenericTooltipDetails GetGearTooltipDetails(Gear gear)
+    public GenericTooltipDetails GetGearTooltip(Gear gear)
     {
         GenericTooltipDetails details = null;
         if (gear != null)
@@ -1020,6 +1106,46 @@ public class GearManager : MonoBehaviour
             //data package
             details.textHeader = builderHeader.ToString();
             details.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
+            details.textDetails = builderDetails.ToString();
+        }
+        return details;
+    }
+
+    /// <summary>
+    /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem.
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <returns></returns>
+    public GenericTooltipDetails GetCompromisedGearTooltip(Gear gear)
+    {
+        GenericTooltipDetails details = null;
+        if (gear != null)
+        {
+            details = new GenericTooltipDetails();
+            StringBuilder builderHeader = new StringBuilder();
+            StringBuilder builderMain = new StringBuilder();
+            StringBuilder builderDetails = new StringBuilder();
+            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd);
+            string colourGearEffect = colourNeutral;
+            if (gear.data == 3) { colourGearEffect = colourGood; }
+            else if (gear.data == 1) { colourGearEffect = colourBad; }
+            //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
+            switch (gear.type.name)
+            {
+                case "Movement":
+                    builderHeader.AppendFormat("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd);
+                    break;
+            }
+            builderMain.AppendFormat("{0}<size=110%>COMPROMISED</size>{1}{2}", colourBad, colourEnd, "\n");
+            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2} {3}Chance{3}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>", "\n");
+            //details
+            builderDetails.AppendFormat("{0}{1}{2}", colourGood, gear.rarity.name, colourEnd);
+            builderDetails.AppendLine();
+            builderDetails.AppendFormat("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd);
+
+            //data package
+            details.textHeader = builderHeader.ToString();
+            details.textMain = builderMain.ToString();
             details.textDetails = builderDetails.ToString();
         }
         return details;

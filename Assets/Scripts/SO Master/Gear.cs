@@ -9,10 +9,6 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Gear / Gear")]
 public class Gear : ScriptableObject
 {
-    [HideInInspector] public int gearID;
-    [HideInInspector] public int timesUsed = 0;               //# of times used in any given turn (reset to zero each turn)
-    [HideInInspector] public bool isCompromised = false;      //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
-
     public string description;
 
     [Tooltip("Only select an option here if the Gear is restricted to a particular metaLevel, otherwise leave as None (null)")]
@@ -31,5 +27,9 @@ public class Gear : ScriptableObject
     [Tooltip("Any effect for when gear is used by the Player while hacking AI. Ignore if none")]
     public Effect aiHackingEffect;
 
-
+    [HideInInspector] public int gearID;
+    [HideInInspector] public int timesUsed = 0;                 //# of times used in any given turn (reset to zero each turn)
+    [HideInInspector] public bool isCompromised = false;        //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
+    [HideInInspector] public string reasonUsed;                 //tag showing reason gear used (reset each turn), set by GearManager.cs -> SetGearUsed
+    [HideInInspector] public int chanceOfCompromise;            //set at time of use, cleared with a new turn
 }

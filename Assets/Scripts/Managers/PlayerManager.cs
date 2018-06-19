@@ -303,6 +303,7 @@ public class PlayerManager : MonoBehaviour
             if (CheckGearPresent(gearID) == false)
             {
                 gear.timesUsed = 0;
+                gear.reasonUsed = "";
                 listOfGear.Add(gearID);
                 Debug.LogFormat("PlayerManager: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
                 CheckForAIUpdate(gear);
@@ -335,6 +336,7 @@ public class PlayerManager : MonoBehaviour
             if (CheckGearPresent(gearID) == true)
             {
                 gear.timesUsed = 0;
+                gear.reasonUsed = "";
                 listOfGear.Remove(gearID);
                 Debug.Log(string.Format("PlayerManager: Gear \"{0}\", gearID {1}, removed from inventory{2}", gear.name, gearID, "\n"));
                 CheckForAIUpdate(gear);
@@ -350,6 +352,28 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
             return false;
+        }
+    }
+
+    /// <summary>
+    /// called at end of every turn in order to reset fields based around gear use ready for the next turn
+    /// </summary>
+    public void ResetGear()
+    {
+        if (listOfGear?.Count > 0)
+        {
+            //loop through looking for best piece of gear that matches the type
+            for (int i = 0; i < listOfGear.Count; i++)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                if (gear != null)
+                {
+                    gear.timesUsed = 0;
+                    gear.reasonUsed = "";
+                    gear.isCompromised = false;
+                    gear.chanceOfCompromise = 0;
+                }
+            }
         }
     }
 
