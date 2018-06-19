@@ -22,6 +22,8 @@ public class GearManager : MonoBehaviour
     [Range(1, 5)] public int gearBenefitRare = 2;
     [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Unique gear to an Actor")]
     [Range(1, 10)] public int gearBenefitUnique = 3;
+    [Tooltip("Base cost to save compromised gear (in Renown) at level start. Cost increases +1 each time the option is used")]
+    [Range(0, 3)] public int gearSaveBaseCost = 0;
 
     //used for quick reference  -> rarity
     [HideInInspector] public GearRarity gearCommon;
@@ -43,6 +45,8 @@ public class GearManager : MonoBehaviour
     private GenericPickerDetails cachedActorDetails;                          //last actor gear selection this action
     private bool isNewActionPlayer;                                           //set to true after player makes a gear choice at own node
     private bool isNewActionActor;                                            //set to true after player makes a gear choice at an actor contact's node
+    //compromised gear
+    private int gearSaveCurrentCost;                                          //how much renown to save a compromised item of gear (increments +1 each time option used)
 
     //fast access
     private GlobalSide globalResistance;
@@ -96,6 +100,8 @@ public class GearManager : MonoBehaviour
             if (gearUnique == null) { Debug.LogError("Invalid gearUnique (Null)"); }
         }
         else { Debug.LogError("Invalid listOfGearRarity (Null)"); }
+        //gear save cost
+        gearSaveCurrentCost = gearSaveBaseCost;
         //cached
         selectionPlayerTurn = -1;
         selectionActorTurn = -1;
@@ -342,7 +348,7 @@ public class GearManager : MonoBehaviour
                     if (gear.isCompromised == true)
                     {
                         //generate an option for picker
-                        GenericTooltipDetails tooltipDetails = GetCompromisedGearTooltipDetails(gear);
+                        GenericTooltipDetails tooltipDetails = GetCompromisedGearTooltip(gear);
                         if (tooltipDetails != null)
                         {
                             //option details
@@ -350,7 +356,7 @@ public class GearManager : MonoBehaviour
                             optionDetails.optionID = gear.gearID;
                             optionDetails.text = gear.name.ToUpper();
                             optionDetails.sprite = gear.sprite;
-                            optionDetails.isOptionActive = false;
+                            /*optionDetails.isOptionActive = false;*/
                             //add to master arrays
                             genericDetails.arrayOfOptions[index] = optionDetails;
                             genericDetails.arrayOfTooltips[index] = tooltipDetails;
@@ -1136,8 +1142,10 @@ public class GearManager : MonoBehaviour
                     builderHeader.AppendFormat("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd);
                     break;
             }
-            builderMain.AppendFormat("{0}<size=110%>COMPROMISED</size>{1}{2}", colourBad, colourEnd, "\n");
-            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2} {3}Chance{3}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>", "\n");
+            builderMain.AppendFormat("{0}<size=115%><cspace=0.5em>COMPROMISED</cspace></size>{1}{2}", colourBad, colourEnd, "\n");
+            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2}{3}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>", "\n");
+            builderMain.AppendFormat("{0}{1}{2}{3}", colourNormal, gear.reasonUsed, colourEnd, "\n");
+            builderMain.AppendFormat("{0}LEFT CLICK to SAVE{1}{2}Cost {3}{4}{5} Renown", colourAlert, colourEnd, "\n", colourNeutral, gearSaveCurrentCost, colourEnd);
             //details
             builderDetails.AppendFormat("{0}{1}{2}", colourGood, gear.rarity.name, colourEnd);
             builderDetails.AppendLine();
