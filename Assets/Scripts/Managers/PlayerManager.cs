@@ -302,6 +302,7 @@ public class PlayerManager : MonoBehaviour
             //check gear not already in inventory
             if (CheckGearPresent(gearID) == false)
             {
+                gear.timesUsed = 0;
                 listOfGear.Add(gearID);
                 Debug.LogFormat("PlayerManager: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
                 CheckForAIUpdate(gear);
@@ -333,6 +334,7 @@ public class PlayerManager : MonoBehaviour
             //check gear not already in inventory
             if (CheckGearPresent(gearID) == true)
             {
+                gear.timesUsed = 0;
                 listOfGear.Remove(gearID);
                 Debug.Log(string.Format("PlayerManager: Gear \"{0}\", gearID {1}, removed from inventory{2}", gear.name, gearID, "\n"));
                 CheckForAIUpdate(gear);

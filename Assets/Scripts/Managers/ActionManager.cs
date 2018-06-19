@@ -350,7 +350,6 @@ public class ActionManager : MonoBehaviour
         Action action = null;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //renown (do prior to effects as Player renown will change)
-        int renownCost = GameManager.instance.actorScript.renownCostGear;
         int renownBefore = GameManager.instance.playerScript.Renown;
         //default data 
         outcomeDetails.side = details.side;

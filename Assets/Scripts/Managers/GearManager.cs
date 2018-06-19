@@ -45,17 +45,14 @@ public class GearManager : MonoBehaviour
     private bool isNewActionActor;                                            //set to true after player makes a gear choice at an actor contact's node
     
 
-    private string colourEffectGood;
-    private string colourEffectNeutral;
-    private string colourEffectBad;
+    private string colourGood;
+    private string colourNeutral;
+    private string colourBad;
     private string colourSide;
     private string colourGear;
     private string colourDefault;
     private string colourGrey;
     private string colourNormal;
-    /*private string colourGood;
-    private string colourBad;
-    private string colourActor;*/
     private string colourAlert;
     private string colourEnd;
 
@@ -220,17 +217,14 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourEffectGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourEffectNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourEffectBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);*/
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -275,7 +269,7 @@ public class GearManager : MonoBehaviour
                 if (captureDetails != null)
                 {
                     //capture happened, abort recruitment
-                    captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourEffectNeutral, colourEnd);
+                    captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourNeutral, colourEnd);
                     EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "GearManager.cs -> InitialiseGenericPickerGear");
                     return;
                 }
@@ -309,7 +303,7 @@ public class GearManager : MonoBehaviour
                 genericDetails.nodeID = details.nodeID;
                 genericDetails.actorSlotID = details.actorDataID;
                 //picker text
-                genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourEffectNeutral, colourEnd, colourNormal, colourEnd);
+                genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
                 genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
@@ -504,8 +498,8 @@ public class GearManager : MonoBehaviour
                 //At least one item of gear is present
                 InventoryInputData data = new InventoryInputData();
                 data.textHeader = "Gear Inventory";
-                data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourEffectNeutral, colourEnd, 
-                    colourDefault, numOfGear, colourEnd, colourEffectNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourEffectNeutral, 
+                data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourNeutral, colourEnd, 
+                    colourDefault, numOfGear, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourNeutral, 
                     maxNumOfGear != 1 ? "s" : "", colourEnd);
                 data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Gear Options{7}", colourAlert, colourEnd, 
                     colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
@@ -530,34 +524,14 @@ public class GearManager : MonoBehaviour
                                 //colour code Rarity
                                 switch (gear.rarity.name)
                                 {
-                                    case "Common": colourRarity = colourEffectBad; break;
-                                    case "Rare": colourRarity = colourEffectNeutral; break;
-                                    case "Unique": colourRarity = colourEffectGood; break;
+                                    case "Common": colourRarity = colourBad; break;
+                                    case "Rare": colourRarity = colourNeutral; break;
+                                    case "Unique": colourRarity = colourGood; break;
                                     default: colourRarity = colourDefault; break;
                                 }
                                 optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
                                     colourDefault, gear.type.name, colourEnd);
                                 optionData.optionID = gear.gearID;
-
-                                /*//tooltip 
-                                GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                                StringBuilder builderHeader = new StringBuilder();
-                                builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
-                                string colourGearEffect = colourEffectNeutral;
-                                if (gear.data == 3) { colourGearEffect = colourEffectGood; }
-                                else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
-                                //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
-                                switch (gear.type.name)
-                                {
-                                    case "Movement":
-                                        builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
-                                        break;
-                                }
-                                tooltipDetails.textHeader = builderHeader.ToString();
-                                tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                                tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd,
-                                    "\n", colourSide, gear.type.name, colourEnd);*/
-
                                 //add to array
                                 data.arrayOfOptions[i] = optionData;
                                 data.arrayOfTooltips[i] = tooltipDetails;
@@ -637,8 +611,8 @@ public class GearManager : MonoBehaviour
         {
             numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
             //At least one item of gear is present
-            data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourEffectNeutral, colourEnd,
-                colourDefault, numOfGear, colourEnd, colourEffectNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourEffectNeutral,
+            data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourNeutral, colourEnd,
+                colourDefault, numOfGear, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourNeutral,
                 maxNumOfGear != 1 ? "s" : "", colourEnd);
             if (numOfGear > 0)
             {
@@ -665,9 +639,9 @@ public class GearManager : MonoBehaviour
                             //colour code Rarity
                             switch (gear.rarity.name)
                             {
-                                case "Common": colourRarity = colourEffectBad; break;
-                                case "Rare": colourRarity = colourEffectNeutral; break;
-                                case "Unique": colourRarity = colourEffectGood; break;
+                                case "Common": colourRarity = colourBad; break;
+                                case "Rare": colourRarity = colourNeutral; break;
+                                case "Unique": colourRarity = colourGood; break;
                                 default: colourRarity = colourDefault; break;
                             }
                             optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
@@ -769,8 +743,8 @@ public class GearManager : MonoBehaviour
                                         {
                                             //ignore invisiblity effect in case of fixer/player getting invisibility gear 
                                             if (isInvisibility == true && effect.outcome.name.Equals("Invisibility") == true)
-                                            { Debug.Log(string.Format("GearManager.cs -> ProcessGearChoice: {0} effect ignored due to Invisibility{1}", 
-                                                effect.name, "\n")); }
+                                            { Debug.LogFormat("GearManager.cs -> ProcessGearChoice: {0} effect ignored due to Invisibility{1}", 
+                                                effect.name, "\n"); }
                                             else
                                             {
                                                 //process effect normally
@@ -917,7 +891,7 @@ public class GearManager : MonoBehaviour
         Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
         if (messageRenown != null) { GameManager.instance.dataScript.AddMessage(messageRenown); }
         //return text string for builder
-        return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourEffectBad, amount, colourEnd);
+        return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
     }
 
     /// <summary>
@@ -933,15 +907,15 @@ public class GearManager : MonoBehaviour
             details = new GenericTooltipDetails();
             StringBuilder builderHeader = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
-            builderHeader.Append(string.Format("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd));
-            string colourGearEffect = colourEffectNeutral;
-            if (gear.data == 3) { colourGearEffect = colourEffectGood; }
-            else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
+            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd);
+            string colourGearEffect = colourNeutral;
+            if (gear.data == 3) { colourGearEffect = colourGood; }
+            else if (gear.data == 1) { colourGearEffect = colourBad; }
             //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
             switch (gear.type.name)
             {
                 case "Movement":
-                    builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
+                    builderHeader.AppendFormat("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd);
                     break;
             }
             //Node use
@@ -951,31 +925,37 @@ public class GearManager : MonoBehaviour
                 case "Hacking":
                 case "Kinetic":
                 case "Persuasion":
-                    builderHeader.Append(string.Format("{0}<size=90%>District use? Yes{1}", colourAlert, colourEnd));
+                    builderHeader.AppendFormat("{0}<size=90%>District use? Yes{1}", colourAlert, colourEnd);
                     break;
                 default:
-                    builderHeader.Append(string.Format("{0}<size=80%>District use? No{1}", colourGrey, colourEnd));
+                    builderHeader.AppendFormat("{0}<size=80%>District use? No{1}", colourGrey, colourEnd);
                     break;
             }
             //gear use
             builderHeader.AppendLine();
-            builderHeader.Append(string.Format("{0}Gift use? Yes{1}", colourAlert, colourEnd));
+            builderHeader.AppendFormat("{0}Gift use? Yes{1}", colourAlert, colourEnd);
             //personal use
             builderHeader.AppendLine();
             if (gear.listOfPersonalEffects != null && gear.listOfPersonalEffects.Count > 0)
-            { builderHeader.Append(string.Format("{0}Personal use? Yes{1}", colourAlert, colourEnd)); }
+            { builderHeader.AppendFormat("{0}Personal use? Yes{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.Append(string.Format("{0}Personal use? No{1}", colourGrey, colourEnd)); }
+            { builderHeader.AppendFormat("{0}Personal use? No{1}", colourGrey, colourEnd); }
             //AI use
             builderHeader.AppendLine();
             if (gear.aiHackingEffect != null)
-            { builderHeader.Append(string.Format("{0}AI use? Yes{1}", colourAlert, colourEnd)); }
+            { builderHeader.AppendFormat("{0}AI use? Yes{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.Append(string.Format("{0}AI use? No{1}", colourGrey, colourEnd)); }
+            { builderHeader.AppendFormat("{0}AI use? No{1}", colourGrey, colourEnd); }
+            //has been used this turn
+            if (gear.timesUsed > 0)
+            {
+                builderHeader.AppendLine();
+                builderHeader.AppendFormat("</size>{0}USED this Turn{1}{2}{3}(Can't be gifted){4}", colourNeutral, colourEnd, "\n", colourBad, colourEnd);
+            }
             //details
-            builderDetails.Append(string.Format("{0}{1}{2}", colourEffectGood, gear.rarity.name, colourEnd));
+            builderDetails.AppendFormat("{0}{1}{2}", colourGood, gear.rarity.name, colourEnd);
             builderDetails.AppendLine();
-            builderDetails.Append(string.Format("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd));
+            builderDetails.AppendFormat("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd);
 
             //data package
             details.textHeader = builderHeader.ToString();

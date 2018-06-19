@@ -421,7 +421,6 @@ public class NodeManager : MonoBehaviour
                     List<Node> nodeList = nodeRef.GetNeighbouringNodes();
                     if (nodeList != null)
                     {
-                        NodeArc nodeArc = GameManager.instance.dataScript.GetNodeArc(data);
                         if (nodeList.Count > 0)
                         {
                             foreach (Node node in nodeList)
@@ -434,11 +433,11 @@ public class NodeManager : MonoBehaviour
                         }
                         else
                         {
-                            if (nodeArc != null)
-                            { displayText = string.Format("{0}There are no {1} districts{2}", colourError, nodeArc.name, colourEnd); }
+                            displayText = string.Format("{0}There are no districts you can Move to{1}", colourError, colourEnd);
+                            Debug.LogWarning("No records in list of Neighbouring Nodes");
                         }
                     }
-                    else { Debug.LogError(string.Format("Invalid nodeList (null) for NodeArcID {0}{1}", data, "\n")); }
+                    else { Debug.LogError("Invalid nodeList (Null) for GetNeighbouring nodes"); }
                 }
                 else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", nodePlayer)); }
                 break;
@@ -1600,7 +1599,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 buttonTitle = "CANCEL",
                                 buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                                buttonTooltipMain = "You decide not to use your gear to carry out a Node action",
+                                buttonTooltipMain = "You decide not to use your gear to carry out a district action",
                                 //use a Lambda to pass arguments to the action
                                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateGearNodeMenu"); }
                             };
@@ -1612,7 +1611,7 @@ public class NodeManager : MonoBehaviour
                         {
                             buttonTitle = "CANCEL",
                             buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                            buttonTooltipMain = "You can only take Gear actions at a Node if you have gear with that capability",
+                            buttonTooltipMain = "You can only take Gear actions at a district if you have gear with that capability",
                             //use a Lambda to pass arguments to the action
                             action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateGearNodeMenu"); }
                         };
@@ -1624,7 +1623,7 @@ public class NodeManager : MonoBehaviour
                     {
                         buttonTitle = "CANCEL",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                        buttonTooltipMain = "You do not have any Gear",
+                        buttonTooltipMain = string.Format("{0}You do not have any Gear capable of being used in districts{1}", colourAlert, colourEnd),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateGearNodeMenu"); }
                     };
@@ -1730,7 +1729,6 @@ public class NodeManager : MonoBehaviour
                 if (moveDetails.gearID > -1)
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
-                    int renownCost = GameManager.instance.actorScript.renownCostGear;
                     if (gear != null)
                     {
                         builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd);
