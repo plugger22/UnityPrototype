@@ -2869,7 +2869,7 @@ public class AIManager : MonoBehaviour
             //add faction starting resources amount to their resource pool + 1 for each successful request
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resourcePool);
             isSuccess = true;
-            Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: APPROVED need {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
+            Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: APPROVED need < {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
         }
         //message & request counter
         string text = "";
@@ -2883,7 +2883,7 @@ public class AIManager : MonoBehaviour
         else
         {
             text = string.Format("Request for Resources DENIED ({0} % chance of being Approved)", adjustedChance);
-            Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: DENIED need {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
+            Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: DENIED need < {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
             //increment counter
             numOfUnsuccessfulResourceRequests++;
             amount = 0;
@@ -3293,7 +3293,7 @@ public class AIManager : MonoBehaviour
                 if (rnd < chance)
                 {
                     //AI DETECTS hacking attempt
-                    Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need {0}, rolled {1}{2}", chance, rnd, "\n");
+                    Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     isDetected = true;
                     hackingAttemptsDetected++;
                     //increase alert status
@@ -3405,7 +3405,7 @@ public class AIManager : MonoBehaviour
                 // NOT Detected
                 else
                 {
-                    Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt Undetected, need {0}, rolled {1}{2}", chance, rnd, "\n");
+                    Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt Undetected, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     //no change to status
                     switch (aiAlertStatus)
                     {

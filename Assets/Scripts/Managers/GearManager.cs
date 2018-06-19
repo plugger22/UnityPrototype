@@ -294,14 +294,14 @@ public class GearManager : MonoBehaviour
                                     gear.isCompromised = true;
                                     isCompromisedGear = true;
                                     gear.chanceOfCompromise = chance;
-                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                     Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
                                     break;
                                 }
                                 else
                                 {
                                     //gear not compromised
-                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} Not compromised, need {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} NOT compromised, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                 }
                             }
                         }
@@ -329,10 +329,9 @@ public class GearManager : MonoBehaviour
         genericDetails.returnEvent = EventType.GenericCompromisedGear;
         genericDetails.side = globalResistance;
         //picker text
-        genericDetails.textTop = string.Format("{0}Gear{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
-        genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
-            colourNormal, colourEnd);
-        genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
+        genericDetails.textTop = string.Format("Select {0}ONE{1} Item of Gear to {2}SAVE{3} (Optional)", colourNeutral, colourEnd, colourGood, colourEnd);
+        genericDetails.textMiddle = string.Format("{0}Any Gear NOT Saved will be Lost{1}", colourAlert, colourEnd);
+        genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to SAVE gear. Mouseover gear for more information.";
         //get all compromised gear
         List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
         if (listOfGear != null && listOfGear.Count > 0)
@@ -498,7 +497,7 @@ public class GearManager : MonoBehaviour
                             index = Random.Range(0, tempRareGear.Count);
                             gearID = tempRareGear[index];
                             tempRareGear.RemoveAt(index);
-                            Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear Success, chance {0} roll {1}{2}", chance, rnd, "\n");
+                            Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear Success, need < {0} roll {1}{2}", chance, rnd, "\n");
                         }
                         //if failed chance for rare gear then need to get common
                         else if (tempCommonGear.Count > 0)
@@ -506,7 +505,7 @@ public class GearManager : MonoBehaviour
                             index = Random.Range(0, tempCommonGear.Count);
                             gearID = tempCommonGear[index];
                             tempCommonGear.RemoveAt(index);
-                            Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear FAIL, chance {0} roll {1}{2}", chance, rnd, "\n");
+                            Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear FAIL, need < {0} roll {1}{2}", chance, rnd, "\n");
                         }
                     }
                     //common gear
@@ -832,7 +831,15 @@ public class GearManager : MonoBehaviour
     /// <param name="data"></param>
     public void ProcessCompromisedGear(GenericReturnData data)
     {
+        if (data != null)
+        {
+            //keep gear
+            Debug.Log("[Tst] GearManager.cs -> ProcessCompromisedGear");
+            //deduct renown
 
+            //remove any other, unsaved, gear
+        }
+        else { Debug.LogError("Invalid GenericReturnData (Null)"); }
     }
 
     /// <summary>

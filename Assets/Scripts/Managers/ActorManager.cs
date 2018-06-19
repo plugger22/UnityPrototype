@@ -2858,7 +2858,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         //actor suffers a breakdown
                                         ActorBreakdown(actor, globalResistance);
-                                        Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need {0}, rolled {1}{2}", 
+                                        Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need < {0}, rolled {1}{2}", 
                                             chance, rnd, "\n");
                                     }
                                 }
@@ -3020,7 +3020,7 @@ public class ActorManager : MonoBehaviour
                         if (GameManager.instance.playerScript.isBreakdown == false)
                         {
                             rnd = Random.Range(0, 100);
-                            if ( rnd <= breakdownChance)
+                            if ( rnd < breakdownChance)
                             {
                                 //player Breakdown
                                 GameManager.instance.playerScript.status = ActorStatus.Inactive;
@@ -3033,7 +3033,7 @@ public class ActorManager : MonoBehaviour
                                 string text = "Player has suffered a Breakdown (Stressed)";
                                 Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                                 GameManager.instance.dataScript.AddMessage(message);
-                                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need {0}, rolled {1}{2}",
+                                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                 //update AI side tab status
                                 GameManager.instance.aiScript.UpdateSideTabData();
