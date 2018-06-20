@@ -374,7 +374,7 @@ public class Connection : MonoBehaviour
                 if (GameManager.instance.optionScript.connectorTooltips == true)
                 {
                     //exit any node tooltip that might be open
-                    GameManager.instance.tooltipNodeScript.CloseTooltip();
+                    GameManager.instance.tooltipNodeScript.CloseTooltip("Connection.cs -> OnMouseOver");
                     //start tooltip routine
                     myCoroutine = StartCoroutine("ShowTooltip");
                 }

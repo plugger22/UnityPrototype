@@ -302,10 +302,9 @@ public class PlayerManager : MonoBehaviour
             //check gear not already in inventory
             if (CheckGearPresent(gearID) == false)
             {
-                gear.timesUsed = 0;
-                gear.reasonUsed = "";
+                ResetGearItem(gear);
                 listOfGear.Add(gearID);
-                Debug.LogFormat("PlayerManager: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
+                Debug.LogFormat("[Gea] -> PlayerManager.cs: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
                 CheckForAIUpdate(gear);
                 return true;
             }
@@ -335,11 +334,7 @@ public class PlayerManager : MonoBehaviour
             //check gear not already in inventory
             if (CheckGearPresent(gearID) == true)
             {
-                gear.timesUsed = 0;
-                gear.reasonUsed = "";
-                listOfGear.Remove(gearID);
-                Debug.Log(string.Format("PlayerManager: Gear \"{0}\", gearID {1}, removed from inventory{2}", gear.name, gearID, "\n"));
-                CheckForAIUpdate(gear);
+                RemoveGearItem(gear);
                 return true;
             }
             else
@@ -356,25 +351,46 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
+    /// subMethod to remove a specific gear item and handle admin
+    /// NOTE: gear checked for Null by calling method
+    /// </summary>
+    /// <param name="gear"></param>
+    private void RemoveGearItem(Gear gear)
+    {
+        ResetGearItem(gear);
+        listOfGear.Remove(gear.gearID);
+        Debug.Log(string.Format("[Gea] -> PlayerManager.cs: Gear \"{0}\", gearID {1}, removed from inventory{2}", gear.name, gear.gearID, "\n"));
+        CheckForAIUpdate(gear);
+    }
+
+    /// <summary>
     /// called at end of every turn in order to reset fields based around gear use ready for the next turn
     /// </summary>
-    public void ResetGear()
+    public void ResetAllGear()
     {
-        if (listOfGear?.Count > 0)
+        if (listOfGear.Count > 0)
         {
             //loop through looking for best piece of gear that matches the type
             for (int i = 0; i < listOfGear.Count; i++)
             {
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
-                {
-                    gear.timesUsed = 0;
-                    gear.reasonUsed = "";
-                    gear.isCompromised = false;
-                    gear.chanceOfCompromise = 0;
-                }
+                { ResetGearItem(gear); }
             }
         }
+    }
+
+    /// <summary>
+    /// subMethod to reset a single item of gear. Called by Add/Remove gear and ResetAllGear
+    /// NOTE: Gear checked for Null by calling method
+    /// </summary>
+    /// <param name="gear"></param>
+    private void ResetGearItem(Gear gear)
+    {
+        gear.timesUsed = 0;
+        gear.reasonUsed = "";
+        gear.isCompromised = false;
+        gear.chanceOfCompromise = 0;
     }
 
     /// <summary>
@@ -392,6 +408,43 @@ public class PlayerManager : MonoBehaviour
             {
                 //update AI to reflect this
                 GameManager.instance.aiScript.UpdateAIGearStatus();
+            }
+        }
+    }
+
+    /// <summary>
+    /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. GearID is the compromised gear that the player chose to save
+    /// </summary>
+    public void UpdateCompromisedGear(int savedGearID)
+    {
+        if (listOfGear.Count > 0)
+        {
+            //loop through looking for compromised gear
+            for (int i = 0; i < listOfGear.Count; i++)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                if (gear != null)
+                {
+                    if (gear.isCompromised == true)
+                    {
+                        //if not saved gear then remove
+                        if (gear.gearID != savedGearID)
+                        {
+                            //message
+                            string msgText = string.Format("{0}, {1}, {2}, has been COMPROMISED and LOST", gear.name, gear.type, gear.reasonUsed);
+                            Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
+                            GameManager.instance.dataScript.AddMessage(message);
+                            RemoveGearItem(gear);
+                        }
+                        else
+                        {
+                            //gear saved
+                            string msgText = string.Format("{0}, {1}, {2}, has been COMPROMISED and SAVED", gear.name, gear.type, gear.reasonUsed);
+                            Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
+                            GameManager.instance.dataScript.AddMessage(message);
+                        }
+                    }
+                }
             }
         }
     }

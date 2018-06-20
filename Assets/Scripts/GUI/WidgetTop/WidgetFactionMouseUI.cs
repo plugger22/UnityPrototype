@@ -44,7 +44,7 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
 
             //exit any node tooltip that might be open
             /*StopCoroutine("ShowTooltip");*/
-            GameManager.instance.tooltipNodeScript.CloseTooltip();
+            GameManager.instance.tooltipNodeScript.CloseTooltip("WidgetFactionMouseUI.cs -> OnPointerEnter");
             //start tooltip routine
             myCoroutine = StartCoroutine("ShowTooltip");
         }

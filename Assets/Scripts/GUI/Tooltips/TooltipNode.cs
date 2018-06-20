@@ -144,16 +144,9 @@ public class TooltipNode : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialise node Tool tip
+    /// Initialise node tooltip
     /// </summary>
-    /// <param name="name">Name of Node, eg. 'Downtown Manhattan'</param>
-    /// <param name="type">Type of Node, eg. Sprawl, government, corporate (auto converted to CAPS)</param>
-    /// <param name="listOfActive">place actor type here if node is active for them, eg. 'Hacker'. No limit to actors</param>
-    /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
-    /// <param name="listOfTeams">List of Authority teams present at node</param>
-    /// <param name="listOfTarget">place target info here, a blank list if none</param>
-    /// <param name="pos">Position of tooltip originator -> Use a transform position (world units), not an Input.MousePosition (screen units)</param>
-    //public void SetTooltip(string name, string type, List<string> listOfActive, int[] arrayOfStats, List<string> listOfTeams, List<string> listOfTarget, Vector3 pos)
+    /// <param name="data"></param>
     public void SetTooltip(NodeTooltipData data)
     {
         bool proceedFlag;
@@ -424,7 +417,6 @@ public class TooltipNode : MonoBehaviour
             nodeStatsVar.text = builderStats.ToString();
             nodeStatsFixed.text = string.Format("{0}{1}\n{2}\n{3}{4}", colourDefault, "Stability", "Support", "Security", colourEnd);
         }
-
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
         Canvas.ForceUpdateCanvases();
@@ -498,9 +490,9 @@ public class TooltipNode : MonoBehaviour
     /// <summary>
     /// close tool tip
     /// </summary>
-    public void CloseTooltip()
+    public void CloseTooltip(string callingMethod)
     {
-        Debug.LogFormat("[UI] TooltipNode.cs -> CloseTooltip{0}", "\n");
+        Debug.LogFormat("[UI] TooltipNode.cs -> CloseTooltip: called by {0}{1}", callingMethod, "\n");
         tooltipNodeObject.SetActive(false);
     }
 

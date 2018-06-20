@@ -2172,7 +2172,7 @@ public class ActorManager : MonoBehaviour
         string unhappySituation;
         bool errorFlag = false;
         //close node tooltip -> safety check
-        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        GameManager.instance.tooltipNodeScript.CloseTooltip("ActorManager.cs -> InitialiseReservePoolInventory");
         numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve(); 
         //check for presence of actors in reserve pool
         if (numOfActors > 0)

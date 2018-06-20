@@ -232,7 +232,7 @@ public class CityInfoUI : MonoBehaviour
         {
             //exit any generic or node tooltips
             GameManager.instance.tooltipGenericScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
-            GameManager.instance.tooltipNodeScript.CloseTooltip();
+            GameManager.instance.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
             //populate data

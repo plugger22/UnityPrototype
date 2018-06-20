@@ -1984,9 +1984,9 @@ public class ActionManager : MonoBehaviour
                 isAction = true;
                 int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
-                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0} - - - {1}", target.name, "\n");
+                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.name, "\n");
                 int roll = Random.Range(0, 100);
-                if (roll <= chance)
+                if (roll < chance)
                 {
                     //Success
                     isSuccessful = true;
@@ -2007,7 +2007,9 @@ public class ActionManager : MonoBehaviour
                     text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
                     Message message = GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
                     GameManager.instance.dataScript.AddMessage(message);
+                    Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
                 }
+                else { Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt FAILED need < {0}, rolled {1}{2}", chance, roll, "\n"); }
                 //set isTargetKnown -> auto if success, % chance otherwise
                 if (isSuccessful == true) { node.isTargetKnown = true; }
                 else
@@ -2015,14 +2017,18 @@ public class ActionManager : MonoBehaviour
                     //chance of being known
                     if (isZeroInvisibility == false)
                     {
-                        if (Random.Range(0, 100) < failedTargetChance)
-                        { node.isTargetKnown = true; }
+                        roll = Random.Range(0, 100);
+                        if (roll < failedTargetChance)
+                        {
+                            node.isTargetKnown = true;
+                            Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt KNOWN need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
+                        }
+                        else { Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n"); }
                     }
                     //if zero invisibility then target auto known to authorities
                     else { node.isTargetKnown = true; }
                 }
                 Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Authority aware of target: {0}", node.isTargetKnown);
-                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Resolution chance {0}  roll {1}  isSuccess {2}{3}", chance, roll, isSuccessful, "\n");
                 //
                 // - - - Effects - - - 
                 //

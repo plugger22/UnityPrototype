@@ -219,7 +219,7 @@ public class Node : MonoBehaviour
             {
                 onMouseFlag = false;
                 StopCoroutine("ShowTooltip");
-                GameManager.instance.tooltipNodeScript.CloseTooltip();
+                GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseDown");
             }
             //Action Menu -> not valid if AI is active for side
             if (GameManager.instance.sideScript.CheckInteraction() == false)
@@ -264,7 +264,7 @@ public class Node : MonoBehaviour
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipNodeScript.CloseTooltip();
+            GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseExit");
         }
     }
 
@@ -297,8 +297,7 @@ public class Node : MonoBehaviour
                     if (proceedFlag == true)
                     {
                         //exit any tooltip
-                        /*StopCoroutine("ShowTooltip");*/
-                        GameManager.instance.tooltipNodeScript.CloseTooltip();
+                        GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
                         //Create a Move Menu at the node
                         if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
                         { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }

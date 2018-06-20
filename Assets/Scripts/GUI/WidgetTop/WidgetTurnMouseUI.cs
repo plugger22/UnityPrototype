@@ -34,12 +34,9 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
         if (GameManager.instance.guiScript.CheckIsBlocked() == false)
         {
             //Tool tip
-
             onMouseFlag = true;
-
             //exit any node tooltip that might be open
-            /*StopCoroutine("ShowTooltip");*/
-            GameManager.instance.tooltipNodeScript.CloseTooltip();
+            GameManager.instance.tooltipNodeScript.CloseTooltip("WidgetTurnMouseUI.cs -> OnPointerEnter");
             //start tooltip routine
             myCoroutine = StartCoroutine("ShowTooltip");
         }

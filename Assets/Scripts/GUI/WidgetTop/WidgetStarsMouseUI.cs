@@ -37,7 +37,7 @@ public class WidgetStarsMouseUI : MonoBehaviour, IPointerClickHandler, IPointerE
             onMouseFlag = true;
             //exit any node tooltip that might be open
             /*StopCoroutine("ShowTooltip");*/
-            GameManager.instance.tooltipNodeScript.CloseTooltip();
+            GameManager.instance.tooltipNodeScript.CloseTooltip("WidgetStarsMouseUI.cs -> OnPointerEnter");
             //start tooltip routine
             myCoroutine = StartCoroutine(ShowTooltip());
         }

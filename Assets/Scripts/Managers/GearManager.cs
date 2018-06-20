@@ -261,6 +261,8 @@ public class GearManager : MonoBehaviour
     private void EndTurnFinal()
     {
         CheckForCompromisedGear();
+        //reset all gear
+        GameManager.instance.playerScript.ResetAllGear();
     }
 
     /// <summary>
@@ -329,9 +331,11 @@ public class GearManager : MonoBehaviour
         genericDetails.returnEvent = EventType.GenericCompromisedGear;
         genericDetails.side = globalResistance;
         //picker text
-        genericDetails.textTop = string.Format("Select {0}ONE{1} Item of Gear to {2}SAVE{3} (Optional)", colourNeutral, colourEnd, colourGood, colourEnd);
+        genericDetails.textTop = string.Format("Select {0}ONE{1} Item of Gear to {2}SAVE{3} <size=70%>(optional)</size>", colourNeutral, colourEnd, colourGood, colourEnd);
         genericDetails.textMiddle = string.Format("{0}Any Gear NOT Saved will be Lost{1}", colourAlert, colourEnd);
         genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to SAVE gear. Mouseover gear for more information.";
+        //renown cost to save gear
+        genericDetails.data = gearSaveCurrentCost;
         //get all compromised gear
         List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
         if (listOfGear != null && listOfGear.Count > 0)
@@ -628,7 +632,7 @@ public class GearManager : MonoBehaviour
         string colourRarity;
         bool errorFlag = false;
         //close node tooltip -> safety check
-        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        GameManager.instance.tooltipNodeScript.CloseTooltip("GearManager.cs -> InitialiseGearInventoryDisplay");
         //only for Resistance
         if (GameManager.instance.sideScript.PlayerSide == GameManager.instance.globalScript.sideResistance)
         {
@@ -746,7 +750,7 @@ public class GearManager : MonoBehaviour
         string colourRarity;
         InventoryInputData data = new InventoryInputData();
         //close node tooltip -> safety check
-        GameManager.instance.tooltipNodeScript.CloseTooltip();
+        GameManager.instance.tooltipNodeScript.CloseTooltip("GearManager.cs -> RefreshGearInventory");
         //only for Resistance
         if (GameManager.instance.sideScript.PlayerSide == GameManager.instance.globalScript.sideResistance)
         {
@@ -788,26 +792,6 @@ public class GearManager : MonoBehaviour
                             optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
                                 colourDefault, gear.type.name, colourEnd);
                             optionData.optionID = gear.gearID;
-
-                            /*//tooltip 
-                            GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                            StringBuilder builderHeader = new StringBuilder();
-                            builderHeader.Append(string.Format("{0}{1}{2}", colourGear, gear.name.ToUpper(), colourEnd));
-                            string colourGearEffect = colourEffectNeutral;
-                            if (gear.data == 3) { colourGearEffect = colourEffectGood; }
-                            else if (gear.data == 1) { colourGearEffect = colourEffectBad; }
-                            //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
-                            switch (gear.type.name)
-                            {
-                                case "Movement":
-                                    builderHeader.Append(string.Format("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd));
-                                    break;
-                            }
-                            tooltipDetails.textHeader = builderHeader.ToString();
-                            tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, gear.description, colourEnd);
-                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5} gear{6}", colourEffectGood, gear.rarity.name, colourEnd,
-                                "\n", colourSide, gear.type.name, colourEnd);*/
-
                             //add to array
                             data.arrayOfOptions[i] = optionData;
                             data.arrayOfTooltips[i] = tooltipDetails;
@@ -833,11 +817,20 @@ public class GearManager : MonoBehaviour
     {
         if (data != null)
         {
-            //keep gear
-            Debug.Log("[Tst] GearManager.cs -> ProcessCompromisedGear");
+            //retain saved gear, remove any unsaved gear
+            GameManager.instance.playerScript.UpdateCompromisedGear(data.optionID);
             //deduct renown
-
-            //remove any other, unsaved, gear
+            if (data.optionID > -1)
+            {
+                int renown = GameManager.instance.playerScript.Renown;
+                renown -= gearSaveCurrentCost;
+                if (renown < 0)
+                {
+                    Debug.LogWarning("Renown invalid (< 0)");
+                    renown = 0;
+                }
+                GameManager.instance.playerScript.Renown = renown;
+            }
         }
         else { Debug.LogError("Invalid GenericReturnData (Null)"); }
     }

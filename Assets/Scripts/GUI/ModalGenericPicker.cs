@@ -25,21 +25,23 @@ public class ModalGenericPicker : MonoBehaviour
     public Button buttonBack;
     public Button buttonConfirm;
 
-    public GameObject[] arrayOfGenericOptions;                //place generic option UI elements here (3 options)
+    public GameObject[] arrayOfGenericOptions;                      //place generic option UI elements here (3 options)
 
     //private CanvasGroup canvasGroup;
     private ButtonInteraction buttonInteraction;
-    private ButtonInteraction buttonBackInteraction;        //specifically for the Back button as it can be dynamically updated
+    private ButtonInteraction buttonBackInteraction;                //specifically for the Back button as it can be dynamically updated
     private static ModalGenericPicker modalGenericPicker;
 
-    private int optionIDSelected;                             //slot ID (eg arrayOfGenericOptions [index] of selected option
-    private string optionTextSelected;                        //used for nested Generic Picker windows, ignore otherwise
+    private int optionIDSelected;                                   //slot ID (eg arrayOfGenericOptions [index] of selected option
+    private string optionTextSelected;                              //used for nested Generic Picker windows, ignore otherwise
     private int nodeIDSelected;
-    private int actorSlotIDSelected; 
-    private EventType defaultReturnEvent;                          //event to trigger once confirmation button is clicked
-    private EventType backReturnEvent;                  //event triggered when back button clicked (dynamic -> SetBackButton)
-    private ModalActionDetails nestedDetails;           //used only if there are multiple, nested, option windows (dynamic -> InitialiseNestedOptions)
+    private int actorSlotIDSelected;
+    private int datapoint;                                          //generic data point passed to picker by initialising method
+    private EventType defaultReturnEvent;                           //event to trigger once confirmation button is clicked
+    private EventType backReturnEvent;                              //event triggered when back button clicked (dynamic -> SetBackButton)
+    private ModalActionDetails nestedDetails;                       //used only if there are multiple, nested, option windows (dynamic -> InitialiseNestedOptions)
 
+    private string colourGood;
     private string colourEffect;
     private string colourDefault;
     private string colourNormal;
@@ -139,6 +141,7 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -170,6 +173,9 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     private void SetGenericPicker(GenericPickerDetails details)
     {
+        //close Node tooltip safety check
+        GameManager.instance.tooltipNodeScript.CloseTooltip("ModalGenericPicker.cs -> SetGenericPicker");
+        //open Generic picker
         bool errorFlag = false;
         CanvasGroup genericCanvasGroup;
         GenericInteraction genericData;
@@ -228,8 +234,11 @@ public class ModalGenericPicker : MonoBehaviour
             }
             if (details.arrayOfOptions.Length > 0)
             {
+                //initialise data
                 nodeIDSelected = details.nodeID;
                 actorSlotIDSelected = details.actorSlotID;
+                datapoint = details.data;
+                optionIDSelected = -1;
                 //assign sprites, texts, optionID's and tooltips
                 for (int i = 0; i < details.arrayOfOptions.Length; i++)
                 {
@@ -435,7 +444,8 @@ public class ModalGenericPicker : MonoBehaviour
                             Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
                             if (gear != null)
                             {
-                                text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                                text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.name.ToUpper(), colourEnd, 
+                                    colourNeutral, datapoint, colourEnd, colourGood, GameManager.instance.playerScript.Renown, colourEnd);
                                 Debug.LogFormat("GearPicker: gearID {0} selected{1}", data.optionID, "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", data.optionID); }
@@ -612,7 +622,8 @@ public class ModalGenericPicker : MonoBehaviour
                     text = string.Format("{0}Gear{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
                 case EventType.GenericCompromisedGear:
-                    text = string.Format("{0}Use Renown to {1}{2}SAVE ONE{3}{4} item (Optional){5}", colourNormal, colourEnd, colourNeutral, colourEnd, colourNormal, colourEnd);
+                    text = string.Format("{0}Use Renown to {1}{2}SAVE ONE{3}{4} item{5} <size=70%>(optional)</size>", colourNormal, colourEnd, colourNeutral, colourEnd, 
+                        colourNormal, colourEnd);
                     break;
                 case EventType.GenericRecruitActorResistance:
                 case EventType.GenericRecruitActorAuthority:

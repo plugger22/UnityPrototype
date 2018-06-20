@@ -173,6 +173,7 @@ namespace modalAPI
         public GlobalSide side;
         public int nodeID;
         public int actorSlotID;
+        public int data;                                                                           //general purpose datapoint, can be ignored
         public GenericOptionDetails[] arrayOfOptions = new GenericOptionDetails[3];                 //only the first three are recognised
         public GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];              //same [index] for both arrays. Keep in synch!!
     }

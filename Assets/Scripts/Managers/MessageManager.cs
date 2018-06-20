@@ -825,9 +825,8 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearCompromised(string text, int nodeID, int gearID)
+    public Message GearCompromised(string text, int gearID, int nodeID = -1)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -836,9 +835,9 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Comprised;
             message.side = globalResistance;
-            message.isPublic = false;
-            message.data0 = nodeID;
-            message.data1 = gearID;
+            message.isPublic = true;
+            message.data0 = gearID;
+            message.data1 = nodeID;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
