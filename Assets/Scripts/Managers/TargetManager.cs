@@ -715,12 +715,12 @@ public class TargetManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns tally of all factors in target success, eg. -2, +1, etc
+    /// returns tally of all factors in target success, eg. -2, +1, etc. SetGearUsed as true only when target actually attempted.
     /// NOTE: Tweak listOfFactors in Initialise() if you want to change any factors in the calculations
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public int GetTargetTally(int targetID)
+    public int GetTargetTally(int targetID, bool setGearAsUsed = false)
     {
         int tally = 0;
         //get target
@@ -757,7 +757,12 @@ public class TargetManager : MonoBehaviour
                                     {
                                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                         if (gear != null)
-                                        { tally += gearEffect * (gear.rarity.level + 1); }
+                                        {
+                                            tally += gearEffect * (gear.rarity.level + 1);
+                                            //gear used?
+                                            if (setGearAsUsed == true)
+                                            { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                        }
                                         else { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
                                     }
                                 }

@@ -152,7 +152,8 @@ public class TurnManager : MonoBehaviour
             {
                 //end the current turn
                 EndTurnAI();
-                EndTurnFinal();
+                EndTurnEarly();
+                EndTurnLate();
                 //start the new turn
                 StartTurnEarly();
                 StartTurnLate();
@@ -271,10 +272,19 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
+    /// all general end of turn early matters are handled here
+    /// </summary>
+    private void EndTurnEarly()
+    {
+        Debug.LogFormat("TurnManager: - - - EndTurnEarly - - - turn {0}{1}", _turn, "\n");
+        EventManager.instance.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
+    }
+
+    /// <summary>
     /// all general end of turn matters are handled here
     /// </summary>
     /// <returns></returns>
-    private void EndTurnFinal()
+    private void EndTurnLate()
     {
         //decrement any action adjustments
         GameManager.instance.dataScript.UpdateActionAdjustments();
@@ -282,9 +292,9 @@ public class TurnManager : MonoBehaviour
         _actionsCurrent = 0;
         _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
         _actionsTotal = Mathf.Max(0, _actionsTotal);
-        Debug.LogFormat("TurnManager: - - - EndTurnFinal - - - turn {0}{1}", _turn, "\n");
+        Debug.LogFormat("TurnManager: - - - EndTurnLate - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> EndTurnFinal");
-        EventManager.instance.PostNotification(EventType.EndTurnFinal, this, null, "TurnManager.cs -> EndTurnFinal");
+        EventManager.instance.PostNotification(EventType.EndTurnLate, this, null, "TurnManager.cs -> EndTurnFinal");
     }
 
 

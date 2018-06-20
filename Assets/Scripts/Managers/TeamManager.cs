@@ -67,7 +67,7 @@ public class TeamManager : MonoBehaviour
         /*SeedTeamsOnMap();     //DEBUG*/
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "TeamManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TeamManager");
         EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent, "TeamManager");
         EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent, "TeamManager");
@@ -87,7 +87,7 @@ public class TeamManager : MonoBehaviour
         //Detect Event type
         switch (eventType)
         {
-            case EventType.EndTurnFinal:
+            case EventType.EndTurnEarly:
                 EndTurn();
                 break;
             case EventType.StartTurnLate:

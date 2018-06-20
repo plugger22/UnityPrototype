@@ -1982,7 +1982,7 @@ public class ActionManager : MonoBehaviour
                 // - - - Attempt Target - - -  
                 //
                 isAction = true;
-                int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID);
+                int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID, true);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.name, "\n");
                 int roll = Random.Range(0, 100);

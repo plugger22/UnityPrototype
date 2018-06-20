@@ -60,7 +60,8 @@ public enum EventType
     StartTurnEarly,
     StartTurnLate,
     EndTurnAI,
-    EndTurnFinal,
+    EndTurnEarly,
+    EndTurnLate,
     NewTurn,
     //team Picker
     OpenTeamPicker,

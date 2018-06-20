@@ -193,9 +193,8 @@ public class GearManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.GenericCompromisedGear, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "GearManager");
+        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "GearManager");
         
     }
 
@@ -214,7 +213,7 @@ public class GearManager : MonoBehaviour
             case EventType.ChangeColour:
                 SetColours();
                 break;
-            case EventType.EndTurnFinal:
+            case EventType.EndTurnEarly:
                 EndTurnFinal();
                 break;
             case EventType.GearAction:

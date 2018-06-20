@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
     public Sprite sprite;
     public string playerNameResistance;
     public string playerNameAuthority;
-    
+
     [HideInInspector] public int numOfRecruits;
     //[HideInInspector] public int Invisibility;
     [HideInInspector] public int actorID = 999;
@@ -21,7 +21,9 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
     [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
     [HideInInspector] public bool isBreakdown;              //enforces a minimum one turn gap between successive breakdowns
-    
+
+    private bool isEndOfTurnGearCheck;                      //set true by UpdateGear (as a result of Compromised gear check)
+
 
     private List<int> listOfGear = new List<int>();                     //gearID's of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();   //list of all conditions currently affecting the Resistance player
@@ -64,7 +66,7 @@ public class PlayerManager : MonoBehaviour
             {
                 //AI control of both side
                 if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return _renownResistance; }
-                else {return _renownAuthority; }
+                else { return _renownAuthority; }
             }
         }
         set
@@ -73,7 +75,7 @@ public class PlayerManager : MonoBehaviour
             {
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Renown changed from {0} to {1}{2}", _renownResistance, value, "\n");
                 _renownResistance = value;
-                
+
                 //update AI side tab (not using an Event here) -> no updates for the first turn
                 if (GameManager.instance.turnScript.Turn > 0)
                 { GameManager.instance.aiScript.UpdateSideTabData(_renownResistance); }
@@ -123,7 +125,8 @@ public class PlayerManager : MonoBehaviour
         else
         { Debug.LogWarning("PlayerManager: Invalid node (Null). Player placed in node '0' by default"); }
         //set player node
-        GameManager.instance.nodeScript.nodePlayer = nodeID;        
+        GameManager.instance.nodeScript.nodePlayer = nodeID;
+        isEndOfTurnGearCheck = false;
         //fast acess fields (BEFORE set stats below)
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -140,7 +143,39 @@ public class PlayerManager : MonoBehaviour
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
         if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+        //register event listeners
+        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
     }
+
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.EndTurnLate:
+                EndTurnFinal();
+                break;
+            default:
+                Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// end of turn final
+    /// </summary>
+    private void EndTurnFinal()
+    {
+        //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
+        ResetAllGear();
+    }
+
 
     //
     /// - - - Gear - - -
@@ -363,22 +398,31 @@ public class PlayerManager : MonoBehaviour
         CheckForAIUpdate(gear);
     }
 
-    /*/// <summary>
-    /// called at end of every turn in order to reset fields based around gear use ready for the next turn
+    /// <summary>
+    /// called at beginning of every turn in order to reset fields based around gear use ready for the next turn. Only done if there where no Compromised Gear checks
     /// </summary>
     public void ResetAllGear()
     {
-        if (listOfGear.Count > 0)
+        Debug.Log("[Tst] PlayerManager.cs -> ResetAllGear");
+        if (isEndOfTurnGearCheck == false)
         {
-            //loop through looking for best piece of gear that matches the type
-            for (int i = 0; i < listOfGear.Count; i++)
+            if (listOfGear.Count > 0)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
-                if (gear != null)
-                { ResetGearItem(gear); }
+                //loop through looking for best piece of gear that matches the type
+                for (int i = 0; i < listOfGear.Count; i++)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                    if (gear != null)
+                    { ResetGearItem(gear); }
+                }
             }
         }
-    }*/
+        else
+        {
+            //checks have already been done elsewhere (PlayerManager.cs -> UpdateGear). Reset Flag
+            isEndOfTurnGearCheck = false;
+        }
+    }
 
     /// <summary>
     /// subMethod to reset a single item of gear. Called by Add/Remove gear and ResetAllGear
@@ -431,7 +475,7 @@ public class PlayerManager : MonoBehaviour
                         if (gear.gearID != savedGearID)
                         {
                             //message
-                            string msgText = string.Format("{0}, {1} ({2}), has been COMPROMISED and LOST", gear.name, gear.type.name, gear.reasonUsed);
+                            string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.name, gear.type.name);
                             Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                             GameManager.instance.dataScript.AddMessage(message);
                             RemoveGearItem(gear);
@@ -439,11 +483,10 @@ public class PlayerManager : MonoBehaviour
                         else
                         {
                             //gear saved
-                            string msgText = string.Format("{0} ({1}), {2}, has been COMPROMISED and SAVED", gear.name, gear.type.name, gear.reasonUsed);
+                            ResetGearItem(gear);
+                            string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.name, gear.type.name);
                             Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                             GameManager.instance.dataScript.AddMessage(message);
-                            //reset AFTER message
-                            ResetGearItem(gear);
                         }
                     }
                     else
@@ -455,6 +498,8 @@ public class PlayerManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gear ID {0}", listOfGear[i]); }
             }
         }
+        //set flag indicating that all gear has been checked
+        isEndOfTurnGearCheck = true;
     }
 
     //
@@ -706,7 +751,7 @@ public class PlayerManager : MonoBehaviour
             if (dictOfGear != null)
             {
                 //loop dictionary looking for gear
-                foreach(var gear in dictOfGear)
+                foreach (var gear in dictOfGear)
                 {
                     if (gear.Value.name.Equals(gearName) == true)
                     {

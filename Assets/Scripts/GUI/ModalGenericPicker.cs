@@ -693,7 +693,9 @@ public class ModalGenericPicker : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Closes generic picker and returns an event, if needed (sometimes you want to know if the user cancelled the dialogue)
+    /// </summary>
     private void ProcessCancelButton()
     {
         //close picker window regardless

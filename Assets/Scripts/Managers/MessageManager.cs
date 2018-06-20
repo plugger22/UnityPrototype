@@ -25,7 +25,7 @@ public class MessageManager : MonoBehaviour
         globalBoth = GameManager.instance.globalScript.sideBoth;
         //event Listeners
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
-        EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "MessageManager");
+        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "MessageManager");
     }
 
 
@@ -43,7 +43,7 @@ public class MessageManager : MonoBehaviour
             case EventType.StartTurnEarly:
                 StartTurnEarly();
                 break;
-            case EventType.EndTurnFinal:
+            case EventType.EndTurnEarly:
                 EndTurn();
                 break;
             default:
