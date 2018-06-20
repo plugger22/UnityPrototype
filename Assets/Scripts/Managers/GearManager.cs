@@ -301,6 +301,7 @@ public class GearManager : MonoBehaviour
                                 else
                                 {
                                     //gear not compromised
+                                    gear.chanceOfCompromise = chance;
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} NOT compromised, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                 }
                             }
@@ -358,6 +359,23 @@ public class GearManager : MonoBehaviour
                             optionDetails.text = gear.name.ToUpper();
                             optionDetails.sprite = gear.sprite;
                             /*optionDetails.isOptionActive = false;*/
+                            //add to master arrays
+                            genericDetails.arrayOfOptions[index] = optionDetails;
+                            genericDetails.arrayOfTooltips[index] = tooltipDetails;
+                        }
+                    }
+                    else if (gear.timesUsed > 0)
+                    {
+                        //gear is Used but NOT Compromised -> faded & unselectable option
+                        GenericTooltipDetails tooltipDetails = GetUsedGearTooltip(gear);
+                        if (tooltipDetails != null)
+                        {
+                            //option details
+                            GenericOptionDetails optionDetails = new GenericOptionDetails();
+                            optionDetails.optionID = gear.gearID;
+                            optionDetails.text = gear.name.ToUpper();
+                            optionDetails.sprite = gear.sprite;
+                            optionDetails.isOptionActive = false;
                             //add to master arrays
                             genericDetails.arrayOfOptions[index] = optionDetails;
                             genericDetails.arrayOfTooltips[index] = tooltipDetails;
@@ -1120,7 +1138,7 @@ public class GearManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem.
+    /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem. For gear that has been used and Compromised.
     /// </summary>
     /// <param name="gear"></param>
     /// <returns></returns>
@@ -1153,6 +1171,47 @@ public class GearManager : MonoBehaviour
             builderDetails.AppendLine();
             builderDetails.AppendFormat("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd);
 
+            //data package
+            details.textHeader = builderHeader.ToString();
+            details.textMain = builderMain.ToString();
+            details.textDetails = builderDetails.ToString();
+        }
+        return details;
+    }
+
+    /// <summary>
+    /// returns a data package of 3 formatted strings. Null if a problem. For gear that has been used but Not Compromised
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <returns></returns>
+    public GenericTooltipDetails GetUsedGearTooltip(Gear gear)
+    {
+        GenericTooltipDetails details = null;
+        if (gear != null)
+        {
+            details = new GenericTooltipDetails();
+            StringBuilder builderHeader = new StringBuilder();
+            StringBuilder builderMain = new StringBuilder();
+            StringBuilder builderDetails = new StringBuilder();
+            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd);
+            string colourGearEffect = colourNeutral;
+            if (gear.data == 3) { colourGearEffect = colourGood; }
+            else if (gear.data == 1) { colourGearEffect = colourBad; }
+            //add a second line to the gear header tooltip to reflect the specific value of the gear, appropriate to it's type
+            switch (gear.type.name)
+            {
+                case "Movement":
+                    builderHeader.AppendFormat("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd);
+                    break;
+            }
+            builderMain.AppendFormat("{0}NOT COMPROMISED{1}{2}", colourGood, colourEnd, "\n");
+            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2}{3}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>", "\n");
+            builderMain.AppendFormat("{0}{1}{2}{3}", colourNormal, gear.reasonUsed, colourEnd, "\n");
+            builderMain.AppendFormat("{0}Gear is O.K{1}{2}{3}No need to Save{4}", colourAlert, colourEnd, "\n", colourNeutral, colourEnd);
+            //details
+            builderDetails.AppendFormat("{0}{1}{2}", colourGood, gear.rarity.name, colourEnd);
+            builderDetails.AppendLine();
+            builderDetails.AppendFormat("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd);
             //data package
             details.textHeader = builderHeader.ToString();
             details.textMain = builderMain.ToString();

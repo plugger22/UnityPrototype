@@ -707,7 +707,7 @@ public class ModalGenericPicker : MonoBehaviour
                 EventManager.instance.PostNotification(defaultReturnEvent, this, null, "ModalGenericPicker.cs -> ProcessCancelButton");
                 break;
             default:
-                Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", defaultReturnEvent));
+                //No default needed
                 break;
         }
     }
