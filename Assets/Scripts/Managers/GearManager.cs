@@ -193,6 +193,7 @@ public class GearManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.GenericCompromisedGear, OnEvent, "GearManager");
+        EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
         EventManager.instance.AddListener(EventType.EndTurnFinal, OnEvent, "GearManager");
         
@@ -261,8 +262,6 @@ public class GearManager : MonoBehaviour
     private void EndTurnFinal()
     {
         CheckForCompromisedGear();
-        //reset all gear
-        GameManager.instance.playerScript.ResetAllGear();
     }
 
     /// <summary>
@@ -818,7 +817,7 @@ public class GearManager : MonoBehaviour
         if (data != null)
         {
             //retain saved gear, remove any unsaved gear
-            GameManager.instance.playerScript.UpdateCompromisedGear(data.optionID);
+            GameManager.instance.playerScript.UpdateGear(data.optionID);
             //deduct renown
             if (data.optionID > -1)
             {
@@ -832,7 +831,11 @@ public class GearManager : MonoBehaviour
                 GameManager.instance.playerScript.Renown = renown;
             }
         }
-        else { Debug.LogError("Invalid GenericReturnData (Null)"); }
+        else
+        {
+            //End of turn compromised Gear dialogue has been Cancelled
+            GameManager.instance.playerScript.UpdateGear();
+        }
     }
 
     /// <summary>

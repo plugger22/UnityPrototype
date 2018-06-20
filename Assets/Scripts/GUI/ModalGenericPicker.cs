@@ -28,7 +28,8 @@ public class ModalGenericPicker : MonoBehaviour
     public GameObject[] arrayOfGenericOptions;                      //place generic option UI elements here (3 options)
 
     //private CanvasGroup canvasGroup;
-    private ButtonInteraction buttonInteraction;
+    private ButtonInteraction buttonConfirmInteraction;
+    private ButtonInteraction buttonCancelInteraction;
     private ButtonInteraction buttonBackInteraction;                //specifically for the Back button as it can be dynamically updated
     private static ModalGenericPicker modalGenericPicker;
 
@@ -67,9 +68,14 @@ public class ModalGenericPicker : MonoBehaviour
     private void Awake()
     {
         //confirm button event
-        buttonInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
-        if (buttonInteraction != null)
-        { buttonInteraction.SetEvent(EventType.ConfirmGenericChoice); }
+        buttonConfirmInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
+        if (buttonConfirmInteraction != null)
+        { buttonConfirmInteraction.SetEvent(EventType.ConfirmGenericChoice); }
+        else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
+        //cancel button event
+        buttonCancelInteraction = buttonCancel.GetComponent<ButtonInteraction>();
+        if (buttonCancelInteraction != null)
+        { buttonCancelInteraction.SetEvent(EventType.CancelButtonGeneric); }
         else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
         //Back button event (default -> can be set dynamically using 'SetBackButton' method
         buttonBackInteraction = buttonBack.GetComponent<ButtonInteraction>();
@@ -77,11 +83,11 @@ public class ModalGenericPicker : MonoBehaviour
         { buttonBackInteraction.SetEvent(EventType.BackButtonGeneric); }
         else { Debug.LogError("Invalid buttonBackInteraction (Null)"); }
         backReturnEvent = EventType.None;
-        //cancel button event
-        buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
-        if (buttonInteraction != null)
-        { buttonInteraction.SetEvent(EventType.CloseGenericPicker); }
-        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+        /*//cancel button event
+        buttonConfirmInteraction = buttonCancel.GetComponent<ButtonInteraction>();
+        if (buttonConfirmInteraction != null)
+        { buttonConfirmInteraction.SetEvent(EventType.CloseGenericPicker); }
+        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }*/
     }
 
     private void Start()
@@ -89,6 +95,7 @@ public class ModalGenericPicker : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.OpenGenericPicker, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.CancelButtonGeneric, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.ConfirmGenericActivate, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.ConfirmGenericChoice, OnEvent, "ModalGenericPicker");
@@ -113,6 +120,9 @@ public class ModalGenericPicker : MonoBehaviour
                 break;
             case EventType.CloseGenericPicker:
                 CloseGenericPicker();
+                break;
+            case EventType.CancelButtonGeneric:
+                ProcessCancelButton();
                 break;
             case EventType.ChangeColour:
                 SetColours();
@@ -676,6 +686,23 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.GenericDismissActor:
             case EventType.GenericDisposeActor:
                 EventManager.instance.PostNotification(defaultReturnEvent, this, returnData, "ModalGenericPicker.cs -> ProcessGenericChoice");
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", defaultReturnEvent));
+                break;
+        }
+    }
+
+
+    private void ProcessCancelButton()
+    {
+        //close picker window regardless
+        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "ModalGenericPicker.cs -> ProcessGenericChoice");
+        //trigger the appropriate return Event and pass selected optionID back to the originating class
+        switch (defaultReturnEvent)
+        {
+            case EventType.GenericCompromisedGear:
+                EventManager.instance.PostNotification(defaultReturnEvent, this, null, "ModalGenericPicker.cs -> ProcessCancelButton");
                 break;
             default:
                 Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", defaultReturnEvent));

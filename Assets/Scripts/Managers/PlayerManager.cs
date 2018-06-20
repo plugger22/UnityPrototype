@@ -363,7 +363,7 @@ public class PlayerManager : MonoBehaviour
         CheckForAIUpdate(gear);
     }
 
-    /// <summary>
+    /*/// <summary>
     /// called at end of every turn in order to reset fields based around gear use ready for the next turn
     /// </summary>
     public void ResetAllGear()
@@ -378,7 +378,7 @@ public class PlayerManager : MonoBehaviour
                 { ResetGearItem(gear); }
             }
         }
-    }
+    }*/
 
     /// <summary>
     /// subMethod to reset a single item of gear. Called by Add/Remove gear and ResetAllGear
@@ -413,9 +413,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. GearID is the compromised gear that the player chose to save
+    /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. GearID is the compromised gear that the player chose to save. Resets all gear
     /// </summary>
-    public void UpdateCompromisedGear(int savedGearID)
+    public void UpdateGear(int savedGearID = -1)
     {
         if (listOfGear.Count > 0)
         {
@@ -431,7 +431,7 @@ public class PlayerManager : MonoBehaviour
                         if (gear.gearID != savedGearID)
                         {
                             //message
-                            string msgText = string.Format("{0}, {1}, {2}, has been COMPROMISED and LOST", gear.name, gear.type, gear.reasonUsed);
+                            string msgText = string.Format("{0}, {1} ({2}), has been COMPROMISED and LOST", gear.name, gear.type.name, gear.reasonUsed);
                             Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                             GameManager.instance.dataScript.AddMessage(message);
                             RemoveGearItem(gear);
@@ -439,12 +439,20 @@ public class PlayerManager : MonoBehaviour
                         else
                         {
                             //gear saved
-                            string msgText = string.Format("{0}, {1}, {2}, has been COMPROMISED and SAVED", gear.name, gear.type, gear.reasonUsed);
+                            string msgText = string.Format("{0} ({1}), {2}, has been COMPROMISED and SAVED", gear.name, gear.type.name, gear.reasonUsed);
                             Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                             GameManager.instance.dataScript.AddMessage(message);
+                            //reset AFTER message
+                            ResetGearItem(gear);
                         }
                     }
+                    else
+                    {
+                        //no compromised gear
+                        ResetGearItem(gear);
+                    }
                 }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gear ID {0}", listOfGear[i]); }
             }
         }
     }
