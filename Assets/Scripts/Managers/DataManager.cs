@@ -2000,6 +2000,16 @@ public class DataManager : MonoBehaviour
     { return listOfGearType; }
 
     /// <summary>
+    /// returns gear type with same name or null of none
+    /// </summary>
+    /// <param name="gearTypeName"></param>
+    /// <returns></returns>
+    public GearType GetGearType(string gearTypeName)
+    {
+        return listOfGearType.Find(x => x.name.Equals(gearTypeName));
+    }
+
+    /// <summary>
     /// returns GearRarity for the specified level, null if not found
     /// </summary>
     /// <param name="level"></param>

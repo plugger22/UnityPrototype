@@ -1238,7 +1238,7 @@ public class GearManager : MonoBehaviour
                     break;
             }
             builderMain.AppendFormat("{0}<size=115%><cspace=0.5em>COMPROMISED</cspace></size>{1}{2}", colourBad, colourEnd, "\n");
-            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2}   <size=85%>({3}{4}{5} time{6})</size>{7}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>", 
+            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2}   <size=90%>({3}{4}{5} time{6})</size>{7}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>", 
                 colourNeutral, gear.timesUsed, colourEnd, gear.timesUsed != 1 ? "s" : "", "\n");
             builderMain.AppendFormat("{0}{1}{2}{3}", colourNormal, gear.reasonUsed, colourEnd, "\n");
             builderMain.AppendFormat("{0}LEFT CLICK to SAVE{1}{2}Cost {3}{4}{5} Renown", colourAlert, colourEnd, "\n", colourNeutral, gearSaveCurrentCost, colourEnd);

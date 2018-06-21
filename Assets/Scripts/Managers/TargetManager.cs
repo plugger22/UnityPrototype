@@ -1,10 +1,9 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using gameAPI;
-using System.Text;
-using System;
 
 public enum TargetFactors { TargetInfo, NodeSupport, ActorAndGear, NodeSecurity, TargetLevel, Teams} //Sequence is order of factor display
 
@@ -39,9 +38,12 @@ public class TargetManager : MonoBehaviour
 
     private List<TargetFactors> listOfFactors = new List<TargetFactors>();              //used to ensure target calculations are consistent across methods
 
+    //fast access
+    private GearType infiltrationGear;
+
     //colour Palette
     private string colourGood;
-    //private string colourNeutral;
+    private string colourNeutral;
     private string colourBad;
     private string colourGear;
     private string colourNormal;
@@ -68,6 +70,9 @@ public class TargetManager : MonoBehaviour
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach(var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
+        //fast access
+        infiltrationGear = GameManager.instance.dataScript.GetGearType("Infiltration");
+        Debug.Assert(infiltrationGear != null, "Invalid infiltrationGear (Null)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TargetManager");
@@ -103,7 +108,7 @@ public class TargetManager : MonoBehaviour
     public void SetColours()
     {
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        //colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -607,6 +612,8 @@ public class TargetManager : MonoBehaviour
                 // - - - Factors affecting Resolution - - -
                 //
                 tempList.Add(string.Format("{0}Target Success Chance{1}", colourTarget, colourEnd));
+                //base chance
+                tempList.Add(string.Format("{0} Base Chance +{1}{2}", colourNeutral, baseTargetChance * 0.1, colourEnd));
                 //Loop listOfFactors to ensure consistency of calculations across methods
                 foreach (TargetFactors factor in listOfFactors)
                 {
@@ -637,10 +644,25 @@ public class TargetManager : MonoBehaviour
                                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                         if (gear != null)
                                         { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
-                                        else { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+                                        else { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gearID {0}", gearID)); }
                                     }
                                     else
                                     { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gear.name, colourEnd)); }
+                                    //infiltration gear works on any target in addition to special gear
+                                    if (target.gear.name.Equals(infiltrationGear.name) == false)
+                                    {
+                                        //check player has infiltration gear
+                                        gearID = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
+                                        if (gearID > -1)
+                                        {
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                            if (gear != null)
+                                            { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
+                                            else { Debug.LogWarning(string.Format("Invalid Infiltration gear (Null) for gearID {0}", gearID)); }
+                                        }
+                                        else
+                                        { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, infiltrationGear.name, colourEnd)); }
+                                    }
                                 }
                             }
                             else
@@ -663,7 +685,10 @@ public class TargetManager : MonoBehaviour
                                 }
                                 //gear not applicable (only when player at node)
                                 if (target.gear != null)
-                                { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gear.name, colourEnd)); }
+                                {
+                                    tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gear.name, colourEnd));
+                                    tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, infiltrationGear.name, colourEnd));
+                                }
                             }
                             break;
                         case TargetFactors.NodeSecurity:
@@ -689,7 +714,7 @@ public class TargetManager : MonoBehaviour
                 int tally = GetTargetTally(targetID);
                 int chance = GetTargetChance(tally);
                 //add tally and chance to string
-                tempList.Add(string.Format("{0}Total {1}{2} (base {3} out of 10) {4}", colourRebel, tally > 0 ? "+" : "", tally, baseTargetChance/10, colourEnd));
+                tempList.Add(string.Format("{0}Total {1}{2}{3}", colourNeutral, tally > 0 ? "+" : "", tally, colourEnd));
                 tempList.Add(string.Format("{0}{1}SUCCESS {2}%{3}{4}", colourDefault, "<mark=#FFFFFF4D>", chance, "</mark>", colourEnd));
             }
             else
@@ -723,6 +748,8 @@ public class TargetManager : MonoBehaviour
     public int GetTargetTally(int targetID, bool setGearAsUsed = false)
     {
         int tally = 0;
+        //base chance
+        tally += (int)(baseTargetChance * 0.1);
         //get target
         Target target = GameManager.instance.dataScript.GetTarget(targetID);
         if (target != null)
@@ -734,7 +761,7 @@ public class TargetManager : MonoBehaviour
             //Loop listOfFactors to ensure consistency of calculations across methods
             foreach(TargetFactors factor in listOfFactors)
                 {
-                    switch(factor)
+                    switch (factor)
                     {
                         case TargetFactors.TargetInfo:
                             //good -> info
@@ -763,7 +790,22 @@ public class TargetManager : MonoBehaviour
                                             if (setGearAsUsed == true)
                                             { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
                                         }
-                                        else { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid Target gear (Null) for gearID {0}", gearID); }
+                                    //infiltration gear works on any target in addition to special gear
+                                    if (target.gear.name.Equals(infiltrationGear.name) == false)
+                                    {
+                                        //check player has infiltration gear
+                                        gearID = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        if (gear != null)
+                                        {
+                                            tally += gearEffect * (gear.rarity.level + 1);
+                                            //gear used?
+                                            if (setGearAsUsed == true)
+                                            { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                        }
+                                        else { Debug.LogWarningFormat("Invalid Infiltration gear (Null) for gearID {0}", gearID); }
                                     }
                                 }
                             }
@@ -816,7 +858,7 @@ public class TargetManager : MonoBehaviour
     /// <returns></returns>
     public int GetTargetChance(int tally)
     {
-        int chance = baseTargetChance + (tally * 10);
+        int chance = tally * 10;
         chance = Mathf.Clamp(chance, 0, 100);
         return chance;
     }
