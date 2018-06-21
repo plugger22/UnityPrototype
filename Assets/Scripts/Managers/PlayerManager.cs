@@ -18,16 +18,15 @@ public class PlayerManager : MonoBehaviour
     //[HideInInspector] public int Invisibility;
     [HideInInspector] public int actorID = 999;
     [HideInInspector] public ActorStatus status;
-    [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
-    [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
-    [HideInInspector] public bool isBreakdown;              //enforces a minimum one turn gap between successive breakdowns
+    [HideInInspector] public ActorTooltip tooltipStatus;                            //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
+    [HideInInspector] public ActorInactive inactiveStatus;                          //reason actor is inactive
+    [HideInInspector] public bool isBreakdown;                                      //enforces a minimum one turn gap between successive breakdowns
+    [HideInInspector] public bool isEndOfTurnGearCheck;                             //set true by UpdateGear (as a result of Compromised gear check)
 
-    private bool isEndOfTurnGearCheck;                      //set true by UpdateGear (as a result of Compromised gear check)
 
-
-    private List<int> listOfGear = new List<int>();                     //gearID's of all gear items in inventory
-    private List<Condition> listOfConditionsResistance = new List<Condition>();   //list of all conditions currently affecting the Resistance player
-    private List<Condition> listOfConditionsAuthority = new List<Condition>();    //list of all conditions currently affecting the Authority player
+    private List<int> listOfGear = new List<int>();                                 //gearID's of all gear items in inventory
+    private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
+    private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
 
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
@@ -403,6 +402,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void ResetAllGear()
     {
+        /*Debug.Log("[Tst] PlayerManager.cs -> ResetAllGear");*/
         if (isEndOfTurnGearCheck == false)
         {
             if (listOfGear.Count > 0)
@@ -460,10 +460,11 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void UpdateGear(int savedGearID = -1)
     {
+        /*Debug.Log("[Tst] PlayerManager.cs -> UpdateGear");*/
         if (listOfGear.Count > 0)
         {
-            //loop through looking for compromised gear
-            for (int i = 0; i < listOfGear.Count; i++)
+            //reverse loop through looking for compromised gear
+            for (int i = listOfGear.Count - 1; i >= 0; i--)
             {
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
@@ -497,8 +498,6 @@ public class PlayerManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gear ID {0}", listOfGear[i]); }
             }
         }
-        //set flag indicating that all gear has been checked
-        isEndOfTurnGearCheck = true;
     }
 
     //

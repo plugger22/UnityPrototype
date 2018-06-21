@@ -12,7 +12,8 @@ public class InputManager : MonoBehaviour
 
     private GameState _gameState;                   //main game state
     private ModalState _modalState;                 //sub state for when game state is 'ModalUI'
-    private ModalInfo _modalInfoState;              //sub sub state of ModalState.InfoDisplay -> what type of info?
+    private ModalInfoSubState _modalInfoState;              //sub sub state of ModalState.InfoDisplay -> what type of info?
+    private ModalGenericPickerSubState _modalGenericPickerState; // sub state of ModalState.GenericPicker -> what type of picker?
 
     public void Initialise()
     {
@@ -40,13 +41,23 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public ModalInfo ModalInfoState
+    public ModalInfoSubState ModalInfoState
     {
         get { return _modalInfoState; }
         set
         {
             _modalInfoState = value;
-            Debug.Log(string.Format("[Inp] InputManager.cs: ModalInfo now {0}{1}", _modalInfoState, "\n"));
+            Debug.Log(string.Format("[Inp] InputManager.cs: ModalInfoState now {0}{1}", _modalInfoState, "\n"));
+        }
+    }
+
+    public ModalGenericPickerSubState ModalGenericPickerState
+    {
+        get { return _modalGenericPickerState; }
+        set
+        {
+            _modalGenericPickerState = value;
+            Debug.Log(string.Format("[Inp] InputManager.cs: ModalGenericPickerState now {0}{1}", _modalGenericPickerState, "\n"));
         }
     }
 
@@ -54,13 +65,15 @@ public class InputManager : MonoBehaviour
     /// Quick way of setting Modal state and Game State (to 'ModalUI'). If Modal state is 'InfoDisplay' provide a setting for ModalInfoState (type of info). Ignore otherwise
     /// </summary>
     /// <param name="modalState"></param>
-    public void SetModalState(ModalState modalState, ModalInfo modalInfoState = ModalInfo.None)
+    public void SetModalState(ModalState modalState, ModalInfoSubState modalInfoState = ModalInfoSubState.None, ModalGenericPickerSubState modalGenericState= ModalGenericPickerSubState.None)
     {
         if (modalState != ModalState.None)
         { GameState = GameState.ModalUI; }
         ModalState = modalState;
         if (ModalState == ModalState.InfoDisplay)
         { ModalInfoState = modalInfoState; }
+        if (ModalState == ModalState.GenericPicker)
+        { ModalGenericPickerState = modalGenericState; }
     }
 
 
@@ -79,7 +92,8 @@ public class InputManager : MonoBehaviour
             if (modal == ModalState.None)
             {
                 GameState = GameState.Normal;
-                ModalInfoState = ModalInfo.None;
+                ModalInfoState = ModalInfoSubState.None;
+                ModalGenericPickerState = ModalGenericPickerSubState.None;
             }
 
         }
@@ -232,17 +246,37 @@ public class InputManager : MonoBehaviour
                         }
                         break;
                     case ModalState.GenericPicker:
-                        if (Input.GetButtonDown("Cancel") == true)
+                        switch (_modalGenericPickerState)
                         {
-                            EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
-                            return;
-                        }
-                        if (Input.GetButtonDown("Multipurpose") == true)
-                        {
-                            EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
-                            return;
+                            case ModalGenericPickerSubState.Normal:
+                                if (Input.GetButtonDown("Cancel") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }
+                                if (Input.GetButtonDown("Multipurpose") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }
+                                break;
+                            case ModalGenericPickerSubState.CompromisedGear:
+                                if (Input.GetButtonDown("Cancel") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
+                                    EventManager.instance.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }
+                                if (Input.GetButtonDown("Multipurpose") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
+                                    EventManager.instance.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }
+                                break;
                         }
                         break;
+                        
                     case ModalState.ActionMenu:
                         if (Input.GetButtonDown("Cancel") == true)
                         {
@@ -254,14 +288,14 @@ public class InputManager : MonoBehaviour
                         //what type of info display?
                         switch (_modalInfoState)
                         {
-                            case ModalInfo.CityInfo:
+                            case ModalInfoSubState.CityInfo:
                                 if (Input.GetButtonDown("Cancel") == true)
                                 {
                                     EventManager.instance.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessInput");
                                     return;
                                 }
                                 break;
-                            case ModalInfo.AIInfo:
+                            case ModalInfoSubState.AIInfo:
                                 if (Input.GetButtonDown("Cancel") == true)
                                 {
                                     EventManager.instance.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessInput");

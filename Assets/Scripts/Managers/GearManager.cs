@@ -312,6 +312,8 @@ public class GearManager : MonoBehaviour
                 //any compromised gear?
                 if (isCompromisedGear == true)
                 {
+                    //set flag indicating that all gear has been checked
+                    GameManager.instance.playerScript.isEndOfTurnGearCheck = true;
                     //initialise generic picker
                     InitialiseCompromisedGearPicker();
                 }
@@ -329,6 +331,8 @@ public class GearManager : MonoBehaviour
         //Obtain Gear
         genericDetails.returnEvent = EventType.GenericCompromisedGear;
         genericDetails.side = globalResistance;
+        //state
+        genericDetails.subState = ModalGenericPickerSubState.CompromisedGear;
         //picker text
         genericDetails.textTop = string.Format("Select {0}ONE{1} Item of Gear to {2}SAVE{3} <size=70%>(optional)</size>", colourNeutral, colourEnd, colourGood, colourEnd);
         genericDetails.textMiddle = string.Format("{0}Any Gear NOT Saved will be Lost{1}", colourAlert, colourEnd);
@@ -358,7 +362,6 @@ public class GearManager : MonoBehaviour
                             optionDetails.optionID = gear.gearID;
                             optionDetails.text = gear.name.ToUpper();
                             optionDetails.sprite = gear.sprite;
-                            /*optionDetails.isOptionActive = false;*/
                             //add to master arrays
                             genericDetails.arrayOfOptions[index] = optionDetails;
                             genericDetails.arrayOfTooltips[index] = tooltipDetails;

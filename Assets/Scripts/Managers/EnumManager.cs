@@ -9,7 +9,8 @@
     //
     public enum GameState { Normal, ModalUI}                                                                            //main game states
     public enum ModalState { None, Outcome, GenericPicker, ActionMenu, Inventory, TeamPicker, DiceRoller, InfoDisplay} //ModalUI sub game states
-    public enum ModalInfo { None, CityInfo, AIInfo}                                                                    //if ModalUI.InfoDisplay -> what type of info
+    public enum ModalInfoSubState { None, CityInfo, AIInfo}                                                                    //if ModalUI.InfoDisplay -> what type of info
+    public enum ModalGenericPickerSubState { None, Normal, CompromisedGear}                                                     //if ModalUI.GenericPicker -> what type of picker
     public enum ResistanceState { Normal }                                                                              //specific Resistance states (Player or AI)
     public enum AuthoritySecurityState { Normal, APB, SecurityAlert, SurveillanceCrackdown }                            //specific Authority Security states (Player or AI)   
     public enum SideState { None, AI, Player }                                                                          //who's running the side

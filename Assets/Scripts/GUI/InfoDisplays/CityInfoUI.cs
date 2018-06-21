@@ -282,7 +282,7 @@ public class CityInfoUI : MonoBehaviour
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
-            GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay, ModalInfo.CityInfo);
+            GameManager.instance.inputScript.SetModalState(ModalState.InfoDisplay, ModalInfoSubState.CityInfo);
             Debug.LogFormat("[UI] CityInfoUI.cs -> SetCityInfo{0}", "\n");
         }
         else { Debug.LogWarning("Invalid city (Null) -> tooltip cancelled"); }
