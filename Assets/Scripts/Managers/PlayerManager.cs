@@ -457,10 +457,12 @@ public class PlayerManager : MonoBehaviour
 
     /// <summary>
     /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. GearID is the compromised gear that the player chose to save. Resets all gear
+    /// returns name of gear saved (UPPER), if any. Otherwise returns Empty string
     /// </summary>
-    public void UpdateGear(int savedGearID = -1)
+    public string UpdateGear(int savedGearID = -1)
     {
         /*Debug.Log("[Tst] PlayerManager.cs -> UpdateGear");*/
+        string gearSavedName = "";
         if (listOfGear.Count > 0)
         {
             //reverse loop through looking for compromised gear
@@ -484,6 +486,7 @@ public class PlayerManager : MonoBehaviour
                         {
                             //gear saved
                             ResetGearItem(gear);
+                            gearSavedName = gear.name.ToUpper();
                             string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.name, gear.type.name);
                             Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                             GameManager.instance.dataScript.AddMessage(message);
@@ -498,6 +501,7 @@ public class PlayerManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gear ID {0}", listOfGear[i]); }
             }
         }
+        return gearSavedName;
     }
 
     //

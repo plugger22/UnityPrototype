@@ -370,9 +370,9 @@ public class ModalTeamPicker : MonoBehaviour
             }
             else { Debug.LogWarning(string.Format("teamIndex \"{0}\" has exceeded limit \"{1}\"", teamIndex, limit)); }
         }
-
-        //set game state
-        GameManager.instance.inputScript.SetModalState(ModalState.TeamPicker);
+        //set states
+        ModalStateData package = new ModalStateData() { mainState = ModalState.TeamPicker };
+        GameManager.instance.inputScript.SetModalState(package);
         Debug.LogFormat("[UI] ModalTeamPicker.cs -> SetTeamPicker{0}", "\n");
     }
 
@@ -440,7 +440,8 @@ public class ModalTeamPicker : MonoBehaviour
         //deselect all teams to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this, null, "ModalTeamPicker.cs -> ProcessTeamChoice");
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.Normal;
+        /*GameManager.instance.inputScript.GameState = GameState.Normal;*/
+        GameManager.instance.inputScript.ResetStates();
         /*Debug.LogFormat("[UI] ModalTeamPicker -> ModalTeamPicker" + "\n"));*/
         Debug.Log(string.Format("TeamPicker: Confirm teamID {0}{1}", teamIDSelected, "\n"));
         //insert team

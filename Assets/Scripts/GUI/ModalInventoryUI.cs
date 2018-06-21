@@ -243,7 +243,8 @@ public class ModalInventoryUI : MonoBehaviour
         else
         {
             //all good, inventory window displayed
-            GameManager.instance.inputScript.SetModalState(ModalState.Inventory);
+            ModalStateData package = new ModalStateData() { mainState = ModalState.Inventory };
+            GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
         }
     }

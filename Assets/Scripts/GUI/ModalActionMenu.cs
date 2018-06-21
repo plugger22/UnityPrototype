@@ -210,7 +210,8 @@ public class ModalActionMenu : MonoBehaviour
             //set new position
             modalMenuObject.transform.position = screenPos;
             //set states
-            GameManager.instance.inputScript.SetModalState(ModalState.ActionMenu);
+            ModalStateData package = new ModalStateData() { mainState = ModalState.ActionMenu };
+            GameManager.instance.inputScript.SetModalState(package);
             //block raycasts to gameobjects
             GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
             modalLevel = details.modalLevel;

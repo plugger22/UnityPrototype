@@ -92,6 +92,8 @@ namespace modalAPI
             modalState = ModalState.None;
             isAction = false;
             reason = "Unknown";
+            side = GameManager.instance.sideScript.PlayerSide;
+            sprite = GameManager.instance.guiScript.infoSprite;
         }
     }
 

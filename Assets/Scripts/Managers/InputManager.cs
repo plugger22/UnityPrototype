@@ -5,6 +5,22 @@ using gameAPI;
 using System.Text;
 
 /// <summary>
+/// class used for SetModalState, only main state needs to be specified as constructor has default options for subStates
+/// </summary>
+public class ModalStateData
+{
+    public ModalState mainState;
+    public ModalInfoSubState infoState;
+    public ModalGenericPickerSubState pickerState;
+
+    public ModalStateData()
+    {
+        infoState = ModalInfoSubState.None;
+        pickerState = ModalGenericPickerSubState.None;
+    }
+}
+
+/// <summary>
 /// handles all input & game states
 /// </summary>
 public class InputManager : MonoBehaviour
@@ -24,7 +40,7 @@ public class InputManager : MonoBehaviour
     public GameState GameState
     {
         get { return _gameState; }
-        set
+        private set
         {
             _gameState = value;
             Debug.Log(string.Format("[Inp] InputManager: GameState now {0}{1}", _gameState, "\n"));
@@ -34,7 +50,7 @@ public class InputManager : MonoBehaviour
     public ModalState ModalState
     {
         get { return _modalState; }
-        set
+        private set
         {
             _modalState = value;
             Debug.Log(string.Format("[Inp] InputManager: ModalState now {0}{1}", _modalState, "\n"));
@@ -44,7 +60,7 @@ public class InputManager : MonoBehaviour
     public ModalInfoSubState ModalInfoState
     {
         get { return _modalInfoState; }
-        set
+        private set
         {
             _modalInfoState = value;
             Debug.Log(string.Format("[Inp] InputManager.cs: ModalInfoState now {0}{1}", _modalInfoState, "\n"));
@@ -54,7 +70,7 @@ public class InputManager : MonoBehaviour
     public ModalGenericPickerSubState ModalGenericPickerState
     {
         get { return _modalGenericPickerState; }
-        set
+        private set
         {
             _modalGenericPickerState = value;
             Debug.Log(string.Format("[Inp] InputManager.cs: ModalGenericPickerState now {0}{1}", _modalGenericPickerState, "\n"));
@@ -65,15 +81,19 @@ public class InputManager : MonoBehaviour
     /// Quick way of setting Modal state and Game State (to 'ModalUI'). If Modal state is 'InfoDisplay' provide a setting for ModalInfoState (type of info). Ignore otherwise
     /// </summary>
     /// <param name="modalState"></param>
-    public void SetModalState(ModalState modalState, ModalInfoSubState modalInfoState = ModalInfoSubState.None, ModalGenericPickerSubState modalGenericState= ModalGenericPickerSubState.None)
+    public void SetModalState(ModalStateData data)
     {
-        if (modalState != ModalState.None)
-        { GameState = GameState.ModalUI; }
-        ModalState = modalState;
-        if (ModalState == ModalState.InfoDisplay)
-        { ModalInfoState = modalInfoState; }
-        if (ModalState == ModalState.GenericPicker)
-        { ModalGenericPickerState = modalGenericState; }
+        if (data != null)
+        {
+            if (data.mainState != ModalState.None)
+            { GameState = GameState.ModalUI; }
+            ModalState = data.mainState;
+            if (ModalState == ModalState.InfoDisplay)
+            { ModalInfoState = data.infoState; }
+            if (ModalState == ModalState.GenericPicker)
+            { ModalGenericPickerState = data.pickerState; }
+        }
+        else { Debug.LogWarning("Invalid ModalStateData (Null)"); }
     }
 
 

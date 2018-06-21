@@ -1134,7 +1134,8 @@ public class AIManager : MonoBehaviour
                                     break;
                             }
                         }
-                        else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", node.Value.targetID)); }
+                        //Explanation -> if target is Known and null then it's a successfully completed target with no ongoing effects. No need for a warning.
+                        /*else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", node.Value.targetID)); }*/
                     }
                 }
                 else { Debug.LogWarning(string.Format("Invalid node (Null) in dictOfNodes for nodeID {0}", node.Key)); }

@@ -170,7 +170,9 @@ public class ModalOutcome : MonoBehaviour
             screenPos.y = Screen.height / 2;
             //set position
             modalOutcomeWindow.transform.position = screenPos;
-            GameManager.instance.inputScript.SetModalState(ModalState.Outcome);
+             //set states
+            ModalStateData package = new ModalStateData() { mainState = ModalState.Outcome };
+            GameManager.instance.inputScript.SetModalState(package);
             //pass through data for when the outcome window is closed
             modalLevel = details.modalLevel;
             modalState = details.modalState;
