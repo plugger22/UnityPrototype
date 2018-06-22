@@ -50,7 +50,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                                 itemDetails = "PLAYER",
                                 itemPos = position,
                                 listOfButtonDetails = GameManager.instance.actorScript.GetPlayerActions(),
-                                menuType = ActionMenuType.Actor
+                                menuType = ActionMenuType.Player
                             };
                             //activate menu
                             GameManager.instance.actionMenuScript.SetActionMenu(details);

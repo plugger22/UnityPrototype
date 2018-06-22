@@ -83,12 +83,10 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     /// <returns></returns>
     IEnumerator FlashingPlayerNode(Node node)
     {
-        Debug.Log("[Tst] PlayerSpriteTooltipUI.cs -> FlashingPlayerNode");
         do
         {
             if (isFlashOn == false)
             {
-                Debug.Log("[Tst] PlayerSpriteTooltipUI.cs -> FlashingPlayerNode: ON");
                 node.SetMaterial(materialPlayer);
                 GameManager.instance.nodeScript.NodeRedraw = true;
                 isFlashOn = true;
@@ -96,7 +94,6 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             }
             else
             {
-                Debug.Log("[Tst] PlayerSpriteTooltipUI.cs -> FlashingPlayerNode: OFF");
                 node.SetMaterial(materialNormal);
                 GameManager.instance.nodeScript.NodeRedraw = true;
                 isFlashOn = false;

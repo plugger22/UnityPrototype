@@ -283,9 +283,9 @@ public class TooltipActor : MonoBehaviour
     /// <summary>
     /// close tool tip
     /// </summary>
-    public void CloseTooltip()
+    public void CloseTooltip(string callingMethod = "Unknown")
     {
-        Debug.LogFormat("[UI] TooltipActor.cs -> CloseTooltip{0}", "\n");
+        Debug.LogFormat("[UI] TooltipActor.cs -> CloseTooltip: called by {0}{1}",  callingMethod, "\n");
         tooltipActorObject.SetActive(false);
     }
 

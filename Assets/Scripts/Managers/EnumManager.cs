@@ -22,6 +22,7 @@
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
     public enum InventoryState { None, Gear, ReservePool}
     public enum UIPosition { None, Left, Middle, Right }
+    public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     public enum AlertType {
         None,
         SomethingWrong,
@@ -29,8 +30,8 @@
         DebugAI, DebugPlayer,
         HackingRebootInProgress, HackingInsufficientRenown, HackingInitialising, HackingIndisposed, HackingOffline
     }
-    
 
+   
     //
     // - - - Connections - - - 
     //
@@ -70,10 +71,7 @@
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Talk}                        //actor sprite shows a relevant tooltip if other than 'None'
 
-    //
-    // - - - Action Menu - - -
-    //
-    public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Move, Reserve}
+
 
     //
     // - - - AI - - -

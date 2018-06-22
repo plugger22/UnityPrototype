@@ -128,6 +128,8 @@ public class ModalActionMenu : MonoBehaviour
                 case ActionMenuType.Actor:
                     modal.actorSlotID = details.itemID;
                     break;
+                case ActionMenuType.Player:
+                    break;
                 case ActionMenuType.Gear:
                     modal.gearID = details.itemID;
                     break;

@@ -246,9 +246,9 @@ public class TooltipConnection : MonoBehaviour
     /// <summary>
     /// close tool tip
     /// </summary>
-    public void CloseTooltip()
+    public void CloseTooltip(string callingMethod = "Unknown")
     {
-        Debug.LogFormat("[UI] TooltipConnection -> CloseTooltip{0}", "\n");
+        Debug.LogFormat("[UI] TooltipConnection -> CloseTooltip: called by {0}{1}", callingMethod, "\n");
         tooltipConnectionObject.SetActive(false);
     }
 

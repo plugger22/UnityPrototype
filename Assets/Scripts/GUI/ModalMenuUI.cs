@@ -61,6 +61,9 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 if (actorSlotID > -1)
                 { myCoroutine = StartCoroutine("ShowTooltip"); }
                 break;
+            case ActionMenuType.Player:
+                myCoroutine = StartCoroutine("ShowTooltip");
+                break;
             case ActionMenuType.Gear:
                 if (gearID > -1)
                 { myCoroutine = StartCoroutine("ShowTooltip"); }
@@ -84,7 +87,10 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 GameManager.instance.tooltipNodeScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
                 break;
             case ActionMenuType.Actor:
-                GameManager.instance.tooltipActorScript.CloseTooltip();
+                GameManager.instance.tooltipActorScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
+                break;
+            case ActionMenuType.Player:
+                GameManager.instance.tooltipPlayerScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
                 break;
             case ActionMenuType.Gear:
                 GameManager.instance.tooltipGenericScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
@@ -213,6 +219,26 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             }
                         }
                     }
+                    break;
+                case ActionMenuType.Player:
+                        //do once
+                        while (GameManager.instance.tooltipPlayerScript.CheckTooltipActive() == false)
+                        {
+                            //adjust position prior to sending
+                            Vector3 positionPlayer = rectTransform.position;
+                            positionPlayer.x += 70;
+                            positionPlayer.y -= 100;
+                            GameManager.instance.tooltipPlayerScript.SetTooltip(positionPlayer);
+                            yield return null;
+                            //fade in
+                            while (GameManager.instance.tooltipPlayerScript.GetOpacity() < 1.0)
+                            {
+                                alphaCurrent = GameManager.instance.tooltipPlayerScript.GetOpacity();
+                                alphaCurrent += Time.deltaTime / mouseOverFade;
+                                GameManager.instance.tooltipPlayerScript.SetOpacity(alphaCurrent);
+                                yield return null;
+                            }
+                        }
                     break;
             }
         }

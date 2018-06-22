@@ -402,7 +402,6 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void ResetAllGear()
     {
-        /*Debug.Log("[Tst] PlayerManager.cs -> ResetAllGear");*/
         if (isEndOfTurnGearCheck == false)
         {
             if (listOfGear.Count > 0)
@@ -461,7 +460,6 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public string UpdateGear(int savedGearID = -1)
     {
-        /*Debug.Log("[Tst] PlayerManager.cs -> UpdateGear");*/
         string gearSavedName = "";
         if (listOfGear.Count > 0)
         {

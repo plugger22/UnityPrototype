@@ -152,7 +152,7 @@ public class TooltipGeneric : MonoBehaviour
     /// </summary>
     public void CloseTooltip(string text = "Unknown")
     {
-        Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: sender {0}{1}", text, "\n");
+        Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: called by {0}{1}", text, "\n");
         tooltipGenericObject.SetActive(false);
     }
 

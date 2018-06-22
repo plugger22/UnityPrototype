@@ -280,9 +280,9 @@ public class TooltipPlayer : MonoBehaviour
     /// <summary>
     /// close tool tip
     /// </summary>
-    public void CloseTooltip()
+    public void CloseTooltip(string callingMethod = "Unknown")
     {
-        Debug.LogFormat("[UI] TooltipPlayer.cs -> CloseTooltip{0}", "\n");
+        Debug.LogFormat("[UI] TooltipPlayer.cs -> CloseTooltip: calling by {0}{1}", callingMethod, "\n");
         tooltipPlayerObject.SetActive(false);
     }
 

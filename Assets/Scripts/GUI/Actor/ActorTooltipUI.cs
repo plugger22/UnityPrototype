@@ -54,7 +54,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         onMouseFlag = false;
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
-        GameManager.instance.tooltipActorScript.CloseTooltip();
+        GameManager.instance.tooltipActorScript.CloseTooltip("ActorTooltipUI.cs -> OnPointerExit");
     }
 
     /// <summary>
