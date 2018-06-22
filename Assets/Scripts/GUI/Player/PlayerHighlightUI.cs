@@ -43,6 +43,8 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (node != null)
         {
             isFlashOn = false;
+            //need to switch this off as otherwise a NodeRedraw will auto display player node all the time and nothing will flash
+            GameManager.instance.nodeScript.SetShowPlayerNode(false);
             myFlashCoroutine = StartCoroutine("FlashingPlayerNode", node);
         }
         else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.instance.nodeScript.nodePlayer); }
@@ -59,12 +61,13 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (myFlashCoroutine != null)
         {
             StopCoroutine(myFlashCoroutine);
+            GameManager.instance.nodeScript.SetShowPlayerNode(true);
             //set player node back to correct material
             Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
             if (node != null)
             {
                 node.SetMaterial(materialPlayer);
-                //GameManager.instance.nodeScript.NodeRedraw = true;
+                GameManager.instance.nodeScript.NodeRedraw = true;
             }
             else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.instance.nodeScript.nodePlayer); }
             GameManager.instance.tooltipGenericScript.CloseTooltip("PlayerSpriteTooltipUI.cs -> OnPointerExit");

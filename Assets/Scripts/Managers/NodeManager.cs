@@ -43,6 +43,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
     private bool isFlashOn = false;                                 //used for flashing Node coroutine
+    private bool showPlayerNode = true;         
     private Coroutine myCoroutine;
 
     //fast access
@@ -809,6 +810,13 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets flag to show player node whenever a node redraw. Normally true but switch off if you want to flash the player node instead
+    /// </summary>
+    /// <param name="isShown"></param>
+    public void SetShowPlayerNode(bool isShown = true)
+    { showPlayerNode = isShown; }
+
+    /// <summary>
     /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
     /// </summary>
     public void RedrawNodes()
@@ -839,24 +847,28 @@ public class NodeManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid Node (null) returned from dictOfNodes"); }
             }
-            //player's current node (Resistance side only if FOW ON)
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            //show player node if flag is true (default condition -> would be false only in case of flashing player Node)
+            if (showPlayerNode == true)
             {
-                if (GameManager.instance.optionScript.fogOfWar == true)
-                { proceedFlag = false; }
-            }
-                if (proceedFlag == true)
-                { 
-                if (nodePlayer > -1)
+                //player's current node (Resistance side only if FOW ON)
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
-                    if (node != null)
+                    if (GameManager.instance.optionScript.fogOfWar == true)
+                    { proceedFlag = false; }
+                }
+                if (proceedFlag == true)
+                {
+                    if (nodePlayer > -1)
                     {
-                        //only do so if it's a normal node, otherwise ignore
-                        if (node.GetMaterial() == materialNormal)
+                        Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
+                        if (node != null)
                         {
-                            nodeRenderer = node.GetComponent<Renderer>();
-                            nodeRenderer.material = materialPlayer;
+                            //only do so if it's a normal node, otherwise ignore
+                            if (node.GetMaterial() == materialNormal)
+                            {
+                                nodeRenderer = node.GetComponent<Renderer>();
+                                nodeRenderer.material = materialPlayer;
+                            }
                         }
                     }
                 }
