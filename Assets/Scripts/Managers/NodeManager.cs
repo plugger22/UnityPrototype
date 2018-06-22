@@ -69,7 +69,7 @@ public class NodeManager : MonoBehaviour
 
     //colours
     string colourDefault;
-    //string colourNormal;
+    string colourNormal;
     string colourAlert;
     string colourHighlight;
     string colourResistance;
@@ -311,7 +311,7 @@ public class NodeManager : MonoBehaviour
     public void SetColours()
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
@@ -1731,35 +1731,12 @@ public class NodeManager : MonoBehaviour
                     Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
                     if (gear != null)
                     {
-                        builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.name, colourEnd, colourNormal, colourEnd);
                         GameManager.instance.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
                         MoveReturnData moveData = new MoveReturnData();
                         moveData.node = node;
                         moveData.text = builder.ToString();
                         ProcessMoveOutcome(moveData);
-
-                        /*//chance of Gear being Compromised
-                        ModalDiceDetails diceDetails = new ModalDiceDetails();
-                        diceDetails.chance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
-                        diceDetails.renownCost = renownCost;
-                        diceDetails.topText = string.Format("{0}{1}{2} used to move{3}{4}{5}% Chance{6} of it being compromised and lost", colourEffectNeutral,
-                            gear.name, colourEnd, "\n", colourEffectBad, diceDetails.chance, colourEnd);
-                        if (GameManager.instance.playerScript.Renown >= renownCost) { diceDetails.isEnoughRenown = true; }
-                        else { diceDetails.isEnoughRenown = false; }
-                        //as gear involved data will be needed to be passed through from this method to ProcessMoveOutcome via ProcessDiveMove
-                        PassThroughDiceData passThroughData = new PassThroughDiceData();
-                        passThroughData.nodeID = node.nodeID;
-                        passThroughData.gearID = gear.gearID;
-                        passThroughData.renownCost = renownCost;
-                        passThroughData.text = builder.ToString();
-                        passThroughData.type = DiceType.Move;
-                        diceDetails.passData = passThroughData;
-                        //go straight to an outcome dialogue if not enough renown and option set to ignore dice roller
-                        if (diceDetails.isEnoughRenown == false && GameManager.instance.optionScript.autoGearResolution == true)
-                        { EventManager.instance.PostNotification(EventType.DiceBypass, this, diceDetails, "NodeManager.cs -> ProcessPlayerMove"); }
-                        //roll dice
-                        else
-                        { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails, "NodeManager.cs -> ProcessPlayerMove"); }*/
                     }
                     else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
                 }

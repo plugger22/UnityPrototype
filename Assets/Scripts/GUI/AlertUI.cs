@@ -59,13 +59,18 @@ public class AlertUI : MonoBehaviour
     /// </summary>
     public void CloseAlertUI(bool resetFlag = false)
     {
-        Debug.LogFormat("[UI] AlertUI.cs -> CloseAlertUI{0}", "\n");
-        alertObject.SetActive(false);
-        GameManager.instance.nodeScript.NodeShowFlag = 0;
-        if (resetFlag == true)
+        if (alertObject.activeSelf == true)
         {
-            //redraw to remove highlighted nodes
-            EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "AlertUI.cs -> CloseAlertUI");
+            Debug.LogFormat("[UI] AlertUI.cs -> CloseAlertUI{0}", "\n");
+            alertObject.SetActive(false);
+            GameManager.instance.nodeScript.NodeShowFlag = 0;
+            if (resetFlag == true)
+            {
+                //redraw to remove highlighted nodes
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "AlertUI.cs -> CloseAlertUI");
+            }
         }
     }
+
+    //new methods above here
 }

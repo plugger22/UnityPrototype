@@ -461,37 +461,6 @@ public class ActionManager : MonoBehaviour
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
             if (gear != null)
             {
-                /*//message
-                Message message = GameManager.instance.messageScript.GearUsed(string.Format("{0} used at {1}", gear.name, node.nodeName), node.nodeID, gear.gearID);
-                GameManager.instance.dataScript.AddMessage(message);
-                //chance of Gear being Compromised
-                ModalDiceDetails diceDetails = new ModalDiceDetails();
-                diceDetails.chance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
-                diceDetails.renownCost = renownCost;
-                if (action != null)
-                {
-                    diceDetails.topText = string.Format("{0}{1}{2} used to {3}{4}{5}{6}{7}% Chance{8} of it being compromised and lost", colourNeutral,
-                        gear.name, colourEnd, action.tooltipText, "\n", "\n", colourBad, diceDetails.chance, colourEnd);
-                }
-                else { diceDetails.topText = string.Format("Missing Data{0}{1}{2}% Chance{3} of it being compromised and lost", "\n", colourBad,
-                    diceDetails.chance, colourEnd);
-                }
-                if (renownBefore >= renownCost) { diceDetails.isEnoughRenown = true; }
-                else { diceDetails.isEnoughRenown = false; }
-                //as gear involved data will be needed to be passed through from this method
-                PassThroughDiceData passThroughData = new PassThroughDiceData();
-                passThroughData.nodeID = node.nodeID;
-                passThroughData.gearID = gear.gearID;
-                passThroughData.renownCost = renownCost;
-                passThroughData.type = DiceType.Gear;
-                passThroughData.outcome = outcomeDetails;
-                diceDetails.passData = passThroughData;
-                //go straight to an outcome dialogue if not enough renown and option set to ignore dice roller
-                if (diceDetails.isEnoughRenown == false && GameManager.instance.optionScript.autoGearResolution == true)
-                { EventManager.instance.PostNotification(EventType.DiceBypass, this, diceDetails, "ActionManager.cs -> ProcessNodeGearAction"); }
-                //roll dice
-                else
-                { EventManager.instance.PostNotification(EventType.OpenDiceUI, this, diceDetails, "ActionManager.cs -> ProcessNodeGearAction"); }*/
                 GameManager.instance.gearScript.SetGearUsed(gear, string.Format("affect district {0}", node.nodeName));
                 //generate a create modal outcome dialogue
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction");
@@ -1406,27 +1375,7 @@ public class ActionManager : MonoBehaviour
             //Gear Used            
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
             if (gear != null)
-            {
-                /*//message
-                string text = string.Format("{0} used (Personal)", gear.name);
-                Message message = GameManager.instance.messageScript.GearUsed(text, node.nodeID, gear.gearID);
-                GameManager.instance.dataScript.AddMessage(message);*/
-                GameManager.instance.gearScript.SetGearUsed(gear, "provide Player with a benefit");
-                /*//chance of Gear being Compromised
-                int rndNum = Random.Range(0, 100);
-                int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
-                if (rndNum < compromiseChance)
-                {
-                    //gear compromised -> remove gear from inventory
-                    returnText = GameManager.instance.gearScript.GearUsedAndCompromised(gear, node);
-                }
-                else
-                {
-                    //gear not compromised
-                    returnText = GameManager.instance.gearScript.GearUsed(gear, node);
-                }
-                builderBottom.Append(returnText);*/
-            }
+            { GameManager.instance.gearScript.SetGearUsed(gear, "provide Player with a benefit");  }
             else
             {
                 Debug.LogErrorFormat("Invalid Gear (Null) for gearID {0}", gear.gearID);

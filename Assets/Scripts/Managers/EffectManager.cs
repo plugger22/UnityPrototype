@@ -943,40 +943,6 @@ public class EffectManager : MonoBehaviour
                                             GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
                                             effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.name.ToUpper(), 
                                                 colourEnd, colourNormal, colourEnd);
-                                            /*isGearUsed = true;
-                                            int chance = GameManager.instance.gearScript.GetChanceOfCompromise(gearID);
-                                            if (Random.Range(0, 100) <= chance)
-                                            {
-                                                //gear compromised
-                                                string text = string.Format("{0} used to stay Invisible ", gear.name);
-                                                effectReturn.bottomText = string.Format("{0}{1}(Compromised!){2}", colourEffect, text, colourEnd);
-                                                Message messageGear = GameManager.instance.messageScript.GearCompromised(string.Format("{0}(Obtain Gear)", text),
-                                                    node.nodeID, gear.gearID);
-                                                GameManager.instance.dataScript.AddMessage(messageGear);
-                                                //remove gear
-                                                GameManager.instance.playerScript.RemoveGear(gearID);
-                                            }
-                                            else
-                                            {
-                                                //gear O.K
-                                                effectReturn.bottomText = string.Format("{0}{1} used to stay Invisible (still O.K){2}", colourEffect, gear.name,
-                                                    colourEnd);
-                                                //message
-                                                string textMsg = string.Format("{0}, ({1}), has prevented detection", gear.name, gear.type.name);
-                                                Message messageGear = GameManager.instance.messageScript.GearUsed(textMsg, node.nodeID, gear.gearID);
-                                                if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
-                                            }
-                                            //special invisibility gear effects
-                                            switch (gear.data)
-                                            {
-                                                case 1:
-                                                    //negates invisibility and increases it by +1 at the same time
-                                                    if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
-                                                    { GameManager.instance.playerScript.Invisibility++; }
-                                                    effectReturn.bottomText = string.Format("{0}{1}{2}{3}Invisibility +1 ({4}){5}", effectReturn.bottomText,
-                                                        "\n", "\n", colourEffect, gear.name, colourEnd);
-                                                    break;
-                                            }*/
                                         }
                                         else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
                                     }

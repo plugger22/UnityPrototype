@@ -1041,7 +1041,7 @@ public class GearManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns chance of gear being compromised. Depends on gear rarity. Returns '0' is a problem.
+    /// returns chance of gear being compromised. Depends on gear rarity (Same for all). Returns '0' is a problem.
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
@@ -1051,13 +1051,10 @@ public class GearManager : MonoBehaviour
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
         if (gear != null)
         {
-            //chance of compromise varies depending on gear rarity
+            //chance of compromise same for all
             switch (gear.rarity.name)
             {
                 case "Unique":
-                    //halved chance
-                    chance = chanceOfCompromise / 2;
-                    break;
                 case "Rare":
                 case "Common":
                     chance = chanceOfCompromise;
@@ -1071,33 +1068,6 @@ public class GearManager : MonoBehaviour
         }
         return chance;
     }
-
-
-
-    /*/// <summary>
-    /// submethod to handle gear comprised for ProcessPlayerMove & others (node and Gear not tested for null as already checked in calling method)
-    /// </summary>
-    /// <param name="gear"></param>
-    /// <returns></returns>
-    public string GearUsedAndCompromised(Gear gear, Node node)
-    {
-        //remove gear from inventory
-        GameManager.instance.playerScript.RemoveGear(gear.gearID);
-        //message -> gear compromised
-        string textMsg = string.Format("{0}, ID {1} has been comprised", gear.name, gear.gearID);
-        Message messageGear = GameManager.instance.messageScript.GearCompromised(textMsg, node.nodeID, gear.gearID);
-        if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
-        //return text string for builder
-        return string.Format("{0}{1}{2}{3} has been compromised!{4}", "\n", "\n", colourEffectBad, gear.name, colourEnd);
-    }
-
-    /// <summary>
-    /// submethod to handle gear being used but NOT compromised (node and Gear are checked for null by the calling method)
-    /// </summary>
-    /// <param name="gear"></param>
-    /// <param name="node"></param>
-    public string GearUsed(Gear gear, Node node)
-    { return string.Format("{0}{1}{2}Gear can be reused{3}", "\n", "\n", colourGear, colourEnd); }*/
 
     /// <summary>
     /// call this whenever gear is used
@@ -1175,7 +1145,7 @@ public class GearManager : MonoBehaviour
                     builderHeader.AppendFormat("{0}<size=90%>District use? Yes{1}", colourAlert, colourEnd);
                     break;
                 default:
-                    builderHeader.AppendFormat("{0}<size=80%>District use? No{1}", colourGrey, colourEnd);
+                    builderHeader.AppendFormat("{0}<size=90%>District use? No{1}", colourGrey, colourEnd);
                     break;
             }
             //gear use

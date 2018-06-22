@@ -242,6 +242,8 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
         //remove highlight from node
         GameManager.instance.nodeScript.ToggleNodeHighlight();
+        //close Alert UI safety check (ignored if not active)
+        GameManager.instance.alertScript.CloseAlertUI();
         //set game state
         GameManager.instance.inputScript.ResetStates(modalState);
         Debug.LogFormat("[UI] ModalActionMenu.cs -> CloseActionMenu{0}", "\n");

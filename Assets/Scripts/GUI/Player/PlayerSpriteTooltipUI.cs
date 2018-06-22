@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
 
+/// <summary>
+/// handles player status tooltip
+/// </summary>
 public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public string tooltipHeader;
@@ -13,10 +16,14 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
-    private Coroutine myCoroutine;
+
+    private Coroutine myTooltipCoroutine;
+
+
     //data derived whenever parent sprite moused over (OnPointerEnter)
     private GlobalSide side;
     private string playerName;
+
 
     private string colourSide;
     private string colourRebel;
@@ -31,6 +38,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     /// </summary>
     private void Start()
     {
+        //delays
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
         //register listener
@@ -76,12 +84,14 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        //update dynamic data (changes whenever you 'Change Side')
+        //
+        // - - - Tooltip - - -
+        //
         side = GameManager.instance.sideScript.PlayerSide;
         playerName = GameManager.instance.playerScript.PlayerName;
         //activate tooltip if there is a valid reason
         if (GameManager.instance.playerScript.tooltipStatus > ActorTooltip.None)
-        { myCoroutine = StartCoroutine("ShowGenericTooltip"); }
+        { myTooltipCoroutine = StartCoroutine("ShowGenericTooltip"); }
     }
 
     /// <summary>
@@ -91,9 +101,9 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
-        GameManager.instance.tooltipGenericScript.CloseTooltip("PlayerSpriteTooltipUI.cs -> OnPointerExit");
+        //Tooltip
+        if (myTooltipCoroutine != null)
+        { StopCoroutine(myTooltipCoroutine); }
     }
 
 
@@ -145,4 +155,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         }
     }
 
+
+
+    //new methods above here
 }
