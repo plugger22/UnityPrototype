@@ -1056,7 +1056,7 @@ public class ActorManager : MonoBehaviour
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.ManageActorAction, this, manageActionDetails, "ActorManager.cs -> GetActorActions"); }
                     };
-                    //add Lie Low button to list
+                    //add Manage button to list
                     tempList.Add(dismissDetails);
                     //
                     // - - - Resistance - - -
@@ -1288,6 +1288,105 @@ public class ActorManager : MonoBehaviour
 
         return tempList;
     }
+
+
+    public List<EventButtonDetails> GetPlayerActions()
+    {
+        string sideColour, tooltipText, title;
+        string cancelText = null;
+        string playerName = GameManager.instance.playerScript.PlayerName;
+        int benefit;
+        bool isResistance;
+        bool proceedFlag;
+        AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
+        //return list of button details
+        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
+        //Cancel button tooltip (handles all no go cases)
+        StringBuilder infoBuilder = new StringBuilder();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //color code for button tooltip header text, eg. "Operator"ss
+        if (playerSide.level == globalAuthority.level)
+        { sideColour = colourAuthority; isResistance = false; }
+        else { sideColour = colourResistance; isResistance = true; }
+        //
+        // - - - Resistance - - -
+        //
+        if (isResistance == true)
+        {
+            //
+            // - - - Lie Low - - -
+            //
+            //Invisibility must be less than max
+            int invis = GameManager.instance.playerScript.Invisibility;
+            if (invis < maxStatValue)
+            {
+                //can't lie low if a Surveillance Crackdown is in place
+                if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
+                {
+                    ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                    lielowActionDetails.side = playerSide;
+                    lielowActionDetails.actorDataID = 999;
+                    int numOfTurns = 3 - invis;
+                    tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
+                        colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                    EventButtonDetails lielowDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Lie Low",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                        buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
+                    };
+                    //add Lie Low button to list
+                    tempList.Add(lielowDetails);
+                }
+                else
+                {
+                    infoBuilder.Append("Can't Lie Low while a Surveillance Crackdown is in force");
+                }
+            }
+            else
+            {
+                //actor invisiblity at max
+                infoBuilder.Append(string.Format("{0}'s Invisibility at Max and can't Lie Low", playerName));
+            }
+        }
+        //
+        // - - - Cancel - - - (both sides)
+        //
+        //Cancel button is added last
+        EventButtonDetails cancelDetails = null;
+        if (infoBuilder.Length > 0)
+        {
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                buttonTooltipMain = cancelText,
+                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
+            };
+        }
+        else
+        {
+            //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+            cancelDetails = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                buttonTooltipMain = cancelText,
+                buttonTooltipDetail = string.Format("{0}Press Cancel to exit{1}", colourCancel, colourEnd),
+                //use a Lambda to pass arguments to the action
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
+            };
+        }
+        //add Cancel button to list
+        tempList.Add(cancelDetails);
+        return tempList;
+    }
+
 
     /// <summary>
     /// Returns a list of all relevant actions for Gear in the player's Inventory (right click gear sprite in inventory)

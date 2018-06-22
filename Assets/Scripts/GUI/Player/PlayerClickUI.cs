@@ -46,10 +46,10 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                             ModalPanelDetails details = new ModalPanelDetails()
                             {
                                 itemID = 1,
-                                itemName = "Player",
-                                itemDetails = string.Format("{0} ID {1}", "PLAYER", "1"),
+                                itemName = GameManager.instance.playerScript.PlayerName,
+                                itemDetails = "PLAYER",
                                 itemPos = position,
-                                listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(1),
+                                listOfButtonDetails = GameManager.instance.actorScript.GetPlayerActions(),
                                 menuType = ActionMenuType.Actor
                             };
                             //activate menu
