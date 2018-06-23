@@ -1297,7 +1297,8 @@ public class ActorManager : MonoBehaviour
     {
         string sideColour, tooltipText, title;
         string playerName = GameManager.instance.playerScript.PlayerName;
-        int benefit;
+        int benefit, numOfTurns;
+        int invis = GameManager.instance.playerScript.Invisibility;
         bool isResistance;
         bool proceedFlag;
         AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
@@ -1315,72 +1316,73 @@ public class ActorManager : MonoBehaviour
         //
         if (isResistance == true)
         {
-            //
-            // - - - Recovery Gear - - -
-            //
-            /*int gearID = GameManager.instance.playerScript.CheckGearTypePresent(gearRecovery);
-            if (gearID > -1)
+            switch (GameManager.instance.playerScript.status)
             {
-                //NOTE: Only the best type of recovery gear is offered as an option (best to have only one Recovery type gear present in level)
-                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-                if (gear != null)
-                {
-                    ModalActionDetails recoveryActionDetails = new ModalActionDetails() { };
-                    recoveryActionDetails.side = playerSide;
-                    recoveryActionDetails.actorDataID = 999;
-                    tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
-                        colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
-                    EventButtonDetails recoveryDetails = new EventButtonDetails()
+                case ActorStatus.Active:
+                    //
+                    // - - - Lie Low - - -
+                    //
+                    //Invisibility must be less than max
+                    if (invis < maxStatValue)
                     {
-                        buttonTitle = "",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, recoveryActionDetails, "ActorManager.cs -> GetActorActions"); }
-                    };
-                    //add Lie Low button to list
-                    tempList.Add(recoveryDetails);
-                }
-                else { Debug.LogWarningFormat("Invalid recovery gear (Null) for gearID {0}", gearID); }
-            }*/
-            //
-            // - - - Lie Low - - -
-            //
-            //Invisibility must be less than max
-            int invis = GameManager.instance.playerScript.Invisibility;
-            if (invis < maxStatValue)
-            {
-                //can't lie low if a Surveillance Crackdown is in place
-                if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
-                {
-                    ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
-                    lielowActionDetails.side = playerSide;
-                    lielowActionDetails.actorDataID = 999;
-                    int numOfTurns = 3 - invis;
-                    tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
-                        colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
-                    EventButtonDetails lielowDetails = new EventButtonDetails()
+                        //can't lie low if a Surveillance Crackdown is in place
+                        if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
+                        {
+                            ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                            lielowActionDetails.side = playerSide;
+                            lielowActionDetails.actorDataID = 999;
+                            numOfTurns = 3 - invis;
+                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
+                                colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                            EventButtonDetails lielowDetails = new EventButtonDetails()
+                            {
+                                buttonTitle = "Lie Low",
+                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
+                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                //use a Lambda to pass arguments to the action
+                                action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                            };
+                            //add Lie Low button to list
+                            tempList.Add(lielowDetails);
+                        }
+                        else
+                        { infoBuilder.AppendFormat("{0}Surveillance Crackdown{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd); }
+                    }
+                    else
                     {
-                        buttonTitle = "Lie Low",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
-                    };
-                    //add Lie Low button to list
-                    tempList.Add(lielowDetails);
-                }
-                else
-                {
-                    infoBuilder.AppendFormat("{0}Surveillance Crackdown{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
-                }
-            }
-            else
-            {
-                //actor invisiblity at max
-                infoBuilder.AppendFormat("{0}Invisibility at Max{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
+                        //actor invisiblity at max
+                        infoBuilder.AppendFormat("{0}Invisibility at Max{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
+                    }
+                    break;
+                case ActorStatus.Inactive:
+                    //
+                    // - - - Activate - - -
+                    //
+                    //can't activate if a Surveillance Crackdown is in place
+                    if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
+                    {
+                        ModalActionDetails activateActionDetails = new ModalActionDetails() { };
+                        activateActionDetails.side = playerSide;
+                        activateActionDetails.actorDataID = 999;
+                        numOfTurns = 3 - invis;
+                        tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", playerName, numOfTurns,
+                            numOfTurns != 1 ? "s" : "");
+                        EventButtonDetails activateDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "Activate",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                            buttonTooltipMain = string.Format("{0} will be Immediately Recalled", playerName),
+                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                        };
+                        //add Activate button to list
+                        tempList.Add(activateDetails);
+                    }
+                    else
+                    { infoBuilder.AppendFormat("{0}Surveillance Crackdown{1}{2}{3}(can't Activate){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd); }
+                    break;
             }
         }
         //
@@ -1397,7 +1399,7 @@ public class ActorManager : MonoBehaviour
                 buttonTooltipMain = playerName,
                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                 //use a Lambda to pass arguments to the action
-                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetPlayerActions"); }
             };
         }
         else
@@ -1410,7 +1412,7 @@ public class ActorManager : MonoBehaviour
                 buttonTooltipMain = playerName,
                 buttonTooltipDetail = string.Format("{0}Press Cancel to exit{1}", colourCancel, colourEnd),
                 //use a Lambda to pass arguments to the action
-                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetPlayerActions"); }
             };
         }
         //add Cancel button to list

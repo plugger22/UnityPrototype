@@ -356,7 +356,7 @@ public class ModalGenericPicker : MonoBehaviour
             //set game state
             ModalStateData package = new ModalStateData();
             package.mainState = ModalState.GenericPicker;
-            package.pickerState = ModalGenericPickerSubState.CompromisedGear;
+            package.pickerState = details.subState;
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalGenericPicker.cs -> SetGenericPicker{0}", "\n");
         }

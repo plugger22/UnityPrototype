@@ -1652,7 +1652,7 @@ public class NodeManager : MonoBehaviour
         {
             itemID = nodeID,
             itemName = node.nodeName,
-            itemDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
+            itemDetails = string.Format("{0}District Gear Actions{1}", colourResistance, colourEnd),
             itemPos = node.transform.position,
             listOfButtonDetails = tempList,
             menuType = ActionMenuType.NodeGear
