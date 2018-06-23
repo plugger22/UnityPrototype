@@ -331,28 +331,27 @@ public class PlayerManager : MonoBehaviour
     public bool AddGear(int gearID)
     {
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-        if (gear != null)
+        if (listOfGear.Count < GameManager.instance.gearScript.maxNumOfGear)
         {
-            //check gear not already in inventory
-            if (CheckGearPresent(gearID) == false)
+            if (gear != null)
             {
-                ResetGearItem(gear);
-                listOfGear.Add(gearID);
-                Debug.LogFormat("[Gea] -> PlayerManager.cs: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
-                CheckForAIUpdate(gear);
-                return true;
+                //check gear not already in inventory
+                if (CheckGearPresent(gearID) == false)
+                {
+                    ResetGearItem(gear);
+                    listOfGear.Add(gearID);
+                    Debug.LogFormat("[Gea] -> PlayerManager.cs: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
+                    CheckForAIUpdate(gear);
+                    return true;
+                }
+                else
+                { Debug.LogWarningFormat("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID);  }
             }
             else
-            {
-                Debug.LogWarningFormat("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID);
-                return false;
-            }
+            { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
         }
-        else
-        {
-            Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
-            return false;
-        }
+        else { Debug.LogWarning("You cannot exceed the maxium number of Gear items -> Gear NOT added"); }
+        return false;
     }
 
     /// <summary>
@@ -744,33 +743,42 @@ public class PlayerManager : MonoBehaviour
     {
         string text = string.Format("{0} has NOT been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
         int gearID = -1;
-        if (string.IsNullOrEmpty(gearName) == false)
+        if (listOfGear.Count < GameManager.instance.gearScript.maxNumOfGear)
         {
-            //find gear in dictionary
-            Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
-            if (dictOfGear != null)
+            if (string.IsNullOrEmpty(gearName) == false)
             {
-                //loop dictionary looking for gear
-                foreach (var gear in dictOfGear)
+                //find gear in dictionary
+                Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+                if (dictOfGear != null)
                 {
-                    if (gear.Value.name.Equals(gearName) == true)
+                    //loop dictionary looking for gear
+                    foreach (var gear in dictOfGear)
                     {
-                        gearID = gear.Value.gearID;
-                        break;
+                        if (gear.Value.name.Equals(gearName) == true)
+                        {
+                            gearID = gear.Value.gearID;
+                            break;
+                        }
                     }
-                }
-                if (gearID > -1)
-                {
-                    //add gear to player's inventory
-                    if (AddGear(gearID) == true)
+                    if (gearID > -1)
                     {
-                        text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
-                        //message
-                        Message message = GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), GameManager.instance.nodeScript.nodePlayer, gearID);
-                        GameManager.instance.dataScript.AddMessage(message);
+                        //add gear to player's inventory
+                        if (AddGear(gearID) == true)
+                        {
+                            text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
+                            //message
+                            Message message = GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), GameManager.instance.nodeScript.nodePlayer, gearID);
+                            GameManager.instance.dataScript.AddMessage(message);
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            //gear inventory already full
+            Debug.LogWarning("You cannot exceed the maximum num of Gear -> gear not added");
+            text = string.Format("{0} NOT added as Gear Allowance MAXXED{1}Press ESC to exit", gearName, "\n");
         }
         return text;
     }

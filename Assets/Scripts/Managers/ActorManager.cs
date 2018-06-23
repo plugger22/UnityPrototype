@@ -1318,7 +1318,7 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Recovery Gear - - -
             //
-            int gearID = GameManager.instance.playerScript.CheckGearTypePresent(gearRecovery);
+            /*int gearID = GameManager.instance.playerScript.CheckGearTypePresent(gearRecovery);
             if (gearID > -1)
             {
                 //NOTE: Only the best type of recovery gear is offered as an option (best to have only one Recovery type gear present in level)
@@ -1328,7 +1328,6 @@ public class ActorManager : MonoBehaviour
                     ModalActionDetails recoveryActionDetails = new ModalActionDetails() { };
                     recoveryActionDetails.side = playerSide;
                     recoveryActionDetails.actorDataID = 999;
-                    int numOfTurns = 3 - invis;
                     tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
                         colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
                     EventButtonDetails recoveryDetails = new EventButtonDetails()
@@ -1344,7 +1343,7 @@ public class ActorManager : MonoBehaviour
                     tempList.Add(recoveryDetails);
                 }
                 else { Debug.LogWarningFormat("Invalid recovery gear (Null) for gearID {0}", gearID); }
-            }
+            }*/
             //
             // - - - Lie Low - - -
             //
@@ -1375,13 +1374,13 @@ public class ActorManager : MonoBehaviour
                 }
                 else
                 {
-                    infoBuilder.Append("Can't Lie Low while a Surveillance Crackdown is in force");
+                    infoBuilder.AppendFormat("{0}Surveillance Crackdown{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
                 }
             }
             else
             {
                 //actor invisiblity at max
-                infoBuilder.Append("Invisibility at Max and can't Lie Low");
+                infoBuilder.AppendFormat("{0}Invisibility at Max{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
             }
         }
         //
