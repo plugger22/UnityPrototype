@@ -97,7 +97,8 @@ public class ActorManager : MonoBehaviour
     private int actorBreakdownChanceLow;
     private int actorBreakdownChanceNone;
     private int actorNoActionsDuringSecurityMeasures;
-
+    //gear type
+    private GearType gearRecovery;
     //colour palette for Generic tool tip
     private string colourResistance;
     private string colourAuthority;
@@ -139,10 +140,12 @@ public class ActorManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
+        gearRecovery = GameManager.instance.dataScript.GetGearType("Recovery");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
+        Debug.Assert(gearRecovery != null, "Invalid gearRecovery (Null)");
         //cached TraitEffects
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
@@ -1293,7 +1296,6 @@ public class ActorManager : MonoBehaviour
     public List<EventButtonDetails> GetPlayerActions()
     {
         string sideColour, tooltipText, title;
-        string cancelText = null;
         string playerName = GameManager.instance.playerScript.PlayerName;
         int benefit;
         bool isResistance;
@@ -1313,6 +1315,36 @@ public class ActorManager : MonoBehaviour
         //
         if (isResistance == true)
         {
+            //
+            // - - - Recovery Gear - - -
+            //
+            int gearID = GameManager.instance.playerScript.CheckGearTypePresent(gearRecovery);
+            if (gearID > -1)
+            {
+                //NOTE: Only the best type of recovery gear is offered as an option (best to have only one Recovery type gear present in level)
+                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                if (gear != null)
+                {
+                    ModalActionDetails recoveryActionDetails = new ModalActionDetails() { };
+                    recoveryActionDetails.side = playerSide;
+                    recoveryActionDetails.actorDataID = 999;
+                    int numOfTurns = 3 - invis;
+                    tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
+                        colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                    EventButtonDetails recoveryDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                        buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, recoveryActionDetails, "ActorManager.cs -> GetActorActions"); }
+                    };
+                    //add Lie Low button to list
+                    tempList.Add(recoveryDetails);
+                }
+                else { Debug.LogWarningFormat("Invalid recovery gear (Null) for gearID {0}", gearID); }
+            }
             //
             // - - - Lie Low - - -
             //
@@ -1349,7 +1381,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //actor invisiblity at max
-                infoBuilder.Append(string.Format("{0}'s Invisibility at Max and can't Lie Low", playerName));
+                infoBuilder.Append("Invisibility at Max and can't Lie Low");
             }
         }
         //
@@ -1363,7 +1395,7 @@ public class ActorManager : MonoBehaviour
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                buttonTooltipMain = cancelText,
+                buttonTooltipMain = playerName,
                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
@@ -1376,7 +1408,7 @@ public class ActorManager : MonoBehaviour
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                buttonTooltipMain = cancelText,
+                buttonTooltipMain = playerName,
                 buttonTooltipDetail = string.Format("{0}Press Cancel to exit{1}", colourCancel, colourEnd),
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
@@ -1446,21 +1478,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //Effect criteria O.K -> tool tip text
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            /*if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
-                            { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd)); }
-                            else
-                            {
-                                //Renown & Invisibility -> player affected (good for renown, bad for invisibility)
-                                if (effect.outcome.name.Equals("Renown"))
-                                { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd)); }
-                                else
-                                {
-                                    builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd));
-                                }
-                            }*/
-
                             builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd));
-
                             //chance of compromise
                             int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                             builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd, 

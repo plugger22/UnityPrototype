@@ -2037,6 +2037,7 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+
     /// <summary>
     /// Initialise lists of gear that are available in the current level
     /// </summary>

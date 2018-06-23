@@ -393,7 +393,7 @@ public class Connection : MonoBehaviour
             //tooltips for Connections may not be switched on
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipConnScript.CloseTooltip();
+            GameManager.instance.tooltipConnScript.CloseTooltip("Connection.cs -> OnMouseExit");
         }
     }
 
