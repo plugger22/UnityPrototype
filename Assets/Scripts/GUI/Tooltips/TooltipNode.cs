@@ -155,7 +155,7 @@ public class TooltipNode : MonoBehaviour
         //open panel at start
         tooltipNodeObject.SetActive(true);
         //set opacity to zero (invisible)
-        SetOpacity(0f);
+        //SetOpacity(0f);
         //set state of all items in tooltip window
         nodeName.gameObject.SetActive(true);
         nodeType.gameObject.SetActive(true);

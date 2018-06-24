@@ -64,7 +64,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                 }
                 break;
             default:
-                Debug.LogError("Unknown InputButton");
+                Debug.LogWarningFormat("Unknown InputButton \"{0}\"", eventData.button);
                 break;
         }
     }

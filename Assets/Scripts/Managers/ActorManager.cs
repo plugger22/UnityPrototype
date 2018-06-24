@@ -1413,16 +1413,15 @@ public class ActorManager : MonoBehaviour
                                                 ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                                 gearActionDetails.side = globalResistance;
                                                 gearActionDetails.gearID = gear.gearID;
-                                                gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
                                                 EventButtonDetails gearDetails = new EventButtonDetails()
                                                 {
-                                                    buttonTitle = "Use",
+                                                    buttonTitle = string.Format("Use {0}", gear.name),
                                                     buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
                                                     buttonTooltipMain = string.Format("Use {0} (Player)", gear.name),
                                                     /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
                                                     buttonTooltipDetail = builder.ToString(),
                                                     //use a Lambda to pass arguments to the action
-                                                    action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
+                                                    action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetPlayerAction"); }
                                                 };
                                                 //add USE to list
                                                 tempList.Add(gearDetails);
@@ -1432,7 +1431,7 @@ public class ActorManager : MonoBehaviour
                                         { infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd)); }
                                     }
                                 }
-                                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGearID[i]); }
+                                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGearID[index]); }
                             }
                         }
                     }

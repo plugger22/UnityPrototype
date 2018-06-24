@@ -414,7 +414,7 @@ public class Node : MonoBehaviour
                     GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
                     yield return null;
                 }
-                //fade in -> only if normal gamestate (eg. not modal)
+                /*//fade in -> only if normal gamestate (eg. not modal)
                 float alphaCurrent;
                 while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0 && GameManager.instance.inputScript.GameState == GameState.Normal)
                 {
@@ -422,7 +422,7 @@ public class Node : MonoBehaviour
                     alphaCurrent += Time.deltaTime / fadeInTime;
                     GameManager.instance.tooltipNodeScript.SetOpacity(alphaCurrent);
                     yield return null;
-                }
+                }*/
             }
         }
     }
