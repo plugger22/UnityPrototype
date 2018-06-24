@@ -1780,7 +1780,7 @@ public class NodeManager : MonoBehaviour
     {
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //Erasure team picks up player immediately if invisibility 0
-        CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(data.node.nodeID, 999);
+        CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(data.node.nodeID, GameManager.instance.playerScript.actorID);
         if (captureDetails != null)
         {
             //Player captured!

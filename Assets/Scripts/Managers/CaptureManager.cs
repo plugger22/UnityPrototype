@@ -272,7 +272,7 @@ public class CaptureManager : MonoBehaviour
         if (node != null)
         {
             string text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
-            Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, 999);
+            Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, GameManager.instance.playerScript.actorID);
             GameManager.instance.dataScript.AddMessage(message);
             //player released outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -358,7 +358,7 @@ public class CaptureManager : MonoBehaviour
             if (GameManager.instance.playerScript.status == ActorStatus.Active)
             {
                 //Player
-                if (actorID == 999)
+                if (actorID == GameManager.instance.playerScript.actorID)
                 {
                     //check player at node
                     if (nodeID == GameManager.instance.nodeScript.nodePlayer)

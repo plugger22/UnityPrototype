@@ -337,7 +337,7 @@ public Message PlayerMove(string text, int nodeID)
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = nodeID;
-            message.data1 = 999;
+            message.data1 = GameManager.instance.playerScript.actorID;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

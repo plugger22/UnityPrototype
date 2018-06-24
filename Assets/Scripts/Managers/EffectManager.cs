@@ -990,7 +990,7 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
                                         Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
-                                            dataInput.textOrigin), node.nodeID, 999, delay);
+                                            dataInput.textOrigin), node.nodeID, GameManager.instance.playerScript.actorID, delay);
                                         GameManager.instance.dataScript.AddMessage(messageAI);
                                         //AI Immediate message
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)

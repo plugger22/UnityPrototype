@@ -98,7 +98,8 @@ public class ActorManager : MonoBehaviour
     private int actorBreakdownChanceNone;
     private int actorNoActionsDuringSecurityMeasures;
     //gear type
-    private GearType gearRecovery;
+    /*private GearType gearRecovery;
+    private GearType gearPersonal;*/
     //colour palette for Generic tool tip
     private string colourResistance;
     private string colourAuthority;
@@ -140,12 +141,14 @@ public class ActorManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
-        gearRecovery = GameManager.instance.dataScript.GetGearType("Recovery");
+        /*gearRecovery = GameManager.instance.dataScript.GetGearType("Recovery");
+        gearPersonal = GameManager.instance.dataScript.GetGearType("Personal");*/
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
-        Debug.Assert(gearRecovery != null, "Invalid gearRecovery (Null)");
+        /*Debug.Assert(gearRecovery != null, "Invalid gearRecovery (Null)");
+        Debug.Assert(gearPersonal != null, "Invalid gearPersonal (Null)");*/
         //cached TraitEffects
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
@@ -1019,6 +1022,7 @@ public class ActorManager : MonoBehaviour
         string sideColour, tooltipText, title;
         string cancelText = null;
         int benefit;
+        int numOfTurns;
         bool isResistance;
         bool proceedFlag;
         bool isGearToGive = false;
@@ -1078,7 +1082,9 @@ public class ActorManager : MonoBehaviour
                                 ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                                 lielowActionDetails.side = playerSide;
                                 lielowActionDetails.actorDataID = actor.actorSlotID;
-                                int numOfTurns = 3 - actor.datapoint2;
+                                if (actor.isLieLowFirstturn == true)
+                                { numOfTurns = 4 - actor.datapoint2; }
+                                else { numOfTurns = 3 - actor.datapoint2; }
                                 tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName,
                                     colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
                                 EventButtonDetails lielowDetails = new EventButtonDetails()
@@ -1210,7 +1216,9 @@ public class ActorManager : MonoBehaviour
                             ModalActionDetails activateActionDetails = new ModalActionDetails() { };
                             activateActionDetails.side = playerSide;
                             activateActionDetails.actorDataID = actor.actorSlotID;
-                            int numOfTurns = 3 - actor.datapoint2;
+                            if (actor.isLieLowFirstturn == true)
+                            { numOfTurns = 4 - actor.datapoint2; }
+                            else { numOfTurns = 3 - actor.datapoint2; }
                             tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", actor.actorName, numOfTurns,
                                 numOfTurns != 1 ? "s" : "");
                             EventButtonDetails activateDetails = new EventButtonDetails()
@@ -1292,15 +1300,17 @@ public class ActorManager : MonoBehaviour
         return tempList;
     }
 
-
+    /// <summary>
+    /// Right click Player sprite Action menu
+    /// </summary>
+    /// <returns></returns>
     public List<EventButtonDetails> GetPlayerActions()
     {
-        string sideColour, tooltipText, title;
+        string sideColour, tooltipText;
         string playerName = GameManager.instance.playerScript.PlayerName;
-        int benefit, numOfTurns;
+        int numOfTurns;
         int invis = GameManager.instance.playerScript.Invisibility;
         bool isResistance;
-        bool proceedFlag;
         AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
         //return list of button details
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
@@ -1320,6 +1330,118 @@ public class ActorManager : MonoBehaviour
             {
                 case ActorStatus.Active:
                     //
+                    // - - - Use Gear (Personal) - - -
+                    //
+                    List<int> listOfGearID = GameManager.instance.playerScript.GetListOfGear();
+                    if (listOfGearID != null)
+                    {
+                        //has gear?
+                        if (listOfGearID.Count > 0)
+                        {
+                            for (int i = 0; i < listOfGearID.Count; i++)
+                            {
+                                Gear gear = GameManager.instance.dataScript.GetGear(listOfGearID[i]);
+                                if (gear != null)
+                                {
+                                    //Personal Use gear?
+                                    if (gear.listOfPersonalEffects != null && gear.listOfPersonalEffects.Count > 0)
+                                    {
+                                        //create a menu option to use gear
+                                        List<Effect> listOfEffects = gear.listOfPersonalEffects;
+                                        if (listOfEffects != null)
+                                        {
+                                            //effects
+                                            StringBuilder builder = new StringBuilder();
+                                            if (listOfEffects.Count > 0)
+                                            {
+                                                for (int i = 0; i < listOfEffects.Count; i++)
+                                                {
+                                                    proceedFlag = true;
+                                                    colourEffect = colourDefault;
+                                                    Effect effect = listOfEffects[i];
+                                                    //colour code effects according to type
+                                                    if (effect.typeOfEffect != null)
+                                                    {
+                                                        switch (effect.typeOfEffect.name)
+                                                        {
+                                                            case "Good":
+                                                                colourEffect = colourGood;
+                                                                break;
+                                                            case "Neutral":
+                                                                colourEffect = colourNeutral;
+                                                                break;
+                                                            case "Bad":
+                                                                colourEffect = colourBad;
+                                                                break;
+                                                        }
+                                                    }
+                                                    //check effect criteria is valid
+                                                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                                    {
+                                                        listOfCriteria = effect.listOfCriteria
+                                                    };
+                                                    effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                                                    if (effectCriteria == null)
+                                                    {
+                                                        //Effect criteria O.K -> tool tip text
+                                                        if (builder.Length > 0) { builder.AppendLine(); }
+                                                        builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd));
+                                                        //chance of compromise
+                                                        int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
+                                                        builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
+                                                            colourNeutral, compromiseChance, colourEnd));
+                                                    }
+                                                    else
+                                                    {
+                                                        proceedFlag = false;
+                                                        //invalid effect criteria -> Action cancelled
+                                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                        infoBuilder.Append(string.Format("{0}USE action invalid{1}{2}{3}({4}){5}",
+                                                            colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd));
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                proceedFlag = false;
+                                                infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd));
+                                            }
+
+
+                                            //button 
+                                            if (proceedFlag == true)
+                                            {
+                                                ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                                                gearActionDetails.side = globalResistance;
+                                                gearActionDetails.gearID = gear.gearID;
+                                                gearActionDetails.modalLevel = 2;
+                                                gearActionDetails.modalState = ModalState.Inventory;
+                                                gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+                                                EventButtonDetails gearDetails = new EventButtonDetails()
+                                                {
+                                                    buttonTitle = "Use",
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                                                    buttonTooltipMain = string.Format("Use {0} (Player)", gear.name),
+                                                    /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
+                                                    buttonTooltipDetail = builder.ToString(),
+                                                    //use a Lambda to pass arguments to the action
+                                                    action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
+                                                };
+                                                //add USE to list
+                                                eventList.Add(gearDetails);
+                                            }
+                                        }
+                                        else
+                                        { infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd)); }
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGearID[i]); }
+                            }
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid listOfGearID (Null)"); }
+
+                    //
                     // - - - Lie Low - - -
                     //
                     //Invisibility must be less than max
@@ -1330,7 +1452,7 @@ public class ActorManager : MonoBehaviour
                         {
                             ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                             lielowActionDetails.side = playerSide;
-                            lielowActionDetails.actorDataID = 999;
+                            lielowActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
                             numOfTurns = 3 - invis;
                             tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
                                 colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
@@ -1364,7 +1486,7 @@ public class ActorManager : MonoBehaviour
                     {
                         ModalActionDetails activateActionDetails = new ModalActionDetails() { };
                         activateActionDetails.side = playerSide;
-                        activateActionDetails.actorDataID = 999;
+                        activateActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
                         numOfTurns = 3 - invis;
                         tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", playerName, numOfTurns,
                             numOfTurns != 1 ? "s" : "");
@@ -2019,7 +2141,7 @@ public class ActorManager : MonoBehaviour
             if (node != null)
             {
                 //check for player/actor being captured
-                int actorID = 999;
+                int actorID = GameManager.instance.playerScript.actorID;
                 if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
                 {
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
@@ -2882,7 +3004,12 @@ public class ActorManager : MonoBehaviour
                             switch (actor.inactiveStatus)
                             {
                                 case ActorInactive.LieLow:
-                                    if (actor.datapoint2 >= maxStatValue)
+                                    int invis = actor.datapoint2;
+                                    //increment invisibility (not the first turn)
+                                    if (actor.isLieLowFirstturn == false)
+                                    { invis++; }
+                                    else { actor.isLieLowFirstturn = false; }
+                                    if (invis >= maxStatValue)
                                     {
                                         //actor has recovered from lying low, needs to be activated
                                         actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
@@ -2907,10 +3034,7 @@ public class ActorManager : MonoBehaviour
                                         }
                                     }
                                     else
-                                    {
-                                        //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
-                                        actor.datapoint2++;
-                                    }
+                                    { actor.datapoint2 = invis; }
                                     break;
                                 case ActorInactive.Breakdown:
                                     //restore actor (one stress turn only)
@@ -3159,11 +3283,7 @@ public class ActorManager : MonoBehaviour
                             }
                         }
                         else
-                        {
-                            /*//increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
-                            GameManager.instance.playerScript.Invisibility++;*/
-                            GameManager.instance.playerScript.Invisibility = invis;
-                        }
+                        {  GameManager.instance.playerScript.Invisibility = invis; }
                         break;
                 }
                 break;

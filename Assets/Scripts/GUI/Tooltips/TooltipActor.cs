@@ -148,7 +148,9 @@ public class TooltipActor : MonoBehaviour
                         switch (data.actor.inactiveStatus)
                         {
                             case ActorInactive.LieLow:
-                                int numOfTurns = GameManager.instance.actorScript.maxStatValue + 1 - data.actor.datapoint2;
+                                int numOfTurns = GameManager.instance.actorScript.maxStatValue - data.actor.datapoint2;
+                                if (data.actor.isLieLowFirstturn == true)
+                                { numOfTurns++; }
                                 actorStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
                                     numOfTurns != 1 ? "s" : "");
                                 break;

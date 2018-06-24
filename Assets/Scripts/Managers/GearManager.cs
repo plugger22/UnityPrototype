@@ -449,7 +449,7 @@ public class GearManager : MonoBehaviour
 
             #region CaptureCheck
             //check for player/actor being captured
-            int actorID = 999;
+            int actorID = GameManager.instance.playerScript.actorID;
             if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
             {
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);

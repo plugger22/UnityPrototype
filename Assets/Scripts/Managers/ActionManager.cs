@@ -1049,6 +1049,7 @@ public class ActionManager : MonoBehaviour
                 actor.Status = ActorStatus.Inactive;
                 actor.inactiveStatus = ActorInactive.LieLow;
                 actor.tooltipStatus = ActorTooltip.LieLow;
+                actor.isLieLowFirstturn = true;
                 numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
                 outcomeDetails.sprite = actor.arc.baseSprite;
@@ -1992,7 +1993,7 @@ public class ActionManager : MonoBehaviour
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
         int targetID;
-        int actorID = 999;
+        int actorID = GameManager.instance.playerScript.actorID; ;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         CaptureDetails details = new CaptureDetails();

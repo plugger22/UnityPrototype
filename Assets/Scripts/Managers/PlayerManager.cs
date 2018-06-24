@@ -11,8 +11,7 @@ using System.Text;
 public class PlayerManager : MonoBehaviour
 {
     public Sprite sprite;
-    public string playerNameResistance;
-    public string playerNameAuthority;
+
 
     [HideInInspector] public int numOfRecruits;
     //[HideInInspector] public int Invisibility;
@@ -32,6 +31,8 @@ public class PlayerManager : MonoBehaviour
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
     private int _renownAuthority;
+    private string _playerNameResistance;
+    private string _playerNameAuthority;
     private int _invisibility;
 
     //for fast access
@@ -45,13 +46,13 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { return playerNameResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { return playerNameAuthority; }
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { return _playerNameResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { return _playerNameAuthority; }
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return playerNameResistance; }
-                else { return playerNameAuthority; }
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return _playerNameResistance; }
+                else { return _playerNameAuthority; }
             }
         }
     }
@@ -113,6 +114,8 @@ public class PlayerManager : MonoBehaviour
     public void Initialise()
     {
         int nodeID = 0;
+        _playerNameAuthority = "Evil Eddy";
+        _playerNameResistance = "Cameron";
         //place Player in a random start location (Sprawl node)
         int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("SPRAWL");
         Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
