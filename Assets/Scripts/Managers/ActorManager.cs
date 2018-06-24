@@ -3130,6 +3130,10 @@ public class ActorManager : MonoBehaviour
                         break;
                     case ActorInactive.LieLow:
                         int invis = GameManager.instance.playerScript.Invisibility;
+                        //increment invisibility (not the first turn)
+                        if (GameManager.instance.playerScript.isLieLowFirstturn == false)
+                        { invis++; }
+                        else { GameManager.instance.playerScript.isLieLowFirstturn = false; }
                         if (invis >= maxStatValue)
                         {
                             //player has recovered from lying low, needs to be activated
@@ -3156,8 +3160,9 @@ public class ActorManager : MonoBehaviour
                         }
                         else
                         {
-                            //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
-                            GameManager.instance.playerScript.Invisibility++;
+                            /*//increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
+                            GameManager.instance.playerScript.Invisibility++;*/
+                            GameManager.instance.playerScript.Invisibility = invis;
                         }
                         break;
                 }

@@ -1092,7 +1092,8 @@ public class ActionManager : MonoBehaviour
         Debug.Assert(GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.Normal, string.Format("Invalid authoritySecurityState {0}",
             GameManager.instance.turnScript.authoritySecurityState));
         string playerName = GameManager.instance.playerScript.PlayerName;
-        int numOfTurns = 3 - GameManager.instance.playerScript.Invisibility;
+        int invis = GameManager.instance.playerScript.Invisibility;
+        int numOfTurns = 3 - invis;
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
@@ -1102,15 +1103,16 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
-                GameManager.instance.playerScript.status = ActorStatus.Inactive;
-                GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
-                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
-                outcomeDetails.textTop = string.Format(" {0} will go to ground and Lie Low", playerName);
-                outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
-                //message
-                string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
-                Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, details.side);
-                GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.playerScript.status = ActorStatus.Inactive;
+            GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
+            GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
+            GameManager.instance.playerScript.isLieLowFirstturn = true;
+            outcomeDetails.textTop = string.Format(" {0} will go to ground and Lie Low", playerName);
+            outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
+            //message
+            string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
+            Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, details.side);
+            GameManager.instance.dataScript.AddMessage(message);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1222,6 +1224,7 @@ public class ActionManager : MonoBehaviour
     public void ProcessActivatePlayerAction(ModalActionDetails details)
     {
         bool errorFlag = false;
+        string playerName = GameManager.instance.playerScript.PlayerName;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
         outcomeDetails.side = details.side;
@@ -1230,26 +1233,22 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
-            if (actor != null)
-            {
+
                 string title = "";
                 if (details.side == GameManager.instance.globalScript.sideAuthority)
                 { title = string.Format(" {0} ", GameManager.instance.metaScript.GetAuthorityTitle()); }
 
-                //Reactivate actor
-                actor.Status = ActorStatus.Active;
-                actor.inactiveStatus = ActorInactive.None;
-                actor.tooltipStatus = ActorTooltip.None;
-                outcomeDetails.textTop = string.Format(" {0} {1} has been Recalled", actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
-                outcomeDetails.sprite = actor.arc.baseSprite;
+                //Reactivate Player
+                GameManager.instance.playerScript.status = ActorStatus.Active;
+                GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                outcomeDetails.textTop = string.Format(" {0} has emerged from hiding early", playerName);
+                outcomeDetails.textBottom = string.Format("{0}{1} is now fully Activated{2}", colourNeutral, playerName, title, colourEnd);
+                outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
                 //message
-                string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                string text = string.Format("{0} has emerged from hiding early. Status: {1}", playerName, GameManager.instance.playerScript.status);
+                Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, details.side);
                 GameManager.instance.dataScript.AddMessage(message);
-            }
-            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1261,17 +1260,17 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            //change alpha of actor to indicate inactive status
-            GameManager.instance.guiScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
+            //change alpha of player to indicate inactive status
+            GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
         {
             outcomeDetails.isAction = true;
-            outcomeDetails.reason = "Activate Actor";
+            outcomeDetails.reason = "Activate Player";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivatePlayerAction");
     }
 
     /// <summary>

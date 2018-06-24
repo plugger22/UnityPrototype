@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public ActorInactive inactiveStatus;                          //reason actor is inactive
     [HideInInspector] public bool isBreakdown;                                      //enforces a minimum one turn gap between successive breakdowns
     [HideInInspector] public bool isEndOfTurnGearCheck;                             //set true by UpdateGear (as a result of Compromised gear check)
+    [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
 
 
     private List<int> listOfGear = new List<int>();                                 //gearID's of all gear items in inventory
