@@ -1306,11 +1306,12 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetPlayerActions()
     {
-        string sideColour, tooltipText;
+        string sideColour, colourEffect, tooltipText, effectCriteria;
         string playerName = GameManager.instance.playerScript.PlayerName;
         int numOfTurns;
         int invis = GameManager.instance.playerScript.Invisibility;
         bool isResistance;
+        bool proceedFlag = false;
         AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
         //return list of button details
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
@@ -1338,9 +1339,9 @@ public class ActorManager : MonoBehaviour
                         //has gear?
                         if (listOfGearID.Count > 0)
                         {
-                            for (int i = 0; i < listOfGearID.Count; i++)
+                            for (int index = 0; index < listOfGearID.Count; index++)
                             {
-                                Gear gear = GameManager.instance.dataScript.GetGear(listOfGearID[i]);
+                                Gear gear = GameManager.instance.dataScript.GetGear(listOfGearID[index]);
                                 if (gear != null)
                                 {
                                     //Personal Use gear?
@@ -1406,16 +1407,12 @@ public class ActorManager : MonoBehaviour
                                                 proceedFlag = false;
                                                 infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd));
                                             }
-
-
                                             //button 
                                             if (proceedFlag == true)
                                             {
                                                 ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                                 gearActionDetails.side = globalResistance;
                                                 gearActionDetails.gearID = gear.gearID;
-                                                gearActionDetails.modalLevel = 2;
-                                                gearActionDetails.modalState = ModalState.Inventory;
                                                 gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
                                                 EventButtonDetails gearDetails = new EventButtonDetails()
                                                 {
@@ -1428,7 +1425,7 @@ public class ActorManager : MonoBehaviour
                                                     action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
                                                 };
                                                 //add USE to list
-                                                eventList.Add(gearDetails);
+                                                tempList.Add(gearDetails);
                                             }
                                         }
                                         else
