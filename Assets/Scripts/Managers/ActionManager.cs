@@ -42,8 +42,10 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.TargetAction, OnEvent, "ActionManager");
-        EventManager.instance.AddListener(EventType.LieLowAction, OnEvent, "ActionManager");
-        EventManager.instance.AddListener(EventType.ActivateAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LieLowActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LieLowPlayerAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ActivateActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ActivatePlayerAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.UseGearAction, OnEvent, "ActionManager");
@@ -90,13 +92,21 @@ public class ActionManager : MonoBehaviour
                 ModalActionDetails detailsDismiss = Param as ModalActionDetails;
                 ProcessManageActorAction(detailsDismiss);
                 break;
-            case EventType.LieLowAction:
-                ModalActionDetails detailsLieLow = Param as ModalActionDetails;
-                ProcessLieLowActorAction(detailsLieLow);
+            case EventType.LieLowActorAction:
+                ModalActionDetails detailsLieLowActor = Param as ModalActionDetails;
+                ProcessLieLowActorAction(detailsLieLowActor);
                 break;
-            case EventType.ActivateAction:
-                ModalActionDetails detailsActivate = Param as ModalActionDetails;
-                ProcessActivateActorAction(detailsActivate);
+            case EventType.LieLowPlayerAction:
+                ModalActionDetails detailsLieLowPlayer = Param as ModalActionDetails;
+                ProcessLieLowPlayerAction(detailsLieLowPlayer);
+                break;
+            case EventType.ActivateActorAction:
+                ModalActionDetails detailsActivateActor = Param as ModalActionDetails;
+                ProcessActivateActorAction(detailsActivateActor);
+                break;
+            case EventType.ActivatePlayerAction:
+                ModalActionDetails detailsActivatePlayer = Param as ModalActionDetails;
+                ProcessActivatePlayerAction(detailsActivatePlayer);
                 break;
             case EventType.GiveGearAction:
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
@@ -1023,7 +1033,8 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.turnScript.authoritySecurityState));
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        StringBuilder builder = new StringBuilder();
+        int numOfTurns = 0;
+        string actorName = "Unknown";
         //default data 
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
@@ -1034,21 +1045,13 @@ public class ActionManager : MonoBehaviour
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
             if (actor != null)
             {
+                actorName = string.Format("{0}, {1}, ", actor.actorName, actor.arc.name);
                 actor.Status = ActorStatus.Inactive;
                 actor.inactiveStatus = ActorInactive.LieLow;
                 actor.tooltipStatus = ActorTooltip.LieLow;
-                int numOfTurns = 3 - actor.datapoint2;
+                numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
                 outcomeDetails.sprite = actor.arc.baseSprite;
-                builder.AppendFormat("{0}{1} will be Inactive for {2}{3}{4} FULL{5}{6} turn{7} or until Activated{8}", colourNeutral, actor.actorName,
-                    colourEnd, colourAlert, numOfTurns, colourEnd, colourNeutral, numOfTurns != 1 ? "s" : "", colourEnd);
-                builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("{0}Invisibility {1}{2}+1{3}{4} each turn Inactive{5}", colourGood, colourEnd, colourAlert, colourEnd, colourGood, colourEnd);
-                builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("{0}Any {1}{2}Stress{3}{4} will be removed once Invisibility is fully recovered{5}", colourGood, colourEnd, 
-                    colourAlert, colourEnd, colourGood, colourEnd);
-                builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd);
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -1074,10 +1077,82 @@ public class ActionManager : MonoBehaviour
         {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Actor Lie Low";
-            outcomeDetails.textBottom = builder.ToString();
+            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, actorName);
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowActorAction");
+    }
+
+    /// <summary>
+    /// Process Lie Low Player action (Resistance only)
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessLieLowPlayerAction(ModalActionDetails details)
+    {
+        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.Normal, string.Format("Invalid authoritySecurityState {0}",
+            GameManager.instance.turnScript.authoritySecurityState));
+        string playerName = GameManager.instance.playerScript.PlayerName;
+        int numOfTurns = 3 - GameManager.instance.playerScript.Invisibility;
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        if (details != null)
+        {
+                GameManager.instance.playerScript.status = ActorStatus.Inactive;
+                GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
+                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
+                outcomeDetails.textTop = string.Format(" {0} will go to ground and Lie Low", playerName);
+                outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
+                //message
+                string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
+                Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, details.side);
+                GameManager.instance.dataScript.AddMessage(message);
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+        }
+        else
+        {
+            //change alpha of player to indicate inactive status
+            GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false)
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Player Lie Low";
+            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, playerName);
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowPlayerAction");
+    }
+
+    /// <summary>
+    /// formatted message string for both player and actor Lie Low action
+    /// </summary>
+    /// <returns></returns>
+    private string GetLieLowMessage(int numOfTurns, string actorName)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1} will be Inactive for {2}{3}{4} FULL{5}{6} turn{7} or until Activated{8}", colourNeutral, actorName,
+                colourEnd, colourAlert, numOfTurns, colourEnd, colourNeutral, numOfTurns != 1 ? "s" : "", colourEnd);
+        builder.AppendLine(); builder.AppendLine();
+        builder.AppendFormat("{0}Invisibility {1}{2}+1{3}{4} each turn Inactive{5}", colourGood, colourEnd, colourAlert, colourEnd, colourGood, colourEnd);
+        builder.AppendLine(); builder.AppendLine();
+        builder.AppendFormat("{0}Any {1}{2}Stress{3}{4} will be removed once Invisibility is fully recovered{5}", colourGood, colourEnd,
+            colourAlert, colourEnd, colourGood, colourEnd);
+        builder.AppendLine(); builder.AppendLine();
+        builder.AppendFormat("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd);
+        return builder.ToString();
     }
 
 
@@ -1140,6 +1215,64 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
     }
 
+    /// <summary>
+    /// Process Activate Player action (Resistance only at present but set up for both sides)
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessActivatePlayerAction(ModalActionDetails details)
+    {
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        if (details != null)
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
+            if (actor != null)
+            {
+                string title = "";
+                if (details.side == GameManager.instance.globalScript.sideAuthority)
+                { title = string.Format(" {0} ", GameManager.instance.metaScript.GetAuthorityTitle()); }
+
+                //Reactivate actor
+                actor.Status = ActorStatus.Active;
+                actor.inactiveStatus = ActorInactive.None;
+                actor.tooltipStatus = ActorTooltip.None;
+                outcomeDetails.textTop = string.Format(" {0} {1} has been Recalled", actor.arc.name, actor.actorName);
+                outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
+                outcomeDetails.sprite = actor.arc.baseSprite;
+                //message
+                string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
+                Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+        }
+        else
+        {
+            //change alpha of actor to indicate inactive status
+            GameManager.instance.guiScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false)
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Activate Actor";
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
+    }
 
     /// <summary>
     /// Process Give Gear actor action (Resistance only)

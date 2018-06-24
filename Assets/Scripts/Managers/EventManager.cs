@@ -50,8 +50,10 @@ public enum EventType
     RecruitAction,
     MoveAction,
     ManageActorAction,
-    LieLowAction,
-    ActivateAction,
+    LieLowActorAction,
+    LieLowPlayerAction,
+    ActivateActorAction,
+    ActivatePlayerAction,
     GiveGearAction,
     UseGearAction,
     //decisions

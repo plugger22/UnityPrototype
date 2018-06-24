@@ -1088,7 +1088,7 @@ public class ActorManager : MonoBehaviour
                                     buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
                                     buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                     //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                    action = () => { EventManager.instance.PostNotification(EventType.LieLowActorAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
                                 };
                                 //add Lie Low button to list
                                 tempList.Add(lielowDetails);
@@ -1220,7 +1220,7 @@ public class ActorManager : MonoBehaviour
                                 buttonTooltipMain = string.Format("{0} {1} will be Immediately Recalled", actor.arc.name, actor.actorName),
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                 //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                action = () => { EventManager.instance.PostNotification(EventType.ActivateActorAction, this, activateActionDetails, "ActorManager.cs -> GetActorActions"); }
                             };
                             //add Activate button to list
                             tempList.Add(activateDetails);
@@ -1341,7 +1341,7 @@ public class ActorManager : MonoBehaviour
                                 buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                 //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.LieLowAction, this, lielowActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                                action = () => { EventManager.instance.PostNotification(EventType.LieLowPlayerAction, this, lielowActionDetails, "ActorManager.cs -> GetPlayerActions"); }
                             };
                             //add Lie Low button to list
                             tempList.Add(lielowDetails);
@@ -1375,7 +1375,7 @@ public class ActorManager : MonoBehaviour
                             buttonTooltipMain = string.Format("{0} will be Immediately Recalled", playerName),
                             buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                             //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.ActivateAction, this, activateActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                            action = () => { EventManager.instance.PostNotification(EventType.ActivatePlayerAction, this, activateActionDetails, "ActorManager.cs -> GetPlayerActions"); }
                         };
                         //add Activate button to list
                         tempList.Add(activateDetails);
@@ -3109,6 +3109,7 @@ public class ActorManager : MonoBehaviour
     private void CheckPlayerStartLate()
     {
         int rnd;
+        string playerName = GameManager.instance.playerScript.PlayerName;
         //check for Stress Nervous breakdown -> both sides
         switch (GameManager.instance.playerScript.status)
         {
@@ -3121,11 +3122,43 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                         GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
-                        string textBreakdown = "Player has recovered from their Breakdown";
+                        string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
                         Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                         GameManager.instance.dataScript.AddMessage(messageBreakdown);
                         //update AI side tab status
                         GameManager.instance.aiScript.UpdateSideTabData();
+                        break;
+                    case ActorInactive.LieLow:
+                        int invis = GameManager.instance.playerScript.Invisibility;
+                        if (invis >= maxStatValue)
+                        {
+                            //player has recovered from lying low, needs to be activated
+                            GameManager.instance.playerScript.Invisibility = Mathf.Min(maxStatValue, invis);
+                            GameManager.instance.playerScript.status = ActorStatus.Active;
+                            GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+                            GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                            GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+                            //message -> status change
+                            string text = string.Format("{0} has automatically reactivated", playerName);
+                            Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, globalResistance, true);
+                            GameManager.instance.dataScript.AddMessage(message);
+                            //check if Player has stressed condition
+                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
+                            {
+                                if (GameManager.instance.playerScript.RemoveCondition(conditionStressed) == true)
+                                {
+                                    //message -> condition change
+                                    text = string.Format("{0} is no longer Stressed (Lie Low)", playerName);
+                                    message = GameManager.instance.messageScript.ActorCondition(text, GameManager.instance.playerScript.actorID, globalResistance, true);
+                                    GameManager.instance.dataScript.AddMessage(message);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //increment invisibility -> Must be AFTER reactivation check otherwise it will take 1 turn less than it should
+                            GameManager.instance.playerScript.Invisibility++;
+                        }
                         break;
                 }
                 break;
