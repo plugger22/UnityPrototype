@@ -1397,8 +1397,8 @@ public class ActorManager : MonoBehaviour
                                                         proceedFlag = false;
                                                         //invalid effect criteria -> Action cancelled
                                                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                        infoBuilder.Append(string.Format("{0}USE action invalid{1}{2}{3}({4}){5}",
-                                                            colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd));
+                                                        infoBuilder.Append(string.Format("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
+                                                            colourInvalid, gear.name, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n"));
                                                     }
                                                 }
                                             }
@@ -1470,7 +1470,7 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         //actor invisiblity at max
-                        infoBuilder.AppendFormat("{0}Invisibility at Max{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
+                        infoBuilder.AppendFormat("{0}Can't Lie Low{1}{2}{3}(Invisibility at Max){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
                     }
                     break;
                 case ActorStatus.Inactive:

@@ -4,12 +4,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
 using modalAPI;
+using System;
 
 /// <summary>
 /// handles clicks on Player portrait in ActorUI
 /// </summary>
 public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
 {
+
+    string menuHeaderRightClick;
+
+    public void Start()
+    {
+        menuHeaderRightClick = GameManager.instance.actionScript.GetPlayerActionMenuHeader();
+        Debug.Assert(String.IsNullOrEmpty(menuHeaderRightClick) == false, "Invalid menuHeaderRightClick (Null or empty)");
+    }
 
     /// <summary>
     /// Mouse click -> Right: Actor Action Menu
@@ -47,7 +56,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                             {
                                 itemID = 1,
                                 itemName = GameManager.instance.playerScript.PlayerName,
-                                itemDetails = "PLAYER",
+                                itemDetails = menuHeaderRightClick,
                                 itemPos = position,
                                 listOfButtonDetails = GameManager.instance.actorScript.GetPlayerActions(),
                                 menuType = ActionMenuType.Player

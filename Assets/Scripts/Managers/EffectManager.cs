@@ -478,6 +478,14 @@ public class EffectManager : MonoBehaviour
                                                 if (compareTip != null)
                                                 { BuildString(result, "maxxed Recruit allowance"); }
                                                 break;
+                                            case "InvisibilityNOTMax":
+                                                //check invisibility is less than the max value -> Actor / Player
+                                                if (actor != null)
+                                                { val = actor.datapoint2; }
+                                                else { val = GameManager.instance.playerScript.Invisibility; }
+                                                if (val == GameManager.instance.actorScript.maxStatValue)
+                                                { BuildString(result, "Invisibility at Max"); }
+                                                break;
                                             case "NumGearMax":
                                                 //Note: effect criteria value is ignored in this case
                                                 val = GameManager.instance.gearScript.maxNumOfGear;

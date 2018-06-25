@@ -63,7 +63,7 @@ public class Node : MonoBehaviour
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
-    private float fadeInTime;                           //tooltip
+    /*private float fadeInTime;                           //tooltip*/
 
     private int maxValue;                               //max and min node datapoint values (derive from NodeManager.cs)
     private int minValue;
@@ -179,8 +179,8 @@ public class Node : MonoBehaviour
         listOfOngoingEffects = new List<EffectDataOngoing>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
-        maxValue = GameManager.instance.nodeScript.maxNodeValue;
+        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
+        maxValue = GameManager.instance.nodeScript.maxNodeValue;*/
         minValue = GameManager.instance.nodeScript.minNodeValue;
 
         //get text component

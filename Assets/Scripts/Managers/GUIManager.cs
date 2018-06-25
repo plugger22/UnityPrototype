@@ -68,14 +68,26 @@ public class GUIManager : MonoBehaviour
     private TextMeshProUGUI type3;
     private TextMeshProUGUI typePlayer;
 
+    private Image renownCircle0;
+    private Image renownCircle1;
+    private Image renownCircle2;
+    private Image renownCircle3;
+    private Image renownCirclePlayer;
+
+    private TextMeshProUGUI renownText0;
+    private TextMeshProUGUI renownText1;
+    private TextMeshProUGUI renownText2;
+    private TextMeshProUGUI renownText3;
+    private TextMeshProUGUI renownTextPlayer;
+
     private CanvasGroup canvas0;
     private CanvasGroup canvas1;
     private CanvasGroup canvas2;
     private CanvasGroup canvas3;
     private CanvasGroup canvasPlayer;
 
-    List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();       //actors (not player)
-    List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)
+    /*List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();       //actors (not player)
+    List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)*/
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -102,23 +114,35 @@ public class GUIManager : MonoBehaviour
         Actor2 = GameObject.Find("Actor2");
         Actor3 = GameObject.Find("Actor3");
         ActorPlayer = GameObject.Find("ActorPlayer");
-        //get image and text references 
+        Debug.Assert(Actor0 != null, "Invalid Actor0 (Null)");
+        Debug.Assert(Actor1 != null, "Invalid Actor1 (Null)");
+        Debug.Assert(Actor2 != null, "Invalid Actor2 (Null)");
+        Debug.Assert(Actor3 != null, "Invalid Actor3 (Null)");
+        Debug.Assert(ActorPlayer != null, "Invalid ActorPlayer (Null)");
+        //get sprite face references 
         GameObject temp0 = Actor0.transform.Find("Face").gameObject;
         GameObject temp1 = Actor1.transform.Find("Face").gameObject;
         GameObject temp2 = Actor2.transform.Find("Face").gameObject;
         GameObject temp3 = Actor3.transform.Find("Face").gameObject;
         GameObject tempPlayer = ActorPlayer.transform.Find("Face").gameObject;
+        Debug.Assert(temp0 != null, "Invalid temp0 (Null)");
+        Debug.Assert(temp1 != null, "Invalid temp1 (Null)");
+        Debug.Assert(temp2 != null, "Invalid temp2 (Null)");
+        Debug.Assert(temp3 != null, "Invalid temp3 (Null)");
+        Debug.Assert(tempPlayer != null, "invalid tempPlayer (Null)");
         picture0 = temp0.GetComponentInChildren<Image>();
         picture1 = temp1.GetComponentInChildren<Image>();
         picture2 = temp2.GetComponentInChildren<Image>();
         picture3 = temp3.GetComponentInChildren<Image>();
         picturePlayer = tempPlayer.GetComponentInChildren<Image>();
+        //get 
         //Can get away with the easy search as there is only a single TMPro object within the master Actor Object Prefab. Can't do this with image above as > 1
         type0 = Actor0.GetComponentInChildren<TextMeshProUGUI>();
         type1 = Actor1.GetComponentInChildren<TextMeshProUGUI>();
         type2 = Actor2.GetComponentInChildren<TextMeshProUGUI>();
         type3 = Actor3.GetComponentInChildren<TextMeshProUGUI>();
         typePlayer = ActorPlayer.GetComponentInChildren<TextMeshProUGUI>();
+
         //Canvas Group references
         canvas0 = Actor0.GetComponent<CanvasGroup>();
         canvas1 = Actor1.GetComponent<CanvasGroup>();
@@ -126,14 +150,24 @@ public class GUIManager : MonoBehaviour
         canvas3 = Actor3.GetComponent<CanvasGroup>();
         canvasPlayer = ActorPlayer.GetComponent<CanvasGroup>();
         //populate lists
-        listOfActorTypes.Add(type0);
-        listOfActorTypes.Add(type1);
-        listOfActorTypes.Add(type2);
-        listOfActorTypes.Add(type3);
-        listOfActorPortraits.Add(picture0);
-        listOfActorPortraits.Add(picture1);
-        listOfActorPortraits.Add(picture2);
-        listOfActorPortraits.Add(picture3);
+        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
+        if (listOfActorTypes != null)
+        {
+            listOfActorTypes.Add(type0);
+            listOfActorTypes.Add(type1);
+            listOfActorTypes.Add(type2);
+            listOfActorTypes.Add(type3);
+        }
+        else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
+        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
+        if (listOfActorPortraits != null)
+        {
+            listOfActorPortraits.Add(picture0);
+            listOfActorPortraits.Add(picture1);
+            listOfActorPortraits.Add(picture2);
+            listOfActorPortraits.Add(picture3);
+        }
+        else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
         //assign actorSlotID's to all Actor components
         Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
         Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
@@ -221,38 +255,48 @@ public class GUIManager : MonoBehaviour
         int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
-        if (arrayOfActors != null)
+        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
+        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
+        if (listOfActorTypes != null)
         {
-            if (arrayOfActors.Length == numOfActors)
+            if (listOfActorPortraits != null)
             {
-                //loop actors
-                for (int i = 0; i < numOfActors; i++)
+                if (arrayOfActors != null)
                 {
-                    //check if actorSlotID has an actor first
-                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                    if (arrayOfActors.Length == numOfActors)
                     {
-                        listOfActorTypes[i].text = arrayOfActors[i].arc.name;
-                        listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
-                    }
-                    else
-                    {
-                        //vacant position
-                        listOfActorTypes[i].text = "VACANT";
-                        switch (side.level)
+                        //loop actors
+                        for (int i = 0; i < numOfActors; i++)
                         {
-                            case 1: listOfActorPortraits[i].sprite = vacantAuthorityActor; break;
-                            case 2: listOfActorPortraits[i].sprite = vacantResistanceActor; break;
-                            default:
-                                Debug.LogError(string.Format("Invalid side.level \"{0}\" {1}", side.name, side.level));
-                                break;
+                            //check if actorSlotID has an actor first
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                            {
+                                listOfActorTypes[i].text = arrayOfActors[i].arc.name;
+                                listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
+                            }
+                            else
+                            {
+                                //vacant position
+                                listOfActorTypes[i].text = "VACANT";
+                                switch (side.level)
+                                {
+                                    case 1: listOfActorPortraits[i].sprite = vacantAuthorityActor; break;
+                                    case 2: listOfActorPortraits[i].sprite = vacantResistanceActor; break;
+                                    default:
+                                        Debug.LogError(string.Format("Invalid side.level \"{0}\" {1}", side.name, side.level));
+                                        break;
+                                }
+
+                            }
                         }
-                        
                     }
+                    else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
                 }
+                else { Debug.LogError("Invalid listOfActors (Null)"); }
             }
-            else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
+            else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
         }
-        else { Debug.LogError("Invalid listOfActors (Null)"); }
+        else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
     }
 
     /// <summary>

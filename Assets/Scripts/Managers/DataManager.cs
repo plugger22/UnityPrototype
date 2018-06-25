@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
@@ -87,6 +89,10 @@ public class DataManager : MonoBehaviour
     private List<int> listOfCommonGear = new List<int>();
     private List<int> listOfRareGear = new List<int>();
     private List<int> listOfUniqueGear = new List<int>();
+
+    //Actor UI Panel
+    List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();                           //actors (not player)
+    List<Image> listOfActorPortraits = new List<Image>();                                           //actors (not player)
 
     //AI persistant data
     private int[] arrayOfAIResources = new int[3];                                                  //Global side index [0] none, [1] Authority, [2] Resistance
@@ -2999,7 +3005,15 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    //
+    // - - - Actor Panel UI - - -
+    //
 
+    public List<TextMeshProUGUI> GetListOfActorTypes()
+    { return listOfActorTypes; }
+
+    public List<Image> GetListOfActorPortraits()
+    { return listOfActorPortraits; }
    
 
     //new methods above here

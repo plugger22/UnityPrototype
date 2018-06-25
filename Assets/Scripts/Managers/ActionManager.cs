@@ -2760,5 +2760,9 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+
+    public string GetPlayerActionMenuHeader()
+    { return string.Format("{0}Personal Actions{1}", colourResistance, colourEnd); }
+
     //methods above here
 }

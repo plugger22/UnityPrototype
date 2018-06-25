@@ -69,7 +69,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public CityInfoUI cityInfoScript;               //City Info UI
     [HideInInspector] public AIDisplayUI aiDisplayScript;             //AI Display UI
     [HideInInspector] public AISideTabUI aiSideTabScript;             //AI SideTab UI
+    [HideInInspector] public ActorPanelUI actorPanelScript;           //Actor Panel UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
+    
 
                                                                    
     [Tooltip("Leave as default 0 for random")]
@@ -151,6 +153,7 @@ public class GameManager : MonoBehaviour
         aiDisplayScript = AIDisplayUI.Instance();
         aiSideTabScript = AISideTabUI.Instance();
         alertScript = AlertUI.Instance();
+        actorPanelScript = ActorPanelUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
@@ -211,6 +214,7 @@ public class GameManager : MonoBehaviour
         aiDisplayScript.Initialise();
         aiSideTabScript.Initialise();
         widgetTopScript.Initialise();
+        /*actorPanelScript.Initialise();*/
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
 
