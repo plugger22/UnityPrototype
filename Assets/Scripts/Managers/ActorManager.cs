@@ -3516,7 +3516,7 @@ public class ActorManager : MonoBehaviour
         if (actor != null)
         {
             if (string.IsNullOrEmpty(skillCheck) == false)
-            { Debug.LogFormat("[Trt] {0} uses \"{1}\" trait {2}", actor.actorName, actor.GetTrait().tag, skillCheck); }
+            { Debug.LogFormat("[Trt] {0}, {1}, uses \"{2}\" trait {3}", actor.actorName, actor.arc.name, actor.GetTrait().tag, skillCheck); }
             else { Debug.LogError("Invalid skillCheck parameter (Null or empty)"); }
         }
         else { Debug.LogError("Invalid actor (Null)"); }

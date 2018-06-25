@@ -28,6 +28,7 @@ public class EffectManager : MonoBehaviour
     private int teamArcErasure = -1;
     //fast access -> traits
     private int actorStressedOverInvisibility;
+    private int actorDoubleRenown;
 
 
     //colour palette for Modal Outcome
@@ -48,7 +49,9 @@ public class EffectManager : MonoBehaviour
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         actorStressedOverInvisibility = GameManager.instance.dataScript.GetTraitEffectID("ActorInvisibilityStress");
+        actorDoubleRenown = GameManager.instance.dataScript.GetTraitEffectID("ActorDoubleRenown");
         Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
+        Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
         //fast access -> teams
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
@@ -1146,12 +1149,26 @@ public class EffectManager : MonoBehaviour
                             //Actor effect
                             if (actor != null)
                             {
+                                
                                 dataBefore = actor.Renown;
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
                                         actor.Renown += effect.value;
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd);
+                                        if (actor.CheckTraitEffect(actorDoubleRenown) == true)
+                                        {
+                                            //trait -> renown doubled (only for Add renown)
+                                            actor.Renown += effect.value;
+                                            effectReturn.bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBad, actor.arc.name, effect.value * 2, colourEnd,
+                                                colourNeutral, actor.GetTrait().tag, colourEnd);
+                                            //logger
+                                            GameManager.instance.actorScript.DebugTraitMessage(actor, "to gain double renown");
+                                        }
+                                        else
+                                        {
+                                            //no trait
+                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd);
+                                        }
                                         break;
                                     case "Subtract":
                                         actor.Renown -= effect.value;
