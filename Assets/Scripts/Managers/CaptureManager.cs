@@ -172,7 +172,7 @@ public class CaptureManager : MonoBehaviour
         //switch off flashing red indicator on top widget UI
         EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
         //reduce player alpha to show inactive (sprite and text)
-        GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
         //AI side tab
         GameManager.instance.aiScript.UpdateSideTabData();
         //player captured outcome window
@@ -219,7 +219,7 @@ public class CaptureManager : MonoBehaviour
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //reduce actor alpha to show inactive (sprite and text)
-        GameManager.instance.guiScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+        GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
         //admin
         GameManager.instance.actorScript.numOfActiveActors--;
         details.actor.Status = ActorStatus.Captured;
@@ -262,7 +262,7 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.playerScript.Invisibility = invisibilityNew;
         builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
         //update Player alpha
-        GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
         //AI side tab (otherwise 'player indisposed' message when accessing tab)
         GameManager.instance.aiScript.UpdateSideTabData();
         //update map
@@ -316,7 +316,7 @@ public class CaptureManager : MonoBehaviour
                 details.actor.datapoint2 = invisibilityNew;
                 builder.AppendFormat("{0}{1} Invisibility +{2}{3}", colourGood, details.actor.actorName, invisibilityNew, colourEnd);
                 //update actor alpha
-                GameManager.instance.guiScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                 //admin
                 GameManager.instance.actorScript.numOfActiveActors++;
                 //message

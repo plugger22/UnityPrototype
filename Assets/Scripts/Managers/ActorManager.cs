@@ -3012,7 +3012,7 @@ public class ActorManager : MonoBehaviour
                                         actor.Status = ActorStatus.Active;
                                         actor.inactiveStatus = ActorInactive.None;
                                         actor.tooltipStatus = ActorTooltip.None;
-                                        GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                         //message -> status change
                                         string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
                                         Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, globalResistance, true);
@@ -3037,7 +3037,7 @@ public class ActorManager : MonoBehaviour
                                     actor.Status = ActorStatus.Active;
                                     actor.inactiveStatus = ActorInactive.None;
                                     actor.tooltipStatus = ActorTooltip.None;
-                                    GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
                                     Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalResistance, true);
                                     GameManager.instance.dataScript.AddMessage(messageBreakdown);
@@ -3186,7 +3186,7 @@ public class ActorManager : MonoBehaviour
                                     actor.Status = ActorStatus.Active;
                                     actor.inactiveStatus = ActorInactive.None;
                                     actor.tooltipStatus = ActorTooltip.None;
-                                    GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
                                     Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalAuthority, true);
                                     GameManager.instance.dataScript.AddMessage(messageBreakdown);
@@ -3214,7 +3214,7 @@ public class ActorManager : MonoBehaviour
             actor.tooltipStatus = ActorTooltip.Breakdown;
             actor.isBreakdown = true;
             //change alpha of actor to indicate inactive status
-            GameManager.instance.guiScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
             //message (public)
             string text = string.Format("{0}, {1}, has suffered a Breakdown (Stressed)", actor.actorName, actor.arc.name);
             Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, side, true);
@@ -3241,7 +3241,7 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.playerScript.status = ActorStatus.Active;
                         GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
-                        GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
                         Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                         GameManager.instance.dataScript.AddMessage(messageBreakdown);
@@ -3261,7 +3261,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.playerScript.status = ActorStatus.Active;
                             GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
                             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
-                            GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+                            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             //message -> status change
                             string text = string.Format("{0} has automatically reactivated", playerName);
                             Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, globalResistance, true);
@@ -3300,7 +3300,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 GameManager.instance.playerScript.isBreakdown = true;
                                 //change alpha of actor to indicate inactive status
-                                GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                 //message (public)
                                 string text = "Player has suffered a Breakdown (Stressed)";
                                 Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);

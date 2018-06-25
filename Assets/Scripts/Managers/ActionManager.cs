@@ -1071,7 +1071,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             //change alpha of actor to indicate inactive status
-            GameManager.instance.guiScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaInactive);
+            GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaInactive);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -1126,7 +1126,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             //change alpha of player to indicate inactive status
-            GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -1206,7 +1206,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             //change alpha of actor to indicate inactive status
-            GameManager.instance.guiScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
+            GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -1262,7 +1262,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             //change alpha of player to indicate inactive status
-            GameManager.instance.guiScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)

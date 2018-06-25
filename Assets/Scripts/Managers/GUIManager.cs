@@ -108,7 +108,7 @@ public class GUIManager : MonoBehaviour
     /// <param name="arrayOfActors"></param>
     public void Initialise()
     {
-        //get actor obj references
+        /*//get actor obj references
         Actor0 = GameObject.Find("Actor0");
         Actor1 = GameObject.Find("Actor1");
         Actor2 = GameObject.Find("Actor2");
@@ -178,7 +178,7 @@ public class GUIManager : MonoBehaviour
         picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
         picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
         type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
-        type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
+        type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;                                                                                                                                                               
         type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
         type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
         picture0.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 0;
@@ -189,7 +189,7 @@ public class GUIManager : MonoBehaviour
         typePlayer.text = "PLAYER";
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
-        else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
+        else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }*/
         //make sure blocking layers are all set to false
         isBlocked = new bool[numOfModalLevels + 1];
         for (int i = 0; i < isBlocked.Length; i++)
@@ -297,7 +297,7 @@ public class GUIManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
         }
         else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
-    }*/
+    }
 
     /// <summary>
     /// changes the alpha of an actor sprite and text
@@ -336,7 +336,7 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     /// <param name="alpha"></param>
     public void UpdatePlayerAlpha(float alpha)
-    { canvasPlayer.alpha = alpha; }
+    { canvasPlayer.alpha = alpha; }*/
 
 
     //
