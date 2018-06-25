@@ -181,9 +181,10 @@ public class GameManager : MonoBehaviour
         sideScript.Initialise();
         actorScript.PreInitialiseActors();
         importScript.InitialiseEarly();
-        guiScript.Initialise();         //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
+        guiScript.Initialise();             //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
         cityScript.InitialiseEarly();        //before levelScript
         objectiveScript.Initialise();
+        actorPanelScript.Initialise();    //must be before actorScript.Initialise
         actorScript.Initialise();
         levelScript.Initialise();
         dataScript.InitialiseLate();      //must be immediately after levelScript.Initialise
@@ -214,7 +215,6 @@ public class GameManager : MonoBehaviour
         aiDisplayScript.Initialise();
         aiSideTabScript.Initialise();
         widgetTopScript.Initialise();
-        actorPanelScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
 

@@ -80,12 +80,16 @@ public class PlayerManager : MonoBehaviour
                 //update AI side tab (not using an Event here) -> no updates for the first turn
                 if (GameManager.instance.turnScript.Turn > 0)
                 { GameManager.instance.aiScript.UpdateSideTabData(_renownResistance); }
+                //update renown UI (regardless of whether on or off
+                GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(_renownResistance);
             }
             else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
             {
                 value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Renown changed from {0} to {1}{2}", _renownAuthority, value, "\n");
                 _renownAuthority = value;
+                //update renown UI (regardless of whether on or off
+                GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(_renownAuthority);
             }
             else
             {

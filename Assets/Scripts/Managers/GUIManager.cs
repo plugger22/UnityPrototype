@@ -49,7 +49,7 @@ public class GUIManager : MonoBehaviour
     public Sprite cityArcDefaultSprite;
 
 
-    //Actor display at bottom
+    /*//Actor display at bottom
     private GameObject Actor0;
     private GameObject Actor1;
     private GameObject Actor2;
@@ -84,7 +84,7 @@ public class GUIManager : MonoBehaviour
     private CanvasGroup canvas1;
     private CanvasGroup canvas2;
     private CanvasGroup canvas3;
-    private CanvasGroup canvasPlayer;
+    private CanvasGroup canvasPlayer;*/
 
     /*List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();       //actors (not player)
     List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)*/

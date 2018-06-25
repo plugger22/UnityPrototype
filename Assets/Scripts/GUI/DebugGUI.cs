@@ -43,6 +43,7 @@ public class DebugGUI : MonoBehaviour
     private string optionAIOffline;
     private string optionAITraceback;
     private string optionAIScreamer;
+    private string optionRenownUI;
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class DebugGUI : MonoBehaviour
         optionAIOffline = "AIOffline ON";
         optionAITraceback = "AITraceback ON";
         optionAIScreamer = "AIScreamer ON";
+        optionRenownUI = "Renown UI ON";
     }
 
     // Update is called once per frame
@@ -417,6 +419,22 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Increase AI Security Protocol");
                 GameManager.instance.aiScript.IncreaseAISecurityProtocolLevel();
+            }
+
+            //eleventh button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), optionRenownUI))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Renown Display");
+                if (GameManager.instance.actorPanelScript.CheckRenownUIStatus() == true)
+                {
+                    GameManager.instance.actorPanelScript.SetActorRenownUI(false);
+                    optionRenownUI = "Renown UI ON";
+                }
+                else
+                {
+                    GameManager.instance.actorPanelScript.SetActorRenownUI(true);
+                    optionRenownUI = "Renown UI OFF";
+                }
             }
 
             //

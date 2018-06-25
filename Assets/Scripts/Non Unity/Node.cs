@@ -179,8 +179,8 @@ public class Node : MonoBehaviour
         listOfOngoingEffects = new List<EffectDataOngoing>();
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
-        maxValue = GameManager.instance.nodeScript.maxNodeValue;*/
+        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
+        maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;
 
         //get text component

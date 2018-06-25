@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -45,6 +46,8 @@ public class ActorPanelUI : MonoBehaviour
     private CanvasGroup canvas2;
     private CanvasGroup canvas3;
     private CanvasGroup canvasPlayer;
+
+    public bool isRenownUI;                             //gives status of renown UI display (true -> On, false -> Off)
 
     //fast access
     private Sprite vacantAuthorityActor;
@@ -134,6 +137,7 @@ public class ActorPanelUI : MonoBehaviour
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
         //initialise starting line up
         UpdateActorPanel();
+        SetActorRenownUI(false);
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
     }
@@ -251,6 +255,70 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="alpha"></param>
     public void UpdatePlayerAlpha(float alpha)
     { canvasPlayer.alpha = alpha; }
+
+    /// <summary>
+    /// toggles actor renown display on/off depending on status
+    /// </summary>
+    /// <param name="status"></param>
+    public void SetActorRenownUI(bool status)
+    {
+        //set active/inactive
+        renownCircle0.gameObject.SetActive(status);
+        renownCircle1.gameObject.SetActive(status);
+        renownCircle2.gameObject.SetActive(status);
+        renownCircle3.gameObject.SetActive(status);
+        renownCirclePlayer.gameObject.SetActive(status);
+        //update flag
+        isRenownUI = status;
+        //logging
+        Debug.LogFormat("[UI] ActorPanelUI.cs -> ToggleActorRenown: {0}{1}", status, "\n");
+    }
+
+    /// <summary>
+    /// returns true if actor Renown UI is ON, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckRenownUIStatus()
+    { return isRenownUI; }
+
+    /// <summary>
+    /// updates actor slot renown UI with current renown
+    /// </summary>
+    /// <param name="actorSlotID"></param>
+    /// <param name="renown"></param>
+    public void UpdateActorRenownUI(int actorSlotID, int renown)
+    {
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
+        Debug.Assert(renown > -1, "Invalid renown (< 0)");
+        switch(actorSlotID)
+        {
+            case 0:
+                renownText0.text = Convert.ToString(renown);
+                break;
+            case 1:
+                renownText1.text = Convert.ToString(renown);
+                break;
+            case 2:
+                renownText2.text = Convert.ToString(renown);
+                break;
+            case 3:
+                renownText3.text = Convert.ToString(renown);
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// updates renown UI with player's current renown
+    /// </summary>
+    /// <param name="renown"></param>
+    public void UpdatePlayerRenownUI(int renown)
+    {
+        renownTextPlayer.text = Convert.ToString(renown);
+    }
+
 
     //new methods above here
 }

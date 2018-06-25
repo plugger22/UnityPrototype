@@ -49,7 +49,7 @@ public class TargetManager : MonoBehaviour
     private string colourNormal;
     private string colourDefault;
     private string colourGrey;
-    private string colourRebel;
+    //private string colourRebel;
     private string colourTarget;
     private string colourEnd;
 
@@ -114,7 +114,7 @@ public class TargetManager : MonoBehaviour
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        //colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourTarget = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
