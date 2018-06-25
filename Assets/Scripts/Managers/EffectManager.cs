@@ -1146,20 +1146,20 @@ public class EffectManager : MonoBehaviour
                             //Actor effect
                             if (actor != null)
                             {
-                                dataBefore = actor.renown;
+                                dataBefore = actor.Renown;
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
-                                        actor.renown += effect.value;
+                                        actor.Renown += effect.value;
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                     case "Subtract":
-                                        actor.renown -= effect.value;
-                                        actor.renown = Mathf.Max(0, actor.renown);
+                                        actor.Renown -= effect.value;
+                                        actor.Renown = Mathf.Max(0, actor.Renown);
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                 }
-                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.renown, "\n");
+                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
                             }
                             else
                             {

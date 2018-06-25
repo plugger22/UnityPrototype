@@ -519,7 +519,7 @@ public class LevelManager : MonoBehaviour
             //ignore invalid actors or slots where there is no actor (Vacant)
             if (actor != null)
             {
-                builder.Append(string.Format("{0}, ID {1},  Renown: {2}{3}", actor.arc.actorName, actor.actorID, actor.renown, "\n"));
+                builder.Append(string.Format("{0}, ID {1},  Renown: {2}{3}", actor.arc.actorName, actor.actorID, actor.Renown, "\n"));
                 switch (side.name)
                 {
                     case "Authority":

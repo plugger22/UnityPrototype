@@ -1235,7 +1235,7 @@ public class TeamManager : MonoBehaviour
         }
         //assign renown to originating actor if all O.K
         if (isError == false && actor != null)
-        { actor.renown++; }
+        { actor.Renown++; }
     }
 
     /// <summary>

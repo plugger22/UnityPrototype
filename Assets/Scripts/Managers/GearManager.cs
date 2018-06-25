@@ -973,8 +973,18 @@ public class GearManager : MonoBehaviour
                                 { isNewActionPlayer = true; }
                                 else { isNewActionActor = true; }
                                 //message
-                                string textMsg = string.Format("{0} ({1}) has been acquired at {2}", gear.name, gear.type.name, node.nodeName);
-                                Message messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
+                                string textMsg;
+                                Message messageGear;
+                                if (isPlayer == true)
+                                {
+                                    textMsg = string.Format("{0} ({1}) has been acquired ( by PLAYER)", gear.name, gear.type.name);
+                                    messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
+                                }
+                                else
+                                {
+                                    textMsg = string.Format("{0} ({1}) has been acquired ( by {2})", gear.name, gear.type.name, actor.arc.name);
+                                    messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID, actor.actorID);
+                                }
                                 if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;

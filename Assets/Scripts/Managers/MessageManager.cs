@@ -877,7 +877,7 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearObtained(string text, int nodeID, int gearID)
+    public Message GearObtained(string text, int nodeID, int gearID, int actorID = 999)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
@@ -891,6 +891,7 @@ public Message PlayerMove(string text, int nodeID)
             message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
+            message.data2 = actorID;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

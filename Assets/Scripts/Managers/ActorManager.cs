@@ -396,7 +396,7 @@ public class ActorManager : MonoBehaviour
                 Actor actor = new Actor();
                 //data
                 actor.actorID = actorIDCounter++;
-                actor.actorSlotID = slotID;
+                actor.actorSlotID = slotID;                
                 actor.level = level;
                 actor.side = side;
                 actor.arc = arc;
@@ -433,6 +433,7 @@ public class ActorManager : MonoBehaviour
                 //OnMap actor
                 if (slotID > -1)
                 {
+                    actor.Renown = 0;
                     //add to data collections
                     GameManager.instance.dataScript.AddCurrentActor(side, actor, slotID);
                     GameManager.instance.dataScript.AddActorToDict(actor);

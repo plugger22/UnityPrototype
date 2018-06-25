@@ -1361,12 +1361,12 @@ public class ActionManager : MonoBehaviour
             //if preferred transfer renown
             if (preferredFlag == true)
             {
-                if (actor.renown > 0)
+                if (actor.Renown > 0)
                 {
                     //take from actor
-                    renownGiven = Mathf.Min(benefit, actor.renown);
-                    actor.renown -= benefit;
-                    actor.renown = Mathf.Max(0, actor.renown);
+                    renownGiven = Mathf.Min(benefit, actor.Renown);
+                    actor.Renown -= benefit;
+                    actor.Renown = Mathf.Max(0, actor.Renown);
                     //give to Player
                     GameManager.instance.playerScript.Renown += renownGiven;
                 }

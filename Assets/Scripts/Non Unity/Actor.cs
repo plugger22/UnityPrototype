@@ -16,7 +16,7 @@ namespace gameAPI
         [HideInInspector] public int actorSlotID;                    //actor slot ID (eg, 0 to 3)
         [HideInInspector] public int actorID;
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
-        [HideInInspector] public int renown;                    //starts at '0' and goes up (no limit)
+        //[HideInInspector] public int Renown;                    //starts at '0' and goes up (no limit)
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
@@ -44,6 +44,7 @@ namespace gameAPI
 
         //private backing field
         private ActorStatus _status;
+        private int _renown;
 
         public ActorStatus Status
         {
@@ -58,12 +59,24 @@ namespace gameAPI
             }
         }
 
+        public int Renown
+        {
+            get { return _renown; }
+            set
+            {
+                _renown = value;
+                //update renownUI regardless of whether it is on or off
+                GameManager.instance.actorPanelScript.UpdateActorRenownUI(actorSlotID, _renown);
+            }
+        }
+
         /// <summary>
         /// default constructor
         /// </summary>
         public Actor()
         {
             nodeCaptured = -1;
+            Renown = 0;
             //cached Trait Effects
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
