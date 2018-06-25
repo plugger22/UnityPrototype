@@ -26,6 +26,8 @@ public class DataManager : MonoBehaviour
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
     private List<Node> listOfMostConnectedNodes = new List<Node>();                             //top connected nodes (3+ connections), used by AI for ProcessSpiderTeam
     private List<Node> listOfDecisionNodes = new List<Node>();                                  //dynamic list of nodes used for connection security level decisions
+    private List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();               //actors (not player)
+    private List<Image> listOfActorPortraits = new List<Image>();                               //actors (not player)
 
     //actor quality input arrays (used to populate arrayOfQualities)
     public Quality[] authorityQualities = new Quality[3];
@@ -89,10 +91,6 @@ public class DataManager : MonoBehaviour
     private List<int> listOfCommonGear = new List<int>();
     private List<int> listOfRareGear = new List<int>();
     private List<int> listOfUniqueGear = new List<int>();
-
-    //Actor UI Panel
-    List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();                           //actors (not player)
-    List<Image> listOfActorPortraits = new List<Image>();                                           //actors (not player)
 
     //AI persistant data
     private int[] arrayOfAIResources = new int[3];                                                  //Global side index [0] none, [1] Authority, [2] Resistance
@@ -1280,7 +1278,7 @@ public class DataManager : MonoBehaviour
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
             //update actor GUI display
-            GameManager.instance.guiScript.UpdateActorGUI();
+            GameManager.instance.actorPanelScript.UpdateActorPanel();
         }
         else { Debug.LogError("Invalid actor (null)"); }
     }
@@ -1309,7 +1307,7 @@ public class DataManager : MonoBehaviour
                         arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
                         actor.Status = status;
                         //update actor GUI display
-                        GameManager.instance.guiScript.UpdateActorGUI();
+                        GameManager.instance.actorPanelScript.UpdateActorPanel();
                         return true;
                     }
                     else
@@ -1322,7 +1320,7 @@ public class DataManager : MonoBehaviour
                         arrayOfActors[side.level, actor.actorSlotID] = null;
                         arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
                         actor.Status = status;
-                        GameManager.instance.guiScript.UpdateActorGUI();
+                        GameManager.instance.actorPanelScript.UpdateActorPanel();
                         return true;
                     }
                     break;
@@ -1333,7 +1331,7 @@ public class DataManager : MonoBehaviour
                         arrayOfActors[side.level, actor.actorSlotID] = null;
                         arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
                         actor.Status = status;
-                        GameManager.instance.guiScript.UpdateActorGUI();
+                        GameManager.instance.actorPanelScript.UpdateActorPanel();
                         return true;
                     }
                     break;
@@ -1344,7 +1342,7 @@ public class DataManager : MonoBehaviour
                         arrayOfActors[side.level, actor.actorSlotID] = null;
                         arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
                         actor.Status = status;
-                        GameManager.instance.guiScript.UpdateActorGUI();
+                        GameManager.instance.actorPanelScript.UpdateActorPanel();
                         return true;
                     }
                     break;

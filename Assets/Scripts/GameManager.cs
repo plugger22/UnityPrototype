@@ -214,7 +214,7 @@ public class GameManager : MonoBehaviour
         aiDisplayScript.Initialise();
         aiSideTabScript.Initialise();
         widgetTopScript.Initialise();
-        /*actorPanelScript.Initialise();*/
+        actorPanelScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
 

@@ -195,14 +195,14 @@ public class GUIManager : MonoBehaviour
         for (int i = 0; i < isBlocked.Length; i++)
         { isBlocked[i] = false; }
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
+        /*EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");*/
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
     }
 
     public void InitialiseLate()
     {
         //assign actor text & sprites (type of Actor)
-        UpdateActorGUI();
+        /*UpdateActorGUI();*/
     }
 
     /// <summary>
@@ -216,9 +216,9 @@ public class GUIManager : MonoBehaviour
         //Detect event type
         switch (eventType)
         {
-            case EventType.ChangeSide:
+            /*case EventType.ChangeSide:
                 UpdateActorGUI();
-                break;
+                break;*/
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -247,7 +247,7 @@ public class GUIManager : MonoBehaviour
     // - - - Actors - - -
     //
 
-    /// <summary>
+    /*/// <summary>
     /// places actor data (type and sprite) into GUI elements via lists (player is static so no need to update)
     /// </summary>
     public void UpdateActorGUI()
@@ -297,7 +297,7 @@ public class GUIManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
         }
         else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
-    }
+    }*/
 
     /// <summary>
     /// changes the alpha of an actor sprite and text

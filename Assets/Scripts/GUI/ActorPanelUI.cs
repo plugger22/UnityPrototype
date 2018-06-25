@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,43 +9,50 @@ public class ActorPanelUI : MonoBehaviour
 {
 
     //Actor display at bottom
-    private GameObject Actor0;
-    private GameObject Actor1;
-    private GameObject Actor2;
-    private GameObject Actor3;
-    private GameObject ActorPlayer;
+    public GameObject ActorGroup;
+    public GameObject Actor0;
+    public GameObject Actor1;
+    public GameObject Actor2;
+    public GameObject Actor3;
+    public GameObject ActorPlayer;
 
-    private Image picture0;
-    private Image picture1;
-    private Image picture2;
-    private Image picture3;
-    private Image picturePlayer;
+    public Image picture0;
+    public Image picture1;
+    public Image picture2;
+    public Image picture3;
+    public Image picturePlayer;
 
-    private TextMeshProUGUI type0;
-    private TextMeshProUGUI type1;
-    private TextMeshProUGUI type2;
-    private TextMeshProUGUI type3;
-    private TextMeshProUGUI typePlayer;
+    public TextMeshProUGUI type0;
+    public TextMeshProUGUI type1;
+    public TextMeshProUGUI type2;
+    public TextMeshProUGUI type3;
+    public TextMeshProUGUI typePlayer;
 
-    private Image renownCircle0;
-    private Image renownCircle1;
-    private Image renownCircle2;
-    private Image renownCircle3;
-    private Image renownCirclePlayer;
+    public Image renownCircle0;
+    public Image renownCircle1;
+    public Image renownCircle2;
+    public Image renownCircle3;
+    public Image renownCirclePlayer;
 
-    private TextMeshProUGUI renownText0;
-    private TextMeshProUGUI renownText1;
-    private TextMeshProUGUI renownText2;
-    private TextMeshProUGUI renownText3;
-    private TextMeshProUGUI renownTextPlayer;
+    public TextMeshProUGUI renownText0;
+    public TextMeshProUGUI renownText1;
+    public TextMeshProUGUI renownText2;
+    public TextMeshProUGUI renownText3;
+    public TextMeshProUGUI renownTextPlayer;
 
-    private CanvasGroup canvas0;
-    private CanvasGroup canvas1;
-    private CanvasGroup canvas2;
-    private CanvasGroup canvas3;
-    private CanvasGroup canvasPlayer;
+    public CanvasGroup canvas0;
+    public CanvasGroup canvas1;
+    public CanvasGroup canvas2;
+    public CanvasGroup canvas3;
+    public CanvasGroup canvasPlayer;
+
+    //fast access
+    private Sprite vacantAuthorityActor;
+    private Sprite vacantResistanceActor;
+
 
     private static ActorPanelUI actorPanelUI;
+
 
 
 
@@ -64,7 +72,7 @@ public class ActorPanelUI : MonoBehaviour
     }
 
     public void Awake()
-    { 
+    {
         /*//assign actorSlotID's to all Actor components
         Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
         Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
@@ -102,6 +110,91 @@ public class ActorPanelUI : MonoBehaviour
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }*/
+
+        //fast access
+        vacantAuthorityActor = GameManager.instance.guiScript.vacantAuthorityActor;
+        vacantResistanceActor = GameManager.instance.guiScript.vacantResistanceActor;
+        Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
+        Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
+        //initialise starting line up
+        UpdateActorPanel();
+        //event listener
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
+    }
+
+
+
+    /// <summary>
+    /// handles events
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.ChangeSide:
+                UpdateActorPanel();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+
+    /// <summary>
+    /// places actor data (type and sprite) into GUI elements via lists (player is static so no need to update)
+    /// </summary>
+    public void UpdateActorPanel()
+    {
+        int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
+        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
+        if (listOfActorTypes != null)
+        {
+            if (listOfActorPortraits != null)
+            {
+                if (arrayOfActors != null)
+                {
+                    if (arrayOfActors.Length == numOfActors)
+                    {
+                        //loop actors
+                        for (int i = 0; i < numOfActors; i++)
+                        {
+                            //check if actorSlotID has an actor first
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                            {
+                                listOfActorTypes[i].text = arrayOfActors[i].arc.name;
+                                listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
+                            }
+                            else
+                            {
+                                //vacant position
+                                listOfActorTypes[i].text = "VACANT";
+                                switch (side.level)
+                                {
+                                    case 1: listOfActorPortraits[i].sprite = vacantAuthorityActor; break;
+                                    case 2: listOfActorPortraits[i].sprite = vacantResistanceActor; break;
+                                    default:
+                                        Debug.LogError(string.Format("Invalid side.level \"{0}\" {1}", side.name, side.level));
+                                        break;
+                                }
+
+                            }
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
+                }
+                else { Debug.LogError("Invalid listOfActors (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
     }
 
     //new methods above here
