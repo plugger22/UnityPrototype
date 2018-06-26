@@ -48,7 +48,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Default City Arc sprite (512 x 150 png")]
     public Sprite cityArcDefaultSprite;
 
-
+    #region archived fields
     /*//Actor display at bottom
     private GameObject Actor0;
     private GameObject Actor1;
@@ -88,6 +88,7 @@ public class GUIManager : MonoBehaviour
 
     /*List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();       //actors (not player)
     List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)*/
+    #endregion
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -108,6 +109,7 @@ public class GUIManager : MonoBehaviour
     /// <param name="arrayOfActors"></param>
     public void Initialise()
     {
+        #region archived code -> finding and using objects in GameManager rather than PanelManager
         /*//get actor obj references
         Actor0 = GameObject.Find("Actor0");
         Actor1 = GameObject.Find("Actor1");
@@ -190,6 +192,8 @@ public class GUIManager : MonoBehaviour
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }*/
+        #endregion
+
         //make sure blocking layers are all set to false
         isBlocked = new bool[numOfModalLevels + 1];
         for (int i = 0; i < isBlocked.Length; i++)
@@ -199,11 +203,6 @@ public class GUIManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
     }
 
-    /*public void InitialiseLate()
-    {
-        //assign actor text & sprites (type of Actor)
-        UpdateActorGUI();
-    }*/
 
     /// <summary>
     /// handles events
@@ -216,9 +215,6 @@ public class GUIManager : MonoBehaviour
         //Detect event type
         switch (eventType)
         {
-            /*case EventType.ChangeSide:
-                UpdateActorGUI();
-                break;*/
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -241,102 +237,6 @@ public class GUIManager : MonoBehaviour
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
-
-
-    //
-    // - - - Actors - - -
-    //
-
-    /*/// <summary>
-    /// places actor data (type and sprite) into GUI elements via lists (player is static so no need to update)
-    /// </summary>
-    public void UpdateActorGUI()
-    {
-        int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
-        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
-        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
-        if (listOfActorTypes != null)
-        {
-            if (listOfActorPortraits != null)
-            {
-                if (arrayOfActors != null)
-                {
-                    if (arrayOfActors.Length == numOfActors)
-                    {
-                        //loop actors
-                        for (int i = 0; i < numOfActors; i++)
-                        {
-                            //check if actorSlotID has an actor first
-                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
-                            {
-                                listOfActorTypes[i].text = arrayOfActors[i].arc.name;
-                                listOfActorPortraits[i].sprite = arrayOfActors[i].arc.baseSprite;
-                            }
-                            else
-                            {
-                                //vacant position
-                                listOfActorTypes[i].text = "VACANT";
-                                switch (side.level)
-                                {
-                                    case 1: listOfActorPortraits[i].sprite = vacantAuthorityActor; break;
-                                    case 2: listOfActorPortraits[i].sprite = vacantResistanceActor; break;
-                                    default:
-                                        Debug.LogError(string.Format("Invalid side.level \"{0}\" {1}", side.name, side.level));
-                                        break;
-                                }
-
-                            }
-                        }
-                    }
-                    else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
-                }
-                else { Debug.LogError("Invalid listOfActors (Null)"); }
-            }
-            else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
-        }
-        else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
-    }
-
-    /// <summary>
-    /// changes the alpha of an actor sprite and text
-    /// </summary>
-    /// <param name="actorSlotID"></param>
-    /// <param name="alpha"></param>
-    public void UpdateActorAlpha(int actorSlotID, float alpha)
-    {
-        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        //check actor present in slot, eg. not vacant
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
-        {
-            switch (actorSlotID)
-            {
-                case 0:
-                    canvas0.alpha = alpha;
-                    break;
-                case 1:
-                    canvas1.alpha = alpha;
-                    break;
-                case 2:
-                    canvas2.alpha = alpha;
-                    break;
-                case 3:
-                    canvas3.alpha = alpha;
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid actorSlotID {0}", actorSlotID));
-                    break;
-            }
-        }
-    }
-
-    /// <summary>
-    /// changes the alpha of the player sprite and text
-    /// </summary>
-    /// <param name="alpha"></param>
-    public void UpdatePlayerAlpha(float alpha)
-    { canvasPlayer.alpha = alpha; }*/
 
 
     //

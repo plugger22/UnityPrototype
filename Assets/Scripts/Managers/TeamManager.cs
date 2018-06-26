@@ -815,6 +815,7 @@ public class TeamManager : MonoBehaviour
             if (listOfTeams != null && listOfTeams.Count > 0)
             {
                 genericDetails.returnEvent = EventType.GenericTeamRecall;
+                genericDetails.textHeader = "Recall Team";
                 genericDetails.side = globalAuthority;
                 genericDetails.nodeID = nodeID;
                 genericDetails.actorSlotID = -1;
@@ -913,6 +914,7 @@ public class TeamManager : MonoBehaviour
             if (listOfTeams != null && listOfTeams.Count > 0)
             {
                 genericDetails.returnEvent = EventType.GenericNeutraliseTeam;
+                genericDetails.textHeader = "Neutralise Team";
                 genericDetails.side = globalResistance;
                 genericDetails.nodeID = details.nodeID;
                 genericDetails.actorSlotID = details.actorDataID;

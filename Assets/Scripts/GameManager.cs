@@ -191,7 +191,6 @@ public class GameManager : MonoBehaviour
         importScript.InitialiseLate();    //must be immediately after levelScript.Initialise
         cityScript.InitialiseLate();      //must be immediately after levelScript.Initialise
         factionScript.Initialise();
-        /*guiScript.InitialiseLate();*/
         inputScript.Initialise();
         metaScript.Initialise();
         dataScript.InitialiseFinal();   //must be after metaScript.Initialise

@@ -16,10 +16,12 @@ public class ModalGenericPicker : MonoBehaviour
     public GameObject modalGenericObject;
     public GameObject modalPanelObject;
     public Image modalPanel;
+    public Image modalHeader;
 
     public TextMeshProUGUI topText;
     public TextMeshProUGUI middleText;
     public TextMeshProUGUI bottomText;
+    public TextMeshProUGUI headerText;
 
     public Button buttonCancel;
     public Button buttonBack;
@@ -83,11 +85,6 @@ public class ModalGenericPicker : MonoBehaviour
         { buttonBackInteraction.SetEvent(EventType.BackButtonGeneric); }
         else { Debug.LogError("Invalid buttonBackInteraction (Null)"); }
         backReturnEvent = EventType.None;
-        /*//cancel button event
-        buttonConfirmInteraction = buttonCancel.GetComponent<ButtonInteraction>();
-        if (buttonConfirmInteraction != null)
-        { buttonConfirmInteraction.SetEvent(EventType.CloseGenericPicker); }
-        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }*/
     }
 
     private void Start()
@@ -97,6 +94,7 @@ public class ModalGenericPicker : MonoBehaviour
         EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.CancelButtonGeneric, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalGenericPicker");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.ConfirmGenericActivate, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.ConfirmGenericChoice, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.ConfirmGenericDeactivate, OnEvent, "ModalGenericPicker");
@@ -126,6 +124,9 @@ public class ModalGenericPicker : MonoBehaviour
                 break;
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.ChangeSide:
+                SetSide();
                 break;
             case EventType.ConfirmGenericActivate:
                 GenericReturnData data = Param as GenericReturnData;
@@ -193,6 +194,14 @@ public class ModalGenericPicker : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(true);
         //activate main panel
         modalPanelObject.SetActive(true);
+        //header activated only if text provided
+        if (string.IsNullOrEmpty(details.textHeader) == false)
+        {
+            modalHeader.gameObject.SetActive(true);
+            headerText.text = details.textHeader;
+        }
+        else
+        { modalHeader.gameObject.SetActive(false); }
         //activate dialogue window
         modalGenericObject.SetActive(true);
         //confirm button should be switched off at the start
@@ -207,41 +216,6 @@ public class ModalGenericPicker : MonoBehaviour
         //populate dialogue
         if (details != null)
         {
-            //set up modal panel & buttons to be side appropriate
-            switch (details.side.name)
-            {
-                case "Authority":
-                    modalPanel.sprite = GameManager.instance.sideScript.picker_background_Authority;
-                    //set button sprites
-                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
-                    buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
-                    buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
-                    //set sprite transitions
-                    SpriteState spriteStateAuthority = new SpriteState();
-                    spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
-                    spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
-                    buttonCancel.spriteState = spriteStateAuthority;
-                    buttonConfirm.spriteState = spriteStateAuthority;
-                    buttonBack.spriteState = spriteStateAuthority;
-                    break;
-                case "Resistance":
-                    modalPanel.sprite = GameManager.instance.sideScript.picker_background_Rebel;
-                    //set button sprites
-                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-                    buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-                    buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-                    //set sprite transitions
-                    SpriteState spriteStateRebel = new SpriteState();
-                    spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
-                    spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
-                    buttonCancel.spriteState = spriteStateRebel;
-                    buttonConfirm.spriteState = spriteStateRebel;
-                    buttonBack.spriteState = spriteStateRebel;
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid side \"{0}\"", details.side.name));
-                    break;
-            }
             if (details.arrayOfOptions.Length > 0)
             {
                 //initialise data
@@ -716,6 +690,50 @@ public class ModalGenericPicker : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Sets all sprites to the Player's current side
+    /// </summary>
+    private void SetSide()
+    {
+        switch(GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1:
+                //Authority
+                modalPanel.sprite = GameManager.instance.sideScript.picker_background_Authority;
+                modalHeader.sprite = GameManager.instance.sideScript.header_background_Authority;
+                //set button sprites
+                buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                //set sprite transitions
+                SpriteState spriteStateAuthority = new SpriteState();
+                spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
+                spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                buttonCancel.spriteState = spriteStateAuthority;
+                buttonConfirm.spriteState = spriteStateAuthority;
+                buttonBack.spriteState = spriteStateAuthority;
+                break;
+            case 2:
+                //Resistance
+                modalPanel.sprite = GameManager.instance.sideScript.picker_background_Rebel;
+                modalHeader.sprite = GameManager.instance.sideScript.header_background_Resistance;
+                //set button sprites
+                buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                //set sprite transitions
+                SpriteState spriteStateRebel = new SpriteState();
+                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
+                spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                buttonCancel.spriteState = spriteStateRebel;
+                buttonConfirm.spriteState = spriteStateRebel;
+                buttonBack.spriteState = spriteStateRebel;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
+                break;
+        }
+    }
 
 
 

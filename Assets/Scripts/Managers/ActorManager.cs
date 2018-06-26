@@ -2205,6 +2205,7 @@ public class ActorManager : MonoBehaviour
                 else if (details.side.level == globalAuthority.level) { genericDetails.returnEvent = EventType.GenericRecruitActorAuthority; }
                 else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
                 genericDetails.side = details.side;
+                genericDetails.textHeader = "Recruit Subordinate";
                 if (details.side.level == globalResistance.level)
                 { genericDetails.nodeID = details.nodeID; }
                 else { genericDetails.nodeID = -1; }

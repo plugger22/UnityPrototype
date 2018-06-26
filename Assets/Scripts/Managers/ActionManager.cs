@@ -523,6 +523,7 @@ public class ActionManager : MonoBehaviour
             if (listOfManageOptions != null)
             {
                 genericDetails.returnEvent = EventType.GenericHandleActor;
+                genericDetails.textHeader = "Manage Subordinates";
                 genericDetails.side = playerSide;
                 genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
@@ -645,6 +646,7 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericReserveActor;
                 genericDetails.side = playerSide;
+                genericDetails.textHeader = "Send to Reserves";
                 genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
@@ -779,6 +781,7 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericDismissActor;
                 genericDetails.side = playerSide;
+                genericDetails.textHeader = "Dismiss";
                 genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
@@ -914,6 +917,7 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericDisposeActor;
                 genericDetails.side = playerSide;
+                genericDetails.textHeader = "Dispose Off";
                 genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text

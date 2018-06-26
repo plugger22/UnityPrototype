@@ -363,6 +363,7 @@ public class GearManager : MonoBehaviour
         //Obtain Gear
         genericDetails.returnEvent = EventType.GenericCompromisedGear;
         genericDetails.side = globalResistance;
+        genericDetails.textHeader = "Compromised Gear";
         //state
         genericDetails.subState = ModalGenericPickerSubState.CompromisedGear;
         //picker text
@@ -495,6 +496,7 @@ public class GearManager : MonoBehaviour
                 #region gearSelection
                 //Obtain Gear
                 genericDetails.returnEvent = EventType.GenericGearChoice;
+                genericDetails.textHeader = "Choose Gear";
                 genericDetails.side = globalResistance;
                 genericDetails.nodeID = details.nodeID;
                 genericDetails.actorSlotID = details.actorDataID;
