@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using packageAPI;
 
 /// <summary>
 /// handles mouse interactions for City Info tab (far left) (2D polygon collider attached to game object)
@@ -99,7 +100,8 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             {
                 tooltipHeader = string.Format("{0}{1}", GameManager.instance.cityScript.GetCityName(), GameManager.instance.cityScript.GetCityArc());
                 tooltipMain = GameManager.instance.cityScript.GetCityDescription();
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
+                GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             //fade in

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using packageAPI;
 
 /// <summary>
 /// handles mouse interactions for Faction level bar (right hand side) (2D polygon collider attached to game object)
@@ -85,7 +86,8 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
             {
                 tooltipHeader = string.Format("{0} Suppport", GameManager.instance.factionScript.GetFactionName(playerSide));
                 tooltipMain = GameManager.instance.factionScript.GetFactionSupportLevel(playerSide);
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
+                GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             //fade in

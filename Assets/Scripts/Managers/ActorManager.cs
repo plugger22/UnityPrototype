@@ -3522,5 +3522,89 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid actor (Null)"); }
     }
 
+
+    //
+    // - - - Tooltips - - -
+    //
+
+    /// <summary>
+    /// tooltip data package for ActorSpriteTooltipUI.cs
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public GenericTooltipData GetActorTooltip(Actor actor, GlobalSide side)
+    {
+        GenericTooltipData data = new GenericTooltipData();
+        if (actor != null)
+        {
+            string colourSide = colourResistance;
+            if (side.level == GameManager.instance.globalScript.sideAuthority.level)
+            { colourSide = colourAuthority; }
+
+            switch (actor.tooltipStatus)
+            {
+                case ActorTooltip.Breakdown:
+                    data.header = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
+                    data.main = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                        colourNeutral, colourEnd, colourNormal, colourEnd);
+                    data.details = string.Format("{0} is expected to recover next turn", actor.actorName);
+                    break;
+                case ActorTooltip.LieLow:
+                    data.header = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
+                    data.main = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                        colourNeutral, colourEnd, colourNormal, colourEnd);
+                    data.details = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
+                        actor.actorName, colourNeutral, colourEnd);
+                    break;
+                case ActorTooltip.Talk:
+
+                    break;
+                default:
+                    data.main = "Unknown"; data.header = "Unknown"; data.details = "Unknown";
+                    break;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid actor (Null)");
+            data = null;
+        }
+        return data;
+    }
+
+    /// <summary>
+    /// tooltip data package for PlayerSpriteTooltipUI.cs
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public GenericTooltipData GetPlayerTooltip(GlobalSide side)
+    {
+        GenericTooltipData data = new GenericTooltipData();
+        string playerName = GameManager.instance.playerScript.PlayerName;
+        string colourSide = colourResistance;
+        if (side.level == GameManager.instance.globalScript.sideAuthority.level)
+        { colourSide = colourAuthority; }
+        switch (GameManager.instance.playerScript.tooltipStatus)
+        {
+            case ActorTooltip.Breakdown:
+                data.header = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                data.main = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                    colourNeutral, colourEnd, colourNormal, colourEnd);
+                data.details = string.Format("{0} is expected to recover next turn", playerName);
+                break;
+            case ActorTooltip.LieLow:
+                data.header = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                data.main = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                    colourNeutral, colourEnd, colourNormal, colourEnd);
+                data.details = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
+                    playerName, colourNeutral, colourEnd);
+                break;
+            default:
+                data.main = "Unknown"; data.header = "Unknown"; data.details = "Unknown";
+                break;
+        }
+        return data;
+    }
+
     //new methods above here
 }

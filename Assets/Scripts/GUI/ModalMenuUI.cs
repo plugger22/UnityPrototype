@@ -172,7 +172,9 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             {
                                 //adjust position prior to sending
                                 Vector3 positionGear = rectTransform.position;
-                                GameManager.instance.tooltipGenericScript.SetTooltip(details.textMain, positionGear, details.textHeader, details.textDetails);
+                                GenericTooltipData data = new GenericTooltipData()
+                                { screenPos = positionGear, main = details.textMain, header = details.textHeader, details = details.textDetails};
+                                GameManager.instance.tooltipGenericScript.SetTooltip(data);
                                 yield return null;
                                 //fade in
                                 while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)

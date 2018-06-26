@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using packageAPI;
 
 /// <summary>
 /// handles mouse interactions for city level bar (left hand side) (2D polygon collider attached to game object)
@@ -82,7 +83,8 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             {
                 tooltipHeader = string.Format("{0} Loyalty", GameManager.instance.cityScript.GetCityName());
                 tooltipMain = GameManager.instance.cityScript.GetCityLoyalty();
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
+                GenericTooltipData data = new GenericTooltipData() { screenPos =screenPos , main = tooltipMain , header = tooltipHeader, details = tooltipDetails };
+                GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             //fade in

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using packageAPI;
 
 /// <summary>
 /// handles mouse interactions for top widget objective Turn indicator (2D polygon collider attached to game object)
@@ -81,7 +82,8 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             {
                 tooltipHeader = GameManager.instance.turnScript.GetTurnTooltip();
                 tooltipMain = GameManager.instance.turnScript.GetTurnInfoTip();
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
+                GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             //fade in

@@ -53,6 +53,23 @@ namespace packageAPI
         public int[] arrayOfStats;
     }
 
+    /// <summary>
+    /// data package for Generic Tooltip
+    /// </summary>
+    public class GenericTooltipData
+    {
+        public Vector3 screenPos;
+        public string main;                                      //required, header and details are optional
+        public string header;
+        public string details;
+
+        public GenericTooltipData()
+        {
+            header = null;
+            details = null;
+        }
+    }
+
     //
     // - - - Effect Data Packages - - -
     //

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using packageAPI;
 
 
 /// <summary>
@@ -128,7 +129,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             position.y += y_offset;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                GameManager.instance.tooltipGenericScript.SetTooltip (tooltipMain, position, tooltipHeader, tooltipDetails );
+                GenericTooltipData data = new GenericTooltipData() { screenPos = position, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
+                GameManager.instance.tooltipGenericScript.SetTooltip (data);
                 yield return null;
             }
             //fade in

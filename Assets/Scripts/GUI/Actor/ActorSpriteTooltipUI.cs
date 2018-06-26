@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// handles selective tooltip (Generic) for the actor sprites. Only shows in certain cases (Actor.tooltipStatus > ActorTooltip.None)
@@ -11,7 +12,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
 {
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
-    [HideInInspector] public string tooltipEffect;
+    [HideInInspector] public string tooltipDetails;
 
     [HideInInspector] public int actorSlotID;               //initialised in GUIManager.cs
 
@@ -105,13 +106,6 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        /*if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
-        {
-            StopCoroutine(myCoroutine);
-        }
-        else
-        { StopCoroutine(myCoroutine); }*/
-
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
 
@@ -123,13 +117,14 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
+        GenericTooltipData data = null;
         //activate tool tip if mouse still over button
         if (onMouseFlag == true)
         {
             //do once
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                colourSide = colourRebel;
+                /*colourSide = colourRebel;
                 if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { colourSide = colourAuthority; }
 
@@ -139,33 +134,40 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                         tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
                         tooltipMain = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} is expected to recover next turn", actor.actorName);
+                        tooltipDetails = string.Format("{0} is expected to recover next turn", actor.actorName);
                         break;
                     case ActorTooltip.LieLow:
                         tooltipHeader = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
                         tooltipMain = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
+                        tooltipDetails = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
                             actor.actorName, colourNeutral, colourEnd);
                         break;
                     case ActorTooltip.Talk:
 
                         break;
                     default:
-                        tooltipMain = "Unknown"; tooltipHeader = "Unknown"; tooltipEffect = "Unknown";
+                        tooltipMain = "Unknown"; tooltipHeader = "Unknown"; tooltipDetails = "Unknown";
                         break;
                 }
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, transform.position, tooltipHeader, tooltipEffect);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = transform.position, main = tooltipMain, header = tooltipHeader, details = tooltipDetails};*/
+                data = GameManager.instance.actorScript.GetActorTooltip(actor, side);
+                data.screenPos = transform.position;
+                if (data != null)
+                { GameManager.instance.tooltipGenericScript.SetTooltip(data); }
                 yield return null;
             }
             //fade in
-            float alphaCurrent;
-            while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+            if (data != null)
             {
-                alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
-                alphaCurrent += Time.deltaTime / mouseOverFade;
-                GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
-                yield return null;
+                float alphaCurrent;
+                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                {
+                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent += Time.deltaTime / mouseOverFade;
+                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    yield return null;
+                }
             }
         }
     }
@@ -189,7 +191,8 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                 string mainText = string.Format("{0}There is currently nobody acting in this position{1}", colourNormal, colourEnd);
                 string detailText = string.Format("{0}Go to the {1}{2}Reserve Pool{3}{4} and click on a person for the option to recall them to active duty{5}",
                     colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd);
-                GameManager.instance.tooltipGenericScript.SetTooltip(mainText, transform.position, headerText, detailText);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = transform.position, main = mainText, header = headerText, details = detailText };
+                GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             //fade in

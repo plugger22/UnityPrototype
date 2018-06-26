@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using packageAPI;
 
 /// <summary>
 /// handles mouse interactions for top widget Actions (2D polygon collider attached to game object)
@@ -84,7 +85,8 @@ public class WidgetActionsMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
                 tooltipHeader = GameManager.instance.turnScript.GetActionsTooltip();
                 tooltipMain = GameManager.instance.turnScript.GetActionAdjustmentTooltip();
                 tooltipDetails = GameManager.instance.turnScript.GetSecurityMeasureTooltip();
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
+                GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             //fade in

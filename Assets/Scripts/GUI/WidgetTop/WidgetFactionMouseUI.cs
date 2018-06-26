@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using packageAPI;
 
 /// <summary>
 ///  handles mouse interactions for Faction Info tab (far right) (2D polygon collider attached to game object)
@@ -86,14 +87,15 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             Vector3 screenPos = transform.position;
             screenPos.x -= 20;
             screenPos.y -= 90;
-                while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
-                {
-                    tooltipHeader = GameManager.instance.factionScript.GetFactionName(playerSide);
-                    tooltipMain = GameManager.instance.factionScript.GetFactionDescription(playerSide);
-                    tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(playerSide);
-                    GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, screenPos, tooltipHeader, tooltipDetails);
-                    yield return null;
-                }
+            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            {
+                tooltipHeader = GameManager.instance.factionScript.GetFactionName(playerSide);
+                tooltipMain = GameManager.instance.factionScript.GetFactionDescription(playerSide);
+                tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(playerSide);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
+                GameManager.instance.tooltipGenericScript.SetTooltip(data);
+                yield return null;
+            }
                 //fade in
                 float alphaCurrent;
                 while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)

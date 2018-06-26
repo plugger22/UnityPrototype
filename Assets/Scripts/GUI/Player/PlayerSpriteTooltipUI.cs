@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// handles player status tooltip
@@ -11,7 +12,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
 {
     [HideInInspector] public string tooltipHeader;
     [HideInInspector] public string tooltipMain;
-    [HideInInspector] public string tooltipEffect;
+    [HideInInspector] public string tooltipDetails;
 
     private float mouseOverDelay;
     private float mouseOverFade;
@@ -25,12 +26,12 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     private string playerName;
 
 
-    private string colourSide;
+    /*private string colourSide;
     private string colourRebel;
     private string colourAuthority;
     private string colourNeutral;
     private string colourNormal;
-    private string colourEnd;
+    private string colourEnd;*/
 
 
     /// <summary>
@@ -41,11 +42,13 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         //delays
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        /*//initialise colours at start (missed out otherwise)
+        SetColours();
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent,"PlayerSpirteTooltipUI");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent,"PlayerSpirteTooltipUI");*/
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Event Handler
     /// </summary>
     /// <param name="eventType"></param>
@@ -75,7 +78,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
-    }
+    }*/
 
     /// <summary>
     /// Mouse Over event -> show tooltip if Player tooltipStatus > ActorTooltip.None
@@ -111,6 +114,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     IEnumerator ShowGenericTooltip()
     {
         //delay before tooltip kicks in
+        GenericTooltipData data = null;
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
         if (onMouseFlag == true)
@@ -118,7 +122,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
             //do once
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                colourSide = colourRebel;
+                /*colourSide = colourRebel;
                 if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { colourSide = colourAuthority; }
                 switch (GameManager.instance.playerScript.tooltipStatus)
@@ -127,30 +131,37 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
                         tooltipHeader = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
                         tooltipMain = string.Format("{0}<size=120%>Currently having a {1}{2}BREAKDOWN (Stress){3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} is expected to recover next turn", playerName);
+                        tooltipDetails = string.Format("{0} is expected to recover next turn", playerName);
                         break;
                     case ActorTooltip.LieLow:
                         tooltipHeader = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
                         tooltipMain = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
-                        tooltipEffect = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
+                        tooltipDetails = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
                             playerName, colourNeutral, colourEnd);
                         break;
                     default:
-                        tooltipMain = "Unknown"; tooltipHeader = "Unknown"; tooltipEffect = "Unknown";
+                        tooltipMain = "Unknown"; tooltipHeader = "Unknown"; tooltipDetails = "Unknown";
                         break;
                 }
-                GameManager.instance.tooltipGenericScript.SetTooltip(tooltipMain, transform.position, tooltipHeader, tooltipEffect);
+                GenericTooltipData data = new GenericTooltipData() { screenPos = transform.position, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };*/
+                data = GameManager.instance.actorScript.GetPlayerTooltip(side);
+                data.screenPos = transform.position;
+                if (data != null)
+                { GameManager.instance.tooltipGenericScript.SetTooltip(data); }
                 yield return null;
             }
             //fade in
-            float alphaCurrent;
-            while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+            if (data != null)
             {
-                alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
-                alphaCurrent += Time.deltaTime / mouseOverFade;
-                GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
-                yield return null;
+                float alphaCurrent;
+                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                {
+                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent += Time.deltaTime / mouseOverFade;
+                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    yield return null;
+                }
             }
         }
     }

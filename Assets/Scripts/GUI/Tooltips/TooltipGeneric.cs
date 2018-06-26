@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using packageAPI;
 
 /// <summary>
 /// handles Generic tooltips. Text only. Attach to PanelManager
@@ -63,7 +64,7 @@ public class TooltipGeneric : MonoBehaviour
     /// <param name="pos">Position of tooltip originator -> Use a transform position (it's screen units as it's derived from a UI element))</param>
     /// <param name="headerText">Optional</param>
     /// <param name="detailText">Optional</param>
-    public void SetTooltip(string mainText, Vector3 screenPos, string headerText = null, string detailText = null)
+    /*public void SetTooltip(string mainText, Vector3 screenPos, string headerText = null, string detailText = null)
     {
         //open panel at start
         tooltipGenericObject.SetActive(true);
@@ -106,9 +107,6 @@ public class TooltipGeneric : MonoBehaviour
         if (screenPos.x + width >= Screen.width)
         { screenPos.x -= (width * 2 + screenPos.x - Screen.width); }
 
-        /*else if (screenPos.x - width <= 0)
-        { screenPos.x += width - screenPos.x; }*/
-
         //minimum position of tooltip from Left Hand side is half width
         else if (screenPos.x <= halfWidth)
         { screenPos.x = halfWidth; }
@@ -116,6 +114,68 @@ public class TooltipGeneric : MonoBehaviour
 
         //set new position
         tooltipGenericObject.transform.position = screenPos;
+        Debug.LogFormat("[UI] TooltipGeneric.cs -> SetTooltip{0}", "\n");
+
+    }*/
+
+
+    /// <summary>
+    /// Initialise node Tool tip. General Purpose. Can take one to three text segments and auto divides them as necessary.
+    /// Unique to the Generic tool tip, colours are set by the calling method
+    /// </summary>
+    public void SetTooltip(GenericTooltipData data)
+    {
+        //open panel at start
+        tooltipGenericObject.SetActive(true);
+        genericText.gameObject.SetActive(true);
+        genericHeader.gameObject.SetActive(false);
+        genericDetail.gameObject.SetActive(false);
+        dividerTop.gameObject.SetActive(false);
+        dividerBottom.gameObject.SetActive(false);
+        //set opacity to zero (invisible)
+        SetOpacity(0f);
+        //set state of all items in tooltip window
+        genericText.text = data.main;
+
+        //header
+        if (String.IsNullOrEmpty(data.header) == false)
+        {
+            genericHeader.text = data.header;
+            genericHeader.gameObject.SetActive(true);
+            dividerTop.gameObject.SetActive(true);
+        }
+        //details
+        if (String.IsNullOrEmpty(data.details) == false)
+        {
+            genericDetail.text = data.details;
+            genericDetail.gameObject.SetActive(true);
+            dividerBottom.gameObject.SetActive(true);
+        }
+        //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
+        Canvas.ForceUpdateCanvases();
+        rectTransform = tooltipGenericObject.GetComponent<RectTransform>();
+        //get dimensions of dynamic tooltip
+        float width = rectTransform.rect.width;
+        float height = rectTransform.rect.height;
+        float halfWidth = width * 0.5f;
+        //place tooltip adjacent to the button
+        data.screenPos.y -= height / 4;
+        if (data.screenPos.y + height >= Screen.height)
+        { data.screenPos.y -= (data.screenPos.y + height - Screen.height) + offset; }
+        //to the right
+        if (data.screenPos.x + width >= Screen.width)
+        { data.screenPos.x -= (width * 2 + data.screenPos.x - Screen.width); }
+
+        /*else if (screenPos.x - width <= 0)
+        { screenPos.x += width - screenPos.x; }*/
+
+        //minimum position of tooltip from Left Hand side is half width
+        else if (data.screenPos.x <= halfWidth)
+        { data.screenPos.x = halfWidth; }
+        else { data.screenPos.x += width / 4; } //never applies, dead code
+
+        //set new position
+        tooltipGenericObject.transform.position = data.screenPos;
         Debug.LogFormat("[UI] TooltipGeneric.cs -> SetTooltip{0}", "\n");
 
     }
