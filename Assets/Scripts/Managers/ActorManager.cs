@@ -3573,6 +3573,48 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// fixed colour formatted tooltip
+    /// </summary>
+    /// <returns></returns>
+    public GenericTooltipData GetVacantActorTooltip()
+    {
+        GenericTooltipData data = new GenericTooltipData();
+        data.header = "Position Vacant";
+        data.main = string.Format("{0}There is currently nobody acting in this position{1}", colourNormal, colourEnd);
+        data.details = string.Format("{0}Go to the {1}{2}Reserve Pool{3}{4} and click on a person for the option to recall them to active duty{5}",
+            colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd);
+        return data;
+    }
+
+    /// <summary>
+    /// fixed colour formatted tooltip
+    /// </summary>
+    /// <returns></returns>
+    public GenericTooltipData GetRenownActorTooltip()
+    {
+        GenericTooltipData data = new GenericTooltipData();
+        data.header = "Renown";
+        data.main = string.Format("{0}Is a measure of how well known a person is and their level support{1}", colourNormal, colourEnd);
+        data.details = string.Format("{0}Somebody with high renown gains {1}{2}influential friends{3}{4} and is harder to {5}{6}Fire{7}{8} or {9}{10}Dispose Off{11}",
+            colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);
+        return data;
+    }
+
+    /// <summary>
+    /// fixed colour formatted tooltip
+    /// </summary>
+    /// <returns></returns>
+    public GenericTooltipData GetRenownPlayerTooltip()
+    {
+        GenericTooltipData data = new GenericTooltipData();
+        data.header = "Renown";
+        data.main = string.Format("{0}The more the better{1}", colourNeutral, colourEnd);
+        data.details = string.Format("{0}Renown is the currency you use to do many things such as Hack the AI, Manage your subordinates, make decision, etc.{1}",
+            colourNormal, colourEnd);
+        return data;
+    }
+
+    /// <summary>
     /// tooltip data package for PlayerSpriteTooltipUI.cs
     /// </summary>
     /// <param name="side"></param>

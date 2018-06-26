@@ -59,7 +59,7 @@ public class DebugGUI : MonoBehaviour
         optionAIOffline = "AIOffline ON";
         optionAITraceback = "AITraceback ON";
         optionAIScreamer = "AIScreamer ON";
-        optionRenownUI = "Renown UI ON";
+        optionRenownUI = "Renown UI OFF";
     }
 
     // Update is called once per frame
@@ -427,13 +427,13 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("[Dbg] Button -> Toggle Renown Display");
                 if (GameManager.instance.actorPanelScript.CheckRenownUIStatus() == true)
                 {
-                    GameManager.instance.actorPanelScript.SetActorRenownUI(false);
-                    optionRenownUI = "Renown UI ON";
+                    GameManager.instance.actorPanelScript.SetActorRenownUI(true);
+                    optionRenownUI = "Renown UI OFF";
                 }
                 else
                 {
-                    GameManager.instance.actorPanelScript.SetActorRenownUI(true);
-                    optionRenownUI = "Renown UI OFF";
+                    GameManager.instance.actorPanelScript.SetActorRenownUI(false);
+                    optionRenownUI = "Renown UI ON";
                 }
             }
 

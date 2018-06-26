@@ -199,11 +199,11 @@ public class GUIManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
     }
 
-    public void InitialiseLate()
+    /*public void InitialiseLate()
     {
         //assign actor text & sprites (type of Actor)
-        /*UpdateActorGUI();*/
-    }
+        UpdateActorGUI();
+    }*/
 
     /// <summary>
     /// handles events

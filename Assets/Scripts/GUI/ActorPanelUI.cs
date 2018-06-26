@@ -137,7 +137,7 @@ public class ActorPanelUI : MonoBehaviour
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
         //initialise starting line up
         UpdateActorPanel();
-        SetActorRenownUI(false);
+        SetActorRenownUI(true);
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
     }

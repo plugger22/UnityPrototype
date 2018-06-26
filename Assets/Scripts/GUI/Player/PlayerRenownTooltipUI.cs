@@ -2,28 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using gameAPI;
 using packageAPI;
 
-/// <summary>
-/// handles player status tooltip
-/// </summary>
-public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PlayerRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    /*[HideInInspector] public string tooltipHeader;
-    [HideInInspector] public string tooltipMain;
-    [HideInInspector] public string tooltipDetails;*/
 
+    private Coroutine myCoroutine;
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
-
-    private Coroutine myTooltipCoroutine;
-
-
     //data derived whenever parent sprite moused over (OnPointerEnter)
     private GlobalSide side;
-    private string playerName;
 
 
     /// <summary>
@@ -31,26 +20,22 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     /// </summary>
     private void Start()
     {
-        //delays
+        myCoroutine = null;
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
     }
 
+
     /// <summary>
-    /// Mouse Over event -> show tooltip if Player tooltipStatus > ActorTooltip.None
+    /// Mouse Over event -> show tooltip 
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        //
-        // - - - Tooltip - - -
-        //
         side = GameManager.instance.sideScript.PlayerSide;
-        playerName = GameManager.instance.playerScript.PlayerName;
-        //activate tooltip if there is a valid reason
-        if (GameManager.instance.playerScript.tooltipStatus > ActorTooltip.None)
-        { myTooltipCoroutine = StartCoroutine("ShowGenericTooltip"); }
+        if (myCoroutine == null)
+        { myCoroutine = StartCoroutine("ShowRenownTooltip"); }
     }
 
     /// <summary>
@@ -60,30 +45,31 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerExit(PointerEventData eventData)
     {
         onMouseFlag = false;
-        //Tooltip
-        if (myTooltipCoroutine != null)
-        { StopCoroutine(myTooltipCoroutine); }
+        if (myCoroutine != null)
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
+        }
+
+        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorRenownTooltipUI.cs -> OnPointerExit");
     }
 
 
-
-    IEnumerator ShowGenericTooltip()
+    IEnumerator ShowRenownTooltip()
     {
         //delay before tooltip kicks in
-        GenericTooltipData data = null;
         yield return new WaitForSeconds(mouseOverDelay);
+        GenericTooltipData data = null;
         //activate tool tip if mouse still over button
         if (onMouseFlag == true)
         {
             //do once
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                data = GameManager.instance.actorScript.GetPlayerTooltip(side);
+                data = GameManager.instance.actorScript.GetRenownPlayerTooltip();
+                data.screenPos = transform.position;
                 if (data != null)
-                {
-                    data.screenPos = transform.position;
-                    GameManager.instance.tooltipGenericScript.SetTooltip(data);
-                }
+                { GameManager.instance.tooltipGenericScript.SetTooltip(data); }
                 yield return null;
             }
             //fade in
@@ -100,8 +86,4 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
             }
         }
     }
-
-
-
-    //new methods above here
 }
