@@ -613,7 +613,7 @@ public class TargetManager : MonoBehaviour
                 //
                 tempList.Add(string.Format("{0}Target Success Chance{1}", colourTarget, colourEnd));
                 //base chance
-                tempList.Add(string.Format("{0} Base Chance +{1}{2}", colourNeutral, baseTargetChance * 0.1, colourEnd));
+                tempList.Add(string.Format("{0}<size=95%> Base Chance +{1}</size>{2}", colourNeutral, baseTargetChance * 0.1, colourEnd));
                 //Loop listOfFactors to ensure consistency of calculations across methods
                 foreach (TargetFactors factor in listOfFactors)
                 {
@@ -621,12 +621,12 @@ public class TargetManager : MonoBehaviour
                     {
                         case TargetFactors.TargetInfo:
                             //good -> info
-                            tempList.Add(string.Format("{0}Info {1}{2}{3}", colourGood, target.infoLevel > 0 ? "+" : "", target.infoLevel, colourEnd));
+                            tempList.Add(string.Format("{0}<size=95%>Info {1}{2}</size>{3}", colourGood, target.infoLevel > 0 ? "+" : "", target.infoLevel, colourEnd));
                             break;
                         case TargetFactors.NodeSupport:
                             //good -> support
                             if (node.Support > 0)
-                            { tempList.Add(string.Format("{0}Support +{1}{2}", colourGood, node.Support, colourEnd)); }
+                            { tempList.Add(string.Format("{0}<size=95%>Support +{1}</size>{2}", colourGood, node.Support, colourEnd)); }
                             break;
                         case TargetFactors.ActorAndGear:
                             //player or Active Actor?
@@ -634,7 +634,7 @@ public class TargetManager : MonoBehaviour
                             {
                                 //Player at node -> active actor not applicable
                                 if (target.actorArc != null)
-                                { tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.actorArc.name, colourEnd)); }
+                                { tempList.Add(string.Format("{0}<size=95%>{1}</size>{2}", colourGrey, target.actorArc.name, colourEnd)); }
                                 //player has special gear?
                                 if (target.gear != null)
                                 {
@@ -643,11 +643,11 @@ public class TargetManager : MonoBehaviour
                                     {
                                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                         if (gear != null)
-                                        { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
+                                        { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
                                         else { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gearID {0}", gearID)); }
                                     }
                                     else
-                                    { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gear.name, colourEnd)); }
+                                    { tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd)); }
                                     //infiltration gear works on any target in addition to special gear
                                     if (target.gear.name.Equals(infiltrationGear.name) == false)
                                     {
@@ -657,11 +657,11 @@ public class TargetManager : MonoBehaviour
                                         {
                                             Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                             if (gear != null)
-                                            { tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
+                                            { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
                                             else { Debug.LogWarning(string.Format("Invalid Infiltration gear (Null) for gearID {0}", gearID)); }
                                         }
                                         else
-                                        { tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, infiltrationGear.name, colourEnd)); }
+                                        { tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, infiltrationGear.name, colourEnd)); }
                                     }
                                 }
                             }
@@ -675,33 +675,33 @@ public class TargetManager : MonoBehaviour
                                     if (slotID > -1)
                                     {
                                         //actor present and available
-                                        tempList.Add(string.Format("{0}{1} +{2}{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
+                                        tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
                                     }
                                     else
                                     {
                                         //actor either not present or unavailable
-                                        tempList.Add(string.Format("{0}{1}{2}", colourGrey, target.actorArc.name, colourEnd));
+                                        tempList.Add(string.Format("{0}<size=95%>{1}</size>{2}", colourGrey, target.actorArc.name, colourEnd));
                                     }
                                 }
                                 //gear not applicable (only when player at node)
                                 if (target.gear != null)
                                 {
-                                    tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, target.gear.name, colourEnd));
-                                    tempList.Add(string.Format("{0}{1} gear{2}", colourGrey, infiltrationGear.name, colourEnd));
+                                    tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd));
+                                    tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, infiltrationGear.name, colourEnd));
                                 }
                             }
                             break;
                         case TargetFactors.NodeSecurity:
                             //bad -> security
-                            tempList.Add(string.Format("{0}Node Security {1}{2}{3}", colourBad, node.Security > 0 ? "-" : "", node.Security, colourEnd));
+                            tempList.Add(string.Format("{0}<size=95%>Node Security {1}{2}</size>{3}", colourBad, node.Security > 0 ? "-" : "", node.Security, colourEnd));
                             break;
                         case TargetFactors.TargetLevel:
                             //bad -> target level
-                            tempList.Add(string.Format("{0}Target Level {1}{2}{3}", colourBad, target.targetLevel > 0 ? "-" : "", target.targetLevel, colourEnd));
+                            tempList.Add(string.Format("{0}<size=95%>Target Level {1}{2}</size>{3}", colourBad, target.targetLevel > 0 ? "-" : "", target.targetLevel, colourEnd));
                             break;
                         case TargetFactors.Teams:
                             if (node.isSecurityTeam == true)
-                            { tempList.Add(string.Format("{0}Control Team -{1}{2}", colourBad, GameManager.instance.teamScript.controlNodeEffect, colourEnd)); }
+                            { tempList.Add(string.Format("{0}<size=95%>Control Team -{1}</size>{2}", colourBad, GameManager.instance.teamScript.controlNodeEffect, colourEnd)); }
                             break;
                         default:
                             Debug.LogError(string.Format("Unknown TargetFactor \"{0}\"{1}", factor, "\n"));
@@ -714,7 +714,7 @@ public class TargetManager : MonoBehaviour
                 int tally = GetTargetTally(targetID);
                 int chance = GetTargetChance(tally);
                 //add tally and chance to string
-                tempList.Add(string.Format("{0}Total {1}{2}{3}", colourNeutral, tally > 0 ? "+" : "", tally, colourEnd));
+                tempList.Add(string.Format("{0}<size=95%>Total {1}{2}</size>{3}", colourNeutral, tally > 0 ? "+" : "", tally, colourEnd));
                 tempList.Add(string.Format("{0}{1}SUCCESS {2}%{3}{4}", colourDefault, "<mark=#FFFFFF4D>", chance, "</mark>", colourEnd));
             }
             else

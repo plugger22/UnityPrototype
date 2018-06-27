@@ -3775,7 +3775,6 @@ public class AIManager : MonoBehaviour
     {
         //base chance
         int chance = hackingDetectBaseChance;
-        bool showBase = false;
         string detectText = "";
         string gearName;
         Gear gear = GameManager.instance.playerScript.GetAIGear(invisibileHackingEffectText);
@@ -3787,14 +3786,12 @@ public class AIManager : MonoBehaviour
             if (city.mayor.CheckTraitEffect(aiDetectionChanceHigher) == true)
             {
                 chance += hackingTraitDetectionFactor;
-                showBase = true;
-                textMayor = string.Format("{0}<size=90%>{1}Mayor +{2}{3}</size>", "\n", colourBad, hackingTraitDetectionFactor, colourEnd);
+                textMayor = string.Format("{0}<size=95%>{1}Mayor +{2}{3}</size>", "\n", colourBad, hackingTraitDetectionFactor * 0.1, colourEnd);
             }
             else if (city.mayor.CheckTraitEffect(aiDetectionChanceLower) == true)
             {
                 chance -= hackingTraitDetectionFactor;
-                showBase = true;
-                textMayor = string.Format("{0}<size=90%>{1}Mayor -{2}{3}</size>", "\n", colourGood, hackingTraitDetectionFactor, colourEnd);
+                textMayor = string.Format("{0}<size=95%>{1}Mayor -{2}{3}</size>", "\n", colourGood, hackingTraitDetectionFactor * 0.1, colourEnd);
             }
             //AI security protocols 
             string textProtocols = "";
@@ -3802,8 +3799,7 @@ public class AIManager : MonoBehaviour
             {
                 int protocolEffect = aiSecurityProtocolLevel * hackingSecurityProtocolFactor;
                 chance += protocolEffect;
-                showBase = true;
-                textProtocols = string.Format("{0}<size=90%>{1}AI Protocol +{2}{3}</size>", "\n", colourBad, protocolEffect, colourEnd);
+                textProtocols = string.Format("{0}<size=95%>{1}AI Protocol +{2}{3}</size>", "\n", colourBad, protocolEffect * 0.1, colourEnd);
             }
             //Gear modifiers
             string textGear = "";
@@ -3811,8 +3807,7 @@ public class AIManager : MonoBehaviour
             if (gearDetect != null)
             {
                 chance -= hackingLowDetectionEffect;
-                showBase = true;
-                textGear = string.Format("{0}<size=90%>{1}Gear -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect, colourEnd);
+                textGear = string.Format("{0}<size=95%>{1}Gear -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect * 0.1, colourEnd);
                 if (logGearUse == true)
                 { GameManager.instance.gearScript.SetGearUsed(gearDetect, "lower the chance of being Detected while Hacking"); }
             }
@@ -3822,18 +3817,19 @@ public class AIManager : MonoBehaviour
             if (GameManager.instance.playerScript.CheckConditionPresent(stressedCondition) == true)
             {
                 chance += hackingStressedDetectionEffect;
-                showBase = true;
-                textStressed = string.Format("{0}<size=90%>{1}STRESSED +{2}{3}</size>", "\n", colourBad, hackingStressedDetectionEffect, colourEnd);
+                textStressed = string.Format("{0}<size=95%>{1}STRESSED +{2}{3}</size>", "\n", colourBad, hackingStressedDetectionEffect, colourEnd);
             }
             //keep within acceptable parameters
             chance = Mathf.Clamp(chance, 0, 100);
             //put together tooltip string
-            builder.AppendFormat("{0}<size=110%> {1} %</size>{2} {3}Chance of being Detected", "<mark=#FFFFFF4D>", chance, "</mark>", "\n");
-            if (showBase == true) { builder.AppendFormat("{0}{1}<size=90%>Base {2} %</size>{3}", "\n", colourNeutral, hackingDetectBaseChance, colourEnd); }
+            builder.AppendFormat("{0}Chance of Being Detected{1}", colourAlert, colourEnd);
+            builder.AppendFormat("{0}{1}<size=95%>Base +{2} </size>{3}", "\n", colourNeutral, hackingDetectBaseChance * 0.1, colourEnd);
             if (textMayor.Length > 0) { builder.Append(textMayor); }
             if (textProtocols.Length > 0) { builder.Append(textProtocols); }
             if (textGear.Length > 0) { builder.Append(textGear); }
             if (textStressed.Length > 0) { builder.Append(textStressed); }
+            builder.AppendFormat("{0}{1}<size=95%>Total +{2}</size>{3}", "\n", colourNeutral, chance * 0.1, colourEnd);
+            builder.AppendFormat("{0}{1}<size=110%>DETECTION {2} %</size>{3}", "\n", "<mark=#FFFFFF4D>", chance, "</mark>");
             detectText = builder.ToString();
         }
         else
