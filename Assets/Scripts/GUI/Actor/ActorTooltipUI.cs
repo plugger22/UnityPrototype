@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using packageAPI;
+using gameAPI;
 using modalAPI;
 
 /// <summary>
@@ -72,15 +73,21 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
             {
                 GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-                ActorTooltipData data = new ActorTooltipData()
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+                if (actor != null)
                 {
-                    tooltipPos = parent.transform.position,
-                    actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
-                    action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
-                    arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
-                    arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
-                };
-                GameManager.instance.tooltipActorScript.SetTooltip(data);
+                    ActorTooltipData data = new ActorTooltipData()
+                    {
+                        tooltipPos = parent.transform.position,
+                        actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
+                        action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
+                        gear = GameManager.instance.dataScript.GetGear(actor.GetGearID()),
+                        arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
+                        arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
+                    };
+                    GameManager.instance.tooltipActorScript.SetTooltip(data);
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID); }
                 yield return null;
             }
             //fade in

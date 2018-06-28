@@ -14,8 +14,12 @@ public class GearManager : MonoBehaviour
     [Range(0, 4)] public int maxNumOfGear = 3;
     [Tooltip("Whenever a random selection of gear is provided there is a chance * actor Ability of it being a Rare item, otherwise it's the standard Common")]
     [Range(1, 10)] public int chanceOfRareGear = 5;
+
+    [Header("Compromised Gear")]
     [Tooltip("Chance gear will be compromised and be no longer of any benefit after each use")]
     [Range(25, 75)] public int chanceOfCompromise = 50;
+
+    [Header("Giving Gear")]
     [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Common gear to an Actor")]
     [Range(1, 3)] public int gearBenefitCommon = 1;
     [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Rare gear to an Actor")]
@@ -24,6 +28,12 @@ public class GearManager : MonoBehaviour
     [Range(1, 10)] public int gearBenefitUnique = 3;
     [Tooltip("Base cost to save compromised gear (in Renown) at level start. Cost increases +1 each time the option is used")]
     [Range(0, 3)] public int gearSaveBaseCost = 0;
+
+    [Header("Actor Gear")]
+    [Tooltip("Number of turns after actor is given gear before it can be handed back and before it begins to be tested for being lost")]
+    [Range(0, 10)] public int actorGearGracePeriod = 3;
+    [Tooltip("% Chance, per turn, of actor losing gear in his possession. Only checked after actorGearGracePeriod number of turns")]
+    [Range(0, 100)] public int actorGearLostChance = 20;
 
     //used for quick reference  -> rarity
     [HideInInspector] public GearRarity gearCommon;
@@ -216,7 +226,7 @@ public class GearManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.EndTurnEarly:
-                EndTurnFinal();
+                EndTurnEarly();
                 break;
             case EventType.GearAction:
                 ModalActionDetails details = Param as ModalActionDetails;
@@ -260,10 +270,12 @@ public class GearManager : MonoBehaviour
     /// <summary>
     /// End turn final events
     /// </summary>
-    private void EndTurnFinal()
+    private void EndTurnEarly()
     {
         CheckForCompromisedGear();
+        CheckActorGear();
     }
+
 
     /// <summary>
     /// run at turn end to check all gear that has been used to see if it's compromised. Generates Generic Picker for player choice (use renown to keep gear) if so
@@ -352,6 +364,65 @@ public class GearManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfGear (Null)"); }
+    }
+
+    /// <summary>
+    /// checks all ACTIVE actors with gear, increments timers and checks for lost gear
+    /// </summary>
+    private void CheckActorGear()
+    {
+        //loop OnMap actors
+        //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        foreach (Actor actor in arrayOfActors)
+        {
+            //if invalid actor or vacant position then ignore
+            if (actor != null)
+            {
+                //only check Active actors
+                if (actor.Status == ActorStatus.Active)
+                {
+                    if (actor.GetGearID() > -1)
+                    {
+                        Gear gear = GameManager.instance.dataScript.GetGear(actor.GetGearID());
+                        if (gear != null)
+                        {
+                            actor.IncrementGearTimer();
+                            int timer = actor.GetGearTimer();
+                            //grace period about to be exceeded
+                            if (timer == actorGearGracePeriod)
+                                {
+                                    //let player know that gear will be available
+                                    string msgText = string.Format("{0} gear held by {1}, {2}, available next turn", gear.name, actor.actorName, actor.arc.name);
+                                    Message message = GameManager.instance.messageScript.GearAvailable(msgText, gear.gearID, actor.actorID);
+                                    GameManager.instance.dataScript.AddMessage(message);
+                                }
+                            //grace period exceeded
+                            if (timer > actorGearGracePeriod)
+                            {
+                                //check for Gear being LOST (only after grace period has expired)
+                                int rnd = Random.Range(0, 100);
+                                if (rnd < actorGearLostChance)
+                                {
+                                    //Gear LOST
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckActorGear: {0} LOST ({1}), need < {2}, rolled {3}{4}",
+                                        gear.name, actor.arc.name, actorGearLostChance, rnd, "\n");
+                                    //message
+                                    string msgText = string.Format("{0} gear lost by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                    Message message = GameManager.instance.messageScript.GearLost(msgText, gear.gearID, actor.actorID);
+                                    GameManager.instance.dataScript.AddMessage(message);
+                                    //remove gear AFTER message
+                                    actor.RemoveGear();
+
+                                }
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}{1}", actor.GetGearID(), "\n"); }
+                    }
+                }
+            }
+            else { Debug.LogWarning("Invalid actor (Null) in arrayOfActors"); }
+        }
     }
 
     /// <summary>

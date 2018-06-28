@@ -49,6 +49,7 @@ namespace packageAPI
         public Vector3 tooltipPos;
         public Actor actor;
         public Action action;
+        public Gear gear;
         public string[] arrayOfQualities;
         public int[] arrayOfStats;
     }

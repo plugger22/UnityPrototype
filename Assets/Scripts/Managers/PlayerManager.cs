@@ -348,7 +348,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     ResetGearItem(gear);
                     listOfGear.Add(gearID);
-                    Debug.LogFormat("[Gea] -> PlayerManager.cs: Gear \"{0}\", gearID {1}, added to inventory{2}", gear.name, gearID, "\n");
+                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to inventory{2}", gear.name, gearID, "\n");
                     CheckForAIUpdate(gear);
                     return true;
                 }
@@ -400,7 +400,7 @@ public class PlayerManager : MonoBehaviour
     {
         ResetGearItem(gear);
         listOfGear.Remove(gear.gearID);
-        Debug.Log(string.Format("[Gea] -> PlayerManager.cs: Gear \"{0}\", gearID {1}, removed from inventory{2}", gear.name, gear.gearID, "\n"));
+        Debug.Log(string.Format("[Gea] PlayerManager.cs -> RemoveGear: {0}, ID {1}, removed from inventory{2}", gear.name, gear.gearID, "\n"));
         CheckForAIUpdate(gear);
     }
 

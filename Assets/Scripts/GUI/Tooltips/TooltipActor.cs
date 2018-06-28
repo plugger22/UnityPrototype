@@ -19,10 +19,12 @@ public class TooltipActor : MonoBehaviour
     public TextMeshProUGUI actorStats;
     public TextMeshProUGUI actorTrait;
     public TextMeshProUGUI actorAction;
+    public TextMeshProUGUI actorGear;
     public Image dividerTop;                   //Side specific sprites for tooltips
     public Image dividerMiddleUpper;
     public Image dividerMiddleLower;
     public Image dividerBottom;
+    public Image dividerGear;
     public GameObject tooltipActorObject;
 
     private Image background;
@@ -31,6 +33,10 @@ public class TooltipActor : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;
+
+    //fast access
+    private int gracePeriod;                    //actor gear grace period
+
     //colours
     private string colourGood;
     private string colourNeutral;
@@ -39,6 +45,8 @@ public class TooltipActor : MonoBehaviour
     private string colourQuality;
     private string colourAction;
     private string colourArc;
+    private string colourAlert;
+    private string colourGrey;
     private string colourEnd;
 
 
@@ -51,6 +59,9 @@ public class TooltipActor : MonoBehaviour
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
+        //fast access
+        gracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
+        Debug.Assert(gracePeriod > -1, "Invalid gracePeriod (-1)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipActor");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipActor");
@@ -102,6 +113,8 @@ public class TooltipActor : MonoBehaviour
         colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourAction = GameManager.instance.colourScript.GetColour(ColourType.actorAction);
         colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -132,6 +145,7 @@ public class TooltipActor : MonoBehaviour
         dividerMiddleUpper.gameObject.SetActive(false);
         dividerMiddleLower.gameObject.SetActive(false);
         dividerBottom.gameObject.SetActive(true);
+        dividerGear.gameObject.SetActive(true);
         if (data.actor != null)
         {
             //Header
@@ -234,6 +248,16 @@ public class TooltipActor : MonoBehaviour
             }
             actorStats.text = builder.ToString();
         }
+        //Gear
+        if (data.gear != null)
+        {
+            //if gear held for <= grace period then show as Grey (can't be requested), otherwise yellow
+            if (data.actor.GetGearTimer() <= gracePeriod)
+            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
+            else
+            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
+        }
+        else { actorGear.text = string.Format("{0}No Gear in inventory{1}", colourAlert, colourEnd); }
         //Coordinates -> You need to send World (object.transform) coordinates
         Vector3 worldPos = data.tooltipPos;
         //update required to get dimensions as tooltip is dynamic
@@ -310,6 +334,7 @@ public class TooltipActor : MonoBehaviour
                 dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerGear.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
             case "Resistance":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
@@ -317,6 +342,7 @@ public class TooltipActor : MonoBehaviour
                 dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerGear.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

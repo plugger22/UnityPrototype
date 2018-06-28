@@ -33,7 +33,7 @@ namespace gameAPI
 
         //gear
         private int gearID;                                     //can only have one piece of gear at a time, default -1
-        private int gearTimer;                                  //number of turns the actor has had the gear
+        private int gearTimer;                                  //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)
 
         //cached trait effects
         private int actorStressNone;
@@ -290,24 +290,51 @@ namespace gameAPI
             //existing gear?
             if (gearID > -1)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-                if (gear != null)
+                Gear gearOld = GameManager.instance.dataScript.GetGear(gearID);
+                if (gearOld != null)
                 {
-                    text = string.Format("{0}, {1}", gear.name, gear.type.name);
-                    //let player know that gear has been lost
-                    string msgText = string.Format("{0}, {1}, has been LOST by {2}, {3}", gear.name, gear.type.name, actorName, arc.name);
-                    Message message = GameManager.instance.messageScript.GearLost(msgText, gear.gearID, actorID);
+                    text = gearOld.name;
+                    Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} given to HQ by {1}{2}", gearOld.name, arc.name, "\n");
+                    //let player know that gear has been Lost
+                    string msgText = string.Format("{0}, {1}, has been GIVEN TO HQ by {2}, {3}", gearOld.name, gearOld.type.name, actorName, arc.name);
+                    Message message = GameManager.instance.messageScript.GearLost(msgText, gearOld.gearID, actorID);
                     GameManager.instance.dataScript.AddMessage(message);
                 }
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
             }
             //add new gear
-            gearID = newGearID;
-            gearTimer = 0;
+            Gear gearNew = GameManager.instance.dataScript.GetGear(newGearID);
+            if (gearNew != null)
+            {
+                gearID = newGearID;
+                gearTimer = 0;
+                Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} added to inventory of {1}{2}", gearNew.name, arc.name, "\n");
+            }
+            else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", newGearID); }
             //return name and type of any gear that was lost (existing prior to new gear being added)
             return text;
         }
 
+
+        public void RemoveGear()
+        {
+            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+            if (gear != null)
+            { Debug.LogFormat("[Gea] Actor.cs -> RemoveGear: {0} removed from inventory of {1}{2}", gear.name, arc.name, "\n"); }
+            else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
+            //remove gear AFTER logger
+            gearID = -1;
+        }
+
+        public void IncrementGearTimer()
+        { gearTimer++; }
+
+        public int GetGearTimer()
+        { return gearTimer; }
+
+
+        public int GetGearID()
+        { return gearID; }
 
 
         //place methods above here
