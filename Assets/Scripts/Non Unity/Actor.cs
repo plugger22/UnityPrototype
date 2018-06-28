@@ -60,6 +60,9 @@ namespace gameAPI
                 //NOTE: don't want this to fire on first turn while everything being set-up (fires in NodeManager.Initialise at the appropriate point)
                 if (GameManager.instance.turnScript.Turn > 0)
                 { GameManager.instance.nodeScript.SetNodeActorFlags(); }
+                //remove gear
+                if (_status != ActorStatus.Active && _status != ActorStatus.Inactive)
+                { RemoveGear(); }
             }
         }
 
@@ -315,15 +318,20 @@ namespace gameAPI
             return text;
         }
 
-
+        /// <summary>
+        /// remove gear for various reasons. Msg only if gear present in first place.
+        /// </summary>
         public void RemoveGear()
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-            if (gear != null)
-            { Debug.LogFormat("[Gea] Actor.cs -> RemoveGear: {0} removed from inventory of {1}{2}", gear.name, arc.name, "\n"); }
-            else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
-            //remove gear AFTER logger
-            gearID = -1;
+            if (gearID > -1)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                if (gear != null)
+                { Debug.LogFormat("[Gea] Actor.cs -> RemoveGear: {0} removed from inventory of {1}{2}", gear.name, arc.name, "\n"); }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                //remove gear AFTER logger
+                gearID = -1;
+            }
         }
 
         public void IncrementGearTimer()

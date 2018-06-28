@@ -393,7 +393,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be STRESSED", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to be {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for STRESSED"); errorFlag = true; }
                                                 }
@@ -407,7 +407,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be CORRUPT", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to be {1}CORRUPT{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for CORRUPT"); errorFlag = true; }
                                                 }
@@ -421,7 +421,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be INCOMPETENT", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to be {1}INCOMPETENT{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for INCOMPETENT"); errorFlag = true; }
                                                 }
@@ -435,7 +435,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to have QUESTIONABLE loyalty", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to have {1}QUESTIONABLE{2} loyalty", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for QUESTIONABLE"); errorFlag = true; }
                                                 }
@@ -449,7 +449,7 @@ public class EffectManager : MonoBehaviour
                                                     if (condition != null)
                                                     {
                                                         if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be a STAR", actor.actorName)); }
+                                                        { BuildString(result, string.Format(" {0} needs to be a {1}STAR{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
                                                     else { Debug.LogError("Invalid condition (Null) for STAR"); errorFlag = true; }
                                                 }
@@ -460,19 +460,22 @@ public class EffectManager : MonoBehaviour
                                                 int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownReserve)
-                                                { BuildString(result, string.Format("You need at least {0} Renown (currently {1})", renownReserve, playerRenown)); }
+                                                { BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownReserve, 
+                                                    colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
                                                 break;
                                             case "RenownDismissMin":
                                                 int renownDismiss = GameManager.instance.actorScript.manageDismissRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDismiss)
-                                                { BuildString(result, string.Format("You need at least {0} Renown (currently {1})", renownDismiss, playerRenown)); }
+                                                { BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss, 
+                                                    colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
                                                 break;
                                             case "RenownDisposeMin":
                                                 int renownDispose = GameManager.instance.actorScript.manageDisposeRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDispose)
-                                                { BuildString(result, string.Format("You need at least {0} Renown (currently {1})", renownDispose, playerRenown)); }
+                                                { BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose, 
+                                                    colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
                                                 break;
                                             case "NumRecruitsCurrent":
                                                 //check max. number of recruits in reserve pool not exceeded
