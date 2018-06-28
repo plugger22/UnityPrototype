@@ -124,6 +124,7 @@
         //Gear
         Gear_Comprised,
         Gear_Used,
+        Gear_Lost,
         Gear_Obtained,
         Gear_Given,
         //Actor

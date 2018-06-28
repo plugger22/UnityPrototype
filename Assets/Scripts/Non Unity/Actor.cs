@@ -31,6 +31,10 @@ namespace gameAPI
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
 
+        //gear
+        private int gearID;                                     //can only have one piece of gear at a time, default -1
+        private int gearTimer;                                  //number of turns the actor has had the gear
+
         //cached trait effects
         private int actorStressNone;
         private int actorCorruptNone;
@@ -77,6 +81,7 @@ namespace gameAPI
         {
             nodeCaptured = -1;
             Renown = 0;
+            gearID = -1;
             //cached Trait Effects
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
@@ -270,6 +275,38 @@ namespace gameAPI
             else { return false; }
         }
 
+        //
+        // - - - Gear - - -
+        //
+
+        /// <summary>
+        /// Add gear. Max 1 piece of gear at a time. If gear already present, new gear overrides, old gear lost. Returns null if no msg (Msg is name & type of gear, if lost)
+        /// </summary>
+        /// <param name="gearID"></param>
+        public string AddGear(int newGearID)
+        {
+            Debug.Assert(newGearID > -1, "Invalid gearID (< 0)");
+            string text = null;
+            //existing gear?
+            if (gearID > -1)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                if (gear != null)
+                {
+                    text = string.Format("{0}, {1}", gear.name, gear.type.name);
+                    //let player know that gear has been lost
+                    string msgText = string.Format("{0}, {1}, has been LOST by {2}, {3}", gear.name, gear.type.name, actorName, arc.name);
+                    Message message = GameManager.instance.messageScript.GearLost(msgText, gear.gearID, actorID);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
+            }
+            //add new gear
+            gearID = newGearID;
+            gearTimer = 0;
+            //return name and type of any gear that was lost (existing prior to new gear being added)
+            return text;
+        }
 
 
 

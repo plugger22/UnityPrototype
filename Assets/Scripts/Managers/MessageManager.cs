@@ -871,6 +871,33 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
+    /// Gear possessed by an Actor has been Lost. Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="gearID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Message GearLost(string text, int gearID, int actorID)
+    {
+        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GEAR;
+            message.subType = MessageSubType.Gear_Lost;
+            message.side = globalResistance;
+            message.isPublic = true;
+            message.data0 = gearID;
+            message.data1 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Gear obtained. Returns null if text invalid
     /// </summary>
     /// <param name="text"></param>

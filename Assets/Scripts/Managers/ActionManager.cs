@@ -1298,6 +1298,7 @@ public class ActionManager : MonoBehaviour
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         outcomeDetails.modalLevel = details.modalLevel;
         outcomeDetails.modalState = details.modalState;
+        StringBuilder builder = new StringBuilder();
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
@@ -1308,7 +1309,8 @@ public class ActionManager : MonoBehaviour
                 {
                     //Give Gear
                     outcomeDetails.textTop = string.Format("{0} {1} thanks you for the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
-
+                    //update actor details
+                    string textGear = actor.AddGear(gear.gearID);
                     //get actor's preferred gear
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
@@ -1326,15 +1328,20 @@ public class ActionManager : MonoBehaviour
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
                             //Preferred gear (renown transfer)
-                            outcomeDetails.textBottom = string.Format("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
+                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
                               colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
                             preferredFlag = true;
                         }
                         else
                         {
                             //Not preferred gear (motivation boost only)
-                            outcomeDetails.textBottom = string.Format("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}",
+                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}",
                               colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, colourEnd);
+                        }
+                        if (string.IsNullOrEmpty(textGear) == false)
+                        {
+                            //gear has been lost (actor already had some gear
+                            builder.AppendFormat("{0}{1}{2}{3}{4}{5} has been Lost{6}", "\n", "\n", colourNeutral, textGear, colourEnd, colourBad, colourEnd);
                         }
                     }
                     else
@@ -1359,6 +1366,7 @@ public class ActionManager : MonoBehaviour
             if (gear != null)
             { GameManager.instance.playerScript.RemoveGear(gear.gearID); }
             outcomeDetails.sprite = actor.arc.baseSprite;
+            outcomeDetails.textBottom = builder.ToString();
             //give actor motivation boost
             actor.datapoint1 += benefit;
             actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
