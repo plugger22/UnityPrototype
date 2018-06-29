@@ -34,6 +34,7 @@ namespace gameAPI
         //gear
         private int gearID;                                     //can only have one piece of gear at a time, default -1
         private int gearTimer;                                  //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)
+        private int gearTimesTaken;                             //tally of how many times player has taken gear from actor (harder to do so each time)
 
         //cached trait effects
         private int actorStressNone;
@@ -86,6 +87,7 @@ namespace gameAPI
             Renown = 0;
             gearID = -1;
             gearTimer = 0;
+            gearTimesTaken = 0;
             //cached Trait Effects
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
@@ -320,9 +322,9 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// remove gear for various reasons. Msg only if gear present in first place.
+        /// remove gear for various reasons. Msg only if gear present in first place. isTaken true if you are taking gear from actor, false (by default) otherwise
         /// </summary>
-        public void RemoveGear()
+        public void RemoveGear(bool isTaken = false)
         {
             if (gearID > -1)
             {
@@ -333,6 +335,9 @@ namespace gameAPI
                 //remove gear AFTER logger
                 gearID = -1;
                 gearTimer = 0;
+                //if gear has been taken, increment counter
+                if (isTaken == true)
+                { gearTimesTaken++; }
             }
         }
 
@@ -342,6 +347,8 @@ namespace gameAPI
         public int GetGearTimer()
         { return gearTimer; }
 
+        public int GetGearTimesTaken()
+        { return gearTimesTaken; }
 
         public int GetGearID()
         { return gearID; }

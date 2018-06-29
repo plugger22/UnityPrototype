@@ -1409,10 +1409,8 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessTakeGearAction(ModalActionDetails details)
     {
-        int benefit = 0;
-        int renownGiven = 0;
+        int motivationCost = 0;
         bool errorFlag = false;
-        bool preferredFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         Gear gear = null;
         Actor actor = null;
@@ -1430,8 +1428,22 @@ public class ActionManager : MonoBehaviour
                 gear = GameManager.instance.dataScript.GetGear(details.gearID);
                 if (gear != null)
                 {
+                    //Cost to take gear
+                    motivationCost = actor.GetGearTimesTaken();
                     //Give Gear
-                    outcomeDetails.textTop = string.Format("{0}, {1}, hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+                    switch (motivationCost)
+                    {
+                        case 0:
+                            outcomeDetails.textTop = string.Format("{0}, {1}, <i>respectfully</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+                            break;
+                        case 1:
+                            outcomeDetails.textTop = string.Format("{0}, {1}, <i>reluctantly</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+                            break;
+                        default:
+                            outcomeDetails.textTop = string.Format("{0}, {1}, <i>angrily</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+                            break;
+                    }
+                    
 
                     #region preferred gear
                     /*//get actor's preferred gear
@@ -1471,6 +1483,8 @@ public class ActionManager : MonoBehaviour
                     { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }*/
                     #endregion
 
+
+
                 }
                 else { Debug.LogErrorFormat("Invalid gear (Null) for details.gearID {0}", details.gearID); errorFlag = true; }
             }
@@ -1490,31 +1504,30 @@ public class ActionManager : MonoBehaviour
             if (errorFlag == false)
             {
                 //remove gear from actor
-                actor.RemoveGear();
+                actor.RemoveGear(true);
                 //Give Gear to Player
                 GameManager.instance.playerScript.AddGear(gear.gearID);
+                //deduct motivation from actor
+                if (motivationCost > 0)
+                {
+                    //second or beyond time that gear has been taken
+                    actor.datapoint1 -= motivationCost;
+                    actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+                    builder.AppendFormat("{0}{1} loses {2}{3}-{4}{5}{6} Motivation{7}", colourBad, actor.arc.name, colourEnd, colourNeutral, motivationCost, colourEnd, colourBad, colourEnd);
+                }
+                else
+                {
+                    //first time gear has been taken
+                    builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourBad, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd);
+                }
+                builder.AppendFormat("{0}{1}Next time you Take gear from {2} they will lose {3}{4}-{5} Motivation{6}. With insufficient Motivation they will {7}{8}Refuse to hand over{9} the gear",
+                    "\n", "\n", actor.actorName, "\n", colourNeutral, motivationCost + 1, colourEnd, "\n", colourBad, colourEnd);
             }
             outcomeDetails.sprite = gear.sprite;
             outcomeDetails.textBottom = builder.ToString();
-            /*//give actor motivation boost
-            actor.datapoint1 += benefit;
-            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
-            //if preferred transfer renown
-            if (preferredFlag == true)
-            {
-                if (actor.Renown > 0)
-                {
-                    //take from actor
-                    renownGiven = Mathf.Min(benefit, actor.Renown);
-                    actor.Renown -= benefit;
-                    actor.Renown = Mathf.Max(0, actor.Renown);
-                    //give to Player
-                    GameManager.instance.playerScript.Renown += renownGiven;
-                }
-            }*/
             //message
             string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            Message message = GameManager.instance.messageScript.GearGive(text, actor.actorID, gear.gearID, renownGiven);
+            Message message = GameManager.instance.messageScript.GearGive(text, actor.actorID, gear.gearID, motivationCost);
             GameManager.instance.dataScript.AddMessage(message);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
