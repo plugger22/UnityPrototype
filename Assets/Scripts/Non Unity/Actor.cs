@@ -85,6 +85,7 @@ namespace gameAPI
             nodeCaptured = -1;
             Renown = 0;
             gearID = -1;
+            gearTimer = 0;
             //cached Trait Effects
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
@@ -331,6 +332,7 @@ namespace gameAPI
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
                 //remove gear AFTER logger
                 gearID = -1;
+                gearTimer = 0;
             }
         }
 

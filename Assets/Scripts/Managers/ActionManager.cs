@@ -48,6 +48,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ActivatePlayerAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.TakeGearAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.UseGearAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent, "ActionManager");
@@ -111,6 +112,10 @@ public class ActionManager : MonoBehaviour
             case EventType.GiveGearAction:
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
                 ProcessGiveGearAction(detailsGiveGear);
+                break;
+            case EventType.TakeGearAction:
+                ModalActionDetails detailsTakeGear = Param as ModalActionDetails;
+                ProcessTakeGearAction(detailsTakeGear);
                 break;
             case EventType.UseGearAction:
                 ModalActionDetails detailsUseGear = Param as ModalActionDetails;
@@ -1401,10 +1406,18 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process Use Gear (Player use) action (Resistance only)
+    /// Process Take Gear  from actor action (Resistance only)
     /// </summary>
     /// <param name="details"></param>
-    public void ProcessUseGearAction(ModalActionDetails details)
+    public void ProcessTakeGearAction(ModalActionDetails details)
+    {
+    }
+
+        /// <summary>
+        /// Process Use Gear (Player use) action (Resistance only)
+        /// </summary>
+        /// <param name="details"></param>
+        public void ProcessUseGearAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         bool isAction = false;

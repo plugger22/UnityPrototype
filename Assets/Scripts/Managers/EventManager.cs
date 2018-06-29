@@ -55,6 +55,7 @@ public enum EventType
     ActivateActorAction,
     ActivatePlayerAction,
     GiveGearAction,
+    TakeGearAction,
     UseGearAction,
     //decisions
     RecruitDecision,

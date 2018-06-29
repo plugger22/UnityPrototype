@@ -97,7 +97,9 @@ public class ActorManager : MonoBehaviour
     private int actorBreakdownChanceLow;
     private int actorBreakdownChanceNone;
     private int actorNoActionsDuringSecurityMeasures;
-    //gear type
+    //gear
+    private int maxNumOfGear;
+    private int gearGracePeriod;
     /*private GearType gearRecovery;
     private GearType gearPersonal;*/
     //colour palette for Generic tool tip
@@ -141,12 +143,16 @@ public class ActorManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
+        maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
+        gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         /*gearRecovery = GameManager.instance.dataScript.GetGearType("Recovery");
         gearPersonal = GameManager.instance.dataScript.GetGearType("Personal");*/
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
+        Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
+        Debug.Assert(gearGracePeriod > -1 && gearGracePeriod < 10, "Invalid gearGracePeriod (<0 or 10+)");
         /*Debug.Assert(gearRecovery != null, "Invalid gearRecovery (Null)");
         Debug.Assert(gearPersonal != null, "Invalid gearPersonal (Null)");*/
         //cached TraitEffects
@@ -881,16 +887,16 @@ public class ActorManager : MonoBehaviour
                                                     switch (effect.typeOfEffect.name)
                                                     {
                                                         case "Good":
-                                                            builder.Append(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd));
+                                                            builder.AppendFormat("{0}{1}{2}", colourBad, effect.textTag, colourEnd);
                                                             break;
                                                         case "Neutral":
-                                                            builder.Append(string.Format("{0}{1}{2}", colourNeutral, effect.textTag, colourEnd));
+                                                            builder.AppendFormat("{0}{1}{2}", colourNeutral, effect.textTag, colourEnd);
                                                             break;
                                                         case "Bad":
-                                                            builder.Append(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd));
+                                                            builder.AppendFormat("{0}{1}{2}", colourGood, effect.textTag, colourEnd);
                                                             break;
                                                         default:
-                                                            builder.Append(string.Format("{0}{1}{2}", colourDefault, effect.textTag, colourEnd));
+                                                            builder.AppendFormat("{0}{1}{2}", colourDefault, effect.textTag, colourEnd);
                                                             Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
                                                             break;
                                                     }
@@ -906,22 +912,22 @@ public class ActorManager : MonoBehaviour
                                                     foreach (string teamName in tempTeamList)
                                                     {
                                                         builder.AppendLine();
-                                                        builder.Append(string.Format("{0}{1}{2}", colourNeutral, teamName, colourEnd));
+                                                        builder.AppendFormat("{0}{1}{2}", colourNeutral, teamName, colourEnd);
                                                     }
                                                 }
                                             }
                                             //actor automatically accumulates renown for their faction
                                             else
-                                            { builder.Append(string.Format("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.textTag, colourEnd)); }
+                                            { builder.AppendFormat("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.textTag, colourEnd); }
 
                                         }
                                         else
                                         {
                                             //invalid effect criteria -> Action cancelled
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                            infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                            infoBuilder.AppendFormat("{0}{1} action invalid{2}{3}{4}({5}){6}",
                                                 colourInvalid, actor.arc.name, "\n", colourEnd,
-                                                colourAuthority, effectCriteria, colourEnd));
+                                                colourAuthority, effectCriteria, colourEnd);
                                             proceedFlag = false;
                                         }
                                     }
@@ -959,14 +965,14 @@ public class ActorManager : MonoBehaviour
                             {
                                 Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.actorSlotID));
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.Append(string.Format("{0} is having a bad day", actor.arc.name));
+                                infoBuilder.AppendFormat("{0} is having a bad day", actor.arc.name);
                             }
                         }
                         else
                         {
                             //actor gone silent
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0} is lying low and unavailale", actor.arc.name));
+                            infoBuilder.AppendFormat("{0} is lying low and unavailale", actor.arc.name);
                         }
                         //add to list
                         if (details != null)
@@ -1013,7 +1019,7 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the actor to enable a ModalActionMenu to be put together (one button per action). 
-    /// Resistance only -> up to 3 x 'Give Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Manage' and an automatic Cancel button (6 total)
+    /// Resistance only -> up to 3 x 'Give (or Take) Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Manage' and an automatic Cancel button (6 total)
     /// triggered when you Right Click an Actor's portrait
     /// </summary>
     /// <param name="actorSlotID"></param>
@@ -1106,7 +1112,7 @@ public class ActorManager : MonoBehaviour
                         else
                         {
                             //actor invisiblity at max
-                            infoBuilder.Append(string.Format("{0} Invisibility at Max and can't Lie Low", actor.arc.name));
+                            infoBuilder.AppendFormat("{0} Invisibility at Max and can't Lie Low", actor.arc.name);
                         }
                         //
                         // - - - Give Gear - - -
@@ -1185,11 +1191,103 @@ public class ActorManager : MonoBehaviour
                             }
                             else { Debug.LogError("Invalid listOfGear (Null)"); }
                         }
+                        //no gear to give
                         if (isGearToGive == false)
                         {
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                             infoBuilder.Append("You have no Gear to give");
                         }
+                        //
+                        // - - - Take Gear - - -
+                        //
+                        //Player must have at least one free slot
+                        if (numOfGear < maxNumOfGear)
+                        {
+                            //actor must have an item of gear
+                            int actorGearID = actor.GetGearID();
+                            if (actorGearID > -1)
+                            {
+                                //grace period must have expired
+                                if (actor.GetGearTimer() > gearGracePeriod)
+                                {
+                                    Gear gearActor = GameManager.instance.dataScript.GetGear(actorGearID);
+                                    if (gearActor != null)
+                                    {
+                                        ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                                        gearActionDetails.side = playerSide;
+                                        gearActionDetails.actorDataID = actor.actorSlotID;
+                                        gearActionDetails.gearID = gearActor.gearID;
+
+                                        #region preferred gear
+                                        //get actor's preferred gear
+                                        GearType preferredGear = actor.arc.preferredGear;
+                                        if (preferredGear != null)
+                                        {
+                                            switch (gearActor.rarity.name)
+                                            {
+                                                case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
+                                                case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
+                                                case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
+                                                default:
+                                                    benefit = 0;
+                                                    Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gearActor.rarity.name));
+                                                    break;
+                                            }
+                                            if (preferredGear.name.Equals(gearActor.type.name) == true)
+                                            {
+                                                tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}",
+                                                  actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                            }
+                                            else
+                                            {
+                                                tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
+                                                  preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            tooltipText = "Unknown Preferred Gear";
+                                            Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
+                                        }
+                                        #endregion
+
+                                        EventButtonDetails gearDetails = new EventButtonDetails()
+                                        {
+                                            buttonTitle = string.Format("<b>TAKE</b> {0}", gearActor.name),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gearActor.name, colourNeutral, gearActor.type.name,
+                                            colourEnd, actor.arc.name, actor.actorName),
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                            //use a Lambda to pass arguments to the action
+                                            action = () => { EventManager.instance.PostNotification(EventType.TakeGearAction, this, gearActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                        };
+                                        //add give gear button to list
+                                        tempList.Add(gearDetails);
+                                        isGearToGive = true;
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid gearActor (Null) for gearID {0}", actorGearID); }
+                                }
+                                else
+                                {
+                                    //grace period still in force
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.AppendFormat("Can't TAKE gear as still within {0}Grace Period{1}", colourNeutral, colourEnd);
+                                }
+                            }
+                            else
+                            {
+                                //actor has no gear to give
+                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                { infoBuilder.AppendFormat("{0} has no gear to Take", actor.arc.name); }
+                            }
+                        }
+                        else
+                        {
+                            //player has no spare slot to put gear
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            { infoBuilder.Append("Player has no space for Gear"); }
+                        }
+
                     }
 
                     break;
@@ -1387,26 +1485,26 @@ public class ActorManager : MonoBehaviour
                                                     {
                                                         //Effect criteria O.K -> tool tip text
                                                         if (builder.Length > 0) { builder.AppendLine(); }
-                                                        builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd));
+                                                        builder.AppendFormat("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
                                                         //chance of compromise
                                                         int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
-                                                        builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
-                                                            colourNeutral, compromiseChance, colourEnd));
+                                                        builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
+                                                            colourNeutral, compromiseChance, colourEnd);
                                                     }
                                                     else
                                                     {
                                                         proceedFlag = false;
                                                         //invalid effect criteria -> Action cancelled
                                                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                        infoBuilder.Append(string.Format("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
-                                                            colourInvalid, gear.name, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n"));
+                                                        infoBuilder.AppendFormat("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
+                                                            colourInvalid, gear.name, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n");
                                                     }
                                                 }
                                             }
                                             else
                                             {
                                                 proceedFlag = false;
-                                                infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd));
+                                                infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd);
                                             }
                                             //button 
                                             if (proceedFlag == true)
@@ -1429,7 +1527,7 @@ public class ActorManager : MonoBehaviour
                                             }
                                         }
                                         else
-                                        { infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd)); }
+                                        { infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd); }
                                     }
                                 }
                                 else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGearID[index]); }
@@ -1598,26 +1696,26 @@ public class ActorManager : MonoBehaviour
                         {
                             //Effect criteria O.K -> tool tip text
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd));
+                            builder.AppendFormat("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
                             //chance of compromise
                             int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
-                            builder.Append(string.Format("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd, 
-                                colourNeutral, compromiseChance, colourEnd));
+                            builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd, 
+                                colourNeutral, compromiseChance, colourEnd);
                         }
                         else
                         {
                             proceedFlag = false;
                             //invalid effect criteria -> Action cancelled
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append(string.Format("{0}USE action invalid{1}{2}{3}({4}){5}",
-                                colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd));
+                            infoBuilder.AppendFormat("{0}USE action invalid{1}{2}{3}({4}){5}",
+                                colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd);
                         }
                     }
                 }
                 else
                 {
                     proceedFlag = false;
-                    infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd));
+                    infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd);
                 }
 
 
@@ -1645,7 +1743,7 @@ public class ActorManager : MonoBehaviour
                 }
             }
             else
-            { infoBuilder.Append(string.Format("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd)); }
+            { infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd); }
             //
             // - - - Give to - - -
             //
@@ -1861,14 +1959,14 @@ public class ActorManager : MonoBehaviour
                 {
                     //can't have duplicate actor types OnMap
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append(string.Format("{0}Active Duty not possible as duplicate Actor types aren't allowed{1}", colourCancel, colourEnd));
+                    infoBuilder.AppendFormat("{0}Active Duty not possible as duplicate Actor types aren't allowed{1}", colourCancel, colourEnd);
                 }
             }
             else
             {
                 //there are no spare OnMap positions availabel
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Active Duty not possible as there are no vacancies.{1}", colourCancel, colourEnd));
+                infoBuilder.AppendFormat("{0}Active Duty not possible as there are no vacancies.{1}", colourCancel, colourEnd);
             }
             //
             // - - - Reassure - - -
@@ -1896,14 +1994,14 @@ public class ActorManager : MonoBehaviour
                 {
                     //actor has already been reassured (once only effect)
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append(string.Format("{0} has already been Reassured", actor.actorName));
+                    infoBuilder.AppendFormat("{0} has already been Reassured", actor.actorName);
                 }
             }
             else
             {
                 //can't reassure somebody who is already unhappy
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Can't Reassure if Unhappy.{1}", colourBad, colourEnd));
+                infoBuilder.AppendFormat("{0}Can't Reassure if Unhappy.{1}", colourBad, colourEnd);
             }
             //
             // - - - Let go - - -
@@ -1931,14 +2029,14 @@ public class ActorManager : MonoBehaviour
                 {
                     //can't let go somebody you've already sent to the reserves, only new recruits
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append(string.Format("{0}Can only Let Go new recruits.{1}", colourCancel, colourEnd));
+                    infoBuilder.AppendFormat("{0}Can only Let Go new recruits.{1}", colourCancel, colourEnd);
                 }
             }
             else
             {
                 //can't reassure somebody who is already unhappy
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Can't Let Go if Unhappy.{1}", colourBad, colourEnd));
+                infoBuilder.AppendFormat("{0}Can't Let Go if Unhappy.{1}", colourBad, colourEnd);
             }
             //
             // - - - Threaten - - -
@@ -1949,11 +2047,11 @@ public class ActorManager : MonoBehaviour
                 if (playerRenown >= renownCost)
                 {
                     StringBuilder builder = new StringBuilder();
-                    builder.Append(string.Format("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyThreatenBoost, colourEnd));
+                    builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyThreatenBoost, colourEnd);
                     builder.AppendLine();
-                    builder.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCostThreaten, colourEnd));
+                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCostThreaten, colourEnd);
                     builder.AppendLine();
-                    builder.Append(string.Format("{0}Can be Threatened again provided not Unhappy{1}", colourNeutral, colourEnd));
+                    builder.AppendFormat("{0}Can be Threatened again provided not Unhappy{1}", colourNeutral, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
                         buttonTitle = "Threaten",
@@ -1971,15 +2069,14 @@ public class ActorManager : MonoBehaviour
                 {
                     //not enough renown
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.Append(string.Format("{0}Insufficient Renown to Threaten (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, 
-                        colourEnd));
+                    infoBuilder.AppendFormat("{0}Insufficient Renown to Threaten (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
                 }
             }
             else
             {
                 //can't threaten somebody who is already unhappy
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Can't Threaten if Unhappy.{1}", colourBad, colourEnd));
+                infoBuilder.AppendFormat("{0}Can't Threaten if Unhappy.{1}", colourBad, colourEnd);
             }
 
             //
@@ -1987,22 +2084,22 @@ public class ActorManager : MonoBehaviour
             //
             //generic tooltip (depends if actor is threatening or not)
             StringBuilder builderTooltip = new StringBuilder();
-            builderTooltip.Append(string.Format("{0}{1}'s Motivation -{2}{3}", colourBad, actor.actorName, motivationLossFire, colourEnd));
+            builderTooltip.AppendFormat("{0}{1}'s Motivation -{2}{3}", colourBad, actor.actorName, motivationLossFire, colourEnd);
             builderTooltip.AppendLine();
-            builderTooltip.Append(string.Format("{0}Can be recruited again{1}", colourNeutral, colourEnd));
+            builderTooltip.AppendFormat("{0}Can be recruited again{1}", colourNeutral, colourEnd);
             builderTooltip.AppendLine();
             //double renown cost if actor threatening to take action against player
             if (actor.isThreatening == false)
             {
                 renownCost = manageDismissRenown;
-                builderTooltip.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+                builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
             }
             else
             {
                 renownCost = manageDismissRenown * 2;
-                builderTooltip.Append(string.Format("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd));
+                builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builderTooltip.AppendLine();
-                builderTooltip.Append(string.Format("{0}Double Renown cost as {1} is Threatening you{2}", colourCancel, actor.actorName, colourEnd));
+                builderTooltip.AppendFormat("{0}Double Renown cost as {1} is Threatening you{2}", colourCancel, actor.actorName, colourEnd);
             }
             //only show button if player has enough renown to cover the cost of firing
             if (playerRenown >= renownCost)
@@ -2023,7 +2120,7 @@ public class ActorManager : MonoBehaviour
             {
                 //not enough renown
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.Append(string.Format("{0}Insufficient Renown to Fire (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd));
+                infoBuilder.AppendFormat("{0}Insufficient Renown to Fire (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
             }
         }
         else
@@ -2298,12 +2395,12 @@ public class ActorManager : MonoBehaviour
                             StringBuilder builder = new StringBuilder();
                             if (arrayOfQualities.Length > 0)
                             {
-                                builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
-                                    actor.datapoint0, colourEnd, "\n"));
-                                builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
-                                    actor.datapoint1, colourEnd, "\n"));
-                                builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
-                                    actor.datapoint2, colourEnd));
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
+                                    actor.datapoint0, colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
+                                    actor.datapoint1, colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
+                                    actor.datapoint2, colourEnd);
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
@@ -2460,12 +2557,12 @@ public class ActorManager : MonoBehaviour
                             StringBuilder builder = new StringBuilder();
                             if (arrayOfQualities.Length > 0)
                             {
-                                builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
-                                    actor.datapoint0, colourEnd, "\n"));
-                                builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
-                                    actor.datapoint1, colourEnd, "\n"));
-                                builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
-                                    actor.datapoint2, colourEnd));
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
+                                    actor.datapoint0, colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
+                                    actor.datapoint1, colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
+                                    actor.datapoint2, colourEnd);
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
@@ -2579,12 +2676,12 @@ public class ActorManager : MonoBehaviour
                         StringBuilder builder = new StringBuilder();
                         if (arrayOfQualities.Length > 0)
                         {
-                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
-                                actor.datapoint0, colourEnd, "\n"));
-                            builder.Append(string.Format("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
-                                actor.datapoint1, colourEnd, "\n"));
-                            builder.Append(string.Format("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
-                                actor.datapoint2, colourEnd));
+                            builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
+                                actor.datapoint0, colourEnd, "\n");
+                            builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
+                                actor.datapoint1, colourEnd, "\n");
+                            builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
+                                actor.datapoint2, colourEnd);
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
@@ -2641,9 +2738,9 @@ public class ActorManager : MonoBehaviour
                             actorRecruited.unhappyTimer = recruitedReserveTimer;
                             actorRecruited.isNewRecruit = true;
                             //actor successfully recruited
-                            builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
-                            builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
-                                actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+                            builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
+                            builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
+                                actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
 
 
                             //message
@@ -2775,9 +2872,9 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.globalScript.sideAuthority);
                         if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
                         //actor successfully recruited
-                        builderTop.Append(string.Format("{0}The interview went well!{1}", colourNormal, colourEnd));
-                        builderBottom.Append(string.Format("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
-                            actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd));
+                        builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
+                        builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
+                            actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
                         //reset cached recruit actor flag
                         isNewActionAuthority = true;
                     }
@@ -2852,8 +2949,8 @@ public class ActorManager : MonoBehaviour
         for (int i = 0; i < listOfActors.Count; i++)
         {
             Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
-            subBuilder.Append(string.Format(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name.ToLower(), actor.level,
-                actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n"));
+            subBuilder.AppendFormat(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name.ToLower(), actor.level,
+                actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n");
         }
         subBuilder.AppendLine();
         return subBuilder.ToString();
