@@ -1298,8 +1298,6 @@ public class ActionManager : MonoBehaviour
         Actor actor = null;
         //default data 
         outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         outcomeDetails.modalLevel = details.modalLevel;
         outcomeDetails.modalState = details.modalState;
@@ -1313,7 +1311,7 @@ public class ActionManager : MonoBehaviour
                 if (gear != null)
                 {
                     //Give Gear
-                    outcomeDetails.textTop = string.Format("{0} {1} thanks you for the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+                    outcomeDetails.textTop = string.Format("{0}, {1}, thanks you for the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
                     //update actor details
                     string textGear = actor.AddGear(gear.gearID);
                     //get actor's preferred gear
@@ -1389,8 +1387,8 @@ public class ActionManager : MonoBehaviour
                 }
             }
             //message
-            string text = string.Format("{0} ({1}) given to {2} {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            Message message = GameManager.instance.messageScript.GiveGear(text, actor.actorID, gear.gearID, renownGiven);
+            string text = string.Format("{0} ({1}) given to {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
+            Message message = GameManager.instance.messageScript.GearGive(text, actor.actorID, gear.gearID, renownGiven);
             GameManager.instance.dataScript.AddMessage(message);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
@@ -1411,6 +1409,124 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessTakeGearAction(ModalActionDetails details)
     {
+        int benefit = 0;
+        int renownGiven = 0;
+        bool errorFlag = false;
+        bool preferredFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        Gear gear = null;
+        Actor actor = null;
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        outcomeDetails.modalLevel = details.modalLevel;
+        outcomeDetails.modalState = details.modalState;
+        StringBuilder builder = new StringBuilder();
+        if (details != null)
+        {
+            actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
+            if (actor != null)
+            {
+                gear = GameManager.instance.dataScript.GetGear(details.gearID);
+                if (gear != null)
+                {
+                    //Give Gear
+                    outcomeDetails.textTop = string.Format("{0}, {1}, hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+
+                    #region preferred gear
+                    /*//get actor's preferred gear
+                    GearType preferredGear = actor.arc.preferredGear;
+                    if (preferredGear != null)
+                    {
+                        switch (gear.rarity.name)
+                        {
+                            case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
+                            case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
+                            case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
+                            default:
+                                benefit = 0;
+                                Debug.LogErrorFormat("Invalid gear rarity \"{0}\"", gear.rarity.name);
+                                break;
+                        }
+                        if (preferredGear.name.Equals(gear.type.name) == true)
+                        {
+                            //Preferred gear (renown transfer)
+                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
+                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
+                            preferredFlag = true;
+                        }
+                        else
+                        {
+                            //Not preferred gear (motivation boost only)
+                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}",
+                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, colourEnd);
+                        }
+                        if (string.IsNullOrEmpty(textGear) == false)
+                        {
+                            //gear has been lost (actor already had some gear
+                            builder.AppendFormat("{0}{1}{2}{3}{4}{5} has been Lost{6}", "\n", "\n", colourNeutral, textGear, colourEnd, colourBad, colourEnd);
+                        }
+                    }
+                    else
+                    { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }*/
+                    #endregion
+
+                }
+                else { Debug.LogErrorFormat("Invalid gear (Null) for details.gearID {0}", details.gearID); errorFlag = true; }
+            }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+        }
+        else
+        {
+            //Transfer Gear
+            if (errorFlag == false)
+            {
+                //remove gear from actor
+                actor.RemoveGear();
+                //Give Gear to Player
+                GameManager.instance.playerScript.AddGear(gear.gearID);
+            }
+            outcomeDetails.sprite = gear.sprite;
+            outcomeDetails.textBottom = builder.ToString();
+            /*//give actor motivation boost
+            actor.datapoint1 += benefit;
+            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+            //if preferred transfer renown
+            if (preferredFlag == true)
+            {
+                if (actor.Renown > 0)
+                {
+                    //take from actor
+                    renownGiven = Mathf.Min(benefit, actor.Renown);
+                    actor.Renown -= benefit;
+                    actor.Renown = Mathf.Max(0, actor.Renown);
+                    //give to Player
+                    GameManager.instance.playerScript.Renown += renownGiven;
+                }
+            }*/
+            //message
+            string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
+            Message message = GameManager.instance.messageScript.GearGive(text, actor.actorID, gear.gearID, renownGiven);
+            GameManager.instance.dataScript.AddMessage(message);
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false)
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Take Gear";
+            //is there a delegate method that needs processing?
+            details.handler?.Invoke();
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
     }
 
         /// <summary>

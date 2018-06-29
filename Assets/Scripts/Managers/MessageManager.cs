@@ -222,35 +222,6 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
-    /// <summary>
-    /// Player gifts an actor with gear and may receive some renown in return if it's the actor's preferred gear type
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="actorID"></param>
-    /// <param name="gearID"></param>
-    /// <param name="renown"></param>
-    /// <returns></returns>
-    public Message GiveGear(string text, int actorID, int gearID, int renown)
-    {
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
-        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.PLAYER;
-            message.subType = MessageSubType.Gear_Given;
-            message.side = globalResistance;
-            message.isPublic = false;
-            message.data0 = actorID;
-            message.data1 = gearID;
-            message.data2 = renown;
-            return message;
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
-    }
-
     //
     // - - - AI - - -
     //
@@ -811,6 +782,39 @@ public Message PlayerMove(string text, int nodeID)
             message.data0 = nodeID;
             message.data1 = teamID;
             message.data2 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    //
+    // - - -  Gear - - -
+    //
+
+    /// <summary>
+    /// Player gifts an actor with gear and may receive some renown in return if it's the actor's preferred gear type
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actorID"></param>
+    /// <param name="gearID"></param>
+    /// <param name="renown"></param>
+    /// <returns></returns>
+    public Message GearGive(string text, int actorID, int gearID, int renown)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Gear_Given;
+            message.side = globalResistance;
+            message.isPublic = false;
+            message.data0 = actorID;
+            message.data1 = gearID;
+            message.data2 = renown;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

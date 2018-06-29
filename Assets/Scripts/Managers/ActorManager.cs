@@ -1170,8 +1170,8 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 buttonTitle = string.Format("Give {0}", gear.name),
                                                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                                buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name,
-                                                colourEnd, actor.arc.name, actor.actorName),
+                                                buttonTooltipMain = string.Format("Give {0}{1}{2} ({3}) to {4}{5}{6}, {7}", colourNeutral, gear.name, colourEnd, gear.type.name,
+                                                 colourCancel, actor.arc.name, colourEnd, actor.actorName),
                                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                                 //use a Lambda to pass arguments to the action
                                                 action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails, "ActorManager.cs -> GetActorActions"); }
@@ -1183,7 +1183,7 @@ public class ActorManager : MonoBehaviour
                                         else
                                         {
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                            infoBuilder.AppendFormat("{0}{1}{2} has been {3}used this turn{4} and can't be gifted", colourNeutral, gear.name, colourEnd, colourBad, colourEnd);
+                                            infoBuilder.AppendFormat("Can't gift {0}{1}{2}{3}{4}(used this turn){5}", colourNeutral, gear.name, colourEnd, "\n", colourBad, colourEnd);
                                         }
                                     }
                                     else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
@@ -1200,11 +1200,11 @@ public class ActorManager : MonoBehaviour
                         //
                         // - - - Take Gear - - -
                         //
+                        int actorGearID = actor.GetGearID();
                         //Player must have at least one free slot
                         if (numOfGear < maxNumOfGear)
                         {
                             //actor must have an item of gear
-                            int actorGearID = actor.GetGearID();
                             if (actorGearID > -1)
                             {
                                 //grace period must have expired
@@ -1255,8 +1255,8 @@ public class ActorManager : MonoBehaviour
                                         {
                                             buttonTitle = string.Format("<b>TAKE</b> {0}", gearActor.name),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gearActor.name, colourNeutral, gearActor.type.name,
-                                            colourEnd, actor.arc.name, actor.actorName),
+                                            buttonTooltipMain = string.Format("<b>TAKE</b> {0}{1}{2} ({3}) from {4}{5}{6}, {7}", colourNeutral, gearActor.name, colourEnd, gearActor.type.name,
+                                             colourCancel, actor.arc.name, colourEnd, actor.actorName),
                                             buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                                             //use a Lambda to pass arguments to the action
                                             action = () => { EventManager.instance.PostNotification(EventType.TakeGearAction, this, gearActionDetails, "ActorManager.cs -> GetActorActions"); }
@@ -1271,7 +1271,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //grace period still in force
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("Can't TAKE gear as still within {0}Grace Period{1}", colourNeutral, colourEnd);
+                                    infoBuilder.AppendFormat("Can't TAKE gear{0}{1}(within Grace Period){2}", "\n", colourBad, colourEnd);
                                 }
                             }
                             else
@@ -1284,8 +1284,11 @@ public class ActorManager : MonoBehaviour
                         else
                         {
                             //player has no spare slot to put gear
-                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            { infoBuilder.Append("Player has no space for Gear"); }
+                            if (actorGearID > -1)
+                            {
+                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                { infoBuilder.AppendFormat("Can't Take Gear{0}{1}(No space){2}", "\n", colourBad, colourEnd); }
+                            }
                         }
 
                     }
