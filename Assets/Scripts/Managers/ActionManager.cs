@@ -1518,11 +1518,14 @@ public class ActionManager : MonoBehaviour
                 else
                 {
                     //first time gear has been taken
-                    builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourBad, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
                 }
-                builder.AppendFormat("{0}{1}Next time you Take gear from {2} they will lose {3}{4}-{5} Motivation{6}. With insufficient Motivation they will {7}{8}Refuse to hand over{9} the gear",
-                    "\n", "\n", actor.actorName, "\n", colourNeutral, motivationCost + 1, colourEnd, "\n", colourBad, colourEnd);
-            }
+                builder.AppendFormat("{0}{1}Next time you Take gear from {2} they will lose", "\n", "\n", actor.actorName);
+                builder.AppendFormat("{0}{1}-{2} Motivation{3}", "\n", colourNeutral, motivationCost+1, colourEnd);
+                builder.AppendFormat("{0}If insufficiently motivated they", "\n");
+                builder.AppendFormat("{0}{1}will refuse{2}", "\n", colourBad, colourEnd);
+                builder.AppendFormat("{0}to hand over the gear", "\n");
+            } 
             outcomeDetails.sprite = gear.sprite;
             outcomeDetails.textBottom = builder.ToString();
             //message

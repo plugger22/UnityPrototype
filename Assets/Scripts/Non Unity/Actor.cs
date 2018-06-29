@@ -87,7 +87,7 @@ namespace gameAPI
             Renown = 0;
             gearID = -1;
             gearTimer = 0;
-            gearTimesTaken = 0;
+            gearTimesTaken = 2;
             //cached Trait Effects
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
