@@ -1319,7 +1319,7 @@ public class ActionManager : MonoBehaviour
                 if (gear != null)
                 {
                     //Give Gear
-                    outcomeDetails.textTop = string.Format("{0}, {1}, thanks you for the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
+                    outcomeDetails.textTop = string.Format("{0}, {1}, thanks you for the {2}{3}{4}{5}", actor.arc.name, actor.actorName, "\n", colourNeutral, gear.name, colourEnd);
                     //update actor details
                     string textGear = actor.AddGear(gear.gearID);
                     //get actor's preferred gear
@@ -1328,14 +1328,17 @@ public class ActionManager : MonoBehaviour
                     {
                         motivationBoost = gearSwapBaseAmount;
                         builder.AppendFormat("{0}{1} no longer available{2}", colourBad, gear.name, colourEnd);
-                        builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourGood, actor.arc.name, gearSwapBaseAmount, colourEnd);
+                        //motivation loss more if preferred gear
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
                             //Preferred gear (extra motivation)
-                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}(Preferred Gear){7}", "\n", "\n", colourGood, actor.arc.name, gearSwapPreferredAmount, colourEnd,
-                                colourNeutral, colourEnd);
                             motivationBoost += gearSwapPreferredAmount;
+                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}(Preferred Gear){7}", "\n", "\n", colourGood, actor.arc.name, motivationBoost, colourEnd,
+                                colourNeutral, colourEnd);
                         }
+                        else
+                        { builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourGood, actor.arc.name, gearSwapBaseAmount, colourEnd); }
+                        //grace period note
                         builder.AppendFormat("{0}{1}After {2}{3}{4} turn{5} you can ask for the gear back", "\n", "\n", colourNeutral, gearGracePeriod, colourEnd,
                             gearGracePeriod != 1 ? "s" : "");
                         if (string.IsNullOrEmpty(textGear) == false)
@@ -1415,36 +1418,28 @@ public class ActionManager : MonoBehaviour
                     //Cost to take gear
                     motivationCost = gearSwapBaseAmount;
                     //Take gear custom message -> actor gets increasingly annoyed the more you take gear off them (no game effect)
+                    string emotion = "respectfully";
                     switch (actor.GetGearTimesTaken())
                     {
-                        case 0:
-                            outcomeDetails.textTop = string.Format("{0}, {1}, <i>respectfully</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
-                            break;
-                        case 1:
-                            outcomeDetails.textTop = string.Format("{0}, {1}, <i>reluctantly</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
-                            break;
-                        default:
-                            outcomeDetails.textTop = string.Format("{0}, {1}, <i>angrily</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
-                            break;
+                        case 1: emotion = "reluctantly"; break;
+                        default: emotion = "resentfully"; break;
                     }
+                    outcomeDetails.textTop = string.Format("{0}, {1}, <b>{2}</b> hands over the {3}{4}{5}{6}", actor.arc.name, actor.actorName, emotion,
+                        "\n", colourNeutral, gear.name, colourEnd);
                     //get actor's preferred gear
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
                     {
-                        
+                        builder.AppendFormat("{0}{1} is available{2}", colourGood, gear.name, colourEnd);
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
                             //Preferred gear (extra motivation)
                             motivationCost += gearSwapPreferredAmount;
-                            builder.AppendFormat("{0}{1} is available{2}{3}{4}{5}{6} Motivation -{7}{8}",
-                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.arc.name, motivationCost, colourEnd);
+                            builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}{6}{7}(Preferred Gear){8}", "\n", "\n", colourBad, actor.arc.name, motivationCost, colourEnd, "\n",
+                            colourNeutral, colourEnd);
                         }
                         else
-                        {
-                            //Not preferred gear
-                            builder.AppendFormat("{0}{1} is available{2}{3}{4}{5}{6} Motivation -{7}{8}",
-                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.arc.name, motivationCost, colourEnd);
-                        }
+                        { builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}", "\n", "\n", colourBad, actor.arc.name, motivationCost, colourEnd); }
                     }
                     else
                     { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }
@@ -1472,22 +1467,22 @@ public class ActionManager : MonoBehaviour
                 GameManager.instance.playerScript.AddGear(gear.gearID);
                 //deduct motivation from actor
                 if (motivationCost > 0)
-                {
+                {                    
+                    //relationship Breakdown
+                    if (actor.datapoint1 < motivationCost)
+                    {
+                        builder.AppendFormat("{0}{1}{2}Motivation too Low!{3}", "\n", "\n", colourAlert, colourEnd);
+                        builder.AppendFormat("{0}{1}{2} suffers a RELATIONSHIP BREAKDOWN", "\n", colourBad, actor.arc.name, colourEnd);
+                    }
                     //second or beyond time that gear has been taken
                     actor.datapoint1 -= motivationCost;
                     actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                    builder.AppendFormat("{0}{1} loses {2}{3}-{4}{5}{6} Motivation{7}", colourBad, actor.arc.name, colourEnd, colourNeutral, motivationCost, colourEnd, colourBad, colourEnd);
                 }
                 else
                 {
-                    //first time gear has been taken
+                    //no motivation cost
                     builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
                 }
-                builder.AppendFormat("{0}{1}Next time you Take gear from {2} they will lose", "\n", "\n", actor.actorName);
-                builder.AppendFormat("{0}{1}-{2} Motivation{3}", "\n", colourNeutral, motivationCost+1, colourEnd);
-                builder.AppendFormat("{0}If insufficiently motivated they", "\n");
-                builder.AppendFormat("{0}{1}will refuse{2}", "\n", colourBad, colourEnd);
-                builder.AppendFormat("{0}to hand over the gear", "\n");
             } 
             outcomeDetails.sprite = gear.sprite;
             outcomeDetails.textBottom = builder.ToString();

@@ -34,7 +34,7 @@ namespace gameAPI
         //gear
         private int gearID;                                     //can only have one piece of gear at a time, default -1
         private int gearTimer;                                  //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)
-        private int gearTimesTaken;                             //tally of how many times player has taken gear from actor (harder to do so each time)
+        private int gearTimesTaken;                             //tally of how many times player has taken gear from actor (harder to do so each time) NO GAME EFFECT AT PRESENT
 
         //cached trait effects
         private int actorStressNone;
@@ -87,7 +87,7 @@ namespace gameAPI
             Renown = 0;
             gearID = -1;
             gearTimer = 0;
-            gearTimesTaken = 2;
+            gearTimesTaken = 0;
             //cached Trait Effects
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");

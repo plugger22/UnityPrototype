@@ -786,12 +786,12 @@ public class EffectManager : MonoBehaviour
                         case "Add":
                             actor.datapoint1 += effect.value;
                             actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
-                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.actorName, effect.textTag, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
                             break;
                         case "Subtract":
                             actor.datapoint1 -= effect.value;
                             actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.actorName, effect.textTag, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
                             break;
                         default:
                             Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
@@ -1035,7 +1035,7 @@ public class EffectManager : MonoBehaviour
                                             invisibility += effect.value;
                                             invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
                                             actor.datapoint2 = invisibility;
-                                            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name, 
+                                            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.arc.name, actor.arc.name, 
                                                 dataBefore, invisibility, "\n");
                                         }
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
@@ -1071,7 +1071,7 @@ public class EffectManager : MonoBehaviour
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
                                         actor.datapoint2 = invisibility;
-                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.arc.name, actor.arc.name,
                                             dataBefore, invisibility, "\n");
                                         //AI activity message
                                         int delay;
@@ -1179,7 +1179,7 @@ public class EffectManager : MonoBehaviour
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                 }
-                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
+                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.arc.name, actor.arc.name, dataBefore, actor.Renown, "\n");
                             }
                             else
                             {
