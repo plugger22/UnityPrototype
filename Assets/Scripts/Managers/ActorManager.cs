@@ -1229,12 +1229,12 @@ public class ActorManager : MonoBehaviour
                                                 if (preferredGear.name.Equals(gearActor.type.name) == true)
                                                 {
                                                     benefit += gearSwapPreferredAmount;
-                                                    tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}",
+                                                    tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation -{4}{5}",
                                                       actor.arc.name, "\n", colourGood, actor.actorName, benefit, colourEnd);
                                                 }
                                                 else
                                                 {
-                                                    tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
+                                                    tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation -{6}{7}", colourNeutral,
                                                       preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                                 }
                                             }

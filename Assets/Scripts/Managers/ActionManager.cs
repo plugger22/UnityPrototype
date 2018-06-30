@@ -1332,7 +1332,8 @@ public class ActionManager : MonoBehaviour
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
                             //Preferred gear (extra motivation)
-                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} (Preferred Gear){5}", "\n", "\n", colourGood, actor.arc.name, gearSwapPreferredAmount, colourEnd);
+                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}(Preferred Gear){7}", "\n", "\n", colourGood, actor.arc.name, gearSwapPreferredAmount, colourEnd,
+                                colourNeutral, colourEnd);
                             motivationBoost += gearSwapPreferredAmount;
                         }
                         builder.AppendFormat("{0}{1}After {2}{3}{4} turn{5} you can ask for the gear back", "\n", "\n", colourNeutral, gearGracePeriod, colourEnd,
@@ -1412,9 +1413,9 @@ public class ActionManager : MonoBehaviour
                 if (gear != null)
                 {
                     //Cost to take gear
-                    motivationCost = actor.GetGearTimesTaken();
-                    //Give Gear
-                    switch (motivationCost)
+                    motivationCost = gearSwapBaseAmount;
+                    //Take gear custom message -> actor gets increasingly annoyed the more you take gear off them (no game effect)
+                    switch (actor.GetGearTimesTaken())
                     {
                         case 0:
                             outcomeDetails.textTop = string.Format("{0}, {1}, <i>respectfully</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
@@ -1426,48 +1427,27 @@ public class ActionManager : MonoBehaviour
                             outcomeDetails.textTop = string.Format("{0}, {1}, <i>angrily</i> hands over the {2}{3}{4}", actor.arc.name, actor.actorName, colourNeutral, gear.name, colourEnd);
                             break;
                     }
-                    
-
-                    #region preferred gear
-                    /*//get actor's preferred gear
+                    //get actor's preferred gear
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
                     {
-                        switch (gear.rarity.name)
-                        {
-                            case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
-                            case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
-                            case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
-                            default:
-                                benefit = 0;
-                                Debug.LogErrorFormat("Invalid gear rarity \"{0}\"", gear.rarity.name);
-                                break;
-                        }
+                        
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
-                            //Preferred gear (renown transfer)
-                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
-                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
-                            preferredFlag = true;
+                            //Preferred gear (extra motivation)
+                            motivationCost += gearSwapPreferredAmount;
+                            builder.AppendFormat("{0}{1} is available{2}{3}{4}{5}{6} Motivation -{7}{8}",
+                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.arc.name, motivationCost, colourEnd);
                         }
                         else
                         {
-                            //Not preferred gear (motivation boost only)
-                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}",
-                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, colourEnd);
-                        }
-                        if (string.IsNullOrEmpty(textGear) == false)
-                        {
-                            //gear has been lost (actor already had some gear
-                            builder.AppendFormat("{0}{1}{2}{3}{4}{5} has been Lost{6}", "\n", "\n", colourNeutral, textGear, colourEnd, colourBad, colourEnd);
+                            //Not preferred gear
+                            builder.AppendFormat("{0}{1} is available{2}{3}{4}{5}{6} Motivation -{7}{8}",
+                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.arc.name, motivationCost, colourEnd);
                         }
                     }
                     else
-                    { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }*/
-                    #endregion
-
-
-
+                    { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }
                 }
                 else { Debug.LogErrorFormat("Invalid gear (Null) for details.gearID {0}", details.gearID); errorFlag = true; }
             }
