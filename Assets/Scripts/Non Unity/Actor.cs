@@ -301,6 +301,9 @@ namespace gameAPI
                 {
                     text = gearOld.name;
                     Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} given to HQ by {1}{2}", gearOld.name, arc.name, "\n");
+                    //gear has been lost
+                    if (GameManager.instance.dataScript.RemoveGearLost(gearOld) == false)
+                    { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gearOld.name, gearOld.gearID); }
                     //let player know that gear has been Lost
                     string msgText = string.Format("{0} ({1}), has been GIVEN TO HQ by {2}", gearOld.name, gearOld.type.name, arc.name);
                     Message message = GameManager.instance.messageScript.GearLost(msgText, gearOld.gearID, actorID);
@@ -315,6 +318,9 @@ namespace gameAPI
                 gearID = newGearID;
                 gearTimer = 0;
                 Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} added to inventory of {1}{2}", gearNew.name, arc.name, "\n");
+                //add to listOfCurrentGear
+                if (GameManager.instance.dataScript.AddGearNew(gearNew) == false)
+                { Debug.LogWarningFormat("Invalid gear Add to Current for \"{0}\", gearID {1}", gearNew.name, gearNew.gearID); }
             }
             else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", newGearID); }
             //return name and type of any gear that was lost (existing prior to new gear being added)
@@ -338,6 +344,12 @@ namespace gameAPI
                 //if gear has been taken, increment counter
                 if (isTaken == true)
                 { gearTimesTaken++; }
+                else
+                {
+                    //gear Lost
+                    if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
+                    { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+                }
             }
         }
 

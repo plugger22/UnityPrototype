@@ -91,6 +91,8 @@ public class DataManager : MonoBehaviour
     private List<int> listOfCommonGear = new List<int>();
     private List<int> listOfRareGear = new List<int>();
     private List<int> listOfUniqueGear = new List<int>();
+    private List<int> listOfLostGear = new List<int>();
+    private List<int> listOfCurrentGear = new List<int>();                                          //gear held by OnMap resistance player or actors
 
     //AI persistant data
     private int[] arrayOfAIResources = new int[3];                                                  //Global side index [0] none, [1] Authority, [2] Resistance
@@ -2053,19 +2055,22 @@ public class DataManager : MonoBehaviour
         {
             if (listOfGearID.Count > 0)
             {
-                switch(rarity.name)
+                switch(rarity.level)
                 {
-                    case "Common":
+                    case 0:
+                        //common
                         listOfCommonGear.AddRange(listOfGearID);
                         break;
-                    case "Rare":
+                    case 1:
+                        //rare
                         listOfRareGear.AddRange(listOfGearID);
                         break;
-                    case "Unique":
+                    case 2:
+                        //unique
                         listOfUniqueGear.AddRange(listOfGearID);
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity.name));
+                        Debug.LogError(string.Format("Invalid rarity \"{0}\", level {1}", rarity.name, rarity.level));
                         break;
                 }
                 Debug.Log(string.Format("DataManager -> SetGearList {0} records for GearLevel \"{1}\"{2}", listOfGearID.Count, rarity.name, "\n"));
@@ -2105,12 +2110,15 @@ public class DataManager : MonoBehaviour
         return tempList;
     }
 
+    public List<int> GetListOfCurrentGear()
+    { return listOfCurrentGear; }
+
     /// <summary>
-    /// will remove a piece of gear that's been lost (for any reason) from the relevant gear picker list
+    /// will remove a piece of gear that's been lost (for any reason) from the relevant gear lists and add to the list Of Lost Gear
     /// </summary>
     /// <param name="gear"></param>
     /// <returns></returns>
-    public bool RemoveGearFromList(Gear gear)
+    public bool RemoveGearLost(Gear gear)
     {
         bool isSuccess = true;
         if (gear != null)
@@ -2119,21 +2127,50 @@ public class DataManager : MonoBehaviour
             {
                 case 0:
                     //common
-
+                    if (listOfCommonGear.Remove(gear.gearID) == false)
+                    { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfCommonGear", gear.name, gear.gearID); }
                     break;
                 case 1:
                     //rare
-
+                    if (listOfRareGear.Remove(gear.gearID) == false)
+                    { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfRareGear", gear.name, gear.gearID); }
                     break;
                 case 2:
                     //unique
-
+                    if (listOfUniqueGear.Remove(gear.gearID) == false)
+                    { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfUniqueGear", gear.name, gear.gearID); }
                     break;
                 default:
                     Debug.LogWarningFormat("Invalid Gear rarity level {0} for \"{1}\"", gear.rarity.level, gear.name);
                     isSuccess = false;
                     break;
             }
+            //remove from Current list
+            if (listOfCurrentGear.Remove(gear.gearID) == false)
+            { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfCurrentGear", gear.name, gear.gearID); }
+            //add to Lost list
+            listOfLostGear.Add(gear.gearID);
+        }
+        else { Debug.LogWarning("Invalid gear (Null)"); }
+        return isSuccess;
+    }
+
+    /// <summary>
+    /// adds gear to list of current, OnMap, in use, gear
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <returns></returns>
+    public bool AddGearNew(Gear gear)
+    {
+        bool isSuccess = true;
+        if (gear != null)
+        {
+            if (listOfCurrentGear.Exists(x => x == gear.gearID) == true)
+            {
+                //entry already exists
+                isSuccess = false;
+            }
+            else { listOfCurrentGear.Add(gear.gearID); }
         }
         else { Debug.LogWarning("Invalid gear (Null)"); }
         return isSuccess;

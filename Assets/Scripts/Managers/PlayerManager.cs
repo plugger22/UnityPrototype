@@ -350,6 +350,9 @@ public class PlayerManager : MonoBehaviour
                     listOfGear.Add(gearID);
                     Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to inventory{2}", gear.name, gearID, "\n");
                     CheckForAIUpdate(gear);
+                    //add to listOfCurrentGear
+                    if (GameManager.instance.dataScript.AddGearNew(gear) == false)
+                    { Debug.LogWarningFormat("Invalid gear Add to Current for \"{0}\", gearID {1}", gear.name, gear.gearID); }
                     return true;
                 }
                 else
@@ -363,11 +366,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// remove gear from player's inventory
+    /// remove gear from player's inventory. Set isLost to true if the gear is gone forever so that the relevant lists can be updated
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public bool RemoveGear(int gearID)
+    public bool RemoveGear(int gearID, bool isLost = false)
     {
         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
         if (gear != null)
@@ -375,7 +378,7 @@ public class PlayerManager : MonoBehaviour
             //check gear not already in inventory
             if (CheckGearPresent(gearID) == true)
             {
-                RemoveGearItem(gear);
+                RemoveGearItem(gear, isLost);
                 return true;
             }
             else
@@ -396,12 +399,15 @@ public class PlayerManager : MonoBehaviour
     /// NOTE: gear checked for Null by calling method
     /// </summary>
     /// <param name="gear"></param>
-    private void RemoveGearItem(Gear gear)
+    private void RemoveGearItem(Gear gear, bool isLost)
     {
         ResetGearItem(gear);
         listOfGear.Remove(gear.gearID);
         Debug.Log(string.Format("[Gea] PlayerManager.cs -> RemoveGear: {0}, ID {1}, removed from inventory{2}", gear.name, gear.gearID, "\n"));
         CheckForAIUpdate(gear);
+        //lost gear
+        if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
+        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
     }
 
     /// <summary>
