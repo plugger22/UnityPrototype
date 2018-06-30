@@ -134,7 +134,7 @@ public class ModalActionMenu : MonoBehaviour
                     modal.gearID = details.itemID;
                     break;
             }
-            //There can be a max of 6 buttons (1 x target, 4 x actor actions, 1 x Cancel)
+            //There can be a max of 6 buttons (5 plus 1 x Cancel)
             int counter = 0;
             Button tempButton;
             Text title;

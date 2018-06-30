@@ -491,7 +491,7 @@ public class PlayerManager : MonoBehaviour
                             string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.name, gear.type.name);
                             Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                             GameManager.instance.dataScript.AddMessage(message);
-                            RemoveGearItem(gear);
+                            RemoveGearItem(gear, true);
                         }
                         else
                         {

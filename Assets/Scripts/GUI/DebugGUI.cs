@@ -21,15 +21,22 @@ public class DebugGUI : MonoBehaviour
     private int debugDisplay = 0;
 
     public int button_height;
-    public int offset_x;        //space between left edge of box and button
-    public int offset_y;        //space between buttons
+    [Tooltip("Space between left edge of box and button")]
+    public int offset_x;  
+    [Tooltip("Space between buttons")]
+    public int offset_y;      
     public int box_x;
-    public int box_option;      //x coord for the options box
-    public int box_action;      //x coord for the actions box
+    [Tooltip("x coord for the options box")]
+    public int box_option;
+    [Tooltip("x coord for the actions box")]
+    public int box_action;
+    [Tooltip("x coord for the levels box")]
+    public int box_level; 
     public int box_y;
     public int box_width;
     public int box_height;
-    public int gap_y;           //gap at start between header and first button
+    [Tooltip("gap at start between header and first button")]
+    public int gap_y; 
 
     private int button_width;
     private string textInput_0 = "what";
@@ -50,6 +57,7 @@ public class DebugGUI : MonoBehaviour
         button_width = box_width - (2 * offset_x);
         box_option = box_x * 2 + box_width;
         box_action = box_x * 3 + box_width * 2;
+        box_level = box_x * 4 + box_width * 3;
         //option strings
         optionAutoGear = "Auto Gear ON";
         optionFogOfWar = "Fog Of War ON";
@@ -88,12 +96,13 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Data)
-            GUI.Box(new Rect(box_x, box_y, box_width, box_height), string.Format("Info Menu{0}Turn {1}", "\n", GameManager.instance.turnScript.Turn), customBackground);
+            GUI.Box(new Rect(box_x, box_y, box_width, box_height), "Info Menu", customBackground);
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height), string.Format("Option Menu{0}Action {1} of {2}", "\n",
-                GameManager.instance.turnScript.GetActionsCurrent(), GameManager.instance.turnScript.GetActionsTotal()), customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height), "Option Menu", customBackground);
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height), "Action Menu", customBackground);
+            //background box (Level)
+            GUI.Box(new Rect(box_level, box_y, box_width, box_height), "Level Menu", customBackground);
 
             //
             // - - - Data (first box)
@@ -227,9 +236,6 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Toggle AI Data"))
             {
                 Debug.Log("[Dbg] Button -> AI Data");
-                /*if (debugDisplay != 10)
-                { debugDisplay = 10; }
-                else { debugDisplay = 0; }*/
                 switch(aiStatus)
                 {
                     case AIDebugData.None: debugDisplay = 10; aiStatus = AIDebugData.Task; break;
@@ -241,15 +247,15 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-            
             //fourteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Give Renown"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Toggle Gear Data"))
             {
-                Debug.Log("[Dbg] Button -> Give Player Renown");
-                int renown = GameManager.instance.playerScript.Renown;
-                renown += 10;
-                GameManager.instance.playerScript.Renown = renown;
+                Debug.Log("[Dbg] Button -> Gear Data");
+                if (debugDisplay != 24)
+                { debugDisplay = 24; }
+                else { debugDisplay = 0; }
             }
+
 
 
             //
@@ -366,74 +372,21 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-            //seventh button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionAIOffline))
-            {
-                Debug.Log("[Dbg] Button -> Toggle AI Offline");
-                if (GameManager.instance.aiScript.CheckAIOffLineStatus() == true)
-                {
-                    GameManager.instance.aiScript.SetAIOffline(false);
-                    optionAIOffline = "AIOffline ON";
-                }
-                else
-                {
-                    GameManager.instance.aiScript.SetAIOffline(true);
-                    optionAIOffline = "AIOffline OFF";
-                }
-            }
-
-            //eigth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionAITraceback))
-            {
-                Debug.Log("[Dbg] Button -> Toggle AI TraceBack");
-                if (GameManager.instance.aiScript.CheckAITraceBackStatus() == true)
-                {
-                    GameManager.instance.aiScript.SetAITraceBack(false);
-                    optionAITraceback = "AITraceBack ON";
-                }
-                else
-                {
-                    GameManager.instance.aiScript.SetAITraceBack(true);
-                    optionAITraceback = "AITraceback OFF";
-                }
-            }
-
-            //ninth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), optionAIScreamer))
-            {
-                Debug.Log("[Dbg] Button -> Toggle AI Screamer");
-                if (GameManager.instance.aiScript.CheckAIScreamerStatus() == true)
-                {
-                    GameManager.instance.aiScript.SetAIScreamer(false);
-                    optionAIScreamer = "AIScreamer ON";
-                }
-                else
-                {
-                    GameManager.instance.aiScript.SetAIScreamer(true);
-                    optionAIScreamer = "AIScreamer OFF";
-                }
-            }
+            
 
             //tenth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "AISecProtocol +"))
-            {
-                Debug.Log("[Dbg] Button -> Increase AI Security Protocol");
-                GameManager.instance.aiScript.IncreaseAISecurityProtocolLevel();
-            }
-
-            //eleventh button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), optionRenownUI))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionRenownUI))
             {
                 Debug.Log("[Dbg] Button -> Toggle Renown Display");
                 if (GameManager.instance.actorPanelScript.CheckRenownUIStatus() == true)
                 {
-                    GameManager.instance.actorPanelScript.SetActorRenownUI(true);
-                    optionRenownUI = "Renown UI OFF";
+                    GameManager.instance.actorPanelScript.SetActorRenownUI(false);
+                    optionRenownUI = "Renown UI ON";
                 }
                 else
                 {
-                    GameManager.instance.actorPanelScript.SetActorRenownUI(false);
-                    optionRenownUI = "Renown UI ON";
+                    GameManager.instance.actorPanelScript.SetActorRenownUI(true);
+                    optionRenownUI = "Renown UI OFF";
                 }
             }
 
@@ -512,30 +465,10 @@ public class DebugGUI : MonoBehaviour
                 GameManager.instance.dataScript.RemoveOngoingEffects();
             }
 
-            //seventh button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Most Connected"))
-            {
-                Debug.Log("[Dbg] Button -> Show Most Connected Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected, "DebugGUI.cs -> OnGUI");
-            }
 
-            //eighth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Centre Nodes"))
-            {
-                Debug.Log("[Dbg] Button -> Centre Nodes");
-                GameManager.instance.debugGraphicsScript.SetCentrePane(true);
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre, "DebugGUI.cs -> OnGUI");
-            }
-
-            //ninth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Near Neighbours"))
-            {
-                Debug.Log("[Dbg] Button -> NearNeighbours");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours, "DebugGUI.cs -> OnGUI");
-            }
 
             //tenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Give Gear"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Give Gear"))
             {
                 //Resistance player only
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
@@ -547,7 +480,7 @@ public class DebugGUI : MonoBehaviour
                 }
             }
             //eleventh button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Give Condition"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Give Condition"))
             {
                 Debug.Log("[Dbg] Button -> Give Condition");
                 if (debugDisplay != 18)
@@ -555,7 +488,7 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
             //twelfth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Give Trait"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Give Trait"))
             {
                 Debug.Log("[Dbg] Button -> Give Actor Trait");
                 if (debugDisplay != 20)
@@ -563,21 +496,111 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
             //thirteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Set Sec State"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Give Renown"))
+            {
+                Debug.Log("[Dbg] Button -> Give Player Renown");
+                int renown = GameManager.instance.playerScript.Renown;
+                renown += 10;
+                GameManager.instance.playerScript.Renown = renown;
+            }
+
+            //thirteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Set Sec State"))
             {
                 Debug.Log("[Dbg] Button -> Set Security State");
                 if (debugDisplay != 22)
                 { debugDisplay = 22; }
                 else { debugDisplay = 0; }
             }
+
             //fourteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Decision Nodes"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "AISecProtocol +"))
+            {
+                Debug.Log("[Dbg] Button -> Increase AI Security Protocol");
+                GameManager.instance.aiScript.IncreaseAISecurityProtocolLevel();
+            }
+
+            //seventh button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), optionAIOffline))
+            {
+                Debug.Log("[Dbg] Button -> Toggle AI Offline");
+                if (GameManager.instance.aiScript.CheckAIOffLineStatus() == true)
+                {
+                    GameManager.instance.aiScript.SetAIOffline(false);
+                    optionAIOffline = "AIOffline ON";
+                }
+                else
+                {
+                    GameManager.instance.aiScript.SetAIOffline(true);
+                    optionAIOffline = "AIOffline OFF";
+                }
+            }
+
+            //eigth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), optionAITraceback))
+            {
+                Debug.Log("[Dbg] Button -> Toggle AI TraceBack");
+                if (GameManager.instance.aiScript.CheckAITraceBackStatus() == true)
+                {
+                    GameManager.instance.aiScript.SetAITraceBack(false);
+                    optionAITraceback = "AITraceBack ON";
+                }
+                else
+                {
+                    GameManager.instance.aiScript.SetAITraceBack(true);
+                    optionAITraceback = "AITraceback OFF";
+                }
+            }
+
+            //ninth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), optionAIScreamer))
+            {
+                Debug.Log("[Dbg] Button -> Toggle AI Screamer");
+                if (GameManager.instance.aiScript.CheckAIScreamerStatus() == true)
+                {
+                    GameManager.instance.aiScript.SetAIScreamer(false);
+                    optionAIScreamer = "AIScreamer ON";
+                }
+                else
+                {
+                    GameManager.instance.aiScript.SetAIScreamer(true);
+                    optionAIScreamer = "AIScreamer OFF";
+                }
+            }
+
+
+            //
+            // - - - Level Menu - - -
+            //
+
+            //first button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Most Connected"))
+            {
+                Debug.Log("[Dbg] Button -> Show Most Connected Nodes");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected, "DebugGUI.cs -> OnGUI");
+            }
+
+            //second button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Centre Nodes"))
+            {
+                Debug.Log("[Dbg] Button -> Centre Nodes");
+                GameManager.instance.debugGraphicsScript.SetCentrePane(true);
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre, "DebugGUI.cs -> OnGUI");
+            }
+
+            //third button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Near Neighbours"))
+            {
+                Debug.Log("[Dbg] Button -> NearNeighbours");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours, "DebugGUI.cs -> OnGUI");
+            }
+
+            //fourth button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Decision Nodes"))
             {
                 Debug.Log("[Dbg] Button -> Show Decision Nodes");
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes, "DebugGUI.cs -> OnGUI");
             }
-
-
 
             //
             // - - - Analysis at Right Hand side of Screen - - -
@@ -799,9 +822,11 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
-                    //
+                    //Gear Info Display
                     case 24:
-                        
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.playerScript.DisplayPlayerStats();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                 }
             }

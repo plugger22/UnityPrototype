@@ -2176,6 +2176,27 @@ public class DataManager : MonoBehaviour
         return isSuccess;
     }
 
+    /// <summary>
+    /// Debug display method for all gear lists
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayGearData()
+    {
+        StringBuilder builder = new StringBuilder();
+
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// submethod (Debug) to turn a list of gear into a readable display item, called by DataManager.cs -> DisplayGearData
+    /// </summary>
+    /// <param name="listOfGear"></param>
+    /// <returns></returns>
+    private string DisplayGearList(List<int> listOfGear)
+    {
+
+    }
+
     //
     // - - - Messages - - -
     //

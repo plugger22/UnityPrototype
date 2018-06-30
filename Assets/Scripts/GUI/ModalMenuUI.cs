@@ -193,6 +193,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                     if (actor != null)
                     {
+                        Gear gearActor = GameManager.instance.dataScript.GetGear(actor.GetGearID());
                         //do once
                         while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
                         {
@@ -206,6 +207,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                                 tooltipPos = positionActor,
                                 actor = actor,
                                 action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
+                                gear = gearActor,
                                 arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
                                 arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
                             };

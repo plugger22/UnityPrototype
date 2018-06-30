@@ -577,7 +577,6 @@ public class GearManager : MonoBehaviour
                 List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
                 List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearRare));
                 //remove from lists any gear that the player currently has
-                /*List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());*/
                 List<int> tempCurrentGear = new List<int>(GameManager.instance.dataScript.GetListOfCurrentGear());
                 if (tempCurrentGear.Count > 0)
                 {
