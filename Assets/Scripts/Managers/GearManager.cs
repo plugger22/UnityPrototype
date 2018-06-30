@@ -86,7 +86,7 @@ public class GearManager : MonoBehaviour
         {
             foreach(GearRarity rarity in listOfGearRarity)
             {
-                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //pick out and assign the ones required for fast access, ignore the rest. 
                 //Also dynamically assign gearRarity.level values (0/1/2). Do so here as lots of gear calc's depend on these and they need to be correct
                 switch (rarity.name)
                 {
@@ -504,9 +504,6 @@ public class GearManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseGenericPickerGear(ModalActionDetails details)
     {
-        /*Debug.LogFormat("GearManager.cs -> InitialiseGenericPickerGear START: Turn {0}, isNewActionPlayer {1}, isNewActionActor {2}{3}", 
-            GameManager.instance.turnScript.Turn, isNewActionPlayer, isNewActionActor, "\n");*/
-
         //first Gear Pick this action
         bool errorFlag = false;
         bool isIgnoreCache = false;

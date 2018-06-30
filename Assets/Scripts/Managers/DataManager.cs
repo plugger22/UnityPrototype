@@ -2083,23 +2083,60 @@ public class DataManager : MonoBehaviour
     public List<int> GetListOfGear(GearRarity rarity)
     {
         List<int> tempList = new List<int>();
-        switch (rarity.name)
+        switch (rarity.level)
         {
-            case "Common":
+            case 0:
+                //common
                 tempList = listOfCommonGear;
                 break;
-            case "Rare":
+            case 1:
+                //rare
                 tempList = listOfRareGear;
                 break;
-            case "Unique":
+            case 2:
+                //unique
                 tempList = listOfUniqueGear;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid rarity \"{0}\"", rarity.name));
+                Debug.LogError(string.Format("Invalid rarity level \"{0}\"", rarity.level));
                 break;
         }
         //return list
         return tempList;
+    }
+
+    /// <summary>
+    /// will remove a piece of gear that's been lost (for any reason) from the relevant gear picker list
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <returns></returns>
+    public bool RemoveGearFromList(Gear gear)
+    {
+        bool isSuccess = true;
+        if (gear != null)
+        {
+            switch(gear.rarity.level)
+            {
+                case 0:
+                    //common
+
+                    break;
+                case 1:
+                    //rare
+
+                    break;
+                case 2:
+                    //unique
+
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid Gear rarity level {0} for \"{1}\"", gear.rarity.level, gear.name);
+                    isSuccess = false;
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid gear (Null)"); }
+        return isSuccess;
     }
 
     //

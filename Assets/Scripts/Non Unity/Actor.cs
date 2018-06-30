@@ -302,7 +302,7 @@ namespace gameAPI
                     text = gearOld.name;
                     Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} given to HQ by {1}{2}", gearOld.name, arc.name, "\n");
                     //let player know that gear has been Lost
-                    string msgText = string.Format("{0}, {1}, has been GIVEN TO HQ by {2}, {3}", gearOld.name, gearOld.type.name, actorName, arc.name);
+                    string msgText = string.Format("{0} ({1}), has been GIVEN TO HQ by {2}", gearOld.name, gearOld.type.name, arc.name);
                     Message message = GameManager.instance.messageScript.GearLost(msgText, gearOld.gearID, actorID);
                     GameManager.instance.dataScript.AddMessage(message);
                 }
