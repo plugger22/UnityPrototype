@@ -99,7 +99,9 @@ public class ActorManager : MonoBehaviour
     private int actorNoActionsDuringSecurityMeasures;
     //gear
     private int maxNumOfGear;
-    private int gearGracePeriod;
+    private int gearGracePeriod = -1;
+    private int gearSwapBaseAmount = -1;
+    private int gearSwapPreferredAmount = -1;
     /*private GearType gearRecovery;
     private GearType gearPersonal;*/
     //colour palette for Generic tool tip
@@ -145,6 +147,8 @@ public class ActorManager : MonoBehaviour
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
         maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
+        gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
+        gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         /*gearRecovery = GameManager.instance.dataScript.GetGearType("Recovery");
         gearPersonal = GameManager.instance.dataScript.GetGearType("Personal");*/
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
@@ -152,7 +156,9 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
-        Debug.Assert(gearGracePeriod > -1 && gearGracePeriod < 10, "Invalid gearGracePeriod (<0 or 10+)");
+        Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
+        Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
+        Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
         /*Debug.Assert(gearRecovery != null, "Invalid gearRecovery (Null)");
         Debug.Assert(gearPersonal != null, "Invalid gearPersonal (Null)");*/
         //cached TraitEffects
@@ -1140,25 +1146,17 @@ public class ActorManager : MonoBehaviour
                                             GearType preferredGear = actor.arc.preferredGear;
                                             if (preferredGear != null)
                                             {
-                                                switch (gear.rarity.name)
-                                                {
-                                                    case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
-                                                    case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
-                                                    case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
-                                                    default:
-                                                        benefit = 0;
-                                                        Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gear.rarity.name));
-                                                        break;
-                                                }
+                                                benefit = gearSwapBaseAmount;
                                                 if (preferredGear.name.Equals(gear.type.name) == true)
                                                 {
-                                                    tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}",
-                                                      actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                                    benefit += gearSwapPreferredAmount;
+                                                    tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} Motivation +{4}{5}",
+                                                      actor.arc.name, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                                 }
                                                 else
                                                 {
                                                     tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
-                                                      preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd);
+                                                      preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                                 }
                                             }
                                             else
@@ -1223,31 +1221,21 @@ public class ActorManager : MonoBehaviour
                                             gearActionDetails.side = playerSide;
                                             gearActionDetails.actorDataID = actor.actorSlotID;
                                             gearActionDetails.gearID = gearActor.gearID;
-
-                                            #region preferred gear
                                             //get actor's preferred gear
                                             GearType preferredGear = actor.arc.preferredGear;
                                             if (preferredGear != null)
                                             {
-                                                switch (gearActor.rarity.name)
-                                                {
-                                                    case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
-                                                    case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
-                                                    case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
-                                                    default:
-                                                        benefit = 0;
-                                                        Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gearActor.rarity.name));
-                                                        break;
-                                                }
+                                                benefit = gearSwapBaseAmount;
                                                 if (preferredGear.name.Equals(gearActor.type.name) == true)
                                                 {
-                                                    tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}Transfer {6} renown to Player from {7}{8}",
-                                                      actor.arc.name, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                                    benefit += gearSwapPreferredAmount;
+                                                    tooltipText = string.Format("Preferred Gear for {0}{1}{2}{3} motivation +{4}{5}",
+                                                      actor.arc.name, "\n", colourGood, actor.actorName, benefit, colourEnd);
                                                 }
                                                 else
                                                 {
                                                     tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
-                                                      preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd);
+                                                      preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                                 }
                                             }
                                             else
@@ -1255,8 +1243,7 @@ public class ActorManager : MonoBehaviour
                                                 tooltipText = "Unknown Preferred Gear";
                                                 Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                             }
-                                            #endregion
-
+                                            //button package
                                             EventButtonDetails gearDetails = new EventButtonDetails()
                                             {
                                                 buttonTitle = string.Format("<b>TAKE</b> {0}", gearActor.name),
@@ -1275,7 +1262,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             //insufficient motivation
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                            infoBuilder.AppendFormat("{0} refuses to handover gear{1}{2}(need Motivation {3}){4}", "\n", actor.arc.name, colourBad,
+                                            infoBuilder.AppendFormat("{0} refuses to handover gear{1}{2}(need Motivation {3}){4}", actor.arc.name, "\n", colourBad,
                                                 actor.GetGearTimesTaken(), colourEnd);
                                         }
                                     }
@@ -1790,25 +1777,17 @@ public class ActorManager : MonoBehaviour
                                 GearType preferredGear = actor.arc.preferredGear;
                                 if (preferredGear != null)
                                 {
-                                    switch (gear.rarity.name)
-                                    {
-                                        case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
-                                        case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
-                                        case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
-                                        default:
-                                            benefit = 0;
-                                            Debug.LogError(string.Format("Invalid gear rarity \"{0}\"", gear.rarity.name));
-                                            break;
-                                    }
+                                    benefit = gearSwapBaseAmount;
                                     if (preferredGear.name.Equals(gear.type.name) == true)
                                     {
-                                        tooltipText = string.Format("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}Transfer {8} renown to Player from {9}{10}",
-                                          colourResistance, actor.arc.name, colourEnd, "\n", colourGood, actor.actorName, benefit, "\n", benefit, actor.actorName, colourEnd);
+                                        benefit += gearSwapPreferredAmount;
+                                        tooltipText = string.Format("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}",
+                                          colourResistance, actor.arc.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                     }
                                     else
                                     {
                                         tooltipText = string.Format("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
-                                          preferredGear.name, colourEnd, "\n", colourGood, actor.actorName, benefit, colourEnd);
+                                          preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                     }
                                 }
                                 else

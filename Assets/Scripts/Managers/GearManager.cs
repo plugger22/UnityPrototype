@@ -19,13 +19,11 @@ public class GearManager : MonoBehaviour
     [Tooltip("Chance gear will be compromised and be no longer of any benefit after each use")]
     [Range(25, 75)] public int chanceOfCompromise = 50;
 
-    [Header("Giving Gear")]
-    [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Common gear to an Actor")]
-    [Range(1, 3)] public int gearBenefitCommon = 1;
-    [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Rare gear to an Actor")]
-    [Range(1, 5)] public int gearBenefitRare = 2;
-    [Tooltip("Benefit obtained in Motivation and Renown Transfer from gifting Unique gear to an Actor")]
-    [Range(1, 10)] public int gearBenefitUnique = 3;
+    [Header("Swap Gear")]
+    [Tooltip("Motivation boost/cost to give/take gear from an actor")]
+    [Range(0, 3)] public int gearSwapBaseAmount = 1;
+    [Tooltip("Motivation boost/cost to give/take PREFERRED gear from an actor")]
+    [Range(0, 3)] public int gearSwapPreferredAmount = 1;
     [Tooltip("Base cost to save compromised gear (in Renown) at level start. Cost increases +1 each time the option is used")]
     [Range(0, 3)] public int gearSaveBaseCost = 0;
 

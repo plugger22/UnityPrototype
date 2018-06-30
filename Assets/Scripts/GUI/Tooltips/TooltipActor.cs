@@ -35,7 +35,7 @@ public class TooltipActor : MonoBehaviour
     private int offset;
 
     //fast access
-    private int gracePeriod;                    //actor gear grace period
+    private int gracePeriod = -1;                    //actor gear grace period
 
     //colours
     private string colourGood;

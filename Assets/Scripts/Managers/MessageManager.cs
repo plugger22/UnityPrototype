@@ -793,15 +793,15 @@ public Message PlayerMove(string text, int nodeID)
     //
 
     /// <summary>
-    /// Player gifts an actor with gear and may receive some renown in return if it's the actor's preferred gear type
-    /// Or player takes gear from actor and it may cost a set amount of motivation to the actor to do so
+    /// Player gifts an actor with gear and gains motivation in return (extra if it's the actor's preferred gear type)
+    /// Or player takes gear from actor and it costs a set amount of motivation (extra if preferred) to the actor to do so
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="gearID"></param>
-    /// <param name="costBenefit"></param>
+    /// <param name="motivation"></param>
     /// <returns></returns>
-    public Message GearGive(string text, int actorID, int gearID, int costBenefit)
+    public Message SwapGive(string text, int actorID, int gearID, int motivation)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
@@ -815,7 +815,7 @@ public Message PlayerMove(string text, int nodeID)
             message.isPublic = false;
             message.data0 = actorID;
             message.data1 = gearID;
-            message.data2 = costBenefit;
+            message.data2 = motivation;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

@@ -14,8 +14,12 @@ using delegateAPI;
 public class ActionManager : MonoBehaviour
 {
     
-    //fast access
+    //fast access -> target
     private int failedTargetChance;
+    //gear
+    private int gearGracePeriod = -1;
+    private int gearSwapBaseAmount = -1;
+    private int gearSwapPreferredAmount = -1;
     //traits
     private int actorStressedDuringSecurity;
 
@@ -36,8 +40,14 @@ public class ActionManager : MonoBehaviour
         //fast access fields
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
+        gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
+        gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
+        gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
         Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
+        Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
+        Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
+        Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
         //register listener
         EventManager.instance.AddListener(EventType.NodeAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent, "ActionManager");
@@ -1289,10 +1299,8 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessGiveGearAction(ModalActionDetails details)
     {
-        int benefit = 0;
-        int renownGiven = 0;
+        int motivationBoost = 0;
         bool errorFlag = false;
-        bool preferredFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         Gear gear = null;
         Actor actor = null;
@@ -1318,29 +1326,17 @@ public class ActionManager : MonoBehaviour
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
                     {
-                        switch (gear.rarity.name)
-                        {
-                            case "Common": benefit = GameManager.instance.gearScript.gearBenefitCommon; break;
-                            case "Rare": benefit = GameManager.instance.gearScript.gearBenefitRare; break;
-                            case "Unique": benefit = GameManager.instance.gearScript.gearBenefitUnique; break;
-                            default:
-                                benefit = 0;
-                                Debug.LogErrorFormat("Invalid gear rarity \"{0}\"", gear.rarity.name);
-                                break;
-                        }
+                        motivationBoost = gearSwapBaseAmount;
+                        builder.AppendFormat("{0}{1} no longer available{2}", colourBad, gear.name, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourGood, actor.arc.name, gearSwapBaseAmount, colourEnd);
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
-                            //Preferred gear (renown transfer)
-                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}{9}Player Renown +{10}{11}{12}{13} Renown -{14}{15}",
-                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, "\n", "\n", benefit, "\n", "\n", actor.actorName, benefit, colourEnd);
-                            preferredFlag = true;
+                            //Preferred gear (extra motivation)
+                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} (Preferred Gear){5}", "\n", "\n", colourGood, actor.arc.name, gearSwapPreferredAmount, colourEnd);
+                            motivationBoost += gearSwapPreferredAmount;
                         }
-                        else
-                        {
-                            //Not preferred gear (motivation boost only)
-                            builder.AppendFormat("{0}{1} no longer available{2}{3}{4}{5}{6} Motivation +{7}{8}",
-                              colourBad, gear.name, colourEnd, "\n", "\n", colourGood, actor.actorName, benefit, colourEnd);
-                        }
+                        builder.AppendFormat("{0}{1}After {2}{3}{4} turn{5} you can ask for the gear back", "\n", "\n", colourNeutral, gearGracePeriod, colourEnd,
+                            gearGracePeriod != 1 ? "s" : "");
                         if (string.IsNullOrEmpty(textGear) == false)
                         {
                             //gear has been lost (actor already had some gear
@@ -1371,24 +1367,11 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.sprite = actor.arc.baseSprite;
             outcomeDetails.textBottom = builder.ToString();
             //give actor motivation boost
-            actor.datapoint1 += benefit;
+            actor.datapoint1 += motivationBoost;
             actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
-            //if preferred transfer renown
-            if (preferredFlag == true)
-            {
-                if (actor.Renown > 0)
-                {
-                    //take from actor
-                    renownGiven = Mathf.Min(benefit, actor.Renown);
-                    actor.Renown -= benefit;
-                    actor.Renown = Mathf.Max(0, actor.Renown);
-                    //give to Player
-                    GameManager.instance.playerScript.Renown += renownGiven;
-                }
-            }
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            Message message = GameManager.instance.messageScript.GearGive(text, actor.actorID, gear.gearID, renownGiven);
+            Message message = GameManager.instance.messageScript.SwapGive(text, actor.actorID, gear.gearID, motivationBoost);
             GameManager.instance.dataScript.AddMessage(message);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
@@ -1530,7 +1513,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = builder.ToString();
             //message
             string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            Message message = GameManager.instance.messageScript.GearGive(text, actor.actorID, gear.gearID, motivationCost);
+            Message message = GameManager.instance.messageScript.SwapGive(text, actor.actorID, gear.gearID, motivationCost);
             GameManager.instance.dataScript.AddMessage(message);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
