@@ -158,7 +158,7 @@ public class CaptureManager : MonoBehaviour
             {
                 //reverse loop through list of gear and remove all
                 for (int i = listOfGear.Count - 1; i >= 0; i--)
-                { GameManager.instance.playerScript.RemoveGear(listOfGear[i]); }
+                { GameManager.instance.playerScript.RemoveGear(listOfGear[i], true); }
                 builder.Append(string.Format("{0}Gear confiscated ({1} item{2}){3}", colourBad, numOfGear, numOfGear != 1 ? "s" : "", colourEnd));
             }
             else { Debug.LogError("Invalid listOfGear (Null)"); }

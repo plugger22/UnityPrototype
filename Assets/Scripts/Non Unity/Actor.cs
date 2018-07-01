@@ -318,9 +318,8 @@ namespace gameAPI
                 gearID = newGearID;
                 gearTimer = 0;
                 Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} added to inventory of {1}{2}", gearNew.name, arc.name, "\n");
-                //add to listOfCurrentGear
-                if (GameManager.instance.dataScript.AddGearNew(gearNew) == false)
-                { Debug.LogWarningFormat("Invalid gear Add to Current for \"{0}\", gearID {1}", gearNew.name, gearNew.gearID); }
+                //add to listOfCurrentGear (if not already present)
+                GameManager.instance.dataScript.AddGearNew(gearNew);
             }
             else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", newGearID); }
             //return name and type of any gear that was lost (existing prior to new gear being added)

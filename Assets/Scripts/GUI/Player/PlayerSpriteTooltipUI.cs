@@ -23,7 +23,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
 
     //data derived whenever parent sprite moused over (OnPointerEnter)
     private GlobalSide side;
-    private string playerName;
+    /*private string playerName;*/
 
 
     /// <summary>
@@ -47,7 +47,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         // - - - Tooltip - - -
         //
         side = GameManager.instance.sideScript.PlayerSide;
-        playerName = GameManager.instance.playerScript.PlayerName;
+        /*playerName = GameManager.instance.playerScript.PlayerName;*/
         //activate tooltip if there is a valid reason
         if (GameManager.instance.playerScript.tooltipStatus > ActorTooltip.None)
         { myTooltipCoroutine = StartCoroutine("ShowGenericTooltip"); }

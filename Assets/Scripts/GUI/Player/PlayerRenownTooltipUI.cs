@@ -12,7 +12,7 @@ public class PlayerRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     private float mouseOverFade;
     private bool onMouseFlag;
     //data derived whenever parent sprite moused over (OnPointerEnter)
-    private GlobalSide side;
+    /*private GlobalSide side;*/
 
 
     /// <summary>
@@ -33,7 +33,7 @@ public class PlayerRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerEnter(PointerEventData eventData)
     {
         onMouseFlag = true;
-        side = GameManager.instance.sideScript.PlayerSide;
+        /*side = GameManager.instance.sideScript.PlayerSide;*/
         if (myCoroutine == null)
         { myCoroutine = StartCoroutine("ShowRenownTooltip"); }
     }

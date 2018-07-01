@@ -790,22 +790,25 @@ public class TargetManager : MonoBehaviour
                                             if (setGearAsUsed == true)
                                             { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
                                         }
+                                        else { Debug.LogWarningFormat("Invalid Target gear (Null) for gearID {0}", gearID); }
                                     }
-                                    else { Debug.LogWarningFormat("Invalid Target gear (Null) for gearID {0}", gearID); }
                                     //infiltration gear works on any target in addition to special gear
                                     if (target.gear.name.Equals(infiltrationGear.name) == false)
                                     {
                                         //check player has infiltration gear
                                         gearID = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-                                        if (gear != null)
+                                        if (gearID > -1)
                                         {
-                                            tally += gearEffect * (gear.rarity.level + 1);
-                                            //gear used?
-                                            if (setGearAsUsed == true)
-                                            { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                            if (gear != null)
+                                            {
+                                                tally += gearEffect * (gear.rarity.level + 1);
+                                                //gear used?
+                                                if (setGearAsUsed == true)
+                                                { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid Infiltration gear (Null) for gearID {0}", gearID); }
                                         }
-                                        else { Debug.LogWarningFormat("Invalid Infiltration gear (Null) for gearID {0}", gearID); }
                                     }
                                 }
                             }

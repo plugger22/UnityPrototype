@@ -350,9 +350,8 @@ public class PlayerManager : MonoBehaviour
                     listOfGear.Add(gearID);
                     Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to inventory{2}", gear.name, gearID, "\n");
                     CheckForAIUpdate(gear);
-                    //add to listOfCurrentGear
-                    if (GameManager.instance.dataScript.AddGearNew(gear) == false)
-                    { Debug.LogWarningFormat("Invalid gear Add to Current for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+                    //add to listOfCurrentGear (if not already present)
+                    GameManager.instance.dataScript.AddGearNew(gear);
                     return true;
                 }
                 else
@@ -406,8 +405,11 @@ public class PlayerManager : MonoBehaviour
         Debug.Log(string.Format("[Gea] PlayerManager.cs -> RemoveGear: {0}, ID {1}, removed from inventory{2}", gear.name, gear.gearID, "\n"));
         CheckForAIUpdate(gear);
         //lost gear
-        if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
-        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+        if (isLost == true)
+        {
+            if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
+            { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+        }
     }
 
     /// <summary>
@@ -784,6 +786,10 @@ public class PlayerManager : MonoBehaviour
                         //add gear to player's inventory
                         if (AddGear(gearID) == true)
                         {
+                            //remove from pool
+                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                            if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
+                            { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
                             text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
                             //message
                             Message message = GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), GameManager.instance.nodeScript.nodePlayer, gearID);

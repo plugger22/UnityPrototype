@@ -2039,7 +2039,7 @@ public class DataManager : MonoBehaviour
     {
         if (dictOfGear.ContainsKey(gearID))
         { return dictOfGear[gearID]; }
-        else { Debug.LogWarning(string.Format("Not found in gearID {0}, in dict {1}", gearID, "\n")); }
+        else { Debug.LogWarningFormat("Not found in gearID {0}, in dict {1}", gearID, "\n"); }
         return null;
     }
 
@@ -2114,7 +2114,7 @@ public class DataManager : MonoBehaviour
     { return listOfCurrentGear; }
 
     /// <summary>
-    /// will remove a piece of gear that's been lost (for any reason) from the relevant gear lists and add to the list Of Lost Gear
+    /// will remove a piece of gear that's been lost (for any reason) from the current gear list and add to the list Of Lost Gear
     /// </summary>
     /// <param name="gear"></param>
     /// <returns></returns>
@@ -2123,7 +2123,27 @@ public class DataManager : MonoBehaviour
         bool isSuccess = true;
         if (gear != null)
         {
-            switch(gear.rarity.level)
+            //remove from Current list
+            if (listOfCurrentGear.Remove(gear.gearID) == false)
+            { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfCurrentGear", gear.name, gear.gearID); }
+            //add to Lost list
+            listOfLostGear.Add(gear.gearID);
+        }
+        else { Debug.LogWarning("Invalid gear (Null)"); }
+        return isSuccess;
+    }
+
+    /// <summary>
+    /// will remove a piece of gear from one of the three pools (common/rare/unique) (for any reason)
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <returns></returns>
+    public bool RemoveGearFromPool(Gear gear)
+    {
+        bool isSuccess = true;
+        if (gear != null)
+        {
+            switch (gear.rarity.level)
             {
                 case 0:
                     //common
@@ -2145,11 +2165,6 @@ public class DataManager : MonoBehaviour
                     isSuccess = false;
                     break;
             }
-            //remove from Current list
-            if (listOfCurrentGear.Remove(gear.gearID) == false)
-            { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfCurrentGear", gear.name, gear.gearID); }
-            //add to Lost list
-            listOfLostGear.Add(gear.gearID);
         }
         else { Debug.LogWarning("Invalid gear (Null)"); }
         return isSuccess;
@@ -2160,20 +2175,17 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="gear"></param>
     /// <returns></returns>
-    public bool AddGearNew(Gear gear)
+    public void AddGearNew(Gear gear)
     {
-        bool isSuccess = true;
         if (gear != null)
         {
-            if (listOfCurrentGear.Exists(x => x == gear.gearID) == true)
+            if (listOfCurrentGear.Exists(x => x == gear.gearID) == false)
             {
-                //entry already exists
-                isSuccess = false;
+                // NOTE: No need for error warning as there will be instances of swapping gear where gear will already exist
+                listOfCurrentGear.Add(gear.gearID);
             }
-            else { listOfCurrentGear.Add(gear.gearID); }
         }
         else { Debug.LogWarning("Invalid gear (Null)"); }
-        return isSuccess;
     }
 
     /// <summary>
@@ -2183,7 +2195,17 @@ public class DataManager : MonoBehaviour
     public string DisplayGearData()
     {
         StringBuilder builder = new StringBuilder();
-
+        builder.AppendFormat(" Gear Data {0}{1}", "\n", "\n");
+        builder.AppendFormat("- Current Gear{0}", "\n");
+        builder.Append(DisplayGearList(listOfCurrentGear));
+        builder.AppendFormat("{0}- Lost Gear{1}", "\n", "\n");
+        builder.Append(DisplayGearList(listOfLostGear));
+        builder.AppendFormat("{0}- Common Gear{1}", "\n", "\n");
+        builder.Append(DisplayGearList(listOfCommonGear));
+        builder.AppendFormat("{0}- Rare Gear{1}", "\n", "\n");
+        builder.Append(DisplayGearList(listOfRareGear));
+        builder.AppendFormat("{0}- Unique Gear{1}", "\n", "\n");
+        builder.Append(DisplayGearList(listOfUniqueGear));
         return builder.ToString();
     }
 
@@ -2194,7 +2216,25 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     private string DisplayGearList(List<int> listOfGear)
     {
-
+        StringBuilder builder = new StringBuilder();
+        if (listOfGear != null)
+        {
+            int limit = listOfGear.Count;
+            if (limit > 0)
+            {
+                for (int index = 0; index < limit; index++)
+                {
+                    Gear gear = GetGear(listOfGear[index]);
+                    if (gear != null)
+                    { builder.AppendFormat(" {0} ({1}), ID{2}, {3}, used {4} times{5}", gear.name, gear.type.name, gear.gearID, gear.rarity.name, gear.timesUsed, "\n"); }
+                    else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
+                }
+            }
+            else
+            { builder.AppendFormat(" No records{0}", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid listOfGear (Null)"); }
+        return builder.ToString();
     }
 
     //

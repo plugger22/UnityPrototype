@@ -576,7 +576,8 @@ public class GearManager : MonoBehaviour
                 //
                 List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
                 List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearRare));
-                //remove from lists any gear that the player currently has
+
+                /*//remove from lists any gear that the player currently has {EDIT -> not needed now as pool lists (above) are updated whenever gear is chosen so are up to date)
                 List<int> tempCurrentGear = new List<int>(GameManager.instance.dataScript.GetListOfCurrentGear());
                 if (tempCurrentGear.Count > 0)
                 {
@@ -588,7 +589,8 @@ public class GearManager : MonoBehaviour
                         else if (tempRareGear.Exists(id => id == gearID))
                         { tempRareGear.Remove(gearID); }
                     }
-                }
+                }*/
+
                 //
                 //select two items of gear for the picker
                 //
@@ -1032,6 +1034,9 @@ public class GearManager : MonoBehaviour
 
                             if (GameManager.instance.playerScript.AddGear(gear.gearID) == true)
                             {
+                                //remove gear from pool
+                                if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
+                                { Debug.LogWarningFormat("Invalid removal for \"{0}\", ID {1}", gear.name, gear.gearID); }
                                 //gear successfully acquired
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
