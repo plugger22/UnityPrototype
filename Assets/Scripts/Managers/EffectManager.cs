@@ -612,7 +612,8 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes effects and returns results in a class. 
+    /// Processes effects and returns results in a class. Leave actor as Null for Resistance Player effect
+    /// Use player node if an issue but check to see if node is used (often to determine who is affected, player or actor)
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="node"></param>

@@ -122,6 +122,32 @@ public class ImportManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfGlobalSide (Null) -> Import failed"); }
         //
+        // - - - GlobalWho - - -
+        //
+        Dictionary<string, GlobalWho> dictOfGlobalWho = GameManager.instance.dataScript.GetDictOfGlobalWho();
+        if (dictOfGlobalWho != null)
+        {
+            var whoGUID = AssetDatabase.FindAssets("t:GlobalWho");
+            foreach (var guid in whoGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object whoObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalWho));
+                //assign a zero based unique ID number
+                GlobalWho who = whoObject as GlobalWho;
+                //add to dictionary
+                try
+                { dictOfGlobalWho.Add(who.name, who); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid GlobalWho (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid GlobalWho (duplicate) \"{0}\"", who.name)); }
+            }
+            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalWho has {0} entries{1}", dictOfGlobalWho.Count, "\n"));
+        }
+        else { Debug.LogError("Invalid dictOfGlobalWho (Null) -> Import failed"); }
+        //
         // - - - Conditions - - -
         //
         Dictionary<string, Condition> dictOfConditions = GameManager.instance.dataScript.GetDictOfConditions();

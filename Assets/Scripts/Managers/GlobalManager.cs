@@ -24,6 +24,9 @@ public class GlobalManager : MonoBehaviour
     [HideInInspector] public GlobalSide sideAuthority;
     [HideInInspector] public GlobalSide sideResistance;
     [HideInInspector] public GlobalSide sideBoth;
+    //globalWho
+    [HideInInspector] public GlobalWho whoPlayer;
+    [HideInInspector] public GlobalWho whoActor;
     //TraitCategory
     [HideInInspector] public TraitCategory categoryActor;
     [HideInInspector] public TraitCategory categoryMayor;
@@ -92,6 +95,35 @@ public class GlobalManager : MonoBehaviour
             if (chanceLow == null) { Debug.LogError("Invalid chanceLow (Null)"); }
             if (chanceMedium == null) { Debug.LogError("Invalid chanceMedium (Null)"); }
             if (chanceHigh == null) { Debug.LogError("Invalid chanceHigh (Null)"); }
+        }
+        //
+        // - - - GlobalWho - - -
+        //
+        Dictionary<string, GlobalWho> dictOfGlobalWho = GameManager.instance.dataScript.GetDictOfGlobalWho();
+        if (dictOfGlobalWho != null)
+        {
+            foreach (var who in dictOfGlobalWho)
+            {
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //Also dynamically assign GlobalWho.level values (0/1). 
+                switch (who.Key)
+                {
+                    case "Player":
+                        whoPlayer = who.Value;
+                        who.Value.level = 0;
+                        break;
+                    case "Actor":
+                        whoActor = who.Value;
+                        who.Value.level = 1;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid GlobalWho \"{0}\"", who.Key);
+                        break;
+                }
+            }
+            //error check
+            if (whoPlayer == null) { Debug.LogError("Invalid whoPlayer (Null)"); }
+            if (whoActor == null) { Debug.LogError("Invalid whoActor (Null)"); }
         }
         //
         // - - - GlobalType - - -

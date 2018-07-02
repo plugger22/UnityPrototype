@@ -16,7 +16,9 @@ public class ActorBreakdown : ScriptableObject
     public GlobalSide side;
     [Tooltip("Determines how many entries are placed in the selection pool for this actorBreakdown")]
     public GlobalChance chance;
-    [Tooltip("There can only be a single effect")]
+    [Tooltip("Who does the effect apply to?")]
+    public GlobalWho who;
+    [Tooltip("There can only be a single effect. Leave empty if for 'Nothing happens'")]
     public Effect effect;
 
     [HideInInspector] public int actBreakID;

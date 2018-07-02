@@ -2968,7 +2968,7 @@ public class ActorManager : MonoBehaviour
                 if (dictOfActorBreakdowns.Count > 0)
                 {
                     //loop dict checking every actorBreakdown to see if they are applicable
-                    foreach(var breakdown in dictOfActorBreakdowns)
+                    foreach (var breakdown in dictOfActorBreakdowns)
                     {
                         if (breakdown.Value != null)
                         {
@@ -2994,7 +2994,7 @@ public class ActorManager : MonoBehaviour
                             if (proceedFlag == true)
                             {
                                 //place into pool, number of entries according to chance of being selected
-                                switch(breakdown.Value.chance.level)
+                                switch (breakdown.Value.chance.level)
                                 {
                                     case 0:
                                         //low
@@ -3019,37 +3019,52 @@ public class ActorManager : MonoBehaviour
                     //select from pool
                     int index = Random.Range(0, listSelectionPool.Count);
                     ActorBreakdown actorBreakdown = listSelectionPool[index];
+                    EffectDataReturn effectReturn = null;
                     //Implement effect
                     if (actorBreakdown.effect != null)
                     {
                         //data packages
-                        EffectDataReturn effectReturn = new EffectDataReturn();
+                        effectReturn = new EffectDataReturn();
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.textOrigin = "Relationship Breakdown";
                         //process effect (use player node, but doesn't really matter)
                         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                         if (node != null)
-                        { effectReturn = GameManager.instance.effectScript.ProcessEffect(actorBreakdown.effect, node, effectInput, actor); }
-                        else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
-                        if (effectReturn != null)
                         {
-                            //build return string
-                            if (string.IsNullOrEmpty(effectReturn.topText) == false)
-                            { builder.Append(effectReturn.topText); }
-                            
-                            if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                            switch (actorBreakdown.who.level)
                             {
-                                if (builder.Length > 0) { builder.AppendLine(); }
-                                builder.Append(effectReturn.bottomText);
+                                case 0:
+                                    //player
+                                    effectReturn = GameManager.instance.effectScript.ProcessEffect(actorBreakdown.effect, node, effectInput);
+                                    break;
+                                case 1:
+                                    //actor
+                                    effectReturn = GameManager.instance.effectScript.ProcessEffect(actorBreakdown.effect, node, effectInput, actor);
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid actorBreakdown.who \"{0}\"", actorBreakdown.who);
+                                    break;
                             }
+                            
                         }
-                        else
+                        else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+                    }
+                    //build return string -> (2 lines) ActorBreakdown.outcomeText at top, effectReturn.bottomText underneath
+                    if (string.IsNullOrEmpty(actorBreakdown.outcomeText) == false)
+                    { builder.Append(actorBreakdown.outcomeText); }
+                    //bottom line
+                    if (actorBreakdown.effect != null)
+                    {
+                        if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                         {
-                            Debug.LogWarning("Invalid effectReturn (Null)");
-                            //default error message (keep it in character)
-                            builder.AppendFormat("{0}{1} stamps their feet and does nothing{2}{3}{4}(Relationship Breakdown outcome){5}", actor.arc.name, colourGood, colourEnd, "\n",
-                                colourNormal, colourEnd);
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.Append(effectReturn.bottomText);
                         }
+                    }
+                    else
+                    {
+                        //default error message (keep it in character)
+                        builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                     }
                 }
                 else { Debug.LogWarning("No records in dictOfActorBreakdowns"); }

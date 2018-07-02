@@ -143,8 +143,10 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalChance> dictOfGlobalChance = new Dictionary<string, GlobalChance>();   //Key -> GlobalChance.name, Value -> GlobalChance
     private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();         //Key -> GlobalType.name, Value -> GlobalType
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();         //Key -> GlobalSide.name, Value -> GlobalSide
+    private Dictionary<string, GlobalWho> dictOfGlobalWho = new Dictionary<string, GlobalWho>();            //Key -> GlobaWho.name, Value -> GlobalWho
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
+
 
     /// <summary>
     /// Stuff that is done after level Manager.SetUp
@@ -2886,6 +2888,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, GlobalType> GetDictOfGlobalType()
     { return dictOfGlobalType; }
+
+    public Dictionary<string, GlobalWho> GetDictOfGlobalWho()
+    { return dictOfGlobalWho; }
 
     public Dictionary<string, GlobalSide> GetDictOfGlobalSide()
     { return dictOfGlobalSide; }
