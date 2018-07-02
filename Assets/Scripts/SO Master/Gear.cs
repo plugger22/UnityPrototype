@@ -32,4 +32,13 @@ public class Gear : ScriptableObject
     [HideInInspector] public bool isCompromised = false;        //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
     [HideInInspector] public string reasonUsed;                 //tag showing reason gear used (reset each turn), set by GearManager.cs -> SetGearUsed
     [HideInInspector] public int chanceOfCompromise;            //set at time of use, cleared with a new turn
+
+    //stats
+    [HideInInspector] public int statTurnObtained;              //turn gear was first obtained
+    [HideInInspector] public int statTurnLost;                  //turn gear was lost
+    [HideInInspector] public int statTimesUsed;                 //times used (total)
+    [HideInInspector] public int statTimesGiven;                //times given to another actor
+    [HideInInspector] public int statTimesCompromised;          //times compromised
+    [HideInInspector] public int statTimesSaved;                //times compromised gear is Saved
+    [HideInInspector] public int statRenownSpent;               //total renown spent on gear
 }

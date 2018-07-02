@@ -850,7 +850,7 @@ public Message PlayerMove(string text, int nodeID)
     }
 
     /// <summary>
-    /// Gear has been used (not compromised). Returns null if text invalid
+    /// Gear has been used (not compromised). Returns null if text invalid. Also updates gear.statTimesUsed
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
@@ -859,19 +859,28 @@ public Message PlayerMove(string text, int nodeID)
     public Message GearUsed(string text, int gearID, int nodeID = -1)
     {
         Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
-        if (string.IsNullOrEmpty(text) == false)
+        //gear needed for gear stat
+        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+        if (gear != null)
         {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.GEAR;
-            message.subType = MessageSubType.Gear_Used;
-            message.side = globalResistance;
-            message.isPublic = false;
-            message.data0 = gearID;
-            message.data1 = nodeID;
-            return message;
+            //gear stat
+            gear.statTimesUsed++;
+            //message
+            if (string.IsNullOrEmpty(text) == false)
+            {
+                Message message = new Message();
+                message.text = text;
+                message.type = MessageType.GEAR;
+                message.subType = MessageSubType.Gear_Used;
+                message.side = globalResistance;
+                message.isPublic = false;
+                message.data0 = gearID;
+                message.data1 = nodeID;
+                return message;
+            }
+            else { Debug.LogWarning("Invalid text (Null or empty)"); }
         }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
         return null;
     }
 

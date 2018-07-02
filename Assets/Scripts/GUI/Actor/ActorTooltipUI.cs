@@ -76,12 +76,15 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                 if (actor != null)
                 {
+                    Gear gearActor = null;
+                    if (actor.GetGearID() > -1)
+                    { gearActor = GameManager.instance.dataScript.GetGear(actor.GetGearID()); }
                     ActorTooltipData data = new ActorTooltipData()
                     {
                         tooltipPos = parent.transform.position,
                         actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
                         action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
-                        gear = GameManager.instance.dataScript.GetGear(actor.GetGearID()),
+                        gear = gearActor,
                         arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
                         arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
                     };

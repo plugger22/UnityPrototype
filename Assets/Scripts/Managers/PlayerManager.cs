@@ -408,7 +408,10 @@ public class PlayerManager : MonoBehaviour
         if (isLost == true)
         {
             if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
-            { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+            {
+                gear.statTurnLost = GameManager.instance.turnScript.Turn;
+                Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID);
+            }
         }
     }
 

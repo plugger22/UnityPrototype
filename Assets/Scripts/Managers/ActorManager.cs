@@ -102,6 +102,8 @@ public class ActorManager : MonoBehaviour
     private int gearGracePeriod = -1;
     private int gearSwapBaseAmount = -1;
     private int gearSwapPreferredAmount = -1;
+    //traits
+    private int actorKeepGear = 1;
     /*private GearType gearRecovery;
     private GearType gearPersonal;*/
     //colour palette for Generic tool tip
@@ -149,6 +151,7 @@ public class ActorManager : MonoBehaviour
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
+        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
         /*gearRecovery = GameManager.instance.dataScript.GetGearType("Recovery");
         gearPersonal = GameManager.instance.dataScript.GetGearType("Personal");*/
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
@@ -159,6 +162,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
+        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
         /*Debug.Assert(gearRecovery != null, "Invalid gearRecovery (Null)");
         Debug.Assert(gearPersonal != null, "Invalid gearPersonal (Null)");*/
         //cached TraitEffects
@@ -1165,6 +1169,14 @@ public class ActorManager : MonoBehaviour
                                                 builderTooltip.Append("Unknown Preferred Gear");
                                                 Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                             }
+
+                                            //traits
+                                            if (actor.CheckTraitEffect(actorKeepGear) == true)
+                                            {
+                                                builderTooltip.AppendFormat("{0}{1} has {2}{3}{4} trait{5}{6}(Refuses to return Gear){7}", "\n", actor.arc.name, colourNeutral,
+                                                    actor.GetTrait().tag, colourEnd, "\n", colourBad, colourEnd);
+                                            }
+
                                             //existing gear
                                             if (actor.GetGearID() > -1)
                                             {
@@ -1214,69 +1226,81 @@ public class ActorManager : MonoBehaviour
                             //actor must have an item of gear
                             if (actorGearID > -1)
                             {
-                                //grace period must have expired
-                                if (actor.GetGearTimer() > gearGracePeriod)
+                                //traits
+                                if (actor.CheckTraitEffect(actorKeepGear) == false)
                                 {
-                                    Gear gearActor = GameManager.instance.dataScript.GetGear(actorGearID);
-                                    if (gearActor != null)
+                                    //grace period must have expired
+                                    if (actor.GetGearTimer() > gearGracePeriod)
                                     {
-                                        benefit = gearSwapBaseAmount;
-                                        StringBuilder builder = new StringBuilder();
-                                        //data package
-                                        ModalActionDetails gearActionDetails = new ModalActionDetails() { };
-                                        gearActionDetails.side = playerSide;
-                                        gearActionDetails.actorDataID = actor.actorSlotID;
-                                        gearActionDetails.gearID = gearActor.gearID;
-                                        //get actor's preferred gear
-                                        GearType preferredGear = actor.arc.preferredGear;
-                                        if (preferredGear != null)
+                                        Gear gearActor = GameManager.instance.dataScript.GetGear(actorGearID);
+                                        if (gearActor != null)
                                         {
-                                            if (preferredGear.name.Equals(gearActor.type.name) == true)
+                                            benefit = gearSwapBaseAmount;
+                                            StringBuilder builder = new StringBuilder();
+                                            //data package
+                                            ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                                            gearActionDetails.side = playerSide;
+                                            gearActionDetails.actorDataID = actor.actorSlotID;
+                                            gearActionDetails.gearID = gearActor.gearID;
+                                            //get actor's preferred gear
+                                            GearType preferredGear = actor.arc.preferredGear;
+                                            if (preferredGear != null)
                                             {
-                                                benefit += gearSwapPreferredAmount;
-                                                builder.AppendFormat("Preferred Gear for {0}{1}{2}{3} Motivation -{4}{5}",
-                                                  actor.arc.name, "\n", colourBad, actor.arc.name, benefit, colourEnd);
+                                                if (preferredGear.name.Equals(gearActor.type.name) == true)
+                                                {
+                                                    benefit += gearSwapPreferredAmount;
+                                                    builder.AppendFormat("Preferred Gear for {0}{1}{2}{3} Motivation -{4}{5}",
+                                                      actor.arc.name, "\n", colourBad, actor.arc.name, benefit, colourEnd);
+                                                }
+                                                else
+                                                {
+                                                    builder.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation -{6}{7}", colourNeutral,
+                                                      preferredGear.name, colourEnd, "\n", colourBad, actor.arc.name, benefit, colourEnd);
+                                                }
                                             }
                                             else
                                             {
-                                                builder.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation -{6}{7}", colourNeutral,
-                                                  preferredGear.name, colourEnd, "\n", colourBad, actor.arc.name, benefit, colourEnd);
+                                                builder.Append("Unknown Preferred Gear");
+                                                Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                             }
+                                            //relationship breakdown
+                                            if (actor.datapoint1 < benefit)
+                                            {
+                                                builder.AppendFormat("{0}{1} Motivation too Low!{2}", "\n", colourAlert, colourEnd);
+                                                builder.AppendFormat("{0}{1}RELATIONSHIP BREAKDOWN{2}", "\n", colourBad, colourEnd);
+                                                builder.AppendFormat("{0}{1}If you Take Gear{2}", "\n", colourAlert, colourEnd);
+                                            }
+                                            //button package
+                                            EventButtonDetails gearDetails = new EventButtonDetails()
+                                            {
+                                                buttonTitle = string.Format("<b>TAKE</b> {0}", gearActor.name),
+                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                                buttonTooltipMain = string.Format("<b>TAKE</b> {0}{1}{2} ({3}) from {4}{5}{6}, {7}", colourNeutral, gearActor.name, colourEnd, gearActor.type.name,
+                                                 colourCancel, actor.arc.name, colourEnd, actor.actorName),
+                                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),
+                                                //use a Lambda to pass arguments to the action
+                                                action = () => { EventManager.instance.PostNotification(EventType.TakeGearAction, this, gearActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                            };
+                                            //add give gear button to list
+                                            tempList.Add(gearDetails);
+                                            isGearToGive = true;
                                         }
-                                        else
-                                        {
-                                            builder.Append("Unknown Preferred Gear");
-                                            Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
-                                        }
-                                        //relationship breakdown
-                                        if (actor.datapoint1 < benefit)
-                                        {
-                                            builder.AppendFormat("{0}{1} Motivation too Low!{2}", "\n", colourAlert, colourEnd);
-                                            builder.AppendFormat("{0}{1}RELATIONSHIP BREAKDOWN{2}", "\n", colourBad, colourEnd);
-                                            builder.AppendFormat("{0}{1}If you Take Gear{2}", "\n", colourAlert, colourEnd);
-                                        }
-                                        //button package
-                                        EventButtonDetails gearDetails = new EventButtonDetails()
-                                        {
-                                            buttonTitle = string.Format("<b>TAKE</b> {0}", gearActor.name),
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                            buttonTooltipMain = string.Format("<b>TAKE</b> {0}{1}{2} ({3}) from {4}{5}{6}, {7}", colourNeutral, gearActor.name, colourEnd, gearActor.type.name,
-                                             colourCancel, actor.arc.name, colourEnd, actor.actorName),
-                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),
-                                            //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.TakeGearAction, this, gearActionDetails, "ActorManager.cs -> GetActorActions"); }
-                                        };
-                                        //add give gear button to list
-                                        tempList.Add(gearDetails);
-                                        isGearToGive = true;
+                                        else { Debug.LogWarningFormat("Invalid gearActor (Null) for gearID {0}", actorGearID); }
                                     }
-                                    else { Debug.LogWarningFormat("Invalid gearActor (Null) for gearID {0}", actorGearID); }
+                                    else
+                                    {
+                                        //grace period still in force
+                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                        infoBuilder.AppendFormat("Can't TAKE gear{0}{1}(within Grace Period){2}", "\n", colourBad, colourEnd);
+                                    }
                                 }
                                 else
                                 {
-                                    //grace period still in force
+                                    //actor has trait (Pack Rat) causing him to refuse to hand over gear
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("Can't TAKE gear{0}{1}(within Grace Period){2}", "\n", colourBad, colourEnd);
+                                    infoBuilder.AppendFormat("Can't TAKE gear{0}{1}({2}{3} {4}{5}{6}{7} trait){8}", "\n", colourBad, actor.arc.name, colourEnd,
+                                        colourNeutral, actor.GetTrait().tag, colourEnd, colourBad, colourEnd);
+                                    DebugTraitMessage(actor, "to Refuse to handback Gear");
                                 }
                             }
                             else

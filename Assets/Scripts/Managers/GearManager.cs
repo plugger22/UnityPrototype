@@ -56,8 +56,10 @@ public class GearManager : MonoBehaviour
     //compromised gear
     private int gearSaveCurrentCost;                                          //how much renown to save a compromised item of gear (increments +1 each time option used)
     private List<string> listOfCompromisedGear;                               //list cleared each turn that contains names of compromised gear (used for outcome dialogues)
-
-    //fast access
+    //fast access -> traits
+    private int actorLoseGearHigh = -1;
+    private int actorLoseGearNone = -1;
+    //fast access -> sides
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
     
@@ -122,11 +124,15 @@ public class GearManager : MonoBehaviour
         //initialise fast access variables -> type
         List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
         Debug.Assert(listOfGearType != null, "Invalid listOfGearType (Null)");
-        //fast access -> sides
+        //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        actorLoseGearHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearHigh");
+        actorLoseGearNone = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearNone");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(actorLoseGearHigh > -1, "Invalid actorLoseGearHigh (-1)");
+        Debug.Assert(actorLoseGearNone > -1, "Invalid actorLoseGearNone (-1)");
         if (listOfGearType != null)
         {
             foreach (GearType gearType in listOfGearType)
@@ -296,6 +302,8 @@ public class GearManager : MonoBehaviour
                         //gear has been used?
                         if (gear.timesUsed > 0)
                         {
+                            //stat
+                            gear.statTimesUsed += gear.timesUsed;
                             //check to see if compromised
                             chance = GetChanceOfCompromise(gear.gearID);
                             for (int j = 0; j < gear.timesUsed; j++)
@@ -312,6 +320,8 @@ public class GearManager : MonoBehaviour
                                     //admin
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                     Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
+                                    //stat
+                                    gear.statTimesCompromised++;
                                     break;
                                 }
                                 else
@@ -369,8 +379,9 @@ public class GearManager : MonoBehaviour
     /// </summary>
     private void CheckActorGear()
     {
+        int rnd, chance;
+        string traitName;
         //loop OnMap actors
-        //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
         foreach (Actor actor in arrayOfActors)
         {
@@ -399,14 +410,30 @@ public class GearManager : MonoBehaviour
                             if (timer > actorGearGracePeriod)
                             {
                                 //check for Gear being LOST (only after grace period has expired)
-                                int rnd = Random.Range(0, 100);
-                                if (rnd < actorGearLostChance)
+                                rnd = Random.Range(0, 100);
+                                chance = actorGearLostChance;
+                                //trait check
+                                if (actor.CheckTraitEffect(actorLoseGearHigh) == true)
+                                {
+                                    chance *= 3;
+                                    traitName = string.Format(" ({0}) ", actor.GetTrait().tag);
+                                    GameManager.instance.actorScript.DebugTraitMessage(actor, "for a Lose Gear check");
+                                }
+                                else if (actor.CheckTraitEffect(actorLoseGearNone) == true)
+                                {
+                                    chance = 0;
+                                    GameManager.instance.actorScript.DebugTraitMessage(actor, "for a Lose Gear check");
+                                    traitName = string.Format(" ({0}) ", actor.GetTrait().tag);
+                                }
+                                else { traitName = ""; }
+                                //roll die
+                                if (rnd < chance)
                                 {
                                     //Gear LOST
-                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckActorGear: {0} LOST ({1}), need < {2}, rolled {3}{4}",
-                                        gear.name, actor.arc.name, actorGearLostChance, rnd, "\n");
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckActorGear: {0} LOST ({1}), need < {2}{3}, rolled {4}{5}",
+                                        gear.name, actor.arc.name,  chance, traitName, rnd, "\n");
                                     //message
-                                    string msgText = string.Format("{0} gear lost by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                    string msgText = string.Format("{0} gear lost by {1}, {2}{3}", gear.name, actor.actorName, actor.arc.name, traitName);
                                     Message message = GameManager.instance.messageScript.GearLost(msgText, gear.gearID, actor.actorID);
                                     GameManager.instance.dataScript.AddMessage(message);
                                     //remove gear AFTER message
@@ -571,26 +598,9 @@ public class GearManager : MonoBehaviour
                 genericDetails.textMiddle = string.Format("{0}Gear will be placed in your inventory{1}",
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
-                //
                 //generate temp list of gear to choose from
-                //
                 List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
                 List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearRare));
-
-                /*//remove from lists any gear that the player currently has {EDIT -> not needed now as pool lists (above) are updated whenever gear is chosen so are up to date)
-                List<int> tempCurrentGear = new List<int>(GameManager.instance.dataScript.GetListOfCurrentGear());
-                if (tempCurrentGear.Count > 0)
-                {
-                    for (int i = 0; i < tempCurrentGear.Count; i++)
-                    {
-                        gearID = tempCurrentGear[i];
-                        if (tempCommonGear.Exists(id => id == gearID))
-                        { tempCommonGear.Remove(gearID); }
-                        else if (tempRareGear.Exists(id => id == gearID))
-                        { tempRareGear.Remove(gearID); }
-                    }
-                }*/
-
                 //
                 //select two items of gear for the picker
                 //
@@ -951,7 +961,14 @@ public class GearManager : MonoBehaviour
                     renown = 0;
                 }
                 GameManager.instance.playerScript.Renown = renown;
-
+                //stats
+                Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
+                if (gear != null)
+                {
+                    gear.statTimesSaved++;
+                    gear.statRenownSpent += gearSaveCurrentCost;
+                }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", data.optionID); }
                 //outcome -> one item saved, any other compromised gear lost
                 ModalOutcomeDetails details = new ModalOutcomeDetails();
                 StringBuilder builderTop = new StringBuilder();
@@ -1037,6 +1054,8 @@ public class GearManager : MonoBehaviour
                                 //remove gear from pool
                                 if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
                                 { Debug.LogWarningFormat("Invalid removal for \"{0}\", ID {1}", gear.name, gear.gearID); }
+                                //stat
+                                gear.statTurnObtained = GameManager.instance.turnScript.Turn;
                                 //gear successfully acquired
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,

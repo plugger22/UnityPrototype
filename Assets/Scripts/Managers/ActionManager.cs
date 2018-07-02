@@ -21,7 +21,8 @@ public class ActionManager : MonoBehaviour
     private int gearSwapBaseAmount = -1;
     private int gearSwapPreferredAmount = -1;
     //traits
-    private int actorStressedDuringSecurity;
+    private int actorStressedDuringSecurity = -1;
+    private int actorKeepGear = -1;
 
     //colour palette for Modal Outcome
     private string colourNormal;
@@ -40,11 +41,13 @@ public class ActionManager : MonoBehaviour
         //fast access fields
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
+        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
         Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
+        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
@@ -1322,6 +1325,8 @@ public class ActionManager : MonoBehaviour
                     outcomeDetails.textTop = string.Format("{0}, {1}, thanks you for the {2}{3}{4}{5}", actor.arc.name, actor.actorName, "\n", colourNeutral, gear.name, colourEnd);
                     //update actor details
                     string textGear = actor.AddGear(gear.gearID);
+                    //gear stats
+                    gear.statTimesGiven++;
                     //get actor's preferred gear
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
@@ -1339,8 +1344,17 @@ public class ActionManager : MonoBehaviour
                         else
                         { builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourGood, actor.arc.name, gearSwapBaseAmount, colourEnd); }
                         //grace period note
-                        builder.AppendFormat("{0}{1}After {2}{3}{4} turn{5} you can ask for the gear back", "\n", "\n", colourNeutral, gearGracePeriod, colourEnd,
-                            gearGracePeriod != 1 ? "s" : "");
+                        if (actor.CheckTraitEffect(actorKeepGear) == false)
+                        {
+                            builder.AppendFormat("{0}{1}After {2}{3}{4} turn{5} you can ask for the gear back", "\n", "\n", colourNeutral, gearGracePeriod, colourEnd,
+                                gearGracePeriod != 1 ? "s" : "");
+                        }
+                        else
+                        {
+                            //trait -> (Pack Rat) refuses to hand back gear
+                            builder.AppendFormat("{0}{1}{2} has {3}{4}{5} trait{6}{7}REFUSES to handback gear{8}", "\n", "\n", actor.arc.name, colourNeutral, actor.GetTrait().tag,
+                                colourEnd, "\n", colourBad, colourEnd);
+                        }
                         if (string.IsNullOrEmpty(textGear) == false)
                         {
                             //gear has been lost (actor already had some gear
