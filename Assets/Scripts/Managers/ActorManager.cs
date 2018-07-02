@@ -2960,6 +2960,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (actor != null)
         {
+            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
             List<ActorBreakdown> listSelectionPool = new List<ActorBreakdown>();
             Dictionary<int, ActorBreakdown> dictOfActorBreakdowns = GameManager.instance.dataScript.GetDictOfActorBreakdowns();
             if (dictOfActorBreakdowns != null)
@@ -2983,6 +2984,13 @@ public class ActorManager : MonoBehaviour
                                 if (GameManager.instance.effectScript.CheckCriteria(criteriaData) != null)
                                 { proceedFlag = false; }
                             }
+                            //check side (if not 'both')
+                            if (breakdown.Value.side.level != 3)
+                            {
+                                if (breakdown.Value.side.level != playerSide.level)
+                                { proceedFlag = false; }
+                            }
+                            //Go Ahead?
                             if (proceedFlag == true)
                             {
                                 //place into pool, number of entries according to chance of being selected
