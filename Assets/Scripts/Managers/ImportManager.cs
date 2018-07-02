@@ -761,6 +761,37 @@ public class ImportManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid authorityQualities (Null) -> Import failed"); }
         //
+        // - - - ActorBreakdowns - - -
+        //
+        Dictionary<int, ActorBreakdown> dictOfActorBreakdowns = GameManager.instance.dataScript.GetDictOfActorBreakdowns();
+        if (dictOfActorBreakdowns != null)
+        {
+            counter = 0;
+            //get GUID of all SO ActorBreakdown Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var actorBreakdownGUID = AssetDatabase.FindAssets("t:ActorBreakdown");
+            foreach (var guid in actorBreakdownGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object actorBreakdownObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActorBreakdown));
+                //assign a zero based unique ID number
+                ActorBreakdown breakdown = actorBreakdownObject as ActorBreakdown;
+                //set data
+                breakdown.actBreakID = counter++;
+                //add to dictionary
+                try
+                { dictOfActorBreakdowns.Add(breakdown.actBreakID, breakdown); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid ActorBreakdown (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid ActorBreakdown (duplicate) ID \"{0}\" for \"{1}\"", counter, breakdown.actBreakID)); counter--; }
+            }
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorBreakdowns has {0} entries{1}", dictOfActorBreakdowns.Count, "\n");
+            Debug.Assert(dictOfActorBreakdowns.Count == counter, "Mismatch in count");
+        }
+        else { Debug.LogError("Invalid dictOfActorBreakdowns (Null) -> Import failed"); }
+        //
         // - - - Factions - - -
         //
         Dictionary<int, Faction> dictOfFactions = GameManager.instance.dataScript.GetDictOfFactions();

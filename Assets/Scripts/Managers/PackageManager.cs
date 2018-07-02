@@ -99,11 +99,16 @@ namespace packageAPI
     public class EffectDataInput
     {
         public GlobalSide side;                                              //used to determine colouring of good/bad effects
-        public int ongoingID = -1;                                           //used only if there are going to be ongoing effects, ignore otherwise
+        public int ongoingID;                                                //used only if there are going to be ongoing effects, ignore otherwise
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
         public string textOrigin;                                            //name of thing that caused the effect, eg. gear name
+
+
         public EffectDataInput()
-        { side = GameManager.instance.sideScript.PlayerSide; }
+        {
+            ongoingID = -1; ongoingText = "";
+            side = GameManager.instance.sideScript.PlayerSide;
+        }
     }
 
     /// <summary>
