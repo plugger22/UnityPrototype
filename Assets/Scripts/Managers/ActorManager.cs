@@ -1263,11 +1263,11 @@ public class ActorManager : MonoBehaviour
                                                 builder.Append("Unknown Preferred Gear");
                                                 Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                             }
-                                            //relationship breakdown
+                                            //relationship conflict
                                             if (actor.datapoint1 < benefit)
                                             {
                                                 builder.AppendFormat("{0}{1} Motivation too Low!{2}", "\n", colourAlert, colourEnd);
-                                                builder.AppendFormat("{0}{1}RELATIONSHIP BREAKDOWN{2}", "\n", colourBad, colourEnd);
+                                                builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                                                 builder.AppendFormat("{0}{1}If you Take Gear{2}", "\n", colourAlert, colourEnd);
                                             }
                                             //button package
@@ -2950,33 +2950,33 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// When an actor's motivation drops below zero (before mincapping) they suffer a relationship breakdown with the player. Returns two line text outcome (as well as applying effect).
+    /// When an actor's motivation drops below zero (before mincapping) they suffer a relationship conflict with the player. Returns two line text outcome (as well as applying effect).
     /// </summary>
     /// <param name="actor"></param>
     /// <returns></returns>
-    public string GetActorBreakdown(Actor actor)
+    public string GetActorConflict(Actor actor)
     {
         bool proceedFlag = true;
         StringBuilder builder = new StringBuilder();
         if (actor != null)
         {
             GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-            List<ActorBreakdown> listSelectionPool = new List<ActorBreakdown>();
-            Dictionary<int, ActorBreakdown> dictOfActorBreakdowns = GameManager.instance.dataScript.GetDictOfActorBreakdowns();
-            if (dictOfActorBreakdowns != null)
+            List<ActorConflict> listSelectionPool = new List<ActorConflict>();
+            Dictionary<int, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
+            if (dictOfActorConflicts != null)
             {
-                if (dictOfActorBreakdowns.Count > 0)
+                if (dictOfActorConflicts.Count > 0)
                 {
-                    //loop dict checking every actorBreakdown to see if they are applicable
-                    foreach (var breakdown in dictOfActorBreakdowns)
+                    //loop dict checking every actorConflict to see if they are applicable
+                    foreach (var conflict in dictOfActorConflicts)
                     {
-                        if (breakdown.Value != null)
+                        if (conflict.Value != null)
                         {
                             //data package
                             CriteriaDataInput criteriaData = new CriteriaDataInput()
                             {
                                 actorSlotID = actor.actorSlotID,
-                                listOfCriteria = breakdown.Value.effect.listOfCriteria
+                                listOfCriteria = conflict.Value.effect.listOfCriteria
                             };
                             //check at least one criteria present
                             if (criteriaData.listOfCriteria != null)
@@ -2985,75 +2985,76 @@ public class ActorManager : MonoBehaviour
                                 { proceedFlag = false; }
                             }
                             //check side (if not 'both')
-                            if (breakdown.Value.side.level != 3)
+                            if (conflict.Value.side.level != 3)
                             {
-                                if (breakdown.Value.side.level != playerSide.level)
+                                if (conflict.Value.side.level != playerSide.level)
                                 { proceedFlag = false; }
                             }
                             //Go Ahead?
                             if (proceedFlag == true)
                             {
                                 //place into pool, number of entries according to chance of being selected
-                                switch (breakdown.Value.chance.level)
+                                switch (conflict.Value.chance.level)
                                 {
                                     case 0:
                                         //low
-                                        listSelectionPool.Add(breakdown.Value);
+                                        listSelectionPool.Add(conflict.Value);
                                         break;
                                     case 1:
                                         //medium
-                                        listSelectionPool.Add(breakdown.Value); listSelectionPool.Add(breakdown.Value);
+                                        listSelectionPool.Add(conflict.Value); listSelectionPool.Add(conflict.Value);
                                         break;
                                     case 2:
                                         //high
-                                        listSelectionPool.Add(breakdown.Value); listSelectionPool.Add(breakdown.Value); listSelectionPool.Add(breakdown.Value);
+                                        listSelectionPool.Add(conflict.Value); listSelectionPool.Add(conflict.Value); listSelectionPool.Add(conflict.Value);
                                         break;
                                     default:
-                                        Debug.LogWarningFormat("Invalid ActorBreakdown.chance.level {0}", breakdown.Value.chance.level);
+                                        Debug.LogWarningFormat("Invalid ActorConflict.chance.level {0}", conflict.Value.chance.level);
                                         break;
                                 }
                             }
                         }
-                        else { Debug.LogWarningFormat("Invalid actorBreakdown (Null) for actBreakID {0}", breakdown.Key); }
+                        else { Debug.LogWarningFormat("Invalid actorConflict (Null) for actBreakID {0}", conflict.Key); }
                     }
                     //select from pool
                     int index = Random.Range(0, listSelectionPool.Count);
-                    ActorBreakdown actorBreakdown = listSelectionPool[index];
+                    ActorConflict actorConflict = listSelectionPool[index];
                     EffectDataReturn effectReturn = null;
                     //Implement effect
-                    if (actorBreakdown.effect != null)
+                    if (actorConflict.effect != null)
                     {
                         //data packages
                         effectReturn = new EffectDataReturn();
                         EffectDataInput effectInput = new EffectDataInput();
-                        effectInput.textOrigin = "Relationship Breakdown";
+                        effectInput.textOrigin = "Relationship Conflict";
                         //process effect (use player node, but doesn't really matter)
-                        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                        if (node != null)
+                        int nodeID = GameManager.instance.nodeScript.nodePlayer;
+
+                        switch (actorConflict.who.level)
                         {
-                            switch (actorBreakdown.who.level)
-                            {
-                                case 0:
-                                    //player
-                                    effectReturn = GameManager.instance.effectScript.ProcessEffect(actorBreakdown.effect, node, effectInput);
-                                    break;
-                                case 1:
-                                    //actor
-                                    effectReturn = GameManager.instance.effectScript.ProcessEffect(actorBreakdown.effect, node, effectInput, actor);
-                                    break;
-                                default:
-                                    Debug.LogWarningFormat("Invalid actorBreakdown.who \"{0}\"", actorBreakdown.who);
-                                    break;
-                            }
-                            
+                            case 0:
+                                //player
+                                Node nodePlayer = GameManager.instance.dataScript.GetNode(nodeID);
+                                if (nodePlayer != null)
+                                { effectReturn = GameManager.instance.effectScript.ProcessEffect(actorConflict.effect, nodePlayer, effectInput); }
+                                else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+                                break;
+                            case 1:
+                                //actor -> can't use player node, need a different one (use nodeID 0 or 1 as safe options)
+                                if (nodeID == 0) { nodeID = 1; } else { nodeID = 0; }
+                                Node nodeOther = GameManager.instance.dataScript.GetNode(nodeID);
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(actorConflict.effect, nodeOther, effectInput, actor);
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Invalid actorConflict.who \"{0}\"", actorConflict.who);
+                                break;
                         }
-                        else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
                     }
-                    //build return string -> (2 lines) ActorBreakdown.outcomeText at top, effectReturn.bottomText underneath
-                    if (string.IsNullOrEmpty(actorBreakdown.outcomeText) == false)
-                    { builder.Append(actorBreakdown.outcomeText); }
+                    //build return string -> (2 lines) ActorConflict.outcomeText at top, effectReturn.bottomText underneath
+                    if (string.IsNullOrEmpty(actorConflict.outcomeText) == false)
+                    { builder.Append(actorConflict.outcomeText); }
                     //bottom line
-                    if (actorBreakdown.effect != null)
+                    if (actorConflict.effect != null)
                     {
                         if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                         {
@@ -3067,9 +3068,9 @@ public class ActorManager : MonoBehaviour
                         builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                     }
                 }
-                else { Debug.LogWarning("No records in dictOfActorBreakdowns"); }
+                else { Debug.LogWarning("No records in dictOfActorConflicts"); }
             }
-            else { Debug.LogWarning("Invalid dictOFActorBreakdowns (Null)"); }
+            else { Debug.LogWarning("Invalid dictOFActorConflicts (Null)"); }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
         //return two line outcome

@@ -238,6 +238,8 @@ public class ImportManager : MonoBehaviour
                 Debug.LogFormat("[Imp] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
                 Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfLookUpTraitEffects.Count == counter, "Mismatch on count");
+                Debug.Assert(dictOfTraitEffects.Count > 0, "No Trait Effects imported to dictionary");
+                Debug.Assert(dictOfLookUpTraitEffects.Count > 0, "No Trait Effects in Lookup dictionary");
             }
             else { Debug.LogError("Invalid dictOfLookUpTraitEffects (Null) -> Import failed"); }
         }
@@ -295,6 +297,8 @@ public class ImportManager : MonoBehaviour
                 Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpNodeArcs has {0} entries{1}", dictOfLookUpNodeArcs.Count, "\n");
                 Debug.Assert(dictOfNodeArcs.Count == counter, "Mismatch on Count");
                 Debug.Assert(dictOfLookUpNodeArcs.Count == counter, "Mismatch on Count");
+                Debug.Assert(dictOfNodeArcs.Count > 0, "No Node Arcs have been imported");
+                Debug.Assert(dictOfLookUpNodeArcs.Count > 0, "No Node Arcs in Lookup dictionary");
             }
             else { Debug.LogError("Invalid dictOfLookUpNodeArcs (Null) -> Import failed"); }
         }
@@ -334,6 +338,7 @@ public class ImportManager : MonoBehaviour
                 }
                 Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTraits has {0} entries{1}", dictOfTraits.Count, "\n");
                 Debug.Assert(dictOfTraits.Count == counter, "Mismatch on count");
+                Debug.Assert(dictOfTraits.Count > 0, "No Traits have been imported");
             }
             else { Debug.LogError("Invalid listOfAllTraits (Null) -> Import failed"); }
         }
@@ -384,6 +389,7 @@ public class ImportManager : MonoBehaviour
                     Debug.LogFormat("[Imp] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
                     Debug.LogFormat("[Imp] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
                     Debug.Assert(dictOfActorArcs.Count == counter, "Mismatch on count");
+                    Debug.Assert(dictOfActorArcs.Count > 0, "No Actor Arcs have been imported");
                 }
                 else { Debug.LogError("Invalid resistanceActorArcs (Null) -> Import failed"); }
             }
@@ -444,6 +450,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfEffects has {0} entries{1}", dictOfEffects.Count, "\n");
             Debug.Assert(dictOfEffects.Count == counter, "Mismatch on count");
+            Debug.Assert(dictOfEffects.Count > 0, "No Effects have been imported");
         }
         else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }
         //
@@ -481,6 +488,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTargets has {0} entries{1}", dictOfTargets.Count, "\n");
             Debug.Assert(dictOfTargets.Count == counter, "Mismatch on count");
+            Debug.Assert(dictOfTargets.Count > 0, "No Targets have been imported");
         }
         else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }
         //
@@ -524,6 +532,8 @@ public class ImportManager : MonoBehaviour
                 Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
                 Debug.Assert(dictOfActions.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfLookUpActions.Count == counter, "Mismatch on count");
+                Debug.Assert(dictOfActions.Count > 0, "No Actions have been imported");
+                Debug.Assert(dictOfLookUpActions.Count > 0, "No Actions in lookup dictionary");
             }
             else { Debug.LogError("Invalid dictOfLookUpActions (Null) -> Import failed"); }
         }
@@ -569,6 +579,8 @@ public class ImportManager : MonoBehaviour
                 Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpTeamArcs has {0} entries{1}", dictOfLookUpTeamArcs.Count, "\n");
                 Debug.Assert(dictOfTeamArcs.Count == counter, "Mismatch on Count");
                 Debug.Assert(dictOfLookUpTeamArcs.Count == counter, "Mismatch on Count");
+                Debug.Assert(dictOfTeamArcs.Count > 0, "No Team Arcs have been imported");
+                Debug.Assert(dictOfLookUpTeamArcs.Count > 0, "No Team Arcs in Lookup dictionary");
                 //arrayOfTeams
                 GameManager.instance.dataScript.InitialiseArrayOfTeams(counter, (int)TeamInfo.Count);
             }
@@ -604,6 +616,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfGear has {0} entries{1}", dictOfGear.Count, "\n");
             Debug.Assert(dictOfGear.Count == counter, "Mismatch on Count");
+            Debug.Assert(dictOfGear.Count > 0, "No Gear has been imported");
         }
         else { Debug.LogError("Invalid dictOfGear (Null) -> Import failed"); }
         //
@@ -787,36 +800,37 @@ public class ImportManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid authorityQualities (Null) -> Import failed"); }
         //
-        // - - - ActorBreakdowns - - -
+        // - - - ActorConflicts - - -
         //
-        Dictionary<int, ActorBreakdown> dictOfActorBreakdowns = GameManager.instance.dataScript.GetDictOfActorBreakdowns();
-        if (dictOfActorBreakdowns != null)
+        Dictionary<int, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
+        if (dictOfActorConflicts != null)
         {
             counter = 0;
-            //get GUID of all SO ActorBreakdown Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var actorBreakdownGUID = AssetDatabase.FindAssets("t:ActorBreakdown");
-            foreach (var guid in actorBreakdownGUID)
+            //get GUID of all SO ActorConflict Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var actorConflictGUID = AssetDatabase.FindAssets("t:ActorConflict");
+            foreach (var guid in actorConflictGUID)
             {
                 //get path
                 path = AssetDatabase.GUIDToAssetPath(guid);
                 //get SO
-                UnityEngine.Object actorBreakdownObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActorBreakdown));
+                UnityEngine.Object actorConflictObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActorConflict));
                 //assign a zero based unique ID number
-                ActorBreakdown breakdown = actorBreakdownObject as ActorBreakdown;
+                ActorConflict conflict = actorConflictObject as ActorConflict;
                 //set data
-                breakdown.actBreakID = counter++;
+                conflict.actBreakID = counter++;
                 //add to dictionary
                 try
-                { dictOfActorBreakdowns.Add(breakdown.actBreakID, breakdown); }
+                { dictOfActorConflicts.Add(conflict.actBreakID, conflict); }
                 catch (ArgumentNullException)
-                { Debug.LogError("Invalid ActorBreakdown (Null)"); counter--; }
+                { Debug.LogError("Invalid ActorConflict (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid ActorBreakdown (duplicate) ID \"{0}\" for \"{1}\"", counter, breakdown.actBreakID)); counter--; }
+                { Debug.LogError(string.Format("Invalid ActorConflict (duplicate) ID \"{0}\" for \"{1}\"", counter, conflict.actBreakID)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorBreakdowns has {0} entries{1}", dictOfActorBreakdowns.Count, "\n");
-            Debug.Assert(dictOfActorBreakdowns.Count == counter, "Mismatch in count");
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorConflicts has {0} entries{1}", dictOfActorConflicts.Count, "\n");
+            Debug.Assert(dictOfActorConflicts.Count == counter, "Mismatch in count");
+            Debug.Assert(dictOfActorConflicts.Count > 0, "No ActorConflicts imported");
         }
-        else { Debug.LogError("Invalid dictOfActorBreakdowns (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfActorConflicts (Null) -> Import failed"); }
         //
         // - - - Factions - - -
         //
@@ -846,6 +860,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfFactions has {0} entries{1}", dictOfFactions.Count, "\n");
             Debug.Assert(dictOfFactions.Count == counter, "Mismatch on count");
+            Debug.Assert(dictOfFactions.Count > 0, "No Factions have been imported");
         }
         else { Debug.LogError("Invalid dictOfFactions (Null) -> Import failed"); }
         //
@@ -877,6 +892,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", dictOfCityArcs.Count, "\n");
             Debug.Assert(dictOfCityArcs.Count == counter, "Mismatch on count");
+            Debug.Assert(dictOfCityArcs.Count > 0, "No City Arcs have been imported");
         }
         else { Debug.LogError("Invalid dictOfCityArcs (Null) -> Import failed"); }
         //
@@ -908,6 +924,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCities has {0} entries{1}", dictOfCities.Count, "\n");
             Debug.Assert(dictOfCities.Count == counter, "Mismatch on Count");
+            Debug.Assert(dictOfCities.Count > 0, "No cities have been imported");
         }
         else { Debug.LogError("Invalid dictOfCities (Null) -> Import failed"); }
         //
@@ -939,6 +956,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfObjectives has {0} entries{1}", dictOfObjectives.Count, "\n");
             Debug.Assert(dictOfObjectives.Count == counter, "Mismatch on Count");
+            Debug.Assert(dictOfObjectives.Count > 0, "No Objectives have been imported");
         }
         else { Debug.LogError("Invalid dictOfObjectives (Null) -> Import failed"); }
         //
@@ -970,6 +988,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", dictOfOrganisations.Count, "\n");
             Debug.Assert(dictOfOrganisations.Count == counter, "Mismatch on Count");
+            Debug.Assert(dictOfOrganisations.Count > 0, "No Organisations have been imported");
         }
         else { Debug.LogError("Invalid dictOfOrganisations (Null) -> Import failed"); }
         //
@@ -1006,6 +1025,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfMayors has {0} entries{1}", dictOfMayors.Count, "\n");
             Debug.Assert(dictOfMayors.Count == counter, "Mismatch in count");
+            Debug.Assert(dictOfMayors.Count > 0, "No Mayors have been imported");
         }
         else { Debug.LogError("Invalid dictOfMayors (Null) -> Import failed"); }
         //
@@ -1049,6 +1069,8 @@ public class ImportManager : MonoBehaviour
                 Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
                 Debug.Assert(dictOfAIDecisions.Count == counter, "Mismatch in count");
                 Debug.Assert(dictOfLookUpAIDecisions.Count == counter, "Mismatch in count");
+                Debug.Assert(dictOfAIDecisions.Count > 0, "No AI Decisions have been imported");
+                Debug.Assert(dictOfLookUpAIDecisions.Count > 0, "No AI Decisions in lookup dictionary");
             }
             else { Debug.LogError("Invalid dictOfLookUpAIDecision (Null) -> Import failed"); }
         }
@@ -1084,6 +1106,7 @@ public class ImportManager : MonoBehaviour
                 }
                 Debug.LogFormat("[Imp] InitialiseLate -> dictOfNodes has {0} entries{1}", dictOfNodes.Count, "\n");
                 Debug.Assert(dictOfNodes.Count == counter, "Mismatch in Count");
+                Debug.Assert(dictOfNodes.Count > 0, "No Nodes have been imported");
             }
             else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
             //Actor Nodes

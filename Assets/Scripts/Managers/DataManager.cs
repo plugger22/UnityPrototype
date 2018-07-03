@@ -135,7 +135,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                     //Key -> mayorID, Value -> Mayor
     private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();      //Key -> aiDecID, Value -> DecisionAI
     private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();        //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
-    private Dictionary<int, ActorBreakdown> dictOfActorBreakdowns = new Dictionary<int, ActorBreakdown>(); //Key -> actBreakID, Value -> ActorBreakdown
+    private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>(); //Key -> actBreakID, Value -> ActorBreakdown
     
 
     //global SO's (enum equivalents)
@@ -431,8 +431,8 @@ public class DataManager : MonoBehaviour
     // - - -  Actor Breakdowns
     //
 
-    public Dictionary<int, ActorBreakdown> GetDictOfActorBreakdowns()
-    { return dictOfActorBreakdowns; }
+    public Dictionary<int, ActorConflict> GetDictOfActorConflicts()
+    { return dictOfActorConflicts; }
 
     //
     // - - - Traits - - -

@@ -1482,11 +1482,11 @@ public class ActionManager : MonoBehaviour
                 //deduct motivation from actor
                 if (motivationCost > 0)
                 {                    
-                    //relationship Breakdown
+                    //relationship Conflict
                     if (actor.datapoint1 < motivationCost)
                     {
                         builder.AppendFormat("{0}{1}{2}Motivation too Low!{3}", "\n", "\n", colourAlert, colourEnd);
-                        builder.AppendFormat("{0}{1}{2} suffers a RELATIONSHIP BREAKDOWN", "\n", colourBad, actor.arc.name, colourEnd);
+                        builder.AppendFormat("{0}{1}{2} starts a RELATIONSHIP CONFLICT", "\n", colourBad, actor.arc.name, colourEnd);
                     }
                     //second or beyond time that gear has been taken
                     actor.datapoint1 -= motivationCost;
