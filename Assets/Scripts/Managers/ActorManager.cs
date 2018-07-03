@@ -2973,11 +2973,23 @@ public class ActorManager : MonoBehaviour
                         if (conflict.Value != null)
                         {
                             //data package
-                            CriteriaDataInput criteriaData = new CriteriaDataInput()
+                            CriteriaDataInput criteriaData = new CriteriaDataInput();
+                            criteriaData.listOfCriteria = conflict.Value.listOfCriteria;
+                            //actorSlot determines whether criteria is tested against Player or actor
+                            switch (conflict.Value.who.level)
                             {
-                                actorSlotID = actor.actorSlotID,
-                                listOfCriteria = conflict.Value.listOfCriteria
-                            };
+                                case 0:
+                                    //player
+                                    criteriaData.actorSlotID = -1;
+                                    break;
+                                case 1:
+                                    //actor
+                                    criteriaData.actorSlotID = actor.actorSlotID;
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid conflict.who \"{0}\"", conflict.Value.who);
+                                    break;
+                            }
                             //
                             // - - - Criteria
                             //
@@ -3061,7 +3073,7 @@ public class ActorManager : MonoBehaviour
                     //
                     //build return string -> (2 lines) ActorConflict.outcomeText at top, effectReturn.bottomText underneath
                     if (string.IsNullOrEmpty(actorConflict.outcomeText) == false)
-                    { builder.Append(actorConflict.outcomeText); }
+                    { builder.AppendFormat("{0}{1} {2}{3}", colourAlert, actor.arc.name, actorConflict.outcomeText, colourEnd); }
                     //bottom line
                     if (actorConflict.effect != null)
                     {

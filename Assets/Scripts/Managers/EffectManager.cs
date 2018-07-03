@@ -29,7 +29,13 @@ public class EffectManager : MonoBehaviour
     //fast access -> traits
     private int actorStressedOverInvisibility;
     private int actorDoubleRenown;
-
+    //fast access -> conditions
+    private Condition conditionStressed;
+    private Condition conditionCorrupt;
+    private Condition conditionIncompetent;
+    private Condition conditionQuestionable;
+    private Condition conditionStar;
+    
 
     //colour palette for Modal Outcome
     private string colourGood; //good effect Resisance / bad effect Authority
@@ -50,8 +56,18 @@ public class EffectManager : MonoBehaviour
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         actorStressedOverInvisibility = GameManager.instance.dataScript.GetTraitEffectID("ActorInvisibilityStress");
         actorDoubleRenown = GameManager.instance.dataScript.GetTraitEffectID("ActorDoubleRenown");
+        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
+        conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
+        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+        conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
         Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
         Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
+        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
+        Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
+        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+        Debug.Assert(conditionStar != null, "Invalid conditionStar (Null)");
         //fast access -> teams
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
@@ -373,90 +389,122 @@ public class EffectManager : MonoBehaviour
                                         errorFlag = true;
                                     }
                                     break;
-                                //Current Actor or Player
+                                //Current Actor / Player
                                 case "ActorCurrent":
                                     if (criteria.effectCriteria != null)
                                     {
                                         int playerRenown;
                                         switch (criteria.effectCriteria.name)
                                         {
-                                            /*case "ActionsRemainingYes":
-                                                //player has at least one action remaining
-                                                if (GameManager.instance.turnScript.CheckRemainingActions() == false)
-                                                { BuildString(result, "All Actions used this turn"); }
-                                                break;*/
                                             case "ConditionStressedYes":
                                                 //actor has the 'Stressed' condition
-                                                if (actor != null)
+                                                if (conditionStressed != null)
                                                 {
-                                                    Condition condition = GameManager.instance.dataScript.GetCondition("STRESSED");
-                                                    if (condition != null)
+                                                    if (actor != null)
                                                     {
-                                                        if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        if (actor.CheckConditionPresent(conditionStressed) == false)
+                                                        { BuildString(result, string.Format(" {0} isn't {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
-                                                    else { Debug.LogError("Invalid condition (Null) for STRESSED"); errorFlag = true; }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == false)
+                                                        { BuildString(result, string.Format(" Player isn't {0}STRESSED{1}", colourNeutral, colourEnd)); }
+                                                    }
                                                 }
-                                                else
-                                                { Debug.LogError(string.Format("Invalid actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionStressedNo":
+                                                //actor / player does NOT have the 'Stressed' condition
+                                                if (conditionStressed != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        //actor
+                                                        if (actor.CheckConditionPresent(conditionStressed) == true)
+                                                        { BuildString(result, string.Format(" {0} is {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
+                                                        { BuildString(result, string.Format(" Player is {0}STRESSED{1}", colourNeutral, colourEnd)); }
+                                                    }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
                                                 break;
                                             case "ConditionCorruptYes":
-                                                if (actor != null)
+                                                if (conditionCorrupt != null)
                                                 {
-                                                    Condition condition = GameManager.instance.dataScript.GetCondition("CORRUPT");
-                                                    if (condition != null)
+                                                    if (actor != null)
                                                     {
-                                                        if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be {1}CORRUPT{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        //actor
+                                                        if (actor.CheckConditionPresent(conditionCorrupt) == false)
+                                                        { BuildString(result, string.Format(" {0} isn't {1}CORRUPT{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
-                                                    else { Debug.LogError("Invalid condition (Null) for CORRUPT"); errorFlag = true; }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt) == false)
+                                                        { BuildString(result, string.Format(" Player isn't {0}CORRUPT{1}", colourNeutral, colourEnd)); }
+                                                    }
                                                 }
-                                                else
-                                                { Debug.LogError(string.Format("Invalid actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                else { Debug.LogWarning("Invalid conditionCorrupt (Null)"); errorFlag = true; }
                                                 break;
                                             case "ConditionIncompetentYes":
-                                                if (actor != null)
+                                                if (conditionIncompetent != null)
                                                 {
-                                                    Condition condition = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
-                                                    if (condition != null)
+                                                    if (actor != null)
                                                     {
-                                                        if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be {1}INCOMPETENT{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        //actor
+                                                        if (actor.CheckConditionPresent(conditionIncompetent) == false)
+                                                        { BuildString(result, string.Format(" {0} isn't {1}INCOMPETENT{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
-                                                    else { Debug.LogError("Invalid condition (Null) for INCOMPETENT"); errorFlag = true; }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent) == false)
+                                                        { BuildString(result, string.Format(" Player isn't {0}INCOMPETENT{1}", colourNeutral, colourEnd)); }
+                                                    }
                                                 }
-                                                else
-                                                { Debug.LogError(string.Format("Invalid actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                else { Debug.LogWarning("Invalid conditionIncompetent (Null)"); errorFlag = true; }
                                                 break;
                                             case "ConditionQuestionableYes":
-                                                if (actor != null)
+                                                if (conditionQuestionable != null)
                                                 {
-                                                    Condition condition = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-                                                    if (condition != null)
+                                                    if (actor != null)
                                                     {
-                                                        if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to have {1}QUESTIONABLE{2} loyalty", actor.actorName, colourNeutral, colourEnd)); }
+                                                        if (actor.CheckConditionPresent(conditionQuestionable) == false)
+                                                        { BuildString(result, string.Format(" {0} isn't {1}QUESTIONABLE{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
-                                                    else { Debug.LogError("Invalid condition (Null) for QUESTIONABLE"); errorFlag = true; }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable) == false)
+                                                        { BuildString(result, string.Format(" Player isn't {0}QUESTIONABLE{1}", colourNeutral, colourEnd)); }
+                                                    }
                                                 }
-                                                else
-                                                { Debug.LogError(string.Format("Invalid actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                else { Debug.LogWarning("Invalid conditionQuestionable (Null)"); errorFlag = true; }
                                                 break;
                                             case "ConditionStarYes":
-                                                if (actor != null)
+                                                if (conditionStar != null)
                                                 {
-                                                    Condition condition = GameManager.instance.dataScript.GetCondition("STAR");
-                                                    if (condition != null)
+                                                    if (actor != null)
                                                     {
-                                                        if (actor.CheckConditionPresent(condition) == false)
-                                                        { BuildString(result, string.Format(" {0} needs to be a {1}STAR{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        if (actor.CheckConditionPresent(conditionStar) == false)
+                                                        { BuildString(result, string.Format(" {0} isn't a {1}STAR{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
-                                                    else { Debug.LogError("Invalid condition (Null) for STAR"); errorFlag = true; }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar) == false)
+                                                        { BuildString(result, string.Format(" Player isn't a {0}STAR{1}", colourNeutral, colourEnd)); }
+                                                    }
                                                 }
-                                                else
-                                                { Debug.LogError(string.Format("Invalid actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                else { Debug.LogWarning("Invalid conditionStar (Null)"); errorFlag = true; }
                                                 break;
                                             case "RenownReserveMin":
+                                                //player
                                                 int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownReserve)
@@ -464,6 +512,7 @@ public class EffectManager : MonoBehaviour
                                                     colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
                                                 break;
                                             case "RenownDismissMin":
+                                                //player
                                                 int renownDismiss = GameManager.instance.actorScript.manageDismissRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDismiss)
@@ -471,11 +520,18 @@ public class EffectManager : MonoBehaviour
                                                     colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
                                                 break;
                                             case "RenownDisposeMin":
+                                                //player
                                                 int renownDispose = GameManager.instance.actorScript.manageDisposeRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDispose)
                                                 { BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose, 
                                                     colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
+                                                break;
+                                            case "RenownNOTZero":
+                                                //Player / Actor
+                                                playerRenown = GameManager.instance.playerScript.Renown;
+                                                if (playerRenown == 0)
+                                                { BuildString(result, "Renown Zero"); }
                                                 break;
                                             case "NumRecruitsCurrent":
                                                 //check max. number of recruits in reserve pool not exceeded
@@ -491,6 +547,14 @@ public class EffectManager : MonoBehaviour
                                                 else { val = GameManager.instance.playerScript.Invisibility; }
                                                 if (val == GameManager.instance.actorScript.maxStatValue)
                                                 { BuildString(result, "Invisibility at Max"); }
+                                                break;
+                                            case "InvisibilityNOTZero":
+                                                //check invisibility greater than Zero -> Actor / Player
+                                                if (actor != null)
+                                                { val = actor.datapoint2; }
+                                                else { val = GameManager.instance.playerScript.Invisibility; }
+                                                if (val == 0)
+                                                { BuildString(result, "Invisibility Zero"); }
                                                 break;
                                             case "NumGearMax":
                                                 //Note: effect criteria value is ignored in this case

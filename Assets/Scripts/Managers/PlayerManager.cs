@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     private List<int> listOfGear = new List<int>();                                 //gearID's of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
+    //private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
 
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;

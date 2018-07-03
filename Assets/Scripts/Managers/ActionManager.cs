@@ -1487,8 +1487,9 @@ public class ActionManager : MonoBehaviour
                     {
                         builder.AppendFormat("{0}{1}{2}Motivation too Low!{3}", "\n", "\n", colourAlert, colourEnd);
                         builder.AppendFormat("{0}{1}{2} starts a RELATIONSHIP CONFLICT", "\n", colourBad, actor.arc.name, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.GetActorConflict(actor));
                     }
-                    //second or beyond time that gear has been taken
+                    //deduct motivation
                     actor.datapoint1 -= motivationCost;
                     actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
                 }
