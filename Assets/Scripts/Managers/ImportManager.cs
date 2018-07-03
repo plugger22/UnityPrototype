@@ -817,14 +817,14 @@ public class ImportManager : MonoBehaviour
                 //assign a zero based unique ID number
                 ActorConflict conflict = actorConflictObject as ActorConflict;
                 //set data
-                conflict.actBreakID = counter++;
+                conflict.conflictID = counter++;
                 //add to dictionary
                 try
-                { dictOfActorConflicts.Add(conflict.actBreakID, conflict); }
+                { dictOfActorConflicts.Add(conflict.conflictID, conflict); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid ActorConflict (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid ActorConflict (duplicate) ID \"{0}\" for \"{1}\"", counter, conflict.actBreakID)); counter--; }
+                { Debug.LogError(string.Format("Invalid ActorConflict (duplicate) ID \"{0}\" for \"{1}\"", counter, conflict.conflictID)); counter--; }
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorConflicts has {0} entries{1}", dictOfActorConflicts.Count, "\n");
             Debug.Assert(dictOfActorConflicts.Count == counter, "Mismatch in count");

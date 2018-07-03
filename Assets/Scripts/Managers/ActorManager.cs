@@ -2976,9 +2976,11 @@ public class ActorManager : MonoBehaviour
                             CriteriaDataInput criteriaData = new CriteriaDataInput()
                             {
                                 actorSlotID = actor.actorSlotID,
-                                listOfCriteria = conflict.Value.effect.listOfCriteria
+                                listOfCriteria = conflict.Value.listOfCriteria
                             };
-                            //check at least one criteria present
+                            //
+                            // - - - Criteria
+                            //
                             if (criteriaData.listOfCriteria != null)
                             {
                                 if (GameManager.instance.effectScript.CheckCriteria(criteriaData) != null)
@@ -2990,7 +2992,9 @@ public class ActorManager : MonoBehaviour
                                 if (conflict.Value.side.level != playerSide.level)
                                 { proceedFlag = false; }
                             }
-                            //Go Ahead?
+                            //
+                            // - - - Pool - - -
+                            //
                             if (proceedFlag == true)
                             {
                                 //place into pool, number of entries according to chance of being selected
@@ -3027,7 +3031,9 @@ public class ActorManager : MonoBehaviour
                         effectReturn = new EffectDataReturn();
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.textOrigin = "Relationship Conflict";
-                        //process effect (use player node, but doesn't really matter)
+                        //
+                        // - - - Effect - - -
+                        //
                         int nodeID = GameManager.instance.nodeScript.nodePlayer;
 
                         switch (actorConflict.who.level)
@@ -3050,6 +3056,9 @@ public class ActorManager : MonoBehaviour
                                 break;
                         }
                     }
+                    //
+                    // - - - Output - - -
+                    //
                     //build return string -> (2 lines) ActorConflict.outcomeText at top, effectReturn.bottomText underneath
                     if (string.IsNullOrEmpty(actorConflict.outcomeText) == false)
                     { builder.Append(actorConflict.outcomeText); }
