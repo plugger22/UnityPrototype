@@ -138,6 +138,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();      //Key -> aiDecID, Value -> DecisionAI
     private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();        //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
     private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>(); //Key -> actBreakID, Value -> ActorBreakdown
+    private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                  //Key -> secretID, Value -> Secret
     
 
     //global SO's (enum equivalents)
@@ -2021,6 +2022,13 @@ public class DataManager : MonoBehaviour
 
     public string[,] GetArrayOfStatTags()
     { return arrayOfStatTags; }
+
+    //
+    // - - - Secrets - - -
+    //
+
+    public Dictionary<int, Secret> GetDictOfSecrets()
+    { return dictOfSecrets; }
 
     //
     // - - - Gear - - -

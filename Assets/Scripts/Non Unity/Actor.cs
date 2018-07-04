@@ -43,7 +43,7 @@ namespace gameAPI
 
         private Trait trait;
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
-        private List<int> listOfSecrets = new List<int>();
+        private List<Secret> listOfSecrets = new List<Secret>();            //Player secrets that the actor knows
         private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
         private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
 
@@ -240,11 +240,36 @@ namespace gameAPI
         public int CheckNumOfConditions()
         { return listOfConditions.Count; }
 
+        //
+        // - - - Secrets - - -
+        //
+
         public int CheckNumOfSecrets()
         { return listOfSecrets.Count; }
 
-        public List<int> GetListOfSecrets()
+        public List<Secret> GetListOfSecrets()
         { return listOfSecrets; }
+
+        public bool CheckSecretPresent(int secretID)
+        { return listOfSecrets.Exists(x => x.secretID == secretID); }
+
+        /// <summary>
+        /// Add a Player secret, checks for duplicates and won't add if one found (warning msg)
+        /// </summary>
+        /// <param name="secret"></param>
+        public void AddSecret(Secret secret)
+        {
+            if (secret != null)
+            {
+                //check same secret doesn't already exist
+                if (listOfSecrets.Exists(x => x.secretID == secret.secretID) == false)
+                {
+                    //add secret
+                    listOfSecrets.Add(secret);
+                }
+                else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
+            }
+        }
 
         //
         // - - -  Trait - - -

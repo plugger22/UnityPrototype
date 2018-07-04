@@ -832,6 +832,38 @@ public class ImportManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfActorConflicts (Null) -> Import failed"); }
         //
+        // - - - Secrets - - -
+        //
+        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        if (dictOfSecrets != null)
+        {
+            counter = 0;
+            //get GUID of all SO Secret Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var secretGUID = AssetDatabase.FindAssets("t:Secret");
+            foreach (var guid in secretGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object secretObject = AssetDatabase.LoadAssetAtPath(path, typeof(Secret));
+                //assign a zero based unique ID number
+                Secret secret = secretObject as Secret;
+                //set data
+                secret.secretID = counter++;
+                //add to dictionary
+                try
+                { dictOfSecrets.Add(secret.secretID, secret); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Secret (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Secret (duplicate) ID \"{0}\" for \"{1}\"", counter, secret.secretID)); counter--; }
+            }
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfSecrets has {0} entries{1}", dictOfSecrets.Count, "\n");
+            Debug.Assert(dictOfSecrets.Count == counter, "Mismatch in count");
+            Debug.Assert(dictOfSecrets.Count > 0, "No Secrets imported");
+        }
+        else { Debug.LogError("Invalid dictOfSecrets (Null) -> Import failed"); }
+        //
         // - - - Factions - - -
         //
         Dictionary<int, Faction> dictOfFactions = GameManager.instance.dataScript.GetDictOfFactions();

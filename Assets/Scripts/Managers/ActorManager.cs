@@ -3365,6 +3365,8 @@ public class ActorManager : MonoBehaviour
         Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActorsResistance != null)
         {
+            bool isSecrets = false;
+            if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
             int chance = breakdownChance;
             //base chance of nervous breakdown doubled during a surveillance crackdown
             if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
@@ -3396,16 +3398,21 @@ public class ActorManager : MonoBehaviour
                                     { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
                                     //test
                                     rnd = Random.Range(0, 100);
-                                    if ( rnd < chance)
+                                    if (rnd < chance)
                                     {
                                         //actor suffers a breakdown
                                         ActorBreakdown(actor, globalResistance);
-                                        Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need < {0}, rolled {1}{2}", 
+                                        Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                             chance, rnd, "\n");
                                     }
                                 }
                                 else { actor.isBreakdown = false; }
                             }
+                            //
+                            // - - - Learn Secrets - - -
+                            //
+                            if (isSecrets == true)
+                            { GameManager.instance.playerScript.CheckForSecrets(actor); }
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
@@ -3424,6 +3431,8 @@ public class ActorManager : MonoBehaviour
         if (arrayOfActorsAuthority != null)
         {
             int chance = breakdownChance;
+            bool isSecrets = false;
+            if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
             for (int i = 0; i < arrayOfActorsAuthority.Length; i++)
             {
                 //check actor is present in slot (not vacant)
@@ -3434,7 +3443,9 @@ public class ActorManager : MonoBehaviour
                     {
                         if (actor.Status == ActorStatus.Active)
                         {
-                            //check any actors with the stressed condition for a breakdown
+                            //
+                            // - - - Stressed Condition - - -
+                            //
                             if (actor.CheckConditionPresent(conditionStressed) == true)
                             {
                                 //enforces a minimu one turn gap between successive breakdowns
@@ -3455,6 +3466,11 @@ public class ActorManager : MonoBehaviour
                                 }
                                 else { actor.isBreakdown = false; }
                             }
+                            //
+                            // - - - Learn Secrets - - -
+                            //
+                            if (isSecrets == true)
+                            { GameManager.instance.playerScript.CheckForSecrets(actor); }
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }

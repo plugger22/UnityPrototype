@@ -27,7 +27,7 @@ public class PlayerManager : MonoBehaviour
     private List<int> listOfGear = new List<int>();                                 //gearID's of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
-    //private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
+    private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
 
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
@@ -660,9 +660,53 @@ public class PlayerManager : MonoBehaviour
     }
 
     //
-    // - - - Assorted - - -
+    // - - - Secrets - - -
     //
 
+    public List<Secret> GetListOfSecrets()
+    { return listOfSecrets; }
+
+    public int CheckNumOfSecrets()
+    { return listOfSecrets.Count; }
+
+    /// <summary>
+    /// Add a secret, checks for duplicates and won't add if one found (warning msg)
+    /// </summary>
+    /// <param name="secret"></param>
+    public void AddSecret(Secret secret)
+    {
+        if (secret != null)
+        {
+            //check same secret doesn't already exist
+            if (listOfSecrets.Exists(x => x.secretID == secret.secretID) == false)
+            {
+                //add secret
+                listOfSecrets.Add(secret);
+            }
+            else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
+        }
+    }
+
+    /// <summary>
+    /// called each turn by actors to check if they learn of a player's secrets
+    /// NOTE: calling method has already verified that player has at least one secret
+    /// </summary>
+    /// <param name="actor"></param>
+    public void CheckForSecrets(Actor actor)
+    {
+        if (actor != null)
+        {
+            //actor already knows any secrets
+            bool knowSecret = false;
+            if (actor.CheckNumOfSecrets() > 0) { knowSecret = true; }
+            //loop through Player secrets
+
+            //does actor learn of secret
+
+            //does actor already know secret
+        }
+        else { Debug.LogWarning("Invalid actor (Null)"); }
+    }
 
     //
     // - - - Debug
@@ -811,6 +855,8 @@ public class PlayerManager : MonoBehaviour
         }
         return text;
     }
+
+
 
     //place new methods above here
 }
