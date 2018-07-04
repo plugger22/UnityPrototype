@@ -696,14 +696,43 @@ public class PlayerManager : MonoBehaviour
     {
         if (actor != null)
         {
+            int rnd;
+            int chance = 25;
+            bool isProceed = true;
             //actor already knows any secrets
             bool knowSecret = false;
             if (actor.CheckNumOfSecrets() > 0) { knowSecret = true; }
             //loop through Player secrets
-
-            //does actor learn of secret
-
-            //does actor already know secret
+            for (int i = 0; i < listOfSecrets.Count; i++)
+            {
+                Secret secret = listOfSecrets[i];
+                if (secret != null)
+                {
+                    //does actor already know the secret
+                    if (knowSecret == true)
+                    {
+                        if (secret.CheckActorPresent(actor.actorID) == true)
+                        { isProceed = false; }
+                    }
+                    if (isProceed == true)
+                    {
+                        //does actor learn of secret
+                        rnd = Random.Range(0, 100);
+                        if (rnd < chance)
+                        {
+                            //actor learns of secret
+                            actor.AddSecret(secret);
+                            secret.AddActor(actor.actorID);
+                            //Admin
+                            Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: Learned SECRET need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                            string msgText = string.Format("{0} learns of Secret ({1})", actor.arc.name, secret.descriptor);
+                            Message message = GameManager.instance.messageScript.ActorSecret(msgText, actor.actorID, secret.secretID, GameManager.instance.sideScript.PlayerSide);
+                            GameManager.instance.dataScript.AddMessage(message);
+                        }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
+            }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
     }
@@ -856,7 +885,10 @@ public class PlayerManager : MonoBehaviour
         return text;
     }
 
-
+    public void DebugAddSecret()
+    {
+        //give the player a random secret
+    }
 
     //place new methods above here
 }

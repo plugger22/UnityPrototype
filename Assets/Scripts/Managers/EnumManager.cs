@@ -133,6 +133,7 @@
         Actor_Action,
         Actor_Status,
         Actor_Condition,
+        Actor_Secret,
         Actor_Reassured,
         Actor_Conflict,
         //Target

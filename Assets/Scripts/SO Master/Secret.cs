@@ -9,10 +9,34 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Actor / Secret")]
 public class Secret : ScriptableObject
 {
+    [Tooltip("Used in message and tooltips, keep short")]
     public string descriptor;
+    [Tooltip("Which side does the secret apply to")]
     public GlobalSide side;
 
-
     [HideInInspector] public int secretID;         //dynamically assigned by DataManager.cs on import
+
+    private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
+
+
+    /// <summary>
+    /// Add the actorID of an actor who has learned of the secret. Checks if already present (doesn't add, warning)
+    /// </summary>
+    /// <param name="actorID"></param>
+    public void AddActor(int actorID)
+    {
+        if (listOfActors.Exists(x => x == actorID) == false)
+        { listOfActors.Add(actorID); }
+        else
+        { Debug.LogWarningFormat("ActorID {0} already exists in listOfActors", actorID); }
+    }
+
+    /// <summary>
+    /// returns true if actorID is on list Of actors who already know of the secret, false otherwise
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public bool CheckActorPresent(int actorID)
+    { return listOfActors.Exists(x => x == actorID); }
 
 }

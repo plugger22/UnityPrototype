@@ -248,6 +248,34 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Actor learns of a Player secret
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actorID"></param>
+    /// <param name="secretID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Message ActorSecret(string text, int actorID, int secretID, GlobalSide side)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(secretID >= 0, string.Format("Invalid secretID {0}", secretID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Secret;
+            message.side = side;
+            message.isPublic = true;
+            message.data0 = actorID;
+            message.data1 = secretID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// actor has been recruited (can be used for both sides). Returns null if text invalid
     /// </summary>
     /// <param name="text"></param>
