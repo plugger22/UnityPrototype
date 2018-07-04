@@ -446,7 +446,6 @@ public class GearManager : MonoBehaviour
                     }
                 }
             }
-            else { Debug.LogWarning("Invalid actor (Null) in arrayOfActors"); }
         }
     }
 

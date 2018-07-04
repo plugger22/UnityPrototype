@@ -801,6 +801,7 @@ public class EffectManager : MonoBehaviour
                 case "ActorDisposedOff":
                 case "ActorPromoted":
                 case "ActorToReserves":
+                case "ActorResigns":                //not a Manage option but included
                 case "ManageDismissRenown":
                 case "ManageDisposeRenown":
                 case "ManageReserveRenown":
@@ -2503,6 +2504,11 @@ public class EffectManager : MonoBehaviour
         //get condition
         switch (effect.outcome.name)
         {
+            case "ActorResigns":
+                //NOTE: Not a Manage option and treated differently to the rest
+                if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                { effectResolve.bottomText = string.Format("{0}{1} RESIGNS{2}", colourBad, actor.arc.name, colourEnd); }
+                break;
             case "ActorToReserves":
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
                 break;

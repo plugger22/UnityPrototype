@@ -24,9 +24,6 @@ namespace gameAPI
         public GlobalSide side;
         public MessageType type;            //main category
         public MessageSubType subType;      //sub type of main category
-        
-        
-
 
         private static int messageCounter = 0;
 
@@ -41,6 +38,7 @@ namespace gameAPI
             data0 = -1;
             data1 = -1;
             data2 = -1;
+            isPublic = false;
         }
 
 

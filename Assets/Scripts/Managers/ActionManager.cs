@@ -1485,8 +1485,8 @@ public class ActionManager : MonoBehaviour
                     //relationship Conflict
                     if (actor.datapoint1 < motivationCost)
                     {
-                        builder.AppendFormat("{0}{1}{2}Motivation too Low!{3}", "\n", "\n", colourAlert, colourEnd);
-                        builder.AppendFormat("{0}{1}{2} starts a RELATIONSHIP CONFLICT", "\n", colourBad, actor.arc.name, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
+                        builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                         builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.GetActorConflict(actor));
                     }
                     //deduct motivation

@@ -46,6 +46,7 @@ public class DataManager : MonoBehaviour
     private List<int> authorityActorDismissed = new List<int>();
     private List<int> authorityActorPromoted = new List<int>();
     private List<int> authorityActorDisposedOf = new List<int>();
+    private List<int> authorityActorResigned = new List<int>();
 
     private List<int> resistanceActorPoolLevelOne = new List<int>();
     private List<int> resistanceActorPoolLevelTwo = new List<int>();
@@ -54,6 +55,7 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorDismissed = new List<int>();
     private List<int> resistanceActorPromoted = new List<int>();
     private List<int> resistanceActorDisposedOf = new List<int>();
+    private List<int> resistanceActorResigned = new List<int>();
 
     //master lists 
     private List<ActorArc> authorityActorArcs = new List<ActorArc>();
@@ -1314,12 +1316,7 @@ public class DataManager : MonoBehaviour
                 case ActorStatus.ReservePool:
                     if (AddActorToReserve(actor.actorID, side) == true)
                     {
-                        //update actor arrays
-                        arrayOfActors[side.level, actor.actorSlotID] = null;
-                        arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
-                        actor.Status = status;
-                        //update actor GUI display
-                        GameManager.instance.actorPanelScript.UpdateActorPanel();
+                        RemoveActorAdmin(side, actor, status);
                         return true;
                     }
                     else
@@ -1328,33 +1325,28 @@ public class DataManager : MonoBehaviour
                 case ActorStatus.Dismissed:
                     if (AddActorToDismissed(actor.actorID, side) == true)
                     {
-                        //update actor arrays
-                        arrayOfActors[side.level, actor.actorSlotID] = null;
-                        arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
-                        actor.Status = status;
-                        GameManager.instance.actorPanelScript.UpdateActorPanel();
+                        RemoveActorAdmin(side, actor, status);
                         return true;
                     }
                     break;
                 case ActorStatus.Promoted:
                     if (AddActorToPromoted(actor.actorID, side) == true)
                     {
-                        //update actor arrays
-                        arrayOfActors[side.level, actor.actorSlotID] = null;
-                        arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
-                        actor.Status = status;
-                        GameManager.instance.actorPanelScript.UpdateActorPanel();
+                        RemoveActorAdmin(side, actor, status);
                         return true;
                     }
                     break;
                 case ActorStatus.Killed:
                     if (AddActorToDisposedOf(actor.actorID, side) == true)
                     {
-                        //update actor arrays
-                        arrayOfActors[side.level, actor.actorSlotID] = null;
-                        arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
-                        actor.Status = status;
-                        GameManager.instance.actorPanelScript.UpdateActorPanel();
+                        RemoveActorAdmin(side, actor, status);
+                        return true;
+                    }
+                    break;
+                case ActorStatus.Resigned:
+                    if (AddActorToResigned(actor.actorID, side) == true)
+                    {
+                        RemoveActorAdmin(side, actor, status);
                         return true;
                     }
                     break;
@@ -1365,6 +1357,23 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid actor (Null)"); }
         return false;
+    }
+
+    /// <summary>
+    /// subMethod for RemoveActor to handle all the admin details
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="actor"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    private void RemoveActorAdmin(GlobalSide side, Actor actor, ActorStatus status)
+    {
+        //update actor arrays
+        arrayOfActors[side.level, actor.actorSlotID] = null;
+        arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
+        actor.Status = status;
+        //update actor GUI display
+        GameManager.instance.actorPanelScript.UpdateActorPanel();
     }
     
     /// <summary>
@@ -1477,7 +1486,7 @@ public class DataManager : MonoBehaviour
                 else { successFlag = false; }
                 break;
             default:
-                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side.name));
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to list", side.name));
                 successFlag = false;
                 break;
         }
@@ -1504,7 +1513,7 @@ public class DataManager : MonoBehaviour
                 resistanceActorDismissed.Add(actorID);
                 break;
             default:
-                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side.name));
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to list", side.name));
                 successFlag = false;
                 break;
         }
@@ -1531,7 +1540,7 @@ public class DataManager : MonoBehaviour
                 resistanceActorPromoted.Add(actorID);
                 break;
             default:
-                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side.name));
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to list", side.name));
                 successFlag = false;
                 break;
         }
@@ -1539,7 +1548,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// add an actor to the Disposed Of pool for that side. Returns ture if successful
+    /// add an actor to the Disposed Of pool for that side. Returns true if successful
     /// </summary>
     /// <param name="actorID"></param>
     /// <param name="side"></param>
@@ -1558,7 +1567,29 @@ public class DataManager : MonoBehaviour
                 resistanceActorDisposedOf.Add(actorID);
                 break;
             default:
-                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to pool", side.name));
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to list", side.name));
+                successFlag = false;
+                break;
+        }
+        return successFlag;
+    }
+
+
+    public bool AddActorToResigned(int actorID, GlobalSide side)
+    {
+        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        bool successFlag = true;
+        switch (side.name)
+        {
+            case "Authority":
+                authorityActorResigned.Add(actorID);
+                break;
+            case "Resistance":
+                resistanceActorResigned.Add(actorID);
+                break;
+            default:
+                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to list", side.name));
                 successFlag = false;
                 break;
         }

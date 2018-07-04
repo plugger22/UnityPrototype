@@ -62,7 +62,7 @@ public class MessageManager : MonoBehaviour
         {
             List<int> listOfMessagesToMove = new List<int>();
             //loop through all messages
-            foreach(var message in dictOfPendingMessages)
+            foreach (var message in dictOfPendingMessages)
             {
                 //look for messages that need to be displayed this turn
                 if (message.Value.displayDelay <= 0)
@@ -97,7 +97,7 @@ public class MessageManager : MonoBehaviour
         if (dictOfCurrentMessages != null)
         {
             List<int> listOfMessagesToMove = new List<int>();
-            foreach(var record in dictOfCurrentMessages)
+            foreach (var record in dictOfCurrentMessages)
             { listOfMessagesToMove.Add(record.Key); }
             //loop list and move all specified messages to the Archive dictionary for display
             for (int i = 0; i < listOfMessagesToMove.Count; i++)
@@ -110,21 +110,21 @@ public class MessageManager : MonoBehaviour
     }
 
 
-//
-// - - - New Message Methods
-//
+    //
+    // - - - New Message Methods
+    //
 
-//
-// - - - Player - - -
-//
+    //
+    // - - - Player - - -
+    //
 
-/// <summary>
-/// Message -> player movement from one node to another. Returns null if text invalid.
-/// </summary>
-/// <param name="text"></param>
-/// <param name="nodeID"></param>
-/// <returns></returns>
-public Message PlayerMove(string text, int nodeID)
+    /// <summary>
+    /// Message -> player movement from one node to another. Returns null if text invalid.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public Message PlayerMove(string text, int nodeID)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         if (string.IsNullOrEmpty(text) == false)
@@ -134,7 +134,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Move;
             message.side = globalResistance;
-            message.isPublic = false;
             message.data0 = nodeID;
             return message;
         }
@@ -142,8 +141,34 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
+    /// <summary>
+    /// Player renown expended. 'dataID' refers to GearID if gear compromised.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="dataID"></param>
+    /// <returns></returns>
+    public Message RenownUsedPlayer(string text, int nodeID, int dataID)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(dataID >= 0, string.Format("Invalid dataID {0}", dataID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Renown;
+            message.side = globalResistance;
+            message.data0 = nodeID;
+            message.data1 = dataID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
-    // - - - Actions - - -
+    // - - - Actors - - -
     //
 
     /// <summary>
@@ -216,6 +241,63 @@ public Message PlayerMove(string text, int nodeID)
             message.side = side;
             message.isPublic = isPublic;
             message.data0 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// actor has been recruited (can be used for both sides). Returns null if text invalid
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="actorID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Message ActorRecruited(string text, int nodeID, int actorID, GlobalSide side)
+    {
+        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (side.level == globalResistance.level)
+        { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Recruited;
+            message.side = side;
+            message.data0 = nodeID;
+            message.data1 = actorID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Actor initiates a Relationship Conflict due to motivation dropping below zero
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actorID"></param>
+    /// <param name="conflictID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Message ActorConflict(string text, int actorID, int conflictID, GlobalSide side)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(conflictID >= 0, string.Format("Invalid conflictID {0}", conflictID));
+        Debug.Assert(side != null, "Invalid side (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Conflict;
+            message.side = side;
+            message.data0 = actorID;
+            message.data1 = conflictID;
             return message;
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -335,7 +417,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Immediate;
             message.side = side;
-            message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = connID;
             message.data2 = actorID;
@@ -630,7 +711,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Add;
             message.side = globalAuthority;
-            message.isPublic = false;
             message.data0 = teamID;
             return message;
         }
@@ -658,7 +738,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Deploy;
             message.side = globalAuthority;
-            message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
             message.data2 = actorID;
@@ -677,7 +756,7 @@ public Message PlayerMove(string text, int nodeID)
     /// <param name="actorID"></param>
     /// <returns></returns>
     public Message TeamAutoRecall(string text, int nodeID, int teamID, int actorID)
-    { 
+    {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
         if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
@@ -719,7 +798,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Withdraw;
             message.side = globalAuthority;
-            message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
             message.data2 = actorID;
@@ -812,7 +890,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Gear_Given;
             message.side = globalResistance;
-            message.isPublic = false;
             message.data0 = actorID;
             message.data1 = gearID;
             message.data2 = motivation;
@@ -873,7 +950,6 @@ public Message PlayerMove(string text, int nodeID)
                 message.type = MessageType.GEAR;
                 message.subType = MessageSubType.Gear_Used;
                 message.side = globalResistance;
-                message.isPublic = false;
                 message.data0 = gearID;
                 message.data1 = nodeID;
                 return message;
@@ -956,7 +1032,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Obtained;
             message.side = globalResistance;
-            message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = gearID;
             message.data2 = actorID;
@@ -966,62 +1041,9 @@ public Message PlayerMove(string text, int nodeID)
         return null;
     }
 
-    /// <summary>
-    /// Player renown expended. 'dataID' refers to GearID if gear compromised.
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="nodeID"></param>
-    /// <param name="dataID"></param>
-    /// <returns></returns>
-    public Message RenownUsedPlayer(string text, int nodeID, int dataID)
-    {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(dataID >= 0, string.Format("Invalid dataID {0}", dataID));
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.PLAYER;
-            message.subType = MessageSubType.Plyr_Renown;
-            message.side = globalResistance;
-            message.isPublic = false;
-            message.data0 = nodeID;
-            message.data1 = dataID;
-            return message;
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
-    }
 
-    /// <summary>
-    /// actor has been recruited (can be used for both sides). Returns null if text invalid
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="nodeID"></param>
-    /// <param name="actorID"></param>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public Message ActorRecruited(string text, int nodeID, int actorID, GlobalSide side)
-    {
-        Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
-        if (side.level == globalResistance.level)
-        { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.ACTOR;
-            message.subType = MessageSubType.Actor_Recruited;
-            message.side = side;
-            message.isPublic = false;
-            message.data0 = nodeID;
-            message.data1 = actorID;
-            return message;
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
-    }
+
+
 
     //
     // - - - Targets - - -
@@ -1047,7 +1069,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Attempt;
             message.side = globalResistance;
-            message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = actorID;
             message.data2 = targetID;
@@ -1077,7 +1098,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Contained;
             message.side = globalBoth;
-            message.isPublic = false;
             message.data0 = nodeID;
             message.data1 = teamID;
             message.data2 = targetID;
@@ -1109,7 +1129,6 @@ public Message PlayerMove(string text, int nodeID)
             message.type = MessageType.EFFECT;
             message.subType = MessageSubType.Ongoing_Created;
             message.side = globalBoth;
-            message.isPublic = false;
             message.data0 = nodeID;
             return message;
         }

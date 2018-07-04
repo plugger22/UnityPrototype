@@ -66,7 +66,7 @@
     //
     // - - - Actors - - -
     //
-    public enum ActorStatus { Active, Inactive, ReservePool, RecruitPool, Captured, Dismissed, Promoted, Killed }
+    public enum ActorStatus { Active, Inactive, ReservePool, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned }
     public enum ActorInactive { None, LieLow, Breakdown}                             //reason actor is inactive
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Talk}                        //actor sprite shows a relevant tooltip if other than 'None'
@@ -134,6 +134,7 @@
         Actor_Status,
         Actor_Condition,
         Actor_Reassured,
+        Actor_Conflict,
         //Target
         Target_Attempt,
         Target_Contained,

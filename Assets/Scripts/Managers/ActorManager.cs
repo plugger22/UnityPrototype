@@ -2956,7 +2956,7 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public string GetActorConflict(Actor actor)
     {
-        bool proceedFlag = true;
+        bool proceedFlag;
         StringBuilder builder = new StringBuilder();
         if (actor != null)
         {
@@ -2972,6 +2972,7 @@ public class ActorManager : MonoBehaviour
                     {
                         if (conflict.Value != null)
                         {
+                            proceedFlag = true;
                             //data package
                             CriteriaDataInput criteriaData = new CriteriaDataInput();
                             criteriaData.listOfCriteria = conflict.Value.listOfCriteria;
@@ -3009,84 +3010,107 @@ public class ActorManager : MonoBehaviour
                             //
                             if (proceedFlag == true)
                             {
+                                
                                 //place into pool, number of entries according to chance of being selected
                                 switch (conflict.Value.chance.level)
                                 {
                                     case 0:
                                         //low
                                         listSelectionPool.Add(conflict.Value);
+                                        Debug.LogFormat("[Tst] {0} PASSED Criteria check -> 1 Entry in Pool", conflict.Value.name);
                                         break;
                                     case 1:
                                         //medium
                                         listSelectionPool.Add(conflict.Value); listSelectionPool.Add(conflict.Value);
+                                        Debug.LogFormat("[Tst] {0} PASSED Criteria check -> 2 Entries in Pool", conflict.Value.name);
                                         break;
                                     case 2:
                                         //high
                                         listSelectionPool.Add(conflict.Value); listSelectionPool.Add(conflict.Value); listSelectionPool.Add(conflict.Value);
+                                        Debug.LogFormat("[Tst] {0} PASSED Criteria check -> 3 Entries in Pool", conflict.Value.name);
                                         break;
                                     default:
                                         Debug.LogWarningFormat("Invalid ActorConflict.chance.level {0}", conflict.Value.chance.level);
                                         break;
                                 }
                             }
+                            else { Debug.LogFormat("[Tst] {0} Failed Criteria check", conflict.Value.name); }
                         }
                         else { Debug.LogWarningFormat("Invalid actorConflict (Null) for actBreakID {0}", conflict.Key); }
                     }
                     //select from pool
-                    int index = Random.Range(0, listSelectionPool.Count);
-                    ActorConflict actorConflict = listSelectionPool[index];
+                    ActorConflict actorConflict = null;
                     EffectDataReturn effectReturn = null;
-                    //Implement effect
-                    if (actorConflict.effect != null)
+                    if (listSelectionPool.Count > 0)
                     {
-                        //data packages
-                        effectReturn = new EffectDataReturn();
-                        EffectDataInput effectInput = new EffectDataInput();
-                        effectInput.textOrigin = "Relationship Conflict";
-                        //
-                        // - - - Effect - - -
-                        //
-                        int nodeID = GameManager.instance.nodeScript.nodePlayer;
-
-                        switch (actorConflict.who.level)
+                        int index = Random.Range(0, listSelectionPool.Count);
+                        actorConflict = listSelectionPool[index];
+                        Debug.LogFormat("[Tst] Pool size {0} Selected {1}", listSelectionPool.Count, actorConflict.name);
+                        //Implement effect
+                        if (actorConflict.effect != null)
                         {
-                            case 0:
-                                //player
-                                Node nodePlayer = GameManager.instance.dataScript.GetNode(nodeID);
-                                if (nodePlayer != null)
-                                { effectReturn = GameManager.instance.effectScript.ProcessEffect(actorConflict.effect, nodePlayer, effectInput); }
-                                else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
-                                break;
-                            case 1:
-                                //actor -> can't use player node, need a different one (use nodeID 0 or 1 as safe options)
-                                if (nodeID == 0) { nodeID = 1; } else { nodeID = 0; }
-                                Node nodeOther = GameManager.instance.dataScript.GetNode(nodeID);
-                                effectReturn = GameManager.instance.effectScript.ProcessEffect(actorConflict.effect, nodeOther, effectInput, actor);
-                                break;
-                            default:
-                                Debug.LogWarningFormat("Invalid actorConflict.who \"{0}\"", actorConflict.who);
-                                break;
+                            //data packages
+                            effectReturn = new EffectDataReturn();
+                            EffectDataInput effectInput = new EffectDataInput();
+                            effectInput.textOrigin = "Relationship Conflict";
+                            //message
+                            string msgText = string.Format("{0} Relationship Conflict ({1})", actor.arc.name, actorConflict.outcomeText);
+                            Message message = GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, actorConflict.conflictID, GameManager.instance.sideScript.PlayerSide);
+                            GameManager.instance.dataScript.AddMessage(message);
+                            //
+                            // - - - Effect - - -
+                            //
+                            int nodeID = GameManager.instance.nodeScript.nodePlayer;
+
+                            switch (actorConflict.who.level)
+                            {
+                                case 0:
+                                    //player
+                                    Node nodePlayer = GameManager.instance.dataScript.GetNode(nodeID);
+                                    if (nodePlayer != null)
+                                    { effectReturn = GameManager.instance.effectScript.ProcessEffect(actorConflict.effect, nodePlayer, effectInput); }
+                                    else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+                                    break;
+                                case 1:
+                                    //actor -> can't use player node, need a different one (use nodeID 0 or 1 as safe options)
+                                    if (nodeID == 0) { nodeID = 1; } else { nodeID = 0; }
+                                    Node nodeOther = GameManager.instance.dataScript.GetNode(nodeID);
+                                    effectReturn = GameManager.instance.effectScript.ProcessEffect(actorConflict.effect, nodeOther, effectInput, actor);
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid actorConflict.who \"{0}\"", actorConflict.who);
+                                    break;
+                            }
                         }
                     }
                     //
                     // - - - Output - - -
                     //
                     //build return string -> (2 lines) ActorConflict.outcomeText at top, effectReturn.bottomText underneath
-                    if (string.IsNullOrEmpty(actorConflict.outcomeText) == false)
-                    { builder.AppendFormat("{0}{1} {2}{3}", colourAlert, actor.arc.name, actorConflict.outcomeText, colourEnd); }
-                    //bottom line
-                    if (actorConflict.effect != null)
+                    if (actorConflict != null)
                     {
-                        if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                        if (string.IsNullOrEmpty(actorConflict.outcomeText) == false)
+                        { builder.AppendFormat("{0}{1} {2}{3}", colourAlert, actor.arc.name, actorConflict.outcomeText, colourEnd); }
+                        //bottom line
+                        if (actorConflict.effect != null)
                         {
-                            if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(effectReturn.bottomText);
+                            if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                            {
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                builder.Append(effectReturn.bottomText);
+                            }
+                        }
+                        else
+                        {
+                            //default error message (keep it in character)
+                            builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                         }
                     }
                     else
                     {
-                        //default error message (keep it in character)
-                        builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
+                        Debug.LogWarning("ActorManager.cs -> GetActorConflict: The selection Pool has no entries in it");
+                        builder.AppendFormat("{0}{1} stamps their feet{2}", colourAlert, actor.arc.name, colourEnd);
+                        builder.AppendFormat("{0}{1} Nothing happens{2}", "\n", colourGood, colourEnd);
                     }
                 }
                 else { Debug.LogWarning("No records in dictOfActorConflicts"); }
