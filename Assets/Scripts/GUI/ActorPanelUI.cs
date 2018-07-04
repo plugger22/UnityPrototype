@@ -49,6 +49,8 @@ public class ActorPanelUI : MonoBehaviour
 
     public bool isRenownUI;                             //gives status of renown UI display (true -> On, false -> Off)
 
+    private Image[] arrayOfRenownCircles = new Image[4];      //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
+
     //fast access
     private Sprite vacantAuthorityActor;
     private Sprite vacantResistanceActor;
@@ -135,6 +137,11 @@ public class ActorPanelUI : MonoBehaviour
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
+        //initialse listOfRenownCircles
+        arrayOfRenownCircles[0] = renownCircle0;
+        arrayOfRenownCircles[1] = renownCircle1;
+        arrayOfRenownCircles[2] = renownCircle2;
+        arrayOfRenownCircles[3] = renownCircle3;
         //initialise starting line up
         UpdateActorPanel();
         SetActorRenownUI(true);
@@ -207,6 +214,8 @@ public class ActorPanelUI : MonoBehaviour
 
                             }
                         }
+                        //Update Renown indicators (switches off for Vacant actors)
+                        SetActorRenownUI(true);
                     }
                     else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
                 }
@@ -257,16 +266,27 @@ public class ActorPanelUI : MonoBehaviour
     { canvasPlayer.alpha = alpha; }
 
     /// <summary>
-    /// toggles actor renown display on/off depending on status
+    /// toggles actor renown display on/off depending on status. If set to true and no actor present in slot (Vacant) will auto switch off
     /// </summary>
     /// <param name="status"></param>
     public void SetActorRenownUI(bool status)
     {
-        //set active/inactive
-        renownCircle0.gameObject.SetActive(status);
-        renownCircle1.gameObject.SetActive(status);
-        renownCircle2.gameObject.SetActive(status);
-        renownCircle3.gameObject.SetActive(status);
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        for (int index = 0; index < arrayOfRenownCircles.Length; index++)
+        {
+            if (status == true)
+            {
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(index, side) == true)
+                { arrayOfRenownCircles[index].gameObject.SetActive(status); }
+                else
+                {
+                    arrayOfRenownCircles[index].gameObject.SetActive(false);
+                    UpdateActorRenownUI(index, 0);
+                }
+            }
+            else { arrayOfRenownCircles[index].gameObject.SetActive(false); }
+        }
+        //player is never vacant
         renownCirclePlayer.gameObject.SetActive(status);
         //update flag
         isRenownUI = status;
@@ -290,7 +310,7 @@ public class ActorPanelUI : MonoBehaviour
     {
         Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
         Debug.Assert(renown > -1, "Invalid renown (< 0)");
-        switch(actorSlotID)
+        switch (actorSlotID)
         {
             case 0:
                 renownText0.text = Convert.ToString(renown);

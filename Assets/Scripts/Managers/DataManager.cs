@@ -1723,7 +1723,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get specific actor (OnMap, active or inactive)
+    /// Get specific actor (OnMap, active or inactive). Run CheckActorSlotStatus first to check if actor present in slot
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
@@ -1735,7 +1735,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns type of Actor, eg. 'Fixer', based on slotID (0 to 3)
+    /// returns type of Actor, eg. 'Fixer', based on slotID (0 to 3). Run CheckActorSlotStatus first to check if actor present in slot
     /// </summary>
     /// <param name="slotID"></param>
     /// <returns></returns>
