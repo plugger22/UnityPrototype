@@ -3369,8 +3369,8 @@ public class ActorManager : MonoBehaviour
     private void CheckActiveResistanceActors()
     {
         int rnd;
-        Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-        if (arrayOfActorsResistance != null)
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
         {
             bool isSecrets = false;
             if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
@@ -3378,12 +3378,12 @@ public class ActorManager : MonoBehaviour
             //base chance of nervous breakdown doubled during a surveillance crackdown
             if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
             { chance *= 2; }
-            for (int i = 0; i < arrayOfActorsResistance.Length; i++)
+            for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
                 if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
-                    Actor actor = arrayOfActorsResistance[i];
+                    Actor actor = arrayOfActors[i];
                     if (actor != null)
                     {
                         if (actor.Status == ActorStatus.Active)
@@ -3429,12 +3429,12 @@ public class ActorManager : MonoBehaviour
                                 actor.blackmailTimer--;
                                 if (actor.datapoint1 == maxStatValue)
                                 {
-                                    //message
-                                    string msgText = string.Format("{0} has maximum Motivation and has dropped their threats", actor.arc.name);
-                                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
-                                    GameManager.instance.dataScript.AddMessage(message);
                                     //Motivation at max value, Blackmailer condition cancelled
                                     actor.RemoveCondition(conditionBlackmailer);
+                                    //message
+                                    string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
+                                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
+                                    GameManager.instance.dataScript.AddMessage(message);
                                 }
                                 else if (actor.blackmailTimer == 0)
                                 {
@@ -3442,15 +3442,22 @@ public class ActorManager : MonoBehaviour
                                     Secret secret = actor.GetSecret();
 
                                     //carry out effects
+                                    if (secret.listOfEffects != null)
+                                    {
+                                        foreach(Effect effect in secret.listOfEffects)
+                                        {
 
-                                    //delete secret from all actors and player
-
+                                        }
+                                    }
+                                    //Motivation at max value, Blackmailer condition cancelled
+                                    actor.RemoveCondition(conditionBlackmailer);
                                     //message
-                                    string msgText = string.Format("{0} revealed your secret ({1})", actor.arc.name, secret.secretID);
+                                    string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
                                     Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
                                     GameManager.instance.dataScript.AddMessage(message);
+                                    //remove secret from all actors and player
+                                    RemoveSecretFromAll(secret.secretID);
                                 }
-                                
                             }
                         }
                     }
@@ -3458,7 +3465,7 @@ public class ActorManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
+        else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
     }
 
     /// <summary>
@@ -3466,18 +3473,18 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveAuthorityActors()
     {
-        Actor[] arrayOfActorsAuthority = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
-        if (arrayOfActorsAuthority != null)
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+        if (arrayOfActors != null)
         {
             int chance = breakdownChance;
             bool isSecrets = false;
             if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
-            for (int i = 0; i < arrayOfActorsAuthority.Length; i++)
+            for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
                 if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
                 {
-                    Actor actor = arrayOfActorsAuthority[i];
+                    Actor actor = arrayOfActors[i];
                     if (actor != null)
                     {
                         if (actor.Status == ActorStatus.Active)
@@ -3516,7 +3523,33 @@ public class ActorManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogError("Invalid arrayOfActorsAuthority (Null)"); }
+        else { Debug.LogError("Invalid arrayOfActors (Authority) (Null)"); }
+    }
+
+    /// <summary>
+    /// private sub-Method to remove a given secret from all actors and player
+    /// </summary>
+    /// <param name="secretID"></param>
+    private void RemoveSecretFromAll(int secretID )
+    {
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //remove from player
+        GameManager.instance.playerScript.RemoveSecret(secretID);
+        //loop actors
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    { actor.RemoveSecret(secretID); }
+                }
+            }
+        }
     }
 
     /// <summary>

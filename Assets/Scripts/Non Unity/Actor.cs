@@ -245,35 +245,6 @@ namespace gameAPI
             return false;
         }
 
-        /// <summary>
-        /// Returns a secret known by actor, if more than one present will randomly choose. Returns null if a problem.
-        /// </summary>
-        /// <returns></returns>
-        public Secret GetSecret()
-        {
-            Secret secret = null;
-            if (listOfSecrets != null)
-            {
-                int numOfSecrets = listOfSecrets.Count;
-                switch (numOfSecrets)
-                {
-                    case 0:
-                        //none available
-                        Debug.LogWarning("Invalid listOfSecrets (Empty)");
-                        break;
-                    case 1:
-                        //one secret only, return this one
-                        secret = listOfSecrets[0];
-                        break;
-                    default:
-                        //more than one, choose randomly
-                        secret = listOfSecrets[Random.Range(0, numOfSecrets)];
-                        break;
-                }
-            }
-            else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
-            return secret;
-        }
 
         public List<Condition> GetListOfConditions()
         { return listOfConditions; }
@@ -314,6 +285,60 @@ namespace gameAPI
                 }
                 else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
             }
+        }
+
+        /// <summary>
+        /// Remove a secret from listOfSecrets. Returns true if successful, false if not found
+        /// </summary>
+        /// <param name="secretID"></param>
+        /// <returns></returns>
+        public bool RemoveSecret(int secretID)
+        {
+            bool isSuccess = false;
+            if (CheckSecretPresent(secretID) == true)
+            {
+                //reverse loop through and remove secret
+                for (int i = listOfSecrets.Count - 1; i >= 0; i--)
+                {
+                    if (listOfSecrets[i].secretID == secretID)
+                    {
+                        listOfSecrets.RemoveAt(i);
+                        isSuccess = true;
+                        break;
+                    }
+                }
+            }
+            return isSuccess;
+        }
+
+        /// <summary>
+        /// Returns a secret known by actor, if more than one present will randomly choose. Returns null if a problem.
+        /// </summary>
+        /// <returns></returns>
+        public Secret GetSecret()
+        {
+            Secret secret = null;
+            if (listOfSecrets != null)
+            {
+                int numOfSecrets = listOfSecrets.Count;
+                switch (numOfSecrets)
+                {
+                    case 0:
+                        //none available
+                        Debug.LogWarning("Invalid listOfSecrets (Empty)");
+                        break;
+                    case 1:
+                        //one secret only, return this one
+                        secret = listOfSecrets[0];
+                        break;
+                    default:
+                        //more than one, choose randomly
+                        secret = listOfSecrets[Random.Range(0, numOfSecrets)];
+                        break;
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
+            return secret;
         }
 
         /// <summary>

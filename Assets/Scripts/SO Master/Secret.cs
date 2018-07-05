@@ -16,6 +16,9 @@ public class Secret : ScriptableObject
     [Tooltip("Which side does the secret apply to")]
     public GlobalSide side;
 
+    [Tooltip("Effects that happen if secret is revealed")]
+    public List<Effect> listOfEffects;
+
     [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
     [HideInInspector] public bool isActive;                //true once player gains secret
 

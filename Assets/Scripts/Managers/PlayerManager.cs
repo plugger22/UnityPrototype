@@ -743,6 +743,30 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Remove a secret from listOfSecrets. Returns true if successful, false if not found
+    /// </summary>
+    /// <param name="secretID"></param>
+    /// <returns></returns>
+    public bool RemoveSecret(int secretID)
+    {
+        bool isSuccess = false;
+        if (listOfSecrets.Exists(x => x.secretID == secretID) == true)
+        {
+            //reverse loop through and remove secret
+            for (int i = listOfSecrets.Count - 1; i >= 0; i--)
+            {
+                if (listOfSecrets[i].secretID == secretID)
+                {
+                    listOfSecrets.RemoveAt(i);
+                    isSuccess = true;
+                    break;
+                }
+            }
+        }
+        return isSuccess;
+    }
+
+    /// <summary>
     /// return a list of all secretsto DataManager.cs -> DipslaySecretData for Debug display
     /// </summary>
     /// <returns></returns>
