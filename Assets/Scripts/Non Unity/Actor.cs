@@ -245,6 +245,36 @@ namespace gameAPI
             return false;
         }
 
+        /// <summary>
+        /// Returns a secret known by actor, if more than one present will randomly choose. Returns null if a problem.
+        /// </summary>
+        /// <returns></returns>
+        public Secret GetSecret()
+        {
+            Secret secret = null;
+            if (listOfSecrets != null)
+            {
+                int numOfSecrets = listOfSecrets.Count;
+                switch (numOfSecrets)
+                {
+                    case 0:
+                        //none available
+                        Debug.LogWarning("Invalid listOfSecrets (Empty)");
+                        break;
+                    case 1:
+                        //one secret only, return this one
+                        secret = listOfSecrets[0];
+                        break;
+                    default:
+                        //more than one, choose randomly
+                        secret = listOfSecrets[Random.Range(0, numOfSecrets)];
+                        break;
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
+            return secret;
+        }
+
         public List<Condition> GetListOfConditions()
         { return listOfConditions; }
 

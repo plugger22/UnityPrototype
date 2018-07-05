@@ -95,6 +95,7 @@ public class ActorManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private Condition conditionStressed;
+    private Condition conditionBlackmailer;
     private TraitCategory actorCategory;
     //cached TraitEffects
     private int actorBreakdownChanceHigh;
@@ -150,6 +151,7 @@ public class ActorManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
         maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
@@ -161,6 +163,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(conditionBlackmailer != null, "Invalid conditionBlackmailer (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
@@ -3426,11 +3429,26 @@ public class ActorManager : MonoBehaviour
                                 actor.blackmailTimer--;
                                 if (actor.datapoint1 == maxStatValue)
                                 {
+                                    //message
+                                    string msgText = string.Format("{0} has maximum Motivation and has dropped their threats", actor.arc.name);
+                                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
+                                    GameManager.instance.dataScript.AddMessage(message);
                                     //Motivation at max value, Blackmailer condition cancelled
+                                    actor.RemoveCondition(conditionBlackmailer);
                                 }
                                 else if (actor.blackmailTimer == 0)
                                 {
                                     //timer at zero -> Actor REVEALS secret
+                                    Secret secret = actor.GetSecret();
+
+                                    //carry out effects
+
+                                    //delete secret from all actors and player
+
+                                    //message
+                                    string msgText = string.Format("{0} revealed your secret ({1})", actor.arc.name, secret.secretID);
+                                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
+                                    GameManager.instance.dataScript.AddMessage(message);
                                 }
                                 
                             }

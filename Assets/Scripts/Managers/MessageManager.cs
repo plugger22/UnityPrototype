@@ -272,6 +272,32 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Actor blackmail outcome -> either drops threat (motivation max) or carries out reveal of a player secret. SecretID only if reveal, ignore otherwise
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actorID"></param>
+    ///<param name="secretID"></param>
+    /// <returns></returns>
+    public Message ActorBlackmail(string text, int actorID, int secretID = -1)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Blackmail;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = actorID;
+            message.data1 = secretID;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Actor learns of a Player secret. Defaults to player side
     /// </summary>
     /// <param name="text"></param>
