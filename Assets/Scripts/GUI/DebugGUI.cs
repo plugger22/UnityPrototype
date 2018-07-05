@@ -248,7 +248,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Toggle Gear Data"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Gear Data"))
             {
                 Debug.Log("[Dbg] Button -> Gear Data");
                 if (debugDisplay != 24)
@@ -257,7 +257,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Toggle Secret Data"))
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Secret Data"))
             {
                 Debug.Log("[Dbg] Button -> Secret Data");
                 if (debugDisplay != 25)

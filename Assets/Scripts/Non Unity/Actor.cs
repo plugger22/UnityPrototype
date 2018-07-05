@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace gameAPI
@@ -273,6 +274,22 @@ namespace gameAPI
                 }
                 else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
             }
+        }
+
+        /// <summary>
+        /// return a list of all secretsto DataManager.cs -> DipslaySecretData for Debug display
+        /// </summary>
+        /// <returns></returns>
+        public string DebugDisplaySecrets()
+        {
+            StringBuilder builder = new StringBuilder();
+            if (listOfSecrets.Count > 0)
+            {
+                foreach (Secret secret in listOfSecrets)
+                { builder.AppendFormat("{0} ID {1}, {2} ({3}), isActive: {4}", "\n", secret.secretID, secret.name, secret.tag, secret.isActive); }
+            }
+            else { builder.AppendFormat("{0} No records", "\n"); }
+            return builder.ToString();
         }
 
         //

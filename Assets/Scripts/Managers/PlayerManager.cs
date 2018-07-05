@@ -751,9 +751,9 @@ public class PlayerManager : MonoBehaviour
         if (listOfSecrets.Count > 0)
         {
             foreach (Secret secret in listOfSecrets)
-                { builder.AppendFormat("{0} ID [1}, {2} ({3}) isActive {4} Known {5}", "\n", secret.secretID, secret.name, secret.tag, secret.isActive, secret.CheckNumOfActorsWhoKnow()); }
+                { builder.AppendFormat("{0} ID {1}, {2} ({3}), isActive: {4}, Known: {5}", "\n", secret.secretID, secret.name, secret.tag, secret.isActive, secret.CheckNumOfActorsWhoKnow()); }
         }
-        else { builder.Append(" No records"); }
+        else { builder.AppendFormat("{0} No records", "\n"); }
         return builder.ToString();
     }
 
