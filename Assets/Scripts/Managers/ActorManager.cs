@@ -26,6 +26,7 @@ public class ActorManager : MonoBehaviour
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
     [Range(2, 4)] public int minStatValue = 0;
+
     [Header("Management")]
     [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int promiseReserveTimer = 10;
@@ -35,8 +36,6 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int restReserveTimer = 10;
     [Tooltip("Actor Recruited and placed in Reserves. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int recruitedReserveTimer = 5;
-    [Tooltip("Renown cost for negating a bad gear use roll")]
-    [Range(1, 3)] public int renownCostGear = 1;
     [Tooltip("Renown cost for threatening an actor in the Reserve Pool")]
     [Range(1, 3)] public int renownCostThreaten = 1;
     [Tooltip("Base Renown cost for carrying out Manage Reserve Actor actions")]
@@ -61,8 +60,6 @@ public class ActorManager : MonoBehaviour
     [Range(1, 99)] public int unhappyLeaveChance = 25;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the third check made. An actor can only complain once")]
     [Range(1, 99)] public int unhappyComplainChance = 50;
-    [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
-    [Range(1, 99)] public int breakdownChance = 5;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
     [Range(1, 10)] public int unhappyReassureBoost = 5;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Threatened")]
@@ -73,6 +70,18 @@ public class ActorManager : MonoBehaviour
     [Range(1, 3)] public int motivationLossFire = 2;
     [Tooltip("Amount of motivation gained when recalled from Reserves to Active Duty")]
     [Range(1, 3)] public int motivationGainActiveDuty = 2;
+
+    [Header("Assorted")]
+    [Tooltip("Renown cost for negating a bad gear use roll")]
+    [Range(1, 3)] public int renownCostGear = 1;
+    [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
+    [Range(1, 99)] public int breakdownChance = 5;
+
+    [Header("Secrets")]
+    [Tooltip("Base chance of an actor learning of a secret per turn (2x if secret Medium, 3x for High)")]
+    [Range(0, 100)] public int secretLearnBaseChance = 25;
+    [Tooltip("Number of turns to set the actor 'Blackmail -> threatening to reveal secret' timer")]
+    [Range(0, 10)] public int secretBlackMailTimer = 5;  
 
     //cached recruit picker choices
     private int resistancePlayerTurn;                                           //turn number of last choice for a resistance Player Recruit selection

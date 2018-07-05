@@ -142,7 +142,31 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player renown expended. 'dataID' refers to GearID if gear compromised.
+    /// Player gains a new secret, defaults to player side
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="secretID"></param>
+    /// <returns></returns>
+    public Message PlayerSecret(string text, int secretID)
+    {
+        Debug.Assert(secretID >= 0, string.Format("Invalid secretID {0}", secretID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Secret;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = secretID;
+            message.isPublic = true;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Player renown expended. 'dataID' is multipurpose (gearID if compromised, etc.) defaults to Player side.
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
@@ -158,7 +182,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Renown;
-            message.side = globalResistance;
+            message.side = GameManager.instance.sideScript.PlayerSide;
             message.data0 = nodeID;
             message.data1 = dataID;
             return message;
@@ -248,14 +272,13 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor learns of a Player secret
+    /// Actor learns of a Player secret. Defaults to player side
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="secretID"></param>
-    /// <param name="side"></param>
     /// <returns></returns>
-    public Message ActorSecret(string text, int actorID, int secretID, GlobalSide side)
+    public Message ActorSecret(string text, int actorID, int secretID)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         Debug.Assert(secretID >= 0, string.Format("Invalid secretID {0}", secretID));
@@ -265,7 +288,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Secret;
-            message.side = side;
+            message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
             message.data0 = actorID;
             message.data1 = secretID;

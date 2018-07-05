@@ -9,12 +9,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Actor / Secret")]
 public class Secret : ScriptableObject
 {
-    [Tooltip("Used in message and tooltips, keep short")]
+    [Tooltip("General purpose descriptor with no ingame use")]
     public string descriptor;
+    [Tooltip("Used in tooltips, etc. Keep short. Format '[Player] ...'")]
+    public string tag;
     [Tooltip("Which side does the secret apply to")]
     public GlobalSide side;
 
-    [HideInInspector] public int secretID;         //dynamically assigned by DataManager.cs on import
+    [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
+    [HideInInspector] public bool isActive = false;         //true once player gains secret
 
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
 
@@ -38,5 +41,12 @@ public class Secret : ScriptableObject
     /// <returns></returns>
     public bool CheckActorPresent(int actorID)
     { return listOfActors.Exists(x => x == actorID); }
+
+    /// <summary>
+    /// returns number of actors who know of the secret
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfActorsWhoKnow()
+    { return listOfActors.Count; }
 
 }

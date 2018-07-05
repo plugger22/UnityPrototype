@@ -98,6 +98,7 @@
         //Player
         Plyr_Move,
         Plyr_Renown,
+        Plyr_Secret,
         //Team
         Team_Add,
         Team_Deploy,

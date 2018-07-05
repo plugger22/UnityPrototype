@@ -40,6 +40,7 @@ public class PlayerManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private string hackingGear;
+    private int secretBaseChance = -1;
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
@@ -139,9 +140,11 @@ public class PlayerManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
+        secretBaseChance = GameManager.instance.actorScript.secretLearnBaseChance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
+        Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
         //set stats
         Renown = 0;
         Invisibility = 3;
@@ -670,7 +673,7 @@ public class PlayerManager : MonoBehaviour
     { return listOfSecrets.Count; }
 
     /// <summary>
-    /// Add a secret, checks for duplicates and won't add if one found (warning msg)
+    /// Add a new secret, checks for duplicates and won't add if one found (warning msg)
     /// </summary>
     /// <param name="secret"></param>
     public void AddSecret(Secret secret)
@@ -680,8 +683,12 @@ public class PlayerManager : MonoBehaviour
             //check same secret doesn't already exist
             if (listOfSecrets.Exists(x => x.secretID == secret.secretID) == false)
             {
-                //add secret
+                //add secret & make active
                 listOfSecrets.Add(secret);
+                secret.isActive = true;
+                //Msg
+                Message message = GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret.secretID);
+                GameManager.instance.dataScript.AddMessage(message);
             }
             else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
         }
@@ -697,7 +704,7 @@ public class PlayerManager : MonoBehaviour
         if (actor != null)
         {
             int rnd;
-            int chance = 25;
+            int chance = secretBaseChance;
             bool isProceed = true;
             //actor already knows any secrets
             bool knowSecret = false;
@@ -725,9 +732,6 @@ public class PlayerManager : MonoBehaviour
                             secret.AddActor(actor.actorID);
                             //Admin
                             Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: Learned SECRET need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                            string msgText = string.Format("{0} learns of Secret ({1})", actor.arc.name, secret.descriptor);
-                            Message message = GameManager.instance.messageScript.ActorSecret(msgText, actor.actorID, secret.secretID, GameManager.instance.sideScript.PlayerSide);
-                            GameManager.instance.dataScript.AddMessage(message);
                         }
                     }
                 }
@@ -735,6 +739,22 @@ public class PlayerManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
+    }
+
+    /// <summary>
+    /// return a list of all secretsto DataManager.cs -> DipslaySecretData for Debug display
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplaySecrets()
+    {
+        StringBuilder builder = new StringBuilder();
+        if (listOfSecrets.Count > 0)
+        {
+            foreach (Secret secret in listOfSecrets)
+                { builder.AppendFormat("{0} ID [1}, {2} ({3}) isActive {4} Known {5}", "\n", secret.secretID, secret.name, secret.tag, secret.isActive, secret.CheckNumOfActorsWhoKnow()); }
+        }
+        else { builder.Append(" No records"); }
+        return builder.ToString();
     }
 
     //
@@ -885,9 +905,32 @@ public class PlayerManager : MonoBehaviour
         return text;
     }
 
-    public void DebugAddSecret()
+    public void DebugAddRandomSecret()
     {
         //give the player a random secret
+        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        if (dictOfSecrets != null)
+        {
+            List<Secret> tempList = new List<Secret>();
+            //put all inactive secrets into the list to enable a random pick
+            foreach(var secret in dictOfSecrets)
+            {
+                if (secret.Value.isActive == false)
+                { tempList.Add(secret.Value); }
+            }
+            //make a random choice
+            if (tempList.Count > 0)
+            {
+                Secret secret = tempList[Random.Range(0, tempList.Count)];
+                if (secret != null)
+                {
+                    //add to player
+                    AddSecret(secret);
+                }
+            }
+            else { Debug.LogWarning("No entries in tempList of Secrets"); }
+        }
+        else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
     }
 
     //place new methods above here

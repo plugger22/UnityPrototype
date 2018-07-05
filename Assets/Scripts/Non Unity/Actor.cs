@@ -266,6 +266,10 @@ namespace gameAPI
                 {
                     //add secret
                     listOfSecrets.Add(secret);
+                    //message
+                    string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
+                    Message message = GameManager.instance.messageScript.ActorSecret(msgText, actorID, secret.secretID);
+                    GameManager.instance.dataScript.AddMessage(message);
                 }
                 else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
             }

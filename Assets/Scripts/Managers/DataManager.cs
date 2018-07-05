@@ -2030,6 +2030,23 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Secret> GetDictOfSecrets()
     { return dictOfSecrets; }
 
+    public string DisplaySecretData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat(" Secret Data {0}{1}", "\n", "\n");
+        builder.AppendFormat("- dictOfSecrets{0}", "\n");
+        if (dictOfSecrets != null)
+        {
+            foreach (var secret in dictOfSecrets)
+            { builder.AppendFormat("{0} ID [1}, {2} ({3}) isActive {4} Known {5}", "\n", secret.Value.secretID, secret.Value.name, secret.Value.tag, secret.Value.isActive,
+                  secret.Value.CheckNumOfActorsWhoKnow()); }
+        }
+        builder.AppendFormat("{0}{1}- Player listOfSecrets{2}", "\n", "\n", "\n");
+        
+
+        return builder.ToString();
+    }
+
     //
     // - - - Gear - - -
     //

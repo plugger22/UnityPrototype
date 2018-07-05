@@ -256,6 +256,14 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //fifteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Toggle Secret Data"))
+            {
+                Debug.Log("[Dbg] Button -> Secret Data");
+                if (debugDisplay != 25)
+                { debugDisplay = 25; }
+                else { debugDisplay = 0; }
+            }
 
 
             //
@@ -568,6 +576,13 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+            //thirteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "Give Secret"))
+            {
+                Debug.Log("[Dbg] Button -> Give Player a Random Secret");
+                GameManager.instance.playerScript.DebugAddRandomSecret();
+            }
+
 
             //
             // - - - Level Menu - - -
@@ -826,6 +841,12 @@ public class DebugGUI : MonoBehaviour
                     case 24:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DisplayGearData();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
+                        break;
+                    //Secret Info Display
+                    case 25:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplaySecretData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
                 }
