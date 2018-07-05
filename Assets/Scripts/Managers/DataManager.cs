@@ -2030,51 +2030,6 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Secret> GetDictOfSecrets()
     { return dictOfSecrets; }
 
-    /// <summary>
-    /// debug method to display data
-    /// </summary>
-    /// <returns></returns>
-    public string DisplaySecretData()
-    {
-        StringBuilder builder = new StringBuilder();
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        builder.AppendFormat(" Secret Data {0}{1}", "\n", "\n");
-        //main dictionary data
-        builder.Append("- dictOfSecrets");
-        if (dictOfSecrets != null)
-        {
-            if (dictOfSecrets.Count > 0)
-            {
-                foreach (var secret in dictOfSecrets)
-                {
-                    builder.AppendFormat("{0} ID {1}, {2} ({3}), isActive: {4}, Known: {5}", "\n", secret.Value.secretID, secret.Value.name, secret.Value.tag, secret.Value.isActive,
-                        secret.Value.CheckNumOfActorsWhoKnow());
-                }
-            }
-            else { builder.AppendFormat("{0} No records", "\n"); }
-        }
-        else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
-        //player data
-        builder.AppendFormat("{0}{1}- Player listOfSecrets", "\n", "\n");
-        builder.Append(GameManager.instance.playerScript.DebugDisplaySecrets());
-        //actor data
-        for(int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
-        {
-            //actor present
-            if (CheckActorSlotStatus(i, side) == true)
-            {
-                Actor actor = GetCurrentActor(i, side);
-                if (actor != null)
-                {
-                    builder.AppendFormat("{0}{1}- {2} ID {3} listOfSecrets", "\n", "\n", actor.arc.name, actor.actorID);
-                    builder.Append(actor.DebugDisplaySecrets());
-                }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", i); }
-            }
-        }
-        return builder.ToString();
-    }
-
     //
     // - - - Gear - - -
     //

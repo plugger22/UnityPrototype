@@ -20,6 +20,7 @@ namespace gameAPI
         //[HideInInspector] public int Renown;                    //starts at '0' and goes up (no limit)
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
+        [HideInInspector] public int blackmailTimer;            //default 0 but set to new global value once actor gains Blackmailer condition
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
         [HideInInspector] public bool isReassured;              //true if actor has been reassured, false if not (can only be reassured once)
@@ -31,6 +32,7 @@ namespace gameAPI
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
+
 
         //gear
         private int gearID;                                     //can only have one piece of gear at a time, default -1
@@ -89,7 +91,8 @@ namespace gameAPI
             gearID = -1;
             gearTimer = 0;
             gearTimesTaken = 0;
-            //cached Trait Effects
+            blackmailTimer = 0;
+            //fast access & cached
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
             actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
@@ -173,6 +176,13 @@ namespace gameAPI
                     if (CheckConditionPresent(condition) == false)
                     {
                         listOfConditions.Add(condition);
+                        //special conditions
+                        switch(condition.name)
+                        {
+                            case "BLACKMAILER":
+                                blackmailTimer = GameManager.instance.secretScript.secretBlackmailTimer;
+                                break;
+                        }
                         //message
                         string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
                         Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);

@@ -140,7 +140,7 @@ public class PlayerManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
-        secretBaseChance = GameManager.instance.actorScript.secretLearnBaseChance;
+        secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
@@ -705,13 +705,14 @@ public class PlayerManager : MonoBehaviour
         {
             int rnd;
             int chance = secretBaseChance;
-            bool isProceed = true;
+            bool isProceed ;
             //actor already knows any secrets
             bool knowSecret = false;
             if (actor.CheckNumOfSecrets() > 0) { knowSecret = true; }
             //loop through Player secrets
             for (int i = 0; i < listOfSecrets.Count; i++)
             {
+                isProceed = true;
                 Secret secret = listOfSecrets[i];
                 if (secret != null)
                 {

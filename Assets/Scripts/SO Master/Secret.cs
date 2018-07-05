@@ -11,16 +11,24 @@ public class Secret : ScriptableObject
 {
     [Tooltip("General purpose descriptor with no ingame use")]
     public string descriptor;
-    [Tooltip("Used in tooltips, etc. Keep short. Format '[Player] ...'")]
+    [Tooltip("Used in tooltips, etc. Keep short. Three words max")]
     public string tag;
     [Tooltip("Which side does the secret apply to")]
     public GlobalSide side;
 
     [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
-    [HideInInspector] public bool isActive = false;         //true once player gains secret
+    [HideInInspector] public bool isActive;                //true once player gains secret
 
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
 
+    /// <summary>
+    /// called by SecretManager.cs -> need to reset data back to default settings otherwise will carry over between sessions
+    /// </summary>
+    public void Initialise()
+    {
+        isActive = false;
+        listOfActors.Clear();
+    }
 
     /// <summary>
     /// Add the actorID of an actor who has learned of the secret. Checks if already present (doesn't add, warning)
@@ -41,6 +49,7 @@ public class Secret : ScriptableObject
     /// <returns></returns>
     public bool CheckActorPresent(int actorID)
     { return listOfActors.Exists(x => x == actorID); }
+
 
     /// <summary>
     /// returns number of actors who know of the secret

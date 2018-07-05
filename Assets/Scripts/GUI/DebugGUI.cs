@@ -846,7 +846,7 @@ public class DebugGUI : MonoBehaviour
                     //Secret Info Display
                     case 25:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplaySecretData();
+                        analysis = GameManager.instance.secretScript.DisplaySecretData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
                 }

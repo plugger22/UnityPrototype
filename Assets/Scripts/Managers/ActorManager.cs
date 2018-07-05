@@ -76,12 +76,7 @@ public class ActorManager : MonoBehaviour
     [Range(1, 3)] public int renownCostGear = 1;
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
     [Range(1, 99)] public int breakdownChance = 5;
-
-    [Header("Secrets")]
-    [Tooltip("Base chance of an actor learning of a secret per turn (2x if secret Medium, 3x for High)")]
-    [Range(0, 100)] public int secretLearnBaseChance = 25;
-    [Tooltip("Number of turns to set the actor 'Blackmail -> threatening to reveal secret' timer")]
-    [Range(0, 10)] public int secretBlackMailTimer = 5;  
+ 
 
     //cached recruit picker choices
     private int resistancePlayerTurn;                                           //turn number of last choice for a resistance Player Recruit selection
@@ -3422,6 +3417,23 @@ public class ActorManager : MonoBehaviour
                             //
                             if (isSecrets == true)
                             { GameManager.instance.playerScript.CheckForSecrets(actor); }
+                            //
+                            // - - - Blackmailing - - -
+                            //
+                            if (actor.blackmailTimer > 0)
+                            {
+                                //decrement timer
+                                actor.blackmailTimer--;
+                                if (actor.datapoint1 == maxStatValue)
+                                {
+                                    //Motivation at max value, Blackmailer condition cancelled
+                                }
+                                else if (actor.blackmailTimer == 0)
+                                {
+                                    //timer at zero -> Actor REVEALS secret
+                                }
+                                
+                            }
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }

@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public PlayerManager playerScript;              //Player Manager
     [HideInInspector] public TraitManager traitScript;                //Trait Manager
     [HideInInspector] public FactionManager factionScript;            //Faction Manager
+    [HideInInspector] public SecretManager secretScript;              //Secret Manager
     [HideInInspector] public OrganisationManager orgScript;           //Organisation Manager
     [HideInInspector] public CityManager cityScript;                  //City Manager
     [HideInInspector] public ObjectiveManager objectiveScript;        //Objectives Manager
@@ -113,6 +114,7 @@ public class GameManager : MonoBehaviour
         playerScript = GetComponent<PlayerManager>();
         traitScript = GetComponent<TraitManager>();
         factionScript = GetComponent<FactionManager>();
+        secretScript = GetComponent<SecretManager>();
         orgScript = GetComponent<OrganisationManager>();
         cityScript = GetComponent<CityManager>();
         objectiveScript = GetComponent<ObjectiveManager>();
@@ -189,6 +191,7 @@ public class GameManager : MonoBehaviour
         levelScript.Initialise();
         dataScript.InitialiseLate();      //must be immediately after levelScript.Initialise
         importScript.InitialiseLate();    //must be immediately after levelScript.Initialise
+        secretScript.Initialise();
         cityScript.InitialiseLate();      //must be immediately after levelScript.Initialise
         factionScript.Initialise();
         inputScript.Initialise();

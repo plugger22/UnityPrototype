@@ -34,6 +34,7 @@ public class EffectManager : MonoBehaviour
     private Condition conditionCorrupt;
     private Condition conditionIncompetent;
     private Condition conditionQuestionable;
+    private Condition conditionBlackmailer;
     private Condition conditionStar;
     
 
@@ -60,6 +61,7 @@ public class EffectManager : MonoBehaviour
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+        conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
         Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
         Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
@@ -67,6 +69,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+        Debug.Assert(conditionBlackmailer != null, "(Invalid conditionBlackmailer (Null)");
         Debug.Assert(conditionStar != null, "Invalid conditionStar (Null)");
         //fast access -> teams
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
@@ -503,6 +506,21 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionStar (Null)"); errorFlag = true; }
                                                 break;
+                                            case "ConditionBlackmailerNo":
+                                                //actor only  does NOT have the 'Blackmailer' condition
+                                                if (conditionBlackmailer != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        //actor
+                                                        if (actor.CheckConditionPresent(conditionBlackmailer) == true)
+                                                        { BuildString(result, string.Format(" {0} already {1}BLACKMAILING{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {  Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                break;
                                             case "RenownReserveMin":
                                                 //player
                                                 int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
@@ -555,6 +573,14 @@ public class EffectManager : MonoBehaviour
                                                 else { val = GameManager.instance.playerScript.Invisibility; }
                                                 if (val == 0)
                                                 { BuildString(result, "Invisibility Zero"); }
+                                                break;
+                                            case "SecretsNOTZero":
+                                                //check num of secrets greater than Zero -> Actor / Player
+                                                if (actor != null)
+                                                { val = actor.CheckNumOfSecrets(); }
+                                                else { val = GameManager.instance.playerScript.CheckNumOfSecrets(); }
+                                                if (val == 0)
+                                                { BuildString(result, "Secrets Zero"); }
                                                 break;
                                             case "NumGearMax":
                                                 //Note: effect criteria value is ignored in this case
@@ -758,6 +784,7 @@ public class EffectManager : MonoBehaviour
                 case "ConditionIncompetent":
                 case "ConditionCorrupt":
                 case "ConditionQuestionable":
+                case "ConditionBlackmailer":
                 case "ConditionStar":
                 case "ConditionGroupBad":
                 case "ConditionGroupGood":
@@ -2113,24 +2140,28 @@ public class EffectManager : MonoBehaviour
             case "ConditionIncompetent":
             case "ConditionCorrupt":
             case "ConditionQuestionable":
+            case "ConditionBlackmailer":
             case "ConditionStar":
                 //get condition
                 switch (effect.outcome.name)
                 {
                     case "ConditionStressed":
-                        condition = GameManager.instance.dataScript.GetCondition("STRESSED");
+                        condition = conditionStressed;
                         break;
                     case "ConditionIncompetent":
-                        condition = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
+                        condition = conditionIncompetent;
                         break;
                     case "ConditionCorrupt":
-                        condition = GameManager.instance.dataScript.GetCondition("CORRUPT");
+                        condition = conditionCorrupt;
                         break;
                     case "ConditionQuestionable":
-                        condition = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+                        condition = conditionQuestionable;
+                        break;
+                    case "ConditionBlackmailer":
+                        condition = conditionBlackmailer;
                         break;
                     case "ConditionStar":
-                        condition = GameManager.instance.dataScript.GetCondition("STAR");
+                        condition = conditionStar;
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
@@ -2150,7 +2181,6 @@ public class EffectManager : MonoBehaviour
                                 if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
                                 {
                                     GameManager.instance.playerScript.AddCondition(condition);
-
                                     effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.name, colourEnd);
                                 }
                                 break;
