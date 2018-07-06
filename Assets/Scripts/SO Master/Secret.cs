@@ -21,6 +21,7 @@ public class Secret : ScriptableObject
 
     [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
     [HideInInspector] public bool isActive;                //true once player gains secret
+    [HideInInspector] public bool isRevealed;               
 
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
 
@@ -30,7 +31,17 @@ public class Secret : ScriptableObject
     public void Initialise()
     {
         isActive = false;
+        isRevealed = false;
         listOfActors.Clear();
+    }
+
+    /// <summary>
+    /// called when secret removed from Player and removed from game (still in dictionary)
+    /// </summary>
+    public void ResetSecret()
+    {
+        listOfActors.Clear();
+        isRevealed = true;
     }
 
     /// <summary>
@@ -60,5 +71,7 @@ public class Secret : ScriptableObject
     /// <returns></returns>
     public int CheckNumOfActorsWhoKnow()
     { return listOfActors.Count; }
+
+
 
 }

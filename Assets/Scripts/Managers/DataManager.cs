@@ -2551,7 +2551,7 @@ public class DataManager : MonoBehaviour
             builderResistance.Append(string.Format(" Messages -> Resistance{0}", "\n"));
             builderAuthority.Append(string.Format("{0} Messages -> Authority{1}", "\n", "\n"));
             //max # of records per side
-            int numOfRecordsPerSide = 20;
+            int numOfRecordsPerSide = 15;       //actual messages per side is double this (don't go above 15)
             int counterResistance = 0;
             int counterAuthority = 0;
             int limitResistance = numOfRecordsPerSide;

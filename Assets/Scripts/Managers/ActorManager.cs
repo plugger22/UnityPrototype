@@ -97,6 +97,7 @@ public class ActorManager : MonoBehaviour
     private Condition conditionStressed;
     private Condition conditionBlackmailer;
     private TraitCategory actorCategory;
+    private int secretBaseChance = -1;
     //cached TraitEffects
     private int actorBreakdownChanceHigh;
     private int actorBreakdownChanceLow;
@@ -153,6 +154,7 @@ public class ActorManager : MonoBehaviour
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
+        secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
         maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
@@ -165,6 +167,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionBlackmailer != null, "Invalid conditionBlackmailer (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
+        Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
         Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
@@ -3364,166 +3367,130 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks all active resistance actors (run AFTER checkInactiveResistanceActors)
+    /// Checks all active resistance actors (run AFTER checkInactiveResistanceActors). No checks are made if Player is not Active
     /// </summary>
     private void CheckActiveResistanceActors()
     {
-        int rnd;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-        if (arrayOfActors != null)
+        //no checks are made if player is not Active
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
-            bool isSecrets = false;
-            if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
-            int chance = breakdownChance;
-            //base chance of nervous breakdown doubled during a surveillance crackdown
-            if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
-            { chance *= 2; }
-            for (int i = 0; i < arrayOfActors.Length; i++)
+            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+            if (arrayOfActors != null)
             {
-                //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+
+                bool isSecrets = false;
+                if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
+                int chanceBreakdown = breakdownChance;
+                //base chance of nervous breakdown doubled during a surveillance crackdown
+                if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
+                { chanceBreakdown *= 2; }
+                //secrets
+                int chanceSecret = secretBaseChance;
+                List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+                //
+                // - - - loop Active actors - - -
+                //
+                for (int i = 0; i < arrayOfActors.Length; i++)
                 {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
+                    //check actor is present in slot (not vacant)
+                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                     {
-                        if (actor.Status == ActorStatus.Active)
+                        Actor actor = arrayOfActors[i];
+                        if (actor != null)
                         {
-                            //
-                            // - - - Stress Condition - - -
-                            //
-                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            if (actor.Status == ActorStatus.Active)
                             {
-                                //enforces a minimu one turn gap between successive breakdowns
-                                if (actor.isBreakdown == false)
+                                //
+                                // - - - Stress Condition - - -
+                                //
+                                if (actor.CheckConditionPresent(conditionStressed) == true)
+                                { ProcessStress(actor, chanceBreakdown); }
+                                //
+                                // - - - Learn Secrets - - -
+                                //
+                                if (isSecrets == true)
+                                { ProcessSecrets(actor, listOfSecrets, chanceSecret); }
+                                //
+                                // - - - Blackmailing - - -
+                                //
+                                if (actor.blackmailTimer > 0)
                                 {
-                                    //Trait Check
-                                    if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
-                                    { chance *= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (doubled)"); }
-                                    else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
-                                    { chance /= 2; DebugTraitMessage(actor, " for a Nervous Breakdown check (halved)"); }
-                                    else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
-                                    { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
-                                    //test
-                                    rnd = Random.Range(0, 100);
-                                    if (rnd < chance)
+                                    string blackmailOutcome = ProcessBlackMail(actor);
+                                    if (string.IsNullOrEmpty(blackmailOutcome) == false)
                                     {
-                                        //actor suffers a breakdown
-                                        ActorBreakdown(actor, globalResistance);
-                                        Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need < {0}, rolled {1}{2}",
-                                            chance, rnd, "\n");
+                                        //TO DO -> Notification to player of black mail outcome (start turn)
                                     }
-                                }
-                                else { actor.isBreakdown = false; }
-                            }
-                            //
-                            // - - - Learn Secrets - - -
-                            //
-                            if (isSecrets == true)
-                            { GameManager.instance.playerScript.CheckForSecrets(actor); }
-                            //
-                            // - - - Blackmailing - - -
-                            //
-                            if (actor.blackmailTimer > 0)
-                            {
-                                //decrement timer
-                                actor.blackmailTimer--;
-                                if (actor.datapoint1 == maxStatValue)
-                                {
-                                    //Motivation at max value, Blackmailer condition cancelled
-                                    actor.RemoveCondition(conditionBlackmailer);
-                                    //message
-                                    string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
-                                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
-                                    GameManager.instance.dataScript.AddMessage(message);
-                                }
-                                else if (actor.blackmailTimer == 0)
-                                {
-                                    //timer at zero -> Actor REVEALS secret
-                                    Secret secret = actor.GetSecret();
-
-                                    //carry out effects
-                                    if (secret.listOfEffects != null)
-                                    {
-                                        foreach(Effect effect in secret.listOfEffects)
-                                        {
-
-                                        }
-                                    }
-                                    //Motivation at max value, Blackmailer condition cancelled
-                                    actor.RemoveCondition(conditionBlackmailer);
-                                    //message
-                                    string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
-                                    GameManager.instance.dataScript.AddMessage(message);
-                                    //remove secret from all actors and player
-                                    RemoveSecretFromAll(secret.secretID);
                                 }
                             }
                         }
+                        else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
                     }
-                    else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
                 }
             }
+            else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
-        else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
     }
 
     /// <summary>
-    /// Checks all active authority actors (run AFTER checkInactiveAuthorityActors)
+    /// Checks all active authority actors (run AFTER checkInactiveAuthorityActors). No checks are made if the player is not Active
     /// </summary>
     private void CheckActiveAuthorityActors()
     {
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
-        if (arrayOfActors != null)
+        //no checks are made if player is not Active
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
-            int chance = breakdownChance;
-            bool isSecrets = false;
-            if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
-            for (int i = 0; i < arrayOfActors.Length; i++)
+            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+            if (arrayOfActors != null)
             {
-                //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                bool isSecrets = false;
+                if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
+                int chanceBreakdown = breakdownChance;
+                //base chance of nervous breakdown doubled during a surveillance crackdown
+                if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
+                { chanceBreakdown *= 2; }
+                //secrets
+                int chanceSecret = secretBaseChance;
+                List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+                //loop actors
+                for (int i = 0; i < arrayOfActors.Length; i++)
                 {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
+                    //check actor is present in slot (not vacant)
+                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
                     {
-                        if (actor.Status == ActorStatus.Active)
+                        Actor actor = arrayOfActors[i];
+                        if (actor != null)
                         {
-                            //
-                            // - - - Stressed Condition - - -
-                            //
-                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            if (actor.Status == ActorStatus.Active)
                             {
-                                //enforces a minimu one turn gap between successive breakdowns
-                                if (actor.isBreakdown == false)
+                                //
+                                // - - - Stress Condition - - -
+                                //
+                                if (actor.CheckConditionPresent(conditionStressed) == true)
+                                { ProcessStress(actor, chanceBreakdown); }
+                                //
+                                // - - - Learn Secrets - - -
+                                //
+                                if (isSecrets == true)
+                                { ProcessSecrets(actor, listOfSecrets, chanceSecret); }
+                                //
+                                // - - - Blackmailing - - -
+                                //
+                                if (actor.blackmailTimer > 0)
                                 {
-                                    //Trait Check
-                                    if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
-                                    { chance *= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (doubled)"); }
-                                    else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
-                                    { chance /= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (halved)"); }
-                                    else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
-                                    { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
-                                    if (Random.Range(0, 100) < chance)
+                                    string blackmailOutcome = ProcessBlackMail(actor);
+                                    if (string.IsNullOrEmpty(blackmailOutcome) == false)
                                     {
-                                        //actor suffers a breakdown
-                                        ActorBreakdown(actor, globalResistance);
+                                        //TO DO -> Notification to player of black mail outcome (start turn)
                                     }
                                 }
-                                else { actor.isBreakdown = false; }
                             }
-                            //
-                            // - - - Learn Secrets - - -
-                            //
-                            if (isSecrets == true)
-                            { GameManager.instance.playerScript.CheckForSecrets(actor); }
                         }
+                        else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
                     }
-                    else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
                 }
             }
+            else { Debug.LogError("Invalid arrayOfActors (Authority) (Null)"); }
         }
-        else { Debug.LogError("Invalid arrayOfActors (Authority) (Null)"); }
     }
 
     /// <summary>
@@ -3551,6 +3518,153 @@ public class ActorManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// sub Method to check Stress condition each turn. Called by CheckActive(Resistance/Authority)Actors.
+    /// NOTE: Actor has been checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private void ProcessStress(Actor actor, int chance)
+    {
+        //enforces a minimum one turn gap between successive breakdowns
+        if (actor.isBreakdown == false)
+        {
+            //Trait Check
+            if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
+            { chance *= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (doubled)"); }
+            else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
+            { chance /= 2; DebugTraitMessage(actor, " for a Nervous Breakdown check (halved)"); }
+            else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
+            { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
+            //test
+            int rnd = Random.Range(0, 100);
+            if (rnd < chance)
+            {
+                //actor suffers a breakdown
+                ActorBreakdown(actor, globalResistance);
+                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need < {0}, rolled {1}{2}",
+                    chance, rnd, "\n");
+            }
+        }
+        else { actor.isBreakdown = false; }
+    }
+
+
+    /// <summary>
+    /// sub Method to check Blackmail condition each turn. Called by CheckActive(Resistance/Authority)Actors. Returns builder string of effects or null if none.
+    /// NOTE: Actor has been checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private string ProcessBlackMail(Actor actor)
+    {
+        string text = null;
+        //decrement timer
+        actor.blackmailTimer--;
+        if (actor.datapoint1 == maxStatValue)
+        {
+            //Motivation at max value, Blackmailer condition cancelled
+            actor.RemoveCondition(conditionBlackmailer);
+            //message
+            string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
+            Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
+            GameManager.instance.dataScript.AddMessage(message);
+        }
+        else if (actor.blackmailTimer == 0)
+        {
+            //timer at zero -> Actor REVEALS secret
+            Secret secret = actor.GetSecret();
+            StringBuilder builder = new StringBuilder();
+            //message
+            string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
+            Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
+            GameManager.instance.dataScript.AddMessage(message);
+            //carry out effects
+            if (secret.listOfEffects != null)
+            {
+                //data packages
+                EffectDataReturn effectReturn = new EffectDataReturn();
+                EffectDataInput effectInput = new EffectDataInput();
+                effectInput.textOrigin = "Reveal Secret";
+                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                if (node != null)
+                {
+                    //loop effects
+                    foreach (Effect effect in secret.listOfEffects)
+                    {
+                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                        if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                        builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);
+                        //temp message
+                        if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                        {
+                            string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
+                            Message messageSecret = GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
+                            GameManager.instance.dataScript.AddMessage(messageSecret);
+                        }
+                    }
+                }
+                else { Debug.LogWarning("Invalid player node (Null)"); }
+                //return builder output (all effects colour formatted, two lines each and a double space betweeen
+                text = builder.ToString();
+            }
+            //Motivation at max value, Blackmailer condition cancelled
+            actor.RemoveCondition(conditionBlackmailer);
+            //remove secret from all actors and player
+            RemoveSecretFromAll(secret.secretID);
+        }
+        return text;
+    }
+
+    /// <summary>
+    /// sub Method to check if actors learn of Player Secrets each turn. Called by CheckActive(Resistance/Authority)Actors.
+    /// NOTE: Actor has been checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>  
+    private void ProcessSecrets(Actor actor, List<Secret> listOfSecrets, int chance)
+    {
+        if (actor != null)
+        {
+            int rnd;
+            bool isProceed;
+            //actor already knows any secrets
+            bool knowSecret = false;
+            if (actor.CheckNumOfSecrets() > 0) { knowSecret = true; }
+            //loop through Player secrets
+            for (int i = 0; i < listOfSecrets.Count; i++)
+            {
+                isProceed = true;
+                Secret secret = listOfSecrets[i];
+                if (secret != null)
+                {
+                    //does actor already know the secret
+                    if (knowSecret == true)
+                    {
+                        if (secret.CheckActorPresent(actor.actorID) == true)
+                        { isProceed = false; }
+                    }
+                    if (isProceed == true)
+                    {
+                        //does actor learn of secret
+                        rnd = Random.Range(0, 100);
+                        if (rnd < chance)
+                        {
+                            //actor learns of secret
+                            actor.AddSecret(secret);
+                            secret.AddActor(actor.actorID);
+                            //Admin
+                            Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: Learned SECRET need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                        }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
+            }
+        }
+        else { Debug.LogWarning("Invalid actor (Null)"); }
+    }
+
 
     /// <summary>
     /// Checks all OnMap Inactive Authority actors, increments invisibility and returns any at max value back to Active status

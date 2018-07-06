@@ -40,7 +40,7 @@ public class PlayerManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private string hackingGear;
-    private int secretBaseChance = -1;
+    
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
@@ -140,11 +140,9 @@ public class PlayerManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
-        secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
-        Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
         //set stats
         Renown = 0;
         Invisibility = 3;
@@ -695,54 +693,6 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// called each turn by actors to check if they learn of a player's secrets
-    /// NOTE: calling method has already verified that player has at least one secret
-    /// </summary>
-    /// <param name="actor"></param>
-    public void CheckForSecrets(Actor actor)
-    {
-        if (actor != null)
-        {
-            int rnd;
-            int chance = secretBaseChance;
-            bool isProceed ;
-            //actor already knows any secrets
-            bool knowSecret = false;
-            if (actor.CheckNumOfSecrets() > 0) { knowSecret = true; }
-            //loop through Player secrets
-            for (int i = 0; i < listOfSecrets.Count; i++)
-            {
-                isProceed = true;
-                Secret secret = listOfSecrets[i];
-                if (secret != null)
-                {
-                    //does actor already know the secret
-                    if (knowSecret == true)
-                    {
-                        if (secret.CheckActorPresent(actor.actorID) == true)
-                        { isProceed = false; }
-                    }
-                    if (isProceed == true)
-                    {
-                        //does actor learn of secret
-                        rnd = Random.Range(0, 100);
-                        if (rnd < chance)
-                        {
-                            //actor learns of secret
-                            actor.AddSecret(secret);
-                            secret.AddActor(actor.actorID);
-                            //Admin
-                            Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: Learned SECRET need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                        }
-                    }
-                }
-                else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
-            }
-        }
-        else { Debug.LogWarning("Invalid actor (Null)"); }
-    }
-
-    /// <summary>
     /// Remove a secret from listOfSecrets. Returns true if successful, false if not found
     /// </summary>
     /// <param name="secretID"></param>
@@ -757,6 +707,8 @@ public class PlayerManager : MonoBehaviour
             {
                 if (listOfSecrets[i].secretID == secretID)
                 {
+                    //reset secret known
+                    listOfSecrets[i].ResetSecret();
                     listOfSecrets.RemoveAt(i);
                     isSuccess = true;
                     break;

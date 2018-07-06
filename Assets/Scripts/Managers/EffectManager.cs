@@ -702,7 +702,7 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes effects and returns results in a class. Leave actor as Null for Resistance Player effect
+    /// Processes effects and returns results in a class. Leave actor as Null for (Resistance?) Player effect
     /// Use player node if an issue but check to see if node is used (often to determine who is affected, player or actor)
     /// </summary>
     /// <param name="effect"></param>
@@ -894,85 +894,136 @@ public class EffectManager : MonoBehaviour
                     
                     break;
                 case "CityLoyalty":
+                    //depends on player side
                     int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
-                    switch (effect.operand.name)
+                    switch (dataInput.side.level)
                     {
-                        case "Add":
-                            cityLoyalty += effect.value;
-                            cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
-                            GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                            effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourEffect, effect.value, colourEnd);
+                        case 1:
+                            //Authority
+                            switch (effect.typeOfEffect.level)
+                            {
+                                case 2:
+                                    //Good
+                                    cityLoyalty += effect.value;
+                                    cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
+                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                    effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                case 0:
+                                    //Bad
+                                    cityLoyalty -= effect.value;
+                                    cityLoyalty = Mathf.Max(0, cityLoyalty);
+                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                    effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
+                                    effectReturn.errorFlag = true;
+                                    break;
+                            }
                             break;
-                        case "Subtract":
-                            cityLoyalty -= effect.value;
-                            cityLoyalty = Mathf.Max(0, cityLoyalty);
-                            GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                            effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourEffect, effect.value, colourEnd);
+                        case 2:
+                            //Resistance
+                            switch (effect.typeOfEffect.level)
+                            {
+                                case 2:
+                                    //Good
+                                    cityLoyalty -= effect.value;
+                                    cityLoyalty = Mathf.Max(0, cityLoyalty);
+                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                    effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                case 0:
+                                    //Bad
+                                    cityLoyalty += effect.value;
+                                    cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
+                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                    effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
+                                    effectReturn.errorFlag = true;
+                                    break;
+                            }
                             break;
                         default:
-                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            Debug.LogWarningFormat("Invalid side \"{0}\"", dataInput.side.name);
                             effectReturn.errorFlag = true;
                             break;
                     }
                     effectReturn.isAction = true;
                     break;
-                case "FactionSupportResistance":
-                    int resistanceSupport;
-                    resistanceSupport = GameManager.instance.factionScript.SupportResistance;
-                    switch (effect.operand.name)
+                case "FactionSupport":
+                    //depends on player side
+                    switch(dataInput.side.level)
                     {
-                        case "Add":
-                            resistanceSupport += effect.value;
-                            resistanceSupport = Mathf.Min(GameManager.instance.factionScript.maxFactionSupport, resistanceSupport);
-                            GameManager.instance.factionScript.SupportResistance = resistanceSupport;
-                            effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText, 
-                                GameManager.instance.factionScript.factionResistance.name, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
+                        case 1:
+                            //Authority
+                            int authoritySupport;
+                            authoritySupport = GameManager.instance.factionScript.SupportAuthority;
+                            switch (effect.operand.name)
+                            {
+                                case "Add":
+                                    authoritySupport += effect.value;
+                                    authoritySupport = Mathf.Min(GameManager.instance.factionScript.maxFactionSupport, authoritySupport);
+                                    GameManager.instance.factionScript.SupportAuthority = authoritySupport;
+                                    effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
+                                        GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                case "Subtract":
+                                    authoritySupport -= effect.value;
+                                    authoritySupport = Mathf.Max(0, authoritySupport);
+                                    GameManager.instance.factionScript.SupportAuthority = authoritySupport;
+                                    effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
+                                        GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                                    effectReturn.errorFlag = true;
+                                    break;
+                            }
+                            effectReturn.isAction = true;
                             break;
-                        case "Subtract":
-                            resistanceSupport  -= effect.value;
-                            resistanceSupport = Mathf.Max(0, resistanceSupport);
-                            GameManager.instance.factionScript.SupportResistance = resistanceSupport;
-                            effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText, 
-                                GameManager.instance.factionScript.factionResistance.name, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
+                        case 2:
+                            //Resistance
+                            int resistanceSupport;
+                            resistanceSupport = GameManager.instance.factionScript.SupportResistance;
+                            switch (effect.operand.name)
+                            {
+                                case "Add":
+                                    resistanceSupport += effect.value;
+                                    resistanceSupport = Mathf.Min(GameManager.instance.factionScript.maxFactionSupport, resistanceSupport);
+                                    GameManager.instance.factionScript.SupportResistance = resistanceSupport;
+                                    effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
+                                        GameManager.instance.factionScript.factionResistance.name, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                case "Subtract":
+                                    resistanceSupport -= effect.value;
+                                    resistanceSupport = Mathf.Max(0, resistanceSupport);
+                                    GameManager.instance.factionScript.SupportResistance = resistanceSupport;
+                                    effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
+                                        GameManager.instance.factionScript.factionResistance.name, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                                    effectReturn.errorFlag = true;
+                                    break;
+                            }
+                            effectReturn.isAction = true;
                             break;
                         default:
-                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            Debug.LogWarningFormat("Invalid side \"{0}\"", dataInput.side.name);
                             effectReturn.errorFlag = true;
                             break;
                     }
-                    effectReturn.isAction = true;
-                    break;
-                case "FactionSupportAuthority":
-                    int authoritySupport;
-                    authoritySupport = GameManager.instance.factionScript.SupportAuthority;
-                    switch (effect.operand.name)
-                    {
-                        case "Add":
-                            authoritySupport += effect.value;
-                            authoritySupport = Mathf.Min(GameManager.instance.factionScript.maxFactionSupport, authoritySupport);
-                            GameManager.instance.factionScript.SupportAuthority = authoritySupport;
-                            effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
-                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
-                            break;
-                        case "Subtract":
-                            authoritySupport -= effect.value;
-                            authoritySupport = Mathf.Max(0, authoritySupport);
-                            GameManager.instance.factionScript.SupportAuthority = authoritySupport;
-                            effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
-                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                            effectReturn.errorFlag = true;
-                            break;
-                    }
-                    effectReturn.isAction = true;
                     break;
                 //
                 // - - - Resistance effects
