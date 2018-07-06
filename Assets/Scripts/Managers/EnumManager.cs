@@ -91,10 +91,13 @@
     // - - - Messages - - -
     //
     public enum MessageCategory { None, Current, Pending, Archive, AI }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT, DECISION, FACTION }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT, DECISION, FACTION, GENERAL }
     public enum MessageSubType
     {
         None,
+        //General
+        General_Warning,
+        General_Info,
         //Player
         Plyr_Move,
         Plyr_Renown,

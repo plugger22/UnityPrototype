@@ -3226,8 +3226,9 @@ public class ActorManager : MonoBehaviour
                 if (actor.CheckConditionPresent(condition) == false)
                 {
                     //add condition
-                    actor.AddCondition(condition);
-                    text = string.Format("Condition {0} added to {1}, {2}", condition.name, actor.arc.name, actor.actorName);
+                    if (actor.AddCondition(condition) == true)
+                    { text = string.Format("Condition {0} added to {1}, {2}", condition.name, actor.arc.name, actor.actorName); }
+                    else { text = string.Format("Condition {0} NOT added", condition.name); }
                 }
                 else { text = string.Format("{0} already has Condition {1}", actor.arc.name, condition.name); }
             }
@@ -3442,8 +3443,6 @@ public class ActorManager : MonoBehaviour
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
             if (arrayOfActors != null)
             {
-                bool isSecrets = false;
-                if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
                 int chanceBreakdown = breakdownChance;
                 //base chance of nervous breakdown doubled during a surveillance crackdown
                 if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
@@ -3451,6 +3450,8 @@ public class ActorManager : MonoBehaviour
                 //secrets
                 int chanceSecret = secretBaseChance;
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+                bool isSecrets = false;
+                if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
                 //loop actors
                 for (int i = 0; i < arrayOfActors.Length; i++)
                 {
@@ -3613,6 +3614,10 @@ public class ActorManager : MonoBehaviour
             actor.RemoveCondition(conditionBlackmailer);
             //remove secret from all actors and player
             RemoveSecretFromAll(secret.secretID);
+        }
+        else
+        {
+            //warning message
         }
         return text;
     }

@@ -115,6 +115,55 @@ public class MessageManager : MonoBehaviour
     //
 
     //
+    // - - - General - - - 
+    //
+
+    /// <summary>
+    /// General Info message
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public Message GeneralWarning(string text)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GENERAL;
+            message.subType = MessageSubType.General_Info;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+    /// <summary>
+    /// General Warning message
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public Message GeneralWarning(string text)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GENERAL;
+            message.subType = MessageSubType.General_Warning;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+
+    //
     // - - - Player - - -
     //
 

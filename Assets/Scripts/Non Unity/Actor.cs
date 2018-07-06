@@ -137,37 +137,40 @@ namespace gameAPI
         { return listOfTeams; }
 
         /// <summary>
-        /// Add a new condition to list provided it isn't already present
+        /// Add a new condition to list provided it isn't already present. Returns true is successful
         /// </summary>
         /// <param name="condition"></param>
-        public void AddCondition(Condition condition)
+        public bool AddCondition(Condition condition)
         {
-            bool proceedFlag = true;
+            bool proceedFlag = false;
             if (condition != null)
             {
-                //trait check
+                //Checks (traits and other)
                 switch(condition.name)
                 {
                     case "STRESSED":
                         if (CheckTraitEffect(actorStressNone) == true)
-                        {
-                            proceedFlag = false;
-                            GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent STRESSED Condition");
-                        }
+                        { GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent STRESSED Condition");  }
+                        else { proceedFlag = true; }
                         break;
                     case "CORRUPT":
                         if (CheckTraitEffect(actorCorruptNone) == true)
-                        {
-                            proceedFlag = false;
-                            GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent CORRUPT Condition");
-                        }
+                        { GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent CORRUPT Condition"); }
+                        else { proceedFlag = true; }
                         break;
                     case "UNHAPPY":
                         if (CheckTraitEffect(actorUnhappyNone) == true)
-                        {
-                            proceedFlag = false;
-                            GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent UNHAPPY Condition");
-                        }
+                        { GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent UNHAPPY Condition");  }
+                        else { proceedFlag = true; }
+                        break;
+                    case "BLACKMAILER":
+                        if (listOfSecrets.Count == 0)
+                        { Debug.Log("Actor.cs -> AddCondition: BLACKMAIL condition NOT added (Actor has no Secrets)"); }
+                        else { proceedFlag = true; }
+                        break;
+                    default:
+                        //All O.K
+                        proceedFlag = true;
                         break;
                 }
                 if (proceedFlag == true)
@@ -191,6 +194,7 @@ namespace gameAPI
                 }
             }
             else { Debug.LogError("Invalid condition (Null)"); }
+            return proceedFlag;
         }
 
         /// <summary>

@@ -39,8 +39,10 @@ public class EffectManager : MonoBehaviour
     
 
     //colour palette for Modal Outcome
-    private string colourGood; //good effect Resisance / bad effect Authority
-    private string colourBad; //bad effect Authority / bad effect Resistance
+    private string colourGoodSide; //good effect Resisance / bad effect Authority
+    private string colourBadSide; //bad effect Authority / bad effect Resistance
+    private string colourGood;  //standard colour Good
+    private string colourBad;   //standard colour Bad
     private string colourNeutral; //used when node is EqualsTo, eg. reset, or for Team Names
     private string colourNormal;
     private string colourDefault;
@@ -120,17 +122,19 @@ public class EffectManager : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
-                colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-                colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
                 break;
             case "Authority":
-                colourGood = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-                colourBad = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
@@ -292,7 +296,7 @@ public class EffectManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         if (node.CheckTeamPresent(teamArcCivil) > -1)
-                                                        { BuildString(result, string.Format("{0}CIVIL team present{1}", colourBad, colourEnd)); }
+                                                        { BuildString(result, string.Format("{0}CIVIL team present{1}", colourBadSide, colourEnd)); }
                                                     }
                                                     break;
                                                 case "TeamProbeNo":
@@ -300,7 +304,7 @@ public class EffectManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         if (node.CheckTeamPresent(teamArcProbe) > -1)
-                                                        { BuildString(result, string.Format("{0}PROBE team present{1}", colourBad, colourEnd)); }
+                                                        { BuildString(result, string.Format("{0}PROBE team present{1}", colourBadSide, colourEnd)); }
                                                     }
                                                     break;
                                                 case "TeamControlNo":
@@ -308,7 +312,7 @@ public class EffectManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         if (node.CheckTeamPresent(teamArcControl) > -1)
-                                                        { BuildString(result, string.Format("{0}CONTROL team present{1}", colourBad, colourEnd)); }
+                                                        { BuildString(result, string.Format("{0}CONTROL team present{1}", colourBadSide, colourEnd)); }
                                                     }
                                                     break;
                                                 case "TeamSpiderNo":
@@ -316,7 +320,7 @@ public class EffectManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         if (node.CheckTeamPresent(teamArcSpider) > -1)
-                                                        { BuildString(result, string.Format("{0}SPIDER team present{1}", colourBad, colourEnd)); }
+                                                        { BuildString(result, string.Format("{0}SPIDER team present{1}", colourBadSide, colourEnd)); }
                                                     }
                                                     break;
                                                 case "TeamMediaNo":
@@ -324,7 +328,7 @@ public class EffectManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         if (node.CheckTeamPresent(teamArcMedia) > -1)
-                                                        { BuildString(result, string.Format("{0}MEDIA team present{1}", colourBad, colourEnd)); }
+                                                        { BuildString(result, string.Format("{0}MEDIA team present{1}", colourBadSide, colourEnd)); }
                                                     }
                                                     break;
                                                 default:
@@ -727,17 +731,20 @@ public class EffectManager : MonoBehaviour
             string colourText = colourDefault;
             if (effect.typeOfEffect != null)
             {
-                switch (effect.typeOfEffect.name)
+                switch (effect.typeOfEffect.level)
                 {
-                    case "Good":
-                        colourEffect = colourGood;
+                    case 2:
+                        //good
+                        colourEffect = colourGoodSide;
                         break;
-                    case "Neutral":
+                    case 1:
+                        //neutral
                         colourEffect = colourNeutral;
                         colourText = colourNeutral;
                         break;
-                    case "Bad":
-                        colourEffect = colourBad;
+                    case 0:
+                        //bad
+                        colourEffect = colourBadSide;
                         colourText = colourAlert;
                         break;
                     default:
@@ -903,20 +910,20 @@ public class EffectManager : MonoBehaviour
                             switch (effect.typeOfEffect.level)
                             {
                                 case 2:
-                                    //Good
+                                    //Good 
                                     cityLoyalty += effect.value;
                                     cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
                                     GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
                                     effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourGood, effect.value, colourEnd);
                                     break;
                                 case 0:
-                                    //Bad
+                                    //Bad 
                                     cityLoyalty -= effect.value;
                                     cityLoyalty = Mathf.Max(0, cityLoyalty);
                                     GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
                                     effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourBad, effect.value, colourEnd);
                                     break;
                                 default:
                                     Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
@@ -934,7 +941,7 @@ public class EffectManager : MonoBehaviour
                                     cityLoyalty = Mathf.Max(0, cityLoyalty);
                                     GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
                                     effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourGood, effect.value, colourEnd);
                                     break;
                                 case 0:
                                     //Bad
@@ -942,7 +949,7 @@ public class EffectManager : MonoBehaviour
                                     cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
                                     GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
                                     effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourBad, effect.value, colourEnd);
                                     break;
                                 default:
                                     Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
@@ -973,7 +980,7 @@ public class EffectManager : MonoBehaviour
                                     GameManager.instance.factionScript.SupportAuthority = authoritySupport;
                                     effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
                                         GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourGood, effect.value, colourEnd);
                                     break;
                                 case "Subtract":
                                     authoritySupport -= effect.value;
@@ -981,7 +988,7 @@ public class EffectManager : MonoBehaviour
                                     GameManager.instance.factionScript.SupportAuthority = authoritySupport;
                                     effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
                                         GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourBad, effect.value, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
@@ -1002,7 +1009,7 @@ public class EffectManager : MonoBehaviour
                                     GameManager.instance.factionScript.SupportResistance = resistanceSupport;
                                     effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
                                         GameManager.instance.factionScript.factionResistance.name, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourGood, effect.value, colourEnd);
                                     break;
                                 case "Subtract":
                                     resistanceSupport -= effect.value;
@@ -1010,7 +1017,7 @@ public class EffectManager : MonoBehaviour
                                     GameManager.instance.factionScript.SupportResistance = resistanceSupport;
                                     effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
                                         GameManager.instance.factionScript.factionResistance.name, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourEffect, effect.value, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourBad, effect.value, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
@@ -1119,7 +1126,7 @@ public class EffectManager : MonoBehaviour
                                                 //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
                                                 effectReturn.bottomText = 
                                                     string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                    colourAlert, colourEnd, "\n", "\n", colourBad, colourEnd);
+                                                    colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
                                         }
@@ -1132,7 +1139,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 //immediate notification. AI flag set. Applies if player invis was 0 before action taken
                                                 effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}", 
-                                                    colourAlert, effect.textTag, colourEnd, "\n", "\n", colourBad, colourEnd);
+                                                    colourAlert, effect.textTag, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
                                             
@@ -1245,7 +1252,7 @@ public class EffectManager : MonoBehaviour
                                                     builder.Append(effectReturn.bottomText);
 
                                                     builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
-                                                        colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd);
+                                                        colourBadSide, colourEnd, colourAlert, colourEnd, colourBadSide, colourEnd, colourNeutral, colourEnd, colourBadSide, colourEnd);
                                                     effectReturn.bottomText = builder.ToString();
                                                 }
                                             }
@@ -1281,12 +1288,12 @@ public class EffectManager : MonoBehaviour
                             {
                                 case "Add":
                                     playerRenown += effect.value;
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.textTag, colourEnd);
                                     break;
                                 case "Subtract":
                                     playerRenown -= effect.value;
                                     playerRenown = Mathf.Max(0, playerRenown);
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.textTag, colourEnd);
                                     break;
                             }
                             GameManager.instance.playerScript.Renown = playerRenown;
@@ -1306,7 +1313,7 @@ public class EffectManager : MonoBehaviour
                                         {
                                             //trait -> renown doubled (only for Add renown)
                                             actor.Renown += effect.value;
-                                            effectReturn.bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBad, actor.arc.name, effect.value * 2, colourEnd,
+                                            effectReturn.bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBadSide, actor.arc.name, effect.value * 2, colourEnd,
                                                 colourNeutral, actor.GetTrait().tag, colourEnd);
                                             //logger
                                             GameManager.instance.actorScript.DebugTraitMessage(actor, "to gain double renown");
@@ -1314,13 +1321,13 @@ public class EffectManager : MonoBehaviour
                                         else
                                         {
                                             //no trait
-                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.textTag, colourEnd);
                                         }
                                         break;
                                     case "Subtract":
                                         actor.Renown -= effect.value;
                                         actor.Renown = Mathf.Max(0, actor.Renown);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, effect.textTag, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.textTag, colourEnd);
                                         break;
                                 }
                                 Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.arc.name, actor.arc.name, dataBefore, actor.Renown, "\n");
@@ -1448,7 +1455,7 @@ public class EffectManager : MonoBehaviour
                 return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}", 
                     colourNeutral, team.arc.name, colourEnd, 
                     colourNormal, team.teamName, operation, colourEnd,  
-                    colourBad, node.Arc.name, colourEnd, colourNormal, node.nodeName, colourEnd);
+                    colourBadSide, node.Arc.name, colourEnd, colourNormal, node.nodeName, colourEnd);
             }
             else
             {
@@ -1472,9 +1479,9 @@ public class EffectManager : MonoBehaviour
     {
         if (actor != null)
         {
-            string colourNumbers = colourGood;
+            string colourNumbers = colourGoodSide;
             if (actor.CheckNumOfTeams() == actor.datapoint2)
-            { colourNumbers = colourBad; }
+            { colourNumbers = colourBadSide; }
             return string.Format("{0}, {1} of {2}{3}{4} has now deployed {5}{6}{7} of {8}{9}{10} teams",
                 actor.actorName, GameManager.instance.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
                 colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd);
@@ -1504,14 +1511,14 @@ public class EffectManager : MonoBehaviour
             switch (effect.typeOfEffect.name)
             {
                 case "Good":
-                    colourEffect = colourGood;
+                    colourEffect = colourGoodSide;
                     break;
                 case "Neutral":
                     colourEffect = colourNeutral;
                     colourText = colourNeutral;
                     break;
                 case "Bad":
-                    colourEffect = colourBad;
+                    colourEffect = colourBadSide;
                     colourText = colourAlert;
                     break;
                 default:
@@ -1932,14 +1939,14 @@ public class EffectManager : MonoBehaviour
             switch (effect.typeOfEffect.name)
             {
                 case "Good":
-                    colourEffect = colourGood;
+                    colourEffect = colourGoodSide;
                     break;
                 case "Neutral":
                     colourEffect = colourNeutral;
                     colourText = colourNeutral;
                     break;
                 case "Bad":
-                    colourEffect = colourBad;
+                    colourEffect = colourBadSide;
                     colourText = colourAlert;
                     break;
                 default:
@@ -2158,7 +2165,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private EffectDataResolve ResolveConditionData(Effect effect, Node node, Actor actor = null)
     {
-        //sort out colour based on type (which is effect benefit from POV of Resistance)
+        //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
         string colourEffect = colourDefault;
         Condition condition = null;
         if (effect.typeOfEffect != null)
@@ -2289,8 +2296,8 @@ public class EffectManager : MonoBehaviour
                 List<Condition> listOfConditions;
                 Condition conditionRandom;
                 string effectType = "Good";
-                string colourConditionAdd = colourGood;
-                string colourConditionRemove = colourBad;
+                string colourConditionAdd = colourGoodSide;
+                string colourConditionRemove = colourBadSide;
                 GlobalType type = GameManager.instance.globalScript.typeGood;
                 //get type
                 switch (effect.outcome.name)
@@ -2301,8 +2308,8 @@ public class EffectManager : MonoBehaviour
                     case "ConditionGroupBad":
                         type = GameManager.instance.globalScript.typeBad;
                         effectType = "Bad";
-                        colourConditionAdd = colourBad;
-                        colourConditionRemove = colourGood;
+                        colourConditionAdd = colourBadSide;
+                        colourConditionRemove = colourGoodSide;
                         break;
                     default:
                         Debug.LogWarning(string.Format("Invalid outcome name \"{0}\"", effect.outcome.name));
@@ -2362,7 +2369,7 @@ public class EffectManager : MonoBehaviour
                                                 if (listOfConditions[i].type.name.Equals(typeCompare) == true)
                                                 { listOfConditions.RemoveAt(i); counter++; }
                                             }
-                                            effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBad, counter, colourEnd);
+                                            effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBadSide, counter, colourEnd);
                                         }
                                         break;
                                     case "ConditionGroupBad":
@@ -2375,7 +2382,7 @@ public class EffectManager : MonoBehaviour
                                                 if (listOfConditions[i].type.name.Equals(typeCompare) == true)
                                                 { listOfConditions.RemoveAt(i); counter++; }
                                             }
-                                            effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGood, counter, colourEnd);
+                                            effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGoodSide, counter, colourEnd);
                                         }
                                         break;
                                     default:
@@ -2447,7 +2454,7 @@ public class EffectManager : MonoBehaviour
                                                     if (listOfConditions[i].type.name.Equals(typeCompare) == true)
                                                     { listOfConditions.RemoveAt(i); counter++; }
                                                 }
-                                                effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBad, counter, colourEnd);
+                                                effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBadSide, counter, colourEnd);
                                             }
                                             break;
                                         case "ConditionGroupBad":
@@ -2460,7 +2467,7 @@ public class EffectManager : MonoBehaviour
                                                     if (listOfConditions[i].type.name.Equals(typeCompare) == true)
                                                     { listOfConditions.RemoveAt(i); counter++; }
                                                 }
-                                                effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGood, counter, colourEnd);
+                                                effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGoodSide, counter, colourEnd);
                                             }
                                             break;
                                         default:
@@ -2566,13 +2573,13 @@ public class EffectManager : MonoBehaviour
             switch (effect.typeOfEffect.name)
             {
                 case "Good":
-                    colourEffect = colourGood;
+                    colourEffect = colourGoodSide;
                     break;
                 case "Neutral":
                     colourEffect = colourNeutral;
                     break;
                 case "Bad":
-                    colourEffect = colourBad;
+                    colourEffect = colourBadSide;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
@@ -2588,7 +2595,7 @@ public class EffectManager : MonoBehaviour
             case "ActorResigns":
                 //NOTE: Not a Manage option and treated differently to the rest
                 if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
-                { effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBad, actor.arc.name, colourEnd); }
+                { effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd); }
                 break;
             case "ActorToReserves":
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
@@ -2660,13 +2667,13 @@ public class EffectManager : MonoBehaviour
             switch (effect.typeOfEffect.name)
             {
                 case "Good":
-                    colourEffect = colourGood;
+                    colourEffect = colourGoodSide;
                     break;
                 case "Neutral":
                     colourEffect = colourNeutral;
                     break;
                 case "Bad":
-                    colourEffect = colourBad;
+                    colourEffect = colourBadSide;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
