@@ -3574,50 +3574,62 @@ public class ActorManager : MonoBehaviour
         }
         else if (actor.blackmailTimer == 0)
         {
-            //timer at zero -> Actor REVEALS secret
+            //
+            // - - - Actor REVEALS secret - - -
+            //
             Secret secret = actor.GetSecret();
-            StringBuilder builder = new StringBuilder();
-            //message
-            string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-            Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
-            GameManager.instance.dataScript.AddMessage(message);
-            //carry out effects
-            if (secret.listOfEffects != null)
+            if (secret != null)
             {
-                //data packages
-                EffectDataReturn effectReturn = new EffectDataReturn();
-                EffectDataInput effectInput = new EffectDataInput();
-                effectInput.textOrigin = "Reveal Secret";
-                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                if (node != null)
+                secret.revealedWho = actor.actorID;
+                secret.revealedWhen = GameManager.instance.turnScript.Turn;
+                StringBuilder builder = new StringBuilder();
+                //message
+                string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
+                Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
+                GameManager.instance.dataScript.AddMessage(message);
+                //carry out effects
+                if (secret.listOfEffects != null)
                 {
-                    //loop effects
-                    foreach (Effect effect in secret.listOfEffects)
+                    //data packages
+                    EffectDataReturn effectReturn = new EffectDataReturn();
+                    EffectDataInput effectInput = new EffectDataInput();
+                    effectInput.textOrigin = "Reveal Secret";
+                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    if (node != null)
                     {
-                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
-                        if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                        builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);
-                        //temp message
-                        if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                        //loop effects
+                        foreach (Effect effect in secret.listOfEffects)
                         {
-                            string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
-                            Message messageSecret = GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
-                            GameManager.instance.dataScript.AddMessage(messageSecret);
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                            if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                            builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);
+                            //temp message
+                            if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                            {
+                                string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
+                                Message messageSecret = GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
+                                GameManager.instance.dataScript.AddMessage(messageSecret);
+                            }
                         }
                     }
+                    else { Debug.LogWarning("Invalid player node (Null)"); }
+                    //return builder output (all effects colour formatted, two lines each and a double space betweeen
+                    text = builder.ToString();
                 }
-                else { Debug.LogWarning("Invalid player node (Null)"); }
-                //return builder output (all effects colour formatted, two lines each and a double space betweeen
-                text = builder.ToString();
+                //Motivation at max value, Blackmailer condition cancelled
+                actor.RemoveCondition(conditionBlackmailer);
+                //remove secret from all actors and player
+                RemoveSecretFromAll(secret.secretID);
             }
-            //Motivation at max value, Blackmailer condition cancelled
-            actor.RemoveCondition(conditionBlackmailer);
-            //remove secret from all actors and player
-            RemoveSecretFromAll(secret.secretID);
+            else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
         }
         else
         {
             //warning message
+            string textWarning = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
+                actor.blackmailTimer != 1 ? "s" : "");
+            Message message = GameManager.instance.messageScript.GeneralWarning(textWarning);
+            GameManager.instance.dataScript.AddMessage(message);
         }
         return text;
     }

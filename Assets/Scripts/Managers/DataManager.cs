@@ -96,6 +96,9 @@ public class DataManager : MonoBehaviour
     private List<int> listOfLostGear = new List<int>();
     private List<int> listOfCurrentGear = new List<int>();                                          //gear held by OnMap resistance player or actors
 
+    //secret lists
+    private List<Secret> listOfRevealedSecrets = new List<Secret>();
+
     //AI persistant data
     private int[] arrayOfAIResources = new int[3];                                                  //Global side index [0] none, [1] Authority, [2] Resistance
     private Queue<AITracker> queueRecentNodes = new Queue<AITracker>();
@@ -2029,6 +2032,24 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, Secret> GetDictOfSecrets()
     { return dictOfSecrets; }
+
+    public List<Secret> GetListOfRevealedSecrets()
+    { return listOfRevealedSecrets; }
+
+    /// <summary>
+    /// add a secret to list of Revealed Secrets (checks that has been revealed)
+    /// </summary>
+    /// <param name="secret"></param>
+    public void AddRevealedSecret(Secret secret)
+    {
+        if (secret != null)
+        {
+            if (secret.revealedWhen > -1)
+            { listOfRevealedSecrets.Add(secret); }
+            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen {2}", secret.tag, secret.secretID, secret.revealedWhen); }
+        }
+        else { Debug.LogWarning("Invalid Secret (Null)"); }
+    }
 
     //
     // - - - Gear - - -

@@ -123,7 +123,7 @@ public class MessageManager : MonoBehaviour
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public Message GeneralWarning(string text)
+    public Message GeneralInfo(string text)
     {
         if (string.IsNullOrEmpty(text) == false)
         {

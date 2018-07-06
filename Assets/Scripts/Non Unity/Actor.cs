@@ -43,6 +43,7 @@ namespace gameAPI
         private int actorStressNone;
         private int actorCorruptNone;
         private int actorUnhappyNone;
+        private int maxNumOfSecrets = -1;
 
         private Trait trait;
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
@@ -96,6 +97,8 @@ namespace gameAPI
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
             actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
+            maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
+            Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
             Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
             Debug.Assert(actorStressNone > -1, "Invalid actorCorruptNone (-1)");
             Debug.Assert(actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
@@ -280,12 +283,17 @@ namespace gameAPI
                 //check same secret doesn't already exist
                 if (listOfSecrets.Exists(x => x.secretID == secret.secretID) == false)
                 {
-                    //add secret
-                    listOfSecrets.Add(secret);
-                    //message
-                    string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
-                    Message message = GameManager.instance.messageScript.ActorSecret(msgText, actorID, secret.secretID);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    //check space for a new secret
+                    if (listOfSecrets.Count < maxNumOfSecrets)
+                    {
+                        //add secret
+                        listOfSecrets.Add(secret);
+                        //message
+                        string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
+                        Message message = GameManager.instance.messageScript.ActorSecret(msgText, actorID, secret.secretID);
+                        GameManager.instance.dataScript.AddMessage(message);
+                    }
+                    else { Debug.LogWarning("Secret NOT added as no space available"); }
                 }
                 else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
             }

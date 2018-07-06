@@ -40,6 +40,7 @@ public class PlayerManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private string hackingGear;
+    private int maxNumOfSecrets = -1;
     
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
@@ -140,9 +141,11 @@ public class PlayerManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
+        maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
+        Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
         //set stats
         Renown = 0;
         Invisibility = 3;
@@ -681,12 +684,17 @@ public class PlayerManager : MonoBehaviour
             //check same secret doesn't already exist
             if (listOfSecrets.Exists(x => x.secretID == secret.secretID) == false)
             {
-                //add secret & make active
-                listOfSecrets.Add(secret);
-                secret.isActive = true;
-                //Msg
-                Message message = GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret.secretID);
-                GameManager.instance.dataScript.AddMessage(message);
+                //check space for a new secret
+                if (listOfSecrets.Count < maxNumOfSecrets)
+                {
+                    //add secret & make active
+                    listOfSecrets.Add(secret);
+                    secret.isActive = true;
+                    //Msg
+                    Message message = GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret.secretID);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                else { Debug.LogWarning("Secret NOT added as not enough space"); }
             }
             else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
         }
@@ -709,6 +717,9 @@ public class PlayerManager : MonoBehaviour
                 {
                     //reset secret known
                     listOfSecrets[i].ResetSecret();
+                    //add to listOfRevealed
+                    GameManager.instance.dataScript.AddRevealedSecret(listOfSecrets[i]);
+                    //remove secret
                     listOfSecrets.RemoveAt(i);
                     isSuccess = true;
                     break;

@@ -14,6 +14,8 @@ public class SecretManager : MonoBehaviour
     [Range(0, 100)] public int secretLearnBaseChance = 25;
     [Tooltip("Number of turns to set the actor 'Blackmail -> threatening to reveal secret' timer")]
     [Range(0, 10)] public int secretBlackmailTimer = 5;
+    [Tooltip("Max number of secrets allowed for a Player or Actor.Determined by capacity of InventoryUI")]
+    [Range(0, 4)] public int secretMaxNum = 4;
 
 
     public void Initialise()
@@ -60,6 +62,23 @@ public class SecretManager : MonoBehaviour
         //player data
         builder.AppendFormat("{0}{1}- Player listOfSecrets", "\n", "\n");
         builder.Append(GameManager.instance.playerScript.DebugDisplaySecrets());
+        //revealed secrets data
+        builder.AppendFormat("{0}{1}- listOfRevealedSecrets", "\n", "\n");
+        List<Secret> tempList = GameManager.instance.dataScript.GetListOfRevealedSecrets();
+        if (tempList != null)
+        {
+            int numSecrets = tempList.Count;
+            if (numSecrets > 0)
+            {
+                foreach (Secret secret in tempList)
+                {
+                    builder.AppendFormat("{0} ID {1}, {2} ({3}), ({4} turn {5})", "\n", secret.secretID, secret.name, secret.tag,
+                          GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen);
+                }
+            }
+            else { builder.AppendFormat("{0} No records", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid listOfRevealedSecrets (Null)"); }
         //actor data
         for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
         {
@@ -75,6 +94,7 @@ public class SecretManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", i); }
             }
         }
+
         return builder.ToString();
     }
 
