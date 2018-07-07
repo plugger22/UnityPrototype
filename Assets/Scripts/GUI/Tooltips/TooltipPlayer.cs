@@ -14,13 +14,14 @@ public class TooltipPlayer : MonoBehaviour
     public TextMeshProUGUI playerName;
     public TextMeshProUGUI playerStatus;
     public TextMeshProUGUI playerConditions;
-    public TextMeshProUGUI playerQualities;
     public TextMeshProUGUI playerStats;
-    public TextMeshProUGUI playerBottom;       //gear for rebels
-    public Image dividerTop;                   //Side specific sprites for tooltips
-    public Image dividerMiddleUpper;
-    public Image dividerMiddleLower;
-    public Image dividerBottom;
+    public TextMeshProUGUI playerMulti_1;       //multipurpose section 1
+    public TextMeshProUGUI playerMulti_2;       //multipurpose section 2
+    public Image divider_1;                     //numbered from top to bottom
+    public Image divider_2;
+    public Image divider_3;
+    public Image divider_4;
+    public Image divider_5;
     public GameObject tooltipPlayerObject;
 
     private Image background;
@@ -34,7 +35,8 @@ public class TooltipPlayer : MonoBehaviour
     private string colourNeutral;
     private string colourBad;
     private string colourName;
-    private string colourArc;
+    private string colourAlert;
+    private string colourGrey;
     private string colourEnd;
 
 
@@ -95,7 +97,8 @@ public class TooltipPlayer : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -106,29 +109,36 @@ public class TooltipPlayer : MonoBehaviour
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
     public void SetTooltip(Vector3 pos)
     {
+        bool isStatus = false;
+        bool isConditions = false;
         //open panel at start
         tooltipPlayerObject.SetActive(true);
         //set opacity to zero (invisible)
         SetOpacity(0f);
-        //set state of all items in tooltip window
+        //set state of all items in tooltip window (Status and Conditions are switched on later only if present)
         playerName.gameObject.SetActive(true);
         playerStatus.gameObject.SetActive(false);
         playerConditions.gameObject.SetActive(false);
         playerStats.gameObject.SetActive(true);
-        playerQualities.gameObject.SetActive(true);
-        playerBottom.gameObject.SetActive(true);
-        dividerTop.gameObject.SetActive(true);
-        dividerMiddleUpper.gameObject.SetActive(false);
-        dividerMiddleLower.gameObject.SetActive(false);
-        dividerBottom.gameObject.SetActive(true);
-        //Header
-        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}{4}{5}", colourArc, colourEnd, "\n", colourName, GameManager.instance.playerScript.PlayerName, colourEnd);
-        //Status (ignore for the default 'Active' Condition)
+        playerMulti_1.gameObject.SetActive(true);
+        playerMulti_2.gameObject.SetActive(true);
+        divider_1.gameObject.SetActive(true);
+        divider_2.gameObject.SetActive(false);
+        divider_3.gameObject.SetActive(false);   //true if both Status and Conditions texts are present
+        divider_4.gameObject.SetActive(true);
+        divider_5.gameObject.SetActive(true);
+        //
+        // - - - Name - - -
+        //
+        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}{4}{5}", colourAlert, colourEnd, "\n", colourName, GameManager.instance.playerScript.PlayerName, colourEnd);
+        //
+        // - - - Status - - -
+        //
         if (GameManager.instance.playerScript.status != ActorStatus.Active)
         {
             //activate UI components
             playerStatus.gameObject.SetActive(true);
-            dividerMiddleUpper.gameObject.SetActive(true);
+            isStatus = true;
             switch (GameManager.instance.playerScript.status)
             {
                 case ActorStatus.Inactive:
@@ -153,13 +163,14 @@ public class TooltipPlayer : MonoBehaviour
                     break;
             }
         }
-        //Conditions
+        //
+        // - - - Conditions - - -
+        //
         if (GameManager.instance.playerScript.CheckNumOfConditions() > 0)
         {
             List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions();
             if (listOfConditions != null)
             {
-                dividerMiddleLower.gameObject.SetActive(true);
                 playerConditions.gameObject.SetActive(true);
                 StringBuilder builderCondition = new StringBuilder();
                 foreach (Condition condition in listOfConditions)
@@ -181,33 +192,52 @@ public class TooltipPlayer : MonoBehaviour
                             break;
                     }
                 }
+                isConditions = true;
                 playerConditions.text = builderCondition.ToString();
             }
             else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
         }
-        //context sensitive at bottom
-        StringBuilder builderStats = new StringBuilder();
-        int renown = GameManager.instance.playerScript.Renown;
+        //
+        // - - - Dividers - - -
+        //
+        if (isStatus == true && isConditions == true) { divider_2.gameObject.SetActive(true); }
+        if (isStatus == true || isConditions == true) { divider_3.gameObject.SetActive(true); }
+        //
+        // - - - Stats - - -
+        //
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                //Authority Stats and Qualities
-                playerQualities.text = string.Format("{0}OnMap{1}{2}Intransit{3}{4}Reserve{5}", colourNeutral, colourEnd, "\n", "\n", colourNeutral, colourEnd);
-                int teamsOnMap = GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap);
-                int teamsInTransit = GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit);
-                int teamsReserve = GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve);
-                playerStats.text = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", colourNeutral, teamsOnMap, colourEnd, "\n", teamsInTransit, "\n", colourNeutral, 
-                    teamsReserve, colourEnd);
-                //Authority Bottom
-                playerBottom.text = string.Format("Renown  {0}{1}{2}", GameManager.instance.colourScript.GetValueColour(renown), renown, colourEnd);
-                break;               
+                //Authority
+                StringBuilder builderStats = new StringBuilder();
+                builderStats.AppendFormat("{0}Teams{1}{2}", colourAlert, colourEnd, "\n");
+                builderStats.AppendFormat("On Map<pos=70%>{0}{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap), "\n");
+                builderStats.AppendFormat("In Transit<pos=70%>{0}{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit), "\n");
+                builderStats.AppendFormat("Reserves<pos=70%>{0}{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve), "\n");
+                playerStats.text = builderStats.ToString();
+                break;
             case 2:
-                //Resistance gear
+                //Resistance
+                int invisibility = GameManager.instance.playerScript.Invisibility;
+                playerStats.text = string.Format("Invisibility<pos=70%>{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd);
+                break;
+        }
+        //
+        // - - - MultiPurpose 1 - - - 
+        //
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1:
+                //Authority
+                playerMulti_1.text = "Placeholder";
+                break;
+            case 2:
+                //Resistance -> Gear
                 List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                 if (listOfGear != null && listOfGear.Count > 0)
                 {
                     StringBuilder builderGear = new StringBuilder();
-                    builderGear.Append("Gear");
+                    builderGear.AppendFormat("{0}Gear{1}", colourAlert, colourEnd);
                     //gear in inventory
                     foreach (int gearID in listOfGear)
                     {
@@ -215,19 +245,24 @@ public class TooltipPlayer : MonoBehaviour
                         if (gear != null)
                         { builderGear.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourNeutral, gear.name, colourEnd); }
                     }
-                    playerBottom.text = builderGear.ToString();
+                    playerMulti_1.text = builderGear.ToString();
                 }
-                else { playerBottom.text = string.Format("{0}<size=90%>No Gear in Inventory</size>{1}", colourArc, colourEnd); }
-                //Resistance Stats and Qualities -> Renown / Secrets / Invisibility
-                
-                builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(renown), renown, colourEnd, "\n");
-                builderStats.Append("0");
-                builderStats.AppendLine();
-                int invisibility = GameManager.instance.playerScript.Invisibility;
-                builderStats.AppendFormat("{0}{1}{2}{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
-                playerStats.text = builderStats.ToString();
-                //Resistance Qualities
-                playerQualities.text = string.Format("Renown{0}Secrets{1}Invisibility", "\n", "\n");
+                else { playerMulti_1.text = string.Format("{0}<size=95%>No Gear</size>{1}", colourGrey, colourEnd); }
+                break;
+        }
+
+        //
+        // - - - MultiPurpose 2 - - - 
+        //
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1:
+                //Authority
+                playerMulti_2.text = "Placeholder";
+                break;
+            case 2:
+                //Resistance -> Secrets
+                playerMulti_2.text = string.Format("{0}<size=95%>No Secrets</size>{1}", colourGrey, colourEnd);
                 break;
         }
         //Coordinates -> You need to send World (object.transform) coordinates
@@ -302,17 +337,19 @@ public class TooltipPlayer : MonoBehaviour
         {
             case "Authority":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
-                dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                divider_1.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                divider_2.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                divider_3.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                divider_4.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                divider_5.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
             case "Resistance":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
-                dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                divider_1.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                divider_2.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                divider_3.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                divider_4.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                divider_5.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

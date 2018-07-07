@@ -85,6 +85,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                         actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
                         action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
                         gear = gearActor,
+                        listOfSecrets = actor.GetSecretsTooltipList(),
                         arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
                         arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
                     };

@@ -264,27 +264,21 @@ public class TooltipActor : MonoBehaviour
         {
             //if gear held for <= grace period then show as Grey (can't be requested), otherwise yellow
             if (data.actor.GetGearTimer() <= gracePeriod)
-            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
+            { actorGear.text = string.Format("{0}Gear{1}{2}{3}{4}{5}", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
             else
             { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
         }
-        else { actorGear.text = string.Format("{0}No Gear in inventory{1}", colourAlert, colourEnd); }
+        else { actorGear.text = string.Format("{0}<size=95%>No Gear</size>{1}", colourGrey, colourEnd); }
         //Secrets
         if (data.listOfSecrets != null && data.listOfSecrets.Count > 0)
         {
-            //if gear held for <= grace period then show as Grey (can't be requested), otherwise yellow
-            if (data.actor.GetGearTimer() <= gracePeriod)
-            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
-            else
-            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
-
             StringBuilder builder = new StringBuilder();
             builder.AppendFormat("{0}Secrets{1}", colourAlert, colourEnd);
             foreach (string secret in data.listOfSecrets)
-            { builder.AppendFormat("{0}{1}{2}", colourNeutral, ); }
+            { builder.AppendFormat("{0}<b>{1}{2}{3}</b>", "\n", colourNeutral, secret, colourEnd); }
             actorSecrets.text = builder.ToString();
         }
-        else { actorSecrets.text = string.Format("{0}No Secrets known{1}", colourAlert, colourEnd); }
+        else { actorSecrets.text = string.Format("{0}<size=95%>No Secrets</size>{1}", colourGrey, colourEnd); }
         //Coordinates -> You need to send World (object.transform) coordinates
         Vector3 worldPos = data.tooltipPos;
         //update required to get dimensions as tooltip is dynamic
@@ -362,6 +356,7 @@ public class TooltipActor : MonoBehaviour
                 dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerGear.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerSecrets.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
             case "Resistance":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
@@ -370,6 +365,7 @@ public class TooltipActor : MonoBehaviour
                 dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerGear.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerSecrets.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

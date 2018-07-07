@@ -369,6 +369,18 @@ namespace gameAPI
             return builder.ToString();
         }
 
+        /// <summary>
+        /// returns a list (empty if none) of secret tags for the actor tooltip
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetSecretsTooltipList()
+        {
+            List<string> listTooltip = new List<string>();
+            foreach(Secret secret in listOfSecrets)
+            { listTooltip.Add(secret.tag); }
+            return listTooltip;
+        }
+
         //
         // - - -  Trait - - -
         //
