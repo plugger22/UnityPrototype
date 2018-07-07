@@ -20,11 +20,13 @@ public class TooltipActor : MonoBehaviour
     public TextMeshProUGUI actorTrait;
     public TextMeshProUGUI actorAction;
     public TextMeshProUGUI actorGear;
+    public TextMeshProUGUI actorSecrets;
     public Image dividerTop;                   //Side specific sprites for tooltips
     public Image dividerMiddleUpper;
     public Image dividerMiddleLower;
     public Image dividerBottom;
     public Image dividerGear;
+    public Image dividerSecrets;
     public GameObject tooltipActorObject;
 
     private Image background;
@@ -141,11 +143,13 @@ public class TooltipActor : MonoBehaviour
         actorQualities.gameObject.SetActive(true);
         actorTrait.gameObject.SetActive(true);
         actorAction.gameObject.SetActive(true);
+        actorSecrets.gameObject.SetActive(true);
         dividerTop.gameObject.SetActive(true);
         dividerMiddleUpper.gameObject.SetActive(false);
         dividerMiddleLower.gameObject.SetActive(false);
         dividerBottom.gameObject.SetActive(true);
         dividerGear.gameObject.SetActive(true);
+        dividerSecrets.gameObject.SetActive(true);
         if (data.actor != null)
         {
             //Header
@@ -265,6 +269,22 @@ public class TooltipActor : MonoBehaviour
             { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
         }
         else { actorGear.text = string.Format("{0}No Gear in inventory{1}", colourAlert, colourEnd); }
+        //Secrets
+        if (data.listOfSecrets != null && data.listOfSecrets.Count > 0)
+        {
+            //if gear held for <= grace period then show as Grey (can't be requested), otherwise yellow
+            if (data.actor.GetGearTimer() <= gracePeriod)
+            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
+            else
+            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
+
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("{0}Secrets{1}", colourAlert, colourEnd);
+            foreach (string secret in data.listOfSecrets)
+            { builder.AppendFormat("{0}{1}{2}", colourNeutral, ); }
+            actorSecrets.text = builder.ToString();
+        }
+        else { actorSecrets.text = string.Format("{0}No Secrets known{1}", colourAlert, colourEnd); }
         //Coordinates -> You need to send World (object.transform) coordinates
         Vector3 worldPos = data.tooltipPos;
         //update required to get dimensions as tooltip is dynamic

@@ -50,6 +50,7 @@ namespace packageAPI
         public Actor actor;
         public Action action;
         public Gear gear;
+        public List<string> listOfSecrets; 
         public string[] arrayOfQualities;
         public int[] arrayOfStats;
     }
