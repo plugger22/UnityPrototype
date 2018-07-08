@@ -43,6 +43,8 @@ namespace gameAPI
         private int actorStressNone;
         private int actorCorruptNone;
         private int actorUnhappyNone;
+        private int actorBlackmailTimerHigh;
+        private int actorBlackmailTimerLow;
         private int maxNumOfSecrets = -1;
 
         private Trait trait;
@@ -97,11 +99,15 @@ namespace gameAPI
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
             actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
+            actorBlackmailTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerHigh");
+            actorBlackmailTimerLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerLow");
             maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
             Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
             Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
             Debug.Assert(actorStressNone > -1, "Invalid actorCorruptNone (-1)");
             Debug.Assert(actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
+            Debug.Assert(actorBlackmailTimerHigh > -1, "Invalid actorBlackmailTimerHigh (-1)");
+            Debug.Assert(actorBlackmailTimerLow > -1, "Invalid actorBlackmailTimerLow (-1)");
         }
 
         /// <summary>
@@ -184,10 +190,19 @@ namespace gameAPI
                     {
                         listOfConditions.Add(condition);
                         //special conditions
-                        switch(condition.name)
+                        switch (condition.name)
                         {
                             case "BLACKMAILER":
-                                blackmailTimer = GameManager.instance.secretScript.secretBlackmailTimer;
+                                int timer = GameManager.instance.secretScript.secretBlackmailTimer;
+                                //traits
+                                if (CheckTraitEffect(actorBlackmailTimerHigh) == true)
+                                { timer *= 3; }
+                                if (CheckTraitEffect(actorBlackmailTimerLow) == true)
+                                {
+                                    timer /= 2;
+                                    timer = Mathf.Max(0, timer);
+                                }
+                                blackmailTimer = timer;
                                 break;
                         }
                         //message

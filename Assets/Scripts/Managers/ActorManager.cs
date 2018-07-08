@@ -106,6 +106,8 @@ public class ActorManager : MonoBehaviour
     private int actorSecretChanceHigh;
     private int actorSecretChanceNone;
     private int actorSecretTellAll;
+    private int actorAppeaseNone;
+    private int actorBlackmailNone;
 
     //gear
     private int maxNumOfGear;
@@ -114,8 +116,6 @@ public class ActorManager : MonoBehaviour
     private int gearSwapPreferredAmount = -1;
     //traits
     private int actorKeepGear = 1;
-    /*private GearType gearRecovery;
-    private GearType gearPersonal;*/
     //colour palette for Generic tool tip
     private string colourResistance;
     private string colourAuthority;
@@ -164,8 +164,6 @@ public class ActorManager : MonoBehaviour
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
-        /*gearRecovery = GameManager.instance.dataScript.GetGearType("Recovery");
-        gearPersonal = GameManager.instance.dataScript.GetGearType("Personal");*/
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
@@ -177,8 +175,6 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
         Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
-        /*Debug.Assert(gearRecovery != null, "Invalid gearRecovery (Null)");
-        Debug.Assert(gearPersonal != null, "Invalid gearPersonal (Null)");*/
         //cached TraitEffects
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
@@ -187,12 +183,16 @@ public class ActorManager : MonoBehaviour
         actorSecretChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceHigh");
         actorSecretChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceNone");
         actorSecretTellAll = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretTellAll");
+        actorAppeaseNone = GameManager.instance.dataScript.GetTraitEffectID("ActorAppeaseNone");
+        actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
         Debug.Assert(actorNoActionsDuringSecurityMeasures > -1, "Invalid actorNoActionsDuringSecurityMeasures (-1)");
         Debug.Assert(actorSecretChanceHigh > -1, "Invalid actorSecretChanceHigh (-1)");
         Debug.Assert(actorSecretChanceNone > -1, "Invalid actorSecretChanceNone (-1)");
+        Debug.Assert(actorAppeaseNone > -1, "Invalid actorAppeaseNone (-1)");
+        Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -2972,7 +2972,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="actor"></param>
     /// <returns></returns>
-    public string GetActorConflict(Actor actor)
+    public string ProcessActorConflict(Actor actor)
     {
         bool proceedFlag;
         StringBuilder builder = new StringBuilder();
@@ -3028,7 +3028,6 @@ public class ActorManager : MonoBehaviour
                             //
                             if (proceedFlag == true)
                             {
-                                
                                 //place into pool, number of entries according to chance of being selected
                                 switch (conflict.Value.chance.level)
                                 {
@@ -3432,7 +3431,7 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (actor.blackmailTimer > 0)
                                 {
-                                    string blackmailOutcome = ProcessBlackMail(actor);
+                                    string blackmailOutcome = ProcessBlackmail(actor);
                                     if (string.IsNullOrEmpty(blackmailOutcome) == false)
                                     {
                                         //TO DO -> Notification to player of black mail outcome (start turn)
@@ -3494,7 +3493,7 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (actor.blackmailTimer > 0)
                                 {
-                                    string blackmailOutcome = ProcessBlackMail(actor);
+                                    string blackmailOutcome = ProcessBlackmail(actor);
                                     if (string.IsNullOrEmpty(blackmailOutcome) == false)
                                     {
                                         //TO DO -> Notification to player of black mail outcome (start turn)
@@ -3574,78 +3573,89 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private string ProcessBlackMail(Actor actor)
+    private string ProcessBlackmail(Actor actor)
     {
         string text = null;
+        bool isResolved = false;
         //decrement timer
         actor.blackmailTimer--;
         if (actor.datapoint1 == maxStatValue)
         {
-            //Motivation at max value, Blackmailer condition cancelled
-            actor.RemoveCondition(conditionBlackmailer);
-            //message
-            string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
-            Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
-            GameManager.instance.dataScript.AddMessage(message);
-        }
-        else if (actor.blackmailTimer == 0)
-        {
-            //
-            // - - - Actor REVEALS secret - - -
-            //
-            Secret secret = actor.GetSecret();
-            if (secret != null)
+            //trait Vindictive (won't be appeased)
+            if (actor.CheckTraitEffect(actorAppeaseNone) == false)
             {
-                secret.revealedWho = actor.actorID;
-                secret.revealedWhen = GameManager.instance.turnScript.Turn;
-                StringBuilder builder = new StringBuilder();
-                //message
-                string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
-                GameManager.instance.dataScript.AddMessage(message);
-                //carry out effects
-                if (secret.listOfEffects != null)
-                {
-                    //data packages
-                    EffectDataReturn effectReturn = new EffectDataReturn();
-                    EffectDataInput effectInput = new EffectDataInput();
-                    effectInput.textOrigin = "Reveal Secret";
-                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                    if (node != null)
-                    {
-                        //loop effects
-                        foreach (Effect effect in secret.listOfEffects)
-                        {
-                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
-                            if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                            builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);
-                            //temp message
-                            if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
-                            {
-                                string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
-                                Message messageSecret = GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
-                                GameManager.instance.dataScript.AddMessage(messageSecret);
-                            }
-                        }
-                    }
-                    else { Debug.LogWarning("Invalid player node (Null)"); }
-                    //return builder output (all effects colour formatted, two lines each and a double space betweeen
-                    text = builder.ToString();
-                }
                 //Motivation at max value, Blackmailer condition cancelled
                 actor.RemoveCondition(conditionBlackmailer);
-                //remove secret from all actors and player
-                RemoveSecretFromAll(secret.secretID);
+                isResolved = true;
+                //message
+                string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
+                Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
+                GameManager.instance.dataScript.AddMessage(message);
             }
-            else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
+            else
+            { TraitLogMessage(actor, "to avoid being bought-off"); }
         }
-        else
+        if (isResolved == false)
         {
-            //warning message
-            string textWarning = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
-                actor.blackmailTimer != 1 ? "s" : "");
-            Message message = GameManager.instance.messageScript.GeneralWarning(textWarning);
-            GameManager.instance.dataScript.AddMessage(message);
+            if (actor.blackmailTimer == 0)
+            {
+                //
+                // - - - Actor REVEALS secret - - -
+                //
+                Secret secret = actor.GetSecret();
+                if (secret != null)
+                {
+                    secret.revealedWho = actor.actorID;
+                    secret.revealedWhen = GameManager.instance.turnScript.Turn;
+                    StringBuilder builder = new StringBuilder();
+                    //message
+                    string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
+                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
+                    GameManager.instance.dataScript.AddMessage(message);
+                    //carry out effects
+                    if (secret.listOfEffects != null)
+                    {
+                        //data packages
+                        EffectDataReturn effectReturn = new EffectDataReturn();
+                        EffectDataInput effectInput = new EffectDataInput();
+                        effectInput.textOrigin = "Reveal Secret";
+                        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                        if (node != null)
+                        {
+                            //loop effects
+                            foreach (Effect effect in secret.listOfEffects)
+                            {
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                                builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);
+                                //temp message
+                                if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                                {
+                                    string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
+                                    Message messageSecret = GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
+                                    GameManager.instance.dataScript.AddMessage(messageSecret);
+                                }
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid player node (Null)"); }
+                        //return builder output (all effects colour formatted, two lines each and a double space betweeen
+                        text = builder.ToString();
+                    }
+                    //Motivation at max value, Blackmailer condition cancelled
+                    actor.RemoveCondition(conditionBlackmailer);
+                    //remove secret from all actors and player
+                    RemoveSecretFromAll(secret.secretID);
+                }
+                else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
+            }
+            else
+            {
+                //warning message
+                string textWarning = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
+                    actor.blackmailTimer != 1 ? "s" : "");
+                Message message = GameManager.instance.messageScript.GeneralWarning(textWarning);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
         }
         return text;
     }

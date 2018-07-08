@@ -1487,7 +1487,7 @@ public class ActionManager : MonoBehaviour
                     {
                         builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
                         builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
-                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.GetActorConflict(actor));
+                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
                     }
                     //deduct motivation
                     actor.datapoint1 -= motivationCost;
