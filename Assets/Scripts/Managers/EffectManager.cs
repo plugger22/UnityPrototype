@@ -29,6 +29,7 @@ public class EffectManager : MonoBehaviour
     //fast access -> traits
     private int actorStressedOverInvisibility;
     private int actorDoubleRenown;
+    private int actorBlackmailNone;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -59,6 +60,7 @@ public class EffectManager : MonoBehaviour
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         actorStressedOverInvisibility = GameManager.instance.dataScript.GetTraitEffectID("ActorInvisibilityStress");
         actorDoubleRenown = GameManager.instance.dataScript.GetTraitEffectID("ActorDoubleRenown");
+        actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
@@ -67,6 +69,7 @@ public class EffectManager : MonoBehaviour
         conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
         Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
         Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
+        Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
@@ -524,6 +527,16 @@ public class EffectManager : MonoBehaviour
                                                     {  Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                break;
+                                            case "TraitBlackmailNoneNo":
+                                                if (actor != null)
+                                                {
+                                                    //actor -> doesn't have 'Honorable' trait
+                                                    if (actor.CheckTraitEffect(actorBlackmailNone) == true)
+                                                    { BuildString(result, string.Format(" {0} has {1}{2}{3}", actor.actorName, colourNeutral, actor.GetTrait().tag, colourEnd)); }
+                                                }
+                                                else
+                                                { Debug.LogWarning("Invalid actor (Null) for TraitBlackmailNone"); }
                                                 break;
                                             case "RenownReserveMin":
                                                 //player

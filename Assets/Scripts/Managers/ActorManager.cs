@@ -107,7 +107,7 @@ public class ActorManager : MonoBehaviour
     private int actorSecretChanceNone;
     private int actorSecretTellAll;
     private int actorAppeaseNone;
-    private int actorBlackmailNone;
+    
 
     //gear
     private int maxNumOfGear;
@@ -184,7 +184,7 @@ public class ActorManager : MonoBehaviour
         actorSecretChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceNone");
         actorSecretTellAll = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretTellAll");
         actorAppeaseNone = GameManager.instance.dataScript.GetTraitEffectID("ActorAppeaseNone");
-        actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
+        
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
@@ -192,7 +192,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorSecretChanceHigh > -1, "Invalid actorSecretChanceHigh (-1)");
         Debug.Assert(actorSecretChanceNone > -1, "Invalid actorSecretChanceNone (-1)");
         Debug.Assert(actorAppeaseNone > -1, "Invalid actorAppeaseNone (-1)");
-        Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
+        
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
