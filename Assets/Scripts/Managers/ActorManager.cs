@@ -103,6 +103,10 @@ public class ActorManager : MonoBehaviour
     private int actorBreakdownChanceLow;
     private int actorBreakdownChanceNone;
     private int actorNoActionsDuringSecurityMeasures;
+    private int actorSecretChanceHigh;
+    private int actorSecretChanceNone;
+    private int actorSecretTellAll;
+
     //gear
     private int maxNumOfGear;
     private int gearGracePeriod = -1;
@@ -180,11 +184,15 @@ public class ActorManager : MonoBehaviour
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
         actorBreakdownChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceNone");
         actorNoActionsDuringSecurityMeasures = GameManager.instance.dataScript.GetTraitEffectID("ActorNoActionsSecurity");
+        actorSecretChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceHigh");
+        actorSecretChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceNone");
+        actorSecretTellAll = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretTellAll");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
         Debug.Assert(actorNoActionsDuringSecurityMeasures > -1, "Invalid actorNoActionsDuringSecurityMeasures (-1)");
-        
+        Debug.Assert(actorSecretChanceHigh > -1, "Invalid actorSecretChanceHigh (-1)");
+        Debug.Assert(actorSecretChanceNone > -1, "Invalid actorSecretChanceNone (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -542,7 +550,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         targetProceed = false;
                                         infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actorTemp.arc.name, colourNeutral, colourEnd);
-                                        DebugTraitMessage(actorTemp, "and is prevented from attempting a Target");
+                                        TraitLogMessage(actorTemp, "and is prevented from attempting a Target");
                                     }
                                     else { targetProceed = true; }
                                 }
@@ -615,7 +623,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                             infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actor.arc.name, colourNeutral, colourEnd);
-                                            DebugTraitMessage(actor, "and is prevented from carrying out a Node Action");
+                                            TraitLogMessage(actor, "and is prevented from carrying out a Node Action");
                                             proceedFlag = false;
                                         }
                                     }
@@ -1310,7 +1318,7 @@ public class ActorManager : MonoBehaviour
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                     infoBuilder.AppendFormat("Can't TAKE gear{0}{1}({2}{3} {4}{5}{6}{7} trait){8}", "\n", colourBad, actor.arc.name, colourEnd,
                                         colourNeutral, actor.GetTrait().tag, colourEnd, colourBad, colourEnd);
-                                    DebugTraitMessage(actor, "to Refuse to handback Gear");
+                                    TraitLogMessage(actor, "to Refuse to handback Gear");
                                 }
                             }
                             else
@@ -1346,7 +1354,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
                         {
                             proceedFlag = false;
-                            DebugTraitMessage(actor, "and is prevented from Activating (Lying Low)");
+                            TraitLogMessage(actor, "and is prevented from Activating (Lying Low)");
                         }
                         if (proceedFlag == true)
                         {
@@ -3246,6 +3254,8 @@ public class ActorManager : MonoBehaviour
     public string DebugAddTrait(string what, string who)
     {
         Debug.Assert(String.IsNullOrEmpty(what) == false && String.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
+        int i;
+        Debug.Assert(int.TryParse(who, out i) == true, "Invalid numeric format for 'who'");
         string text = "";
         int actorSlotID = Convert.ToInt32(who);
         //Trait
@@ -3533,11 +3543,11 @@ public class ActorManager : MonoBehaviour
         {
             //Trait Check
             if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
-            { chance *= 2; DebugTraitMessage(actor, "for a Nervous Breakdown check (doubled)"); }
+            { chance *= 2; TraitLogMessage(actor, "for a Nervous Breakdown check (doubled)"); }
             else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
-            { chance /= 2; DebugTraitMessage(actor, " for a Nervous Breakdown check (halved)"); }
+            { chance /= 2; TraitLogMessage(actor, " for a Nervous Breakdown check (halved)"); }
             else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
-            { chance = 0; DebugTraitMessage(actor, "to prevent a Nervous Breakdown"); }
+            { chance = 0; TraitLogMessage(actor, "to prevent a Nervous Breakdown"); }
             //test
             int rnd = Random.Range(0, 100);
             if (rnd < chance)
@@ -3649,39 +3659,93 @@ public class ActorManager : MonoBehaviour
             //actor already knows any secrets
             bool knowSecret = false;
             if (actor.CheckNumOfSecrets() > 0) { knowSecret = true; }
-            //loop through Player secrets
-            for (int i = 0; i < listOfSecrets.Count; i++)
+            //trait Detective
+            if (actor.CheckTraitEffect(actorSecretChanceHigh) == true)
             {
-                isProceed = true;
-                Secret secret = listOfSecrets[i];
-                if (secret != null)
+                chance *= 3;
+                TraitLogMessage(actor, "triple chance of learning Secrets");
+            }
+            //trait Blind
+            if (actor.CheckTraitEffect(actorSecretChanceNone) == false)
+            {
+                //loop through Player secrets
+                for (int i = 0; i < listOfSecrets.Count; i++)
                 {
-                    //does actor already know the secret
-                    if (knowSecret == true)
+                    isProceed = true;
+                    Secret secret = listOfSecrets[i];
+                    if (secret != null)
                     {
-                        if (secret.CheckActorPresent(actor.actorID) == true)
-                        { isProceed = false; }
-                    }
-                    if (isProceed == true)
-                    {
-                        //does actor learn of secret
-                        rnd = Random.Range(0, 100);
-                        if (rnd < chance)
+                        //does actor already know the secret
+                        if (knowSecret == true)
                         {
-                            //actor learns of secret
-                            actor.AddSecret(secret);
-                            secret.AddActor(actor.actorID);
-                            //Admin
-                            Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: Learned SECRET need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                            if (secret.CheckActorPresent(actor.actorID) == true)
+                            { isProceed = false; }
+                        }
+                        if (isProceed == true)
+                        {
+                            //does actor learn of secret
+                            rnd = Random.Range(0, 100);
+                            if (rnd < chance)
+                            {
+                                //actor learns of secret
+                                actor.AddSecret(secret);
+                                secret.AddActor(actor.actorID);
+                                //Admin
+                                Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                                //trait Blabbermouth
+                                if (actor.CheckTraitEffect(actorSecretTellAll) == true)
+                                {
+                                    //actor passes secret onto all other actors
+                                    int numTold = ProcessSecretTellAll(secret, actor);
+                                    TraitLogMessage(actor, string.Format("tell {0} other {1} about the secret", numTold, numTold != 1 ? "people" : "person"));
+                                }
+                            }
                         }
                     }
+                    else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
                 }
-                else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
             }
+            else { TraitLogMessage(actor, "to not learn Secrets"); }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
     }
 
+    /// <summary>
+    /// subMethod for ProcessSecrets to handle trait Blabbermouth where an actor tells all other actors about the secret they have learned. Actor is the actor who learned of secret
+    /// NOTE: actorTrait & secret checked for null by calling method. Actors are told of secret regardless whether they are active or inactive or have 'Blind' trait
+    /// </summary>
+    /// <param name="secret"></param>
+    /// <returns></returns>
+    private int ProcessSecretTellAll(Secret secret, Actor actorTrait)
+    {
+        int numTold = 0;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        //loop all actors on Map
+        for (int i = 0; i < arrayOfActors.Length; i++)
+        {
+            //check actor is present in slot (not vacant)
+            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+            {
+                Actor actor = arrayOfActors[i];
+                if (actor != null)
+                {
+                    //exclude actor with the trait who is telling everybody else
+                    if (actor.actorID != actorTrait.actorID)
+                    {
+                        //actor doesn't already know the secret
+                        if (secret.CheckActorPresent(actor.actorID) == false)
+                        {
+                            //actor learns of secret
+                            actor.AddSecret(secret);
+                            secret.AddActor(actor.actorID);
+                            numTold++;
+                        }
+                    }
+                }
+            }
+        }
+        return numTold;
+    }
 
     /// <summary>
     /// Checks all OnMap Inactive Authority actors, increments invisibility and returns any at max value back to Active status
@@ -4029,11 +4093,11 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Generates a debug log message indicating use of a trait. Input skillCheck as "Actor uses x trait ...... (for a Nervous Breakdown check / to prevent Stressed)"
+    /// Generates a log message indicating use of a trait. Input skillCheck as "Actor uses x trait ...... (for a Nervous Breakdown check / to prevent Stressed)"
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="skillCheck"></param>
-    public void DebugTraitMessage(Actor actor, string skillCheck)
+    public void TraitLogMessage(Actor actor, string skillCheck)
     {
         if (actor != null)
         {

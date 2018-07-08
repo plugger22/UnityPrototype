@@ -211,15 +211,15 @@ public class TooltipPlayer : MonoBehaviour
                 //Authority
                 StringBuilder builderStats = new StringBuilder();
                 builderStats.AppendFormat("{0}Teams{1}{2}", colourAlert, colourEnd, "\n");
-                builderStats.AppendFormat("On Map<pos=70%>{0}{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap), "\n");
-                builderStats.AppendFormat("In Transit<pos=70%>{0}{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit), "\n");
-                builderStats.AppendFormat("Reserves<pos=70%>{0}{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve), "\n");
+                builderStats.AppendFormat("<b>On Map<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap), "\n");
+                builderStats.AppendFormat("<b>In Transit<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit), "\n");
+                builderStats.AppendFormat("<b>Reserves<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve), "\n");
                 playerStats.text = builderStats.ToString();
                 break;
             case 2:
                 //Resistance
                 int invisibility = GameManager.instance.playerScript.Invisibility;
-                playerStats.text = string.Format("Invisibility<pos=70%>{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd);
+                playerStats.text = string.Format("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd);
                 break;
         }
         //
@@ -250,7 +250,6 @@ public class TooltipPlayer : MonoBehaviour
                 else { playerMulti_1.text = string.Format("{0}<size=95%>No Gear</size>{1}", colourGrey, colourEnd); }
                 break;
         }
-
         //
         // - - - MultiPurpose 2 - - - 
         //
@@ -262,7 +261,25 @@ public class TooltipPlayer : MonoBehaviour
                 break;
             case 2:
                 //Resistance -> Secrets
-                playerMulti_2.text = string.Format("{0}<size=95%>No Secrets</size>{1}", colourGrey, colourEnd);
+                List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+                if (listOfSecrets != null && listOfSecrets.Count > 0)
+                {
+                    StringBuilder builderSecrets = new StringBuilder();
+                    builderSecrets.AppendFormat("{0}Secrets{1}", colourAlert, colourEnd);
+                    //lo0p secrets
+                    foreach (Secret secret in listOfSecrets)
+                    {
+                        //secrets shown as Red if known by other actors, green otherwise
+                        if (secret != null)
+                        {
+                            if (secret.CheckNumOfActorsWhoKnow() > 0)
+                            { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourBad, secret.tag, colourEnd); }
+                            else { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourGood, secret.tag, colourEnd); }
+                        }
+                    }
+                    playerMulti_2.text = builderSecrets.ToString();
+                }
+                else { playerMulti_2.text = string.Format("{0}<size=95%>No Secrets</size>{1}", colourGrey, colourEnd); }
                 break;
         }
         //Coordinates -> You need to send World (object.transform) coordinates

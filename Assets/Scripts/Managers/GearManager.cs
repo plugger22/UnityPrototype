@@ -417,12 +417,12 @@ public class GearManager : MonoBehaviour
                                 {
                                     chance *= 3;
                                     traitName = string.Format(" ({0}) ", actor.GetTrait().tag);
-                                    GameManager.instance.actorScript.DebugTraitMessage(actor, "for a Lose Gear check");
+                                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Lose Gear check");
                                 }
                                 else if (actor.CheckTraitEffect(actorLoseGearNone) == true)
                                 {
                                     chance = 0;
-                                    GameManager.instance.actorScript.DebugTraitMessage(actor, "for a Lose Gear check");
+                                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Lose Gear check");
                                     traitName = string.Format(" ({0}) ", actor.GetTrait().tag);
                                 }
                                 else { traitName = ""; }

@@ -153,17 +153,17 @@ namespace gameAPI
                 {
                     case "STRESSED":
                         if (CheckTraitEffect(actorStressNone) == true)
-                        { GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent STRESSED Condition");  }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "to prevent STRESSED Condition");  }
                         else { proceedFlag = true; }
                         break;
                     case "CORRUPT":
                         if (CheckTraitEffect(actorCorruptNone) == true)
-                        { GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent CORRUPT Condition"); }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "to prevent CORRUPT Condition"); }
                         else { proceedFlag = true; }
                         break;
                     case "UNHAPPY":
                         if (CheckTraitEffect(actorUnhappyNone) == true)
-                        { GameManager.instance.actorScript.DebugTraitMessage(this, "to prevent UNHAPPY Condition");  }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "to prevent UNHAPPY Condition");  }
                         else { proceedFlag = true; }
                         break;
                     case "BLACKMAILER":

@@ -312,7 +312,7 @@ public class ActionManager : MonoBehaviour
                                     if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                     builderBottom.AppendFormat("{0}Gains {1}{2}STRESSED{3}{4} condition due to{5}{6} Nervous{7}{8} trait{9}", colourBad, colourEnd,
                                         colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd);
-                                    GameManager.instance.actorScript.DebugTraitMessage(actor, "and gains STRESSED condition");
+                                    GameManager.instance.actorScript.TraitLogMessage(actor, "and gains STRESSED condition");
                                 }
                                 else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                             }
