@@ -3213,6 +3213,27 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// subMethod for DebugAddCondition to add a condition to the player. Returns a string indicating success, or otherwise
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    private string DebugAddConditionToPlayer(Condition condition)
+    {
+        Debug.Assert(condition != null, "Invalid Condition (Null)");
+        string text = "Unknown";
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //does actor already have the condition?
+        if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
+        {
+            //add condition
+            GameManager.instance.playerScript.AddCondition(condition);
+            text = string.Format("Condition {0} added to Player", condition.name);
+        }
+        else { text = string.Format("Player already has Condition {0}", condition.name); }
+        return string.Format("{0}{1}Press ESC to Exit", text, "\n");
+    }
+
+    /// <summary>
     /// subMethod for DebugAddCondition to add a condition to an actor and return a string indicating success, or otherwise
     /// </summary>
     /// <param name="slotID"></param>
@@ -3254,54 +3275,39 @@ public class ActorManager : MonoBehaviour
     public string DebugAddTrait(string what, string who)
     {
         Debug.Assert(String.IsNullOrEmpty(what) == false && String.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
-        int i;
-        Debug.Assert(int.TryParse(who, out i) == true, "Invalid numeric format for 'who'");
         string text = "";
-        int actorSlotID = Convert.ToInt32(who);
-        //Trait
-        Trait trait = GameManager.instance.dataScript.GetTrait(what);
-        if (trait != null)
+        int i;
+        if (int.TryParse(who, out i) == true)
         {
-            GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-
-            //Get actor
-            if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
+            
+            int actorSlotID = Convert.ToInt32(who);
+            //Trait
+            Trait trait = GameManager.instance.dataScript.GetTrait(what);
+            if (trait != null)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
-                if (actor != null)
+                GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+
+                //Get actor
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
                 {
-                    //add trait
-                    actor.AddTrait(trait);
-                    text = string.Format("Trait {0} added to {1}, {2}", trait.tag, actor.arc.name, actor.actorName);
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+                    if (actor != null)
+                    {
+                        //add trait
+                        actor.AddTrait(trait);
+                        text = string.Format("Trait {0} added to {1}, {2}", trait.tag, actor.arc.name, actor.actorName);
+                    }
+                    else { text = string.Format("There is no valid Actor (Null) in Slot {0}", actorSlotID); }
                 }
-                else { text = string.Format("There is no valid Actor (Null) in Slot {0}", actorSlotID); }
+                else { text = string.Format("There is no valid Actor Present in Slot {0}", actorSlotID); }
             }
-            else { text = string.Format("There is no valid Actor Present in Slot {0}", actorSlotID); }
+            else { text = "Input Trait is INVALID and is NOT added"; }
         }
-        else { text = "Input Trait is INVALID and is NOT added"; }
+        else { text = "Invalid numeric input for 'who'"; }
         return string.Format("{0}{1}Press ESC to Exit", text, "\n");
     }
 
-    /// <summary>
-    /// subMethod for DebugAddCondition to add a condition to the player. Returns a string indicating success, or otherwise
-    /// </summary>
-    /// <param name="condition"></param>
-    /// <returns></returns>
-    private string DebugAddConditionToPlayer(Condition condition)
-    {
-        Debug.Assert(condition != null, "Invalid Condition (Null)");
-        string text = "Unknown";
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        //does actor already have the condition?
-        if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
-        {
-            //add condition
-            GameManager.instance.playerScript.AddCondition(condition);
-            text = string.Format("Condition {0} added to Player", condition.name);
-        }
-        else { text = string.Format("Player already has Condition {0}", condition.name); }
-        return string.Format("{0}{1}Press ESC to Exit", text, "\n");
-    }
+
 
     /// <summary>
     /// Checks all OnMap Inactive Resistance actors, increments invisibility and returns any at max value back to Active status

@@ -167,6 +167,7 @@ namespace gameAPI
                         else { proceedFlag = true; }
                         break;
                     case "BLACKMAILER":
+                        //need to have at least one secret
                         if (listOfSecrets.Count == 0)
                         { Debug.Log("Actor.cs -> AddCondition: BLACKMAIL condition NOT added (Actor has no Secrets)"); }
                         else { proceedFlag = true; }
