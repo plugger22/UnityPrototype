@@ -193,10 +193,11 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                     if (actor != null)
                     {
-                        Gear gearActor = null;
+                        /*Gear gearActor = null;
                         int gearID = actor.GetGearID();
                         if (gearID > -1)
-                        { gearActor = GameManager.instance.dataScript.GetGear(actor.GetGearID()); }
+                        { gearActor = GameManager.instance.dataScript.GetGear(actor.GetGearID()); }*/
+
                         //do once
                         while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
                         {
@@ -205,7 +206,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             positionActor.x += 70;
                             positionActor.y -= 100;
 
-                            ActorTooltipData actorTooltip = new ActorTooltipData()
+                            /*ActorTooltipData actorTooltip = new ActorTooltipData()
                             {
                                 tooltipPos = positionActor,
                                 actor = actor,
@@ -214,7 +215,10 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                                 listOfSecrets = actor.GetSecretsTooltipList(),
                                 arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
                                 arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
-                            };
+                            };*/
+
+                            ActorTooltipData actorTooltip = actor.GetTooltipData(positionActor);
+
                             GameManager.instance.tooltipActorScript.SetTooltip(actorTooltip);
                             yield return null;
                             //fade in

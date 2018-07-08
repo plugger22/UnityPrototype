@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using packageAPI;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -518,6 +519,34 @@ namespace gameAPI
         /// <returns></returns>
         public int GetGearID()
         { return gearID; }
+
+
+        //
+        // - - - Tooltip - - -
+        //
+
+        /// <summary>
+        /// returns data package for actor tooltip. Null if a problem
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public ActorTooltipData GetTooltipData(Vector3 position)
+        {
+            Gear gear = null;
+            if (gearID > -1)
+            { gear = GameManager.instance.dataScript.GetGear(gearID); }
+            ActorTooltipData data = new ActorTooltipData()
+            {
+                tooltipPos = position,
+                actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
+                action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
+                gear = gear,
+                listOfSecrets = GetSecretsTooltipList(),
+                arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
+                arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
+            };
+            return data;
+        }
 
 
         //place methods above here

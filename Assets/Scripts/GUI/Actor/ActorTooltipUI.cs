@@ -76,7 +76,8 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                 if (actor != null)
                 {
-                    Gear gearActor = null;
+
+                    /*Gear gearActor = null;
                     if (actor.GetGearID() > -1)
                     { gearActor = GameManager.instance.dataScript.GetGear(actor.GetGearID()); }
                     ActorTooltipData data = new ActorTooltipData()
@@ -88,7 +89,10 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                         listOfSecrets = actor.GetSecretsTooltipList(),
                         arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
                         arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
-                    };
+                    };*/
+
+                    ActorTooltipData data = actor.GetTooltipData(parent.transform.position);
+
                     GameManager.instance.tooltipActorScript.SetTooltip(data);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID); }
