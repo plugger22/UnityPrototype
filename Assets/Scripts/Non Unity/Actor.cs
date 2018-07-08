@@ -512,6 +512,10 @@ namespace gameAPI
         public int GetGearTimesTaken()
         { return gearTimesTaken; }
 
+        /// <summary>
+        /// returns -1 if no gear
+        /// </summary>
+        /// <returns></returns>
         public int GetGearID()
         { return gearID; }
 
