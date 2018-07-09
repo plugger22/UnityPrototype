@@ -111,9 +111,6 @@ public class SecretManager : MonoBehaviour
             else { builder.AppendFormat("{0} No records", "\n"); }
         }
         else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
-        //player data
-        builder.AppendFormat("{0}{1}- Player", "\n", "\n");
-        builder.Append(GameManager.instance.playerScript.DebugDisplaySecrets());
         //player secrets data
         builder.AppendFormat("{0}{1}- listOfPlayerSecrets", "\n", "\n");
         builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfPlayerSecrets()));
@@ -123,6 +120,9 @@ public class SecretManager : MonoBehaviour
         //deleted secrets data
         builder.AppendFormat("{0}{1}- listOfDeletedSecrets", "\n", "\n");
         builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfDeletedSecrets()));
+        //player data
+        builder.AppendFormat("{0}{1}- PLAYER", "\n", "\n");
+        builder.Append(GameManager.instance.playerScript.DebugDisplaySecrets());
         //actor data
         for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
         {
@@ -132,7 +132,7 @@ public class SecretManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, side);
                 if (actor != null)
                 {
-                    builder.AppendFormat("{0}{1}- {2} ID {3} listOfSecrets", "\n", "\n", actor.arc.name, actor.actorID);
+                    builder.AppendFormat("{0}{1}- {2} ID {3}", "\n", "\n", actor.arc.name, actor.actorID);
                     builder.Append(actor.DebugDisplaySecrets());
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", i); }
@@ -149,7 +149,7 @@ public class SecretManager : MonoBehaviour
     /// <returns></returns>
     private string DisplaySecretList(List<Secret> tempList)
     {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builderTemp = new StringBuilder();
         if (tempList != null)
         {
             int numSecrets = tempList.Count;
@@ -157,14 +157,19 @@ public class SecretManager : MonoBehaviour
             {
                 foreach (Secret secret in tempList)
                 {
-                    builder.AppendFormat("{0} ID {1}, {2} ({3}), ({4} turn {5})", "\n", secret.secretID, secret.name, secret.tag,
-                          GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen);
+                    if (secret.revealedWho > -1)
+                    {
+                        builderTemp.AppendFormat("{0} ID {1}, {2} ({3}), ({4} turn {5})", "\n", secret.secretID, secret.name, secret.tag,
+                            GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen);
+                    }
+                    else
+                    { builderTemp.AppendFormat("{0} ID {1}, {2} ({3})", "\n", secret.secretID, secret.name, secret.tag ); }
                 }
             }
-            else { builder.AppendFormat("{0} No records", "\n"); }
+            else { builderTemp.AppendFormat("{0} No records", "\n"); }
         }
         else { Debug.LogWarning("Invalid listOfRevealedSecrets (Null)"); }
-        return builder.ToString();
+        return builderTemp.ToString();
     }
 
 }
