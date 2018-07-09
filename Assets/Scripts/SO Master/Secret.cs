@@ -21,8 +21,8 @@ public class Secret : ScriptableObject
     [Tooltip("What category does the secret belong to")]
     public SecretType type;
 
+    [HideInInspector] public SecretStatus status;           //SO enum -> Inactive 0, Active 1, Revealed 2, Deleted 3
     [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
-    [HideInInspector] public bool isActive;                //true once player gains secret
     [HideInInspector] public int revealedWho;               //actorID of person who revealed the secret
     [HideInInspector] public int revealedWhen;              //turn revealed
     [HideInInspector] public int deletedWhen;               //turn deleted (removed from game without being revealed)
@@ -34,7 +34,7 @@ public class Secret : ScriptableObject
     /// </summary>
     public void Initialise()
     {
-        isActive = false;
+        status = GameManager.instance.secretScript.secretStatusInactive;
         revealedWho = -1;
         revealedWhen = -1;
         deletedWhen = -1;

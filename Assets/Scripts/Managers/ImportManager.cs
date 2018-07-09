@@ -252,7 +252,7 @@ public class ImportManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTraitEffects (Null) -> Import failed"); }
         //
-        // - - - SecretType - - -
+        // - - - Secret Type - - -
         //
         Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
         if (dictOfSecretTypes != null)
@@ -277,7 +277,34 @@ public class ImportManager : MonoBehaviour
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretTypes has {0} entries{1}", dictOfSecretTypes.Count, "\n");
             Debug.Assert(dictOfSecretTypes.Count > 0, "No SecretTypes in dictOfSecretTypes");
         }
-        else { Debug.LogError("Invalid dictOfLookUpSecretTypes (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfecretTypes (Null) -> Import failed"); }
+        //
+        // - - - Secret Status - - -
+        //
+        Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
+        if (dictOfSecretStatus != null)
+        {
+            var secretStatusGUID = AssetDatabase.FindAssets("t:SecretStatus");
+            foreach (var guid in secretStatusGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object secretStatusObject = AssetDatabase.LoadAssetAtPath(path, typeof(SecretStatus));
+                //assign a zero based unique ID number
+                SecretStatus secretStatus = secretStatusObject as SecretStatus;
+                //add to dictionary
+                try
+                { dictOfSecretStatus.Add(secretStatus.name, secretStatus); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Secret Status (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid SecretStatus (duplicate) \"{0}\"", secretStatus.name); }
+            }
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", dictOfSecretStatus.Count, "\n");
+            Debug.Assert(dictOfSecretStatus.Count > 0, "No SecretStatus in dictOfSecretStatus");
+        }
+        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }
     }
 
 

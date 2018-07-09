@@ -19,30 +19,38 @@ public class SecretManager : MonoBehaviour
 
 
     //globals
-    [HideInInspector] public int secretTypePlayer = -1;
-    [HideInInspector] public int secretTypeDesperate = -1;
+    [HideInInspector] public SecretType secretTypePlayer;
+    [HideInInspector] public SecretType secretTypeDesperate;
+    [HideInInspector] public SecretStatus secretStatusActive;
+    [HideInInspector] public SecretStatus secretStatusInactive;
+    [HideInInspector] public SecretStatus secretStatusRevealed;
+    [HideInInspector] public SecretStatus secretStatusDeleted;
+
+    //fast access
+    private Condition conditionBlackmail;
 
 
     public void Initialise()
     {
-        //initialise SecretTypes
+        //
+        // - - - SecretTypes - - -
+        //
         Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
         if (dictOfSecretTypes != null)
         {
             foreach (var secretType in dictOfSecretTypes)
             {
                 //pick out and assign the ones required for fast access. 
-                //Add to lists where appropriate
                 //Also dynamically assign SecretType.level values (0/1/2). 
                 switch (secretType.Key)
                 {
                     case "Player":
                         secretType.Value.level = 0;
-                        secretTypePlayer = secretType.Value.level;
+                        secretTypePlayer = secretType.Value;
                         break;
                     case "Desperate":
                         secretType.Value.level = 1;
-                        secretTypeDesperate = secretType.Value.level;
+                        secretTypeDesperate = secretType.Value;
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid secretType \"{0}\"", secretType.Key);
@@ -50,11 +58,53 @@ public class SecretManager : MonoBehaviour
                 }
             }
             //error check
-            if (secretTypePlayer == -1) { Debug.LogError("Invalid secretTypePlayer (-1)"); }
-            if (secretTypeDesperate == -1) { Debug.LogError("Invalid secretTypeDesperate (-1)"); }
+            Debug.Assert(secretTypePlayer != null, "Invalid secretTypePlayer (Null)");
+            Debug.Assert(secretTypeDesperate != null, "Invalid secretTypeDesperate (Null)");
         }
         else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
-        //initialise Secrets
+        //
+        // - - - SecretStatus - - -
+        //
+        Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
+        if (dictOfSecretStatus != null)
+        {
+            foreach (var secretStatus in dictOfSecretStatus)
+            {
+                //pick out and assign the ones required for fast access. 
+                //Also dynamically assign SecretStatus.level values (0/1/2). 
+                switch (secretStatus.Key)
+                {
+                    case "Inactive":
+                        secretStatus.Value.level = 0;
+                        secretStatusInactive = secretStatus.Value;
+                        break;
+                    case "Active":
+                        secretStatus.Value.level = 1;
+                        secretStatusActive = secretStatus.Value;
+                        break;
+                    case "Revealed":
+                        secretStatus.Value.level = 2;
+                        secretStatusRevealed = secretStatus.Value;
+                        break;
+                    case "Deleted":
+                        secretStatus.Value.level = 3;
+                        secretStatusDeleted = secretStatus.Value;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid secretStatus \"{0}\"", secretStatus.Key);
+                        break;
+                }
+            }
+            //error check
+            Debug.Assert(secretStatusActive != null, "Invalid secretStatusActive (Null)");
+            Debug.Assert(secretStatusInactive != null, "Invalid secretStatusInactive (Null)");
+            Debug.Assert(secretStatusRevealed != null, "Invalid secretStatusRevealed (Null)");
+            Debug.Assert(secretStatusDeleted != null, "Invalid secretStatusDeleted (Null)");
+        }
+        else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
+        //
+        // - - - - Secrets - - - 
+        //
         Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
         if (dictOfSecrets != null)
@@ -84,6 +134,11 @@ public class SecretManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
         }
         else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
+        //
+        // - - - Fast Access
+        //
+        conditionBlackmail = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
+        Debug.Assert(conditionBlackmail != null, "Invalid conditionBlackmail (Null)");
     }
 
     /// <summary>
@@ -104,7 +159,7 @@ public class SecretManager : MonoBehaviour
             {
                 foreach (var secret in dictOfSecrets)
                 {
-                    builder.AppendFormat("{0} ID {1}, {2} ({3}), isActive: {4}, Known: {5}", "\n", secret.Value.secretID, secret.Value.name, secret.Value.tag, secret.Value.isActive,
+                    builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.Value.secretID, secret.Value.name, secret.Value.tag, secret.Value.status.name,
                         secret.Value.CheckNumOfActorsWhoKnow());
                 }
             }
@@ -142,6 +197,42 @@ public class SecretManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    /// <summary>
+    /// Removes a given secret from all actors and player. If calling for any reason OTHER than a normal blackmail resolution then set isBlackmailCheck true
+    /// This ensures that if a secret is deleted from an actor who is currently blackmailing then their blackmailer status is removed if they end up with no secrets remaining
+    /// </summary>
+    /// <param name="secretID"></param>
+    public void RemoveSecretFromAll(int secretID, bool isBlackmailCheckNeeded = false)
+    {
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //remove from player
+        GameManager.instance.playerScript.RemoveSecret(secretID);
+        //loop actors
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        actor.RemoveSecret(secretID);
+                        //blackmail check -> if actor is blackmailing and they end up with zero secrets then the condition is removed
+                        if (actor.CheckConditionPresent(conditionBlackmail) == true)
+                        {
+                            if (actor.CheckNumOfSecrets() == 0)
+                            { actor.RemoveCondition(conditionBlackmail); }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// subMethod used by DisplaySecretData to process Secret Lists
     /// </summary>
@@ -159,11 +250,11 @@ public class SecretManager : MonoBehaviour
                 {
                     if (secret.revealedWho > -1)
                     {
-                        builderTemp.AppendFormat("{0} ID {1}, {2} ({3}), ({4} turn {5})", "\n", secret.secretID, secret.name, secret.tag,
-                            GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen);
+                        builderTemp.AppendFormat("{0} ID {1}, {2} ({3}), {4} turn {5}, {6}", "\n", secret.secretID, secret.name, secret.tag,
+                            GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen, secret.status.name);
                     }
                     else
-                    { builderTemp.AppendFormat("{0} ID {1}, {2} ({3})", "\n", secret.secretID, secret.name, secret.tag ); }
+                    { builderTemp.AppendFormat("{0} ID {1}, {2} ({3}) {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status.name ); }
                 }
             }
             else { builderTemp.AppendFormat("{0} No records", "\n"); }

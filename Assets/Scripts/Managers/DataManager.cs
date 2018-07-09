@@ -145,6 +145,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>(); //Key -> actBreakID, Value -> ActorBreakdown
     private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                  //Key -> secretID, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>(); //Key -> SecretType.name, Value -> SecretType
+    private Dictionary<string, SecretStatus> dictOfSecretStatus = new Dictionary<string, SecretStatus>(); //Key -> SecretStatus.name, Value -> SecretStatus
     
 
     //global SO's (enum equivalents)
@@ -2039,6 +2040,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, SecretType> GetDictOfSecretTypes()
     { return dictOfSecretTypes; }
 
+    public Dictionary<string, SecretStatus> GetDictOfSecretStatus()
+    { return dictOfSecretStatus; }
+
     public List<Secret> GetListOfPlayerSecrets()
     { return listOfPlayerSecrets; }
 
@@ -2056,7 +2060,7 @@ public class DataManager : MonoBehaviour
     {
         if (secret != null)
         {
-            if (secret.revealedWhen > -1)
+            if (secret.status.level == 2)
             { listOfRevealedSecrets.Add(secret); }
             else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen {2}", secret.tag, secret.secretID, secret.revealedWhen); }
         }
@@ -2071,7 +2075,7 @@ public class DataManager : MonoBehaviour
     {
         if (secret != null)
         {
-            if (secret.deletedWhen > -1)
+            if (secret.status.level == 3)
             { listOfDeletedSecrets.Add(secret); }
             else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has deletedWhen {2}", secret.tag, secret.secretID, secret.deletedWhen); }
         }

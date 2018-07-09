@@ -380,7 +380,7 @@ namespace gameAPI
             if (listOfSecrets.Count > 0)
             {
                 foreach (Secret secret in listOfSecrets)
-                { builder.AppendFormat("{0} ID {1}, {2} ({3}), isActive: {4}", "\n", secret.secretID, secret.name, secret.tag, secret.isActive); }
+                { builder.AppendFormat("{0} ID {1}, {2} ({3}), status: {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status.name); }
             }
             else { builder.AppendFormat("{0} No records", "\n"); }
             return builder.ToString();
@@ -396,6 +396,27 @@ namespace gameAPI
             foreach(Secret secret in listOfSecrets)
             { listTooltip.Add(secret.tag); }
             return listTooltip;
+        }
+
+        /// <summary>
+        /// returns a random secret from the Actor's current list of secrets. Returns null if none present or a problem
+        /// </summary>
+        /// <returns></returns>
+        public Secret GetRandomCurrentSecret()
+        {
+            Secret secret = null;
+            int numOfSecrets = listOfSecrets.Count;
+            Condition condition = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
+            if (condition != null)
+            {
+                //can't have blackmailer trait as could be using secret
+                if (CheckConditionPresent(condition) == false)
+                {
+                    if (numOfSecrets > 0)
+                    { secret = listOfSecrets[Random.Range(0, numOfSecrets)]; }
+                }
+            }
+            return secret;
         }
 
         //

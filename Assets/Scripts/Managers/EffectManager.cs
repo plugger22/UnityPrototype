@@ -869,6 +869,38 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 //
+                // - - - Secrets - - -
+                //
+                case "Secret":
+                    //Remove a random secret from Player (removes all instances) or Actor (removes local instance only)
+                    if (actor == null)
+                    {
+                        //Player
+                        Secret secret = GameManager.instance.playerScript.GetRandomCurrentSecret();
+                        if (secret != null)
+                        {
+                            secret.status = GameManager.instance.secretScript.secretStatusDeleted;
+                            secret.deletedWhen = GameManager.instance.turnScript.Turn;
+                            //remove secret from game
+                            GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID);
+                            effectReturn.bottomText = string.Format("{0}{1} secret deleted{2}", colourGood, secret.tag, colourEnd);
+                            effectReturn.isAction = true;
+                        }
+                    }
+                    else
+                    {
+                        //Actor
+                        Secret secret = actor.GetRandomCurrentSecret();
+                        if (secret != null)
+                        {
+                            //removes secret from actor only (could still be with other actors and will always be with the player)
+                            actor.RemoveSecret(secret.secretID);
+                            effectReturn.bottomText = string.Format("{0}{1} secret deleted from {2}{3}", colourGood, secret.tag, actor.arc.name, colourEnd);
+                            effectReturn.isAction = true;
+                        }
+                    }
+                    break;
+                //
                 // - - - Other - - -
                 //
                 case "Recruit":

@@ -98,6 +98,9 @@ public class ActorManager : MonoBehaviour
     private Condition conditionBlackmailer;
     private TraitCategory actorCategory;
     private int secretBaseChance = -1;
+    //secrets
+    /*private SecretStatus secretStatusRevealed;
+    private SecretStatus secretStatusDeleted;*/
     //cached TraitEffects
     private int actorBreakdownChanceHigh;
     private int actorBreakdownChanceLow;
@@ -164,6 +167,8 @@ public class ActorManager : MonoBehaviour
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
+        /*secretStatusRevealed = GameManager.instance.secretScript.secretStatusRevealed;
+        secretStatusDeleted = GameManager.instance.secretScript.secretStatusDeleted;*/
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
@@ -175,6 +180,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
         Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
+
         //cached TraitEffects
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
@@ -3509,31 +3515,6 @@ public class ActorManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// private sub-Method to remove a given secret from all actors and player
-    /// </summary>
-    /// <param name="secretID"></param>
-    private void RemoveSecretFromAll(int secretID )
-    {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        //remove from player
-        GameManager.instance.playerScript.RemoveSecret(secretID);
-        //loop actors
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
-        if (arrayOfActors != null)
-        {
-            for (int i = 0; i < arrayOfActors.Length; i++)
-            {
-                //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
-                {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
-                    { actor.RemoveSecret(secretID); }
-                }
-            }
-        }
-    }
 
     /// <summary>
     /// sub Method to check Stress condition each turn. Called by CheckActive(Resistance/Authority)Actors.
@@ -3607,6 +3588,7 @@ public class ActorManager : MonoBehaviour
                 {
                     secret.revealedWho = actor.actorID;
                     secret.revealedWhen = GameManager.instance.turnScript.Turn;
+                    secret.status = GameManager.instance.secretScript.secretStatusRevealed;
                     StringBuilder builder = new StringBuilder();
                     //message
                     string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
@@ -3644,7 +3626,7 @@ public class ActorManager : MonoBehaviour
                     //Motivation at max value, Blackmailer condition cancelled
                     actor.RemoveCondition(conditionBlackmailer);
                     //remove secret from all actors and player
-                    RemoveSecretFromAll(secret.secretID);
+                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID);
                 }
                 else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
             }
