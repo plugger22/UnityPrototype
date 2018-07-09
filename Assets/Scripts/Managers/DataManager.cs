@@ -97,7 +97,9 @@ public class DataManager : MonoBehaviour
     private List<int> listOfCurrentGear = new List<int>();                                          //gear held by OnMap resistance player or actors
 
     //secret lists
+    private List<Secret> listOfPlayerSecrets = new List<Secret>();
     private List<Secret> listOfRevealedSecrets = new List<Secret>();
+    private List<Secret> listOfDeletedSecrets = new List<Secret>();                                 //secrets that have been scrubbed without being revealed
 
     //AI persistant data
     private int[] arrayOfAIResources = new int[3];                                                  //Global side index [0] none, [1] Authority, [2] Resistance
@@ -142,6 +144,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();        //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
     private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>(); //Key -> actBreakID, Value -> ActorBreakdown
     private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                  //Key -> secretID, Value -> Secret
+    private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>(); //Key -> SecretType.name, Value -> SecretType
     
 
     //global SO's (enum equivalents)
@@ -2033,8 +2036,17 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Secret> GetDictOfSecrets()
     { return dictOfSecrets; }
 
+    public Dictionary<string, SecretType> GetDictOfSecretTypes()
+    { return dictOfSecretTypes; }
+
+    public List<Secret> GetListOfPlayerSecrets()
+    { return listOfPlayerSecrets; }
+
     public List<Secret> GetListOfRevealedSecrets()
     { return listOfRevealedSecrets; }
+
+    public List<Secret> GetListOfDeletedSecrets()
+    { return listOfDeletedSecrets; }
 
     /// <summary>
     /// add a secret to list of Revealed Secrets (checks that has been revealed)
@@ -2047,6 +2059,21 @@ public class DataManager : MonoBehaviour
             if (secret.revealedWhen > -1)
             { listOfRevealedSecrets.Add(secret); }
             else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen {2}", secret.tag, secret.secretID, secret.revealedWhen); }
+        }
+        else { Debug.LogWarning("Invalid Secret (Null)"); }
+    }
+
+    /// <summary>
+    /// add a secret to list of deleted Secrets (checks that has been deleted)
+    /// </summary>
+    /// <param name="secret"></param>
+    public void AddDeletedSecret(Secret secret)
+    {
+        if (secret != null)
+        {
+            if (secret.deletedWhen > -1)
+            { listOfDeletedSecrets.Add(secret); }
+            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has deletedWhen {2}", secret.tag, secret.secretID, secret.deletedWhen); }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
     }

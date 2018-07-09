@@ -41,6 +41,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", meta.name)); }
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
+            Debug.Assert(dictOfGlobalMeta.Count > 0, "No GlobalMeta in dictOfGlobaMeta");
         }
         else { Debug.LogError("Invalid dictOfGlobalMeta (Null) -> Import failed"); }
         //
@@ -67,6 +68,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", chance.name)); }
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
+            Debug.Assert(dictOfGlobalChance.Count > 0, "No GlobalChance in dictOfGlobalChance");
         }
         else { Debug.LogError("Invalid dictOfGlobalChance (Null) -> Import failed"); }
         //
@@ -91,6 +93,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError("Invalid GlobalType (Null)"); }
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid GlobalType (duplicate) \"{0}\"", type.name)); }
+                Debug.Assert(dictOfGlobalType.Count > 0, "No GlobalType in dictOfGlobalType");
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalType has {0} entries{1}", dictOfGlobalType.Count, "\n"));
         }
@@ -119,6 +122,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid GlobalSide (duplicate) \"{0}\"", side.name)); }
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalSide has {0} entries{1}", dictOfGlobalSide.Count, "\n"));
+            Debug.Assert(dictOfGlobalSide.Count > 0, "No GlobalSide in dictOfGlobalSide");
         }
         else { Debug.LogError("Invalid dictOfGlobalSide (Null) -> Import failed"); }
         //
@@ -145,6 +149,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid GlobalWho (duplicate) \"{0}\"", who.name)); }
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalWho has {0} entries{1}", dictOfGlobalWho.Count, "\n"));
+            Debug.Assert(dictOfGlobalWho.Count > 0, "No GlobalWho in dictOfGlobalWho");
         }
         else { Debug.LogError("Invalid dictOfGlobalWho (Null) -> Import failed"); }
         //
@@ -169,6 +174,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError("Invalid Condition (Null)"); }
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.name)); }
+                Debug.Assert(dictOfGlobalMeta.Count > 0, "No conditions in dictOfConditions");
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
         }
@@ -197,6 +203,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid trait category (duplicate) \"{0}\"", category.name)); }
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", dictOfTraitCategories.Count, "\n"));
+            Debug.Assert(dictOfTraitCategories.Count > 0, "No Trait categories in dictOfTraitCategories");
         }
         else { Debug.LogError("Invalid dictOfTraitCategories (Null) -> Import failed"); }
         //
@@ -226,13 +233,13 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentNullException)
                     { Debug.LogError("Invalid trait Effect (Null)"); }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name)); }
+                    { Debug.LogErrorFormat("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name); }
                     try
                     { dictOfLookUpTraitEffects.Add(traitEffect.name, traitEffect.teffID); }
                     catch (ArgumentNullException)
                     { Debug.LogError("Invalid traitEffect.name (Null)"); }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid traitEffect.name (duplicate) \"{0}\"", traitEffect.name)); }
+                    { Debug.LogErrorFormat("Invalid traitEffect.name (duplicate) \"{0}\"", traitEffect.name); }
                 }
                 Debug.LogFormat("[Imp] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", dictOfTraitEffects.Count, "\n");
                 Debug.LogFormat("[Imp] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
@@ -244,6 +251,33 @@ public class ImportManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfLookUpTraitEffects (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfTraitEffects (Null) -> Import failed"); }
+        //
+        // - - - SecretType - - -
+        //
+        Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
+        if (dictOfSecretTypes != null)
+        {
+            var secretTypeGUID = AssetDatabase.FindAssets("t:SecretType");
+            foreach (var guid in secretTypeGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object secretTypeObject = AssetDatabase.LoadAssetAtPath(path, typeof(SecretType));
+                //assign a zero based unique ID number
+                SecretType secretType = secretTypeObject as SecretType;
+                //add to dictionary
+                try
+                { dictOfSecretTypes.Add(secretType.name, secretType); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Secret Type (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid SecretType (duplicate) \"{0}\"", secretType.name); }
+            }
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretTypes has {0} entries{1}", dictOfSecretTypes.Count, "\n");
+            Debug.Assert(dictOfSecretTypes.Count > 0, "No SecretTypes in dictOfSecretTypes");
+        }
+        else { Debug.LogError("Invalid dictOfLookUpSecretTypes (Null) -> Import failed"); }
     }
 
 

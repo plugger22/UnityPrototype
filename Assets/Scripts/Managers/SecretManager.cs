@@ -18,18 +18,70 @@ public class SecretManager : MonoBehaviour
     [Range(0, 4)] public int secretMaxNum = 4;
 
 
+    //globals
+    [HideInInspector] public int secretTypePlayer = -1;
+    [HideInInspector] public int secretTypeDesperate = -1;
+
+
     public void Initialise()
     {
+        //initialise SecretTypes
+        Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
+        if (dictOfSecretTypes != null)
+        {
+            foreach (var secretType in dictOfSecretTypes)
+            {
+                //pick out and assign the ones required for fast access. 
+                //Add to lists where appropriate
+                //Also dynamically assign SecretType.level values (0/1/2). 
+                switch (secretType.Key)
+                {
+                    case "Player":
+                        secretType.Value.level = 0;
+                        secretTypePlayer = secretType.Value.level;
+                        break;
+                    case "Desperate":
+                        secretType.Value.level = 1;
+                        secretTypeDesperate = secretType.Value.level;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid secretType \"{0}\"", secretType.Key);
+                        break;
+                }
+            }
+            //error check
+            if (secretTypePlayer == -1) { Debug.LogError("Invalid secretTypePlayer (-1)"); }
+            if (secretTypeDesperate == -1) { Debug.LogError("Invalid secretTypeDesperate (-1)"); }
+        }
+        else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
+        //initialise Secrets
         Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
         if (dictOfSecrets != null)
         {
-            //set all key secret data to default settings
-            foreach(var secret in dictOfSecrets)
+            if (listOfPlayerSecrets != null)
             {
-                if (secret.Value != null)
-                { secret.Value.Initialise(); }
-                else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
+                foreach (var secret in dictOfSecrets)
+                {
+                    if (secret.Value != null)
+                    {
+                        //set all key secret data to default settings (otherwise will carry over data between sessions)
+                        secret.Value.Initialise();
+                        //add to appropriate lists
+                        switch (secret.Value.type.level)
+                        {
+                            case 0:
+                                //Player secrets
+                                listOfPlayerSecrets.Add(secret.Value);
+                                break;
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
+                }
+                Debug.LogFormat("[Imp] SecretManager.cs -> listOfPlayerSecrets has {0} entries{1}", listOfPlayerSecrets.Count, "\n");
+                Debug.Assert(listOfPlayerSecrets.Count > 0, "No records in listOfPlayerSecrets");
             }
+            else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
         }
         else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
     }
@@ -60,25 +112,17 @@ public class SecretManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
         //player data
-        builder.AppendFormat("{0}{1}- Player listOfSecrets", "\n", "\n");
+        builder.AppendFormat("{0}{1}- Player", "\n", "\n");
         builder.Append(GameManager.instance.playerScript.DebugDisplaySecrets());
+        //player secrets data
+        builder.AppendFormat("{0}{1}- listOfPlayerSecrets", "\n", "\n");
+        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfPlayerSecrets()));
         //revealed secrets data
         builder.AppendFormat("{0}{1}- listOfRevealedSecrets", "\n", "\n");
-        List<Secret> tempList = GameManager.instance.dataScript.GetListOfRevealedSecrets();
-        if (tempList != null)
-        {
-            int numSecrets = tempList.Count;
-            if (numSecrets > 0)
-            {
-                foreach (Secret secret in tempList)
-                {
-                    builder.AppendFormat("{0} ID {1}, {2} ({3}), ({4} turn {5})", "\n", secret.secretID, secret.name, secret.tag,
-                          GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen);
-                }
-            }
-            else { builder.AppendFormat("{0} No records", "\n"); }
-        }
-        else { Debug.LogWarning("Invalid listOfRevealedSecrets (Null)"); }
+        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfRevealedSecrets()));
+        //deleted secrets data
+        builder.AppendFormat("{0}{1}- listOfDeletedSecrets", "\n", "\n");
+        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfDeletedSecrets()));
         //actor data
         for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
         {
@@ -95,6 +139,31 @@ public class SecretManager : MonoBehaviour
             }
         }
 
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// subMethod used by DisplaySecretData to process Secret Lists
+    /// </summary>
+    /// <param name="tempList"></param>
+    /// <returns></returns>
+    private string DisplaySecretList(List<Secret> tempList)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (tempList != null)
+        {
+            int numSecrets = tempList.Count;
+            if (numSecrets > 0)
+            {
+                foreach (Secret secret in tempList)
+                {
+                    builder.AppendFormat("{0} ID {1}, {2} ({3}), ({4} turn {5})", "\n", secret.secretID, secret.name, secret.tag,
+                          GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen);
+                }
+            }
+            else { builder.AppendFormat("{0} No records", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid listOfRevealedSecrets (Null)"); }
         return builder.ToString();
     }
 

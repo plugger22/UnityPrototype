@@ -137,7 +137,7 @@ public class PlayerManager : MonoBehaviour
         //set player node
         GameManager.instance.nodeScript.nodePlayer = nodeID;
         isEndOfTurnGearCheck = false;
-        //fast acess fields (BEFORE set stats below)
+        //fast access fields (BEFORE set stats below)
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
@@ -151,6 +151,8 @@ public class PlayerManager : MonoBehaviour
         Invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
+        //give the player a random secret (PLACEHOLDER -> should be player choice)
+        GetRandomPlayerSecret();
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
         Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
@@ -730,7 +732,33 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// return a list of all secretsto DataManager.cs -> DipslaySecretData for Debug display
+    /// placeholder method to automatically assign a random secret to the player at game start
+    /// </summary>
+    private void GetRandomPlayerSecret()
+    {
+        List<Secret> tempList = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        if (tempList != null)
+        {
+            int numOfSecrets = tempList.Count;
+            if (numOfSecrets > 0)
+            {
+                int index = Random.Range(0, numOfSecrets);
+                Secret secret = tempList[index];
+                if (secret != null)
+                { AddSecret(secret); }
+                else { Debug.LogWarningFormat("Invalid secret (Null) for listOfPlayerSecrets[{0}]", index); }
+            }
+            else { Debug.LogWarning("Invalid listOfPlayerSecrets (No records)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
+    }
+
+    //
+    // - - - Debug
+    //
+
+    /// <summary>
+    /// return a list of all secretsto SecretManager.cs -> DisplaySecretData for Debug display
     /// </summary>
     /// <returns></returns>
     public string DebugDisplaySecrets()
@@ -744,10 +772,6 @@ public class PlayerManager : MonoBehaviour
         else { builder.AppendFormat("{0} No records", "\n"); }
         return builder.ToString();
     }
-
-    //
-    // - - - Debug
-    //
 
     /// <summary>
     /// Debug function to display all player related stats
