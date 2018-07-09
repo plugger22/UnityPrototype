@@ -2053,6 +2053,19 @@ public class DataManager : MonoBehaviour
     { return listOfDeletedSecrets; }
 
     /// <summary>
+    /// returns a secret, null if not fond
+    /// </summary>
+    /// <param name="secretID"></param>
+    /// <returns></returns>
+    public Secret GetSecret(int secretID)
+    {
+        if (dictOfSecrets.ContainsKey(secretID))
+        { return dictOfSecrets[secretID]; }
+        else { Debug.LogWarningFormat("Not found secretID {0}, in dictOfSecrets", secretID); }
+        return null;
+    }
+
+    /// <summary>
     /// add a secret to list of Revealed Secrets (checks that has been revealed)
     /// </summary>
     /// <param name="secret"></param>

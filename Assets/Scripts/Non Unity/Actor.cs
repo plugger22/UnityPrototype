@@ -255,6 +255,13 @@ namespace gameAPI
                     {
                         if (listOfConditions[i].name.Equals(condition.name) == true)
                         {
+                            //special cases
+                            switch(condition.name)
+                            {
+                                case "BLACKMAILER":
+                                    blackmailTimer = 0;
+                                    break;
+                            }
                             listOfConditions.RemoveAt(i);
                             //message
                             string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.name);
