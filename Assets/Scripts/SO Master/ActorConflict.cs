@@ -20,6 +20,8 @@ public class ActorConflict : ScriptableObject
     public GlobalWho who;
     [Tooltip("Criteria. NOTE: Separate from effect cause some effects don't have criteria when I want them. Any effect criteria are ignored. Criteria is for 'who' (Player or Actor")]
     public List<Criteria> listOfCriteria;
+    [Tooltip("Is it a good or bad outcome from the Player's POV")]
+    public GlobalType type;
     [Tooltip("There can only be a single effect. Leave empty if for 'Nothing happens'")]
     public Effect effect;
 

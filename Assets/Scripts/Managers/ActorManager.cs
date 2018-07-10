@@ -98,9 +98,6 @@ public class ActorManager : MonoBehaviour
     private Condition conditionBlackmailer;
     private TraitCategory actorCategory;
     private int secretBaseChance = -1;
-    //secrets
-    /*private SecretStatus secretStatusRevealed;
-    private SecretStatus secretStatusDeleted;*/
     //cached TraitEffects
     private int actorBreakdownChanceHigh;
     private int actorBreakdownChanceLow;
@@ -110,6 +107,7 @@ public class ActorManager : MonoBehaviour
     private int actorSecretChanceNone;
     private int actorSecretTellAll;
     private int actorAppeaseNone;
+    private int actorConflictNoGoodOptions;
     
 
     //gear
@@ -166,9 +164,7 @@ public class ActorManager : MonoBehaviour
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
-        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
-        /*secretStatusRevealed = GameManager.instance.secretScript.secretStatusRevealed;
-        secretStatusDeleted = GameManager.instance.secretScript.secretStatusDeleted;*/
+
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
@@ -179,8 +175,8 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
-        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
-
+        
+        
         //cached TraitEffects
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
@@ -190,7 +186,8 @@ public class ActorManager : MonoBehaviour
         actorSecretChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceNone");
         actorSecretTellAll = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretTellAll");
         actorAppeaseNone = GameManager.instance.dataScript.GetTraitEffectID("ActorAppeaseNone");
-        
+        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
+        actorConflictNoGoodOptions = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictGoodNone");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
@@ -198,7 +195,8 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorSecretChanceHigh > -1, "Invalid actorSecretChanceHigh (-1)");
         Debug.Assert(actorSecretChanceNone > -1, "Invalid actorSecretChanceNone (-1)");
         Debug.Assert(actorAppeaseNone > -1, "Invalid actorAppeaseNone (-1)");
-        
+        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
+        Debug.Assert(actorConflictNoGoodOptions > -1, "Invalid actorConflictNoGoodOptions (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -2985,6 +2983,7 @@ public class ActorManager : MonoBehaviour
         if (actor != null)
         {
             GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+            GlobalType typeGood = GameManager.instance.globalScript.typeGood;
             List<ActorConflict> listSelectionPool = new List<ActorConflict>();
             Dictionary<int, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
             if (dictOfActorConflicts != null)
@@ -3029,6 +3028,12 @@ public class ActorManager : MonoBehaviour
                                 if (conflict.Value.side.level != playerSide.level)
                                 { proceedFlag = false; }
                             }
+                            //traits -> Thin Skinned (excludes all good conflict options)
+                            if (conflict.Value.type == typeGood && actor.CheckTraitEffect(actorConflictNoGoodOptions) == true)
+                            {
+                                proceedFlag = false;
+                                TraitLogMessage(actor, "to eliminate Good options in a Conflict");
+                            }
                             //
                             // - - - Pool - - -
                             //
@@ -3068,7 +3073,7 @@ public class ActorManager : MonoBehaviour
                     {
                         int index = Random.Range(0, listSelectionPool.Count);
                         actorConflict = listSelectionPool[index];
-                        Debug.LogFormat("[Tst] Pool size {0} Selected {1}", listSelectionPool.Count, actorConflict.name);
+                        Debug.LogFormat("[Tst] Pool size {0} Entries ->  Selected {1}", listSelectionPool.Count, actorConflict.name);
                         //Implement effect
                         if (actorConflict.effect != null)
                         {

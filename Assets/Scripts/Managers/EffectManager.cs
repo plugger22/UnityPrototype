@@ -30,6 +30,7 @@ public class EffectManager : MonoBehaviour
     private int actorStressedOverInvisibility;
     private int actorDoubleRenown;
     private int actorBlackmailNone;
+    private int actorConflictPoison;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -61,6 +62,7 @@ public class EffectManager : MonoBehaviour
         actorStressedOverInvisibility = GameManager.instance.dataScript.GetTraitEffectID("ActorInvisibilityStress");
         actorDoubleRenown = GameManager.instance.dataScript.GetTraitEffectID("ActorDoubleRenown");
         actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
+        actorConflictPoison = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictPoison");
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
@@ -70,6 +72,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
         Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
         Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
+        Debug.Assert(actorConflictPoison > -1, "Invalid actorPoisonYes (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
@@ -538,6 +541,16 @@ public class EffectManager : MonoBehaviour
                                                 else
                                                 { Debug.LogWarning("Invalid actor (Null) for TraitBlackmailNone"); }
                                                 break;
+                                            case "TraitConflictPoisonYes":
+                                                if (actor != null)
+                                                {
+                                                    //actor -> HAS 'Snake' trait
+                                                    if (actor.CheckTraitEffect(actorConflictPoison) == true)
+                                                    { BuildString(result, string.Format(" {0} has {1}{2}{3}", actor.actorName, colourNeutral, actor.GetTrait().tag, colourEnd)); }
+                                                }
+                                                else
+                                                { Debug.LogWarning("Invalid actor (Null) for TraitConflictPoisonYes"); }
+                                                break;
                                             case "RenownReserveMin":
                                                 //player
                                                 int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
@@ -930,14 +943,40 @@ public class EffectManager : MonoBehaviour
                     switch (effect.operand.name)
                     {
                         case "Add":
-                            actor.datapoint1 += effect.value;
-                            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
-                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                            switch (effect.apply.name)
+                            {
+                                case "ActorCurrent":
+                                    actor.datapoint1 += effect.value;
+                                    actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                                    break;
+                                case "ActorAll":
+                                    //all actors have their motivation raised
+                                    ResolveGroupActorEffect(effect, actor);
+                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
+                                    break;
+                            }
                             break;
                         case "Subtract":
-                            actor.datapoint1 -= effect.value;
-                            actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                            switch (effect.apply.name)
+                            {
+                                case "ActorCurrent":
+                                    actor.datapoint1 -= effect.value;
+                                    actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                                    break;
+                                case "ActorAll":
+                                    //all actors have their motivation lowered
+                                    ResolveGroupActorEffect(effect, actor);
+                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
+                                    break;
+                            }
                             break;
                         default:
                             Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
@@ -1540,8 +1579,69 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Sub method to process group actor effects, eg. All actors Motivation +1. If actor != null then this actor is excluded from the effect
+    /// NOTE: Effect and Actor are checked for null by the calling method
+    /// </summary>
+    /// <param name="datapoint"></param>
+    /// <param name="value"></param>
+    /// <param name="actor"></param>
+    private void ResolveGroupActorEffect(Effect effect, Actor actorExclude = null)
+    {
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        bool isProceed = true;
+                        //don't do actorExclude if provided
+                        if (actorExclude != null)
+                        {
+                           if (actorExclude.actorID == actor.actorID)
+                            { isProceed = false; }
+                        }
+                        //adjust actor
+                        if (isProceed == true)
+                        {
+                            switch (effect.outcome.name)
+                            {
+                                case "Motivation":
+                                    switch (effect.operand.name)
+                                    {
+                                        case "Add":
+                                            actor.datapoint1 += effect.value;
+                                            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+                                            break;
+                                        case "Subtract":
+                                            actor.datapoint1 -= effect.value;
+                                            actor.datapoint1 = Mathf.Max(GameManager.instance.actorScript.minStatValue, actor.datapoint1);
+                                            break;
+                                        default:
+                                            Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
+                                            break;
+                                    }
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid effect.outcome \"{0}\"", effect.outcome.name);
+                                    break;
+                            }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid arrayOfActors (Null)"); }
+    }
+
+    /// <summary>
     /// Sub method to process Node Stability/Security/Support
-    /// Note: Effect and Node checked for null in calling method
+    /// Note: Effect and Node checked for null by the calling method
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="node"></param>
