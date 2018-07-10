@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
     private string hackingGear;
     private int maxNumOfSecrets = -1;
     private SecretStatus secretStatusActive;
-    private SecretStatus secretStatusInactive;
+    /*private SecretStatus secretStatusInactive;*/
 
     
 
@@ -146,7 +146,7 @@ public class PlayerManager : MonoBehaviour
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
         maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
         secretStatusActive = GameManager.instance.secretScript.secretStatusActive;
-        secretStatusInactive = GameManager.instance.secretScript.secretStatusInactive;
+        /*secretStatusInactive = GameManager.instance.secretScript.secretStatusInactive;*/
 
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");

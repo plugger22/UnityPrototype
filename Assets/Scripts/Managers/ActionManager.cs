@@ -1482,7 +1482,7 @@ public class ActionManager : MonoBehaviour
                 //deduct motivation from actor
                 if (motivationCost > 0)
                 {                    
-                    //relationship Conflict
+                    //relationship Conflict  (ActorConflict)
                     if (actor.datapoint1 < motivationCost)
                     {
                         builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);

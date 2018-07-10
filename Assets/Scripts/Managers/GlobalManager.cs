@@ -15,6 +15,7 @@ public class GlobalManager : MonoBehaviour
     [HideInInspector] public GlobalChance chanceLow;
     [HideInInspector] public GlobalChance chanceMedium;
     [HideInInspector] public GlobalChance chanceHigh;
+    [HideInInspector] public GlobalChance chanceExtreme;
     //globalType
     [HideInInspector] public GlobalType typeGood;
     [HideInInspector] public GlobalType typeNeutral;
@@ -58,6 +59,9 @@ public class GlobalManager : MonoBehaviour
                         metaTop = meta.Value;
                         meta.Value.level = 2;
                         break;
+                    default:
+                        Debug.LogWarningFormat("Invalid meta \"{0}\"", meta.Key);
+                        break;
                 }
             }
             //error check
@@ -89,12 +93,20 @@ public class GlobalManager : MonoBehaviour
                         chanceHigh = chance.Value;
                         chance.Value.level = 2;
                         break;
+                    case "Extreme":
+                        chanceExtreme = chance.Value;
+                        chance.Value.level = 3;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid chance \"{0}\"", chance.Key);
+                        break;
                 }
             }
             //error check
             if (chanceLow == null) { Debug.LogError("Invalid chanceLow (Null)"); }
             if (chanceMedium == null) { Debug.LogError("Invalid chanceMedium (Null)"); }
             if (chanceHigh == null) { Debug.LogError("Invalid chanceHigh (Null)"); }
+            if (chanceExtreme == null) { Debug.LogError("Invalid chanceCritical (Null)"); }
         }
         //
         // - - - GlobalWho - - -
@@ -149,6 +161,9 @@ public class GlobalManager : MonoBehaviour
                         typeGood = type.Value;
                         type.Value.level = 2;
                         break;
+                    default:
+                        Debug.LogWarningFormat("Invalid type \"{0}\"", type.Key);
+                        break;
                 }
             }
             //error check
@@ -183,6 +198,9 @@ public class GlobalManager : MonoBehaviour
                     case "Both":
                         sideBoth = side.Value;
                         side.Value.level = 3;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid side \"{0}\"", side.Key);
                         break;
                 }
             }

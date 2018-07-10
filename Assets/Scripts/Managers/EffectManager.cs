@@ -31,6 +31,7 @@ public class EffectManager : MonoBehaviour
     private int actorDoubleRenown;
     private int actorBlackmailNone;
     private int actorConflictPoison;
+    private int actorNeverResigns;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -63,6 +64,7 @@ public class EffectManager : MonoBehaviour
         actorDoubleRenown = GameManager.instance.dataScript.GetTraitEffectID("ActorDoubleRenown");
         actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
         actorConflictPoison = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictPoison");
+        actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
@@ -73,6 +75,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
         Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
         Debug.Assert(actorConflictPoison > -1, "Invalid actorPoisonYes (-1)");
+        Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
@@ -545,8 +548,8 @@ public class EffectManager : MonoBehaviour
                                                 if (actor != null)
                                                 {
                                                     //actor -> HAS 'Snake' trait
-                                                    if (actor.CheckTraitEffect(actorConflictPoison) == true)
-                                                    { BuildString(result, string.Format(" {0} has {1}{2}{3}", actor.actorName, colourNeutral, actor.GetTrait().tag, colourEnd)); }
+                                                    if (actor.CheckTraitEffect(actorConflictPoison) == false)
+                                                    { BuildString(result, string.Format(" {0} doesn't have {1}{2}{3}", actor.actorName, colourNeutral, actor.GetTrait().tag, colourEnd)); }
                                                 }
                                                 else
                                                 { Debug.LogWarning("Invalid actor (Null) for TraitConflictPoisonYes"); }
@@ -2740,8 +2743,18 @@ public class EffectManager : MonoBehaviour
         {
             case "ActorResigns":
                 //NOTE: Not a Manage option and treated differently to the rest
-                if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
-                { effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd); }
+                if (actor.CheckTraitEffect(actorNeverResigns) == false)
+                {
+                    if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                    { effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd); }
+                }
+                else
+                {
+                    //trait actorResignNone "Loyal"
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "to decline Resigning");                    
+                    effectResolve.bottomText = string.Format("{0}{1} has {2}{3}{4}{5}{6} trait{7}", colourAlert, actor.arc.name, colourEnd, 
+                        colourNeutral, actor.GetTrait().tag, colourEnd, colourAlert, colourEnd);
+                }
                 break;
             case "ActorToReserves":
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);

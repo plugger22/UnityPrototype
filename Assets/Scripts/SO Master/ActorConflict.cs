@@ -24,6 +24,8 @@ public class ActorConflict : ScriptableObject
     public GlobalType type;
     [Tooltip("There can only be a single effect. Leave empty if for 'Nothing happens'")]
     public Effect effect;
+    [Tooltip("Used for testing purposes only. If ON the conflict is ignored (fails criteria check). Leave as OFF")]
+    public bool isTestOff = false;
 
     [HideInInspector] public int conflictID;
 

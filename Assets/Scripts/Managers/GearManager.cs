@@ -402,7 +402,7 @@ public class GearManager : MonoBehaviour
                             if (timer == actorGearGracePeriod)
                                 {
                                     //let player know that gear will be available
-                                    string msgText = string.Format("{0} gear held by {1}, {2}, available next turn", gear.name, actor.actorName, actor.arc.name);
+                                    string msgText = string.Format("{0} gear held by {1}, available next turn", gear.name, actor.arc.name);
                                     Message message = GameManager.instance.messageScript.GearAvailable(msgText, gear.gearID, actor.actorID);
                                     GameManager.instance.dataScript.AddMessage(message);
                                 }
