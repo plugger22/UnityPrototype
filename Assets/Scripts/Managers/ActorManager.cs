@@ -3578,6 +3578,13 @@ public class ActorManager : MonoBehaviour
                                         //TO DO -> Notification to player of black mail outcome (start turn)
                                     }
                                 }
+                                //
+                                // - - - Compatibility - - -
+                                //
+                                if (GameManager.instance.playerScript.CheckIfBadConditionPresent() == true)
+                                {
+
+                                }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }

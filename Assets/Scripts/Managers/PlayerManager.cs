@@ -42,7 +42,10 @@ public class PlayerManager : MonoBehaviour
     private string hackingGear;
     private int maxNumOfSecrets = -1;
     private SecretStatus secretStatusActive;
-    /*private SecretStatus secretStatusInactive;*/
+    private Condition conditionCorrupt;
+    private Condition conditionIncompetent;
+    private Condition conditionQuestionable;
+    
 
     
 
@@ -146,12 +149,17 @@ public class PlayerManager : MonoBehaviour
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
         maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
         secretStatusActive = GameManager.instance.secretScript.secretStatusActive;
-        /*secretStatusInactive = GameManager.instance.secretScript.secretStatusInactive;*/
-
+        conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
+        conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
+        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
         Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
+        Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
+        Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
+        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+
         //set stats
         Renown = 0;
         Invisibility = 3;
@@ -669,6 +677,39 @@ public class PlayerManager : MonoBehaviour
             else { listOfConditions = listOfConditionsAuthority; }
         }
         return listOfConditions.Count;
+    }
+
+    /// <summary>
+    /// Returns true if player is Corrupt / Incompetent / Questionable, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfBadConditionPresent()
+    {
+        bool isPresent = false;
+
+            //use correct list for the player side
+            List<Condition> listOfConditions;
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+            else
+            {
+                //AI control of both side
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+                else { listOfConditions = listOfConditionsAuthority; }
+            }
+        if (listOfConditions.Count > 0)
+        {
+            foreach (Condition condition in listOfConditions)
+            {
+                if (condition.name.Equals(conditionCorrupt.name) == true)
+                { isPresent = true; break; }
+                if (condition.name.Equals(conditionIncompetent.name) == true)
+                { isPresent = true; break; }
+                if (condition.name.Equals(conditionQuestionable.name) == true)
+                { isPresent = true; break; }
+            }
+        }
+        return isPresent;
     }
 
     //

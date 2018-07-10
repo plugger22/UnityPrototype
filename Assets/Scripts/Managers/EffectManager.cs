@@ -896,8 +896,6 @@ public class EffectManager : MonoBehaviour
                 case "UnhappyTimerNoPromise":
                 case "UnhappyTimerPromise":
                 case "UnhappyTimerRest":
-                case "ActorResigns":                //not a Manage option but included
-                case "ActorKills":                  //not a Manage option but included
                     if (actor != null)
                     {
                         EffectDataResolve resolve = ResolveManageData(effect, actor);
@@ -911,6 +909,25 @@ public class EffectManager : MonoBehaviour
                         }
                     }
                     break;
+                //
+                // - - - Special Actor Effects - - -
+                //
+                case "ActorResigns":
+                case "ActorKills":
+                    if (actor != null)
+                    {
+                        EffectDataResolve resolve = ResolveSpecialActorEffect(effect, actor);
+                        if (resolve.isError == true)
+                        { effectReturn.errorFlag = true; }
+                        else
+                        {
+                            effectReturn.topText = resolve.topText;
+                            effectReturn.bottomText = resolve.bottomText;
+                            effectReturn.isAction = true;
+                        }
+                    }
+                    break;
+
                 //
                 // - - - Secrets - - -
                 //
@@ -1013,7 +1030,7 @@ public class EffectManager : MonoBehaviour
                             effectReturn.errorFlag = true;
                             break;
                     }
-                    
+
                     break;
                 case "CityLoyalty":
                     //depends on player side
@@ -1081,7 +1098,7 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "FactionSupport":
                     //depends on player side
-                    switch(dataInput.side.level)
+                    switch (dataInput.side.level)
                     {
                         case 1:
                             //Authority
@@ -1221,7 +1238,7 @@ public class EffectManager : MonoBehaviour
                                         if (gear != null)
                                         {
                                             GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
-                                            effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.name.ToUpper(), 
+                                            effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.name.ToUpper(),
                                                 colourEnd, colourNormal, colourEnd);
                                         }
                                         else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
@@ -1239,7 +1256,7 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
-                                                effectReturn.bottomText = 
+                                                effectReturn.bottomText =
                                                     string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
                                                     colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
@@ -1253,11 +1270,11 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //immediate notification. AI flag set. Applies if player invis was 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}", 
+                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
                                                     colourAlert, effect.textTag, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
-                                            
+
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
@@ -1301,7 +1318,7 @@ public class EffectManager : MonoBehaviour
                                             invisibility += effect.value;
                                             invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
                                             actor.datapoint2 = invisibility;
-                                            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.arc.name, actor.arc.name, 
+                                            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.arc.name, actor.arc.name,
                                                 dataBefore, invisibility, "\n");
                                         }
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
@@ -1329,7 +1346,7 @@ public class EffectManager : MonoBehaviour
                                             else
                                             {
                                                 //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}", 
+                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
                                                     colourEffect, actor.arc.name, effect.textTag, "\n", "\n", colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
@@ -1343,7 +1360,7 @@ public class EffectManager : MonoBehaviour
                                         int delay;
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
-                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})", 
+                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
                                             dataInput.textOrigin, actor.arc.name), node.nodeID, actor.actorID, delay);
                                         GameManager.instance.dataScript.AddMessage(messageAI);
                                         //AI Immediate message
@@ -1418,7 +1435,7 @@ public class EffectManager : MonoBehaviour
                             //Actor effect
                             if (actor != null)
                             {
-                                
+
                                 dataBefore = actor.Renown;
                                 switch (effect.operand.name)
                                 {
@@ -2768,25 +2785,6 @@ public class EffectManager : MonoBehaviour
         //get condition
         switch (effect.outcome.name)
         {
-            case "ActorResigns":
-                //NOTE: Not a Manage option and treated differently to the rest
-                if (actor.CheckTraitEffect(actorNeverResigns) == false)
-                {
-                    if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
-                    { effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd); }
-                }
-                else
-                {
-                    //trait actorResignNone "Loyal"
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "to decline Resigning");                    
-                    effectResolve.bottomText = string.Format("{0}{1} has {2}{3}{4}{5}{6} trait{7}", colourAlert, actor.arc.name, colourEnd, 
-                        colourNeutral, actor.GetTrait().tag, colourEnd, colourAlert, colourEnd);
-                }
-                break;
-            case "ActorKills":
-                //NOTE: Not a Manage option and treated differently to the rest
-                effectResolve.bottomText = GameManager.instance.actorScript.ProcessKillRandomActor(actor);
-                break;
             case "ActorToReserves":
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
                 break;
@@ -2837,6 +2835,48 @@ public class EffectManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                 break;
         }
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// subMethod to handle special actor effects
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveSpecialActorEffect(Effect effect, Actor actor)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //get condition
+        switch (effect.outcome.name)
+        {
+            case "ActorResigns":
+                //NOTE: Not a Manage option and treated differently to the rest
+                if (actor.CheckTraitEffect(actorNeverResigns) == false)
+                {
+                    if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                    {
+                        effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd);
+                    }
+                }
+                else
+                {
+                    //trait actorResignNone "Loyal"
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "to decline Resigning");
+                    effectResolve.bottomText = string.Format("{0}{1} has {2}{3}{4}{5}{6} trait{7}", colourAlert, actor.arc.name, colourEnd,
+                        colourNeutral, actor.GetTrait().tag, colourEnd, colourAlert, colourEnd);
+                }
+                break;
+            case "ActorKills":
+                //NOTE: Not a Manage option and treated differently to the rest
+                effectResolve.bottomText = GameManager.instance.actorScript.ProcessKillRandomActor(actor);
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
+                break;
+        }
+
         return effectResolve;
     }
 
