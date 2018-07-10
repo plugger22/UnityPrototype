@@ -110,6 +110,7 @@ public class ActorManager : MonoBehaviour
     private int actorConflictNoGoodOptions;
     private int actorConflictNone;
     private int actorNeverResigns;
+    private int actorConflictKill;
     
 
     //gear
@@ -191,6 +192,7 @@ public class ActorManager : MonoBehaviour
         actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
         actorConflictNoGoodOptions = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictGoodNone");
         actorConflictNone = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictNone");
+        actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
         actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
@@ -202,6 +204,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
         Debug.Assert(actorConflictNoGoodOptions > -1, "Invalid actorConflictNoGoodOptions (-1)");
         Debug.Assert(actorConflictNone > -1, "Invalid actorConflictNone (-1)");
+        Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
         Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
@@ -3211,6 +3214,70 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogWarning("Invalid actor (Null)"); }
         //return two line outcome
         return builder.ToString();
+    }
+
+
+    /// <summary>
+    /// ActorKiller murders a random OnMap actor (in your line-up). Returns a formatted output string (one line). Psychopath trait
+    /// NOTE: actorKiller checked for Null by calling method (EffectManager.cs -> ResolveManageData
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public string ProcessKillRandomActor(Actor actorKiller)
+    {
+        string outputMsg = "Unknown";
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+        if (arrayOfActors != null)
+        {
+            List<Actor> listOfActors = new List<Actor>();
+            //loop actors and add any that are present (active / inactive) to the list (excluding actorKiller)
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.actorID != actorKiller.actorID)
+                        { listOfActors.Add(actor); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfActors[{0}]", i); }
+                }
+            }
+            //randomly choose an actor from list
+            int numOfActors = listOfActors.Count;
+            if (numOfActors > 0)
+            {
+                Actor actorVictim = listOfActors[Random.Range(0, numOfActors)];
+                //kill actor
+                if (GameManager.instance.dataScript.RemoveCurrentActor(side, actorVictim, ActorStatus.Killed) == true)
+                {
+                    //actor should have trait but check just to be sure as there could, perhaps, be another reason for the random killing
+                    if (actorKiller.CheckTraitEffect(actorConflictKill) == true)
+                    {
+                        //add trait to output
+                        outputMsg = string.Format("{0}{1} killed by {2}{3}{4}{5}{6} {7}{8}  ", colourBad, actorVictim.arc.name, colourEnd, colourNeutral, actorKiller.GetTrait().tag, 
+                            colourEnd, colourBad, actorKiller.arc.name, colourEnd);
+                        TraitLogMessage(actorKiller, "to kill a friend");
+                    }
+                    else
+                    { outputMsg = string.Format("{0}{1} killed by {2}{3}", colourBad, actorVictim.arc.name, actorKiller.arc.name, colourEnd); }
+                    //victim message
+                    string msgText = string.Format("{0} has been killed by {1}", actorVictim.arc.name, actorKiller.arc.name);
+                    Message message = GameManager.instance.messageScript.ActorStatus(msgText, actorVictim.actorID, side, true);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                else { outputMsg = string.Format("{0}{1} failed to kill somebody{2}", colourNeutral, actorKiller.arc.name, colourEnd); }
+            }
+            else
+            {
+                //no actors in pool
+                outputMsg = string.Format("{0}{1} unable to find a victim{2}", colourNeutral, actorKiller.arc.name, colourEnd);
+            }
+        }
+        else { Debug.LogWarning("Invalid arrayOfActors (Null)"); }
+        return outputMsg;
     }
 
     /// <summary>

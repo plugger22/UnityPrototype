@@ -31,7 +31,9 @@ public class EffectManager : MonoBehaviour
     private int actorDoubleRenown;
     private int actorBlackmailNone;
     private int actorConflictPoison;
+    private int actorConflictKill;
     private int actorNeverResigns;
+    
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -64,6 +66,7 @@ public class EffectManager : MonoBehaviour
         actorDoubleRenown = GameManager.instance.dataScript.GetTraitEffectID("ActorDoubleRenown");
         actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
         actorConflictPoison = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictPoison");
+        actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
         actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
@@ -75,6 +78,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
         Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
         Debug.Assert(actorConflictPoison > -1, "Invalid actorPoisonYes (-1)");
+        Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
         Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
@@ -212,7 +216,9 @@ public class EffectManager : MonoBehaviour
                         {
                             switch (criteria.apply.name)
                             {
-                                //apply to current Node
+                                //
+                                // - - - Current Node - - -
+                                //
                                 case "NodeCurrent":
                                     if (node != null)
                                     {
@@ -359,7 +365,9 @@ public class EffectManager : MonoBehaviour
                                         errorFlag = true;
                                     }
                                     break;
-                                //Apply to neighbouring nodes
+                                //
+                                // - - - Neighbouring nodes - - -
+                                //
                                 case "NodeNeighbours":
                                     if (node != null)
                                     {
@@ -405,7 +413,9 @@ public class EffectManager : MonoBehaviour
                                         errorFlag = true;
                                     }
                                     break;
-                                //Current Actor / Player
+                                //
+                                // - - - Current Actor / Player - - -
+                                //
                                 case "ActorCurrent":
                                     if (criteria.effectCriteria != null)
                                     {
@@ -530,7 +540,7 @@ public class EffectManager : MonoBehaviour
                                                         { BuildString(result, string.Format(" {0} already {1}BLACKMAILING{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
                                                     else
-                                                    {  Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
+                                                    { Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
                                                 break;
@@ -549,34 +559,50 @@ public class EffectManager : MonoBehaviour
                                                 {
                                                     //actor -> HAS 'Snake' trait
                                                     if (actor.CheckTraitEffect(actorConflictPoison) == false)
-                                                    { BuildString(result, string.Format(" {0} doesn't have {1}{2}{3}", actor.actorName, colourNeutral, actor.GetTrait().tag, colourEnd)); }
+                                                    { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName)); }
                                                 }
                                                 else
                                                 { Debug.LogWarning("Invalid actor (Null) for TraitConflictPoisonYes"); }
+                                                break;
+                                            case "TraitConflictKillYes":
+                                                if (actor != null)
+                                                {
+                                                    //actor -> HAS 'Psychopath' trait
+                                                    if (actor.CheckTraitEffect(actorConflictKill) == false)
+                                                    { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName));  }
+                                                }
+                                                else
+                                                { Debug.LogWarning("Invalid actor (Null) for TraitConflictKillYes"); }
                                                 break;
                                             case "RenownReserveMin":
                                                 //player
                                                 int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownReserve)
-                                                { BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownReserve, 
-                                                    colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
+                                                {
+                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownReserve,
+                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                }
                                                 break;
                                             case "RenownDismissMin":
                                                 //player
                                                 int renownDismiss = GameManager.instance.actorScript.manageDismissRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDismiss)
-                                                { BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss, 
-                                                    colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
+                                                {
+                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
+                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                }
                                                 break;
                                             case "RenownDisposeMin":
                                                 //player
                                                 int renownDispose = GameManager.instance.actorScript.manageDisposeRenown;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDispose)
-                                                { BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose, 
-                                                    colourEnd, "\n", colourNeutral, playerRenown, colourEnd)); }
+                                                {
+                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose,
+                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                }
                                                 break;
                                             case "RenownNOTZero":
                                                 //Player / Actor
@@ -864,13 +890,14 @@ public class EffectManager : MonoBehaviour
                 case "ActorDisposedOff":
                 case "ActorPromoted":
                 case "ActorToReserves":
-                case "ActorResigns":                //not a Manage option but included
                 case "ManageDismissRenown":
                 case "ManageDisposeRenown":
                 case "ManageReserveRenown":
                 case "UnhappyTimerNoPromise":
                 case "UnhappyTimerPromise":
                 case "UnhappyTimerRest":
+                case "ActorResigns":                //not a Manage option but included
+                case "ActorKills":                  //not a Manage option but included
                     if (actor != null)
                     {
                         EffectDataResolve resolve = ResolveManageData(effect, actor);
@@ -2755,6 +2782,10 @@ public class EffectManager : MonoBehaviour
                     effectResolve.bottomText = string.Format("{0}{1} has {2}{3}{4}{5}{6} trait{7}", colourAlert, actor.arc.name, colourEnd, 
                         colourNeutral, actor.GetTrait().tag, colourEnd, colourAlert, colourEnd);
                 }
+                break;
+            case "ActorKills":
+                //NOTE: Not a Manage option and treated differently to the rest
+                effectResolve.bottomText = GameManager.instance.actorScript.ProcessKillRandomActor(actor);
                 break;
             case "ActorToReserves":
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
