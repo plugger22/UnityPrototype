@@ -175,6 +175,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseGame()
     {
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
         importScript.InitialiseStart();   //must be first
         globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
         colourScript.Initialise();      
@@ -219,6 +221,8 @@ public class GameManager : MonoBehaviour
         widgetTopScript.Initialise();
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
 
         //TO DO -> tap into game options chosen by player and start game as correct side or AI vs. AI
     }

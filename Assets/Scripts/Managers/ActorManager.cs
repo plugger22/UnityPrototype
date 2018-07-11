@@ -222,7 +222,6 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorResignHigh > -1, "Invalid actorResignHigh (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
-        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.RecruitAction, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent, "ActorManager");
@@ -253,9 +252,6 @@ public class ActorManager : MonoBehaviour
                 break;
             case EventType.StartTurnLate:
                 StartTurnLate();
-                break;
-            case EventType.EndTurnEarly:
-                EndTurnEarly();
                 break;
             case EventType.RecruitAction:
                 ModalActionDetails details = Param as ModalActionDetails;
@@ -306,20 +302,6 @@ public class ActorManager : MonoBehaviour
         UpdateReserveActors();
     }
 
-    /// <summary>
-    /// Post turn processing
-    /// </summary>
-    private void EndTurnEarly()
-    {
-        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
-        {
-
-        }
-        else
-        {
-
-        }
-    }
 
     /// <summary>
     /// deregisters events
