@@ -116,6 +116,7 @@ public class ActorManager : MonoBehaviour
     private int actorConflictNone;
     private int actorNeverResigns;
     private int actorConflictKill;
+    private int actorResignHigh;
     
 
     //gear
@@ -205,6 +206,7 @@ public class ActorManager : MonoBehaviour
         actorConflictNone = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictNone");
         actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
         actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
+        actorResignHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorResignHigh");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
@@ -217,8 +219,10 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorConflictNone > -1, "Invalid actorConflictNone (-1)");
         Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
         Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
+        Debug.Assert(actorResignHigh > -1, "Invalid actorResignHigh (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.RecruitAction, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent, "ActorManager");
@@ -249,6 +253,9 @@ public class ActorManager : MonoBehaviour
                 break;
             case EventType.StartTurnLate:
                 StartTurnLate();
+                break;
+            case EventType.EndTurnEarly:
+                EndTurnEarly();
                 break;
             case EventType.RecruitAction:
                 ModalActionDetails details = Param as ModalActionDetails;
@@ -285,14 +292,33 @@ public class ActorManager : MonoBehaviour
             //run for Resistance Player
             CheckInactiveResistanceActors();
             CheckActiveResistanceActors();    //needs to be AFTER CheckInactiveActors
+            GameManager.instance.factionScript.CheckFactionFirePlayer();
         }
         else
         {
             //run for Authority Player
             CheckInactiveAuthorityActors();
             CheckActiveAuthorityActors();    //needs to be AFTER CheckInactiveActors
+            GameManager.instance.factionScript.CheckFactionFirePlayer();
         }
         UpdateReserveActors();
+    }
+
+    /// <summary>
+    /// Post turn processing
+    /// </summary>
+    private void EndTurnEarly()
+    {
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+        {
+            //run for Resistance Player
+            GameManager.instance.factionScript.CheckFactionFirePlayer();
+        }
+        else
+        {
+            //run for Authority Player
+            GameManager.instance.factionScript.CheckFactionFirePlayer();
+        }
     }
 
     /// <summary>
@@ -3936,15 +3962,15 @@ public class ActorManager : MonoBehaviour
                 if (actor.CheckTraitEffect(actorNeverResigns) == false)
                 {
                     int chance = playerBadResignChance * numOfBadConditions;
+                    //trait check -> 'Ethical' (triple chance of resigning)
+                    if (actor.CheckTraitEffect(actorResignHigh) == true)
+                    { chance *= 3; }
                     int rnd = Random.Range(0, 100);
                     if (rnd < chance)
                     {
                         Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: RESIGNS need < {0}, rolled {1}{2}", chance, rnd, "\n");
 
                         //actor resigns
-
-                        /*if (actor.CheckTraitEffect(actorNeverResigns) == false)
-                        {*/
                         if (GameManager.instance.dataScript.RemoveCurrentActor(side, actor, ActorStatus.Resigned) == true)
                         {
 
@@ -3958,7 +3984,6 @@ public class ActorManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid conditionUpsetOver (Null)"); }
                         }
-                        /*}*/
 
                         //message
                         if (String.IsNullOrEmpty(msgText) == false)

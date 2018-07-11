@@ -1378,7 +1378,7 @@ public class DataManager : MonoBehaviour
         actor.Status = status;
         //if actor resigned, loose -1 faction support
         if (status == ActorStatus.Resigned)
-        {  GameManager.instance.factionScript.ChangeFactionSupportLevel(GameManager.instance.factionScript.factionSupportActorResigns * -1, string.Format("{0} Resigned", actor.arc.name)); }
+        {  GameManager.instance.factionScript.ChangeFactionSupport(GameManager.instance.factionScript.factionSupportActorResigns * -1, string.Format("{0} Resigned", actor.arc.name)); }
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
     }

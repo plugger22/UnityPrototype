@@ -1168,13 +1168,13 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Add":
-                                    GameManager.instance.factionScript.ChangeFactionSupportLevel(effect.value, dataInput.textOrigin);
+                                    GameManager.instance.factionScript.ChangeFactionSupport(effect.value, dataInput.textOrigin);
                                     effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
                                         GameManager.instance.factionScript.factionAuthority.name, colourEnd);
                                     effectReturn.bottomText = string.Format("{0}Faction Support +{1}{2}", colourGood, effect.value, colourEnd);
                                     break;
                                 case "Subtract":
-                                    GameManager.instance.factionScript.ChangeFactionSupportLevel(effect.value, dataInput.textOrigin);
+                                    GameManager.instance.factionScript.ChangeFactionSupport(effect.value, dataInput.textOrigin);
                                     effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
                                         GameManager.instance.factionScript.factionAuthority.name, colourEnd);
                                     effectReturn.bottomText = string.Format("{0}Faction Support -{1}{2}", colourBad, effect.value, colourEnd);

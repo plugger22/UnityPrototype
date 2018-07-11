@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -16,11 +17,17 @@ public class FactionManager : MonoBehaviour
     [Tooltip("Amount Faction Support drops by whenever an Actor resigns for whatever reason")]
     [Range(0, 3)] public int factionSupportActorResigns = 1;
 
+    [Header("Faction Matters")]
+    [Tooltip("Timer set when faction support is first zero. Decrements each turn and when zero the Player is fired. Reset if support rises above zero")]
+    [Range(1, 10)] public int factionFirePlayerTimer = 3;
+
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
+    [HideInInspector] public int supportZeroTimer;          //countdown timer once support at zero. Player fired when timer reaches zero.
 
     private int _supportAuthority;                          //level of faction support (out of 10) enjoyed by authority side (Player/AI)
     private int _supportResistance;                         //level of faction support (out of 10) enjoyed by resistance side (Player/AI)
+    
     
     //fast access
     private GlobalSide globalAuthority;
@@ -115,7 +122,7 @@ public class FactionManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.StartTurnEarly:
-                CheckFactionSupport();
+                CheckFactionRenownSupport();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -146,7 +153,7 @@ public class FactionManager : MonoBehaviour
     /// <summary>
     /// checks if player given support (+1 renown) from faction based on a random roll vs. level of faction support
     /// </summary>
-    private void CheckFactionSupport()
+    private void CheckFactionRenownSupport()
     {
         int side = GameManager.instance.sideScript.PlayerSide.level;
         if (side > 0)
@@ -157,6 +164,7 @@ public class FactionManager : MonoBehaviour
             switch (side)
             {
                 case 1:
+                    //Authority
                     threshold = _supportAuthority * 10;
                     if (rnd < threshold)
                     {
@@ -176,6 +184,7 @@ public class FactionManager : MonoBehaviour
                     }
                     break;
                 case 2:
+                    //Resistance
                     threshold = _supportResistance * 10;
                     if (rnd < threshold)
                     {
@@ -194,9 +203,76 @@ public class FactionManager : MonoBehaviour
                         message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown);
                     }
                     break;
+                default:
+                    Debug.LogWarningFormat("Invalid side \"{0}\"", side);
+                    break;
             }
             if  (message != null)
             { GameManager.instance.dataScript.AddMessage(message); }
+        }
+    }
+
+    /// <summary>
+    /// Checks if support zero, sets timer, counts down each turn and fires player when timer expired. Timer cancelled if support rises
+    /// </summary>
+    public void CheckFactionFirePlayer()
+    {
+        //get support
+        int support = -1;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        switch(side.level)
+        {
+            case 1:
+                //Authority
+                support = _supportAuthority;
+                break;
+            case 2:
+                //Resistance
+                support = _supportResistance;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid side \"{0}\"", side);
+                break;
+        }
+        if (support == 0)
+        {
+            if (supportZeroTimer == 0)
+            {
+                //set timer
+                supportZeroTimer = factionFirePlayerTimer;
+                //message
+                string msgText = string.Format("Faction support Zero. Faction will FIRE you in {0} turn{1}", supportZeroTimer, supportZeroTimer != 1 ? "s" : "");
+                Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else
+            {
+                //decrement timer
+                supportZeroTimer--;
+                //fire player at zero
+                if (supportZeroTimer == 0)
+                {
+                    //Player fired -> outcome
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                    outcomeDetails.side = side;
+                    outcomeDetails.textTop = string.Format("The {0} faction has lost faith in your abilities", GetFactionName(side));
+                    outcomeDetails.textBottom = "You've been FIRED";
+                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "FactionManager.cs -> CheckFactionFirePlayer");
+
+                }
+                else
+                {
+                    //message
+                    string msgText = string.Format("Faction support Zero. Faction will FIRE you in {0} turn{1}", supportZeroTimer, supportZeroTimer != 1 ? "s" : "");
+                    Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+            }
+        }
+        else
+        {
+            //timer set to default (support > 0)
+            supportZeroTimer = 0;
         }
     }
 
@@ -350,7 +426,7 @@ public class FactionManager : MonoBehaviour
     /// use this to adjust faction support level (auto checks for various faction mechanics & generates a message)
     /// </summary>
     /// <param name="amount"></param>
-    public void ChangeFactionSupportLevel(int amountToChange, string reason)
+    public void ChangeFactionSupport(int amountToChange, string reason)
     {
         if (string.IsNullOrEmpty(reason) == true) { reason = "Unknown"; }
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
@@ -364,14 +440,13 @@ public class FactionManager : MonoBehaviour
             case 2:
                 //Resistance
                 SupportResistance += amountToChange;
-                Debug.LogFormat("[Fac] Resistance Faction Support: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, SupportAuthority, reason, "\n");
+                Debug.LogFormat("[Fac] Resistance Faction Support: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, SupportResistance, reason, "\n");
                 break;
             default:
                 Debug.LogWarningFormat("Invalid PlayerSide \"{0}\"", side);
                 break;
         }
     }
-
 
     //
     // - - - Debug - - -
