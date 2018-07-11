@@ -680,36 +680,38 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns true if player is Corrupt / Incompetent / Questionable, false otherwise
+    /// Returns a list of all bad conditions present, empty if none
     /// </summary>
     /// <returns></returns>
-    public bool CheckIfBadConditionPresent()
+    public List<Condition> GetNumOfBadConditionPresent()
     {
-        bool isPresent = false;
-
-            //use correct list for the player side
-            List<Condition> listOfConditions;
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-            else
-            {
-                //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-                else { listOfConditions = listOfConditionsAuthority; }
-            }
+        List<Condition> tempList = new List<Condition>();
+        bool checkCorrupt = true;
+        bool checkIncompetent = true;
+        bool checkQuestionable = true;
+        //use correct list for the player side
+        List<Condition> listOfConditions;
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
+        else
+        {
+            //AI control of both side
+            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
+            else { listOfConditions = listOfConditionsAuthority; }
+        }
         if (listOfConditions.Count > 0)
         {
             foreach (Condition condition in listOfConditions)
             {
-                if (condition.name.Equals(conditionCorrupt.name) == true)
-                { isPresent = true; break; }
-                if (condition.name.Equals(conditionIncompetent.name) == true)
-                { isPresent = true; break; }
-                if (condition.name.Equals(conditionQuestionable.name) == true)
-                { isPresent = true; break; }
+                if (checkCorrupt == true && condition.name.Equals(conditionCorrupt.name) == true)
+                { tempList.Add(conditionCorrupt); checkCorrupt = false; }
+                if (checkIncompetent == true && condition.name.Equals(conditionIncompetent.name) == true)
+                { tempList.Add(conditionIncompetent); checkIncompetent = false; }
+                if (checkQuestionable == true && condition.name.Equals(conditionQuestionable.name) == true)
+                { tempList.Add(conditionQuestionable); checkQuestionable = false; }
             }
         }
-        return isPresent;
+        return tempList;
     }
 
     //

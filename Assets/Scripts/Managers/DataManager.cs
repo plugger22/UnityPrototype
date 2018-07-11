@@ -1376,6 +1376,9 @@ public class DataManager : MonoBehaviour
         arrayOfActors[side.level, actor.actorSlotID] = null;
         arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
         actor.Status = status;
+        //if actor resigned, loose -1 faction support
+        if (status == ActorStatus.Resigned)
+        {  GameManager.instance.factionScript.ChangeFactionSupportLevel(-1, string.Format("{0} Resigned", actor.arc.name)); }
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
     }

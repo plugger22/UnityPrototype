@@ -2852,13 +2852,11 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "ActorResigns":
-                //NOTE: Not a Manage option and treated differently to the rest
+                //NOTE: Not a Manage option
                 if (actor.CheckTraitEffect(actorNeverResigns) == false)
                 {
                     if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
-                    {
-                        effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd);
-                    }
+                    { effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd); }
                 }
                 else
                 {
@@ -2869,7 +2867,7 @@ public class EffectManager : MonoBehaviour
                 }
                 break;
             case "ActorKills":
-                //NOTE: Not a Manage option and treated differently to the rest
+                //NOTE: Not a Manage option
                 effectResolve.bottomText = GameManager.instance.actorScript.ProcessKillRandomActor(actor);
                 break;
             default:

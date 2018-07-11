@@ -76,6 +76,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 3)] public int renownCostGear = 1;
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
     [Range(1, 99)] public int breakdownChance = 5;
+    [Tooltip("Chance, per turn, of a character resigning if the Player has a bad condition (corrupt/quesitonable/incompetent). Chance stacks for each bad condition present")]
+    [Range(0, 10)] public int playerBadResignChance = 5;
  
 
     //cached recruit picker choices
@@ -96,6 +98,9 @@ public class ActorManager : MonoBehaviour
     private GlobalSide globalResistance;
     private Condition conditionStressed;
     private Condition conditionBlackmailer;
+    private Condition conditionCorrupt;
+    private Condition conditionIncompetent;
+    private Condition conditionQuestionable;
     private TraitCategory actorCategory;
     private int secretBaseChance = -1;
     //cached TraitEffects
@@ -161,6 +166,9 @@ public class ActorManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
+        conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
+        conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
+        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
         secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
         maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
@@ -172,6 +180,9 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionBlackmailer != null, "Invalid conditionBlackmailer (Null)");
+        Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
+        Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
+        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
         Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
@@ -3544,6 +3555,14 @@ public class ActorManager : MonoBehaviour
                 //secrets
                 int chanceSecret = secretBaseChance;
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+                //compatibility (actors with player)
+                List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent();
+                if (listOfBadConditions.Count > 0)
+                {
+                    //warning message
+                    Message message = GameManager.instance.messageScript.GeneralWarning("Your subordinates are considering resigning (over your status)");
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
                 //
                 // - - - loop Active actors - - -
                 //
@@ -3575,16 +3594,14 @@ public class ActorManager : MonoBehaviour
                                     string blackmailOutcome = ProcessBlackmail(actor);
                                     if (string.IsNullOrEmpty(blackmailOutcome) == false)
                                     {
-                                        //TO DO -> Notification to player of black mail outcome (start turn)
+                                        //TO DO -> Notification to player of black mail outcome (start turn) -> already done via Messages -> improve Notification system needed
                                     }
                                 }
                                 //
                                 // - - - Compatibility - - -
                                 //
-                                if (GameManager.instance.playerScript.CheckIfBadConditionPresent() == true)
-                                {
-
-                                }
+                                if (listOfBadConditions.Count > 0)
+                                { ProcessCompatibility(actor, listOfBadConditions); }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
@@ -3615,6 +3632,14 @@ public class ActorManager : MonoBehaviour
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
                 bool isSecrets = false;
                 if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
+                //compatibility (actors with player)
+                List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent();
+                if (listOfBadConditions.Count > 0)
+                {
+                    //warning message
+                    Message message = GameManager.instance.messageScript.GeneralWarning("Your subordinates are considering resigning (over your status)");
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
                 //loop actors
                 for (int i = 0; i < arrayOfActors.Length; i++)
                 {
@@ -3647,6 +3672,11 @@ public class ActorManager : MonoBehaviour
                                         //TO DO -> Notification to player of black mail outcome (start turn)
                                     }
                                 }
+                                //
+                                // - - - Compatibility - - -
+                                //
+                                if (listOfBadConditions.Count > 0)
+                                { ProcessCompatibility(actor, listOfBadConditions); }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
@@ -3885,6 +3915,68 @@ public class ActorManager : MonoBehaviour
             }
         }
         return numTold;
+    }
+
+    /// <summary>
+    /// subMethod to check if actors resign due to the Player having a bad condition (Corrupt/Incompetent/Questionable)
+    /// NOTE: Actor checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="numOfBadConditions"></param>
+    private void ProcessCompatibility(Actor actor, List<Condition> listOfBadConditions)
+    {
+        if (listOfBadConditions != null)
+        {
+            int numOfBadConditions = listOfBadConditions.Count;
+            if (numOfBadConditions > 0)
+            {
+                string msgText = "";
+                GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+                //proceed only if actor doesn't have do not resign trait
+                if (actor.CheckTraitEffect(actorNeverResigns) == false)
+                {
+                    int chance = playerBadResignChance * numOfBadConditions;
+                    int rnd = Random.Range(0, 100);
+                    if (rnd < chance)
+                    {
+                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: RESIGNS need < {0}, rolled {1}{2}", chance, rnd, "\n");
+
+                        //actor resigns
+
+                        /*if (actor.CheckTraitEffect(actorNeverResigns) == false)
+                        {*/
+                        if (GameManager.instance.dataScript.RemoveCurrentActor(side, actor, ActorStatus.Resigned) == true)
+                        {
+
+                            //choose a random condition that actor is upset about
+                            Condition conditionUpsetOver = listOfBadConditions[Random.Range(0, numOfBadConditions)];
+                            if (conditionUpsetOver != null)
+                            {
+                                if (String.IsNullOrEmpty(conditionUpsetOver.resignTag) == false)
+                                { msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag); }
+                                else { Debug.LogWarning("Invalid conditionUpsetOver.resignTag (Null or empty)"); }
+                            }
+                            else { Debug.LogWarning("Invalid conditionUpsetOver (Null)"); }
+                        }
+                        /*}*/
+
+                        //message
+                        if (String.IsNullOrEmpty(msgText) == false)
+                        {
+                            Message message = GameManager.instance.messageScript.ActorStatus(msgText, actor.actorID, side, true);
+                            GameManager.instance.dataScript.AddMessage(message);
+                        }
+                    }
+                }
+                else
+                {
+                    //trait actorResignNone "Loyal"
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "to decline Resigning");
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfBadConditions (empty)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfBadConditions (Null)"); }
     }
 
     /// <summary>

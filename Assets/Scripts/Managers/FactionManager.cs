@@ -37,7 +37,7 @@ public class FactionManager : MonoBehaviour
     public int SupportAuthority
     {
         get { return _supportAuthority; }
-        set
+        private set
         {
             _supportAuthority = value;
             //update top widget bar if current side is authority
@@ -49,7 +49,7 @@ public class FactionManager : MonoBehaviour
     public int SupportResistance
     {
         get { return _supportResistance; }
-        set
+        private set
         {
             _supportResistance = value;
             //update top widget bar if current side is resistance
@@ -340,8 +340,19 @@ public class FactionManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// use this to adjust faction support level (auto checks for various faction mechanics & generates a message)
+    /// </summary>
+    /// <param name="amount"></param>
+    public void ChangeFactionSupportLevel(int amountToChange, string reason)
+    {
+
+    }
 
 
+    //
+    // - - - Debug - - -
+    //
 
     /// <summary>
     /// Debug method to display faction info
