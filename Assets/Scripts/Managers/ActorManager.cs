@@ -292,6 +292,7 @@ public class ActorManager : MonoBehaviour
             //run for Resistance Player
             CheckInactiveResistanceActors();
             CheckActiveResistanceActors();    //needs to be AFTER CheckInactiveActors
+            //run for Resistance Player
             GameManager.instance.factionScript.CheckFactionFirePlayer();
         }
         else
@@ -299,6 +300,7 @@ public class ActorManager : MonoBehaviour
             //run for Authority Player
             CheckInactiveAuthorityActors();
             CheckActiveAuthorityActors();    //needs to be AFTER CheckInactiveActors
+            //run for Authority Player
             GameManager.instance.factionScript.CheckFactionFirePlayer();
         }
         UpdateReserveActors();
@@ -311,13 +313,11 @@ public class ActorManager : MonoBehaviour
     {
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         {
-            //run for Resistance Player
-            GameManager.instance.factionScript.CheckFactionFirePlayer();
+
         }
         else
         {
-            //run for Authority Player
-            GameManager.instance.factionScript.CheckFactionFirePlayer();
+
         }
     }
 

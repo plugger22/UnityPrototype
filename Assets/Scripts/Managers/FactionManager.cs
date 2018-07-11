@@ -23,12 +23,13 @@ public class FactionManager : MonoBehaviour
 
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
-    [HideInInspector] public int supportZeroTimer;          //countdown timer once support at zero. Player fired when timer reaches zero.
 
+    private int supportZeroTimer;                           //countdown timer once support at zero. Player fired when timer reaches zero.
+    private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
     private int _supportAuthority;                          //level of faction support (out of 10) enjoyed by authority side (Player/AI)
     private int _supportResistance;                         //level of faction support (out of 10) enjoyed by resistance side (Player/AI)
-    
-    
+
+
     //fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -98,13 +99,14 @@ public class FactionManager : MonoBehaviour
         //support levels
         SupportAuthority = Random.Range(0, 10);
         SupportResistance = Random.Range(0, 10);
-        Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}", 
+        Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}",
             factionResistance, factionAuthority, "\n"));
         //update colours for AI Display tooltip data
         SetColours();
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "FactionManager");
+        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "FactionManager");
     }
 
     /// <summary>
@@ -118,6 +120,9 @@ public class FactionManager : MonoBehaviour
         //select event type
         switch (eventType)
         {
+            case EventType.EndTurnLate:
+                EndTurnLate();
+                break;
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -148,6 +153,15 @@ public class FactionManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
+    }
+
+    /// <summary>
+    /// End turn late event
+    /// </summary>
+    private void EndTurnLate()
+    {
+        //reset flag ready for next turn
+        isZeroTimerThisTurn = false;
     }
 
     /// <summary>
@@ -234,8 +248,10 @@ public class FactionManager : MonoBehaviour
                 Debug.LogWarningFormat("Invalid side \"{0}\"", side);
                 break;
         }
-        if (support == 0)
+        //only check once per turn
+        if (support == 0 && isZeroTimerThisTurn == false)
         {
+            isZeroTimerThisTurn = true;
             if (supportZeroTimer == 0)
             {
                 //set timer
@@ -255,8 +271,9 @@ public class FactionManager : MonoBehaviour
                     //Player fired -> outcome
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                     outcomeDetails.side = side;
-                    outcomeDetails.textTop = string.Format("The {0} faction has lost faith in your abilities", GetFactionName(side));
-                    outcomeDetails.textBottom = "You've been FIRED";
+                    outcomeDetails.textTop = string.Format("{0}The {1} faction has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
+                    outcomeDetails.textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
+                    outcomeDetails.sprite = GameManager.instance.guiScript.firedSprite;
                     EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "FactionManager.cs -> CheckFactionFirePlayer");
 
                 }
