@@ -12,6 +12,10 @@ public class FactionManager : MonoBehaviour
     [Tooltip("Support for both sides factions range from 0 to this amount")]
     [Range(0, 10)] public int maxFactionSupport = 10;
 
+    [Header("Actor Influence")]
+    [Tooltip("Amount Faction Support drops by whenever an Actor resigns for whatever reason")]
+    [Range(0, 3)] public int factionSupportActorResigns = 1;
+
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
 
@@ -40,6 +44,7 @@ public class FactionManager : MonoBehaviour
         private set
         {
             _supportAuthority = value;
+            _supportAuthority = Mathf.Clamp(_supportAuthority, 0, maxFactionSupport);
             //update top widget bar if current side is authority
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
             { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportAuthority, "FactionManager.cs -> SupportAuthority"); }
@@ -52,6 +57,7 @@ public class FactionManager : MonoBehaviour
         private set
         {
             _supportResistance = value;
+            _supportResistance = Mathf.Clamp(_supportResistance, 0, maxFactionSupport);
             //update top widget bar if current side is resistance
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
             { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportResistance, "FactionManager.cs -> SupportResistance"); }
@@ -346,7 +352,24 @@ public class FactionManager : MonoBehaviour
     /// <param name="amount"></param>
     public void ChangeFactionSupportLevel(int amountToChange, string reason)
     {
-
+        if (string.IsNullOrEmpty(reason) == true) { reason = "Unknown"; }
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        switch(side.level)
+        {
+            case 1:
+                //Authority
+                SupportAuthority += amountToChange;
+                Debug.LogFormat("[Fac] Authority Faction Support: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, SupportAuthority, reason, "\n");
+                break;
+            case 2:
+                //Resistance
+                SupportResistance += amountToChange;
+                Debug.LogFormat("[Fac] Resistance Faction Support: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, SupportAuthority, reason, "\n");
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid PlayerSide \"{0}\"", side);
+                break;
+        }
     }
 
 
