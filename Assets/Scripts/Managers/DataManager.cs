@@ -737,6 +737,26 @@ public class DataManager : MonoBehaviour
         return listOfMoveNodes.Exists(x => x == nodeID);
     }
 
+    /// <summary>
+    /// Debug method to display crisis nodes
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayCrisisNodes()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append("- listOfCrisisNodes");
+        if (listOfCrisisNodes.Count > 0)
+        {
+            foreach (Node node in listOfCrisisNodes)
+            { builder.AppendFormat("{0} {1}, {2}, ID {3}, crisisTimer {4} (\"{5}\")", "\n", node.nodeName, node.Arc.name, node.nodeID, node.crisisTimer, node.crisisType); }
+        }
+        else { builder.Append("No records found"); }
+        return builder.ToString();
+    }
+
+    //
+    // - - - Connections - - - 
+    //
 
     public bool AddConnection(Connection connection)
     {

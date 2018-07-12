@@ -265,6 +265,15 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //sixteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "Crisis Data"))
+            {
+                Debug.Log("[Dbg] Button -> Crisis Data");
+                if (debugDisplay != 26)
+                { debugDisplay = 26; }
+                else { debugDisplay = 0; }
+            }
+
 
             //
             // - - - Options (second box)
@@ -617,6 +626,13 @@ public class DebugGUI : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes, "DebugGUI.cs -> OnGUI");
             }
 
+            //fifth button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Crisis Nodes"))
+            {
+                Debug.Log("[Dbg] Button -> Show Crisis Nodes");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.CrisisNodes, "DebugGUI.cs -> OnGUI");
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
@@ -848,6 +864,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.secretScript.DisplaySecretData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
+                        break;
+                    //Node Crisis Data Display
+                    case 26:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DisplayCrisisNodes();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 400), analysis, customBackground);
                         break;
                 }
             }

@@ -221,6 +221,7 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
         /*EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");*/
+        /*EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "NodeManager");*/
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
@@ -313,8 +314,11 @@ public class NodeManager : MonoBehaviour
                 MoveReturnData data = Param as MoveReturnData;
                 ProcessMoveOutcome(data);
                 break;*/
+            /*case EventType.StartTurnEarly:
+                break;*/
             case EventType.StartTurnLate:
                 ProcessNodeTimers();
+                ProcessNodeCrisis();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -671,6 +675,30 @@ public class NodeManager : MonoBehaviour
                 {
                     Debug.LogWarning("Invalid decisionList (Null)");
                     displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Decision districts", colourEnd);
+                }
+                break;
+            case NodeUI.CrisisNodes:
+                //highlight nodes in DataManager.cs -> ListOfCrisisNodes (ones a node crisis)
+                List<Node> crisisList = GameManager.instance.dataScript.GetListOfCrisisNodes();
+                if (crisisList != null)
+                {
+                    if (crisisList.Count > 0)
+                    {
+                        foreach (Node node in crisisList)
+                        {
+                            if (node != null)
+                            { node.SetMaterial(materialActive); }
+                            else { Debug.LogWarning("Invalid node (Null)"); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Crisis district{4}{5}", colourDefault, crisisList.Count, colourEnd, colourHighlight,
+                            crisisList.Count != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid crisisList (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Crisis districts", colourEnd);
                 }
                 break;
             case NodeUI.NearNeighbours:
