@@ -750,7 +750,7 @@ public class DataManager : MonoBehaviour
             foreach (Node node in listOfCrisisNodes)
             { builder.AppendFormat("{0} {1}, {2}, ID {3}, crisisTimer {4} (\"{5}\")", "\n", node.nodeName, node.Arc.name, node.nodeID, node.crisisTimer, node.crisisType); }
         }
-        else { builder.AppendFormat("{0}{1} No records found", "\n", "\n"); }
+        else { builder.AppendFormat("{0} No records found", "\n"); }
         return builder.ToString();
     }
 
