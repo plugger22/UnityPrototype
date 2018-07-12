@@ -744,13 +744,13 @@ public class DataManager : MonoBehaviour
     public string DisplayCrisisNodes()
     {
         StringBuilder builder = new StringBuilder();
-        builder.Append("- listOfCrisisNodes");
+        builder.AppendFormat("- listOfCrisisNodes{0}", "\n");
         if (listOfCrisisNodes.Count > 0)
         {
             foreach (Node node in listOfCrisisNodes)
             { builder.AppendFormat("{0} {1}, {2}, ID {3}, crisisTimer {4} (\"{5}\")", "\n", node.nodeName, node.Arc.name, node.nodeID, node.crisisTimer, node.crisisType); }
         }
-        else { builder.Append("No records found"); }
+        else { builder.AppendFormat("{0}{1} No records found", "\n", "\n"); }
         return builder.ToString();
     }
 

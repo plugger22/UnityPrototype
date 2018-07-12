@@ -261,6 +261,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.Centre:
                     case NodeUI.NearNeighbours:
                     case NodeUI.DecisionNodes:
+                    case NodeUI.CrisisNodes:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
                     case NodeUI.NodeArc2:
@@ -275,7 +276,8 @@ public class NodeManager : MonoBehaviour
                         break;
 
                     default:
-                        Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", Param.ToString(), "\n"));
+                        /*Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", Param.ToString(), "\n"));*/
+                        Debug.LogError(string.Format("Invalid NodeUI param \"{0}\"{1}", nodeUI, "\n"));
                         break;
                 }
                 break;
