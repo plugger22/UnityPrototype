@@ -1315,5 +1315,34 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-    //new methods above here
-}
+    //
+    // - - - Nodes - - -
+    //
+
+    /// <summary>
+    /// Node undergoes a crisis (commences, averted, finishes)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public Message NodeCrisis(string text, int nodeID, int reductionInCityLoyalty = -1)
+    {
+        Debug.Assert(nodeID > -1, "Invalid nodeID ( < zero)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.NODE;
+            message.subType = MessageSubType.Node_Crisis;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = nodeID;
+            message.data1 = reductionInCityLoyalty;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+        //new methods above here
+    }

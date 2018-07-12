@@ -91,7 +91,7 @@
     // - - - Messages - - -
     //
     public enum MessageCategory { None, Current, Pending, Archive, AI }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT, DECISION, FACTION, GENERAL }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, EFFECT, DECISION, FACTION, NODE, GENERAL }
     public enum MessageSubType
     {
         None,
@@ -147,6 +147,8 @@
         //Effect
         Ongoing_Created,
         Ongoing_Expired,
+        //Node
+        Node_Crisis,
         //Faction
         Faction_Support
 

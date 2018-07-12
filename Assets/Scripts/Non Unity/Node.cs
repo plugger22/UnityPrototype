@@ -41,6 +41,10 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isDamageTeam;        //Damage team present at node
     [HideInInspector] public bool isErasureTeam;       //Erasure team present at node
 
+    [HideInInspector] public int crisisTimer;           //counts down a node crisis
+    [HideInInspector] public int waitTimer;             //counts down interval between possible crisis
+    [HideInInspector] public string crisisType;         //type of crisis, eg. "Riot"
+
 
     private Coroutine myCoroutine;
 
@@ -70,7 +74,7 @@ public class Node : MonoBehaviour
 
     //private backing fields
     private int _stability;
-    private int _support;
+    private int _support;                               //support for resistance
     private int _security;
     private int _stabilityStart;                        //values at game start (base line)
     private int _supportStart;
