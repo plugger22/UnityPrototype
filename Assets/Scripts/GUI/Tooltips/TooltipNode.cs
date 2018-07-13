@@ -18,6 +18,7 @@ public class TooltipNode : MonoBehaviour
     public TextMeshProUGUI nodeType;
     public TextMeshProUGUI spiderTimer;
     public TextMeshProUGUI tracerTimer;
+    public TextMeshProUGUI crisis;
     public TextMeshProUGUI nodeActive;
     public TextMeshProUGUI nodeStatsFixed;
     public TextMeshProUGUI nodeStatsVar;
@@ -26,6 +27,7 @@ public class TooltipNode : MonoBehaviour
     public TextMeshProUGUI nodeTarget;
 
     public Image dividerTop;                   //Side specific sprites for tooltips
+    public Image dividerCrisis;
     public Image dividerUpperMiddle;
     public Image dividerLowerMiddle;
     public Image dividerStats;
@@ -220,6 +222,20 @@ public class TooltipNode : MonoBehaviour
         //set up tooltipNode object
         nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd);
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);
+        //
+        // - - - Crisis - - -
+        //
+        if (data.listOfCrisis != null)
+        {
+            StringBuilder builderCrisis = new StringBuilder();
+            //line one red
+            //line two yellow
+            //line 3 and 4 alert
+            //fix up divider on/off
+
+            crisis.text = builderCrisis.ToString();
+        }
+        else { crisis.text = ""; }
         //
         // - - - Actor Contacts - - -
         //
@@ -519,6 +535,7 @@ public class TooltipNode : MonoBehaviour
             case "Authority":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                dividerCrisis.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
@@ -527,6 +544,7 @@ public class TooltipNode : MonoBehaviour
             case "Resistance":
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerCrisis.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;

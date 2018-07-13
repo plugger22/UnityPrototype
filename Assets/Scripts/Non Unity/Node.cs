@@ -360,6 +360,15 @@ public class Node : MonoBehaviour
                     List<string> targetList = new List<string>();
                     if (targetID > -1)
                     { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID, isTargetKnown); }
+                    //crisis info
+                    List<string> crisisList = new List<string>();
+                    if (crisis != null)
+                    {
+                        crisisList.Add(string.Format("{0} CRISIS", crisis.tag));
+                        crisisList.Add(string.Format("{0} turns left", crisisTimer));
+                        crisisList.Add(string.Format("City Loyalty -{0}", GameManager.instance.nodeScript.crisisCityLoyalty));
+                        crisisList.Add("If crisis not Resolved");
+                    }
                     //activity info
                     List<string> activityList = null;
                     if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
@@ -407,6 +416,7 @@ public class Node : MonoBehaviour
                         spiderTimer = spiderTimer,
                         tracerTimer = tracerTimer,
                         arrayOfStats = GetStats(),
+                        listOfCrisis = crisisList,
                         listOfActive = activeList,
                         listOfEffects = effectsList,
                         listOfTeams = teamList,

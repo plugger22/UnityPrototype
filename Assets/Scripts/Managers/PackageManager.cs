@@ -33,6 +33,7 @@ namespace packageAPI
         public int spiderTimer;                                         //ignore timers if spider or tracer aren't present
         public int tracerTimer;
         public int[] arrayOfStats;
+        public List<string> listOfCrisis;
         public List<string> listOfActive;
         public List<EffectDataTooltip> listOfEffects;
         public List<string> listOfTeams;
