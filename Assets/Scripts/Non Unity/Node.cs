@@ -43,7 +43,7 @@ public class Node : MonoBehaviour
 
     [HideInInspector] public int crisisTimer;           //counts down a node crisis
     [HideInInspector] public int waitTimer;             //counts down interval between possible crisis
-    [HideInInspector] public string crisisType;         //type of crisis, eg. "Riot"
+    [HideInInspector] public NodeCrisis crisis;             //type of Nodecrisis, eg. "Riot"
 
 
     private Coroutine myCoroutine;

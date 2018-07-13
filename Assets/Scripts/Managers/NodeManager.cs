@@ -2058,6 +2058,7 @@ public class NodeManager : MonoBehaviour
         Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
         List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
         List<Node> tempList = new List<Node>(); //add all current crisis nodes in list then, once done, overwrite listOfCrisisNodes
+        List<NodeDatapoint> listOfDatapoints = new List<NodeDatapoint>();
         if (tempDict != null)
         {
             if (listOfCrisisNodes != null)
@@ -2084,7 +2085,7 @@ public class NodeManager : MonoBehaviour
                                 //crisis AVERTED
                                 node.Value.crisisTimer = 0;
                                 node.Value.waitTimer = crisisWaitTimer;
-                                node.Value.crisisType = "Unknown";
+                                node.Value.crisis = null;
                                 //admin
                                 msgText = string.Format("{0}, {1}, ID {2} crisis AVERTED", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID);
                                 Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID);
@@ -2099,7 +2100,7 @@ public class NodeManager : MonoBehaviour
                                     //add to list of crisis nodes
                                     tempList.Add(node.Value);
                                     //warning message
-                                    msgText = string.Format("{0} Crisis in {1}, {2}, ({3} turn{4} left to Resolve)", node.Value.crisisType, node.Value.nodeName, node.Value.Arc.name,
+                                    msgText = string.Format("{0} Crisis in {1}, {2}, ({3} turn{4} left to Resolve)", node.Value.crisis.tag, node.Value.nodeName, node.Value.Arc.name,
                                         node.Value.crisisTimer, node.Value.crisisTimer != 1 ? "s" : "");
                                     Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
                                     GameManager.instance.dataScript.AddMessage(message);
@@ -2108,7 +2109,7 @@ public class NodeManager : MonoBehaviour
                                 {
                                     //Crisis COMPLETED (goes Critical)
                                     node.Value.waitTimer = crisisWaitTimer;
-                                    node.Value.crisisType = "Unknown";
+                                    node.Value.crisis = null;
                                     //lower city support
                                     int loyalty = GameManager.instance.cityScript.CityLoyalty;
                                     loyalty -= crisisCityLoyalty;
@@ -2117,7 +2118,7 @@ public class NodeManager : MonoBehaviour
                                     //admin
                                     Debug.LogFormat("[Cit] NodeManager.cs -> ProcessNodeCrisis: {0} Loyalty -{1}, now {2}{3}", GameManager.instance.cityScript.GetCityName(), 
                                         crisisCityLoyalty, loyalty, "\n");
-                                    msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.Value.nodeName, node.Value.Arc, node.Value.crisisType);
+                                    msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.Value.nodeName, node.Value.Arc, node.Value.crisis?.tag);
                                     Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID, crisisCityLoyalty);
                                     GameManager.instance.dataScript.AddMessage(message);
                                 }
@@ -2132,9 +2133,9 @@ public class NodeManager : MonoBehaviour
                         else
                         {
                             //check for datapoints in the DANGER ZONE
-                            if (node.Value.Security <= crisisSecurity) { numOfDangerSigns++; }
-                            if (node.Value.Stability <= crisisStability) { numOfDangerSigns++; }
-                            if (node.Value.Support >= crisisSupport) { numOfDangerSigns++; }
+                            if (node.Value.Security <= crisisSecurity) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeSecurity); }
+                            if (node.Value.Stability <= crisisStability) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeStability); }
+                            if (node.Value.Support >= crisisSupport) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeSupport); }
                             //Danger signs present
                             if (numOfDangerSigns > 0)
                             {
@@ -2150,13 +2151,34 @@ public class NodeManager : MonoBehaviour
                                     tempList.Add(node.Value);
 
                                     //Get crisis type
+                                    NodeDatapoint datapoint;
+                                    int numOfDatapoints = listOfDatapoints.Count;
+                                    if (numOfDatapoints > 0)
+                                    {
+                                        //get random datapoint
+                                        datapoint = listOfDatapoints[Random.Range(0, numOfDatapoints)];
 
-                                    node.Value.crisisType = "Unknown";
-
+                                    }
+                                    else
+                                    {
+                                        //safety backup
+                                        Debug.LogWarning("Invalid listOfDatapoints (Empty) -> default datapoint Stability provided");
+                                        datapoint = GameManager.instance.globalScript.nodeStability;
+                                    }
+                                    node.Value.crisis = GameManager.instance.dataScript.GetRandomNodeCrisis(datapoint);
+                                    if (node.Value.crisis == null)
+                                    {
+                                        //safety backup
+                                        Debug.LogWarning("Invalid node.Value.crisis (Null) -> default value Crisis provided (nodeCrisisID 0)");
+                                        node.Value.crisis = GameManager.instance.dataScript.GetNodeCrisisByID(0);
+                                        //if backup failed, generate an error
+                                        if (node.Value.crisis == null)
+                                        { Debug.LogError("Invalid nodeCrisis default backup nodeCrisisID 0 (Null)"); }
+                                    }
                                     //admin
                                     Debug.LogFormat("[Rnd] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, CRISIS need < {2}, rolled {3}", node.Value.Arc.name, node.Value.nodeID, 
                                         chance, rnd);
-                                    msgText = string.Format("{0}, {1}, ID {2} crisis COMMENCES ({3})", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID, node.Value.crisisType);
+                                    msgText = string.Format("{0}, {1}, ID {2} crisis COMMENCES ({3})", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID, node.Value.crisis.tag);
                                     Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID);
                                     GameManager.instance.dataScript.AddMessage(message);
                                 }

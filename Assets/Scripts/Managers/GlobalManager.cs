@@ -28,6 +28,10 @@ public class GlobalManager : MonoBehaviour
     //globalWho
     [HideInInspector] public GlobalWho whoPlayer;
     [HideInInspector] public GlobalWho whoActor;
+    //NodeDatapoint
+    [HideInInspector] public NodeDatapoint nodeStability;
+    [HideInInspector] public NodeDatapoint nodeSupport;
+    [HideInInspector] public NodeDatapoint nodeSecurity;
     //TraitCategory
     [HideInInspector] public TraitCategory categoryActor;
     [HideInInspector] public TraitCategory categoryMayor;
@@ -198,6 +202,40 @@ public class GlobalManager : MonoBehaviour
                     case "Both":
                         sideBoth = side.Value;
                         side.Value.level = 3;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid side \"{0}\"", side.Key);
+                        break;
+                }
+            }
+            //error check
+            Debug.Assert(sideAI != null, "Invalid sideAI (Null)");
+            Debug.Assert(sideAuthority != null, "Invalid sideAuthority (Null)");
+            Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
+            Debug.Assert(sideBoth != null, "Invalid sideBoth (Null)");
+        }
+        //
+        // - - - NodeDatapoint - - -
+        //
+        Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
+        if (dictOfNodeDatapoints != null)
+        {
+            foreach (var side in dictOfNodeDatapoints)
+            {
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                switch (side.Key)
+                {
+                    case "Stability":
+                        nodeStability = side.Value;
+                        side.Value.level = 0;
+                        break;
+                    case "Support":
+                        nodeSupport = side.Value;
+                        side.Value.level = 1;
+                        break;
+                    case "Security":
+                        nodeSecurity = side.Value;
+                        side.Value.level = 2;
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid side \"{0}\"", side.Key);

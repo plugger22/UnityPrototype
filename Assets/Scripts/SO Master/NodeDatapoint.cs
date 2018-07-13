@@ -9,4 +9,6 @@ using UnityEngine;
 public class NodeDatapoint : ScriptableObject
 {
     [HideInInspector] public int nodeDataID;               //unique #, zero based, assigned automatically by DataManager.Initialise
+
+    [HideInInspector] public int level;                    //dynamically assigned by GlobalManager.cs -> Stability 0, Support 1, Security 2
 }

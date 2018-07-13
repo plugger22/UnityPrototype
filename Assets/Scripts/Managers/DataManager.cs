@@ -23,10 +23,17 @@ public class DataManager : MonoBehaviour
     private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None->4 x Null)
     private bool[,] arrayOfActorsPresent;                                                       //array determining if an actorSlot is filled (True) or vacant (False)
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
+
+    //Nodes
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
     private List<Node> listOfMostConnectedNodes = new List<Node>();                             //top connected nodes (3+ connections), used by AI for ProcessSpiderTeam
     private List<Node> listOfDecisionNodes = new List<Node>();                                  //dynamic list of nodes used for connection security level decisions
     private List<Node> listOfCrisisNodes = new List<Node>();
+    private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();
+    private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
+    private List<NodeCrisis> listOfCrisisStability = new List<NodeCrisis>();
+    
+    //Actors
     private List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();               //actors (not player)
     private List<Image> listOfActorPortraits = new List<Image>();                               //actors (not player)
 
@@ -143,10 +150,11 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                     //Key -> mayorID, Value -> Mayor
     private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();      //Key -> aiDecID, Value -> DecisionAI
     private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();        //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
-    private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>(); //Key -> actBreakID, Value -> ActorBreakdown
+    private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();   //Key -> actBreakID, Value -> ActorBreakdown
     private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                  //Key -> secretID, Value -> Secret
-    private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>(); //Key -> SecretType.name, Value -> SecretType
+    private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();      //Key -> SecretType.name, Value -> SecretType
     private Dictionary<string, SecretStatus> dictOfSecretStatus = new Dictionary<string, SecretStatus>(); //Key -> SecretStatus.name, Value -> SecretStatus
+    private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();        //Key -> nodeCrisisID, Value -> NodeCrisis
     
 
     //global SO's (enum equivalents)
@@ -157,6 +165,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalWho> dictOfGlobalWho = new Dictionary<string, GlobalWho>();            //Key -> GlobaWho.name, Value -> GlobalWho
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
+    private Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = new Dictionary<string, NodeDatapoint>();   //Key -> NodeDatapoint.name, Value -> NodeDatapoint
 
 
     /// <summary>
@@ -184,6 +193,20 @@ public class DataManager : MonoBehaviour
             Node node = nodeObj.Value.GetComponent<Node>();
             listOfNodesByType[node.Arc.nodeArcID].Add(node);
         }
+        //Node Crisis placed into pick lists
+        if (dictOfNodeCrisis != null)
+        {
+            foreach (var crisis in dictOfNodeCrisis)
+            {
+                if (crisis.Value != null)
+                { AddNodeCrisisToList(crisis.Value); }
+                else { Debug.LogWarningFormat("Invalid nodeCrisis \"{0}\" (Null)", crisis.Key); }
+            }
+            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisStability has {0} records", listOfCrisisStability.Count);
+            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSupport has {0} records", listOfCrisisSupport.Count);
+            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
+        }
+        else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "DataManager");
     }
@@ -308,6 +331,10 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, int> GetDictOfLookUpNodeArcs()
     { return dictOfLookUpNodeArcs; }
+
+
+    public Dictionary<string, NodeDatapoint> GetDictOfNodeDatapoints()
+    { return dictOfNodeDatapoints; }
 
 
     /// <summary>
@@ -748,7 +775,7 @@ public class DataManager : MonoBehaviour
         if (listOfCrisisNodes.Count > 0)
         {
             foreach (Node node in listOfCrisisNodes)
-            { builder.AppendFormat("{0} {1}, {2}, ID {3}, crisisTimer {4} (\"{5}\")", "\n", node.nodeName, node.Arc.name, node.nodeID, node.crisisTimer, node.crisisType); }
+            { builder.AppendFormat("{0} {1}, {2}, ID {3}, crisisTimer {4} (\"{5}\")", "\n", node.nodeName, node.Arc.name, node.nodeID, node.crisisTimer, node.crisis.tag); }
         }
         else { builder.AppendFormat("{0} No records found", "\n"); }
         return builder.ToString();
@@ -813,6 +840,139 @@ public class DataManager : MonoBehaviour
 
     public List<Node> GetListOfDecisionNodes()
     { return listOfDecisionNodes; }
+
+    public Dictionary<int, NodeCrisis> GetDictOfNodeCrisis()
+    { return dictOfNodeCrisis; }
+
+    /// <summary>
+    /// returns a NodeCrisis pick list, null if not found
+    /// </summary>
+    /// <param name="datapoint"></param>
+    /// <returns></returns>
+    public List<NodeCrisis> GetNodeCrisisList(NodeDatapoint datapoint)
+    {
+        List<NodeCrisis> tempList = null;
+        if (datapoint != null)
+        {
+            switch(datapoint.level)
+            {
+                case 0:
+                    //stability
+                    tempList = listOfCrisisStability;
+                    break;
+                case 1:
+                    //support
+                    tempList = listOfCrisisSupport;
+                    break;
+                case 2:
+                    //security
+                    tempList = listOfCrisisSecurity;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid NodeDatapoint \"{0}\"", datapoint.name);
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid nodeDatapoint (Null)"); }
+        return tempList;
+    }
+
+    /// <summary>
+    /// returns a random Node Crisis from the appropriate pick list, null if none found
+    /// </summary>
+    /// <param name="datapoint"></param>
+    /// <returns></returns>
+    public NodeCrisis GetRandomNodeCrisis(NodeDatapoint datapoint)
+    {
+        int count;
+        NodeCrisis crisis = null;
+        if (datapoint != null)
+        {
+            switch (datapoint.level)
+            {
+                case 0:
+                    //stability
+                    if (listOfCrisisStability != null)
+                    {
+                        count = listOfCrisisStability.Count;
+                        if (count > 0)
+                        { crisis = listOfCrisisStability[Random.Range(0, count)]; }
+                    }
+                    else { Debug.LogWarning("Invalid listOfCrisisStability (Null)"); }
+                    break;
+                case 1:
+                    //support
+                    if (listOfCrisisSupport != null)
+                    {
+                        count = listOfCrisisSupport.Count;
+                        if (count > 0)
+                        { crisis = listOfCrisisSupport[Random.Range(0, count)]; }
+                    }
+                    else { Debug.LogWarning("Invalid listOfCrisisSupport (Null)"); }
+                    break;
+                case 2:
+                    //security
+                    if (listOfCrisisSecurity != null)
+                    {
+                        count = listOfCrisisSecurity.Count;
+                        if (count > 0)
+                        { crisis = listOfCrisisSecurity[Random.Range(0, count)]; }
+                    }
+                    else { Debug.LogWarning("Invalid listOfCrisisSecurity (Null)"); }
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid NodeDatapoint \"{0}\"", datapoint.name);
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid nodeDatapoint (Null)"); }
+        return crisis;
+    }
+
+    /// <summary>
+    /// returns a specific crisis based on nodeCrisisID, null if not found
+    /// </summary>
+    /// <param name="nodeCrisisID"></param>
+    /// <returns></returns>
+    public NodeCrisis GetNodeCrisisByID(int nodeCrisisID)
+    {
+            NodeCrisis crisis = null;
+            if (dictOfNodeCrisis.TryGetValue(nodeCrisisID, out crisis))
+            {
+                return crisis;
+            }
+            return null;
+    }
+
+    /// <summary>
+    /// Game start -> add crisis to the appropriate pick lists
+    /// </summary>
+    /// <param name="datapoint"></param>
+    public void AddNodeCrisisToList(NodeCrisis crisis)
+    {
+        if (crisis != null)
+        {
+            switch(crisis.datapoint.level)
+            {
+                case 0:
+                    //stability
+                    listOfCrisisStability.Add(crisis);
+                    break;
+                case 1:
+                    //support
+                    listOfCrisisSupport.Add(crisis);
+                    break;
+                case 2:
+                    //security
+                    listOfCrisisSecurity.Add(crisis);
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid crisis.datapoint \"{0}\"", crisis.datapoint.name);
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid crisis (Null) -> not added to list"); }
+    }
 
     /// <summary>
     /// Centred and Most Connected nodes with at least one no security connection that isn't a dead end. Used by AI

@@ -305,6 +305,33 @@ public class ImportManager : MonoBehaviour
             Debug.Assert(dictOfSecretStatus.Count > 0, "No SecretStatus in dictOfSecretStatus");
         }
         else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }
+        //
+        // - - - Node Datapoints - - -
+        //
+        Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
+        if (dictOfNodeDatapoints != null)
+        {
+            var datapointGUID = AssetDatabase.FindAssets("t:NodeDatapoint");
+            foreach (var guid in datapointGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object datapointObject = AssetDatabase.LoadAssetAtPath(path, typeof(NodeDatapoint));
+                //assign a zero based unique ID number
+                NodeDatapoint datapoint = datapointObject as NodeDatapoint;
+                //add to dictionary
+                try
+                { dictOfNodeDatapoints.Add(datapoint.name, datapoint); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Node Datapoint (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid Node Datapoint (duplicate) \"{0}\"", datapoint.name); }
+            }
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfNodeDatapoints has {0} entries{1}", dictOfNodeDatapoints.Count, "\n");
+            Debug.Assert(dictOfNodeDatapoints.Count > 0, "No datapoints in dictOfNodeDatapoints");
+        }
+        else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }
     }
 
 
@@ -364,6 +391,37 @@ public class ImportManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfLookUpNodeArcs (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfNodeArcs (Null) -> Import failed"); }
+        //
+        // - - - Node Crisis - - -
+        //
+        Dictionary<int, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
+        if (dictOfNodeCrisis != null)
+        {
+            counter = 0;
+            //get GUID of all SO Node Objects -> Note that I'm searching the entire database here so it's not folder dependant
+            var nodeCrisisGUID = AssetDatabase.FindAssets("t:NodeCrisis");
+            foreach (var guid in nodeCrisisGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object nodeCrisisObject = AssetDatabase.LoadAssetAtPath(path, typeof(NodeCrisis));
+                //assign a zero based unique ID number
+                NodeCrisis nodeCrisis = nodeCrisisObject as NodeCrisis;
+                nodeCrisis.nodeCrisisID = counter++;
+                //add to dictionary
+                try
+                { dictOfNodeCrisis.Add(nodeCrisis.nodeCrisisID, nodeCrisis); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid NodeCrisis (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid NodeCrisis (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeCrisis.name)); counter--; }
+            }
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfNodeCrisis has {0} entries{1}", dictOfNodeCrisis.Count, "\n");
+            Debug.Assert(dictOfNodeCrisis.Count == counter, "Mismatch on Count");
+            Debug.Assert(dictOfNodeCrisis.Count > 0, "No Node Crisis have been imported");
+        }
+        else { Debug.LogError("Invalid dictOfNodeCrisis (Null) -> Import failed"); }
         //
         // - - - Traits - - -
         //

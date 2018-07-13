@@ -10,7 +10,7 @@ public class NodeCrisis : ScriptableObject
 {
     [HideInInspector] public int nodeCrisisID;               //unique #, zero based, assigned automatically by DataManager.Initialise
 
-    public NodeDatapoint dataType;
+    public NodeDatapoint datapoint;
     [Tooltip("Used for shorter description")]
     public string tag;
     [Tooltip("Used for fuller description")]
