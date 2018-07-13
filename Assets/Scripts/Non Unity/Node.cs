@@ -43,15 +43,16 @@ public class Node : MonoBehaviour
 
     [HideInInspector] public int crisisTimer;           //counts down a node crisis
     [HideInInspector] public int waitTimer;             //counts down interval between possible crisis
-    [HideInInspector] public NodeCrisis crisis;             //type of Nodecrisis, eg. "Riot"
+    [HideInInspector] public NodeCrisis crisis = null;             //type of Nodecrisis, eg. "Riot"
 
 
     private Coroutine myCoroutine;
 
     //fast access fields
-    private int stabilityTeamEffect;
-    private int securityTeamEffect;
-    private int supportTeamEffect;
+    private int stabilityTeamEffect = 999;
+    private int securityTeamEffect = 999;
+    private int supportTeamEffect = 999;
+    private int crisisCityLoyalty = 999;
 
     public Material _Material { get; private set; }    //material renderer uses to draw node
     public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
@@ -206,6 +207,11 @@ public class Node : MonoBehaviour
         stabilityTeamEffect = GameManager.instance.teamScript.civilNodeEffect;
         securityTeamEffect = GameManager.instance.teamScript.controlNodeEffect;
         supportTeamEffect = GameManager.instance.teamScript.mediaNodeEffect * -1;
+        crisisCityLoyalty = GameManager.instance.nodeScript.crisisCityLoyalty;
+        Debug.Assert(stabilityTeamEffect != 999, "Invalid stabilityTeamEffect (999)");
+        Debug.Assert(securityTeamEffect != 999, "Invalid securityTeamEffect (999)");
+        Debug.Assert(supportTeamEffect != 999, "Invalid supportTeamEffect (999)");
+        Debug.Assert(crisisCityLoyalty != 999, "Invalid crisisCityLoyalty (999)");
     }
 
 
@@ -361,13 +367,13 @@ public class Node : MonoBehaviour
                     if (targetID > -1)
                     { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID, isTargetKnown); }
                     //crisis info
-                    List<string> crisisList = new List<string>();
+                    List<string> crisisList= new List<string>();
                     if (crisis != null)
                     {
                         crisisList.Add(string.Format("{0} CRISIS", crisis.tag));
                         crisisList.Add(string.Format("{0} turns left", crisisTimer));
-                        crisisList.Add(string.Format("City Loyalty -{0}", GameManager.instance.nodeScript.crisisCityLoyalty));
-                        crisisList.Add("If crisis not Resolved");
+                        crisisList.Add(string.Format("City Loyalty -{0}", crisisCityLoyalty));
+                        crisisList.Add("if crisis not Resolved");
                     }
                     //activity info
                     List<string> activityList = null;

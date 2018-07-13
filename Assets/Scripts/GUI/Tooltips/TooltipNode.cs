@@ -167,6 +167,7 @@ public class TooltipNode : MonoBehaviour
         dividerTop.gameObject.SetActive(true);
         //show only if node active for at least one actor
         nodeActive.gameObject.SetActive(false);
+        dividerCrisis.gameObject.SetActive(false);
         dividerUpperMiddle.gameObject.SetActive(false);
         dividerLowerMiddle.gameObject.SetActive(true);
         dividerStats.gameObject.SetActive(false);
@@ -225,17 +226,43 @@ public class TooltipNode : MonoBehaviour
         //
         // - - - Crisis - - -
         //
-        if (data.listOfCrisis != null)
+        int numOfCrisis = data.listOfCrisis.Count;
+        if ( numOfCrisis > 0)
         {
             StringBuilder builderCrisis = new StringBuilder();
-            //line one red
-            //line two yellow
-            //line 3 and 4 alert
-            //fix up divider on/off
-
+            //listOfCrisis has 4 fixed topic entries
+            for (int index = 0; index < numOfCrisis; index++)
+            {
+                switch(index)
+                {
+                    case 0:
+                        //'x' CRISIS
+                        builderCrisis.AppendFormat("{0}<b>{1}</b>{2}", colourBad, data.listOfCrisis[index], colourEnd);
+                        break;
+                    case 1:
+                        //'x' turns left
+                        builderCrisis.AppendFormat("{0}{1}{2}{3}", "\n", colourNeutral, data.listOfCrisis[index], colourEnd);
+                        break;
+                    case 2:
+                    case 3:
+                        //info dump
+                        builderCrisis.AppendFormat("{0}<size=95%>{1}{2}{3}</size>", "\n", colourAlert, data.listOfCrisis[index], colourEnd);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid listOfCrisis[{0}] \"{1}\"", index, data.listOfCrisis[index]);
+                        break;
+                }
+            }
+            //divider
+            dividerCrisis.gameObject.SetActive(true);
             crisis.text = builderCrisis.ToString();
+            crisis.gameObject.SetActive(true);
         }
-        else { crisis.text = ""; }
+        else
+        {
+            crisis.text = "";
+            crisis.gameObject.SetActive(false);
+        }
         //
         // - - - Actor Contacts - - -
         //
