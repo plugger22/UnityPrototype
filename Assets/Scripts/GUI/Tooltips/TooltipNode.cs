@@ -46,10 +46,14 @@ public class TooltipNode : MonoBehaviour
     //fast access fields
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
+    private int maxStatValue = -1;
+    private int minStatValue = -1;
 
     //colour Palette
-    private string colourGood;
+    private string colourGoodSide;      //side dependant
+    private string colourBadSide;
     private string colourNeutral;
+    private string colourGood;          //absolute
     private string colourBad;
     private string colourActive;
     private string colourAlert;
@@ -77,8 +81,15 @@ public class TooltipNode : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        //fast access fields
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
+        minStatValue = GameManager.instance.nodeScript.minNodeValue;
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
+        Debug.Assert(minStatValue > -1, "Invalid minStatValue (-1)");
     }
 
     /// <summary>
@@ -123,12 +134,12 @@ public class TooltipNode : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
-                colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-                colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
                 break;
             case "Authority":
-                colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-                colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -137,7 +148,8 @@ public class TooltipNode : MonoBehaviour
         //colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        //colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -224,6 +236,40 @@ public class TooltipNode : MonoBehaviour
         nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd);
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);
         //
+        // - - - Stats (BEFORE Crisis)- - - 
+        //
+        int checkCounter = 0;
+        int statData;
+        bool isPossibleCrisis = false;
+        if (data.arrayOfStats.Length == 3)
+        {
+            StringBuilder builderStats = new StringBuilder();
+            for (int i = 0; i < data.arrayOfStats.Length; i++)
+            {
+                statData = data.arrayOfStats[i];
+                if (i > 0) { builderStats.AppendLine(); }
+                builderStats.AppendFormat("{0}{1}{2}", GetStatColour(statData, (NodeData)i), statData, colourEnd);
+                //idiot check to handle case of being too many stats
+                checkCounter++;
+                if (checkCounter >= 3) { break; }
+            }
+            nodeStatsVar.text = builderStats.ToString();
+            //fixed node stat tags -> show red (authority) / green (resistance) if in the danger zone (possible or actual crisis), default white otherwise
+            string colourCrisis = colourGood;
+            if (playerSide.level == 1) { colourCrisis = colourBad; }
+            StringBuilder builderFixed = new StringBuilder();
+            if (data.arrayOfStats[0] == minStatValue) { builderFixed.AppendFormat("{0}Stability{1}", colourCrisis, colourEnd); isPossibleCrisis = true; }
+            else { builderFixed.Append("Stability"); }
+            builderFixed.AppendLine();
+            if (data.arrayOfStats[1] == maxStatValue) { builderFixed.AppendFormat("{0}Support{1}", colourCrisis, colourEnd); isPossibleCrisis = true; }
+            else { builderFixed.Append("Support"); }
+            builderFixed.AppendLine();
+            if (data.arrayOfStats[2] == minStatValue) { builderFixed.AppendFormat("{0}Security{1}", colourCrisis, colourEnd); isPossibleCrisis = true; }
+            else { builderFixed.Append("Security"); }
+            nodeStatsFixed.text = builderFixed.ToString();
+        }
+        else { Debug.LogWarning("Invalid length for arrayOfStats (not 3)"); }
+        //
         // - - - Crisis - - -
         //
         int numOfCrisis = data.listOfCrisis.Count;
@@ -246,7 +292,7 @@ public class TooltipNode : MonoBehaviour
                     case 2:
                     case 3:
                         //info dump
-                        builderCrisis.AppendFormat("{0}<size=95%>{1}{2}{3}</size>", "\n", colourAlert, data.listOfCrisis[index], colourEnd);
+                        builderCrisis.AppendFormat("{0}<size=90%>{1}{2}{3}</size>", "\n", colourAlert, data.listOfCrisis[index], colourEnd);
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid listOfCrisis[{0}] \"{1}\"", index, data.listOfCrisis[index]);
@@ -257,6 +303,12 @@ public class TooltipNode : MonoBehaviour
             dividerCrisis.gameObject.SetActive(true);
             crisis.text = builderCrisis.ToString();
             crisis.gameObject.SetActive(true);
+        }
+        else if (isPossibleCrisis == true)
+        {
+            crisis.text = String.Format("{0}Potential Crisis{1}", colourAlert, colourEnd);
+            crisis.gameObject.SetActive(true);
+            dividerCrisis.gameObject.SetActive(true);
         }
         else
         {
@@ -310,7 +362,7 @@ public class TooltipNode : MonoBehaviour
                     }
                 }
                 else if (playerSide.level == globalAuthority.level)
-                { builderActor.AppendFormat("{0}Resistance Contacts present{1}", colourBad, colourEnd); }
+                { builderActor.AppendFormat("{0}Resistance Contacts present{1}", colourBadSide, colourEnd); }
             }
             //FOW On and Authority player has no knowledge of actor contacts at node
             else
@@ -346,13 +398,13 @@ public class TooltipNode : MonoBehaviour
                 switch(data.listOfEffects[i].type.name)
                 {
                     case "Good":
-                        effectText = string.Format("{0}{1}{2}", colourGood, data.listOfEffects[i].text, colourEnd);
+                        effectText = string.Format("{0}{1}{2}", colourGoodSide, data.listOfEffects[i].text, colourEnd);
                         break;
                     case "Neutral":
                         effectText = string.Format("{0}{1}{2}", colourNeutral, data.listOfEffects[i].text, colourEnd);
                         break;
                     case "Bad":
-                        effectText = string.Format("{0}{1}{2}", colourBad, data.listOfEffects[i].text, colourEnd);
+                        effectText = string.Format("{0}{1}{2}", colourBadSide, data.listOfEffects[i].text, colourEnd);
                         break;
                     default:
                         effectText = string.Format("{0}{1}{2}", colourDefault, data.listOfEffects[i].text, colourEnd);
@@ -394,7 +446,7 @@ public class TooltipNode : MonoBehaviour
             }
             else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>No Teams present</size>", colourEnd); }
         }
-        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=90%>requires Tracer or Actor</size>{4}", colourBad, colourEnd, "\n", colourDefault, colourEnd); }
+        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=90%>requires Tracer or Actor</size>{4}", colourBadSide, colourEnd, "\n", colourDefault, colourEnd); }
         //
         // - - Target (multipurpose, shows activity data if NodeManager.cs -> activityState > 'None') - - -
         //
@@ -437,28 +489,8 @@ public class TooltipNode : MonoBehaviour
                 }
                 builder.Append(colourEnd);
             }
-            else { builder.AppendFormat("{0}<b>Unknown Activity Info</b>{1}", colourBad, colourEnd); }
+            else { builder.AppendFormat("{0}<b>Unknown Activity Info</b>{1}", colourBadSide, colourEnd); }
             nodeTarget.text = builder.ToString();
-        }
-        //
-        // - - - Stats - - - 
-        //
-        int checkCounter = 0;
-        int statData;
-        if (data.arrayOfStats.Length > 0)
-        {
-            StringBuilder builderStats = new StringBuilder();
-            for (int i = 0; i < data.arrayOfStats.Length; i++)
-            {
-                statData = data.arrayOfStats[i];
-                if (i > 0) { builderStats.AppendLine(); }
-                builderStats.AppendFormat("{0}{1}{2}", GetStatColour(statData, (NodeData)i), statData, colourEnd);
-                //idiot check to handle case of being too many stats
-                checkCounter++;
-                if (checkCounter >= 3) { break; }
-            }
-            nodeStatsVar.text = builderStats.ToString();
-            nodeStatsFixed.text = string.Format("{0}{1}\n{2}\n{3}{4}", colourDefault, "Stability", "Support", "Security", colourEnd);
         }
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
@@ -504,19 +536,19 @@ public class TooltipNode : MonoBehaviour
             case NodeData.Security:
                 switch (data)
                 {
-                    case 3: colour = colourBad; break;
+                    case 3: colour = colourBadSide; break;
                     case 2: colour = colourNeutral; break;
-                    case 1: colour = colourGood; break;
-                    case 0: colour = colourGood; break;
+                    case 1: colour = colourGoodSide; break;
+                    case 0: colour = colourGoodSide; break;
                 }
                 break;
             case NodeData.Support:
                 switch (data)
                 {
-                    case 3: colour = colourGood; break;
+                    case 3: colour = colourGoodSide; break;
                     case 2: colour = colourNeutral; break;
-                    case 1: colour = colourBad; break;
-                    case 0: colour = colourBad; break;
+                    case 1: colour = colourBadSide; break;
+                    case 0: colour = colourBadSide; break;
                 }
                 break;
         }

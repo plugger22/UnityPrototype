@@ -2115,11 +2115,13 @@ public class NodeManager : MonoBehaviour
                                     //admin
                                     City city = GameManager.instance.cityScript.GetCity();
                                     string cityName = "Unknown";
-                                    if (city != null) { cityName = city.name; }
-                                    Debug.LogFormat("[Cit] NodeManager.cs -> ProcessNodeCrisis: {0} Loyalty -{1}, now {2}{3}", cityName, crisisCityLoyalty, loyalty, "\n");
+                                    if (city != null) { cityName = city.name; }                                    
                                     msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.Value.nodeName, node.Value.Arc.name, node.Value.crisis.tag);
-                                    Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID, crisisCityLoyalty);
-                                    GameManager.instance.dataScript.AddMessage(message);
+                                    Message messageCrisis = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID, crisisCityLoyalty);
+                                    GameManager.instance.dataScript.AddMessage(messageCrisis);
+                                    msgText = string.Format("{0} Loyalty falls by -{1} to {2} ({3} crisis)", cityName, crisisCityLoyalty, loyalty, node.Value.crisis.tag);
+                                    Message messageCity = GameManager.instance.messageScript.CityLoyalty(msgText, loyalty, crisisCityLoyalty * -1);
+                                    GameManager.instance.dataScript.AddMessage(messageCity);
                                     //set variables
                                     node.Value.waitTimer = crisisWaitTimer;
                                     node.Value.crisis = null;

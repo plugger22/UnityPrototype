@@ -1344,5 +1344,34 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-        //new methods above here
+    //
+    // - - - Cities - - -
+    //
+
+    /// <summary>
+    /// City loyalty changes for any reason
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="newCityLoyalty"></param>
+    /// <param name="changeInLoyalty"></param>
+    /// <returns></returns>
+    public Message CityLoyalty(string text, int newCityLoyalty, int changeInLoyalty)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CITY;
+            message.subType = MessageSubType.City_Loyalty;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = newCityLoyalty;
+            message.data1 = changeInLoyalty;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
     }
+
+    //new methods above here
+}
