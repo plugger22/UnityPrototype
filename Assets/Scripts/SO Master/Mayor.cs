@@ -17,6 +17,9 @@ public class Mayor : ScriptableObject
 
     public Trait trait;
 
+    [Tooltip("Used for testing purposes only. If 'ON' the Mayor is ignored (DataManager.cs -> GetRandomMayor). Leave as OFF")]
+    public bool isTestOff = false;
+
     private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
 
     //

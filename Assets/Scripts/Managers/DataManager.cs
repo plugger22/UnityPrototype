@@ -3347,15 +3347,24 @@ public class DataManager : MonoBehaviour
     { return dictOfMayors; }
 
     /// <summary>
-    /// Gets a random Mayor, returns null if none. NOTE: Debug method, Duplicates ARE NOT CHECKED FOR
+    /// Gets a random Mayor, returns null if none. NOTE: Debug method, Duplicates ARE NOT CHECKED FOR. Selects only for those Mayors where 'isTestOff' is false
     /// </summary>
     /// <returns></returns>
     public Mayor GetRandomMayor()
     {
         Mayor mayor = null;
+        List<Mayor> useList = new List<Mayor>();
         List<Mayor> tempList = dictOfMayors.Values.ToList();
-        if (tempList != null)
-        { mayor = tempList[Random.Range(0, tempList.Count)]; }
+        //narrow list down to those with isTestOff = false (default condition) -> DEBUG testing only, not for release
+        foreach (Mayor mayorTemp in tempList)
+        {
+            if (mayorTemp != null)
+            { if (mayorTemp.isTestOff == false) { useList.Add(mayorTemp); } }
+            else { Debug.LogWarning("Invalid mayor in tempList (Null)"); }
+        }
+        //select random mayor
+        if (useList != null && useList.Count > 0)
+        { mayor = useList[Random.Range(0, useList.Count)]; }
         return mayor;
     }
 

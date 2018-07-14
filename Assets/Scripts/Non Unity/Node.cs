@@ -371,7 +371,7 @@ public class Node : MonoBehaviour
                     if (crisis != null)
                     {
                         crisisList.Add(string.Format("{0} CRISIS", crisis.tag));
-                        crisisList.Add(string.Format("{0} turns left", crisisTimer));
+                        crisisList.Add(string.Format("{0} turn{1} left", crisisTimer, crisisTimer != 1 ? "s" : ""));
                         crisisList.Add(string.Format("City Loyalty -{0}", crisisCityLoyalty));
                         crisisList.Add("if crisis not Resolved");
                     }

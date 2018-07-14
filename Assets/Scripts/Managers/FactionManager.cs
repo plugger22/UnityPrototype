@@ -97,8 +97,8 @@ public class FactionManager : MonoBehaviour
         GameManager.instance.aiScript.resourcesGainResistance = factionResistance.resourcesAllowance;
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);
         //support levels
-        SupportAuthority = Random.Range(0, 10);
-        SupportResistance = Random.Range(0, 10);
+        SupportAuthority = Random.Range(1, 10);
+        SupportResistance = Random.Range(1, 10);
         Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}",
             factionResistance, factionAuthority, "\n"));
         //update colours for AI Display tooltip data
