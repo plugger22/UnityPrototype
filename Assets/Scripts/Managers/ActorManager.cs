@@ -3082,32 +3082,32 @@ public class ActorManager : MonoBehaviour
                                             //low
                                             numOfEntries = 1;
                                             for (int i = 0; i < numOfEntries; i++) { listSelectionPool.Add(conflict.Value); }
-                                            Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entry in Pool", conflict.Value.name, numOfEntries);
+                                            /*Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entry in Pool", conflict.Value.name, numOfEntries);*/
                                             break;
                                         case 1:
                                             //medium
                                             numOfEntries = 2;
                                             for (int i = 0; i < numOfEntries; i++) { listSelectionPool.Add(conflict.Value); }
-                                            Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entries in Pool", conflict.Value.name, numOfEntries);
+                                            /*Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entries in Pool", conflict.Value.name, numOfEntries);*/
                                             break;
                                         case 2:
                                             //high
                                             numOfEntries = 3;
                                             for (int i = 0; i < numOfEntries; i++) { listSelectionPool.Add(conflict.Value); }
-                                            Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entries in Pool", conflict.Value.name, numOfEntries);
+                                            /*Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entries in Pool", conflict.Value.name, numOfEntries);*/
                                             break;
                                         case 3:
                                             //extreme
                                             numOfEntries = 5;
                                             for (int i = 0; i < numOfEntries; i++) { listSelectionPool.Add(conflict.Value); }
-                                            Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entries in Pool", conflict.Value.name, numOfEntries);
+                                            /*Debug.LogFormat("[Tst] {0} PASSED Criteria check -> {1} Entries in Pool", conflict.Value.name, numOfEntries);*/
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid ActorConflict.chance.level {0}", conflict.Value.chance.level);
                                             break;
                                     }
                                 }
-                                else { Debug.LogFormat("[Tst] {0} Failed Criteria check", conflict.Value.name); }
+                                else { /*Debug.LogFormat("[Tst] {0} Failed Criteria check", conflict.Value.name);*/ }
                             }
                             else { Debug.LogWarningFormat("Invalid actorConflict (Null) for actBreakID {0}", conflict.Key); }
                         }
@@ -3118,7 +3118,7 @@ public class ActorManager : MonoBehaviour
                         {
                             int index = Random.Range(0, listSelectionPool.Count);
                             actorConflict = listSelectionPool[index];
-                            Debug.LogFormat("[Tst] Pool size {0} Entries ->  Selected {1}", listSelectionPool.Count, actorConflict.name);
+                            /*Debug.LogFormat("[Tst] Pool size {0} Entries ->  Selected {1}", listSelectionPool.Count, actorConflict.name);*/
                             //
                             // - - - Special Trait cases - - -
                             //

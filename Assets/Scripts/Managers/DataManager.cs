@@ -25,6 +25,7 @@ public class DataManager : MonoBehaviour
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
 
     //Nodes
+    private List<Node> listOfNodes = new List<Node>();                                          //main list of nodes used for iteration (rather than dictOfNodes)
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
     private List<Node> listOfMostConnectedNodes = new List<Node>();                             //top connected nodes (3+ connections), used by AI for ProcessSpiderTeam
     private List<Node> listOfDecisionNodes = new List<Node>();                                  //dynamic list of nodes used for connection security level decisions
@@ -640,6 +641,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, Node> GetDictOfNodes()
     { return dictOfNodes; }
+
+    public List<Node> GetListOfAllNodes()
+    { return listOfNodes; }
 
     public List<Node> GetListOfCrisisNodes()
     { return listOfCrisisNodes; }

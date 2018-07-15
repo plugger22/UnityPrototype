@@ -1239,6 +1239,7 @@ public class ImportManager : MonoBehaviour
         // - - - Nodes - - -
         //
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         if (dictOfNodes != null)
         {
             int counter = 0;
@@ -1253,11 +1254,20 @@ public class ImportManager : MonoBehaviour
                     catch (ArgumentNullException)
                     { Debug.LogError("Invalid Node (Null)"); }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name)); }
+                    { Debug.LogErrorFormat("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name); }
                 }
                 Debug.LogFormat("[Imp] InitialiseLate -> dictOfNodes has {0} entries{1}", dictOfNodes.Count, "\n");
                 Debug.Assert(dictOfNodes.Count == counter, "Mismatch in Count");
                 Debug.Assert(dictOfNodes.Count > 0, "No Nodes have been imported");
+                //create List Of Nodes for iteration purposes
+                if (listOfNodes != null)
+                {
+                    listOfNodes.Clear();
+                    listOfNodes.AddRange(dictOfNodes.Values.ToList());
+                    Debug.LogFormat("[Imp] InitialiseLate -> listOfNodes has {0} entries{1}", listOfNodes.Count, "\n");
+                    Debug.Assert(dictOfNodes.Count == listOfNodes.Count, "Mismatch on count between dictOfNodes and listOfNodes");
+                }
+                else { Debug.LogError("Invalid listOfNodes (Null)"); }
             }
             else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
             //Actor Nodes

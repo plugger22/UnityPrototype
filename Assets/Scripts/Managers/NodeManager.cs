@@ -2167,7 +2167,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 //WAITING between potential crisis
                                 node.Value.waitTimer--;
-                                Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0}, ID {1}, waitTimer now {2}{3}", node.Value.Arc.name, node.Value.nodeID, node.Value.waitTimer, "\n");
+                                /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0}, ID {1}, waitTimer now {2}{3}", node.Value.Arc.name, node.Value.nodeID, node.Value.waitTimer, "\n");*/
                             }
                             else
                             {
@@ -2178,7 +2178,7 @@ public class NodeManager : MonoBehaviour
                                 //Danger signs present
                                 if (numOfDangerSigns > 0)
                                 {
-                                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, danger signs {2}{3}", node.Value.Arc.name, node.Value.nodeID, numOfDangerSigns, "\n");
+                                    /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, danger signs {2}{3}", node.Value.Arc.name, node.Value.nodeID, numOfDangerSigns, "\n");*/
                                     chance = nodeBaseChance * numOfDangerSigns;
                                     //random roll
                                     rnd = Random.Range(0, 100);
@@ -2224,8 +2224,8 @@ public class NodeManager : MonoBehaviour
                                     else
                                     {
                                         //failed roll, nothing happens
-                                        Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Value.Arc.name, node.Value.nodeID,
-                                            chance, rnd);
+                                        /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Value.Arc.name, node.Value.nodeID,
+                                            chance, rnd);*/
                                     }
                                 }
                             }
@@ -2235,7 +2235,7 @@ public class NodeManager : MonoBehaviour
                     //update listOfCrisisNodes
                     listOfCrisisNodes.Clear();
                     listOfCrisisNodes.AddRange(tempList);
-                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} records in listOfCrisisNodes{1}", listOfCrisisNodes.Count, "\n");
+                    /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} records in listOfCrisisNodes{1}", listOfCrisisNodes.Count, "\n");*/
                 }
                 else { Debug.LogWarning("Invalid city (Null) -> Crisis checks cancelled"); }
             }

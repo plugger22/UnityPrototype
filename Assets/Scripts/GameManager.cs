@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MessageManager messageScript;            //Message Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
+    [HideInInspector] public TestManager testScript;                  //Test Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;     //connection tooltip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;         //actor tooltip static instance
@@ -127,6 +128,7 @@ public class GameManager : MonoBehaviour
         messageScript = GetComponent<MessageManager>();
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
+        testScript = GetComponent<TestManager>();
         tooltipScript = GetComponent<TooltipManager>();
         sideScript = GetComponent<SideManager>();
         helpScript = GetComponent<HelpManager>();
@@ -223,6 +225,8 @@ public class GameManager : MonoBehaviour
         nodeScript.NodeRedraw = true;
         //free mouse for normal operations
         Cursor.lockState = CursorLockMode.None;
+        //start tests
+        testScript.Initialise();
 
         //TO DO -> tap into game options chosen by player and start game as correct side or AI vs. AI
     }
