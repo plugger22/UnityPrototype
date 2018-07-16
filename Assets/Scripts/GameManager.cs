@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
         actorPanelScript = ActorPanelUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
         //set up list of delegates
-        InitialiseDelegates();
+        InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
     }
@@ -177,13 +177,19 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //setup game
-
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+        //need testManager in order to access performance timer
+        testScript.Initialise();
+        //start sequence
         if (isPerformanceLog == false)
         { InitialiseGame(); }
         else
-        { InitialiseGamePerformanceMonitor(); }
-
+        { InitialiseGameWithPerformanceMonitoring(); }
+        //do a final redraw before game start
+        nodeScript.NodeRedraw = true;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
     }
@@ -191,90 +197,244 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// set up list of delegates ready for initialisation (do this because there are two version of initialisation, performance monitoring ON or OFF)
     /// </summary>
-    private void InitialiseDelegates()
+    private void InitialiseStartSequence()
     {
         StartMethod startMethod = new StartMethod();
+        //Import Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.importScript.InitialiseStart;
         startMethod.className = "ImportManager";
         listOfStartMethods.Add(startMethod);
+        //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
+        startMethod.handler = GameManager.instance.globalScript.Initialise;
+        startMethod.className = "GlobalManager";
+        listOfStartMethods.Add(startMethod);
+        //Colour Manager
+        startMethod.handler = GameManager.instance.colourScript.Initialise;
+        startMethod.className = "ColourManager";
+        listOfStartMethods.Add(startMethod);
+        //Message Manager -> after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
+        startMethod.handler = GameManager.instance.messageScript.Initialise;
+        startMethod.className = "MessageManager";
+        listOfStartMethods.Add(startMethod);
+        //Tooltip Node
+        startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
+        startMethod.className = "TooltipNode";
+        listOfStartMethods.Add(startMethod);
+        //Side Manager
+        startMethod.handler = GameManager.instance.sideScript.Initialise;
+        startMethod.className = "SideManager";
+        listOfStartMethods.Add(startMethod);
+        //Actor Manager -> PreInitialise
+        startMethod.handler = GameManager.instance.actorScript.PreInitialiseActors;
+        startMethod.className = "ActorManager";
+        listOfStartMethods.Add(startMethod);
+        //Import Manager -> InitialiseEarly
+        startMethod.handler = GameManager.instance.importScript.InitialiseEarly;
+        startMethod.className = "ImportManager";
+        listOfStartMethods.Add(startMethod);
+        //GUI Manager -> before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
+        startMethod.handler = GameManager.instance.guiScript.Initialise;
+        startMethod.className = "GUIManager";
+        listOfStartMethods.Add(startMethod);
+        //City Manager -> before levelScript
+        startMethod.handler = GameManager.instance.cityScript.InitialiseEarly;
+        startMethod.className = "CityManager";
+        listOfStartMethods.Add(startMethod);
+        //Objective Manager
+        startMethod.handler = GameManager.instance.objectiveScript.Initialise;
+        startMethod.className = "ObjectiveManager";
+        listOfStartMethods.Add(startMethod);
+        //Actor Panel UI -> before actorScript.Initialise
+        startMethod.handler = GameManager.instance.actorPanelScript.Initialise;
+        startMethod.className = "ActorPanelUI";
+        listOfStartMethods.Add(startMethod);
+        //Actor Manager
+        startMethod.handler = GameManager.instance.actorScript.Initialise;
+        startMethod.className = "ActorManager";
+        listOfStartMethods.Add(startMethod);
+        //Level Manager
+        startMethod.handler = GameManager.instance.levelScript.Initialise;
+        startMethod.className = "LevelManager";
+        listOfStartMethods.Add(startMethod);
+        //Data Manager -> InitialiseLate -> immediately after levelScript.Initialise
+        startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
+        startMethod.className = "DataManager";
+        listOfStartMethods.Add(startMethod);
+        //Import Manager -> InitialiseLate -> immediately after levelScript.Initialise
+        startMethod.handler = GameManager.instance.importScript.InitialiseLate;
+        startMethod.className = "ImportManager";
+        listOfStartMethods.Add(startMethod);
+        //City Manager -> InitialiseLate -> after levelScript.Initialise
+        startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
+        startMethod.className = "CityManager";
+        listOfStartMethods.Add(startMethod);
+        //Secret Manager -> after dataScript and before playerScript
+        startMethod.handler = GameManager.instance.secretScript.Initialise;
+        startMethod.className = "SecretManager";
+        listOfStartMethods.Add(startMethod);
+        //Faction Manager
+        startMethod.handler = GameManager.instance.factionScript.Initialise;
+        startMethod.className = "FactionManager";
+        listOfStartMethods.Add(startMethod);
+        //Input Manager
+        startMethod.handler = GameManager.instance.inputScript.Initialise;
+        startMethod.className = "InputManager";
+        listOfStartMethods.Add(startMethod);
+        //Meta Manager
+        startMethod.handler = GameManager.instance.metaScript.Initialise;
+        startMethod.className = "MetaManager";
+        listOfStartMethods.Add(startMethod);
+        //DataManager -> Initialisefinal -> after metaScript.Initialise
+        startMethod.handler = GameManager.instance.dataScript.InitialiseFinal;
+        startMethod.className = "DataManager";
+        listOfStartMethods.Add(startMethod);
+        //Action Manager
+        startMethod.handler = GameManager.instance.actionScript.Initialise;
+        startMethod.className = "ActionManager";
+        listOfStartMethods.Add(startMethod);
+        //Target Manager
+        startMethod.handler = GameManager.instance.targetScript.Initialise;
+        startMethod.className = "TargetManager";
+        listOfStartMethods.Add(startMethod);
+        //Node Manager
+        startMethod.handler = GameManager.instance.nodeScript.Initialise;
+        startMethod.className = "NodeManager";
+        listOfStartMethods.Add(startMethod);
+        //Effect Manager -> after nodeScript
+        startMethod.handler = GameManager.instance.effectScript.Initialise;
+        startMethod.className = "EffectManager";
+        listOfStartMethods.Add(startMethod);
+        //Team Manager
+        startMethod.handler = GameManager.instance.teamScript.Initialise;
+        startMethod.className = "TeamManager";
+        listOfStartMethods.Add(startMethod);
+        //Turn Manager
+        startMethod.handler = GameManager.instance.turnScript.Initialise;
+        startMethod.className = "TurnManager";
+        listOfStartMethods.Add(startMethod);
+        //Gear Manager
+        startMethod.handler = GameManager.instance.gearScript.Initialise;
+        startMethod.className = "GearManager";
+        listOfStartMethods.Add(startMethod);
+        //Team Picker
+        startMethod.handler = GameManager.instance.teamPickerScript.Initialise;
+        startMethod.className = "TeamPickerUI";
+        listOfStartMethods.Add(startMethod);
+
+        /*//Dice Manager
+        diceScript.Initialise();*/
+
+        //AI Manager -> after factionScript
+        startMethod.handler = GameManager.instance.aiScript.Initialise;
+        startMethod.className = "AIManager";
+        listOfStartMethods.Add(startMethod);
+        //Capture Manager
+        startMethod.handler = GameManager.instance.captureScript.Initialise;
+        startMethod.className = "CaptureManager";
+        listOfStartMethods.Add(startMethod);
+        //Authority Manager
+        startMethod.handler = GameManager.instance.authorityScript.Initialise;
+        startMethod.className = "AuthorityManager";
+        listOfStartMethods.Add(startMethod);
+        //Player Manager
+        startMethod.handler = GameManager.instance.playerScript.Initialise;
+        startMethod.className = "PlayerManager";
+        listOfStartMethods.Add(startMethod);
+        //Debug Graphics Manager
+        startMethod.handler = GameManager.instance.debugGraphicsScript.Initialise;
+        startMethod.className = "DebugGraphicManager";
+        listOfStartMethods.Add(startMethod);
+        //Trait Manager
+        startMethod.handler = GameManager.instance.traitScript.Initialise;
+        startMethod.className = "TraitManager";
+        listOfStartMethods.Add(startMethod);
+        //Connection Manager
+        startMethod.handler = GameManager.instance.connScript.Initialise;
+        startMethod.className = "ConnectionManager";
+        listOfStartMethods.Add(startMethod);
+        //City Info UI
+        startMethod.handler = GameManager.instance.cityInfoScript.Initialise;
+        startMethod.className = "CityInfoUI";
+        listOfStartMethods.Add(startMethod);
+        //AI Display UI
+        startMethod.handler = GameManager.instance.aiDisplayScript.Initialise;
+        startMethod.className = "AIDisplayUI";
+        listOfStartMethods.Add(startMethod);
+        //AI Side Tab UI
+        startMethod.handler = GameManager.instance.aiSideTabScript.Initialise;
+        startMethod.className = "AISideTabUI";
+        listOfStartMethods.Add(startMethod);
+        //Widget Top UI
+        startMethod.handler = GameManager.instance.widgetTopScript.Initialise;
+        startMethod.className = "WidgetTopUI";
+        listOfStartMethods.Add(startMethod);
     }
 
+
     /// <summary>
-    /// Initialise the Game
+    /// Initialise game start sequence with no performance monitoring
     /// </summary>
     private void InitialiseGame()
     {
-        //lock mouse to prevent mouseover events occuring prior to full initialisation
-        Cursor.lockState = CursorLockMode.Locked;
-        importScript.InitialiseStart();   //must be first
-        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
-        colourScript.Initialise();      
-        messageScript.Initialise();     //must be after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
-        tooltipNodeScript.Initialise();
-        sideScript.Initialise();
-        actorScript.PreInitialiseActors();
-        importScript.InitialiseEarly();
-        guiScript.Initialise();             //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
-        cityScript.InitialiseEarly();        //before levelScript
-        objectiveScript.Initialise();
-        actorPanelScript.Initialise();    //must be before actorScript.Initialise
-        actorScript.Initialise();
-        levelScript.Initialise();
-        dataScript.InitialiseLate();      //must be immediately after levelScript.Initialise
-        importScript.InitialiseLate();    //must be immediately after levelScript.Initialise
-        cityScript.InitialiseLate();      //must be immediately after levelScript.Initialise
-        secretScript.Initialise();        //after dataScript and before playerScript
-        factionScript.Initialise();
-        inputScript.Initialise();
-        metaScript.Initialise();
-        dataScript.InitialiseFinal();   //must be after metaScript.Initialise
-        actionScript.Initialise();      
-        targetScript.Initialise();
-        nodeScript.Initialise();
-        effectScript.Initialise();      //after nodeScript
-        teamScript.Initialise();
-        turnScript.Initialise();
-        gearScript.Initialise();
-        teamPickerScript.Initialise();
-        /*diceScript.Initialise();*/
-        aiScript.Initialise();          //after factionScript
-        captureScript.Initialise();
-        authorityScript.Initialise();
-        playerScript.Initialise(); 
-        debugGraphicsScript.Initialise();
-        traitScript.Initialise();
-        connScript.Initialise();
-        cityInfoScript.Initialise();
-        aiDisplayScript.Initialise();
-        aiSideTabScript.Initialise();
-        widgetTopScript.Initialise();
-        //do a final redraw before game start
-        nodeScript.NodeRedraw = true;
-        //free mouse for normal operations
-        Cursor.lockState = CursorLockMode.None;
-        //start tests
-        testScript.Initialise();
-
-        //TO DO -> tap into game options chosen by player and start game as correct side or AI vs. AI
+        //run each method via delegates in their preset order
+        if (listOfStartMethods != null)
+        {
+            foreach (StartMethod method in listOfStartMethods)
+            {
+                if (method.handler != null)
+                { method.handler(); }
+                else { Debug.LogErrorFormat("Invalid startMethod handler for {0}", method.className); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfStartMethods (Null)"); }
     }
 
-    private void InitialiseGamePerformanceMonitor()
+    /// <summary>
+    /// Initialise game start sequence with Performance Monitoring
+    /// </summary>
+    private void InitialiseGameWithPerformanceMonitoring()
+    {
+        //run each method via delegates in their preset order
+        if (listOfStartMethods != null)
+        {
+            //start timer tally to get an overall performance time
+            GameManager.instance.testScript.TimerTallyStart();
+            foreach (StartMethod method in listOfStartMethods)
+            {
+                if (method.handler != null)
+                {
+                    GameManager.instance.testScript.StartTimer();
+                    method.handler();
+                    long elapsed = GameManager.instance.testScript.StopTimer();
+                    Debug.LogFormat("[Per] {0} -> {1}: {2} ms{3}", method.className, method.handler.Method.Name, elapsed, "\n");
+                }
+                else { Debug.LogErrorFormat("Invalid startMethod handler for {0}", method.className); }
+            }
+            long totalTime = GameManager.instance.testScript.TimerTallyStop();
+            Debug.LogFormat("[Per] GameManager.cs -> InitialiseGameWithPerfomanceMonitoring: TOTAL TIME {0} ms{1}", totalTime, "\n");
+        }
+        else { Debug.LogError("Invalid listOfStartMethods (Null)"); }
+    }
+
+    /// <summary>
+    /// Only update in the entire code base -> handles redraws and input
+    /// </summary>
+    private void Update()
+    {
+        //redraw any Nodes where required
+        if (nodeScript.NodeRedraw == true)
+        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
+        //Handle Game Input
+        if (Input.anyKey == true)
+        { inputScript.ProcessInput(); }
+    }
+
+    /*private void InitialiseGamePerformanceMonitor()
     {
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
+        //need testManager in order to access timer
         testScript.Initialise();
-
-        
-       /* //importScript.InitialiseStart();   //must be first
-        InitialisationDelegate handler;
-        handler = listOfDelegates[0];
-        GameManager.instance.testScript.StartTimer();
-        handler();
-        long elapsed = GameManager.instance.testScript.StopTimer();
-        Debug.LogFormat("[Per] {0} -> {1}: {2} ms{3}", GetClassName(handler), handler.Method.Name, elapsed, "\n");
-        GameManager.instance.testScript.StartTimer();
-        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
-        Debug.LogFormat("[Per] globalScript -> Initialise: {0} ms{1}", GameManager.instance.testScript.StopTimer(), "\n");*/
 
         StartMethod startMethod = listOfStartMethods[0];
         GameManager.instance.testScript.StartTimer();
@@ -314,7 +474,7 @@ public class GameManager : MonoBehaviour
         turnScript.Initialise();
         gearScript.Initialise();
         teamPickerScript.Initialise();
-        /*diceScript.Initialise();*/
+        //diceScript.Initialise();
         aiScript.Initialise();          //after factionScript
         captureScript.Initialise();
         authorityScript.Initialise();
@@ -330,19 +490,65 @@ public class GameManager : MonoBehaviour
         nodeScript.NodeRedraw = true;
         //free mouse for normal operations
         Cursor.lockState = CursorLockMode.None;
-        
-    }
+    }*/
 
-
-    private void Update()
+    /*/// <summary>
+    /// Initialise the Game
+    /// </summary>
+    private void InitialiseGame()
     {
-        //redraw any Nodes where required
-        if (nodeScript.NodeRedraw == true)
-        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
-        //Handle Game Input
-        if (Input.anyKey == true)
-        { inputScript.ProcessInput(); }
-    }
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+        importScript.InitialiseStart();   //must be first
+        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
+        colourScript.Initialise();      
+        messageScript.Initialise();     //must be after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
+        tooltipNodeScript.Initialise();
+        sideScript.Initialise();
+        actorScript.PreInitialiseActors();
+        importScript.InitialiseEarly();
+        guiScript.Initialise();             //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
+        cityScript.InitialiseEarly();        //before levelScript
+        objectiveScript.Initialise();
+        actorPanelScript.Initialise();    //must be before actorScript.Initialise
+        actorScript.Initialise();
+        levelScript.Initialise();
+        dataScript.InitialiseLate();      //must be immediately after levelScript.Initialise
+        importScript.InitialiseLate();    //must be immediately after levelScript.Initialise
+        cityScript.InitialiseLate();      //must be immediately after levelScript.Initialise
+        secretScript.Initialise();        //after dataScript and before playerScript
+        factionScript.Initialise();
+        inputScript.Initialise();
+        metaScript.Initialise();
+        dataScript.InitialiseFinal();   //must be after metaScript.Initialise
+        actionScript.Initialise();      
+        targetScript.Initialise();
+        nodeScript.Initialise();
+        effectScript.Initialise();      //after nodeScript
+        teamScript.Initialise();
+        turnScript.Initialise();
+        gearScript.Initialise();
+        teamPickerScript.Initialise();
+        //diceScript.Initialise();
+        aiScript.Initialise();          //after factionScript
+        captureScript.Initialise();
+        authorityScript.Initialise();
+        playerScript.Initialise(); 
+        debugGraphicsScript.Initialise();
+        traitScript.Initialise();
+        connScript.Initialise();
+        cityInfoScript.Initialise();
+        aiDisplayScript.Initialise();
+        aiSideTabScript.Initialise();
+        widgetTopScript.Initialise();
+        //do a final redraw before game start
+        nodeScript.NodeRedraw = true;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
+
+        //TO DO -> tap into game options chosen by player and start game as correct side or AI vs. AI
+    }*/
+
 
 
 
