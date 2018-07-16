@@ -13,11 +13,13 @@ public class TestManager : MonoBehaviour
 
     public void Initialise()
     {
-        TestIterationSpeed();
+        //TestIterationSpeed();
     }
 
     /// <summary>
     /// test speed of iterating between the dictOfNodes and the listOfNode
+    /// NOTE: Debug is doing funny things and the numbers it gives are nonsense. Do a breakpoint check to get numbers. 
+    /// Averages around 352 ms for dict, 278 ms for list
     /// </summary>
     public void TestIterationSpeed()
     {

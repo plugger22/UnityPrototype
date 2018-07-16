@@ -652,29 +652,30 @@ public class AIManager : MonoBehaviour
         int numOfConnections, numNodesHalf, counter, limit;
         //temp dictionary, key -> nodeID, value -> # of connections
         Dictionary<int, int> dictOfConnected = new Dictionary<int, int>();
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         List<Node> listOfMostConnectedNodes = new List<Node>();
-        if (dictOfNodes != null)
+        if (listOfNodes != null)
         {
-            numNodesHalf = dictOfNodes.Count / 2;
+            numNodesHalf = listOfNodes.Count / 2;
             //loop nodes and set up dictionary of nodes and their # of connections (Neighbours are used but same thing)
-            foreach(var node in dictOfNodes)
+            foreach(Node node in listOfNodes)
             {
-                if (node.Value != null)
+                if (node != null)
                 {
-                    numOfConnections = node.Value.GetNumOfNeighbours();
+                    numOfConnections = node.GetNumOfNeighbours();
                     //only select nodes that have 'x' number of connections
                     if (numOfConnections >= nodeConnectionThreshold)
                     {
                         try
-                        { dictOfConnected.Add(node.Value.nodeID, numOfConnections); }
+                        { dictOfConnected.Add(node.nodeID, numOfConnections); }
                         catch (ArgumentException)
-                        { Debug.LogWarning(string.Format("Invalid connection entry (duplicate) for nodeID {0}", node.Value.nodeID)); }
+                        { Debug.LogWarningFormat("Invalid connection entry (duplicate) for nodeID {0}", node.nodeID); }
                     }
 
                 }
-                else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.Key)); }
+                else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
             }
+         
             //check that there are at least 3 nodes in dict
             if (dictOfConnected.Count < 3)
             {
@@ -682,22 +683,22 @@ public class AIManager : MonoBehaviour
                 int numSpecific = nodeConnectionThreshold - 1;
                 if (numSpecific > 0)
                 {
-                    foreach(var node in dictOfNodes)
+                    foreach(Node node in listOfNodes)
                     {
-                        if (node.Value != null)
+                        if (node != null)
                         {
-                            numOfConnections = node.Value.GetNumOfNeighbours();
+                            numOfConnections = node.GetNumOfNeighbours();
                             //only select nodes that have 'x' number of connections
                             if (numOfConnections == numSpecific)
                             {
                                 try
-                                { dictOfConnected.Add(node.Value.nodeID, numOfConnections); }
+                                { dictOfConnected.Add(node.nodeID, numOfConnections); }
                                 catch (ArgumentException)
-                                { Debug.LogWarning(string.Format("Invalid connection entry (duplicate) for nodeID {0}", node.Value.nodeID)); }
+                                { Debug.LogWarningFormat("Invalid connection entry (duplicate) for nodeID {0}", node.nodeID); }
                             }
 
                         }
-                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.Key)); }
+                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
                     }
                     Debug.Log(string.Format("[Aim] -> SetConnectedNodes: Extra nodes ({0} connections) have been added to the listOfMostConnectedNodes{1}", 
                         numSpecific, "\n"));
@@ -740,7 +741,7 @@ public class AIManager : MonoBehaviour
             }
             else { Debug.LogError("Insufficient records (None) for SetConnectedNodes"); }
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        else { Debug.LogError("Invalid ListOfNodes (Null)"); }
     }
 
     /// <summary>
@@ -748,17 +749,17 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void SetPreferredNodes()
     {
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        if (dictOfNodes != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
             //isPreferred
             if (authorityPreferredArc != null)
             {
-                foreach (var node in dictOfNodes)
+                foreach (Node node in listOfNodes)
                 {
-                    if (node.Value.Arc.name.Equals(authorityPreferredArc) == true)
-                    { node.Value.isPreferredAuthority = true; }
-                    else { node.Value.isPreferredAuthority = false; }
+                    if (node.Arc.name.Equals(authorityPreferredArc) == true)
+                    { node.isPreferredAuthority = true; }
+                    else { node.isPreferredAuthority = false; }
                 }
             }
             else { Debug.LogWarning("Invalid authorityPreferredArc (Null)"); }
@@ -766,16 +767,16 @@ public class AIManager : MonoBehaviour
             //Resistance preferred -> TO DO
             if (resistancePreferredArc != null)
             {
-                foreach (var node in dictOfNodes)
+                foreach (Node node in listOfNodes)
                 {
-                    if (node.Value.Arc.name.Equals(resistancePreferredArc) == true)
-                    { node.Value.isPreferredResistance = true; }
-                    else { node.Value.isPreferredResistance = false; }
+                    if (node.Arc.name.Equals(resistancePreferredArc) == true)
+                    { node.isPreferredResistance = true; }
+                    else { node.isPreferredResistance = false; }
                 }
             }
             else { Debug.LogWarning("Invalid resistancePreferredArc (Null)"); }
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
     /// <summary>
@@ -788,20 +789,20 @@ public class AIManager : MonoBehaviour
         float limit = centreNum / 2f;
         float upper = limit;
         float lower = limit * -1;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        if (dictOfNodes != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
-            foreach (var node in dictOfNodes)
+            foreach (Node node in listOfNodes)
             {
                 //check each node to determine if it's inside or outside central area
-                if (node.Value.nodePosition.x <= upper && node.Value.nodePosition.x >= lower)
+                if (node.nodePosition.x <= upper && node.nodePosition.x >= lower)
                 {
-                    if (node.Value.nodePosition.z <= upper && node.Value.nodePosition.z >= lower)
-                    { node.Value.isCentreNode = true; }
+                    if (node.nodePosition.z <= upper && node.nodePosition.z >= lower)
+                    { node.isCentreNode = true; }
                     else
-                    { node.Value.isCentreNode = false; }
+                    { node.isCentreNode = false; }
                 }
-                else { node.Value.isCentreNode = false; }
+                else { node.isCentreNode = false; }
             }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
@@ -812,22 +813,22 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void SetDecisionNodes()
     {
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        List<Node> listOfNodes = new List<Node>();
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfDecisionNodes = new List<Node>();
         Node nodeFar;
         bool isSuccessful;
-        if (dictOfNodes != null)
+        if (listOfNodes != null)
         {
-            foreach(var node in dictOfNodes)
+            foreach(Node node in listOfNodes)
             {
                 isSuccessful = false;
-                if (node.Value != null)
+                if (node != null)
                 {
                     //centred and/or connected
-                    if (node.Value.isCentreNode == true || node.Value.isConnectedNode == true)
+                    if (node.isCentreNode == true || node.isConnectedNode == true)
                     {
                         //check connections
-                        List<Connection> listOfConnections = node.Value.GetListOfConnections();
+                        List<Connection> listOfConnections = node.GetListOfConnections();
                         if (listOfConnections != null)
                         {
                             //avoid dead end connections
@@ -839,7 +840,7 @@ public class AIManager : MonoBehaviour
                                     {
                                         nodeFar = connection.node1;
                                         //check that we've got the correct connection end
-                                        if (nodeFar.nodeID == node.Value.nodeID)
+                                        if (nodeFar.nodeID == node.nodeID)
                                         { nodeFar = connection.node2; }
                                         //check that the far node has at least 2 connections (ignore single dead end connections)
                                         if (nodeFar.CheckNumOfConnections() > 1)
@@ -852,19 +853,19 @@ public class AIManager : MonoBehaviour
                             }
                         }
                         else
-                        { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.Key); }
+                        { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.nodeID); }
                         //add to list
                         if (isSuccessful == true)
-                        { listOfNodes.Add(node.Value); }
+                        { listOfDecisionNodes.Add(node); }
                     }
                 }
-                else { Debug.LogWarning("Invalid node (Null) in dictOfNodes"); }
+                else { Debug.LogWarning("Invalid node (Null) in listOfNodes"); }
             }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
         //initialise list (overwrites any existing data)
-        Debug.LogFormat("[Aim] -> SetDecisionNodes: {0} nodes have been added to listOfDecisionNodes{1}", listOfNodes.Count, "\n");
-        GameManager.instance.dataScript.SetDecisionNodes(listOfNodes);
+        Debug.LogFormat("[Aim] -> SetDecisionNodes: {0} nodes have been added to listOfDecisionNodes{1}", listOfDecisionNodes.Count, "\n");
+        GameManager.instance.dataScript.SetDecisionNodes(listOfDecisionNodes);
     }
 
     /// <summary>
