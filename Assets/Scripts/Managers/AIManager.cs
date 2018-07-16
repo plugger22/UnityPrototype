@@ -1482,13 +1482,13 @@ public class AIManager : MonoBehaviour
         teamRatio = 0;
         erasureTeamsOnMap = 0;
         //work out connection security ratio (cumulate tally of connection security levels / number of connections)
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
-        if (dictOfConnections != null)
+        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        if (listOfConnections != null)
         {
             tally = 0;
-            foreach(var conn in dictOfConnections)
+            foreach(Connection conn in listOfConnections)
             {
-                switch(conn.Value.SecurityLevel)
+                switch(conn.SecurityLevel)
                 {
                     case ConnectionType.HIGH:
                         tally += 3f;
@@ -1503,7 +1503,7 @@ public class AIManager : MonoBehaviour
             }
             connSecRatio = tally / (float)totalConnections;
         }
-        else { Debug.LogWarning("Invalid dictOfConnections (Null)"); }
+        else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
         //work out team ratio (total teams / total nodes)
         teamRatio = GameManager.instance.dataScript.CheckNumOfTeams() / (float)totalNodes;
         //number of erasure teams onMap

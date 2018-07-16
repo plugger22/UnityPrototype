@@ -4,10 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using gameAPI;
+using delegateAPI;
 
 
 
-
+public struct StartMethod
+{
+    public InitialisationDelegate handler;
+    public string className;
+}
 
 
 
@@ -78,7 +83,11 @@ public class GameManager : MonoBehaviour
                                                                    
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
+
+    [Tooltip("Switch ON to get a performance log of initialisation ")]
+    public bool isPerformanceLog;
     
+    private List<StartMethod> listOfStartMethods = new List<StartMethod>();
     
 
     #endregion
@@ -159,6 +168,8 @@ public class GameManager : MonoBehaviour
         alertScript = AlertUI.Instance();
         actorPanelScript = ActorPanelUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
+        //set up list of delegates
+        InitialiseDelegates();
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
     }
@@ -167,9 +178,25 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //setup game
-        InitialiseGame();
+
+        if (isPerformanceLog == false)
+        { InitialiseGame(); }
+        else
+        { InitialiseGamePerformanceMonitor(); }
+
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
+    }
+    
+    /// <summary>
+    /// set up list of delegates ready for initialisation (do this because there are two version of initialisation, performance monitoring ON or OFF)
+    /// </summary>
+    private void InitialiseDelegates()
+    {
+        StartMethod startMethod = new StartMethod();
+        startMethod.handler = GameManager.instance.importScript.InitialiseStart;
+        startMethod.className = "ImportManager";
+        listOfStartMethods.Add(startMethod);
     }
 
     /// <summary>
@@ -229,6 +256,81 @@ public class GameManager : MonoBehaviour
         testScript.Initialise();
 
         //TO DO -> tap into game options chosen by player and start game as correct side or AI vs. AI
+    }
+
+    private void InitialiseGamePerformanceMonitor()
+    {
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+        testScript.Initialise();
+
+        
+       /* //importScript.InitialiseStart();   //must be first
+        InitialisationDelegate handler;
+        handler = listOfDelegates[0];
+        GameManager.instance.testScript.StartTimer();
+        handler();
+        long elapsed = GameManager.instance.testScript.StopTimer();
+        Debug.LogFormat("[Per] {0} -> {1}: {2} ms{3}", GetClassName(handler), handler.Method.Name, elapsed, "\n");
+        GameManager.instance.testScript.StartTimer();
+        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
+        Debug.LogFormat("[Per] globalScript -> Initialise: {0} ms{1}", GameManager.instance.testScript.StopTimer(), "\n");*/
+
+        StartMethod startMethod = listOfStartMethods[0];
+        GameManager.instance.testScript.StartTimer();
+        Debug.Assert(startMethod.handler != null, "Invalid startMethod (index 0)");
+            startMethod.handler();
+            long elapsed = GameManager.instance.testScript.StopTimer();
+            Debug.LogFormat("[Per] {0} -> {1}: {2} ms{3}", startMethod.className, startMethod.handler.Method.Name, elapsed, "\n");
+        GameManager.instance.testScript.StartTimer();
+        globalScript.Initialise();      //must be immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
+        Debug.LogFormat("[Per] globalScript -> Initialise: {0} ms{1}", GameManager.instance.testScript.StopTimer(), "\n");
+
+        colourScript.Initialise();
+        messageScript.Initialise();     //must be after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
+        tooltipNodeScript.Initialise();
+        sideScript.Initialise();
+        actorScript.PreInitialiseActors();
+        importScript.InitialiseEarly();
+        guiScript.Initialise();             //must be before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
+        cityScript.InitialiseEarly();        //before levelScript
+        objectiveScript.Initialise();
+        actorPanelScript.Initialise();    //must be before actorScript.Initialise
+        actorScript.Initialise();
+        levelScript.Initialise();
+        dataScript.InitialiseLate();      //must be immediately after levelScript.Initialise
+        importScript.InitialiseLate();    //must be immediately after levelScript.Initialise
+        cityScript.InitialiseLate();      //must be immediately after levelScript.Initialise
+        secretScript.Initialise();        //after dataScript and before playerScript
+        factionScript.Initialise();
+        inputScript.Initialise();
+        metaScript.Initialise();
+        dataScript.InitialiseFinal();   //must be after metaScript.Initialise
+        actionScript.Initialise();
+        targetScript.Initialise();
+        nodeScript.Initialise();
+        effectScript.Initialise();      //after nodeScript
+        teamScript.Initialise();
+        turnScript.Initialise();
+        gearScript.Initialise();
+        teamPickerScript.Initialise();
+        /*diceScript.Initialise();*/
+        aiScript.Initialise();          //after factionScript
+        captureScript.Initialise();
+        authorityScript.Initialise();
+        playerScript.Initialise();
+        debugGraphicsScript.Initialise();
+        traitScript.Initialise();
+        connScript.Initialise();
+        cityInfoScript.Initialise();
+        aiDisplayScript.Initialise();
+        aiSideTabScript.Initialise();
+        widgetTopScript.Initialise();
+        //do a final redraw before game start
+        nodeScript.NodeRedraw = true;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
+        
     }
 
 

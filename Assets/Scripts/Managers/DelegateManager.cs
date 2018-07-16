@@ -14,4 +14,7 @@ namespace delegateAPI
     //used for ActionMenu's to pass a method to be run once that button is pressed, if null ignore
     public delegate void ActionButtonDelegate();
 
+    //used for GameManager Initialisation
+    public delegate void InitialisationDelegate();
+
 }

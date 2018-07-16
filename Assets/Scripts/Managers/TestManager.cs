@@ -10,10 +10,11 @@ using UnityEngine;
 /// </summary>
 public class TestManager : MonoBehaviour
 {
+    Stopwatch timer;
 
     public void Initialise()
     {
-        //TestIterationSpeed();
+        timer = new Stopwatch();
     }
 
     /// <summary>
@@ -46,6 +47,24 @@ public class TestManager : MonoBehaviour
         }
         timerList.Stop();
         UnityEngine.Debug.LogFormat("[Tst] TestManager.cs -> TestIterationSpeed: List {0} ms, {1} records{2}", timerList.ElapsedMilliseconds, listOfNodes.Count, "\n");
+    }
+
+    /// <summary>
+    /// starts timer
+    /// </summary>
+    public void StartTimer()
+    {
+        timer.Restart();
+    }
+
+    /// <summary>
+    /// Returns elapsed time in milliseconds
+    /// </summary>
+    /// <returns></returns>
+    public long StopTimer()
+    {
+        timer.Stop();
+        return timer.ElapsedMilliseconds;
     }
 
 }

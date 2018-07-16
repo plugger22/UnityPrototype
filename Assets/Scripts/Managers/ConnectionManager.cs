@@ -108,11 +108,11 @@ public class ConnectionManager : MonoBehaviour
     /// <param name="ongoingID"></param>
     public void RemoveOngoingEffect(int ongoingID)
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
-        if (dictOfConnections != null)
+        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        if (listOfConnections != null)
         {
-            foreach (var connection in dictOfConnections)
-            { connection.Value.RemoveOngoingEffect(ongoingID); }
+            foreach (Connection connection in listOfConnections)
+            { connection.RemoveOngoingEffect(ongoingID); }
         }
         else { Debug.LogError("Invalid dictOfConnections (Null)"); }
     }
@@ -126,22 +126,22 @@ public class ConnectionManager : MonoBehaviour
     {
         int activityData = -1;
         int currentTurn = GameManager.instance.turnScript.Turn;
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
-        if (dictOfConnections != null)
+        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        if (listOfConnections != null)
         {
             resetConnections = true;
             //loop all connections regardless
-            foreach (var conn in dictOfConnections)
+            foreach (Connection conn in listOfConnections)
             {
                 //save existing security level
-                conn.Value.SaveSecurityLevel();
+                conn.SaveSecurityLevel();
                 //action depends on type of activity display required
                 switch (activityUI)
                 {
                     //Time (# of turns ago)
                     case ActivityUI.Time:
                         int limit = GameManager.instance.aiScript.activityTimeLimit;
-                        activityData = conn.Value.activityTime;
+                        activityData = conn.activityTime;
                         if (activityData > -1)
                         {
                             int timeElapsed = currentTurn - activityData;
@@ -151,61 +151,61 @@ public class ConnectionManager : MonoBehaviour
                                 {
                                     case 0:
                                     case 1:
-                                        conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
+                                        conn.ChangeSecurityLevel(ConnectionType.HIGH);
                                         break;
                                     case 2:
-                                        conn.Value.ChangeSecurityLevel(ConnectionType.MEDIUM);
+                                        conn.ChangeSecurityLevel(ConnectionType.MEDIUM);
                                         break;
                                     case 3:
                                     default:
                                         if (timeElapsed > limit)
-                                        { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                                        { conn.ChangeSecurityLevel(ConnectionType.None); }
                                         else
                                         {
                                             //within time elapsed allowance
-                                            conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
+                                            conn.ChangeSecurityLevel(ConnectionType.LOW);
                                         }
                                         break;
                                 }
                             }
                             else
-                            { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                            { conn.ChangeSecurityLevel(ConnectionType.None); }
                         }
                         else
-                        { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                        { conn.ChangeSecurityLevel(ConnectionType.None); }
                         break;
                     //Count
                     case ActivityUI.Count:
-                        activityData = conn.Value.activityCount;
+                        activityData = conn.activityCount;
                         if (activityData > -1)
                         {
                             switch (activityData)
                             {
                                 case 3:
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
+                                    conn.ChangeSecurityLevel(ConnectionType.HIGH);
                                     break;
                                 case 2:
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.MEDIUM);
+                                    conn.ChangeSecurityLevel(ConnectionType.MEDIUM);
                                     break;
                                 case 1:
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.LOW);
+                                    conn.ChangeSecurityLevel(ConnectionType.LOW);
                                     break;
                                 case 0:
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.None);
+                                    conn.ChangeSecurityLevel(ConnectionType.None);
                                     break;
                                 default:
                                     //more than 3
-                                    conn.Value.ChangeSecurityLevel(ConnectionType.HIGH);
+                                    conn.ChangeSecurityLevel(ConnectionType.HIGH);
                                     break;
                             }
                         }
                         else
-                        { conn.Value.ChangeSecurityLevel(ConnectionType.None); }
+                        { conn.ChangeSecurityLevel(ConnectionType.None); }
                         break;
                 }
             }
         }
-        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+        else { Debug.LogError("Invalid listOfConnections (Null)"); }
     }
 
     /// <summary>
@@ -213,141 +213,18 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void RestoreConnections()
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
-        if (dictOfConnections != null)
+        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        if (listOfConnections != null)
         {
-            foreach (var conn in dictOfConnections)
+            foreach (Connection conn in listOfConnections)
             {
                 //save existing security level
-                conn.Value.RestoreSecurityLevel();
+                conn.RestoreSecurityLevel();
             }
         }
-        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+        else { Debug.LogError("Invalid listOfConnections (Null)"); }
     }
 
-
-    /*/// <summary>
-    /// Permanently raises the security level (+1) of a specific (some logic here) chosen connection due to an Authority decision. Returns true if successful
-    /// </summary>
-    public bool ProcessConnectionSecurityDecisionKKK()
-    {
-        bool isDone = false;
-        int index;
-        List<Node> listOfDecisionNodes = GameManager.instance.dataScript.GetListOfDecisionNodes();
-        List<Node> tempList = new List<Node>();
-        if (listOfDecisionNodes != null)
-        {
-            //Debug.LogFormat("ListOfDecisionNodes -> Start -> {0}  Turn {1}", listOfDecisionNodes.Count, GameManager.instance.turnScript.Turn);
-            Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
-            if (factionAuthority != null)
-            {
-                NodeArc preferredNodeArc = factionAuthority.preferredArc;
-                if (preferredNodeArc != null)
-                {
-                    //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)
-                    for (int i = listOfDecisionNodes.Count - 1; i >= 0; i--)
-                    {
-                        if (listOfDecisionNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
-                        {
-                            //add to tempList and remove from decision List
-                            tempList.Add(listOfDecisionNodes[i]);
-                            listOfDecisionNodes.RemoveAt(i);
-                        }
-                    }
-                    //found any suitable nodes and do they have suitable connections?
-                    if (tempList.Count > 0)
-                    {
-                        //Debug.LogFormat("ListOfDecisionNodes -> TempList.Count {0}", tempList.Count);
-                        do
-                        {
-                            index = Random.Range(0, tempList.Count);
-                            isDone = ProcessNodeConnection(tempList[index]);
-                            if (isDone == false)
-                            { tempList.RemoveAt(index); }
-                            else { break; }
-                        }
-                        while (tempList.Count > 0);
-                    }
-                }
-                else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
-                //Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);
-                //keep looking if not yet successful. List should have all preferred nodes stripped out.
-                if (isDone == false)
-                {
-                    //Debug.Log("ListOfDecisionNodes -> Look for a Random Node");
-                    //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
-                    if (listOfDecisionNodes.Count > 0)
-                    {
-                        do
-                        {
-                            index = Random.Range(0, listOfDecisionNodes.Count);
-                            Node nodeTemp = listOfDecisionNodes[index];
-                            isDone = ProcessNodeConnection(nodeTemp);
-                            if (isDone == false)
-                            { listOfDecisionNodes.RemoveAt(index); } //not needed with refactored code but left in anyway
-                            else { break; }
-                        }
-                        while (listOfDecisionNodes.Count > 0);
-                    }
-                }
-            }
-            else { Debug.LogWarning("Invalid factionAuthority (Null)"); }
-        }
-        else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
-        if (isDone != true)
-        { Debug.LogWarningFormat("ConnectionManager.cs -> ProcessConnectionSecurityDecision: FAILED TO FIND suitable connection for nodeID {0}", "\n"); }
-        else
-        {
-            //update listOfDecisionNodes
-            GameManager.instance.aiScript.SetDecisionNodes();
-        }
-        return isDone;
-    }
-
-    /// <summary>
-    /// sub-Method for ProcessConnectionSecurityDecision that takes a node, checks for a Securitylevel.None connection, raises it up +1 level and returns true if successful.
-    /// </summary>
-    /// <param name="node"></param>
-    /// <returns></returns>
-    private bool ProcessNodeConnection(Node node)
-    {
-        bool isSuccessful = false;
-        if (node != null)
-        {
-            List<Connection> listOfConnections = node.GetListOfConnections();
-            if (listOfConnections != null)
-            {
-                Node nodeFar = null;
-                //loop connections and take first one with no security
-                foreach (Connection connection in listOfConnections)
-                {
-                    if (connection.SecurityLevel == ConnectionType.None)
-                    {
-                        nodeFar = connection.node1;
-                        //check that we've got the correct connection end
-                        if (nodeFar.nodeID == node.nodeID)
-                        { nodeFar = connection.node2; }
-                        //check that the far node has at least 2 connections (ignore single dead end connections)
-                        if (nodeFar.CheckNumOfConnections() > 1)
-                        {
-                            //raise security level + 1 permanently
-                            connection.ChangeSecurityLevel(ConnectionType.LOW);
-                            //message
-                            string descriptor = string.Format("ConnID {0}, Security Level now LOW (btwn nodeID's {1} & {2})", 
-                                connection.connID, connection.node1.nodeID, connection.node2.nodeID);
-                            Message message = GameManager.instance.messageScript.DecisionConnection(descriptor, connection.connID, (int)ConnectionType.LOW);
-                            GameManager.instance.dataScript.AddMessage(message);
-                            isSuccessful = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for nodeID {0}", node.nodeID); }
-        }
-        else { Debug.LogWarning("Invalid node (Null)"); }
-        return isSuccessful;
-    }*/
 
     /// <summary>
     /// Permanently raises the security level (+1) of a specific (some logic here) chosen connection due to an Authority decision. Returns true if successful

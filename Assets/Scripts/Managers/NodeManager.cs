@@ -1969,22 +1969,22 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
         //Connections
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
-        if (dictOfConnections != null)
+        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        if (listOfConnections != null)
         {
             counter = 0;
-            foreach (var conn in dictOfConnections)
+            foreach (Connection conn in listOfConnections)
             {
                 if (Random.Range(0, 100) < baseChance)
                 {
-                    conn.Value.activityCount = Random.Range(1, 5);
-                    conn.Value.activityTime = Random.Range(0, 3);
+                    conn.activityCount = Random.Range(1, 5);
+                    conn.activityTime = Random.Range(0, 3);
                     counter++;
                 }
             }
             Debug.Log(string.Format("DebugRandomActivity: {0} Connections initiated{1}", counter, "\n"));
         }
-        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+        else { Debug.LogError("Invalid listOfConnections (Null)"); }
     }
 
     /// <summary>
