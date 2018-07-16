@@ -2015,14 +2015,14 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all nodes
-                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                if (dictOfAllNodes != null)
+                List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                if (listOfAllNodes != null)
                 {
-                    foreach (var nodeTemp in dictOfAllNodes)
+                    foreach (Node nodeTemp in listOfAllNodes)
                     {
                         //exclude current node
-                        if (nodeTemp.Value.nodeID != node.nodeID)
-                        { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                        if (nodeTemp.nodeID != node.nodeID)
+                        { nodeTemp.ProcessNodeEffect(effectProcess); }
                     }
                 }
                 else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
@@ -2113,17 +2113,17 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
-                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                if (dictOfNodes != null)
+                List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                if (listOfNodes != null)
                 {
-                    foreach (var nodeTemp in dictOfNodes)
+                    foreach (var nodeTemp in listOfNodes)
                     {
                         //same node Arc type and not the current node?
-                        if (nodeTemp.Value.Arc.nodeArcID == node.Arc.nodeArcID && nodeTemp.Value.nodeID != node.nodeID)
-                        { nodeTemp.Value.ProcessNodeEffect(effectProcess); }
+                        if (nodeTemp.Arc.nodeArcID == node.Arc.nodeArcID && nodeTemp.nodeID != node.nodeID)
+                        { nodeTemp.ProcessNodeEffect(effectProcess); }
                     }
                 }
-                else { Debug.LogError("Invalid dictOfSameNodes (Null)"); }
+                else { Debug.LogError("Invalid listOfNodes (Null)"); }
                 break;
             default:
                 Debug.LogError(string.Format("Invalid effect.apply \"{0}\"", effect.apply.name));
@@ -2304,21 +2304,21 @@ public class EffectManager : MonoBehaviour
                     GameManager.instance.dataScript.AddOngoingIDToDict(effectProcess.effectOngoing.ongoingID, "Connection Security");*/
                 }
                 //Process Connection effect
-                Dictionary<int, Node> dictOfAllNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                if (dictOfAllNodes != null)
+                List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                if (listOfAllNodes != null)
                 {
                     //clear all connection flags first to prevent double dipping
                     GameManager.instance.connScript.SetAllFlagsToFalse();
                     //current node
                     node.ProcessConnectionEffect(effectProcess);
-                    foreach (var nodeTemp in dictOfAllNodes)
+                    foreach (var nodeTemp in listOfAllNodes)
                     {
                         //same node Arc type and not the current node?
-                        if (nodeTemp.Value.Arc.nodeArcID == node.Arc.nodeArcID && nodeTemp.Value.nodeID != node.nodeID)
-                        { nodeTemp.Value.ProcessConnectionEffect(effectProcess); }
+                        if (nodeTemp.Arc.nodeArcID == node.Arc.nodeArcID && nodeTemp.nodeID != node.nodeID)
+                        { nodeTemp.ProcessConnectionEffect(effectProcess); }
                     }
                 }
-                else { Debug.LogError("Invalid dictOfAllNodes (Null)"); }
+                else { Debug.LogError("Invalid listOfAllNodes (Null)"); }
                 break;
             //All Nodes
             case "ConnectionAll":
@@ -2356,15 +2356,15 @@ public class EffectManager : MonoBehaviour
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
                 }
                 //Process Connection effect
-                Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                if (dictOfNodes != null)
+                List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                if (listOfNodes != null)
                 {                
                     //clear all connection flags first to prevent double dipping
                     GameManager.instance.connScript.SetAllFlagsToFalse();
-                    foreach (var nodeTemp in dictOfNodes)
-                    { nodeTemp.Value.ProcessConnectionEffect(effectProcess); }
+                    foreach (Node nodeTemp in listOfNodes)
+                    { nodeTemp.ProcessConnectionEffect(effectProcess); }
                 }
-                else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+                else { Debug.LogError("Invalid listOfNodes (Null)"); }
                 break;
         }
         //return data to calling method (ProcessEffect)

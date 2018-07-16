@@ -125,20 +125,20 @@ public class TargetManager : MonoBehaviour
     private void StartTurnLate()
     {
         int targetID;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        if (dictOfNodes != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
-            foreach(var node in dictOfNodes)
+            foreach(Node node in listOfNodes)
             {
-                targetID = node.Value.targetID;
+                targetID = node.targetID;
                 if (targetID > -1)
                 {
                     //target present
-                    if (node.Value.isTargetKnown == false)
+                    if (node.isTargetKnown == false)
                     {
                         //probe team present -> target known
-                        if (node.Value.isProbeTeam == true)
-                        { node.Value.isTargetKnown = true; }
+                        if (node.isProbeTeam == true)
+                        { node.isTargetKnown = true; }
                         else
                         {
                             //get target status
@@ -150,7 +150,7 @@ public class TargetManager : MonoBehaviour
                                 {
                                     case Status.Completed:
                                     case Status.Contained:
-                                        node.Value.isTargetKnown = true;
+                                        node.isTargetKnown = true;
                                         break;
                                 }
                             }
@@ -161,12 +161,12 @@ public class TargetManager : MonoBehaviour
                 else
                 {
                     //No target -> reset target known flag if true
-                    if (node.Value.isTargetKnown == true)
-                    { node.Value.isTargetKnown = false; }
+                    if (node.isTargetKnown == true)
+                    { node.isTargetKnown = false; }
                 }
             }
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
     /// <summary>

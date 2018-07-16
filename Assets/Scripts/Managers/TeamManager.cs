@@ -357,32 +357,36 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void SeedTeamsOnMap()
     {
-        List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetDictOfNodes().Values);
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
-        if (dictOfTeams != null)
+        if (listOfNodes != null)
         {
-            int actorSlotID;
-            //loop teams
-            foreach (var teamData in dictOfTeams)
+            if (dictOfTeams != null)
             {
-                //40% chance of being deployed
-                if (Random.Range(0, 100) < 40 == true)
+                int actorSlotID;
+                //loop teams
+                foreach (var teamData in dictOfTeams)
                 {
-                    //get a random node
-                    Node node = listOfNodes[Random.Range(0, listOfNodes.Count)];
-                    if (node != null)
+                    //40% chance of being deployed
+                    if (Random.Range(0, 100) < 40 == true)
                     {
-                        //get a random Actor
-                        actorSlotID = Random.Range(0, GameManager.instance.actorScript.maxNumOfOnMapActors);
-                        //only do so if Actor is present in slot (player might start level with less than full complement of actors)
-                        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
-                        { MoveTeam(TeamPool.OnMap, teamData.Key, actorSlotID, node); }
+                        //get a random node
+                        Node node = listOfNodes[Random.Range(0, listOfNodes.Count)];
+                        if (node != null)
+                        {
+                            //get a random Actor
+                            actorSlotID = Random.Range(0, GameManager.instance.actorScript.maxNumOfOnMapActors);
+                            //only do so if Actor is present in slot (player might start level with less than full complement of actors)
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
+                            { MoveTeam(TeamPool.OnMap, teamData.Key, actorSlotID, node); }
+                        }
+                        else { Debug.LogError("Invalid node (Null)"); }
                     }
-                    else { Debug.LogError("Invalid node (Null)"); }
                 }
             }
+            else { Debug.LogWarning("Invalid dictOfTeams (Null)"); }
         }
-        else { Debug.LogError("Invalid dictOfTeams (Null)"); }
+        else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
     }
 
 

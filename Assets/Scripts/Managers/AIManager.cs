@@ -875,12 +875,12 @@ public class AIManager : MonoBehaviour
     {
         List<Node> listOfNearNeighbours = new List<Node>();
         List<int> listLookup = new List<int>();
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        if (dictOfNodes != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
-            foreach(var node in dictOfNodes)
+            foreach(Node node in listOfNodes)
             {
-                List<Node> listOfImmediateNeighbours = node.Value.GetNeighbouringNodes();
+                List<Node> listOfImmediateNeighbours = node.GetNeighbouringNodes();
                 if (listOfImmediateNeighbours != null)
                 {
                     //immediate neighbours
@@ -916,12 +916,13 @@ public class AIManager : MonoBehaviour
                 }
                 //Pass data to Node
                 if (listOfNearNeighbours.Count > 0)
-                { node.Value.SetNearNeighbours(listOfNearNeighbours); }
+                { node.SetNearNeighbours(listOfNearNeighbours); }
                 //clear lists ready for next pass
                 listOfNearNeighbours.Clear();
                 listLookup.Clear();
             }
         }
+        else { Debug.LogWarning("Invalid listOfNodes (NUll)"); }
     }
 
 
@@ -1017,86 +1018,86 @@ public class AIManager : MonoBehaviour
     {
         int data;
         AINodeData dataPackage;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        if (dictOfNodes != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
-            foreach (var node in dictOfNodes)
+            foreach (Node node in listOfNodes)
             {
-                if (node.Value != null)
+                if (node != null)
                 {
                     //
                     // - - - Node datapoints - - -
                     //
                     //check that node isn't already maxxed out on teams
-                    if (node.Value.CheckNumOfTeams() < maxTeamsAtNode)
+                    if (node.CheckNumOfTeams() < maxTeamsAtNode)
                     {
                         //Stability
-                        data = node.Value.GetNodeChange(NodeData.Stability);
+                        data = node.GetNodeChange(NodeData.Stability);
                         if (data < 0)
                         {
                             //ignore if civil team already present
-                            if (node.Value.isStabilityTeam == false)
+                            if (node.isStabilityTeam == false)
                             {
                                 //node stability has degraded
                                 dataPackage = new AINodeData();
-                                dataPackage.nodeID = node.Value.nodeID;
+                                dataPackage.nodeID = node.nodeID;
                                 dataPackage.type = NodeData.Stability;
-                                dataPackage.arc = node.Value.Arc;
+                                dataPackage.arc = node.Arc;
                                 dataPackage.difference = Mathf.Abs(data);
-                                dataPackage.current = node.Value.Stability;
-                                dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                dataPackage.current = node.Stability;
+                                dataPackage.isPreferred = node.isPreferredAuthority;
                                 listNodeMaster.Add(dataPackage);
                             }
                         }
                         //Security
-                        data = node.Value.GetNodeChange(NodeData.Security);
+                        data = node.GetNodeChange(NodeData.Security);
                         if (data < 0)
                         {
                             //ignore if control team already present
-                            if (node.Value.isSecurityTeam == false)
+                            if (node.isSecurityTeam == false)
                             {
                                 //node stability has degraded
                                 dataPackage = new AINodeData();
-                                dataPackage.nodeID = node.Value.nodeID;
+                                dataPackage.nodeID = node.nodeID;
                                 dataPackage.type = NodeData.Security;
-                                dataPackage.arc = node.Value.Arc;
+                                dataPackage.arc = node.Arc;
                                 dataPackage.difference = Mathf.Abs(data);
-                                dataPackage.current = node.Value.Security;
-                                dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                dataPackage.current = node.Security;
+                                dataPackage.isPreferred = node.isPreferredAuthority;
                                 listNodeMaster.Add(dataPackage);
                             }
                         }
                         //Support (positive value indicates a problem, eg. growing support for resistance)
-                        data = node.Value.GetNodeChange(NodeData.Support);
+                        data = node.GetNodeChange(NodeData.Support);
                         if (data > 0)
                         {
                             //ignore if media team already present
-                            if (node.Value.isSupportTeam == false)
+                            if (node.isSupportTeam == false)
                             {
                                 //node stability has degraded
                                 dataPackage = new AINodeData();
-                                dataPackage.nodeID = node.Value.nodeID;
+                                dataPackage.nodeID = node.nodeID;
                                 dataPackage.type = NodeData.Support;
-                                dataPackage.arc = node.Value.Arc;
+                                dataPackage.arc = node.Arc;
                                 dataPackage.difference = data;
-                                dataPackage.current = node.Value.Support;
-                                dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                dataPackage.current = node.Support;
+                                dataPackage.isPreferred = node.isPreferredAuthority;
                                 listNodeMaster.Add(dataPackage);
                             }
                         }
                         //
                         // - - - Probe nodes - - -
                         //
-                        if (node.Value.isProbeTeam == false)
+                        if (node.isProbeTeam == false)
                         {
-                            if (node.Value.isTargetKnown == false)
+                            if (node.isTargetKnown == false)
                             {
                                 //probe team suitable node data package
                                 dataPackage = new AINodeData();
-                                dataPackage.nodeID = node.Value.nodeID;
+                                dataPackage.nodeID = node.nodeID;
                                 dataPackage.type = NodeData.Probe;
-                                dataPackage.arc = node.Value.Arc;
-                                dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                dataPackage.arc = node.Arc;
+                                dataPackage.isPreferred = node.isPreferredAuthority;
                                 listOfProbeNodes.Add(dataPackage);
                             }
                         }
@@ -1104,9 +1105,9 @@ public class AIManager : MonoBehaviour
                     //
                     // - - - Targets (known and uncompleted) - - -
                     //
-                    if (node.Value.isTargetKnown == true)
+                    if (node.isTargetKnown == true)
                     {
-                        Target target = GameManager.instance.dataScript.GetTarget(node.Value.targetID);
+                        Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
                         if (target != null)
                         {
                             switch (target.targetStatus)
@@ -1115,21 +1116,21 @@ public class AIManager : MonoBehaviour
                                 case Status.Live:
                                     //spider/erasure team node data package (good ambush situation as targets will lure in resistance player)
                                     dataPackage = new AINodeData();
-                                    dataPackage.nodeID = node.Value.nodeID;
+                                    dataPackage.nodeID = node.nodeID;
                                     dataPackage.type = NodeData.Target;
-                                    dataPackage.arc = node.Value.Arc;
-                                    dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                    dataPackage.arc = node.Arc;
+                                    dataPackage.isPreferred = node.isPreferredAuthority;
                                     listOfTargetsKnown.Add(dataPackage);
                                     break;
                                 case Status.Completed:
                                     //Damage team node data package (only for completed targets with ongoing effects that require containing)
-                                    if (node.Value.CheckForOngoingEffects() == true)
+                                    if (node.CheckForOngoingEffects() == true)
                                     {
                                         dataPackage = new AINodeData();
-                                        dataPackage.nodeID = node.Value.nodeID;
+                                        dataPackage.nodeID = node.nodeID;
                                         dataPackage.type = NodeData.Target;
-                                        dataPackage.arc = node.Value.Arc;
-                                        dataPackage.isPreferred = node.Value.isPreferredAuthority;
+                                        dataPackage.arc = node.Arc;
+                                        dataPackage.isPreferred = node.isPreferredAuthority;
                                         listOfTargetsDamaged.Add(dataPackage);
                                     }
                                     break;
@@ -1139,10 +1140,10 @@ public class AIManager : MonoBehaviour
                         /*else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", node.Value.targetID)); }*/
                     }
                 }
-                else { Debug.LogWarning(string.Format("Invalid node (Null) in dictOfNodes for nodeID {0}", node.Key)); }
+                else { Debug.LogWarning(string.Format("Invalid node (Null) in listOfNodes for nodeID {0}", node.nodeID)); }
             }
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
     /// <summary>
@@ -1481,7 +1482,7 @@ public class AIManager : MonoBehaviour
         teamRatio = 0;
         erasureTeamsOnMap = 0;
         //work out connection security ratio (cumulate tally of connection security levels / number of connections)
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             tally = 0;

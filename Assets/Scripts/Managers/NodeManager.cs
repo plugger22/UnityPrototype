@@ -486,8 +486,8 @@ public class NodeManager : MonoBehaviour
 
             //show all nodes containng a spider
             case NodeUI.ShowSpiders:
-                Dictionary<int, Node> dictOfSpiderNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                if (dictOfSpiderNodes != null)
+                List<Node> listOfSpiderNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                if (listOfSpiderNodes != null)
                 {
                     int count = 0;
                     //determine level of visibility
@@ -505,22 +505,22 @@ public class NodeManager : MonoBehaviour
                             Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                             break;
                     }
-                    foreach (var node in dictOfSpiderNodes)
+                    foreach (Node node in listOfSpiderNodes)
                     {
-                        if (node.Value.isSpider == true)
+                        if (node.isSpider == true)
                         {
                             //show all
                             if (proceedFlag == true)
                             {
-                                node.Value.SetMaterial(materialActive);
+                                node.SetMaterial(materialActive);
                                 count++;
                             }
                             //conditional -> only show if spider is known
                             else
                             {
-                                if (node.Value.isSpiderKnown == true)
+                                if (node.isSpiderKnown == true)
                                 {
-                                    node.Value.SetMaterial(materialActive);
+                                    node.SetMaterial(materialActive);
                                     count++;
                                 }
                             }
@@ -534,13 +534,13 @@ public class NodeManager : MonoBehaviour
                     else
                     { displayText = string.Format("{0}There are no Spider districts{1}", colourError, colourEnd); }
                 }
-                else { Debug.LogError("Invalid dictOfSpiderNodes (Null)"); }
+                else { Debug.LogError("Invalid listOfSpiderNodes (Null)"); }
                 break;
 
             //show all nodes with a tracer or within one node radius of a tracer
             case NodeUI.ShowTracers:
-                Dictionary<int, Node> dictOfTracerNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                if (dictOfTracerNodes != null)
+                List<Node> listOfTracerNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                if (listOfTracerNodes != null)
                 {
                     int count = 0;
                     //determine level of visibility
@@ -558,27 +558,22 @@ public class NodeManager : MonoBehaviour
                             Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                             break;
                     }
-                    foreach (var node in dictOfTracerNodes)
+                    foreach (Node node in listOfTracerNodes)
                     {
-                        if (node.Value.isTracerActive == true)
+                        if (node.isTracerActive == true)
                         {
-                            /*node.Value.SetMaterial(nodeMaterial);
-                            //count number of tracers, not active tracer nodes
-                            if (node.Value.isTracer == true)
-                            { count++; }*/
-
                             //show all
                             if (proceedFlag == true)
                             {
-                                node.Value.SetMaterial(materialActive);
+                                node.SetMaterial(materialActive);
                                 count++;
                             }
                             //conditional -> only show if tracer is known
                             else
                             {
-                                if (node.Value.isTracerKnown == true)
+                                if (node.isTracerKnown == true)
                                 {
-                                    node.Value.SetMaterial(materialActive);
+                                    node.SetMaterial(materialActive);
                                     count++;
                                 }
                             }
@@ -592,7 +587,7 @@ public class NodeManager : MonoBehaviour
                     else
                     { displayText = string.Format("{0}There are no Tracer districts{1}", colourError, colourEnd); }
                 }
-                else { Debug.LogError("Invalid dictOfTracerNodes (Null)"); }
+                else { Debug.LogError("Invalid listOfTracerNodes (Null)"); }
                 break;
 
             //show all nodes containng a Team
@@ -616,32 +611,32 @@ public class NodeManager : MonoBehaviour
                             Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide));
                             break;
                     }
-                    Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                    if (dictOfNodes != null)
+                    List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                    if (listOfNodes != null)
                     {
-                        foreach (var node in dictOfNodes)
+                        foreach (Node node in listOfNodes)
                         {
-                            if (node.Value.CheckNumOfTeams() > 0)
+                            if (node.CheckNumOfTeams() > 0)
                             {
                                 //show all
                                 if (proceedFlag == true)
                                 {
-                                    node.Value.SetMaterial(materialActive);
+                                    node.SetMaterial(materialActive);
                                     count++;
                                 }
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
                                 else
                                 {
-                                    if (node.Value.isTeamKnown || node.Value.isTracerActive || node.Value.isContactKnown)
+                                    if (node.isTeamKnown || node.isTracerActive || node.isContactKnown)
                                     {
-                                        node.Value.SetMaterial(materialActive);
+                                        node.SetMaterial(materialActive);
                                         count++;
                                     }
                                 }
                             }
                         }
                     }
-                    else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+                    else { Debug.LogError("Invalid listOfNodes (Null)"); }
                     if (count > 0)
                     {
                         displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, count, colourEnd,
@@ -758,33 +753,33 @@ public class NodeManager : MonoBehaviour
                 break;
             case NodeUI.Centre:
                 //display all nodes with AI designated central area (node.isCentreNode true)
-                Dictionary<int, Node> dictOfCentreNodes = GameManager.instance.dataScript.GetDictOfNodes();
-                if (dictOfCentreNodes != null)
+                List<Node> listOfCentreNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                if (listOfCentreNodes != null)
                 {
-                    if (dictOfCentreNodes.Count > 0)
+                    if (listOfCentreNodes.Count > 0)
                     {
                         int counter = 0;
-                        foreach (var node in dictOfCentreNodes)
+                        foreach (Node node in listOfCentreNodes)
                         {
-                            if (node.Value != null)
+                            if (node != null)
                             {
-                                if (node.Value.isCentreNode == true)
+                                if (node.isCentreNode == true)
                                 {
-                                    node.Value.SetMaterial(materialActive);
+                                    node.SetMaterial(materialActive);
                                     counter++;
                                 }
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Centred district{4}{5}", colourDefault, counter, colourEnd, colourHighlight,
-                            dictOfCentreNodes.Count != 1 ? "s" : "", colourEnd);
+                            listOfCentreNodes.Count != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
                 }
                 else
                 {
-                    Debug.LogWarning("Invalid dictOfCentreNodes (Null)");
-                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null dictOfCentreNodes", colourEnd);
+                    Debug.LogWarning("Invalid listOfCentreNodes (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null listOfCentreNodes", colourEnd);
                 }
                 break;
 
@@ -888,14 +883,14 @@ public class NodeManager : MonoBehaviour
     {
         Renderer nodeRenderer;
         bool proceedFlag = true;
-        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
-        if (tempDict != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
             //loop all nodes & assign current materials to their renderers (changes colour on screen)
-            foreach (var node in tempDict)
+            foreach (Node node in listOfNodes)
             {
-                nodeRenderer = node.Value.GetComponent<Renderer>();
-                nodeRenderer.material = node.Value._Material;
+                nodeRenderer = node.GetComponent<Renderer>();
+                nodeRenderer.material = node._Material;
             }
             //highlighted node
             if (nodeHighlight > -1)
@@ -910,7 +905,7 @@ public class NodeManager : MonoBehaviour
                         nodeRenderer.material = materialHighlight;
                     }
                 }
-                else { Debug.LogError("Invalid Node (null) returned from dictOfNodes"); }
+                else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
             }
             //show player node if flag is true (default condition -> would be false only in case of flashing player Node)
             if (showPlayerNode == true)
@@ -941,7 +936,7 @@ public class NodeManager : MonoBehaviour
             //reset flag to prevent constant redraws
             NodeRedraw = false;
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null) returned from dataManager in RedrawNodes"); }
+        else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in RedrawNodes"); }
     }
 
     /// <summary>
@@ -950,18 +945,18 @@ public class NodeManager : MonoBehaviour
     public void ResetNodes()
     {
         //loop and assign
-        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
-        if (tempDict != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
-            foreach (var node in tempDict)
+            foreach (Node node in listOfNodes)
             {
-                node.Value.SetMaterial(materialNormal);
-                node.Value.faceText.text = "";
+                node.SetMaterial(materialNormal);
+                node.faceText.text = "";
             }
             //trigger an automatic redraw
             NodeRedraw = true;
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null) returned from dataManager in ResetNodes"); }
+        else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in ResetNodes"); }
 
     }
 
@@ -1013,26 +1008,26 @@ public class NodeManager : MonoBehaviour
         if (activityUI != ActivityUI.None)
         {
             int data;
-            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-            if (dictOfNodes != null)
+            List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+            if (listOfNodes != null)
             {
                 //loop nodes
                 bool errorFlag = false;
-                foreach(var node in dictOfNodes)
+                foreach(Node node in listOfNodes)
                 {
-                    if (node.Value != null)
+                    if (node != null)
                     {
-                        if (node.Value.faceObject != null)
+                        if (node.faceObject != null)
                         {
                             switch(activityUI)
                             {
                                 case ActivityUI.Count:
                                 case ActivityUI.Time:
-                                    data = node.Value.GetNodeActivity(activityUI);
+                                    data = node.GetNodeActivity(activityUI);
                                     if (data > -1)
                                     {
-                                        node.Value.faceText.text = data.ToString();
-                                        node.Value.faceText.color = GetActivityColour(activityUI, data);
+                                        node.faceText.text = data.ToString();
+                                        node.faceText.color = GetActivityColour(activityUI, data);
                                     }
                                     break;
                                 default:
@@ -1041,15 +1036,14 @@ public class NodeManager : MonoBehaviour
                                     break;
                             }
                         }
-                        else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.Key)); }
-
+                        else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.nodeID)); }
                         if (errorFlag == true)
                         { break; }
                     }
-                    else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.Key)); }
+                    else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
                 }
             }
-            else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+            else { Debug.LogError("Invalid listOfNodes (Null)"); }
         }
     }
 
@@ -1871,13 +1865,13 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     public void SetNodeActorFlags()
     {
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         GlobalSide side = GameManager.instance.globalScript.sideResistance;
-        if (dictOfNodes != null)
+        if (listOfNodes != null)
         {
             //set all to false
-            foreach (var node in dictOfNodes)
-            { node.Value.isContact = false; }
+            foreach (Node node in listOfNodes)
+            { node.isContact = false; }
             //loop Resistance actors
             for (int slotID = 0; slotID < GameManager.instance.actorScript.maxNumOfOnMapActors; slotID++)
             {
@@ -1890,28 +1884,28 @@ public class NodeManager : MonoBehaviour
                         //only consider actor if Active
                         if (actor.Status == ActorStatus.Active)
                         {
-                            List<GameObject> listOfNodes = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
-                            if (listOfNodes != null)
+                            List<GameObject> listOfActorNodes = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
+                            if (listOfActorNodes != null)
                             {
                                 //loop nodes where actor has a connection
-                                for (int i = 0; i < listOfNodes.Count; i++)
+                                for (int i = 0; i < listOfActorNodes.Count; i++)
                                 {
                                     //set flag to true
-                                    Node node = listOfNodes[i].GetComponent<Node>();
+                                    Node node = listOfActorNodes[i].GetComponent<Node>();
                                     if (node != null)
                                     { node.isContact = true; }
                                     else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
                                 }
 
                             }
-                            else { Debug.LogError(string.Format("Invalid listOfNodes (Null) for slotID {0}", slotID)); }
+                            else { Debug.LogError(string.Format("Invalid listOfActorNodes (Null) for slotID {0}", slotID)); }
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Actor (null) for slotID {0}", slotID)); }
                 }
             }
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
     /// <summary>
@@ -1922,13 +1916,13 @@ public class NodeManager : MonoBehaviour
     {
         if (ongoingID > -1)
         {
-            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-            if (dictOfNodes != null)
+            List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+            if (listOfNodes != null)
             {
-                foreach (var node in dictOfNodes)
-                { node.Value.RemoveOngoingEffect(ongoingID); }
+                foreach (Node node in listOfNodes)
+                { node.RemoveOngoingEffect(ongoingID); }
             }
-            else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+            else { Debug.LogError("Invalid listOfNodes (Null)"); }
         }
         else { Debug.LogError(string.Format("Invalid ongoingID {0} (must be zero or above)", ongoingID)); }
     }
@@ -1940,13 +1934,13 @@ public class NodeManager : MonoBehaviour
     private void ProcessNodeTimers()
     {
         //Debug.LogWarning(string.Format("PROCESSNODETIMER: turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        if (dictOfNodes != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
-            foreach (var node in dictOfNodes)
+            foreach (Node node in listOfNodes)
             {
-                node.Value.ProcessOngoingEffectTimers();
-                node.Value.ProcessObserverTimers();
+                node.ProcessOngoingEffectTimers();
+                node.ProcessObserverTimers();
             }
         }
     }
@@ -1959,23 +1953,23 @@ public class NodeManager : MonoBehaviour
         int baseChance = 20;
         int counter = 0;
         //Nodes
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        if (dictOfNodes != null)
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
         {
-            foreach (var node in dictOfNodes)
+            foreach (Node node in listOfNodes)
             {
                 if (Random.Range(0, 100) < baseChance)
                 {
-                    node.Value.activityCount = Random.Range(1, 5);
-                    node.Value.activityTime = Random.Range(0, 3);
+                    node.activityCount = Random.Range(1, 5);
+                    node.activityTime = Random.Range(0, 3);
                     counter++;
                 }
             }
             Debug.Log(string.Format("DebugRandomActivity: {0} Nodes initiated{1}", counter, "\n"));
         }
-        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
         //Connections
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             counter = 0;
@@ -2073,12 +2067,11 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void ProcessNodeCrisis()
     {
-        
-        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
         List<Node> tempList = new List<Node>(); //add all current crisis nodes in list then, once done, overwrite listOfCrisisNodes
         List<NodeDatapoint> listOfDatapoints = new List<NodeDatapoint>();
-        if (tempDict != null)
+        if (listOfNodes != null)
         {
             if (listOfCrisisNodes != null)
             {
@@ -2106,40 +2099,40 @@ public class NodeManager : MonoBehaviour
                     if (city.mayor.CheckTraitEffect(crisisTimerHigh) == true) { nodeTimer += 1; }
                     else if (city.mayor.CheckTraitEffect(crisisTimerLow) == true) { nodeTimer -= 1; }
                     //loop all nodes
-                    foreach (var node in tempDict)
+                    foreach (Node node in listOfNodes)
                     {
-                        if (node.Value != null)
+                        if (node != null)
                         {
                             numOfDangerSigns = 0;
-                            if (node.Value.crisisTimer > 0)
+                            if (node.crisisTimer > 0)
                             {
                                 //currently undergoing a CRISIS
-                                if (node.Value.Security <= crisisSecurity) { numOfDangerSigns++; }
-                                if (node.Value.Stability <= crisisStability) { numOfDangerSigns++; }
-                                if (node.Value.Support >= crisisSupport) { numOfDangerSigns++; }
+                                if (node.Security <= crisisSecurity) { numOfDangerSigns++; }
+                                if (node.Stability <= crisisStability) { numOfDangerSigns++; }
+                                if (node.Support >= crisisSupport) { numOfDangerSigns++; }
                                 //check if crisis averted
                                 if (numOfDangerSigns == 0)
                                 {
                                     //crisis AVERTED
-                                    node.Value.crisisTimer = 0;
-                                    node.Value.waitTimer = nodeWaitTimer;
-                                    node.Value.crisis = null;
+                                    node.crisisTimer = 0;
+                                    node.waitTimer = nodeWaitTimer;
+                                    node.crisis = null;
                                     //admin
-                                    msgText = string.Format("{0}, {1}, ID {2} crisis AVERTED", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID);
-                                    Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID);
+                                    msgText = string.Format("{0}, {1}, ID {2} crisis AVERTED", node.nodeName, node.Arc.name, node.nodeID);
+                                    Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
                                     GameManager.instance.dataScript.AddMessage(message);
                                 }
                                 else
                                 {
                                     //Crisis CONTINUES
-                                    node.Value.crisisTimer--;
-                                    if (node.Value.crisisTimer > 0)
+                                    node.crisisTimer--;
+                                    if (node.crisisTimer > 0)
                                     {
                                         //add to list of crisis nodes
-                                        tempList.Add(node.Value);
+                                        tempList.Add(node);
                                         //warning message
-                                        msgText = string.Format("{0} crisis in {1}, {2}, ({3} turn{4} left to Resolve)", node.Value.crisis.tag, node.Value.nodeName, node.Value.Arc.name,
-                                            node.Value.crisisTimer, node.Value.crisisTimer != 1 ? "s" : "");
+                                        msgText = string.Format("{0} crisis in {1}, {2}, ({3} turn{4} left to Resolve)", node.crisis.tag, node.nodeName, node.Arc.name,
+                                            node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
                                         Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
                                         GameManager.instance.dataScript.AddMessage(message);
                                     }
@@ -2151,30 +2144,30 @@ public class NodeManager : MonoBehaviour
                                         loyalty = Mathf.Max(0, loyalty);
                                         GameManager.instance.cityScript.CityLoyalty = loyalty;
                                         //admin                                
-                                        msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.Value.nodeName, node.Value.Arc.name, node.Value.crisis.tag);
-                                        Message messageCrisis = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID, crisisCityLoyalty);
+                                        msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.nodeName, node.Arc.name, node.crisis.tag);
+                                        Message messageCrisis = GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID, crisisCityLoyalty);
                                         GameManager.instance.dataScript.AddMessage(messageCrisis);
-                                        msgText = string.Format("{0} Loyalty falls by -{1} to {2} ({3} crisis)", city.name, crisisCityLoyalty, loyalty, node.Value.crisis.tag);
+                                        msgText = string.Format("{0} Loyalty falls by -{1} to {2} ({3} crisis)", city.name, crisisCityLoyalty, loyalty, node.crisis.tag);
                                         Message messageCity = GameManager.instance.messageScript.CityLoyalty(msgText, loyalty, crisisCityLoyalty * -1);
                                         GameManager.instance.dataScript.AddMessage(messageCity);
                                         //set variables
-                                        node.Value.waitTimer = nodeWaitTimer;
-                                        node.Value.crisis = null;
+                                        node.waitTimer = nodeWaitTimer;
+                                        node.crisis = null;
                                     }
                                 }
                             }
-                            else if (node.Value.waitTimer > 0)
+                            else if (node.waitTimer > 0)
                             {
                                 //WAITING between potential crisis
-                                node.Value.waitTimer--;
+                                node.waitTimer--;
                                 /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0}, ID {1}, waitTimer now {2}{3}", node.Value.Arc.name, node.Value.nodeID, node.Value.waitTimer, "\n");*/
                             }
                             else
                             {
                                 //check for datapoints in the DANGER ZONE
-                                if (node.Value.Security <= crisisSecurity) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeSecurity); }
-                                if (node.Value.Stability <= crisisStability) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeStability); }
-                                if (node.Value.Support >= crisisSupport) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeSupport); }
+                                if (node.Security <= crisisSecurity) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeSecurity); }
+                                if (node.Stability <= crisisStability) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeStability); }
+                                if (node.Support >= crisisSupport) { numOfDangerSigns++; listOfDatapoints.Add(GameManager.instance.globalScript.nodeSupport); }
                                 //Danger signs present
                                 if (numOfDangerSigns > 0)
                                 {
@@ -2185,10 +2178,10 @@ public class NodeManager : MonoBehaviour
                                     if (rnd < chance)
                                     {
                                         //CRISIS COMMENCES -> set crisisTimer
-                                        node.Value.crisisTimer = nodeTimer;
-                                        node.Value.waitTimer = 0;
+                                        node.crisisTimer = nodeTimer;
+                                        node.waitTimer = 0;
                                         //add to list of crisis nodes
-                                        tempList.Add(node.Value);
+                                        tempList.Add(node);
                                         //Get crisis type
                                         NodeDatapoint datapoint;
                                         int numOfDatapoints = listOfDatapoints.Count;
@@ -2204,21 +2197,21 @@ public class NodeManager : MonoBehaviour
                                             Debug.LogWarning("Invalid listOfDatapoints (Empty) -> default datapoint Stability provided");
                                             datapoint = GameManager.instance.globalScript.nodeStability;
                                         }
-                                        node.Value.crisis = GameManager.instance.dataScript.GetRandomNodeCrisis(datapoint);
-                                        if (node.Value.crisis == null)
+                                        node.crisis = GameManager.instance.dataScript.GetRandomNodeCrisis(datapoint);
+                                        if (node.crisis == null)
                                         {
                                             //safety backup
                                             Debug.LogWarning("Invalid node.Value.crisis (Null) -> default value Crisis provided (nodeCrisisID 0)");
-                                            node.Value.crisis = GameManager.instance.dataScript.GetNodeCrisisByID(0);
+                                            node.crisis = GameManager.instance.dataScript.GetNodeCrisisByID(0);
                                             //if backup failed, generate an error
-                                            if (node.Value.crisis == null)
+                                            if (node.crisis == null)
                                             { Debug.LogError("Invalid nodeCrisis default backup nodeCrisisID 0 (Null)"); }
                                         }
                                         //admin
-                                        Debug.LogFormat("[Rnd] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, CRISIS need < {2}, rolled {3}", node.Value.Arc.name, node.Value.nodeID,
+                                        Debug.LogFormat("[Rnd] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, CRISIS need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);
-                                        msgText = string.Format("{0}, {1}, ID {2} crisis COMMENCES ({3})", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID, node.Value.crisis.tag);
-                                        Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.Value.nodeID);
+                                        msgText = string.Format("{0}, {1}, ID {2} crisis COMMENCES ({3})", node.nodeName, node.Arc.name, node.nodeID, node.crisis.tag);
+                                        Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
                                         GameManager.instance.dataScript.AddMessage(message);
                                     }
                                     else
@@ -2230,7 +2223,7 @@ public class NodeManager : MonoBehaviour
                                 }
                             }
                         }
-                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", node.Key); }
+                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
                     }
                     //update listOfCrisisNodes
                     listOfCrisisNodes.Clear();
@@ -2241,7 +2234,7 @@ public class NodeManager : MonoBehaviour
             }
             else { Debug.LogWarning("Invalid listOfCrisisNodes (Null) -> Crisis checks cancelled"); }
         }
-        else { Debug.LogWarning("Invalid dictOfNodes (tempDict) (Null) -> Crisis checks cancelled"); }
+        else { Debug.LogWarning("Invalid listOfNodes (Null) -> Crisis checks cancelled"); }
     }
 
     //new methods above here

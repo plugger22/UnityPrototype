@@ -33,7 +33,10 @@ public class DataManager : MonoBehaviour
     private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisStability = new List<NodeCrisis>();
-    
+
+    //Connections
+    private List<Connection> listOfConnections = new List<Connection>();                       //main list of connections used for iteration (rather than dictOfConnections)
+
     //Actors
     private List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();               //actors (not player)
     private List<Image> listOfActorPortraits = new List<Image>();                               //actors (not player)
@@ -785,46 +788,6 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
-    //
-    // - - - Connections - - - 
-    //
-
-    public bool AddConnection(Connection connection)
-    {
-        bool successFlag = true;
-        //add to dictionary
-        try
-        { dictOfConnections.Add(connection.connID, connection); }
-        catch (ArgumentNullException)
-        { Debug.LogError("Invalid Connection (Null)"); successFlag = false; }
-        catch (ArgumentException)
-        { Debug.LogError(string.Format("Invalid Connection (duplicate) connID \"{0}\"", connection.connID)); successFlag = false; }
-        return successFlag;
-    }
-
-    /// <summary>
-    /// returns connection with specified ID from dict, "Null" if not found
-    /// </summary>
-    /// <param name="connectionID"></param>
-    /// <returns></returns>
-    public Connection GetConnection(int connectionID)
-    {
-        Connection connection = null;
-        if (dictOfConnections.TryGetValue(connectionID, out connection))
-        { return connection; }
-        return null;
-    }
-
-    public Dictionary<int, Connection> GetAllConnections()
-    { return dictOfConnections; }
-
-    /// <summary>
-    /// Returns total number of connections
-    /// </summary>
-    /// <returns></returns>
-    public int CheckNumOfConnections()
-    { return dictOfConnections.Count; }
-
     /// <summary>
     /// pass the top most connected nodes (those with 3+ connections) to the list. Used by AI
     /// </summary>
@@ -858,7 +821,7 @@ public class DataManager : MonoBehaviour
         List<NodeCrisis> tempList = null;
         if (datapoint != null)
         {
-            switch(datapoint.level)
+            switch (datapoint.level)
             {
                 case 0:
                     //stability
@@ -940,12 +903,12 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public NodeCrisis GetNodeCrisisByID(int nodeCrisisID)
     {
-            NodeCrisis crisis = null;
-            if (dictOfNodeCrisis.TryGetValue(nodeCrisisID, out crisis))
-            {
-                return crisis;
-            }
-            return null;
+        NodeCrisis crisis = null;
+        if (dictOfNodeCrisis.TryGetValue(nodeCrisisID, out crisis))
+        {
+            return crisis;
+        }
+        return null;
     }
 
     /// <summary>
@@ -956,7 +919,7 @@ public class DataManager : MonoBehaviour
     {
         if (crisis != null)
         {
-            switch(crisis.datapoint.level)
+            switch (crisis.datapoint.level)
             {
                 case 0:
                     //stability
@@ -991,6 +954,51 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
     }
+
+    //
+    // - - - Connections - - - 
+    //
+
+    public bool AddConnection(Connection connection)
+    {
+        bool successFlag = true;
+        //add to dictionary
+        try
+        { dictOfConnections.Add(connection.connID, connection); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid Connection (Null)"); successFlag = false; }
+        catch (ArgumentException)
+        { Debug.LogError(string.Format("Invalid Connection (duplicate) connID \"{0}\"", connection.connID)); successFlag = false; }
+        return successFlag;
+    }
+
+    /// <summary>
+    /// returns connection with specified ID from dict, "Null" if not found
+    /// </summary>
+    /// <param name="connectionID"></param>
+    /// <returns></returns>
+    public Connection GetConnection(int connectionID)
+    {
+        Connection connection = null;
+        if (dictOfConnections.TryGetValue(connectionID, out connection))
+        { return connection; }
+        return null;
+    }
+
+    public Dictionary<int, Connection> GetDictOfConnections()
+    { return dictOfConnections; }
+
+    public List<Connection> GetListOfConnections()
+    { return listOfConnections; }
+
+    /// <summary>
+    /// Returns total number of connections
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfConnections()
+    { return dictOfConnections.Count; }
+
+   
 
 
     //

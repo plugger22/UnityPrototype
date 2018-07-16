@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
-
+using System.Linq;
 
 /// <summary>
 /// Handles all connection related matters
@@ -27,6 +27,8 @@ public class ConnectionManager : MonoBehaviour
         //flash
         flashConnectionTime = GameManager.instance.guiScript.flashNodeTime;
         Debug.Assert(flashConnectionTime > 0, "Invalid flashConnectionTime (zero)");
+        //Data Collections
+        InitialiseListOfConnections();
         //register listener
         EventManager.instance.AddListener(EventType.FlashConnectionStart, OnEvent, "ConnectionManager");
         EventManager.instance.AddListener(EventType.FlashConnectionStop, OnEvent, "ConnectionManager");
@@ -55,6 +57,28 @@ public class ConnectionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets up a mirrored listOfConnections for iteration purposes (performant)
+    /// </summary>
+    private void InitialiseListOfConnections()
+    {
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
+        if (dictOfConnections != null)
+        {
+            List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+            if (listOfConnections != null)
+            {
+                listOfConnections.Clear();
+                listOfConnections.AddRange(dictOfConnections.Values.ToList());
+                Debug.LogFormat("[Imp] ConnectionManager.cs -> dictOfConnections has {0} records", dictOfConnections.Count);
+                Debug.LogFormat("[Imp] ConnectionManager.cs -> listOfConnections has {0} records", listOfConnections.Count);
+                Debug.Assert(listOfConnections.Count == dictOfConnections.Count, "Mismatch on record count between listOfConnections and dictOfConnections");
+            }
+            else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid dictOfConnections (Null)"); }
+    }
+
 
     /// <summary>
     /// returns a connection material type based on security level
@@ -69,7 +93,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void SetAllFlagsToFalse()
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             foreach(var connection in dictOfConnections)
@@ -84,7 +108,7 @@ public class ConnectionManager : MonoBehaviour
     /// <param name="ongoingID"></param>
     public void RemoveOngoingEffect(int ongoingID)
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             foreach (var connection in dictOfConnections)
@@ -102,7 +126,7 @@ public class ConnectionManager : MonoBehaviour
     {
         int activityData = -1;
         int currentTurn = GameManager.instance.turnScript.Turn;
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             resetConnections = true;
@@ -189,7 +213,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void RestoreConnections()
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetAllConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             foreach (var conn in dictOfConnections)
