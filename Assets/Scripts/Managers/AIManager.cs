@@ -510,6 +510,7 @@ public class AIManager : MonoBehaviour
         isOffline = false;
         isTraceBack = false;
         isScreamer = false;
+        isPolicy = false;
         timerTraceBack = -1;
         timerScreamer = -1;
         timerOffline = -1;
@@ -1967,7 +1968,7 @@ public class AIManager : MonoBehaviour
                     //Censorship
                     if (resources >= decisionCensorship.cost)
                     {
-                        AITask taskResources = new AITask()
+                        AITask taskPolicy = new AITask()
                         {
                             data1 = decisionCensorship.cost,
                             data2 = decisionCensorship.aiDecID,
@@ -1975,12 +1976,12 @@ public class AIManager : MonoBehaviour
                             type = AIType.Decision,
                             priority = Priority.Low
                         };
-                        listOfDecisionTasksCritical.Add(taskResources);
+                        listOfDecisionTasksNonCritical.Add(taskPolicy);
                     }
                     //Ban Protests
                     if (resources >= decisionBanProtests.cost)
                     {
-                        AITask taskResources = new AITask()
+                        AITask taskPolicy = new AITask()
                         {
                             data1 = decisionBanProtests.cost,
                             data2 = decisionBanProtests.aiDecID,
@@ -1988,7 +1989,7 @@ public class AIManager : MonoBehaviour
                             type = AIType.Decision,
                             priority = Priority.Low
                         };
-                        listOfDecisionTasksCritical.Add(taskResources);
+                        listOfDecisionTasksNonCritical.Add(taskPolicy);
                     }
                 }
                 //MEDIUM IMPACT
@@ -1997,7 +1998,7 @@ public class AIManager : MonoBehaviour
                     //Censorship
                     if (resources >= decisionCurfew.cost)
                     {
-                        AITask taskResources = new AITask()
+                        AITask taskPolicy = new AITask()
                         {
                             data1 = decisionCurfew.cost,
                             data2 = decisionCurfew.aiDecID,
@@ -2005,12 +2006,12 @@ public class AIManager : MonoBehaviour
                             type = AIType.Decision,
                             priority = Priority.Medium
                         };
-                        listOfDecisionTasksCritical.Add(taskResources);
+                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
                     }
                     //Robo Cops
                     if (resources >= decisionRoboCops.cost)
                     {
-                        AITask taskResources = new AITask()
+                        AITask taskPolicy = new AITask()
                         {
                             data1 = decisionRoboCops.cost,
                             data2 = decisionRoboCops.aiDecID,
@@ -2018,7 +2019,7 @@ public class AIManager : MonoBehaviour
                             type = AIType.Decision,
                             priority = Priority.Medium
                         };
-                        listOfDecisionTasksCritical.Add(taskResources);
+                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
                     }
                 }
                 //HIGH IMPACT
@@ -2027,7 +2028,7 @@ public class AIManager : MonoBehaviour
                     //Martial Law
                     if (resources >= decisionMartialLaw.cost)
                     {
-                        AITask taskResources = new AITask()
+                        AITask taskPolicy = new AITask()
                         {
                             data1 = decisionMartialLaw.cost,
                             data2 = decisionMartialLaw.aiDecID,
@@ -2035,12 +2036,12 @@ public class AIManager : MonoBehaviour
                             type = AIType.Decision,
                             priority = Priority.High
                         };
-                        listOfDecisionTasksCritical.Add(taskResources);
+                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
                     }
                     //Drone Warfare
                     if (resources >= decisionDrones.cost)
                     {
-                        AITask taskResources = new AITask()
+                        AITask taskPolicy = new AITask()
                         {
                             data1 = decisionDrones.cost,
                             data2 = decisionDrones.aiDecID,
@@ -2048,7 +2049,7 @@ public class AIManager : MonoBehaviour
                             type = AIType.Decision,
                             priority = Priority.High
                         };
-                        listOfDecisionTasksCritical.Add(taskResources);
+                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
                     }
                 }
             }
@@ -2084,7 +2085,9 @@ public class AIManager : MonoBehaviour
                     { priorityDetect = Priority.Critical; }
                     break;
                 default:
-                    Debug.LogWarningFormat("Invalid hackingAttemptsDetected {0}", hackingAttemptsDetected);
+                    priorityDetect = Priority.Critical;
+                    priorityWeight = priorityHighWeight;
+                    /*Debug.LogWarningFormat("Invalid hackingAttemptsDetected {0}", hackingAttemptsDetected);*/
                     break;
             }
             if (priorityDetect != Priority.Critical)
@@ -3026,24 +3029,23 @@ public class AIManager : MonoBehaviour
     private bool ProcessAIPolicy(AITask task)
     {
         bool isSuccess = false;
-        //set isPolicy flag
-        isPolicy = true;
         //deduct city Loyalty & update node crisis modifier
         int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        int loyaltyChange = 0;
         int nodeCrisisModifier = 0;
         //task priority determines impact category
         switch (task.priority)
         {
             case Priority.Low:
-                cityLoyalty -= policyCityLoyaltyLow;
+                loyaltyChange = policyCityLoyaltyLow;
                 nodeCrisisModifier = policyNodeCrisisLow;
                 break;
             case Priority.Medium:
-                cityLoyalty -= policyCityLoyaltyMed;
+                loyaltyChange = policyCityLoyaltyMed;
                 nodeCrisisModifier = policyNodeCrisisMed;
                 break;
             case Priority.High:
-                cityLoyalty -= policyCityLoyaltyHigh;
+                loyaltyChange = policyCityLoyaltyHigh;
                 nodeCrisisModifier = policyNodeCrisisHigh;
                 break;
             default:
@@ -3051,21 +3053,23 @@ public class AIManager : MonoBehaviour
                 break;
         }
         //update
+        cityLoyalty -= loyaltyChange;
         cityLoyalty = Mathf.Max(0, cityLoyalty);
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         GameManager.instance.nodeScript.crisisPolicyModifier = nodeCrisisModifier;
 
-        //set timer & current Policy
+        //set vars
+        isPolicy = true;
         timerPolicy = aiCounterMeasureTimer;
         policyName = task.name0;
         policyEffectCrisis = nodeCrisisModifier;
         policyEffectLoyalty = cityLoyalty;
         //admin
-        string msgText = string.Format("{0} policy has been implemented city wide by the Authority", policyName);
+        string msgText = string.Format("Authority implements {0} policy city wide", policyName);
         Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
         GameManager.instance.dataScript.AddMessage(message);
-        msgText = string.Format("{0} Loyalty has decreased by -{1} to {2} due to the {3} policy", city.name, policyEffectLoyalty, cityLoyalty, policyName);
-        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
+        msgText = string.Format("{0} loyalty has decreased by -{1} to {2} due to the {3} policy", city.name, loyaltyChange, cityLoyalty, policyName);
+        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         GameManager.instance.dataScript.AddMessage(message);
         return isSuccess;
     }
@@ -3484,7 +3488,7 @@ public class AIManager : MonoBehaviour
             else
             {
                 //warning notification
-                msgText = string.Format("City wide {0} policy in force, {1} turn{2} to go", policyName, timerPolicy, timerPolicy != 1 ? "s" : "");
+                msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
                 Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
                 GameManager.instance.dataScript.AddMessage(message);
                 Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerPolicy now {0}{1}", timerPolicy, "\n");
@@ -4163,6 +4167,7 @@ public class AIManager : MonoBehaviour
         message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
         GameManager.instance.dataScript.AddMessage(message);
         //reset vars
+        isPolicy = false;
         timerPolicy = -1;
         policyName = "Unknown";
         policyEffectCrisis = -1;
@@ -4189,6 +4194,7 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
         builder.AppendFormat("- Options{0}", "\n");
         builder.AppendFormat(" AI Security Protocol level {0}{1}", aiSecurityProtocolLevel, "\n");
+        builder.AppendFormat(" isPolicy -> {0}{1}", isPolicy, "\n");
         builder.AppendFormat(" isOffline -> {0}{1}", isOffline, "\n");
         builder.AppendFormat(" isScreamer -> {0}{1}", isScreamer, "\n");
         builder.AppendFormat(" isTraceBack -> {0}{1}{2}", isTraceBack, "\n", "\n");
@@ -4329,6 +4335,7 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" immediateFlagResistance -> {0}{1}", immediateFlagResistance, "\n");
         builder.AppendFormat(" isInsufficientResources -> {0}{1}", isInsufficientResources, "\n");
         builder.AppendFormat(" numOfUnsuccessfulResourceRequests -> {0}{1}", numOfUnsuccessfulResourceRequests, "\n");
+        builder.AppendFormat(" numOfCrisis -> {0}{1}", numOfCrisis, "\n");
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         { builder.AppendFormat(" SECURITY MEASURES Available{0}", "\n"); }
         return builder.ToString();

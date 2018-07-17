@@ -2172,7 +2172,8 @@ public class NodeManager : MonoBehaviour
                                 //Danger signs present
                                 if (numOfDangerSigns > 0)
                                 {
-                                    chance = (nodeBaseChance + crisisPolicyModifier) * numOfDangerSigns;
+                                    chance = (nodeBaseChance - crisisPolicyModifier) * numOfDangerSigns;
+                                    chance = Mathf.Clamp(chance, 0, 100);
                                     Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, base chance {2}{3}", node.Arc.name, node.nodeID, nodeBaseChance, "\n");
                                     Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, danger signs {2}{3}", node.Arc.name, node.nodeID, numOfDangerSigns, "\n");
                                     Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, policy modifier {2}{3}", node.Arc.name, node.nodeID, crisisPolicyModifier, "\n");
@@ -2221,7 +2222,7 @@ public class NodeManager : MonoBehaviour
                                     else
                                     {
                                         //failed roll, nothing happens
-                                        Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Value.Arc.name, node.Value.nodeID,
+                                        Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);
                                     }
                                 }
