@@ -52,6 +52,7 @@ public class NodeManager : MonoBehaviour
     [Tooltip("Level, at or Above, where Node support (for resistance) reaches the danger point")]
     [Range(0, 3)] public int crisisSupport = 3;
 
+    [HideInInspector] public int crisisPolicyModifier = 0;          //modifier to  crisisBaseChance due to Authority Policies, eg. "Curfew" 
     [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
@@ -2171,8 +2172,10 @@ public class NodeManager : MonoBehaviour
                                 //Danger signs present
                                 if (numOfDangerSigns > 0)
                                 {
-                                    /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, danger signs {2}{3}", node.Value.Arc.name, node.Value.nodeID, numOfDangerSigns, "\n");*/
-                                    chance = nodeBaseChance * numOfDangerSigns;
+                                    chance = (nodeBaseChance + crisisPolicyModifier) * numOfDangerSigns;
+                                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, base chance {2}{3}", node.Arc.name, node.nodeID, nodeBaseChance, "\n");
+                                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, danger signs {2}{3}", node.Arc.name, node.nodeID, numOfDangerSigns, "\n");
+                                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, policy modifier {2}{3}", node.Arc.name, node.nodeID, crisisPolicyModifier, "\n");
                                     //random roll
                                     rnd = Random.Range(0, 100);
                                     if (rnd < chance)
@@ -2191,7 +2194,6 @@ public class NodeManager : MonoBehaviour
                                         {
                                             //get random datapoint
                                             datapoint = listOfDatapoints[Random.Range(0, numOfDatapoints)];
-
                                         }
                                         else
                                         {
@@ -2219,8 +2221,8 @@ public class NodeManager : MonoBehaviour
                                     else
                                     {
                                         //failed roll, nothing happens
-                                        /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Value.Arc.name, node.Value.nodeID,
-                                            chance, rnd);*/
+                                        Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Value.Arc.name, node.Value.nodeID,
+                                            chance, rnd);
                                     }
                                 }
                             }

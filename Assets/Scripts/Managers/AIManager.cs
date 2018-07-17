@@ -2954,7 +2954,7 @@ public class AIManager : MonoBehaviour
             resources -= decisionCost;
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
-            //implement decision
+            //Security Measures
             if (task.name0.Equals(decisionAPB.name) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, AuthoritySecurityState.APB);
@@ -2977,7 +2977,7 @@ public class AIManager : MonoBehaviour
             { isSuccess = ProcessAITeamRequest(); }
             else if (task.name0.Equals(decisionResources.name) == true)
             { isSuccess = ProcessAIResourceRequest(); }
-            //countermeasures
+            //Network countermeasures
             else if (task.name0.Equals(decisionTraceBack.name) == true)
             { isSuccess = ProcessAITraceBack(); }
             else if (task.name0.Equals(decisionScreamer.name) == true)
@@ -2988,17 +2988,17 @@ public class AIManager : MonoBehaviour
             { isSuccess = ProcessAIOffline(); }
             //policies
             else if (task.name0.Equals(decisionCensorship.name) == true)
-            { isSuccess = ProcessAIPolicy(); }
+            { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionBanProtests.name) == true)
-            { isSuccess = ProcessAIPolicy(); }
+            { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionCurfew.name) == true)
-            { isSuccess = ProcessAIPolicy(); }
+            { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionRoboCops.name) == true)
-            { isSuccess = ProcessAIPolicy(); }
+            { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionMartialLaw.name) == true)
-            { isSuccess = ProcessAIPolicy(); }
+            { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionDrones.name) == true)
-            { isSuccess = ProcessAIPolicy(); }
+            { isSuccess = ProcessAIPolicy(task); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
             //debug logs
@@ -3015,12 +3015,44 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// Processes an AI policy decision from Authority. Returns true if successful
+    /// NOTE: task has been checked for Null by the calling method (ExecuteDecisionTask)
     /// </summary>
     /// <returns></returns>
-    private bool ProcessAIPolicy()
+    private bool ProcessAIPolicy(AITask task)
     {
         bool isSuccess = false;
-        jj
+        //set isPolicy flag
+        isPolicy = true;
+        //deduct city Loyalty & update node crisis modifier
+        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        int nodeCrisisModifier = 0;
+        //task priority determines impact category
+        switch (task.priority)
+        {
+            case Priority.Low:
+                cityLoyalty -= policyCityLoyaltyLow;
+                nodeCrisisModifier = policyNodeCrisisLow;
+                break;
+            case Priority.Medium:
+                cityLoyalty -= policyCityLoyaltyMed;
+                nodeCrisisModifier = policyNodeCrisisMed;
+                break;
+            case Priority.High:
+                cityLoyalty -= policyCityLoyaltyHigh;
+                nodeCrisisModifier = policyNodeCrisisHigh;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid task.priority \"{0}\"", task.priority);
+                break;
+        }
+        //update
+        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+        GameManager.instance.nodeScript.crisisPolicyModifier = nodeCrisisModifier;
+
+        //set timer
+        dd
+        //feedback
+
         return isSuccess;
     }
 
