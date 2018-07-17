@@ -2182,6 +2182,8 @@ public class NodeManager : MonoBehaviour
                                         node.waitTimer = 0;
                                         //add to list of crisis nodes
                                         tempList.Add(node);
+                                        //track number of crisis for AI decision making
+                                        GameManager.instance.aiScript.numOfCrisis++;
                                         //Get crisis type
                                         NodeDatapoint datapoint;
                                         int numOfDatapoints = listOfDatapoints.Count;

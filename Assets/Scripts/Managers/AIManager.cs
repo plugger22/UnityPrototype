@@ -238,6 +238,7 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public Priority aiAlertStatus;
     [HideInInspector] public bool isRebooting;                          //true if AI Security System is rebooting and hacking not possible (external access cut)
     [HideInInspector] public int rebootTimer;                           //how many times does it take to reboot, (rebooted when timer reaches zero)
+    [HideInInspector] public int numOfCrisis;                           //tally of number of node crisis that have occured so far
     
     //ai countermeasure flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
@@ -303,6 +304,10 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionScreamer;
     private DecisionAI decisionProtocol;
     private DecisionAI decisionOffline;
+    private DecisionAI decisionCensorWeb;
+    private DecisionAI decisionCurfew;
+    private DecisionAI decisionBanProtests;
+    private DecisionAI decisionMartialLaw;
     //text strings
     private string traceBackFormattedText;                                   //specially formatted string (uncoloured) for tooltips
     private string screamerFormattedText;
@@ -361,6 +366,7 @@ public class AIManager : MonoBehaviour
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
         numOfUnsuccessfulResourceRequests = 0;
         numOfSuccessfulResourceRequests = 0;
+        numOfCrisis = 0;
         isInsufficientResources = false;
         //decision ID's
         int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
@@ -383,6 +389,14 @@ public class AIManager : MonoBehaviour
         decisionOffline = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Protocol");
         decisionProtocol = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Censor Web");
+        decisionCensorWeb = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Ban Protests");
+        decisionBanProtests = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Martial Law");
+        decisionMartialLaw = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Curfew");
+        decisionCurfew = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -393,6 +407,10 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionScreamer != null, "Invalid decisionScreamer (Null)");
         Debug.Assert(decisionOffline != null, "Invalid decisionOffline (Null)");
         Debug.Assert(decisionProtocol != null, "Invalid decisionProtocol (Null)");
+        Debug.Assert(decisionCensorWeb != null, "Invalid decisionCensorWeb (Null)");
+        Debug.Assert(decisionBanProtests != null, "Invalid decisionBanProtests (Null)");
+        Debug.Assert(decisionMartialLaw != null, "Invalid decisionMartialLaw (Null)");
+        Debug.Assert(decisionCurfew != null, "Invalid decisionCurfew (Null)");
         //conditions
         stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
@@ -1804,7 +1822,7 @@ public class AIManager : MonoBehaviour
         Debug.Assert(listOfDecisionTasksNonCritical != null, "Invalid listOfDecisionTasksNonCritical (Null)");
         Debug.Assert(listOfDecisionTasksCritical != null, "Invalid listOfDecisionTasksCritical (Null)");
         //
-        // - - - OnMap Security -> Critical priority - - -
+        // - - - Security -> Critical priority - - -
         //
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         {
@@ -1902,7 +1920,11 @@ public class AIManager : MonoBehaviour
         }
         isInsufficientResources = false;
         //
-        // - - - AI CounterMeasures - - - 
+        // - - - Policy - - -
+        //
+
+        //
+        // - - - Network (AI CounterMeasures) - - - 
         //
         // No countermeasure options are valid if rebooting or offline
         if (isRebooting == false || isOffline == false)
