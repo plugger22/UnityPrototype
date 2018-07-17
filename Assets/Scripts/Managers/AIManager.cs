@@ -198,6 +198,28 @@ public class AIManager : MonoBehaviour
     [Tooltip("This amount will be added to the chance of a resource request being approved once per unsuccessful attempt")]
     [Range(0, 100)] public int resourcesBoost = 15;
 
+    [Header("Policy Decisions")]
+    [Tooltip("The level of City Loyalty, or above, at which policies countering crisis will be considered")]
+    [Range(0, 10)] public int policyCrisisLoyaltyCriteria = 4;
+    [Tooltip("The number, or above, of confirmed District Crisis before Low impact Crisis policies will be considered")]
+    [Range(0, 10)] public int policyCrisisCriteriaLow = 1;
+    [Tooltip("The number, or above, of confirmed District Crisis before Medium impact Crisis policies will be considered")]
+    [Range(0, 10)] public int policyCrisisCriteriaMed = 3;
+    [Tooltip("The number, or above, of confirmed District Crisis before High impact Crisis policies will be considered")]
+    [Range(0, 10)] public int policyCrisisCriteriaHigh = 5;
+    [Tooltip("The amount City Loyalty changes by (down when policy implemented, up when policy cancelled) LOW impact")]
+    [Range(1, 3)] public int policyCityLoyaltyLow = 1;
+    [Tooltip("The amount City Loyalty changes by (down when policy implemented, up when policy cancelled) MED impact")]
+    [Range(1, 3)] public int policyCityLoyaltyMed = 2;
+    [Tooltip("The amount City Loyalty changes by (down when policy implemented, up when policy cancelled) HIGH impact")]
+    [Range(1, 3)] public int policyCityLoyaltyHigh = 3;
+    [Tooltip("The amount that the base chance of a node crisis occuring lessens (makes it harder for a crisis) while policy in force. LOW impact")]
+    [Range(10, 50)] public int policyNodeCrisisLow = 15;
+    [Tooltip("The amount that the base chance of a node crisis occuring lessens (makes it harder for a crisis) while policy in force. MED impact")]
+    [Range(10, 50)] public int policyNodeCrisisMed = 30;
+    [Tooltip("The amount that the base chance of a node crisis occuring lessens (makes it harder for a crisis) while policy in force. HIGH impact")]
+    [Range(10, 50)] public int policyNodeCrisisHigh = 45;
+
     [Header("Hacking AI")]
     [Tooltip("Base cost, in renown, to hack AI at start of a level")]
     [Range(0, 5)] public int hackingBaseCost = 2;
@@ -217,12 +239,11 @@ public class AIManager : MonoBehaviour
     [Range(0, 50)] public int hackingTraitDetectionFactor = 20;
 
     [Header("AI Countermeasures")]
-    [Tooltip("When the AI instigates Hacking counter measures they will stay in place for this number of turns")]
+    [Tooltip("When the AI instigates any counter measures (incl. policies) they will stay in place for this number of turns")]
     [Range(1, 10)] public int aiCounterMeasureTimer = 5;
     [Tooltip("The highest level that the AI can raise it's Security Protocols to in order to increase the chances of detecting Hacking")]
     [Range(1, 5)] public int aiSecurityProtocolMaxLevel = 3;
     
-
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
     [HideInInspector] public int resourcesGainAuthority;                //resources added to pool (DataManager.cs -> arrayOfAIResources every turn
@@ -244,6 +265,7 @@ public class AIManager : MonoBehaviour
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
     private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility
     private bool isScreamer;                           //if true AI has ability to give Player STRESSED condition whenever they detect a hacking attempt
+    private bool isPolicy;                             //true if a  policy is in currently in force (blocks other policies from occurring -> one at a time)
     //ai countermeasures
     private int timerTraceBack;
     private int timerScreamer;
@@ -260,7 +282,6 @@ public class AIManager : MonoBehaviour
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
-    
 
     //decision data
     private float connSecRatio;
@@ -304,10 +325,12 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionScreamer;
     private DecisionAI decisionProtocol;
     private DecisionAI decisionOffline;
-    private DecisionAI decisionCensorWeb;
+    private DecisionAI decisionCensorship;
     private DecisionAI decisionCurfew;
     private DecisionAI decisionBanProtests;
     private DecisionAI decisionMartialLaw;
+    private DecisionAI decisionRoboCops;
+    private DecisionAI decisionDrones;
     //text strings
     private string traceBackFormattedText;                                   //specially formatted string (uncoloured) for tooltips
     private string screamerFormattedText;
@@ -389,14 +412,18 @@ public class AIManager : MonoBehaviour
         decisionOffline = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Protocol");
         decisionProtocol = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Censor Web");
-        decisionCensorWeb = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Censorship");
+        decisionCensorship = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Ban Protests");
         decisionBanProtests = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Martial Law");
         decisionMartialLaw = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Curfew");
         decisionCurfew = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Robo Cops");
+        decisionRoboCops = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Drone Warfare");
+        decisionDrones = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -407,10 +434,12 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionScreamer != null, "Invalid decisionScreamer (Null)");
         Debug.Assert(decisionOffline != null, "Invalid decisionOffline (Null)");
         Debug.Assert(decisionProtocol != null, "Invalid decisionProtocol (Null)");
-        Debug.Assert(decisionCensorWeb != null, "Invalid decisionCensorWeb (Null)");
+        Debug.Assert(decisionCensorship != null, "Invalid decisionCensorWeb (Null)");
         Debug.Assert(decisionBanProtests != null, "Invalid decisionBanProtests (Null)");
         Debug.Assert(decisionMartialLaw != null, "Invalid decisionMartialLaw (Null)");
         Debug.Assert(decisionCurfew != null, "Invalid decisionCurfew (Null)");
+        Debug.Assert(decisionRoboCops != null, "Invalid decisionRoboCops (Null)");
+        Debug.Assert(decisionDrones != null, "Invalid decisionDrones (Null)");
         //conditions
         stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
@@ -1821,13 +1850,13 @@ public class AIManager : MonoBehaviour
     {
         Debug.Assert(listOfDecisionTasksNonCritical != null, "Invalid listOfDecisionTasksNonCritical (Null)");
         Debug.Assert(listOfDecisionTasksCritical != null, "Invalid listOfDecisionTasksCritical (Null)");
+        //generate a security decision, choose which one (random choice but exclude ones where the cost can't be covered by the resource pool)
+        int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
         //
         // - - - Security -> Critical priority - - -
         //
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         {
-            //generate a security decision, choose which one (random choice but exclude ones where the cost can't be covered by the resource pool)
-            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
             //APB
             if (resources >= decisionAPB.cost)
             {
@@ -1906,7 +1935,7 @@ public class AIManager : MonoBehaviour
             { listOfDecisionTasksNonCritical.Add(taskTeam); }
         }
         //Resource request -> once made can be Approved or Denied by higher authority. NOTE: make sure it is '<=' to avoid getting stuck in dead end with '<'
-        if (GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) <= lowResourcesThreshold || isInsufficientResources == true)
+        if (resources <= lowResourcesThreshold || isInsufficientResources == true)
         {
             AITask taskResources = new AITask()
             {
@@ -1922,7 +1951,103 @@ public class AIManager : MonoBehaviour
         //
         // - - - Policy - - -
         //
-
+        if (isPolicy == false)
+        {
+            //there is no policy currently in play (one at a time allowed) -> Check City Loyalty
+            if (GameManager.instance.cityScript.CityLoyalty >= policyCrisisLoyaltyCriteria)
+            {
+                //LOW IMPACT
+                if (numOfCrisis >= policyCrisisCriteriaLow)
+                {
+                    //Censorship
+                    if (resources >= decisionCensorship.cost)
+                    {
+                        AITask taskResources = new AITask()
+                        {
+                            data1 = decisionCensorship.cost,
+                            data2 = decisionCensorship.aiDecID,
+                            name0 = decisionCensorship.name,
+                            type = AIType.Decision,
+                            priority = Priority.Low
+                        };
+                        listOfDecisionTasksCritical.Add(taskResources);
+                    }
+                    //Ban Protests
+                    if (resources >= decisionBanProtests.cost)
+                    {
+                        AITask taskResources = new AITask()
+                        {
+                            data1 = decisionBanProtests.cost,
+                            data2 = decisionBanProtests.aiDecID,
+                            name0 = decisionBanProtests.name,
+                            type = AIType.Decision,
+                            priority = Priority.Low
+                        };
+                        listOfDecisionTasksCritical.Add(taskResources);
+                    }
+                }
+                //MEDIUM IMPACT
+                if (numOfCrisis >= policyCrisisCriteriaMed)
+                {
+                    //Censorship
+                    if (resources >= decisionCurfew.cost)
+                    {
+                        AITask taskResources = new AITask()
+                        {
+                            data1 = decisionCurfew.cost,
+                            data2 = decisionCurfew.aiDecID,
+                            name0 = decisionCurfew.name,
+                            type = AIType.Decision,
+                            priority = Priority.Medium
+                        };
+                        listOfDecisionTasksCritical.Add(taskResources);
+                    }
+                    //Robo Cops
+                    if (resources >= decisionRoboCops.cost)
+                    {
+                        AITask taskResources = new AITask()
+                        {
+                            data1 = decisionRoboCops.cost,
+                            data2 = decisionRoboCops.aiDecID,
+                            name0 = decisionRoboCops.name,
+                            type = AIType.Decision,
+                            priority = Priority.Medium
+                        };
+                        listOfDecisionTasksCritical.Add(taskResources);
+                    }
+                }
+                //HIGH IMPACT
+                if (numOfCrisis >= policyCrisisCriteriaHigh)
+                {
+                    //Martial Law
+                    if (resources >= decisionMartialLaw.cost)
+                    {
+                        AITask taskResources = new AITask()
+                        {
+                            data1 = decisionMartialLaw.cost,
+                            data2 = decisionMartialLaw.aiDecID,
+                            name0 = decisionMartialLaw.name,
+                            type = AIType.Decision,
+                            priority = Priority.High
+                        };
+                        listOfDecisionTasksCritical.Add(taskResources);
+                    }
+                    //Drone Warfare
+                    if (resources >= decisionDrones.cost)
+                    {
+                        AITask taskResources = new AITask()
+                        {
+                            data1 = decisionDrones.cost,
+                            data2 = decisionDrones.aiDecID,
+                            name0 = decisionDrones.name,
+                            type = AIType.Decision,
+                            priority = Priority.High
+                        };
+                        listOfDecisionTasksCritical.Add(taskResources);
+                    }
+                }
+            }
+        }
         //
         // - - - Network (AI CounterMeasures) - - - 
         //
@@ -2861,6 +2986,19 @@ public class AIManager : MonoBehaviour
             { isSuccess = ProcessAIProtocol(); }
             else if (task.name0.Equals(decisionOffline.name) == true)
             { isSuccess = ProcessAIOffline(); }
+            //policies
+            else if (task.name0.Equals(decisionCensorship.name) == true)
+            { isSuccess = ProcessAIPolicy(); }
+            else if (task.name0.Equals(decisionBanProtests.name) == true)
+            { isSuccess = ProcessAIPolicy(); }
+            else if (task.name0.Equals(decisionCurfew.name) == true)
+            { isSuccess = ProcessAIPolicy(); }
+            else if (task.name0.Equals(decisionRoboCops.name) == true)
+            { isSuccess = ProcessAIPolicy(); }
+            else if (task.name0.Equals(decisionMartialLaw.name) == true)
+            { isSuccess = ProcessAIPolicy(); }
+            else if (task.name0.Equals(decisionDrones.name) == true)
+            { isSuccess = ProcessAIPolicy(); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
             //debug logs
@@ -2873,6 +3011,17 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: INSUFFICIENT RESOURCES to implement \"{0}\" decision{1}", task.name0, "\n");
             isInsufficientResources = true;
         }
+    }
+
+    /// <summary>
+    /// Processes an AI policy decision from Authority. Returns true if successful
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessAIPolicy()
+    {
+        bool isSuccess = false;
+        jj
+        return isSuccess;
     }
 
     /// <summary>
