@@ -23,7 +23,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
         if (dictOfGlobalMeta != null)
         {
-            var metaGUID = AssetDatabase.FindAssets("t:GlobalMeta");
+            var metaGUID = AssetDatabase.FindAssets("t:GlobalMeta", new[] {"Assets/SO"} );
             foreach (var guid in metaGUID)
             {
                 //get path
@@ -50,7 +50,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, GlobalChance> dictOfGlobalChance = GameManager.instance.dataScript.GetDictOfGlobalChance();
         if (dictOfGlobalChance != null)
         {
-            var chanceGUID = AssetDatabase.FindAssets("t:GlobalChance");
+            var chanceGUID = AssetDatabase.FindAssets("t:GlobalChance", new[] { "Assets/SO" });
             foreach (var guid in chanceGUID)
             {
                 //get path
@@ -77,7 +77,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, GlobalType> dictOfGlobalType = GameManager.instance.dataScript.GetDictOfGlobalType();
         if (dictOfGlobalType != null)
         {
-            var typeGUID = AssetDatabase.FindAssets("t:GlobalType");
+            var typeGUID = AssetDatabase.FindAssets("t:GlobalType", new[] { "Assets/SO" });
             foreach (var guid in typeGUID)
             {
                 //get path
@@ -104,7 +104,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.instance.dataScript.GetDictOfGlobalSide();
         if (dictOfGlobalSide != null)
         {
-            var sideGUID = AssetDatabase.FindAssets("t:GlobalSide");
+            var sideGUID = AssetDatabase.FindAssets("t:GlobalSide", new[] { "Assets/SO" });
             foreach (var guid in sideGUID)
             {
                 //get path
@@ -131,7 +131,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, GlobalWho> dictOfGlobalWho = GameManager.instance.dataScript.GetDictOfGlobalWho();
         if (dictOfGlobalWho != null)
         {
-            var whoGUID = AssetDatabase.FindAssets("t:GlobalWho");
+            var whoGUID = AssetDatabase.FindAssets("t:GlobalWho", new[] { "Assets/SO" });
             foreach (var guid in whoGUID)
             {
                 //get path
@@ -158,7 +158,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, Condition> dictOfConditions = GameManager.instance.dataScript.GetDictOfConditions();
         if (dictOfConditions != null)
         {
-            var conditionGUID = AssetDatabase.FindAssets("t:Condition");
+            var conditionGUID = AssetDatabase.FindAssets("t:Condition", new[] { "Assets/SO" });
             foreach (var guid in conditionGUID)
             {
                 //get path
@@ -185,7 +185,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.instance.dataScript.GetDictOfTraitCategories();
         if (dictOfTraitCategories != null)
         {
-            var categoryGUID = AssetDatabase.FindAssets("t:TraitCategory");
+            var categoryGUID = AssetDatabase.FindAssets("t:TraitCategory", new[] { "Assets/SO" });
             foreach (var guid in categoryGUID)
             {
                 //get path
@@ -216,7 +216,7 @@ public class ImportManager : MonoBehaviour
             if (dictOfLookUpTraitEffects != null)
             {
                 counter = 0;
-                var traitEffectGUID = AssetDatabase.FindAssets("t:TraitEffect");
+                var traitEffectGUID = AssetDatabase.FindAssets("t:TraitEffect", new[] { "Assets/SO" });
                 foreach (var guid in traitEffectGUID)
                 {
                     //get path
@@ -257,7 +257,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
         if (dictOfSecretTypes != null)
         {
-            var secretTypeGUID = AssetDatabase.FindAssets("t:SecretType");
+            var secretTypeGUID = AssetDatabase.FindAssets("t:SecretType", new[] { "Assets/SO" });
             foreach (var guid in secretTypeGUID)
             {
                 //get path
@@ -284,7 +284,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
         if (dictOfSecretStatus != null)
         {
-            var secretStatusGUID = AssetDatabase.FindAssets("t:SecretStatus");
+            var secretStatusGUID = AssetDatabase.FindAssets("t:SecretStatus", new[] { "Assets/SO" });
             foreach (var guid in secretStatusGUID)
             {
                 //get path
@@ -311,7 +311,7 @@ public class ImportManager : MonoBehaviour
         Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
         if (dictOfNodeDatapoints != null)
         {
-            var datapointGUID = AssetDatabase.FindAssets("t:NodeDatapoint");
+            var datapointGUID = AssetDatabase.FindAssets("t:NodeDatapoint", new[] { "Assets/SO" });
             foreach (var guid in datapointGUID)
             {
                 //get path
@@ -356,7 +356,7 @@ public class ImportManager : MonoBehaviour
             {
                 counter = 0;
                 //get GUID of all SO Node Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var nodeArcGUID = AssetDatabase.FindAssets("t:NodeArc");
+                var nodeArcGUID = AssetDatabase.FindAssets("t:NodeArc", new[] { "Assets/SO" });
                 foreach (var guid in nodeArcGUID)
                 {
                     //get path
@@ -399,7 +399,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Node Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var nodeCrisisGUID = AssetDatabase.FindAssets("t:NodeCrisis");
+            var nodeCrisisGUID = AssetDatabase.FindAssets("t:NodeCrisis", new[] { "Assets/SO" });
             foreach (var guid in nodeCrisisGUID)
             {
                 //get path
@@ -433,7 +433,7 @@ public class ImportManager : MonoBehaviour
             {
                 counter = 0;
                 //get GUID of all SO Trait Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var traitGUID = AssetDatabase.FindAssets("t:Trait");
+                var traitGUID = AssetDatabase.FindAssets("t:Trait", new[] { "Assets/SO" });
                 foreach (var guid in traitGUID)
                 {
                     //get path
@@ -476,7 +476,7 @@ public class ImportManager : MonoBehaviour
                 {
                     counter = 0;
                     //get GUID of all SO ActorArc Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                    var arcGUID = AssetDatabase.FindAssets("t:ActorArc");
+                    var arcGUID = AssetDatabase.FindAssets("t:ActorArc", new[] { "Assets/SO" });
                     foreach (var guid in arcGUID)
                     {
                         //get path
@@ -523,7 +523,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Effect Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var effectsGUID = AssetDatabase.FindAssets("t:Effect");
+            var effectsGUID = AssetDatabase.FindAssets("t:Effect", new[] { "Assets/SO" });
             foreach (var guid in effectsGUID)
             {
                 //get path
@@ -580,7 +580,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Target Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var targetGUID = AssetDatabase.FindAssets("t:Target");
+            var targetGUID = AssetDatabase.FindAssets("t:Target", new[] { "Assets/SO" });
             foreach (var guid in targetGUID)
             {
                 //get path
@@ -621,7 +621,7 @@ public class ImportManager : MonoBehaviour
             {
                 counter = 0;
                 //get GUID of all SO Action Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var actionGUID = AssetDatabase.FindAssets("t:Action");
+                var actionGUID = AssetDatabase.FindAssets("t:Action", new[] { "Assets/SO" });
                 foreach (var guid in actionGUID)
                 {
                     //get path
@@ -668,7 +668,7 @@ public class ImportManager : MonoBehaviour
             {
                 counter = 0;
                 //get GUID of all SO Team Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var teamGUID = AssetDatabase.FindAssets("t:TeamArc");
+                var teamGUID = AssetDatabase.FindAssets("t:TeamArc", new[] { "Assets/SO" });
                 foreach (var guid in teamGUID)
                 {
                     //get path
@@ -714,7 +714,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Gear Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var gearGUID = AssetDatabase.FindAssets("t:Gear");
+            var gearGUID = AssetDatabase.FindAssets("t:Gear", new[] { "Assets/SO" });
             foreach (var guid in gearGUID)
             {
                 //get path
@@ -744,7 +744,7 @@ public class ImportManager : MonoBehaviour
         List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
         if (listOfGearRarity != null)
         {
-            var gearRarityGUID = AssetDatabase.FindAssets("t:GearRarity");
+            var gearRarityGUID = AssetDatabase.FindAssets("t:GearRarity", new[] { "Assets/SO" });
             foreach (var guid in gearRarityGUID)
             {
                 //get path
@@ -766,7 +766,7 @@ public class ImportManager : MonoBehaviour
         List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
         if (listOfGearType != null)
         {
-            var gearTypeGUID = AssetDatabase.FindAssets("t:GearType");
+            var gearTypeGUID = AssetDatabase.FindAssets("t:GearType", new[] { "Assets/SO" });
             foreach (var guid in gearTypeGUID)
             {
                 //get path
@@ -792,7 +792,7 @@ public class ImportManager : MonoBehaviour
         List<ManageAction> listOfActorDispose = new List<ManageAction>();
         if (dictOfManageActions != null)
         {
-            var manageGUID = AssetDatabase.FindAssets("t:ManageAction");
+            var manageGUID = AssetDatabase.FindAssets("t:ManageAction", new[] { "Assets/SO" });
             foreach (var guid in manageGUID)
             {
                 //get path
@@ -926,7 +926,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO ActorConflict Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var actorConflictGUID = AssetDatabase.FindAssets("t:ActorConflict");
+            var actorConflictGUID = AssetDatabase.FindAssets("t:ActorConflict", new[] { "Assets/SO" });
             foreach (var guid in actorConflictGUID)
             {
                 //get path
@@ -958,7 +958,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Secret Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var secretGUID = AssetDatabase.FindAssets("t:Secret");
+            var secretGUID = AssetDatabase.FindAssets("t:Secret", new[] { "Assets/SO" });
             foreach (var guid in secretGUID)
             {
                 //get path
@@ -990,7 +990,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Faction Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var factionGUID = AssetDatabase.FindAssets("t:Faction");
+            var factionGUID = AssetDatabase.FindAssets("t:Faction", new[] { "Assets/SO" });
             foreach (var guid in factionGUID)
             {
                 //get path
@@ -1022,7 +1022,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO CityArc Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var cityArcGUID = AssetDatabase.FindAssets("t:CityArc");
+            var cityArcGUID = AssetDatabase.FindAssets("t:CityArc", new[] { "Assets/SO" });
             foreach (var guid in cityArcGUID)
             {
                 //get path
@@ -1054,7 +1054,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO City Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var cityGUID = AssetDatabase.FindAssets("t:City");
+            var cityGUID = AssetDatabase.FindAssets("t:City", new[] { "Assets/SO" });
             foreach (var guid in cityGUID)
             {
                 //get path
@@ -1086,7 +1086,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Objective Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var objectiveGUID = AssetDatabase.FindAssets("t:Objective");
+            var objectiveGUID = AssetDatabase.FindAssets("t:Objective", new[] { "Assets/SO" });
             foreach (var guid in objectiveGUID)
             {
                 //get path
@@ -1118,7 +1118,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Organisation Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var organisationGUID = AssetDatabase.FindAssets("t:Organisation");
+            var organisationGUID = AssetDatabase.FindAssets("t:Organisation", new[] { "Assets/SO" });
             foreach (var guid in organisationGUID)
             {
                 //get path
@@ -1150,7 +1150,7 @@ public class ImportManager : MonoBehaviour
         {
             counter = 0;
             //get GUID of all SO Mayor Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var mayorGUID = AssetDatabase.FindAssets("t:Mayor");
+            var mayorGUID = AssetDatabase.FindAssets("t:Mayor", new[] { "Assets/SO" });
             foreach (var guid in mayorGUID)
             {
                 //get path
@@ -1190,7 +1190,7 @@ public class ImportManager : MonoBehaviour
             {
                 counter = 0;
                 //get GUID of all SO DecisionAI Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var decisionAIGUID = AssetDatabase.FindAssets("t:DecisionAI");
+                var decisionAIGUID = AssetDatabase.FindAssets("t:DecisionAI", new[] { "Assets/SO" });
                 foreach (var guid in decisionAIGUID)
                 {
                     //get path

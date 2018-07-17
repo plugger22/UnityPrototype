@@ -13,6 +13,8 @@ public class DecisionAI : ScriptableObject
     [TextArea]
     [Tooltip("Used for task tooltip (further explanation) in the AIDisplayUI. Use Rich text formatting where needed (eg. '<b> </b>')")]
     public string tooltipDescriptor;
+    [Tooltip("Type of decision. At present this has no use other than for developer classification")]
+    public DecisionType type;
 
     public GlobalSide side;
 
