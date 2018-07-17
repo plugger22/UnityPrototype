@@ -270,7 +270,11 @@ public class AIManager : MonoBehaviour
     private int timerTraceBack;
     private int timerScreamer;
     private int timerOffline;
+    private int timerPolicy;
     private int aiSecurityProtocolLevel;                //each level of security provides a 'HackingSecurityProtocolFactor' * level increased risk of hacking attempt detection
+    private string policyName;                          //name of current policy in play, null if none
+    private int policyEffectCrisis;                     //int for use with a tag detailing effect of policy on node crisis chance, eg. "District Crisis base chance -15%"
+    private int policyEffectLoyalty;                    //int for use with a tag detailing effect of Policy on City Loyalty, eg. "City Loyalty -2 (while policy in force)"
     //hacking
     private int detectModifierMayor;                    //modifiers to base chance of AI detecting an hacking attempt (HackingDetectBaseChance)
     private int detectModifierFaction;
@@ -509,6 +513,7 @@ public class AIManager : MonoBehaviour
         timerTraceBack = -1;
         timerScreamer = -1;
         timerOffline = -1;
+        timerPolicy = -1;
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
@@ -3046,13 +3051,22 @@ public class AIManager : MonoBehaviour
                 break;
         }
         //update
+        cityLoyalty = Mathf.Max(0, cityLoyalty);
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         GameManager.instance.nodeScript.crisisPolicyModifier = nodeCrisisModifier;
 
-        //set timer
-        dd
-        //feedback
-
+        //set timer & current Policy
+        timerPolicy = aiCounterMeasureTimer;
+        policyName = task.name0;
+        policyEffectCrisis = nodeCrisisModifier;
+        policyEffectLoyalty = cityLoyalty;
+        //admin
+        string msgText = string.Format("{0} policy has been implemented city wide by the Authority", policyName);
+        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
+        GameManager.instance.dataScript.AddMessage(message);
+        msgText = string.Format("{0} Loyalty has decreased by -{1} to {2} due to the {3} policy", city.name, policyEffectLoyalty, cityLoyalty, policyName);
+        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
+        GameManager.instance.dataScript.AddMessage(message);
         return isSuccess;
     }
 
@@ -3436,6 +3450,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void UpdateCounterMeasureTimers()
     {
+        string msgText;
         //TraceBack
         if (timerTraceBack > 0)
         {
@@ -3459,6 +3474,21 @@ public class AIManager : MonoBehaviour
             if (timerOffline == 0)
             { CancelOffline(); }
             else { Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerOffline now {0}{1}", timerOffline, "\n"); }
+        }
+        //Policy
+        if (timerPolicy > 0)
+        {
+            timerPolicy--;
+            if (timerPolicy == 0)
+            { CancelPolicy(); }
+            else
+            {
+                //warning notification
+                msgText = string.Format("City wide {0} policy in force, {1} turn{2} to go", policyName, timerPolicy, timerPolicy != 1 ? "s" : "");
+                Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
+                GameManager.instance.dataScript.AddMessage(message);
+                Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerPolicy now {0}{1}", timerPolicy, "\n");
+            }
         }
     }
 
@@ -4111,6 +4141,32 @@ public class AIManager : MonoBehaviour
         //message
         Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure OFFLINE Cancelled");
         GameManager.instance.dataScript.AddMessage(message);
+    }
+
+    /// <summary>
+    /// subMethod to cancel the current Policy
+    /// </summary>
+    private void CancelPolicy()
+    {
+        //update node crisis modifer
+        GameManager.instance.nodeScript.crisisPolicyModifier = 0;
+        //update loyalty
+        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        cityLoyalty += policyEffectLoyalty;
+        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
+        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+        //admin
+        string msgText = string.Format("{0} policy is no longer in effect", policyName);
+        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
+        GameManager.instance.dataScript.AddMessage(message);
+        msgText = string.Format("{0} Loyalty has increased by +{1} to {2} due to the {3} policy being cancelled", city.name, policyEffectLoyalty, cityLoyalty, policyName);
+        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
+        GameManager.instance.dataScript.AddMessage(message);
+        //reset vars
+        timerPolicy = -1;
+        policyName = "Unknown";
+        policyEffectCrisis = -1;
+        policyEffectLoyalty = -1;
     }
 
     //
