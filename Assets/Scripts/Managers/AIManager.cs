@@ -355,6 +355,8 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionHamper;
     private DecisionAI decisionAusterity;
     private DecisionAI decisionMedical;
+    private DecisionAI decisionBlindEye;
+    private DecisionAI decisionHoliday;
     //text strings
     private string traceBackFormattedText;                                   //specially formatted string (uncoloured) for tooltips
     private string screamerFormattedText;
@@ -448,12 +450,16 @@ public class AIManager : MonoBehaviour
         decisionRoboCop = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Drone Warfare");
         decisionDrones = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Chrismas Hamper");
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Christmas Hampers");
         decisionHamper = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Austerity Payment");
         decisionAusterity = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Medical Care");
         decisionMedical = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Blind Eye");
+        decisionBlindEye = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Holiday");
+        decisionHoliday = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -473,6 +479,8 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionHamper != null, "Invalid decisionHamper (Null)");
         Debug.Assert(decisionAusterity != null, "Invalid decisionAusterity (Null)");
         Debug.Assert(decisionMedical != null, "Invalid decisionMedical (Null)");
+        Debug.Assert(decisionBlindEye != null, "Invalid decisionBlindEye (Null)");
+        Debug.Assert(decisionHoliday != null, "Invalid decisionHoliday (Null)");
         //conditions
         stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
@@ -544,7 +552,7 @@ public class AIManager : MonoBehaviour
         timerScreamer = -1;
         timerOffline = -1;
         timerPolicy = -1;
-        timerHandout = -1;
+        timerHandout = 0;
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
@@ -2115,41 +2123,75 @@ public class AIManager : MonoBehaviour
             //LOW IMPACT
             if (cityLoyalty <= handoutLoyaltyCriteriaLow)
             {
-
                 //randomly choose one low impact handout
-
-                //Christmas Hampers
-                if (resources >= decisionHamper.cost)
+                if (Random.Range(0, 100) < 50)
                 {
-                    AITask taskHandout = new AITask()
+                    //Christmas Hampers
+                    if (resources >= decisionHamper.cost)
                     {
-                        data1 = decisionHamper.cost,
-                        data2 = decisionHamper.aiDecID,
-                        name0 = decisionHamper.name,
-                        type = AIType.Decision,
-                        priority = Priority.Low
-                    };
-                    listOfDecisionTasksNonCritical.Add(taskHandout);
+                        AITask taskHandout = new AITask()
+                        {
+                            data1 = decisionHamper.cost,
+                            data2 = decisionHamper.aiDecID,
+                            name0 = decisionHamper.name,
+                            type = AIType.Decision,
+                            priority = Priority.Low
+                        };
+                        listOfDecisionTasksNonCritical.Add(taskHandout);
+                    }
+                }
+                else
+                {
+                    //Blind Eye
+                    if (resources >= decisionBlindEye.cost)
+                    {
+                        AITask taskHandout = new AITask()
+                        {
+                            data1 = decisionBlindEye.cost,
+                            data2 = decisionBlindEye.aiDecID,
+                            name0 = decisionBlindEye.name,
+                            type = AIType.Decision,
+                            priority = Priority.Low
+                        };
+                        listOfDecisionTasksNonCritical.Add(taskHandout);
+                    }
                 }
             }
             //MEDIUM IMPACT
             if (cityLoyalty <= handoutLoyaltyCriteriaMed)
             {
-                
                 //randomly choose one Medium impact handout
-
-                //Austerity Payments
-                if (resources >= decisionAusterity.cost)
+                if (Random.Range(0, 100) < 50)
                 {
-                    AITask taskHandout = new AITask()
+                    //Austerity Payments
+                    if (resources >= decisionAusterity.cost)
                     {
-                        data1 = decisionAusterity.cost,
-                        data2 = decisionAusterity.aiDecID,
-                        name0 = decisionAusterity.name,
-                        type = AIType.Decision,
-                        priority = Priority.Medium
-                    };
-                    listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
+                        AITask taskHandout = new AITask()
+                        {
+                            data1 = decisionAusterity.cost,
+                            data2 = decisionAusterity.aiDecID,
+                            name0 = decisionAusterity.name,
+                            type = AIType.Decision,
+                            priority = Priority.Medium
+                        };
+                        listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
+                    }
+                }
+                else
+                {
+                    //Holiday
+                    if (resources >= decisionHoliday.cost)
+                    {
+                        AITask taskHandout = new AITask()
+                        {
+                            data1 = decisionHoliday.cost,
+                            data2 = decisionHoliday.aiDecID,
+                            name0 = decisionHoliday.name,
+                            type = AIType.Decision,
+                            priority = Priority.Medium
+                        };
+                        listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
+                    }
                 }
             }
             //HIGH IMPACT
@@ -3130,6 +3172,14 @@ public class AIManager : MonoBehaviour
             //handouts
             else if (task.name0.Equals(decisionHamper.name) == true)
             { isSuccess = ProcessAIHandout(task); }
+            else if (task.name0.Equals(decisionBlindEye.name) == true)
+            { isSuccess = ProcessAIHandout(task); }
+            else if (task.name0.Equals(decisionAusterity.name) == true)
+            { isSuccess = ProcessAIHandout(task); }
+            else if (task.name0.Equals(decisionHoliday.name) == true)
+            { isSuccess = ProcessAIHandout(task); }
+            else if (task.name0.Equals(decisionMedical.name) == true)
+            { isSuccess = ProcessAIHandout(task); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
             //debug logs
@@ -3224,16 +3274,16 @@ public class AIManager : MonoBehaviour
                 break;
         }
         //update
-        cityLoyalty -= loyaltyChange;
+        cityLoyalty += loyaltyChange;
         cityLoyalty = Mathf.Max(0, cityLoyalty);
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         //set cooldown timer
         timerHandout = handoutCooldownTimer;
         //admin
-        string msgText = string.Format("Authority implements {0} policy city wide", policyName);
+        string msgText = string.Format("Authority implements {0} policy city wide", task.name0);
         Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
         GameManager.instance.dataScript.AddMessage(message);
-        msgText = string.Format("{0} loyalty has increased by +{1} to {2} due to the {3} policy", city.name, loyaltyChange, cityLoyalty, policyName);
+        msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.name, loyaltyChange, task.name0);
         message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         GameManager.instance.dataScript.AddMessage(message);
         return true;
@@ -4504,6 +4554,7 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" isInsufficientResources -> {0}{1}", isInsufficientResources, "\n");
         builder.AppendFormat(" numOfUnsuccessfulResourceRequests -> {0}{1}", numOfUnsuccessfulResourceRequests, "\n");
         builder.AppendFormat(" numOfCrisis -> {0}{1}", numOfCrisis, "\n");
+        builder.AppendFormat(" timerHandout -> {0}{1}", timerHandout, "\n");
         if (erasureTeamsOnMap > 0 && immediateFlagResistance == true)
         { builder.AppendFormat(" SECURITY MEASURES Available{0}", "\n"); }
         return builder.ToString();
