@@ -220,6 +220,22 @@ public class AIManager : MonoBehaviour
     [Tooltip("The amount that the base chance of a node crisis occuring lessens (makes it harder for a crisis) while policy in force. HIGH impact")]
     [Range(10, 50)] public int policyNodeCrisisHigh = 45;
 
+    [Header("Handouts")]
+    [Tooltip("City Loyalty level, at or below, where Low Impact handouts will be considered")]
+    [Range(1, 10)] public int handoutLoyaltyCriteriaLow = 7;
+    [Tooltip("City Loyalty level, at or below, where Medium Impact handouts will be considered")]
+    [Range(1, 10)] public int handoutLoyaltyCriteriaMed = 5;
+    [Tooltip("City Loyalty level, at or below, where High Impact handouts will be considered")]
+    [Range(1, 10)] public int handoutLoyaltyCriteriaHigh = 3;
+    [Tooltip("This sets the number of turns for the handout cooldown timer")]
+    [Range(0, 10)] public int handoutCooldownTimer = 4;
+    [Tooltip("The amount City Loyalty increases by for a Low Impact handout")]
+    [Range(1, 5)] public int handoutCityLoyaltyLow = 1;
+    [Tooltip("The amount City Loyalty increases by for a Medium Impact handout")]
+    [Range(1, 5)] public int handoutCityLoyaltyMed = 2;
+    [Tooltip("The amount City Loyalty increases by for a High Impact handout")]
+    [Range(1, 5)] public int handoutCityLoyaltyHigh = 3;
+
     [Header("Hacking AI")]
     [Tooltip("Base cost, in renown, to hack AI at start of a level")]
     [Range(0, 5)] public int hackingBaseCost = 2;
@@ -268,10 +284,11 @@ public class AIManager : MonoBehaviour
     private bool isPolicy;                             //true if a  policy is in currently in force (blocks other policies from occurring -> one at a time)
     //ai countermeasures
     private int timerTraceBack;
+    private int aiSecurityProtocolLevel;                //each level of security provides a 'HackingSecurityProtocolFactor' * level increased risk of hacking attempt detection
     private int timerScreamer;
     private int timerOffline;
+    private int timerHandout;                           //cooldown timer before another handout is possible
     private int timerPolicy;
-    private int aiSecurityProtocolLevel;                //each level of security provides a 'HackingSecurityProtocolFactor' * level increased risk of hacking attempt detection
     private string policyName;                          //name of current policy in play, null if none
     private int policyEffectCrisis;                     //int for use with a tag detailing effect of policy on node crisis chance, eg. "District Crisis base chance -15%"
     private int policyEffectLoyalty;                    //int for use with a tag detailing effect of Policy on City Loyalty, eg. "City Loyalty -2 (while policy in force)"
@@ -333,8 +350,11 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionCurfew;
     private DecisionAI decisionBanProtests;
     private DecisionAI decisionMartialLaw;
-    private DecisionAI decisionRoboCops;
+    private DecisionAI decisionRoboCop;
     private DecisionAI decisionDrones;
+    private DecisionAI decisionHamper;
+    private DecisionAI decisionAusterity;
+    private DecisionAI decisionMedical;
     //text strings
     private string traceBackFormattedText;                                   //specially formatted string (uncoloured) for tooltips
     private string screamerFormattedText;
@@ -425,9 +445,15 @@ public class AIManager : MonoBehaviour
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Curfew");
         decisionCurfew = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Robo Cops");
-        decisionRoboCops = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionRoboCop = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Drone Warfare");
         decisionDrones = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Chrismas Hamper");
+        decisionHamper = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Austerity Payment");
+        decisionAusterity = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Medical Care");
+        decisionMedical = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -442,8 +468,11 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionBanProtests != null, "Invalid decisionBanProtests (Null)");
         Debug.Assert(decisionMartialLaw != null, "Invalid decisionMartialLaw (Null)");
         Debug.Assert(decisionCurfew != null, "Invalid decisionCurfew (Null)");
-        Debug.Assert(decisionRoboCops != null, "Invalid decisionRoboCops (Null)");
+        Debug.Assert(decisionRoboCop != null, "Invalid decisionRoboCops (Null)");
         Debug.Assert(decisionDrones != null, "Invalid decisionDrones (Null)");
+        Debug.Assert(decisionHamper != null, "Invalid decisionHamper (Null)");
+        Debug.Assert(decisionAusterity != null, "Invalid decisionAusterity (Null)");
+        Debug.Assert(decisionMedical != null, "Invalid decisionMedical (Null)");
         //conditions
         stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
@@ -515,6 +544,7 @@ public class AIManager : MonoBehaviour
         timerScreamer = -1;
         timerOffline = -1;
         timerPolicy = -1;
+        timerHandout = -1;
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
@@ -1858,6 +1888,7 @@ public class AIManager : MonoBehaviour
         Debug.Assert(listOfDecisionTasksCritical != null, "Invalid listOfDecisionTasksCritical (Null)");
         //generate a security decision, choose which one (random choice but exclude ones where the cost can't be covered by the resource pool)
         int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
         //
         // - - - Security -> Critical priority - - -
         //
@@ -1960,97 +1991,185 @@ public class AIManager : MonoBehaviour
         if (isPolicy == false)
         {
             //there is no policy currently in play (one at a time allowed) -> Check City Loyalty
-            if (GameManager.instance.cityScript.CityLoyalty >= policyCrisisLoyaltyCriteria)
+            
+            if (cityLoyalty >= policyCrisisLoyaltyCriteria)
             {
                 //LOW IMPACT
                 if (numOfCrisis >= policyCrisisCriteriaLow)
                 {
-                    //Censorship
-                    if (resources >= decisionCensorship.cost)
+                    //Only one policy is (randomly) selected per impact category per turn
+                    if (Random.Range(0, 100) < 50)
                     {
-                        AITask taskPolicy = new AITask()
+                        //Censorship
+                        if (resources >= decisionCensorship.cost)
                         {
-                            data1 = decisionCensorship.cost,
-                            data2 = decisionCensorship.aiDecID,
-                            name0 = decisionCensorship.name,
-                            type = AIType.Decision,
-                            priority = Priority.Low
-                        };
-                        listOfDecisionTasksNonCritical.Add(taskPolicy);
+                            AITask taskPolicy = new AITask()
+                            {
+                                data1 = decisionCensorship.cost,
+                                data2 = decisionCensorship.aiDecID,
+                                name0 = decisionCensorship.name,
+                                type = AIType.Decision,
+                                priority = Priority.Low
+                            };
+                            listOfDecisionTasksNonCritical.Add(taskPolicy);
+                        }
                     }
-                    //Ban Protests
-                    if (resources >= decisionBanProtests.cost)
+                    else
                     {
-                        AITask taskPolicy = new AITask()
+                        //Ban Protests
+                        if (resources >= decisionBanProtests.cost)
                         {
-                            data1 = decisionBanProtests.cost,
-                            data2 = decisionBanProtests.aiDecID,
-                            name0 = decisionBanProtests.name,
-                            type = AIType.Decision,
-                            priority = Priority.Low
-                        };
-                        listOfDecisionTasksNonCritical.Add(taskPolicy);
+                            AITask taskPolicy = new AITask()
+                            {
+                                data1 = decisionBanProtests.cost,
+                                data2 = decisionBanProtests.aiDecID,
+                                name0 = decisionBanProtests.name,
+                                type = AIType.Decision,
+                                priority = Priority.Low
+                            };
+                            listOfDecisionTasksNonCritical.Add(taskPolicy);
+                        }
                     }
                 }
                 //MEDIUM IMPACT
                 if (numOfCrisis >= policyCrisisCriteriaMed)
                 {
-                    //Censorship
-                    if (resources >= decisionCurfew.cost)
+                    //Only one policy is (randomly) selected per impact category per turn
+                    if (Random.Range(0, 100) < 50)
                     {
-                        AITask taskPolicy = new AITask()
+                        //Censorship
+                        if (resources >= decisionCurfew.cost)
                         {
-                            data1 = decisionCurfew.cost,
-                            data2 = decisionCurfew.aiDecID,
-                            name0 = decisionCurfew.name,
-                            type = AIType.Decision,
-                            priority = Priority.Medium
-                        };
-                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                            AITask taskPolicy = new AITask()
+                            {
+                                data1 = decisionCurfew.cost,
+                                data2 = decisionCurfew.aiDecID,
+                                name0 = decisionCurfew.name,
+                                type = AIType.Decision,
+                                priority = Priority.Medium
+                            };
+                            listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                        }
                     }
-                    //Robo Cops
-                    if (resources >= decisionRoboCops.cost)
-                    {
-                        AITask taskPolicy = new AITask()
+                    else
+                    { 
+                        //Robo Cops
+                        if (resources >= decisionRoboCop.cost)
                         {
-                            data1 = decisionRoboCops.cost,
-                            data2 = decisionRoboCops.aiDecID,
-                            name0 = decisionRoboCops.name,
-                            type = AIType.Decision,
-                            priority = Priority.Medium
-                        };
-                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                            AITask taskPolicy = new AITask()
+                            {
+                                data1 = decisionRoboCop.cost,
+                                data2 = decisionRoboCop.aiDecID,
+                                name0 = decisionRoboCop.name,
+                                type = AIType.Decision,
+                                priority = Priority.Medium
+                            };
+                            listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                        }
                     }
                 }
                 //HIGH IMPACT
                 if (numOfCrisis >= policyCrisisCriteriaHigh)
                 {
-                    //Martial Law
-                    if (resources >= decisionMartialLaw.cost)
+                    //Only one policy is (randomly) selected per impact category per turn
+                    if (Random.Range(0, 100) < 50)
                     {
-                        AITask taskPolicy = new AITask()
+                        //Martial Law
+                        if (resources >= decisionMartialLaw.cost)
                         {
-                            data1 = decisionMartialLaw.cost,
-                            data2 = decisionMartialLaw.aiDecID,
-                            name0 = decisionMartialLaw.name,
-                            type = AIType.Decision,
-                            priority = Priority.High
-                        };
-                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                            AITask taskPolicy = new AITask()
+                            {
+                                data1 = decisionMartialLaw.cost,
+                                data2 = decisionMartialLaw.aiDecID,
+                                name0 = decisionMartialLaw.name,
+                                type = AIType.Decision,
+                                priority = Priority.High
+                            };
+                            listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                        }
                     }
-                    //Drone Warfare
-                    if (resources >= decisionDrones.cost)
+                    else
                     {
-                        AITask taskPolicy = new AITask()
+                        //Drone Warfare
+                        if (resources >= decisionDrones.cost)
                         {
-                            data1 = decisionDrones.cost,
-                            data2 = decisionDrones.aiDecID,
-                            name0 = decisionDrones.name,
-                            type = AIType.Decision,
-                            priority = Priority.High
-                        };
-                        listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                            AITask taskPolicy = new AITask()
+                            {
+                                data1 = decisionDrones.cost,
+                                data2 = decisionDrones.aiDecID,
+                                name0 = decisionDrones.name,
+                                type = AIType.Decision,
+                                priority = Priority.High
+                            };
+                            listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
+                        }
                     }
+                }
+            }
+        }
+        //
+        // - - - Handouts - - -
+        //
+        if (timerHandout == 0)
+        {
+            //LOW IMPACT
+            if (cityLoyalty <= handoutLoyaltyCriteriaLow)
+            {
+
+                //randomly choose one low impact handout
+
+                //Christmas Hampers
+                if (resources >= decisionHamper.cost)
+                {
+                    AITask taskHandout = new AITask()
+                    {
+                        data1 = decisionHamper.cost,
+                        data2 = decisionHamper.aiDecID,
+                        name0 = decisionHamper.name,
+                        type = AIType.Decision,
+                        priority = Priority.Low
+                    };
+                    listOfDecisionTasksNonCritical.Add(taskHandout);
+                }
+            }
+            //MEDIUM IMPACT
+            if (cityLoyalty <= handoutLoyaltyCriteriaMed)
+            {
+                
+                //randomly choose one Medium impact handout
+
+                //Austerity Payments
+                if (resources >= decisionAusterity.cost)
+                {
+                    AITask taskHandout = new AITask()
+                    {
+                        data1 = decisionAusterity.cost,
+                        data2 = decisionAusterity.aiDecID,
+                        name0 = decisionAusterity.name,
+                        type = AIType.Decision,
+                        priority = Priority.Medium
+                    };
+                    listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
+                }
+            }
+            //HIGH IMPACT
+            if (cityLoyalty <= handoutLoyaltyCriteriaHigh)
+            {
+
+                //randomly choose one High impact handout
+
+                //Medical Clinics
+                if (resources >= decisionMedical.cost)
+                {
+                    AITask taskHandout = new AITask()
+                    {
+                        data1 = decisionMedical.cost,
+                        data2 = decisionMedical.aiDecID,
+                        name0 = decisionMedical.name,
+                        type = AIType.Decision,
+                        priority = Priority.High
+                    };
+                    listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
                 }
             }
         }
@@ -2363,7 +2482,8 @@ public class AIManager : MonoBehaviour
                         //remove entry from list to prevent future selection
                         listOfTasksCritical.RemoveAt(index);
                     }
-                    while (numTasksSelected < numOfFinalTasks || listOfTasksCritical.Count == 0);
+                    while (numTasksSelected < numOfFinalTasks && listOfTasksCritical.Count > 0);
+                    /*while (numTasksSelected < numOfFinalTasks || listOfTasksCritical.Count == 0);*/
                 }
             }
             //still room 
@@ -3001,12 +3121,15 @@ public class AIManager : MonoBehaviour
             { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionCurfew.name) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionRoboCops.name) == true)
+            else if (task.name0.Equals(decisionRoboCop.name) == true)
             { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionMartialLaw.name) == true)
             { isSuccess = ProcessAIPolicy(task); }
             else if (task.name0.Equals(decisionDrones.name) == true)
             { isSuccess = ProcessAIPolicy(task); }
+            //handouts
+            else if (task.name0.Equals(decisionHamper.name) == true)
+            { isSuccess = ProcessAIHandout(task); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
             //debug logs
@@ -3028,7 +3151,6 @@ public class AIManager : MonoBehaviour
     /// <returns></returns>
     private bool ProcessAIPolicy(AITask task)
     {
-        bool isSuccess = false;
         //deduct city Loyalty & update node crisis modifier
         int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
         int loyaltyChange = 0;
@@ -3057,7 +3179,6 @@ public class AIManager : MonoBehaviour
         cityLoyalty = Mathf.Max(0, cityLoyalty);
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         GameManager.instance.nodeScript.crisisPolicyModifier = nodeCrisisModifier;
-
         //set vars
         isPolicy = true;
         timerPolicy = aiCounterMeasureTimer;
@@ -3071,7 +3192,51 @@ public class AIManager : MonoBehaviour
         msgText = string.Format("{0} loyalty has decreased by -{1} to {2} due to the {3} policy", city.name, loyaltyChange, cityLoyalty, policyName);
         message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         GameManager.instance.dataScript.AddMessage(message);
-        return isSuccess;
+        return true;
+    }
+
+
+    /// <summary>
+    /// Process an AI Handout decision from Authority. Returns true if successful
+    /// NOTE: task has been checked for null by the calling method (ExcecuteDecisionTask)
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    private bool ProcessAIHandout(AITask task)
+    {
+        //deduct city Loyalty
+        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        int loyaltyChange = 0;
+        //task priority determines impact category
+        switch (task.priority)
+        {
+            case Priority.Low:
+                loyaltyChange = handoutCityLoyaltyLow;
+                break;
+            case Priority.Medium:
+                loyaltyChange = handoutCityLoyaltyMed;
+                break;
+            case Priority.High:
+                loyaltyChange = handoutCityLoyaltyHigh;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid task.priority \"{0}\"", task.priority);
+                break;
+        }
+        //update
+        cityLoyalty -= loyaltyChange;
+        cityLoyalty = Mathf.Max(0, cityLoyalty);
+        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+        //set cooldown timer
+        timerHandout = handoutCooldownTimer;
+        //admin
+        string msgText = string.Format("Authority implements {0} policy city wide", policyName);
+        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
+        GameManager.instance.dataScript.AddMessage(message);
+        msgText = string.Format("{0} loyalty has increased by +{1} to {2} due to the {3} policy", city.name, loyaltyChange, cityLoyalty, policyName);
+        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
+        GameManager.instance.dataScript.AddMessage(message);
+        return true;
     }
 
     /// <summary>
@@ -3494,6 +3659,9 @@ public class AIManager : MonoBehaviour
                 Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerPolicy now {0}{1}", timerPolicy, "\n");
             }
         }
+        //Handout
+        if (timerHandout > 0)
+        { timerHandout--; }
     }
 
     /// <summary>
