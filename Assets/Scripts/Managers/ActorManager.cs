@@ -288,16 +288,18 @@ public class ActorManager : MonoBehaviour
             //run for Resistance Player
             CheckInactiveResistanceActors();
             CheckActiveResistanceActors();    //needs to be AFTER CheckInactiveActors
-            //run for Resistance Player
+            //end game checks
             GameManager.instance.factionScript.CheckFactionFirePlayer();
+            GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
         }
         else
         {
             //run for Authority Player
             CheckInactiveAuthorityActors();
             CheckActiveAuthorityActors();    //needs to be AFTER CheckInactiveActors
-            //run for Authority Player
+            //end game checks
             GameManager.instance.factionScript.CheckFactionFirePlayer();
+            GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
         }
         UpdateReserveActors();
     }

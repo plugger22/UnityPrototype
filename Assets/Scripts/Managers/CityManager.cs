@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using modalAPI;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -10,13 +12,21 @@ public class CityManager : MonoBehaviour
 {
     [Tooltip("City Loyalty (same for both sides) range from 0 to this amount")]
     [Range(0, 10)] public int maxCityLoyalty = 10;
+
     [Header("GUI data")]
     [Tooltip("Opacity of the 3 grey background subPanels in the city tooltip")]
     [Range(0f, 1.0f)] public float subPanelOpacity = 0.1f;
     [Tooltip("Opacity of the 3 grey background miniPanels (centre panel -> Mayor / Faction / Orgs) in the city tooltip")]
     [Range(0f, 1.0f)] public float miniPanelOpacity = 0.25f;
 
+    [Header("Timers")]
+    [Tooltip("Countdown timer, in turns, triggered when City Loyalty at Max or Min")]
+    [Range(1, 10)] public int loyaltyCountdownTimer = 3;
+
     private int _cityLoyalty;                       //loyalty of city (0 to 10). Same number for both sides
+    private bool isLoyaltyCheckedThisTurn;          //ensures that CheckCityLoyaltyAtLimit is checked only once per turn
+    private int loyaltyMinTimer;                    //countdown timer that triggers when loyalty at min
+    private int loyaltyMaxTimer;                    //countdown timer that triggers when loyalty at max
 
     private City city;
 
@@ -55,10 +65,13 @@ public class CityManager : MonoBehaviour
             // need to initialise all relevant info in city.SO's
 
         city = GameManager.instance.dataScript.GetRandomCity();
-        
+        isLoyaltyCheckedThisTurn = false;
+        loyaltyMinTimer = 0;
+        loyaltyMaxTimer = 0;
 
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CityManager");
+        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "CityManager");
     }
 
     /// <summary>
@@ -96,6 +109,9 @@ public class CityManager : MonoBehaviour
         //select event type
         switch (eventType)
         {
+            case EventType.EndTurnLate:
+                EndTurnLate();
+                break;
             case EventType.ChangeColour:
                 SetColours();
                 break;
@@ -124,6 +140,15 @@ public class CityManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
+    }
+
+    /// <summary>
+    /// End turn late event
+    /// </summary>
+    private void EndTurnLate()
+    {
+        //reset flag ready for next turn
+        isLoyaltyCheckedThisTurn = false;
     }
 
     /// <summary>
@@ -275,6 +300,111 @@ public class CityManager : MonoBehaviour
         builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.GetTrait().tagFormatted);
         builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.GetTrait().description, colourEnd);
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// checks city loyalty once per turn for min and max conditions, sets timers, gives outcomes. Checks for both sides, depending on who is player
+    /// </summary>
+    public void CheckCityLoyaltyAtLimit()
+    {
+        bool isAtLimit = false;
+        bool isMaxLoyalty = false;
+        bool isMinLoyalty = false;
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //check if loyalty at limit
+        if (_cityLoyalty == 0) { isAtLimit = true; isMinLoyalty = true; }
+        else if (_cityLoyalty >= maxCityLoyalty) { isAtLimit = true; isMaxLoyalty = true; }
+
+
+        //only check once per turn
+        if (isAtLimit = true && isLoyaltyCheckedThisTurn == false)
+        {
+            isLoyaltyCheckedThisTurn = true;
+            //
+            // - - - Min Loyalty - - -
+            //
+            if (isMinLoyalty == true)
+            {
+                if (loyaltyMinTimer == 0)
+                {
+                    //set timer
+                    loyaltyMinTimer = loyaltyCountdownTimer;
+                    //message
+                    string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
+                    Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                else
+                {
+                    //decrement timer
+                    loyaltyMinTimer--;
+                    //fire player at zero
+                    if (loyaltyMinTimer == 0)
+                    {
+                        //Loyalty at Min -> Resistance wins
+                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                        outcomeDetails.side = side;
+                        outcomeDetails.textTop = string.Format("{0}{1} has lost faith in the Authorities and joined the Resistance{2}", colourNormal, city.name, colourEnd);
+                        outcomeDetails.textBottom = string.Format("{0}Resistance WINS{1}{2}{3}{4}Authority LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
+                        outcomeDetails.sprite = GameManager.instance.guiScript.firedSprite;
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CityManager.cs -> CheckCityLoyalty");
+
+                    }
+                    else
+                    {
+                        //message
+                        string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
+                        Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
+                        GameManager.instance.dataScript.AddMessage(message);
+                    }
+                }
+            }
+            //
+            // - - - Max Loyalty - - -
+            //
+            else if (isMaxLoyalty == true)
+            {
+                if (loyaltyMaxTimer == 0)
+                {
+                    //set timer
+                    loyaltyMaxTimer = loyaltyCountdownTimer;
+                    //message
+                    string msgText = string.Format("{0} Loyalty at MAX. Resistance wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
+                    Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
+                    GameManager.instance.dataScript.AddMessage(message);
+                }
+                else
+                {
+                    //decrement timer
+                    loyaltyMaxTimer--;
+                    //fire player at zero
+                    if (loyaltyMaxTimer == 0)
+                    {
+                        //Loyalty at Max -> Authority wins
+                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                        outcomeDetails.side = side;
+                        outcomeDetails.textTop = string.Format("{0}{1} has lost all interest in joining the Resistance{2}", colourNormal, city.name, colourEnd);
+                        outcomeDetails.textBottom = string.Format("{0}Authority WINS{1}{2}{3}{4}Resistance LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
+                        outcomeDetails.sprite = GameManager.instance.guiScript.firedSprite;
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CityManager.cs -> CheckCityLoyalty");
+
+                    }
+                    else
+                    {
+                        //message
+                        string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
+                        Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
+                        GameManager.instance.dataScript.AddMessage(message);
+                    }
+                }
+            }
+        }
+        else
+        {
+            //set both timers to zero (loyalty neither min nor max)
+            loyaltyMinTimer = 0;
+            loyaltyMaxTimer = 0;
+        }
     }
 
     //new methods above here

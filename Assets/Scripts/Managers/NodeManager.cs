@@ -2174,9 +2174,9 @@ public class NodeManager : MonoBehaviour
                                 {
                                     chance = (nodeBaseChance - crisisPolicyModifier) * numOfDangerSigns;
                                     chance = Mathf.Clamp(chance, 0, 100);
-                                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, base chance {2}{3}", node.Arc.name, node.nodeID, nodeBaseChance, "\n");
+                                    /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, base chance {2}{3}", node.Arc.name, node.nodeID, nodeBaseChance, "\n");
                                     Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, danger signs {2}{3}", node.Arc.name, node.nodeID, numOfDangerSigns, "\n");
-                                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, policy modifier {2}{3}", node.Arc.name, node.nodeID, crisisPolicyModifier, "\n");
+                                    Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNode: {0}, ID {1}, policy modifier {2}{3}", node.Arc.name, node.nodeID, crisisPolicyModifier, "\n");*/
                                     //random roll
                                     rnd = Random.Range(0, 100);
                                     if (rnd < chance)
@@ -2222,8 +2222,8 @@ public class NodeManager : MonoBehaviour
                                     else
                                     {
                                         //failed roll, nothing happens
-                                        Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Arc.name, node.nodeID,
-                                            chance, rnd);
+                                        /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Arc.name, node.nodeID,
+                                            chance, rnd);*/
                                     }
                                 }
                             }
