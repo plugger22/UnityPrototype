@@ -253,13 +253,20 @@ public class AIManager : MonoBehaviour
     [Range(0, 50)] public int hackingSecurityProtocolFactor = 10;
     [Tooltip("Mayoral Traits that increase / decrease the chance of detecting an AI hacking attempt are adjusted by this amount")]
     [Range(0, 50)] public int hackingTraitDetectionFactor = 20;
+    
 
     [Header("AI Countermeasures")]
-    [Tooltip("When the AI instigates any counter measures (incl. policies) they will stay in place for this number of turns")]
-    [Range(1, 10)] public int aiCounterMeasureTimer = 5;
     [Tooltip("The highest level that the AI can raise it's Security Protocols to in order to increase the chances of detecting Hacking")]
     [Range(1, 5)] public int aiSecurityProtocolMaxLevel = 3;
-    
+
+    [Header("Timers")]
+    [Tooltip("When the AI instigates any Network counter measures they will stay in place for this number of turns")]
+    [Range(1, 10)] public int aiCounterMeasureTimer = 5;
+    [Tooltip("When the AI instigates any Policies they will stay in place for this number of turns")]
+    [Range(1, 10)] public int aiPolicyTimer= 5;
+
+
+
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
     [HideInInspector] public int resourcesGainAuthority;                //resources added to pool (DataManager.cs -> arrayOfAIResources every turn
@@ -326,6 +333,11 @@ public class AIManager : MonoBehaviour
     private int aiDetectionChanceLower;
     private int aiCounterMeasurePriorityRaise;
     private int aiCounterMeasureTimerDoubled;
+    private int aiPolicyTimerDoubled;
+    private int aiPolicyCostLower;
+    private int aiPolicyCostHigher;
+    private int aiHandoutCostLower;
+    private int aiHandoutCostHigher;
     //conditions
     private Condition stressedCondition;
     //sides
@@ -498,6 +510,11 @@ public class AIManager : MonoBehaviour
         aiDetectionChanceLower = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceLower");
         aiCounterMeasurePriorityRaise = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasurePriorityRaise");
         aiCounterMeasureTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasureTimerDoubled");
+        aiPolicyTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyTimerDoubled");
+        aiPolicyCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostLower");
+        aiPolicyCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostHigher");
+        aiHandoutCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostLower");
+        aiHandoutCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostHigher");
         Debug.Assert(aiDetectionChanceHigher > -1, "Invalid aiDetectionChanceHigher (-1)");
         Debug.Assert(aiDetectionChanceLower > -1, "Invalid aiDetectionChanceLower (-1)");
         Debug.Assert(aiCounterMeasurePriorityRaise > -1, "Invalid aiCounterMeasurePriorityRaise (-1)");
@@ -3231,15 +3248,40 @@ public class AIManager : MonoBehaviour
         GameManager.instance.nodeScript.crisisPolicyModifier = nodeCrisisModifier;
         //set vars
         isPolicy = true;
-        timerPolicy = aiCounterMeasureTimer;
+        timerPolicy = aiPolicyTimer;
         policyName = task.name0;
         policyEffectCrisis = nodeCrisisModifier;
         policyEffectLoyalty = cityLoyalty;
+        //trait -> PolicyWonk
+        if (city.mayor.CheckTraitEffect(aiPolicyTimerDoubled) == true)
+        {
+            timerPolicy *= 2;
+            Debug.LogFormat("[Trt] {0} uses {1} trait, timerPolicy now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, timerPolicy, "\n");
+        }
+        //trait -> Expert
+        else if (city.mayor.CheckTraitEffect(aiPolicyCostLower) == true)
+        {
+            //add an extra resource back to the pool (policy costs less)
+            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            resources += 1;
+            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+        }
+        //trait -> Sloppy
+        else if (city.mayor.CheckTraitEffect(aiPolicyCostHigher) == true)
+        {
+            //deduct an extra resource (policy costs more)
+            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            resources -= 1;
+            resources = Mathf.Max(0, resources);
+            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+        }
         //admin
         string msgText = string.Format("Authority implements {0} policy city wide", policyName);
         Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
         GameManager.instance.dataScript.AddMessage(message);
-        msgText = string.Format("{0} loyalty has decreased by -{1} to {2} due to the {3} policy", city.name, loyaltyChange, cityLoyalty, policyName);
+        msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyName);
         message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         GameManager.instance.dataScript.AddMessage(message);
         return true;
@@ -3279,6 +3321,25 @@ public class AIManager : MonoBehaviour
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         //set cooldown timer
         timerHandout = handoutCooldownTimer;
+        //trait -> Liberal
+        if (city.mayor.CheckTraitEffect(aiHandoutCostLower) == true)
+        {
+            //add an extra resource back to the pool (handout costs less)
+            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            resources += 1;
+            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+        }
+        //trait -> Penny Pincher
+        else if (city.mayor.CheckTraitEffect(aiHandoutCostHigher) == true)
+        {
+            //deduct an extra resource (handout costs more)
+            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            resources -= 1;
+            resources = Mathf.Max(0, resources);
+            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+        }
         //admin
         string msgText = string.Format("Authority implements {0} policy city wide", task.name0);
         Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
@@ -4381,7 +4442,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("{0} policy is no longer in effect", policyName);
         Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
         GameManager.instance.dataScript.AddMessage(message);
-        msgText = string.Format("{0} Loyalty has increased by +{1} to {2} due to the {3} policy being cancelled", city.name, policyEffectLoyalty, cityLoyalty, policyName);
+        msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.name, policyEffectLoyalty, policyName);
         message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
         GameManager.instance.dataScript.AddMessage(message);
         //reset vars
