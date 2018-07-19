@@ -24,6 +24,8 @@ public class ParticleHostObject : MonoBehaviour
     {
         if (launcher != null)
         {
+            //launcher.StartParticleSystem(20);
+            //launcher.particleLauncher.Play(false);
             StartCoroutine("TestParticleSystem");
         }
     }
@@ -31,10 +33,8 @@ public class ParticleHostObject : MonoBehaviour
 
     IEnumerator TestParticleSystem()
     {
-        yield return new WaitForSecondsRealtime(5);
-        launcher.StartParticleSystem(20);
-        yield return new WaitForSecondsRealtime(5);
-        launcher.StopParticleSystem();
+        yield return new WaitForSecondsRealtime(3);
+        launcher.StartParticleSystem(25);
         yield return null;
     }
 }

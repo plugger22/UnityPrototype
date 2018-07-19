@@ -9,11 +9,13 @@ public class ParticleLauncher : MonoBehaviour
 {
     public ParticleSystem particleLauncher;
 
-    private void Update()
+    private bool isPlaying = false;
+
+    private void Awake()
     {
         //deactivate Launcher at game start
         if (particleLauncher != null)
-        { particleLauncher.gameObject.SetActive(false); }
+        { particleLauncher.Stop(false, ParticleSystemStopBehavior.StopEmitting); }
         else { Debug.LogWarning("Invalid particleLauncher (Null)"); }
     }
 
@@ -23,10 +25,15 @@ public class ParticleLauncher : MonoBehaviour
     /// <param name="particlesPerFrame"></param>
     public void StartParticleSystem(int particlesPerFrame)
     {
-        //keep input within reasonable parameters
-        particlesPerFrame = Mathf.Clamp(particlesPerFrame, 10, 40);
-        particleLauncher.gameObject.SetActive(true);
-        particleLauncher.Emit(particlesPerFrame);
+        if (isPlaying == false)
+        {
+            //keep input within reasonable parameters
+            particlesPerFrame = Mathf.Clamp(particlesPerFrame, 10, 40);
+            var emission = particleLauncher.emission;
+            emission.rateOverTime = particlesPerFrame;
+            particleLauncher.Play(false);
+            isPlaying = true;
+        }
     }
 
     /// <summary>
@@ -34,7 +41,8 @@ public class ParticleLauncher : MonoBehaviour
     /// </summary>
     public void StopParticleSystem()
     {
-        particleLauncher.gameObject.SetActive(false);
+        particleLauncher.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        isPlaying = false;
     }
 
 }
