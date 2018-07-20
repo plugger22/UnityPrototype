@@ -7,15 +7,17 @@ using UnityEngine;
 /// </summary>
 public class ParticleLauncher : MonoBehaviour
 {
-    public ParticleSystem particleLauncher;
+    public ParticleSystem launcher;
 
     private bool isPlaying = false;
 
     private void Awake()
     {
         //deactivate Launcher at game start
-        if (particleLauncher != null)
-        { particleLauncher.Stop(false, ParticleSystemStopBehavior.StopEmitting); }
+        if (launcher != null)
+        {
+            launcher.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        }
         else { Debug.LogWarning("Invalid particleLauncher (Null)"); }
     }
 
@@ -23,15 +25,16 @@ public class ParticleLauncher : MonoBehaviour
     /// start emitting at a set rate of particles per frame
     /// </summary>
     /// <param name="particlesPerFrame"></param>
-    public void StartParticleSystem(int particlesPerFrame)
+    public void StartSmoke(int particlesPerFrame)
     {
         if (isPlaying == false)
         {
             //keep input within reasonable parameters
             particlesPerFrame = Mathf.Clamp(particlesPerFrame, 10, 40);
-            var emission = particleLauncher.emission;
+            var emission = launcher.emission;
+            emission.enabled = true;
             emission.rateOverTime = particlesPerFrame;
-            particleLauncher.Play(false);
+            launcher.Play(false);
             isPlaying = true;
         }
     }
@@ -39,9 +42,11 @@ public class ParticleLauncher : MonoBehaviour
     /// <summary>
     /// stop emitting
     /// </summary>
-    public void StopParticleSystem()
+    public void StopSmoke()
     {
-        particleLauncher.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        launcher.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        var emission = launcher.emission;
+        emission.enabled = false;
         isPlaying = false;
     }
 

@@ -704,7 +704,11 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in crisisList)
                         {
                             if (node != null)
-                            { node.SetMaterial(materialActive); }
+                            {
+                                node.SetMaterial(materialActive);
+                                //test turn on particle smoke system
+                                node.launcher.StartSmoke(20);
+                            }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Crisis district{4}{5}", colourDefault, crisisList.Count, colourEnd, colourHighlight,

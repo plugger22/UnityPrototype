@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// test script to attach to host game object
+/// Debug script to attach to host game object to test particle system in Particle Scene
 /// </summary>
 public class ParticleHostObject : MonoBehaviour
 {
@@ -34,7 +34,7 @@ public class ParticleHostObject : MonoBehaviour
     IEnumerator TestParticleSystem()
     {
         yield return new WaitForSecondsRealtime(3);
-        launcher.StartParticleSystem(25);
+        launcher.StartSmoke(25);
         yield return null;
     }
 }

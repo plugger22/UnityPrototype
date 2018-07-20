@@ -15,6 +15,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public Vector3 nodePosition;      //position
     [HideInInspector] public string nodeName;           //name of node, eg. "Downtown Bronx"
     [HideInInspector] public NodeArc Arc;               //archetype type
+    [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
 
     [HideInInspector] public bool isTracer;             //has resistance tracer?
     [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
@@ -175,26 +176,31 @@ public class Node : MonoBehaviour
 	
 	private void Awake ()
     {
+        //collections
         listOfNeighbourPositions = new List<Vector3>();
         listOfNeighbourNodes = new List<Node>();
         listOfNearNeighbours = new List<Node>();
-        //listOfMoves = new List<Node>();
         listOfTeams = new List<Team>();
         listOfConnections = new List<Connection>();
         listOfOngoingEffects = new List<EffectDataOngoing>();
+
+        //vars
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;
-
-        //get text component
+        //components
+        launcher = GetComponent<ParticleLauncher>();
         if (faceObject != null)
         {
+            //node face text
             faceText = faceObject.GetComponent<TextMesh>();
             faceText.text = "";
         }
         else { Debug.LogError("Invalid faceObject (Null)"); }
+        Debug.Assert(launcher != null, "Invalid Launcher (Null)");
+        Debug.Assert(faceText != null, "Invalid faceText (Null)");
 	}
 
     private void Start()
