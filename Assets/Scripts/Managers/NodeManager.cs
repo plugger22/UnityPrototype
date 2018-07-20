@@ -706,8 +706,6 @@ public class NodeManager : MonoBehaviour
                             if (node != null)
                             {
                                 node.SetMaterial(materialActive);
-                                //test turn on particle smoke system
-                                node.launcher.StartSmoke(20);
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
@@ -2122,6 +2120,7 @@ public class NodeManager : MonoBehaviour
                                     node.crisisTimer = 0;
                                     node.waitTimer = nodeWaitTimer;
                                     node.crisis = null;
+                                    node.launcher.StopSmoke();
                                     //admin
                                     msgText = string.Format("{0}, {1}, ID {2} crisis AVERTED", node.nodeName, node.Arc.name, node.nodeID);
                                     Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
@@ -2133,6 +2132,7 @@ public class NodeManager : MonoBehaviour
                                     node.crisisTimer--;
                                     if (node.crisisTimer > 0)
                                     {
+                                        node.launcher.StartSmoke(30);
                                         //add to list of crisis nodes
                                         tempList.Add(node);
                                         //warning message
@@ -2158,6 +2158,7 @@ public class NodeManager : MonoBehaviour
                                         //set variables
                                         node.waitTimer = nodeWaitTimer;
                                         node.crisis = null;
+                                        node.launcher.StopSmoke();
                                     }
                                 }
                             }
@@ -2165,6 +2166,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 //WAITING between potential crisis
                                 node.waitTimer--;
+                                node.launcher.StopSmoke();
                                 /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0}, ID {1}, waitTimer now {2}{3}", node.Value.Arc.name, node.Value.nodeID, node.Value.waitTimer, "\n");*/
                             }
                             else
@@ -2188,6 +2190,7 @@ public class NodeManager : MonoBehaviour
                                         //CRISIS COMMENCES -> set crisisTimer
                                         node.crisisTimer = nodeTimer;
                                         node.waitTimer = 0;
+                                        node.launcher.StartSmoke(30);
                                         //add to list of crisis nodes
                                         tempList.Add(node);
                                         //track number of crisis for AI decision making
@@ -2226,6 +2229,7 @@ public class NodeManager : MonoBehaviour
                                     else
                                     {
                                         //failed roll, nothing happens
+                                        node.launcher.StopSmoke();
                                         /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);*/
                                     }

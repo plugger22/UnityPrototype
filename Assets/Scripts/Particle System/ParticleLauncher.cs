@@ -44,10 +44,13 @@ public class ParticleLauncher : MonoBehaviour
     /// </summary>
     public void StopSmoke()
     {
-        launcher.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-        var emission = launcher.emission;
-        emission.enabled = false;
-        isPlaying = false;
+        if (isPlaying == true)
+        {
+            launcher.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+            var emission = launcher.emission;
+            emission.enabled = false;
+            isPlaying = false;
+        }
     }
 
 }
