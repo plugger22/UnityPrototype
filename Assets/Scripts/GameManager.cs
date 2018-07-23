@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
     [HideInInspector] public WidgetTopUI widgetTopScript;             //Widget Top UI
     [HideInInspector] public CityInfoUI cityInfoScript;               //City Info UI
+    [HideInInspector] public MainInfoUI mainInfoScript;               //Main Info UI
     [HideInInspector] public AIDisplayUI aiDisplayScript;             //AI Display UI
     [HideInInspector] public AISideTabUI aiSideTabScript;             //AI SideTab UI
     [HideInInspector] public ActorPanelUI actorPanelScript;           //Actor Panel UI
@@ -163,6 +164,7 @@ public class GameManager : MonoBehaviour
         modalGUIScropt = ModalGUI.Instance();
         widgetTopScript = WidgetTopUI.Instance();
         cityInfoScript = CityInfoUI.Instance();
+        mainInfoScript = MainInfoUI.Instance();
         aiDisplayScript = AIDisplayUI.Instance();
         aiSideTabScript = AISideTabUI.Instance();
         alertScript = AlertUI.Instance();
@@ -355,6 +357,10 @@ public class GameManager : MonoBehaviour
         //City Info UI
         startMethod.handler = GameManager.instance.cityInfoScript.Initialise;
         startMethod.className = "CityInfoUI";
+        listOfStartMethods.Add(startMethod);
+        //Main Info UI
+        startMethod.handler = GameManager.instance.mainInfoScript.Initialise;
+        startMethod.className = "MainInfoUI";
         listOfStartMethods.Add(startMethod);
         //AI Display UI
         startMethod.handler = GameManager.instance.aiDisplayScript.Initialise;

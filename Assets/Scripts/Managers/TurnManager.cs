@@ -174,6 +174,8 @@ public class TurnManager : MonoBehaviour
             while (finishedProcessing == false);
             //switch off any node Alerts
             GameManager.instance.alertScript.CloseAlertUI(true);
+            //turn on info App
+            EventManager.instance.PostNotification(EventType.MainInfoOpen, this, _turn, "TurnManager.cs -> ProcessNewTurn");
         }
     }
 

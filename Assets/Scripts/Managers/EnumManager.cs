@@ -18,7 +18,7 @@
     //  - - - UI - - -
     //
     public enum ModalState { None, Outcome, GenericPicker, ActionMenu, Inventory, TeamPicker, DiceRoller, InfoDisplay } //ModalUI sub game states
-    public enum ModalInfoSubState { None, CityInfo, AIInfo }                                                                    //if ModalUI.InfoDisplay -> what type of info
+    public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo }                                                                    //if ModalUI.InfoDisplay -> what type of info
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
     public enum InventoryState { None, Gear, ReservePool}
     public enum UIPosition { None, Left, Middle, Right }

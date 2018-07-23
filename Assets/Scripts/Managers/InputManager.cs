@@ -322,6 +322,13 @@ public class InputManager : MonoBehaviour
                                     return;
                                 }
                                 break;
+                            case ModalInfoSubState.MainInfo:
+                                if (Input.GetButtonDown("Cancel") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }
+                                break;
                             default:
                                 Debug.LogWarningFormat("Invalid _modalInfoState \"{0}\"", _modalInfoState);
                                 break;

@@ -103,6 +103,7 @@ public enum EventType
     InventoryLetGo,
     InventoryFire,
     InventoryActiveDuty,
+
     /*//Dice UI
     OpenDiceUI,
     CloseDiceUI,
@@ -115,6 +116,10 @@ public enum EventType
     DiceBypass,
     DiceReturnMove,
     DiceReturnGear,*/
+
+    //Main Info
+    MainInfoOpen,
+    MainInfoClose,
     //City Info
     CityInfoOpen,
     CityInfoClose,
