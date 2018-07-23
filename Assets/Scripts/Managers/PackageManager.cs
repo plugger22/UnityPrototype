@@ -215,5 +215,18 @@ namespace packageAPI
         public string effects;                  //carry over effects for a combined outcome window, eg insert tracer and then get captured
     }
 
+    /// <summary>
+    /// Main Info App data package
+    /// </summary>
+    public class MainInfoData
+    {
+        public List<string> listOfMainText;         //list of strings (one per line) for main tab
+
+
+        public MainInfoData()
+        {
+            listOfMainText = new List<string>();
+        }
+    }
 
 }
