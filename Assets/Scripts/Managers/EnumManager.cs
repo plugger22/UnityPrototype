@@ -23,6 +23,7 @@
     public enum InventoryState { None, Gear, ReservePool}
     public enum UIPosition { None, Left, Middle, Right }
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
+    public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {
         None,
         SomethingWrong,

@@ -329,7 +329,7 @@ public class TurnManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid dictOfMessages (Null)"); }
-        data.listOfMainText.AddRange(listOfMessages);
+        data.listOfData_0.AddRange(listOfMessages);
         //turn on info App
         EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn");
     }

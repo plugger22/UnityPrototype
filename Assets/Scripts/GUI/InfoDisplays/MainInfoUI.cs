@@ -17,7 +17,7 @@ public class MainInfoUI : MonoBehaviour
 
     public Button buttonClose;
 
-    [Header("Main Tab")]
+    [Header("RHS backgrounds")]
     //main tab -> parent backgrounds
     public Image main_issue_0;
     public Image main_issue_1;
@@ -29,6 +29,8 @@ public class MainInfoUI : MonoBehaviour
     public Image main_issue_7;
     public Image main_issue_8;
     public Image main_issue_9;
+
+    [Header("RHS texts")]
     //main tab -> text
     public TextMeshProUGUI main_text_0;
     public TextMeshProUGUI main_text_1;
@@ -40,6 +42,8 @@ public class MainInfoUI : MonoBehaviour
     public TextMeshProUGUI main_text_7;
     public TextMeshProUGUI main_text_8;
     public TextMeshProUGUI main_text_9;
+
+    [Header("RHS borders")]
     //main tab -> border
     public Image main_border_1;
     public Image main_border_2;
@@ -51,11 +55,39 @@ public class MainInfoUI : MonoBehaviour
     public Image main_border_8;
     public Image main_border_9;
 
+    [Header("RHS Active tabs")]
+    //page tabs -> active
+    public Image tab_active_0;
+    public Image tab_active_1;
+    public Image tab_active_2;
+    public Image tab_active_3;
+    public Image tab_active_4;
+    public Image tab_active_5;
+
+    [Header("RHS Passive tabs")]
+    //page tabs -> passive
+    public Image tab_passive_0;
+    public Image tab_passive_1;
+    public Image tab_passive_2;
+    public Image tab_passive_3;
+    public Image tab_passive_4;
+    public Image tab_passive_5;
+
     private ButtonInteraction buttonInteractionClose;
 
-    private Image[] mainImageArray = new Image[10];
-    private Image[] mainBorderArray = new Image[10];
-    private TextMeshProUGUI[] mainTextArray = new TextMeshProUGUI[10];
+
+    //hardwired lines in main page -> 10
+    private int numOfLines = 10;
+    private Image[] mainImageArray;
+    private Image[] mainBorderArray;
+    private TextMeshProUGUI[] mainTextArray;
+    //hardwired tabs at top -> 6
+    private int numOfTabs = 6;
+    private Image[] tabActiveArray;
+    private Image[] tabPassiveArray;
+    //data sets (one per tab)
+    private Dictionary<int, List<String>> dictOfData;                   //cached data, one entry for each page for current turn
+    List<string> listOfCurrentData;                                     //current data for currently displayed page
 
     private static MainInfoUI mainInfoUI;
     
@@ -77,6 +109,14 @@ public class MainInfoUI : MonoBehaviour
 
     private void Awake()
     {
+        //collections
+        mainImageArray = new Image[numOfLines];
+        mainBorderArray = new Image[numOfLines];
+        mainTextArray = new TextMeshProUGUI[numOfLines];
+        tabActiveArray = new Image[numOfTabs];
+        tabPassiveArray = new Image[numOfTabs];
+        dictOfData = new Dictionary<int, List<String>>();
+        listOfCurrentData = new List<string>();
         //close button event
         buttonInteractionClose = buttonClose.GetComponent<ButtonInteraction>();
         if (buttonInteractionClose != null)
@@ -143,6 +183,32 @@ public class MainInfoUI : MonoBehaviour
         mainTextArray[7] = main_text_7;
         mainTextArray[8] = main_text_8;
         mainTextArray[9] = main_text_9;
+        //active tab array
+        Debug.Assert(tab_active_0 != null, "Invalid tab_active_0 (Null)");
+        Debug.Assert(tab_active_1 != null, "Invalid tab_active_1 (Null)");
+        Debug.Assert(tab_active_2 != null, "Invalid tab_active_2 (Null)");
+        Debug.Assert(tab_active_3 != null, "Invalid tab_active_3 (Null)");
+        Debug.Assert(tab_active_4 != null, "Invalid tab_active_4 (Null)");
+        Debug.Assert(tab_active_5 != null, "Invalid tab_active_5 (Null)");
+        tabActiveArray[0] = tab_active_0;
+        tabActiveArray[1] = tab_active_1;
+        tabActiveArray[2] = tab_active_2;
+        tabActiveArray[3] = tab_active_3;
+        tabActiveArray[4] = tab_active_4;
+        tabActiveArray[5] = tab_active_5;
+        //passive tab array
+        Debug.Assert(tab_passive_0 != null, "Invalid tab_passive_0 (Null)");
+        Debug.Assert(tab_passive_1 != null, "Invalid tab_passive_1 (Null)");
+        Debug.Assert(tab_passive_2 != null, "Invalid tab_passive_2 (Null)");
+        Debug.Assert(tab_passive_3 != null, "Invalid tab_passive_3 (Null)");
+        Debug.Assert(tab_passive_4 != null, "Invalid tab_passive_4 (Null)");
+        Debug.Assert(tab_passive_5 != null, "Invalid tab_passive_5 (Null)");
+        tabPassiveArray[0] = tab_passive_0;
+        tabPassiveArray[1] = tab_passive_1;
+        tabPassiveArray[2] = tab_passive_2;
+        tabPassiveArray[3] = tab_passive_3;
+        tabPassiveArray[4] = tab_passive_4;
+        tabPassiveArray[5] = tab_passive_5;
     }
 
     public void Start()
@@ -151,10 +217,25 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
     }
 
     public void Initialise()
-    { }
+    {
+        //initiliase Active tabs
+        for (int index = 0; index < tabActiveArray.Length; index++)
+        {
+            //deactivate Active tabs except default first one
+            if (index == 0)
+            { tabActiveArray[index].gameObject.SetActive(true); }
+            else { tabActiveArray[index].gameObject.SetActive(false); }
+            //initialise tabIndex fields for Passive Tabs
+            MainInfoRightTabUI tab = tabPassiveArray[index].GetComponent<MainInfoRightTabUI>();
+            if (tab != null)
+            { tab.SetTabIndex(index); }
+            else { Debug.LogWarningFormat("Invalid MainInfoRightTabUI component (Null) for tabActiveArray[{0}]", index); }
+        }
+    }
 
     /// <summary>
     /// Event handler
@@ -177,6 +258,9 @@ public class MainInfoUI : MonoBehaviour
             case EventType.MainInfoClose:
                 CloseMainInfo();
                 break;
+            case EventType.MainInfoTabOpen:
+                OpenTab((int)Param);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -198,50 +282,15 @@ public class MainInfoUI : MonoBehaviour
             GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
+
             //
             // - - - Populate data
             //
-            
-            if (data.listOfMainText != null)
-            {
-                int numOfMessages = data.listOfMainText.Count;
-                if (numOfMessages > 0)
-                {
-                    //populate current messages for the main tab
-                    for (int index = 0; index < mainTextArray.Length; index++)
-                    {
-                        if (index < numOfMessages)
-                        {
-                            mainImageArray[index].gameObject.SetActive(true);
-                            mainTextArray[index].text = data.listOfMainText[index];
-                            if (index > 0)
-                            { mainBorderArray[index].gameObject.SetActive(true); }
-                        }
-                        else
-                        {
-                            mainTextArray[index].text = "";
-                            mainImageArray[index].gameObject.SetActive(false);
-                            if (index > 0)
-                            { mainBorderArray[index].gameObject.SetActive(false); }
-                        }
-                    }
-                }
-                else
-                {
-                    //no data, blank all items, disable line
-                    if (data.listOfMainText.Count > 0)
-                    {
-                        for (int index = 0; index < mainTextArray.Length; index++)
-                        {
-                            mainTextArray[index].text = "";
-                            mainImageArray[index].gameObject.SetActive(false);
-                            if (index > 0)
-                            { mainBorderArray[index].gameObject.SetActive(false); }
-                        }
-                    }
-                }
-            }
-            else { Debug.LogWarning("Invalid MainInofData.listOfMainText (Null)"); }
+            UpdateData(data);
+            //
+            // - - - Display Main page by default
+            //
+            DisplayPage(0);
             //
             // - - - GUI - - -
             //
@@ -259,6 +308,89 @@ public class MainInfoUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Updates cached data in dictionary
+    /// NOTE: data checked for null by the calling procedure
+    /// </summary>
+    /// <param name="data"></param>
+    private void UpdateData(MainInfoData data)
+    {
+        //clear out dictionary
+        dictOfData.Clear();
+        //populate new data (excludes help)
+        if (data.listOfData_0 != null)
+        { dictOfData.Add(0, data.listOfData_0); }
+        else { Debug.LogWarning("Invaid data.listOfData_0 (Null)"); }
+        if (data.listOfData_1 != null)
+        { dictOfData.Add(1, data.listOfData_1); }
+        else { Debug.LogWarning("Invaid data.listOfData_1 (Null)"); }
+        if (data.listOfData_2 != null)
+        { dictOfData.Add(2, data.listOfData_2); }
+        else { Debug.LogWarning("Invaid data.listOfData_2 (Null)"); }
+        if (data.listOfData_3 != null)
+        { dictOfData.Add(3, data.listOfData_3); }
+        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }
+        if (data.listOfData_4 != null)
+        { dictOfData.Add(4, data.listOfData_4); }
+        else { Debug.LogWarning("Invaid data.listOfData_4 (Null)"); }
+    }
+
+
+    /// <summary>
+    /// sub Method to display a particular page drawing from cached data in dictOfData
+    /// </summary>
+    /// <param name="tab"></param>
+    private void DisplayPage(int tabIndex)
+    {
+        //clear out current dat
+        listOfCurrentData.Clear();
+        //get data
+        if (dictOfData.ContainsKey(tabIndex) == true)
+        { listOfCurrentData.AddRange(dictOfData[tabIndex]); }
+        //display routine
+        if (listOfCurrentData != null)
+        {
+            int numOfItems = listOfCurrentData.Count;
+            if (numOfItems > 0)
+            {
+                //populate current messages for the main tab
+                for (int index = 0; index < mainTextArray.Length; index++)
+                {
+                    if (index < numOfItems)
+                    {
+                        mainImageArray[index].gameObject.SetActive(true);
+                        mainTextArray[index].text = listOfCurrentData[index];
+                        if (index > 0)
+                        { mainBorderArray[index].gameObject.SetActive(true); }
+                    }
+                    else
+                    {
+                        mainTextArray[index].text = "";
+                        mainImageArray[index].gameObject.SetActive(false);
+                        if (index > 0)
+                        { mainBorderArray[index].gameObject.SetActive(false); }
+                    }
+                }
+            }
+            else
+            {
+                //no data, blank all items, disable line
+                if (listOfCurrentData.Count > 0)
+                {
+                    for (int index = 0; index < mainTextArray.Length; index++)
+                    {
+                        mainTextArray[index].text = "";
+                        mainImageArray[index].gameObject.SetActive(false);
+                        if (index > 0)
+                        { mainBorderArray[index].gameObject.SetActive(false); }
+                    }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid MainInofData.listOfMainText (Null)"); }
+    }
+
+
+    /// <summary>
     /// close Main Info display
     /// </summary>
     private void CloseMainInfo()
@@ -269,6 +401,23 @@ public class MainInfoUI : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
+    }
+
+
+    /// <summary>
+    /// Open the designated tab and close whatever is open
+    /// </summary>
+    /// <param name="tabIndex"></param>
+    private void OpenTab(int tabIndex)
+    {
+        //reset Active tabs to reflect new status
+        for (int index = 0; index < tabActiveArray.Length; index++)
+        {
+            //activate indicated tab and deactivate the rest
+            if (index == tabIndex)
+            { tabActiveArray[index].gameObject.SetActive(true); }
+            else  { tabActiveArray[index].gameObject.SetActive(false); }
+        }
     }
 
 

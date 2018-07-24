@@ -220,12 +220,19 @@ namespace packageAPI
     /// </summary>
     public class MainInfoData
     {
-        public List<string> listOfMainText;         //list of strings (one per line) for main tab
-
+        public List<string> listOfData_0;         //list of strings (one per line) for main tab
+        public List<string> listOfData_1;         //list of strings (one per line) for HQ tab
+        public List<string> listOfData_2;         //list of strings (one per line) for People tab
+        public List<string> listOfData_3;         //list of strings (one per line) for Random tab
+        public List<string> listOfData_4;         //list of strings (one per line) for Summary tab
 
         public MainInfoData()
         {
-            listOfMainText = new List<string>();
+            listOfData_0 = new List<string>();
+            listOfData_1 = new List<string>();
+            listOfData_2 = new List<string>();
+            listOfData_3 = new List<string>();
+            listOfData_4 = new List<string>();
         }
     }
 

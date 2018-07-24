@@ -120,6 +120,7 @@ public enum EventType
     //Main Info
     MainInfoOpen,
     MainInfoClose,
+    MainInfoTabOpen,
     //City Info
     CityInfoOpen,
     CityInfoClose,
