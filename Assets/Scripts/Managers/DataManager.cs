@@ -312,12 +312,10 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid dictOfMessages (Null)"); }
         currentInfoData.listOfData_0.AddRange(listOfMessages);
-        //
-        // - - - archived messages (latest)
-        //
+        //add archived messages at the bottom
         if (listOfArchiveLatestMessages.Count > 0)
         {
-            currentInfoData.listOfData_1.AddRange(listOfArchiveLatestMessages);
+            currentInfoData.listOfData_0.AddRange(listOfArchiveLatestMessages);
             //empty list ready for next set of messages
             listOfArchiveLatestMessages.Clear();
         }
@@ -2672,7 +2670,9 @@ public class DataManager : MonoBehaviour
         {
             case MessageCategory.Archive:
                 dictOfMessages = dictOfArchiveMessages;
-                CheckMessageClearingHouse(message);
+                //exclude public messages (they have already been covered directly by dictOfCurrentMessages) to avoid repetition
+                if (message.isPublic == false)
+                { CheckMessageClearingHouse(message); }
                 break;
             case MessageCategory.Pending:
                 dictOfMessages = dictOfPendingMessages;
@@ -2751,6 +2751,7 @@ public class DataManager : MonoBehaviour
     /// <param name="category"></param>
     private void CheckMessageClearingHouse(Message message)
     {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         switch (message.type)
         {
             case MessageType.GENERAL:
@@ -2762,7 +2763,8 @@ public class DataManager : MonoBehaviour
                 }
                 break;
             default:
-                listOfArchiveLatestMessages.Add(message.text);
+                if (playerSide.level == message.side.level)
+                { listOfArchiveLatestMessages.Add(message.text); }
                 break;
         }
     }

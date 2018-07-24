@@ -23,16 +23,16 @@ public class MainInfoUI : MonoBehaviour
 
     [Header("RHS backgrounds")]
     //main tab -> parent backgrounds
-    public Image main_issue_0;
-    public Image main_issue_1;
-    public Image main_issue_2;
-    public Image main_issue_3;
-    public Image main_issue_4;
-    public Image main_issue_5;
-    public Image main_issue_6;
-    public Image main_issue_7;
-    public Image main_issue_8;
-    public Image main_issue_9;
+    public Image main_item_0;
+    public Image main_item_1;
+    public Image main_item_2;
+    public Image main_item_3;
+    public Image main_item_4;
+    public Image main_item_5;
+    public Image main_item_6;
+    public Image main_item_7;
+    public Image main_item_8;
+    public Image main_item_9;
 
     [Header("RHS texts")]
     //main tab -> text
@@ -77,12 +77,17 @@ public class MainInfoUI : MonoBehaviour
     public Image tab_passive_4;
     public Image tab_passive_5;
 
+    [Header("LHS details")]
+    public TextMeshProUGUI details_text_top;
+    public TextMeshProUGUI details_text_bottom;
+    public Image details_image;
+
     private ButtonInteraction buttonInteractionClose;
 
 
     //hardwired lines in main page -> 10
     private int numOfLines = 10;
-    private Image[] mainImageArray;
+    private Image[] mainItemArray;
     private Image[] mainBorderArray;
     private TextMeshProUGUI[] mainTextArray;
     //hardwired tabs at top -> 6
@@ -114,7 +119,7 @@ public class MainInfoUI : MonoBehaviour
     private void Awake()
     {
         //collections
-        mainImageArray = new Image[numOfLines];
+        mainItemArray = new Image[numOfLines];
         mainBorderArray = new Image[numOfLines];
         mainTextArray = new TextMeshProUGUI[numOfLines];
         tabActiveArray = new Image[numOfTabs];
@@ -127,26 +132,26 @@ public class MainInfoUI : MonoBehaviour
         { buttonInteractionClose.SetEvent(EventType.MainInfoClose); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
         //main background image array
-        Debug.Assert(main_issue_0 != null, "Invalid issue_0 (Null)");
-        Debug.Assert(main_issue_1 != null, "Invalid issue_1 (Null)");
-        Debug.Assert(main_issue_2 != null, "Invalid issue_2 (Null)");
-        Debug.Assert(main_issue_3 != null, "Invalid issue_3 (Null)");
-        Debug.Assert(main_issue_4 != null, "Invalid issue_4 (Null)");
-        Debug.Assert(main_issue_5 != null, "Invalid issue_5 (Null)");
-        Debug.Assert(main_issue_6 != null, "Invalid issue_6 (Null)");
-        Debug.Assert(main_issue_7 != null, "Invalid issue_7 (Null)");
-        Debug.Assert(main_issue_8 != null, "Invalid issue_8 (Null)");
-        Debug.Assert(main_issue_9 != null, "Invalid issue_9 (Null)");
-        mainImageArray[0] = main_issue_0;
-        mainImageArray[1] = main_issue_1;
-        mainImageArray[2] = main_issue_2;
-        mainImageArray[3] = main_issue_3;
-        mainImageArray[4] = main_issue_4;
-        mainImageArray[5] = main_issue_5;
-        mainImageArray[6] = main_issue_6;
-        mainImageArray[7] = main_issue_7;
-        mainImageArray[8] = main_issue_8;
-        mainImageArray[9] = main_issue_9;
+        Debug.Assert(main_item_0 != null, "Invalid item_0 (Null)");
+        Debug.Assert(main_item_1 != null, "Invalid item_1 (Null)");
+        Debug.Assert(main_item_2 != null, "Invalid item_2 (Null)");
+        Debug.Assert(main_item_3 != null, "Invalid item_3 (Null)");
+        Debug.Assert(main_item_4 != null, "Invalid item_4 (Null)");
+        Debug.Assert(main_item_5 != null, "Invalid item_5 (Null)");
+        Debug.Assert(main_item_6 != null, "Invalid item_6 (Null)");
+        Debug.Assert(main_item_7 != null, "Invalid item_7 (Null)");
+        Debug.Assert(main_item_8 != null, "Invalid item_8 (Null)");
+        Debug.Assert(main_item_9 != null, "Invalid item_9 (Null)");
+        mainItemArray[0] = main_item_0;
+        mainItemArray[1] = main_item_1;
+        mainItemArray[2] = main_item_2;
+        mainItemArray[3] = main_item_3;
+        mainItemArray[4] = main_item_4;
+        mainItemArray[5] = main_item_5;
+        mainItemArray[6] = main_item_6;
+        mainItemArray[7] = main_item_7;
+        mainItemArray[8] = main_item_8;
+        mainItemArray[9] = main_item_9;
         //main border image array
         Debug.Assert(main_border_1 != null, "Invalid main_border_1 (Null)");
         Debug.Assert(main_border_2 != null, "Invalid main_border_2 (Null)");
@@ -222,6 +227,7 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoShowDetails, OnEvent, "MainInfoUI");
     }
 
     public void Initialise()
@@ -238,6 +244,14 @@ public class MainInfoUI : MonoBehaviour
             if (tab != null)
             { tab.SetTabIndex(index); }
             else { Debug.LogWarningFormat("Invalid MainInfoRightTabUI component (Null) for tabActiveArray[{0}]", index); }
+        }
+        //initialise item fields
+        for (int index = 0; index < mainItemArray.Length; index++)
+        {
+            MainInfoRightItemUI item = mainItemArray[index].GetComponent<MainInfoRightItemUI>();
+            if (item != null)
+            { item.SetItemIndex(index); }
+            else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for mainItemArray[{0}]", index); }
         }
     }
 
@@ -264,6 +278,9 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case EventType.MainInfoTabOpen:
                 OpenTab((int)Param);
+                break;
+            case EventType.MainInfoShowDetails:
+                ShowDetails((int)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -362,7 +379,7 @@ public class MainInfoUI : MonoBehaviour
                 {
                     if (index < numOfItems)
                     {
-                        mainImageArray[index].gameObject.SetActive(true);
+                        mainItemArray[index].gameObject.SetActive(true);
                         mainTextArray[index].text = listOfCurrentPageData[index];
                         if (index > 0)
                         { mainBorderArray[index].gameObject.SetActive(true); }
@@ -370,7 +387,7 @@ public class MainInfoUI : MonoBehaviour
                     else
                     {
                         mainTextArray[index].text = "";
-                        mainImageArray[index].gameObject.SetActive(false);
+                        mainItemArray[index].gameObject.SetActive(false);
                         if (index > 0)
                         { mainBorderArray[index].gameObject.SetActive(false); }
                     }
@@ -384,7 +401,7 @@ public class MainInfoUI : MonoBehaviour
                     for (int index = 0; index < mainTextArray.Length; index++)
                     {
                         mainTextArray[index].text = "";
-                        mainImageArray[index].gameObject.SetActive(false);
+                        mainItemArray[index].gameObject.SetActive(false);
                         if (index > 0)
                         { mainBorderArray[index].gameObject.SetActive(false); }
                     }
@@ -426,6 +443,17 @@ public class MainInfoUI : MonoBehaviour
             //redrawn main page
             DisplayPage(tabIndex);
         }
+    }
+
+    /// <summary>
+    /// called by clicking on an item on RHS which will then show details of the item on the LHS
+    /// </summary>
+    /// <param name="itemIndex"></param>
+    private void ShowDetails(int itemIndex)
+    {
+        //debug
+        int rnd = UnityEngine.Random.Range(0, 1000);
+        details_text_top.text = string.Format("itemIndex {0}, Random {1}", itemIndex, rnd);
     }
 
 
