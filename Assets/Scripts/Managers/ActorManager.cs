@@ -3980,7 +3980,7 @@ public class ActorManager : MonoBehaviour
                         //message
                         if (String.IsNullOrEmpty(msgText) == false)
                         {
-                            Message message = GameManager.instance.messageScript.ActorStatus(msgText, actor.actorID, side, true);
+                            message = GameManager.instance.messageScript.ActorStatus(msgText, actor.actorID, side, true);
                             GameManager.instance.dataScript.AddMessage(message);
                         }
                     }

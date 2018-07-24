@@ -224,7 +224,7 @@ namespace packageAPI
         public List<string> listOfData_1;         //list of strings (one per line) for HQ tab
         public List<string> listOfData_2;         //list of strings (one per line) for People tab
         public List<string> listOfData_3;         //list of strings (one per line) for Random tab
-        public List<string> listOfData_4;         //list of strings (one per line) for Summary tab
+        public List<string> listOfData_4;         //list of strings (one per line) for Ongoing Effects tab
 
         public MainInfoData()
         {
@@ -233,6 +233,18 @@ namespace packageAPI
             listOfData_2 = new List<string>();
             listOfData_3 = new List<string>();
             listOfData_4 = new List<string>();
+        }
+
+        /// <summary>
+        /// Empties out all data
+        /// </summary>
+        public void Reset()
+        {
+            listOfData_0.Clear();
+            listOfData_1.Clear();
+            listOfData_2.Clear();
+            listOfData_3.Clear();
+            listOfData_4.Clear();
         }
     }
 

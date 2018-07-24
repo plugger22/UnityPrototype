@@ -15,7 +15,11 @@ public class MainInfoUI : MonoBehaviour
 
     public GameObject mainInfoObject;
 
+    [Header("Overall")]
     public Button buttonClose;
+
+    [Header("RHS Miscellanous")]
+    public TextMeshProUGUI page_header;
 
     [Header("RHS backgrounds")]
     //main tab -> parent backgrounds
@@ -87,7 +91,7 @@ public class MainInfoUI : MonoBehaviour
     private Image[] tabPassiveArray;
     //data sets (one per tab)
     private Dictionary<int, List<String>> dictOfData;                   //cached data, one entry for each page for current turn
-    List<string> listOfCurrentData;                                     //current data for currently displayed page
+    List<string> listOfCurrentPageData;                                     //current data for currently displayed page
 
     private static MainInfoUI mainInfoUI;
     
@@ -116,7 +120,7 @@ public class MainInfoUI : MonoBehaviour
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
         dictOfData = new Dictionary<int, List<String>>();
-        listOfCurrentData = new List<string>();
+        listOfCurrentPageData = new List<string>();
         //close button event
         buttonInteractionClose = buttonClose.GetComponent<ButtonInteraction>();
         if (buttonInteractionClose != null)
@@ -290,7 +294,7 @@ public class MainInfoUI : MonoBehaviour
             //
             // - - - Display Main page by default
             //
-            DisplayPage(0);
+            OpenTab(0);
             //
             // - - - GUI - - -
             //
@@ -341,15 +345,16 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="tab"></param>
     private void DisplayPage(int tabIndex)
     {
+        int turn = GameManager.instance.turnScript.Turn;
         //clear out current dat
-        listOfCurrentData.Clear();
+        listOfCurrentPageData.Clear();
         //get data
         if (dictOfData.ContainsKey(tabIndex) == true)
-        { listOfCurrentData.AddRange(dictOfData[tabIndex]); }
+        { listOfCurrentPageData.AddRange(dictOfData[tabIndex]); }
         //display routine
-        if (listOfCurrentData != null)
+        if (listOfCurrentPageData != null)
         {
-            int numOfItems = listOfCurrentData.Count;
+            int numOfItems = listOfCurrentPageData.Count;
             if (numOfItems > 0)
             {
                 //populate current messages for the main tab
@@ -358,7 +363,7 @@ public class MainInfoUI : MonoBehaviour
                     if (index < numOfItems)
                     {
                         mainImageArray[index].gameObject.SetActive(true);
-                        mainTextArray[index].text = listOfCurrentData[index];
+                        mainTextArray[index].text = listOfCurrentPageData[index];
                         if (index > 0)
                         { mainBorderArray[index].gameObject.SetActive(true); }
                     }
@@ -370,12 +375,12 @@ public class MainInfoUI : MonoBehaviour
                         { mainBorderArray[index].gameObject.SetActive(false); }
                     }
                 }
+                //set header
+                page_header.text = string.Format("Day {0}, 2033, there {1} {2} item{3}", turn,  numOfItems != 1 ? "are" : "is", numOfItems, numOfItems != 1 ? "s" : "");
             }
             else
             {
                 //no data, blank all items, disable line
-                if (listOfCurrentData.Count > 0)
-                {
                     for (int index = 0; index < mainTextArray.Length; index++)
                     {
                         mainTextArray[index].text = "";
@@ -383,7 +388,8 @@ public class MainInfoUI : MonoBehaviour
                         if (index > 0)
                         { mainBorderArray[index].gameObject.SetActive(false); }
                     }
-                }
+                //set header
+                page_header.text = string.Format("Day {0}, 2033, there are 0 items", turn);
             }
         }
         else { Debug.LogWarning("Invalid MainInofData.listOfMainText (Null)"); }
@@ -417,6 +423,8 @@ public class MainInfoUI : MonoBehaviour
             if (index == tabIndex)
             { tabActiveArray[index].gameObject.SetActive(true); }
             else  { tabActiveArray[index].gameObject.SetActive(false); }
+            //redrawn main page
+            DisplayPage(tabIndex);
         }
     }
 

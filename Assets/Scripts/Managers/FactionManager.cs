@@ -175,6 +175,7 @@ public class FactionManager : MonoBehaviour
             int rnd = Random.Range(0, 100);
             int threshold;
             Message message = null;
+            Message messageRandom = null;
             switch (side)
             {
                 case 1:
@@ -186,6 +187,9 @@ public class FactionManager : MonoBehaviour
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
                         message = GameManager.instance.messageScript.FactionSupport(msgText, _supportAuthority, GameManager.instance.playerScript.Renown, 1);
+                        //random
+                        string text = string.Format("Faction support GIVEN, need < {0}, rolled {1}",  threshold, rnd);
+                        messageRandom = GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
                         //Support given
                         GameManager.instance.playerScript.Renown++;
                     }
@@ -195,6 +199,9 @@ public class FactionManager : MonoBehaviour
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
                         message = GameManager.instance.messageScript.FactionSupport(msgText, _supportAuthority, GameManager.instance.playerScript.Renown);
+                        //random
+                        string text = string.Format("Faction support DECLINED, need < {0}, rolled {1}", threshold, rnd);
+                        messageRandom = GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
                     }
                     break;
                 case 2:
@@ -206,6 +213,9 @@ public class FactionManager : MonoBehaviour
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
                         message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown, 1);
+                        //random
+                        string text = string.Format("Faction support GIVEN, need < {0}, rolled {1}", threshold, rnd);
+                        messageRandom = GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
                         //Support given
                         GameManager.instance.playerScript.Renown++;
                     }
@@ -215,6 +225,9 @@ public class FactionManager : MonoBehaviour
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
                         message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown);
+                        //random
+                        string text = string.Format("Faction support DECLINED, need < {0}, rolled {1}", threshold, rnd);
+                        messageRandom = GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
                     }
                     break;
                 default:
@@ -223,6 +236,8 @@ public class FactionManager : MonoBehaviour
             }
             if  (message != null)
             { GameManager.instance.dataScript.AddMessage(message); }
+            if (messageRandom != null)
+            { GameManager.instance.dataScript.AddMessage(messageRandom);}
         }
     }
 

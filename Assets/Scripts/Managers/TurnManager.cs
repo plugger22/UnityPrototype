@@ -310,26 +310,10 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public void InitialiseInfoApp(GlobalSide playerSide)
     {
+
         MainInfoData data = new MainInfoData();
-        //get current messages
-        Dictionary<int, Message> dictOfMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
-        List<string> listOfMessages = new List<string>();
-        if (dictOfMessages != null)
-        {
-            //populate current messages to pass to info app for display
-            foreach(var message in dictOfMessages)
-            {
-                if (message.Value != null)
-                {
-                    //player side message
-                    if (message.Value.side.level == playerSide.level)
-                    { listOfMessages.Add(message.Value.text); }
-                }
-                else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", message.Key); }
-            }
-        }
-        else { Debug.LogWarning("Invalid dictOfMessages (Null)"); }
-        data.listOfData_0.AddRange(listOfMessages);
+        data = GameManager.instance.dataScript.UpdateCurrentNotifications();
+
         //turn on info App
         EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn");
     }

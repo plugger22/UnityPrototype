@@ -118,8 +118,14 @@ public class DataManager : MonoBehaviour
     private Queue<AITracker> queueRecentNodes = new Queue<AITracker>();
     private Queue<AITracker> queueRecentConnections = new Queue<AITracker>();
 
+    //Notifications
+    private MainInfoData currentInfoData = new MainInfoData();                                      //rolling current turn MainInfoData package
+    private List<string> listOfRandomLatestMessages = new List<string>();                                 //all latest random messages
+    private List<string> listOfArchiveLatestMessages = new List<string>();                                //all latest archived messages
+
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
+    
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
@@ -271,6 +277,67 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void UpdateActorNodes()
     { listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.sideScript.PlayerSide);}
+
+    //
+    // - - - Info Flow (Notifications)- - - 
+    //
+
+    /// <summary>
+    /// Master method to update current MainInfoData package with all relevant data and to send it to calling method in TurnManager.cs & archive in dictionaryOfNotifications
+    /// </summary>
+    /// <returns></returns>
+    public MainInfoData UpdateCurrentNotifications()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //empty out data package prior to updating
+        currentInfoData.Reset();
+        //
+        // - - - current messages - - - 
+        //
+        Dictionary<int, Message> dictOfMessages = GetMessageDict(MessageCategory.Current);
+        List<string> listOfMessages = new List<string>();
+        if (dictOfMessages != null)
+        {
+            //populate current messages to pass to info app for display
+            foreach (var message in dictOfMessages)
+            {
+                if (message.Value != null)
+                {
+                    //player side message
+                    if (message.Value.side.level == playerSide.level)
+                    { listOfMessages.Add(message.Value.text); }
+                }
+                else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", message.Key); }
+            }
+        }
+        else { Debug.LogWarning("Invalid dictOfMessages (Null)"); }
+        currentInfoData.listOfData_0.AddRange(listOfMessages);
+        //
+        // - - - archived messages (latest)
+        //
+        if (listOfArchiveLatestMessages.Count > 0)
+        {
+            currentInfoData.listOfData_1.AddRange(listOfArchiveLatestMessages);
+            //empty list ready for next set of messages
+            listOfArchiveLatestMessages.Clear();
+        }
+        //
+        // - - - random messages (latest) - - -
+        //
+        if (listOfRandomLatestMessages.Count > 0)
+        {
+            currentInfoData.listOfData_3.AddRange(listOfRandomLatestMessages);
+            //empty list ready for next set of messages
+            listOfRandomLatestMessages.Clear();
+        }
+
+        //
+        // - - - archive data - - -
+        //
+
+        //send package to TurnManager.cs -> InitialiseInfoApp
+        return currentInfoData;
+    }
 
     //
     // - - - NodeArcs - - -
@@ -2605,6 +2672,7 @@ public class DataManager : MonoBehaviour
         {
             case MessageCategory.Archive:
                 dictOfMessages = dictOfArchiveMessages;
+                CheckMessageClearingHouse(message);
                 break;
             case MessageCategory.Pending:
                 dictOfMessages = dictOfPendingMessages;
@@ -2674,6 +2742,29 @@ public class DataManager : MonoBehaviour
             else { successFlag = false; }
         }
         return successFlag;
+    }
+
+    /// <summary>
+    /// checks incoming messages (into Archives) to see if they need to be hived off (copied) to a separate list for InfoApp display
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="category"></param>
+    private void CheckMessageClearingHouse(Message message)
+    {
+        switch (message.type)
+        {
+            case MessageType.GENERAL:
+                switch(message.subType)
+                {
+                    case MessageSubType.General_Random:
+                        listOfRandomLatestMessages.Add(message.text);
+                        break;
+                }
+                break;
+            default:
+                listOfArchiveLatestMessages.Add(message.text);
+                break;
+        }
     }
 
     /// <summary>
