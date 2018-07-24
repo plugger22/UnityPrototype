@@ -161,7 +161,29 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-
+    /// <summary>
+    /// Random roll results (only ones that matter, don't spam). Auto player side.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="numNeeded"></param>
+    /// <param name="numRolled"></param>
+    /// <returns></returns>
+    public Message GeneralRandom(string text, int numNeeded, int numRolled)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GENERAL;
+            message.subType = MessageSubType.General_Random;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = numNeeded;
+            message.data1 = numRolled;
+            return message;
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
 
     //
     // - - - Player - - -
