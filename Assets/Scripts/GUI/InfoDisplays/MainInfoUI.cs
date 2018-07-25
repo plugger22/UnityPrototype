@@ -85,6 +85,7 @@ public class MainInfoUI : MonoBehaviour
     private ButtonInteraction buttonInteractionClose;
 
 
+    private int highlightIndex = -1;                                 //item index of currently highlighted item
     //hardwired lines in main page -> 10
     private int numOfLines = 10;
     private Image[] mainItemArray;
@@ -98,6 +99,21 @@ public class MainInfoUI : MonoBehaviour
     private Dictionary<int, List<String>> dictOfData;                   //cached data, one entry for each page for current turn
     List<string> listOfCurrentPageData;                                     //current data for currently displayed page
 
+    //colours
+    string colourDefault;
+    string colourHighlight;
+    /*string colourNormal;
+    string colourAlert;
+    string colourHighlight;
+    string colourResistance;
+    string colourBad;
+    string colourGood;
+    string colourError;
+    string colourInvalid;
+    string colourCancel;*/
+    string colourEnd;
+
+    //static reference
     private static MainInfoUI mainInfoUI;
     
 
@@ -224,6 +240,7 @@ public class MainInfoUI : MonoBehaviour
     {
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
@@ -266,6 +283,9 @@ public class MainInfoUI : MonoBehaviour
         //Detect event type
         switch (eventType)
         {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             case EventType.ChangeSide:
                 ChangeSides((GlobalSide)Param);
                 break;
@@ -288,7 +308,24 @@ public class MainInfoUI : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Set colour palette for tooltip
+    /// </summary>
+    public void SetColours()
+    {
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);*/
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
 
 
     /// <summary>
@@ -440,8 +477,13 @@ public class MainInfoUI : MonoBehaviour
             if (index == tabIndex)
             { tabActiveArray[index].gameObject.SetActive(true); }
             else  { tabActiveArray[index].gameObject.SetActive(false); }
+            //blank LHS
+            details_text_top.text = "";
+            details_text_bottom.text = "";
             //redrawn main page
             DisplayPage(tabIndex);
+            //reset highlightIndex to default
+            highlightIndex = -1;
         }
     }
 
@@ -454,6 +496,16 @@ public class MainInfoUI : MonoBehaviour
         //debug
         int rnd = UnityEngine.Random.Range(0, 1000);
         details_text_top.text = string.Format("itemIndex {0}, Random {1}", itemIndex, rnd);
+        //remove highlight
+        if (highlightIndex != itemIndex)
+        {
+            //reset currently highlighted back to default
+            if (highlightIndex > -1)
+            { mainTextArray[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageData[itemIndex], colourEnd); }
+            highlightIndex = itemIndex;
+            //highlight item -> show as yellow
+            mainTextArray[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
+        }
     }
 
 
