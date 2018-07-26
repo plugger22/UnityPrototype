@@ -1,11 +1,10 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using packageAPI;
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using gameAPI;
-using packageAPI;
-using TMPro;
-using System;
 
 /// <summary>
 /// handles the main info App
@@ -23,26 +22,26 @@ public class MainInfoUI : MonoBehaviour
 
     [Header("RHS Items")]
     //main tab -> parent backgrounds (full set of twenty, only a max of 10 shown at a time)
-    public Image main_item_0;
-    public Image main_item_1;
-    public Image main_item_2;
-    public Image main_item_3;
-    public Image main_item_4;
-    public Image main_item_5;
-    public Image main_item_6;
-    public Image main_item_7;
-    public Image main_item_8;
-    public Image main_item_9;
-    public Image main_item_10;
-    public Image main_item_11;
-    public Image main_item_12;
-    public Image main_item_13;
-    public Image main_item_14;
-    public Image main_item_15;
-    public Image main_item_16;
-    public Image main_item_17;
-    public Image main_item_18;
-    public Image main_item_19;
+    public GameObject main_item_0;
+    public GameObject main_item_1;
+    public GameObject main_item_2;
+    public GameObject main_item_3;
+    public GameObject main_item_4;
+    public GameObject main_item_5;
+    public GameObject main_item_6;
+    public GameObject main_item_7;
+    public GameObject main_item_8;
+    public GameObject main_item_9;
+    public GameObject main_item_10;
+    public GameObject main_item_11;
+    public GameObject main_item_12;
+    public GameObject main_item_13;
+    public GameObject main_item_14;
+    public GameObject main_item_15;
+    public GameObject main_item_16;
+    public GameObject main_item_17;
+    public GameObject main_item_18;
+    public GameObject main_item_19;
 
     /*[Header("RHS texts")]
     //main tab -> text
@@ -97,12 +96,13 @@ public class MainInfoUI : MonoBehaviour
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     //hardwired Max number of items -> 20
-    private int numOfItemsMax = 20;
+    private int numOfItemsTotal = 20;
     //hardwired visible items in main page -> 10
     private int numOfVisibleItems = 10;
-    private Image[] arrayItemMain;
+    private GameObject[] arrayItemMain;
     private Image[] arrayItemIcon;
     private Image[] arrayItemBorder;
+    private Image[] arrayItemBackground;
     private TextMeshProUGUI[] arrayItemText;
     //hardwired tabs at top -> 6
     private int numOfTabs = 6;
@@ -148,10 +148,11 @@ public class MainInfoUI : MonoBehaviour
     private void Awake()
     {
         //collections
-        arrayItemMain = new Image[numOfItemsMax];
-        arrayItemIcon = new Image[numOfItemsMax];
-        arrayItemBorder = new Image[numOfItemsMax];
-        arrayItemText = new TextMeshProUGUI[numOfItemsMax];
+        arrayItemMain = new GameObject[numOfItemsTotal];
+        arrayItemIcon = new Image[numOfItemsTotal];
+        arrayItemBorder = new Image[numOfItemsTotal];
+        arrayItemBackground = new Image[numOfItemsTotal];
+        arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
         dictOfData = new Dictionary<int, List<String>>();
@@ -256,29 +257,60 @@ public class MainInfoUI : MonoBehaviour
             { tab.SetTabIndex(index); }
             else { Debug.LogWarningFormat("Invalid MainInfoRightTabUI component (Null) for tabActiveArray[{0}]", index); }
         }
-        //initialise item components
+        //initialise items & populate arrays
         for (int index = 0; index < arrayItemMain.Length; index++)
         {
-            //attached interaction script
-            MainInfoRightItemUI itemScript = arrayItemMain[index].GetComponent<MainInfoRightItemUI>();
-            if (itemScript != null)
-            { itemScript.SetItemIndex(index); }
-            else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for mainItemArray[{0}]", index); }
-            //text
-            TextMeshProUGUI itemText = arrayItemMain[index].GetComponent<TextMeshProUGUI>();
-            if (itemText != null)
-            { arrayItemText[index] = itemText; }
-            else { Debug.LogWarningFormat("Invalid TextMeshProUGUI component (Null) for mainItemArray[{0}]", index); }
-            //icon
-            Image itemIcon = arrayItemMain[index].GetComponent<Image>();
-            if (itemIcon != null)
-            { arrayItemIcon[index] = itemIcon; }
-            else { Debug.LogWarningFormat("Invalid Image Icon component (Null) for mainItemArray[{0}]", index); }
-            //border
-            Image itemBorder = arrayItemBorder[index].GetComponent<Image>();
-            if (itemBorder != null)
-            { arrayItemBorder[index] = itemBorder; }
-            else { Debug.LogWarningFormat("Invalid Image Border component (Null) for mainItemArray[{0}]", index); }
+            GameObject itemObject = arrayItemMain[index];
+            if (itemObject != null)
+            {
+                //get child components -> Image
+                var childrenImage = itemObject.GetComponentsInChildren<Image>();
+                foreach (var child in childrenImage)
+                {
+                    if (child.name.Equals("background") == true)
+                    {
+                        arrayItemBackground[index] = child;
+                        //attached interaction script
+                        MainInfoRightItemUI itemScript = child.GetComponent<MainInfoRightItemUI>();
+                        if (itemScript != null)
+                        { itemScript.SetItemIndex(index); }
+                        else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for mainItemArray[{0}]", index); }
+                    }
+                    else if (child.name.Equals("icon") == true)
+                    { arrayItemIcon[index] = child; }
+                    else if (child.name.Equals("border") == true)
+                    { arrayItemBorder[index] = child; }
+                }
+                //child components -> Text
+                var childrenText = itemObject.GetComponentsInChildren<TextMeshProUGUI>();
+                foreach (var child in childrenText)
+                {
+                    if (child.name.Equals("text") == true)
+                    {
+                        TextMeshProUGUI itemText = child.GetComponent<TextMeshProUGUI>();
+                        if (itemText != null)
+                        { arrayItemText[index] = itemText; }
+                        else { Debug.LogWarningFormat("Invalid TextMeshProUGUI component (Null) for mainItemArray[{0}]", index); }
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid GameObject (Null) for mainItemArray[{0}]", index); }
+        }
+        //Set starting Initialisation states
+        InitialiseItems();
+    }
+
+    private void InitialiseItems()
+    {
+        for (int index = 0; index < numOfItemsTotal; index++)
+        {
+            //main game objects off
+            arrayItemMain[index].SetActive(false);
+            //all other child objects on
+            arrayItemIcon[index].gameObject.SetActive(true);
+            arrayItemText[index].gameObject.SetActive(true);
+            arrayItemBorder[index].gameObject.SetActive(true);
+            arrayItemBackground[index].gameObject.SetActive(true);
         }
     }
 
