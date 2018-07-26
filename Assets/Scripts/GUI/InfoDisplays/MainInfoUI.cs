@@ -21,8 +21,8 @@ public class MainInfoUI : MonoBehaviour
     [Header("RHS Miscellanous")]
     public TextMeshProUGUI page_header;
 
-    [Header("RHS backgrounds")]
-    //main tab -> parent backgrounds
+    [Header("RHS Items")]
+    //main tab -> parent backgrounds (full set of twenty, only a max of 10 shown at a time)
     public Image main_item_0;
     public Image main_item_1;
     public Image main_item_2;
@@ -33,8 +33,18 @@ public class MainInfoUI : MonoBehaviour
     public Image main_item_7;
     public Image main_item_8;
     public Image main_item_9;
+    public Image main_item_10;
+    public Image main_item_11;
+    public Image main_item_12;
+    public Image main_item_13;
+    public Image main_item_14;
+    public Image main_item_15;
+    public Image main_item_16;
+    public Image main_item_17;
+    public Image main_item_18;
+    public Image main_item_19;
 
-    [Header("RHS texts")]
+    /*[Header("RHS texts")]
     //main tab -> text
     public TextMeshProUGUI main_text_0;
     public TextMeshProUGUI main_text_1;
@@ -57,7 +67,7 @@ public class MainInfoUI : MonoBehaviour
     public Image main_border_6;
     public Image main_border_7;
     public Image main_border_8;
-    public Image main_border_9;
+    public Image main_border_9;*/
 
     [Header("RHS Active tabs")]
     //page tabs -> active
@@ -86,11 +96,14 @@ public class MainInfoUI : MonoBehaviour
 
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
-    //hardwired lines in main page -> 10
-    private int numOfLines = 10;
-    private Image[] mainItemArray;
-    private Image[] mainBorderArray;
-    private TextMeshProUGUI[] mainTextArray;
+    //hardwired Max number of items -> 20
+    private int numOfItemsMax = 20;
+    //hardwired visible items in main page -> 10
+    private int numOfVisibleItems = 10;
+    private Image[] arrayItemMain;
+    private Image[] arrayItemIcon;
+    private Image[] arrayItemBorder;
+    private TextMeshProUGUI[] arrayItemText;
     //hardwired tabs at top -> 6
     private int numOfTabs = 6;
     private Image[] tabActiveArray;
@@ -135,9 +148,10 @@ public class MainInfoUI : MonoBehaviour
     private void Awake()
     {
         //collections
-        mainItemArray = new Image[numOfLines];
-        mainBorderArray = new Image[numOfLines];
-        mainTextArray = new TextMeshProUGUI[numOfLines];
+        arrayItemMain = new Image[numOfItemsMax];
+        arrayItemIcon = new Image[numOfItemsMax];
+        arrayItemBorder = new Image[numOfItemsMax];
+        arrayItemText = new TextMeshProUGUI[numOfItemsMax];
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
         dictOfData = new Dictionary<int, List<String>>();
@@ -158,56 +172,36 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(main_item_7 != null, "Invalid item_7 (Null)");
         Debug.Assert(main_item_8 != null, "Invalid item_8 (Null)");
         Debug.Assert(main_item_9 != null, "Invalid item_9 (Null)");
-        mainItemArray[0] = main_item_0;
-        mainItemArray[1] = main_item_1;
-        mainItemArray[2] = main_item_2;
-        mainItemArray[3] = main_item_3;
-        mainItemArray[4] = main_item_4;
-        mainItemArray[5] = main_item_5;
-        mainItemArray[6] = main_item_6;
-        mainItemArray[7] = main_item_7;
-        mainItemArray[8] = main_item_8;
-        mainItemArray[9] = main_item_9;
-        //main border image array
-        Debug.Assert(main_border_1 != null, "Invalid main_border_1 (Null)");
-        Debug.Assert(main_border_2 != null, "Invalid main_border_2 (Null)");
-        Debug.Assert(main_border_3 != null, "Invalid main_border_3 (Null)");
-        Debug.Assert(main_border_4 != null, "Invalid main_border_4 (Null)");
-        Debug.Assert(main_border_5 != null, "Invalid main_border_5 (Null)");
-        Debug.Assert(main_border_6 != null, "Invalid main_border_6 (Null)");
-        Debug.Assert(main_border_7 != null, "Invalid main_border_7 (Null)");
-        Debug.Assert(main_border_8 != null, "Invalid main_border_8 (Null)");
-        Debug.Assert(main_border_9 != null, "Invalid main_border_9 (Null)");
-        mainBorderArray[1] = main_border_1;
-        mainBorderArray[2] = main_border_2;
-        mainBorderArray[3] = main_border_3;
-        mainBorderArray[4] = main_border_4;
-        mainBorderArray[5] = main_border_5;
-        mainBorderArray[6] = main_border_6;
-        mainBorderArray[7] = main_border_7;
-        mainBorderArray[8] = main_border_8;
-        mainBorderArray[9] = main_border_9;
-        //main text array
-        Debug.Assert(main_text_0 != null, "Invalid text_0 (Null)");
-        Debug.Assert(main_text_1 != null, "Invalid text_1 (Null)");
-        Debug.Assert(main_text_2 != null, "Invalid text_2 (Null)");
-        Debug.Assert(main_text_3 != null, "Invalid text_3 (Null)");
-        Debug.Assert(main_text_4 != null, "Invalid text_4 (Null)");
-        Debug.Assert(main_text_5 != null, "Invalid text_5 (Null)");
-        Debug.Assert(main_text_6 != null, "Invalid text_6 (Null)");
-        Debug.Assert(main_text_7 != null, "Invalid text_7 (Null)");
-        Debug.Assert(main_text_8 != null, "Invalid text_8 (Null)");
-        Debug.Assert(main_text_9 != null, "Invalid text_9 (Null)");
-        mainTextArray[0] = main_text_0;
-        mainTextArray[1] = main_text_1;
-        mainTextArray[2] = main_text_2;
-        mainTextArray[3] = main_text_3;
-        mainTextArray[4] = main_text_4;
-        mainTextArray[5] = main_text_5;
-        mainTextArray[6] = main_text_6;
-        mainTextArray[7] = main_text_7;
-        mainTextArray[8] = main_text_8;
-        mainTextArray[9] = main_text_9;
+        Debug.Assert(main_item_10 != null, "Invalid item_0 (Null)");
+        Debug.Assert(main_item_11 != null, "Invalid item_1 (Null)");
+        Debug.Assert(main_item_12 != null, "Invalid item_2 (Null)");
+        Debug.Assert(main_item_13 != null, "Invalid item_3 (Null)");
+        Debug.Assert(main_item_14 != null, "Invalid item_4 (Null)");
+        Debug.Assert(main_item_15 != null, "Invalid item_5 (Null)");
+        Debug.Assert(main_item_16 != null, "Invalid item_6 (Null)");
+        Debug.Assert(main_item_17 != null, "Invalid item_7 (Null)");
+        Debug.Assert(main_item_18 != null, "Invalid item_8 (Null)");
+        Debug.Assert(main_item_19 != null, "Invalid item_9 (Null)");
+        arrayItemMain[0] = main_item_0;
+        arrayItemMain[1] = main_item_1;
+        arrayItemMain[2] = main_item_2;
+        arrayItemMain[3] = main_item_3;
+        arrayItemMain[4] = main_item_4;
+        arrayItemMain[5] = main_item_5;
+        arrayItemMain[6] = main_item_6;
+        arrayItemMain[7] = main_item_7;
+        arrayItemMain[8] = main_item_8;
+        arrayItemMain[9] = main_item_9;
+        arrayItemMain[10] = main_item_10;
+        arrayItemMain[11] = main_item_11;
+        arrayItemMain[12] = main_item_12;
+        arrayItemMain[13] = main_item_13;
+        arrayItemMain[14] = main_item_14;
+        arrayItemMain[15] = main_item_15;
+        arrayItemMain[16] = main_item_16;
+        arrayItemMain[17] = main_item_17;
+        arrayItemMain[18] = main_item_18;
+        arrayItemMain[19] = main_item_19;
         //active tab array
         Debug.Assert(tab_active_0 != null, "Invalid tab_active_0 (Null)");
         Debug.Assert(tab_active_1 != null, "Invalid tab_active_1 (Null)");
@@ -262,13 +256,29 @@ public class MainInfoUI : MonoBehaviour
             { tab.SetTabIndex(index); }
             else { Debug.LogWarningFormat("Invalid MainInfoRightTabUI component (Null) for tabActiveArray[{0}]", index); }
         }
-        //initialise item fields
-        for (int index = 0; index < mainItemArray.Length; index++)
+        //initialise item components
+        for (int index = 0; index < arrayItemMain.Length; index++)
         {
-            MainInfoRightItemUI item = mainItemArray[index].GetComponent<MainInfoRightItemUI>();
-            if (item != null)
-            { item.SetItemIndex(index); }
+            //attached interaction script
+            MainInfoRightItemUI itemScript = arrayItemMain[index].GetComponent<MainInfoRightItemUI>();
+            if (itemScript != null)
+            { itemScript.SetItemIndex(index); }
             else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for mainItemArray[{0}]", index); }
+            //text
+            TextMeshProUGUI itemText = arrayItemMain[index].GetComponent<TextMeshProUGUI>();
+            if (itemText != null)
+            { arrayItemText[index] = itemText; }
+            else { Debug.LogWarningFormat("Invalid TextMeshProUGUI component (Null) for mainItemArray[{0}]", index); }
+            //icon
+            Image itemIcon = arrayItemMain[index].GetComponent<Image>();
+            if (itemIcon != null)
+            { arrayItemIcon[index] = itemIcon; }
+            else { Debug.LogWarningFormat("Invalid Image Icon component (Null) for mainItemArray[{0}]", index); }
+            //border
+            Image itemBorder = arrayItemBorder[index].GetComponent<Image>();
+            if (itemBorder != null)
+            { arrayItemBorder[index] = itemBorder; }
+            else { Debug.LogWarningFormat("Invalid Image Border component (Null) for mainItemArray[{0}]", index); }
         }
     }
 
@@ -412,21 +422,21 @@ public class MainInfoUI : MonoBehaviour
             if (numOfItems > 0)
             {
                 //populate current messages for the main tab
-                for (int index = 0; index < mainTextArray.Length; index++)
+                for (int index = 0; index < arrayItemText.Length; index++)
                 {
                     if (index < numOfItems)
                     {
-                        mainItemArray[index].gameObject.SetActive(true);
-                        mainTextArray[index].text = listOfCurrentPageData[index];
+                        arrayItemMain[index].gameObject.SetActive(true);
+                        arrayItemText[index].text = listOfCurrentPageData[index];
                         if (index > 0)
-                        { mainBorderArray[index].gameObject.SetActive(true); }
+                        { arrayItemBorder[index].gameObject.SetActive(true); }
                     }
                     else
                     {
-                        mainTextArray[index].text = "";
-                        mainItemArray[index].gameObject.SetActive(false);
+                        arrayItemText[index].text = "";
+                        arrayItemMain[index].gameObject.SetActive(false);
                         if (index > 0)
-                        { mainBorderArray[index].gameObject.SetActive(false); }
+                        { arrayItemBorder[index].gameObject.SetActive(false); }
                     }
                 }
                 //set header
@@ -435,12 +445,12 @@ public class MainInfoUI : MonoBehaviour
             else
             {
                 //no data, blank all items, disable line
-                    for (int index = 0; index < mainTextArray.Length; index++)
+                    for (int index = 0; index < arrayItemText.Length; index++)
                     {
-                        mainTextArray[index].text = "";
-                        mainItemArray[index].gameObject.SetActive(false);
+                        arrayItemText[index].text = "";
+                        arrayItemMain[index].gameObject.SetActive(false);
                         if (index > 0)
-                        { mainBorderArray[index].gameObject.SetActive(false); }
+                        { arrayItemBorder[index].gameObject.SetActive(false); }
                     }
                 //set header
                 page_header.text = string.Format("Day {0}, 2033, there are 0 items", turn);
@@ -501,10 +511,10 @@ public class MainInfoUI : MonoBehaviour
         {
             //reset currently highlighted back to default
             if (highlightIndex > -1)
-            { mainTextArray[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageData[itemIndex], colourEnd); }
+            { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageData[itemIndex], colourEnd); }
             highlightIndex = itemIndex;
             //highlight item -> show as yellow
-            mainTextArray[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
+            arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
         }
     }
 
