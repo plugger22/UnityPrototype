@@ -317,7 +317,7 @@ public class CityManager : MonoBehaviour
 
 
         //only check once per turn
-        if (isAtLimit = true && isLoyaltyCheckedThisTurn == false)
+        if (isAtLimit == true && isLoyaltyCheckedThisTurn == false)
         {
             isLoyaltyCheckedThisTurn = true;
             //

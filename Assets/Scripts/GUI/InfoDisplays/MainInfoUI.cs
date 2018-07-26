@@ -19,6 +19,8 @@ public class MainInfoUI : MonoBehaviour
 
     [Header("RHS Miscellanous")]
     public TextMeshProUGUI page_header;
+    public GameObject scrollBar;
+    public GameObject scrollBackground;         //needed to get scrollRect component in order to manually disable scrolling when not needed
 
     [Header("RHS Items")]
     //main tab -> parent backgrounds (full set of twenty, only a max of 10 shown at a time)
@@ -95,15 +97,17 @@ public class MainInfoUI : MonoBehaviour
 
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
-    //hardwired Max number of items -> 20
-    private int numOfItemsTotal = 20;
-    //hardwired visible items in main page -> 10
-    private int numOfVisibleItems = 10;
+    
+    private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 20
+    private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
+    private int numOfItemsCurrent = -1;                              //count of items in current list / page
+    private int numOfMaxItem = -1;                                   // (max) count of items in current list / page
     private GameObject[] arrayItemMain;
     private Image[] arrayItemIcon;
     private Image[] arrayItemBorder;
     private Image[] arrayItemBackground;
     private TextMeshProUGUI[] arrayItemText;
+    private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
     //hardwired tabs at top -> 6
     private int numOfTabs = 6;
     private Image[] tabActiveArray;
@@ -162,6 +166,15 @@ public class MainInfoUI : MonoBehaviour
         if (buttonInteractionClose != null)
         { buttonInteractionClose.SetEvent(EventType.MainInfoClose); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+        //scrollRect
+        if (scrollBackground != null)
+        {
+            scrollRect = scrollBackground.GetComponent<ScrollRect>();
+            Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
+        }
+        else { Debug.LogWarning("Invalid scrollBackground (Null)"); }
+        //scrollBar
+        Debug.Assert(scrollBar != null, "Invalid scrollBar (Null)");
         //main background image array
         Debug.Assert(main_item_0 != null, "Invalid item_0 (Null)");
         Debug.Assert(main_item_1 != null, "Invalid item_1 (Null)");
@@ -382,18 +395,11 @@ public class MainInfoUI : MonoBehaviour
             GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
-
-            //
-            // - - - Populate data
-            //
+            // Populate data
             UpdateData(data);
-            //
-            // - - - Display Main page by default
-            //
+            // Display Main page by default
             OpenTab(0);
-            //
-            // - - - GUI - - -
-            //
+            // GUI
             mainInfoObject.SetActive(true);
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
@@ -450,29 +456,28 @@ public class MainInfoUI : MonoBehaviour
         //display routine
         if (listOfCurrentPageData != null)
         {
-            int numOfItems = listOfCurrentPageData.Count;
-            if (numOfItems > 0)
+            numOfItemsCurrent = listOfCurrentPageData.Count;
+            if (numOfItemsCurrent > 0)
             {
+                //update max number of items
+                numOfMaxItem = numOfItemsCurrent;
                 //populate current messages for the main tab
                 for (int index = 0; index < arrayItemText.Length; index++)
                 {
-                    if (index < numOfItems)
+                    if (index < numOfItemsCurrent)
                     {
-                        arrayItemMain[index].gameObject.SetActive(true);
+                        //populate text and set item to active
                         arrayItemText[index].text = listOfCurrentPageData[index];
-                        if (index > 0)
-                        { arrayItemBorder[index].gameObject.SetActive(true); }
+                        arrayItemMain[index].gameObject.SetActive(true);
                     }
                     else
                     {
                         arrayItemText[index].text = "";
                         arrayItemMain[index].gameObject.SetActive(false);
-                        if (index > 0)
-                        { arrayItemBorder[index].gameObject.SetActive(false); }
                     }
                 }
                 //set header
-                page_header.text = string.Format("Day {0}, 2033, there {1} {2} item{3}", turn,  numOfItems != 1 ? "are" : "is", numOfItems, numOfItems != 1 ? "s" : "");
+                page_header.text = string.Format("Day {0}, 2033, there {1} {2} item{3}", turn,  numOfItemsCurrent != 1 ? "are" : "is", numOfItemsCurrent, numOfItemsCurrent != 1 ? "s" : "");
             }
             else
             {
@@ -481,14 +486,23 @@ public class MainInfoUI : MonoBehaviour
                     {
                         arrayItemText[index].text = "";
                         arrayItemMain[index].gameObject.SetActive(false);
-                        if (index > 0)
-                        { arrayItemBorder[index].gameObject.SetActive(false); }
                     }
                 //set header
                 page_header.text = string.Format("Day {0}, 2033, there are 0 items", turn);
             }
         }
         else { Debug.LogWarning("Invalid MainInofData.listOfMainText (Null)"); }
+        //manually activate / deactivate scrollBar as needed (because you've got daactivated objects in the scroll list the bar shows regardless unless you override here)
+        if (numOfItemsCurrent <= numOfVisibleItems)
+        {
+            //scrollRect.gameObject.SetActive(false);
+            scrollBar.SetActive(false);
+        }
+        else
+        {
+            scrollBar.SetActive(true);
+            //scrollRect.gameObject.SetActive(true);
+        }
     }
 
 
