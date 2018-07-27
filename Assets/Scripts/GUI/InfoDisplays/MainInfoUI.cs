@@ -81,6 +81,7 @@ public class MainInfoUI : MonoBehaviour
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int viewTurnNumber = -1;                                 //turn number of data being viewed
+    private int currentTurn = -1;                                    //cached current turn # (SetMainInfo)
     private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 20
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
@@ -105,6 +106,7 @@ public class MainInfoUI : MonoBehaviour
     //colours
     string colourDefault;
     string colourHighlight;
+    string colourGrey;
     /*string colourNormal;
     string colourAlert;
     string colourHighlight;
@@ -380,6 +382,7 @@ public class MainInfoUI : MonoBehaviour
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
@@ -405,7 +408,8 @@ public class MainInfoUI : MonoBehaviour
             GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
-            viewTurnNumber = GameManager.instance.turnScript.Turn;
+            currentTurn = GameManager.instance.turnScript.Turn;
+            viewTurnNumber = currentTurn;
             // Populate data
             UpdateData(data);
             // Display Main page by default
@@ -460,7 +464,6 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="tab"></param>
     private void DisplayPage(int tabIndex)
     {
-        int turn = GameManager.instance.turnScript.Turn;
         //clear out current data
         listOfCurrentPageData.Clear();
         //get data
@@ -528,12 +531,12 @@ public class MainInfoUI : MonoBehaviour
     private void SetPageHeader(int numOfItems)
     {
         string text = "Unknown";
-        string colourDay = colourDefault;
-        if (viewTurnNumber == GameManager.instance.turnScript.Turn) { colourDay = colourHighlight; }
+        string colourDay = colourGrey;
+        if (viewTurnNumber == currentTurn) { colourDay = colourDefault; }
         if (numOfItems > 0)
-        { text = string.Format("{0}Day {1}{2}, 2033, there {3} {4} item{5}", colourDay, viewTurnNumber, colourEnd, numOfItems != 1 ? "are" : "is", numOfItems, numOfItems != 1 ? "s" : ""); }
+        { text = string.Format("{0}Day {1}, 2033, there {2} {3} item{4}{5}", colourDay, viewTurnNumber, numOfItems != 1 ? "are" : "is", numOfItems, numOfItems != 1 ? "s" : "", colourEnd); }
         else
-        { text = string.Format("{0}Day {1}{2}, 2033, there are 0 items", colourDay, viewTurnNumber, colourEnd); }
+        { text = string.Format("{0}Day {1}, 2033, there are 0 items{2}", colourDay, viewTurnNumber, colourEnd); }
         page_header.text = text;
     }
 
@@ -601,13 +604,11 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     private void ExecuteButtonHome()
     {
-        int turn = GameManager.instance.turnScript.Turn;
-
         //get & update data
         MainInfoData data = GameManager.instance.dataScript.GetNotifications();
         if (data != null)
         {
-            viewTurnNumber = turn;
+            viewTurnNumber = currentTurn;
             UpdateData(data);
             //Open last used tab
             if (currentTabIndex > -1)
@@ -655,7 +656,6 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     private void ExecuteButtonForward()
     {
-        int turn = GameManager.instance.turnScript.Turn;
         //get & update data
         viewTurnNumber += 1;
         MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
@@ -685,9 +685,8 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="isForward"></param>
     private void UpdateNavigationStatus()
     {
-        int turn = GameManager.instance.turnScript.Turn;
         //home button -> only if not at current turn
-        if (turn != viewTurnNumber)
+        if (currentTurn != viewTurnNumber)
         { buttonHome.gameObject.SetActive(true); }
         else { buttonHome.gameObject.SetActive(false); }
         //back button
@@ -695,7 +694,7 @@ public class MainInfoUI : MonoBehaviour
         { buttonBack.gameObject.SetActive(true); }
         else { buttonBack.gameObject.SetActive(false); }
         //forward button
-        if (viewTurnNumber < turn)
+        if (viewTurnNumber < currentTurn)
         { buttonForward.gameObject.SetActive(true); }
         else { buttonForward.gameObject.SetActive(false); }
     }
