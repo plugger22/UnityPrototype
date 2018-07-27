@@ -335,9 +335,11 @@ public class DataManager : MonoBehaviour
         //
         if (dictOfHistory != null)
         {
+            //pass by value, not reference (otherwise duplicate data for each turn)
+            MainInfoData historyData = new MainInfoData(currentInfoData);
             int turn = GameManager.instance.turnScript.Turn;
             try
-            { dictOfHistory.Add(turn, currentInfoData); }
+            { dictOfHistory.Add(turn, historyData); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid currentInfoData (Null)"); }
             catch (ArgumentException)
@@ -345,6 +347,24 @@ public class DataManager : MonoBehaviour
         }
         //send package to TurnManager.cs -> InitialiseInfoApp
         return currentInfoData;
+    }
+
+    /// <summary>
+    /// returns a notification data package for a specific turn. Returns Null if not found and defaults to current turn if no parameter set
+    /// </summary>
+    /// <param name="turnNumber"></param>
+    /// <returns></returns>
+    public MainInfoData GetNotifications(int turnNumber = -1)
+    {
+        MainInfoData data = null;
+        //if no turn number provided, or turn number 0, use current turn
+        if (turnNumber < 1) { turnNumber = GameManager.instance.turnScript.Turn; }
+        //get data set
+        if (dictOfHistory.ContainsKey(turnNumber))
+        {  data = dictOfHistory[turnNumber]; }
+        else { Debug.LogWarningFormat("Record not found in dictOfHistory for turn number {0}", turnNumber); }
+        //return data set
+        return data;
     }
 
     //

@@ -236,6 +236,19 @@ namespace packageAPI
         }
 
         /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="dataCopy"></param>
+        public MainInfoData(MainInfoData dataCopy)
+        {
+            listOfData_0 = new List<string>(dataCopy.listOfData_0);
+            listOfData_1 = new List<string>(dataCopy.listOfData_1);
+            listOfData_2 = new List<string>(dataCopy.listOfData_2);
+            listOfData_3 = new List<string>(dataCopy.listOfData_3);
+            listOfData_4 = new List<string>(dataCopy.listOfData_4);
+        }
+
+        /// <summary>
         /// Empties out all data
         /// </summary>
         public void Reset()

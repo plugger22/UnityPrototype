@@ -80,7 +80,7 @@ public class MainInfoUI : MonoBehaviour
 
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
-    
+    private int viewTurnNumber = -1;                                 //turn number of data being viewed
     private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 20
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
@@ -95,6 +95,7 @@ public class MainInfoUI : MonoBehaviour
     private Scrollbar scrollBar;
     //hardwired tabs at top -> 6
     private int numOfTabs = 6;
+    private int currentTabIndex = -1;
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
     //data sets (one per tab)
@@ -117,7 +118,7 @@ public class MainInfoUI : MonoBehaviour
 
     //static reference
     private static MainInfoUI mainInfoUI;
-    
+
 
     /// <summary>
     /// provide a static reference to MainInfoUI that can be accessed from any script
@@ -358,13 +359,13 @@ public class MainInfoUI : MonoBehaviour
                 ShowDetails((int)Param);
                 break;
             case EventType.MainInfoHome:
-
+                ExecuteButtonHome();
                 break;
             case EventType.MainInfoBack:
-
+                ExecuteButtonBack();
                 break;
             case EventType.MainInfoForward:
-
+                ExecuteButtonForward();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -393,7 +394,7 @@ public class MainInfoUI : MonoBehaviour
 
 
     /// <summary>
-    /// Open Main Info display
+    /// Open Main Info display at start of turn
     /// </summary>
     private void SetMainInfo(MainInfoData data)
     {
@@ -404,10 +405,13 @@ public class MainInfoUI : MonoBehaviour
             GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
+            viewTurnNumber = GameManager.instance.turnScript.Turn;
             // Populate data
             UpdateData(data);
             // Display Main page by default
             OpenTab(0);
+            // Navigation buttons
+            UpdateNavigationStatus();
             // GUI
             mainInfoObject.SetActive(true);
             //set modal status
@@ -457,7 +461,7 @@ public class MainInfoUI : MonoBehaviour
     private void DisplayPage(int tabIndex)
     {
         int turn = GameManager.instance.turnScript.Turn;
-        //clear out current dat
+        //clear out current data
         listOfCurrentPageData.Clear();
         //get data
         if (dictOfData.ContainsKey(tabIndex) == true)
@@ -486,22 +490,21 @@ public class MainInfoUI : MonoBehaviour
                         arrayItemMain[index].gameObject.SetActive(false);
                     }
                 }
-                //set header
-                page_header.text = string.Format("Day {0}, 2033, there {1} {2} item{3}", turn,  numOfItemsCurrent != 1 ? "are" : "is", numOfItemsCurrent, numOfItemsCurrent != 1 ? "s" : "");
             }
             else
             {
                 //no data, blank previous items (not necessarily all), disable line
-                    for (int index = 0; index < numOfItemsPrevious; index++)
-                    {
-                        arrayItemText[index].text = "";
-                        arrayItemMain[index].gameObject.SetActive(false);
-                    }
-                //set header
-                page_header.text = string.Format("Day {0}, 2033, there are 0 items", turn);
+                for (int index = 0; index < numOfItemsPrevious; index++)
+                {
+                    arrayItemText[index].text = "";
+                    arrayItemMain[index].gameObject.SetActive(false);
+                }
+
             }
             //update previous count to current
             numOfItemsPrevious = numOfItemsCurrent;
+            //set header
+            SetPageHeader(numOfItemsCurrent);
         }
         else { Debug.LogWarning("Invalid MainInofData.listOfMainText (Null)"); }
         //manually activate / deactivate scrollBar as needed (because you've got daactivated objects in the scroll list the bar shows regardless unless you override here)
@@ -517,6 +520,22 @@ public class MainInfoUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// handles formatting of page header string in a constant format
+    /// </summary>
+    /// <param name="numOfItems"></param>
+    /// <returns></returns>
+    private void SetPageHeader(int numOfItems)
+    {
+        string text = "Unknown";
+        string colourDay = colourDefault;
+        if (viewTurnNumber == GameManager.instance.turnScript.Turn) { colourDay = colourHighlight; }
+        if (numOfItems > 0)
+        { text = string.Format("{0}Day {1}{2}, 2033, there {3} {4} item{5}", colourDay, viewTurnNumber, colourEnd, numOfItems != 1 ? "are" : "is", numOfItems, numOfItems != 1 ? "s" : ""); }
+        else
+        { text = string.Format("{0}Day {1}{2}, 2033, there are 0 items", colourDay, viewTurnNumber, colourEnd); }
+        page_header.text = text;
+    }
 
     /// <summary>
     /// close Main Info display
@@ -544,15 +563,16 @@ public class MainInfoUI : MonoBehaviour
             //activate indicated tab and deactivate the rest
             if (index == tabIndex)
             { tabActiveArray[index].gameObject.SetActive(true); }
-            else  { tabActiveArray[index].gameObject.SetActive(false); }
+            else { tabActiveArray[index].gameObject.SetActive(false); }
             //blank LHS
             details_text_top.text = "";
             details_text_bottom.text = "";
         }
         //redrawn main page
         DisplayPage(tabIndex);
-        //reset highlightIndex to default
+        //update indexes
         highlightIndex = -1;
+        currentTabIndex = tabIndex;
     }
 
     /// <summary>
@@ -574,6 +594,110 @@ public class MainInfoUI : MonoBehaviour
             //highlight item -> show as yellow
             arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
         }
+    }
+
+    /// <summary>
+    /// press Home button -> jump to current turn
+    /// </summary>
+    private void ExecuteButtonHome()
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+
+        //get & update data
+        MainInfoData data = GameManager.instance.dataScript.GetNotifications();
+        if (data != null)
+        {
+            viewTurnNumber = turn;
+            UpdateData(data);
+            //Open last used tab
+            if (currentTabIndex > -1)
+            { OpenTab(currentTabIndex); }
+            else
+            {
+                //default to main tab -> should never be used
+                Debug.Assert(currentTabIndex < 0, "Invalid currentTabIndex (< 0)");
+                OpenTab(0);
+            }
+            //update button status
+            UpdateNavigationStatus();
+        }
+        else { Debug.LogWarning("Invalid data (Null)"); }
+    }
+
+    /// <summary>
+    /// press Back button -> go back one turn (until start)
+    /// </summary>
+    private void ExecuteButtonBack()
+    {
+        //get & update data
+        viewTurnNumber -= 1;
+        MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
+        if (data != null)
+        {
+            UpdateData(data);
+            //Open last used tab
+            if (currentTabIndex > -1)
+            { OpenTab(currentTabIndex); }
+            else
+            {
+                //default to main tab -> should never be used
+                Debug.Assert(currentTabIndex < 0, "Invalid currentTabIndex (< 0)");
+                OpenTab(0);
+            }
+            //update button status
+            UpdateNavigationStatus();
+        }
+        else { Debug.LogWarning("Invalid data (Null)"); }
+    }
+
+    /// <summary>
+    /// press Forward button -> go forward one turn (until current)
+    /// </summary>
+    private void ExecuteButtonForward()
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        //get & update data
+        viewTurnNumber += 1;
+        MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
+        if (data != null)
+        {
+            UpdateData(data);
+            //Open last used tab
+            if (currentTabIndex > -1)
+            { OpenTab(currentTabIndex); }
+            else
+            {
+                //default to main tab -> should never be used
+                Debug.Assert(currentTabIndex < 0, "Invalid currentTabIndex (< 0)");
+                OpenTab(0);
+            }
+            //update button status
+            UpdateNavigationStatus();
+        }
+        else { Debug.LogWarning("Invalid data (Null)"); }
+    }
+
+    /// <summary>
+    /// subMethod to update status of three navigation buttons. Contains all necessary logic to auto set buttons
+    /// </summary>
+    /// <param name="isHome"></param>
+    /// <param name="isBack"></param>
+    /// <param name="isForward"></param>
+    private void UpdateNavigationStatus()
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        //home button -> only if not at current turn
+        if (turn != viewTurnNumber)
+        { buttonHome.gameObject.SetActive(true); }
+        else { buttonHome.gameObject.SetActive(false); }
+        //back button
+        if (viewTurnNumber > 1)
+        { buttonBack.gameObject.SetActive(true); }
+        else { buttonBack.gameObject.SetActive(false); }
+        //forward button
+        if (viewTurnNumber < turn)
+        { buttonForward.gameObject.SetActive(true); }
+        else { buttonForward.gameObject.SetActive(false); }
     }
 
 
