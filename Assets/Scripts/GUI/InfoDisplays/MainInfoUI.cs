@@ -14,12 +14,16 @@ public class MainInfoUI : MonoBehaviour
 
     public GameObject mainInfoObject;
 
-    [Header("Overall")]
+    [Header("Buttons")]
     public Button buttonClose;
+    public Button buttonInfo;
+    public Button buttonHome;
+    public Button buttonBack;
+    public Button buttonForward;
 
     [Header("RHS Miscellanous")]
     public TextMeshProUGUI page_header;
-    public GameObject scrollBar;
+    public GameObject scrollBarObject;
     public GameObject scrollBackground;         //needed to get scrollRect component in order to manually disable scrolling when not needed
 
     [Header("RHS Items")]
@@ -45,31 +49,6 @@ public class MainInfoUI : MonoBehaviour
     public GameObject main_item_18;
     public GameObject main_item_19;
 
-    /*[Header("RHS texts")]
-    //main tab -> text
-    public TextMeshProUGUI main_text_0;
-    public TextMeshProUGUI main_text_1;
-    public TextMeshProUGUI main_text_2;
-    public TextMeshProUGUI main_text_3;
-    public TextMeshProUGUI main_text_4;
-    public TextMeshProUGUI main_text_5;
-    public TextMeshProUGUI main_text_6;
-    public TextMeshProUGUI main_text_7;
-    public TextMeshProUGUI main_text_8;
-    public TextMeshProUGUI main_text_9;
-
-    [Header("RHS borders")]
-    //main tab -> border
-    public Image main_border_1;
-    public Image main_border_2;
-    public Image main_border_3;
-    public Image main_border_4;
-    public Image main_border_5;
-    public Image main_border_6;
-    public Image main_border_7;
-    public Image main_border_8;
-    public Image main_border_9;*/
-
     [Header("RHS Active tabs")]
     //page tabs -> active
     public Image tab_active_0;
@@ -93,7 +72,11 @@ public class MainInfoUI : MonoBehaviour
     public TextMeshProUGUI details_text_bottom;
     public Image details_image;
 
+    //button script handlers
     private ButtonInteraction buttonInteractionClose;
+    private ButtonInteraction buttonInteractionHome;
+    private ButtonInteraction buttonInteractionBack;
+    private ButtonInteraction buttonInteractionForward;
 
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
@@ -101,6 +84,7 @@ public class MainInfoUI : MonoBehaviour
     private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 20
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
+    private int numOfItemsPrevious = -1;                             //count of items in previous list / page
     private int numOfMaxItem = -1;                                   // (max) count of items in current list / page
     private GameObject[] arrayItemMain;
     private Image[] arrayItemIcon;
@@ -108,6 +92,7 @@ public class MainInfoUI : MonoBehaviour
     private Image[] arrayItemBackground;
     private TextMeshProUGUI[] arrayItemText;
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
+    private Scrollbar scrollBar;
     //hardwired tabs at top -> 6
     private int numOfTabs = 6;
     private Image[] tabActiveArray;
@@ -161,19 +146,31 @@ public class MainInfoUI : MonoBehaviour
         tabPassiveArray = new Image[numOfTabs];
         dictOfData = new Dictionary<int, List<String>>();
         listOfCurrentPageData = new List<string>();
-        //close button event
+        //buttons
+        Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
+        Debug.Assert(buttonInfo != null, "Invalid buttonInfo (Null)");
+        Debug.Assert(buttonHome != null, "Invalid buttonHome (Null)");
+        Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
+        Debug.Assert(buttonForward != null, "Invalid buttonForward (Null)");
+        //set button interaction events
         buttonInteractionClose = buttonClose.GetComponent<ButtonInteraction>();
-        if (buttonInteractionClose != null)
-        { buttonInteractionClose.SetEvent(EventType.MainInfoClose); }
-        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
-        //scrollRect
-        if (scrollBackground != null)
-        {
-            scrollRect = scrollBackground.GetComponent<ScrollRect>();
-            Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
-        }
-        else { Debug.LogWarning("Invalid scrollBackground (Null)"); }
-        //scrollBar
+        buttonInteractionHome = buttonHome.GetComponent<ButtonInteraction>();
+        buttonInteractionBack = buttonBack.GetComponent<ButtonInteraction>();
+        buttonInteractionForward = buttonForward.GetComponent<ButtonInteraction>();
+        Debug.Assert(buttonInteractionClose != null, "Invalid buttonInteractionClose (Null)");
+        Debug.Assert(buttonInteractionHome != null, "Invalid buttonInteractionHome (Null)");
+        Debug.Assert(buttonInteractionBack != null, "Invalid buttonInteractionBack (Null)");
+        Debug.Assert(buttonInteractionForward != null, "Invalid buttonInteractionForward (Null)");
+        buttonInteractionClose.SetEvent(EventType.MainInfoClose);
+        buttonInteractionHome.SetEvent(EventType.MainInfoHome);
+        buttonInteractionBack.SetEvent(EventType.MainInfoBack);
+        buttonInteractionForward.SetEvent(EventType.MainInfoForward);
+        //scrollRect & ScrollBar
+        Debug.Assert(scrollBackground != null, "Invalid scrollBackground (Null)");
+        Debug.Assert(scrollBarObject != null, "Invalid scrollBarObject (Null)");
+        scrollRect = scrollBackground.GetComponent<ScrollRect>();
+        scrollBar = scrollBarObject.GetComponent<Scrollbar>();
+        Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
         Debug.Assert(scrollBar != null, "Invalid scrollBar (Null)");
         //main background image array
         Debug.Assert(main_item_0 != null, "Invalid item_0 (Null)");
@@ -253,6 +250,9 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoShowDetails, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoHome, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoBack, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoForward, OnEvent, "MainInfoUI");
     }
 
     public void Initialise()
@@ -356,6 +356,15 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case EventType.MainInfoShowDetails:
                 ShowDetails((int)Param);
+                break;
+            case EventType.MainInfoHome:
+
+                break;
+            case EventType.MainInfoBack:
+
+                break;
+            case EventType.MainInfoForward:
+
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -470,8 +479,9 @@ public class MainInfoUI : MonoBehaviour
                         arrayItemText[index].text = listOfCurrentPageData[index];
                         arrayItemMain[index].gameObject.SetActive(true);
                     }
-                    else
+                    else if (index < numOfItemsPrevious)
                     {
+                        //efficient -> only disables items that were previously active, not the whole set
                         arrayItemText[index].text = "";
                         arrayItemMain[index].gameObject.SetActive(false);
                     }
@@ -481,8 +491,8 @@ public class MainInfoUI : MonoBehaviour
             }
             else
             {
-                //no data, blank all items, disable line
-                    for (int index = 0; index < arrayItemText.Length; index++)
+                //no data, blank previous items (not necessarily all), disable line
+                    for (int index = 0; index < numOfItemsPrevious; index++)
                     {
                         arrayItemText[index].text = "";
                         arrayItemMain[index].gameObject.SetActive(false);
@@ -490,18 +500,20 @@ public class MainInfoUI : MonoBehaviour
                 //set header
                 page_header.text = string.Format("Day {0}, 2033, there are 0 items", turn);
             }
+            //update previous count to current
+            numOfItemsPrevious = numOfItemsCurrent;
         }
         else { Debug.LogWarning("Invalid MainInofData.listOfMainText (Null)"); }
         //manually activate / deactivate scrollBar as needed (because you've got daactivated objects in the scroll list the bar shows regardless unless you override here)
         if (numOfItemsCurrent <= numOfVisibleItems)
         {
-            //scrollRect.gameObject.SetActive(false);
-            scrollBar.SetActive(false);
+            scrollRect.verticalScrollbar = null;
+            scrollBarObject.SetActive(false);
         }
         else
         {
-            scrollBar.SetActive(true);
-            //scrollRect.gameObject.SetActive(true);
+            scrollBarObject.SetActive(true);
+            scrollRect.verticalScrollbar = scrollBar;
         }
     }
 
@@ -536,11 +548,11 @@ public class MainInfoUI : MonoBehaviour
             //blank LHS
             details_text_top.text = "";
             details_text_bottom.text = "";
-            //redrawn main page
-            DisplayPage(tabIndex);
-            //reset highlightIndex to default
-            highlightIndex = -1;
         }
+        //redrawn main page
+        DisplayPage(tabIndex);
+        //reset highlightIndex to default
+        highlightIndex = -1;
     }
 
     /// <summary>

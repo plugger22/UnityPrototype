@@ -122,6 +122,9 @@ public enum EventType
     MainInfoClose,
     MainInfoTabOpen,
     MainInfoShowDetails,
+    MainInfoHome,
+    MainInfoBack,
+    MainInfoForward,
     //City Info
     CityInfoOpen,
     CityInfoClose,

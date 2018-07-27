@@ -19,7 +19,7 @@ public class MainInfoRightItemUI : MonoBehaviour, IPointerClickHandler
     {
         Debug.Assert(index > -1 && index < 20, "Invalid index (must be > -1 && < 20)");
         itemIndex = index;
-        Debug.LogFormat("[Tst] MainInfoRightItemUI.cs -> SetItemIndex: itemIndex {0}{1}", itemIndex, "\n");
+        /*Debug.LogFormat("[Tst] MainInfoRightItemUI.cs -> SetItemIndex: itemIndex {0}{1}", itemIndex, "\n");*/
     }
 
     public int GetItemIndex()

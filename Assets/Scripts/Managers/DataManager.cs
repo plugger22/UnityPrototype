@@ -165,6 +165,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();      //Key -> SecretType.name, Value -> SecretType
     private Dictionary<string, SecretStatus> dictOfSecretStatus = new Dictionary<string, SecretStatus>(); //Key -> SecretStatus.name, Value -> SecretStatus
     private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();        //Key -> nodeCrisisID, Value -> NodeCrisis
+    private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();       //Key -> turn, Value -> MainInfoData set for turn
     
 
     //global SO's (enum equivalents)
@@ -330,9 +331,18 @@ public class DataManager : MonoBehaviour
         }
 
         //
-        // - - - archive data - - -
+        // - - - add History dataset for turn - - -
         //
-
+        if (dictOfHistory != null)
+        {
+            int turn = GameManager.instance.turnScript.Turn;
+            try
+            { dictOfHistory.Add(turn, currentInfoData); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid currentInfoData (Null)"); }
+            catch (ArgumentException)
+            { Debug.LogErrorFormat("Duplicate record exists for MainInfoData turn {0}", turn); }
+        }
         //send package to TurnManager.cs -> InitialiseInfoApp
         return currentInfoData;
     }
@@ -2630,7 +2640,9 @@ public class DataManager : MonoBehaviour
             {
                 case true:
                     //if isPublic true then store in Pending dictionary
-                    AddMessageExisting(message, MessageCategory.Pending);
+                    if (message.displayDelay > 0)
+                    { AddMessageExisting(message, MessageCategory.Pending); }
+                    else { AddMessageExisting(message, MessageCategory.Current); }
                     break;
                 case false:
                     //if isPublic False then store in Archive dictionary
