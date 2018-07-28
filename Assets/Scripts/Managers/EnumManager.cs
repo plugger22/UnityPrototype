@@ -65,6 +65,11 @@
     public enum Activation { Low, Medium, High }                                     //chance of becoming 'Live' once 'Active'
 
     //
+    // - - - ItemData - - -
+    //
+    public enum ItemPriority { Low, Medium, High }
+
+    //
     // - - - Actors - - -
     //
     public enum ActorStatus { Active, Inactive, ReservePool, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned }

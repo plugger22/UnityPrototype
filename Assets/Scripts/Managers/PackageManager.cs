@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using UnityEngine.UI;
 
 namespace packageAPI
 {
@@ -223,7 +224,7 @@ namespace packageAPI
         public List<string> listOfData_0;         //list of strings (one per line) for main tab
         public List<string> listOfData_1;         //list of strings (one per line) for HQ tab
         public List<string> listOfData_2;         //list of strings (one per line) for People tab
-        public List<string> listOfData_3;         //list of strings (one per line) for Random tab
+        public List<ItemData> listOfData_3;         //list of ItemData (one per line) for Random tab
         public List<string> listOfData_4;         //list of strings (one per line) for Ongoing Effects tab
 
         public MainInfoData()
@@ -231,7 +232,7 @@ namespace packageAPI
             listOfData_0 = new List<string>();
             listOfData_1 = new List<string>();
             listOfData_2 = new List<string>();
-            listOfData_3 = new List<string>();
+            listOfData_3 = new List<ItemData>();
             listOfData_4 = new List<string>();
         }
 
@@ -244,7 +245,7 @@ namespace packageAPI
             listOfData_0 = new List<string>(dataCopy.listOfData_0);
             listOfData_1 = new List<string>(dataCopy.listOfData_1);
             listOfData_2 = new List<string>(dataCopy.listOfData_2);
-            listOfData_3 = new List<string>(dataCopy.listOfData_3);
+            listOfData_3 = new List<ItemData>(dataCopy.listOfData_3);
             listOfData_4 = new List<string>(dataCopy.listOfData_4);
         }
 
@@ -261,4 +262,16 @@ namespace packageAPI
         }
     }
 
+    /// <summary>
+    /// multipurpose class to handle message equivalents, requests and meeting decision options for MainInfoData packages
+    /// NOTE: Don't add any methods as it needs to be memory efficient
+    /// </summary>
+    public class ItemData
+    {
+        public string itemText;
+        public string topText;
+        public string bottomText;
+        public Image sprite;
+        public ItemPriority priority;
+    }
 }

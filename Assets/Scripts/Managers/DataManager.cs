@@ -120,7 +120,7 @@ public class DataManager : MonoBehaviour
 
     //Notifications
     private MainInfoData currentInfoData = new MainInfoData();                                      //rolling current turn MainInfoData package
-    private List<string> listOfRandomLatestMessages = new List<string>();                                 //all latest random messages
+    private List<ItemData> listOfRandomLatestMessages = new List<ItemData>();                                 //all latest random messages
     private List<string> listOfArchiveLatestMessages = new List<string>();                                //all latest archived messages
 
     //Adjustments
@@ -2790,7 +2790,7 @@ public class DataManager : MonoBehaviour
                 switch(message.subType)
                 {
                     case MessageSubType.General_Random:
-                        listOfRandomLatestMessages.Add(message.text);
+                        /*listOfRandomLatestMessages.Add(message.text);*/
                         break;
                 }
                 break;
@@ -2799,6 +2799,25 @@ public class DataManager : MonoBehaviour
                 { listOfArchiveLatestMessages.Add(message.text); }
                 break;
         }
+    }
+
+    public void AddItemData(ItemData data)
+    {
+        if (data != null)
+        {
+            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+            switch (data.priority)
+            {
+                case ItemPriority.Low:
+                    listOfRandomLatestMessages.Add(data);
+                    break;
+                    /*default:
+                        if (playerSide.level == message.side.level)
+                        { listOfArchiveLatestMessages.Add(message.text); }
+                        break;*/
+            }
+        }
+        else { Debug.LogWarning("Invalid ItemData (Null)"); }
     }
 
     /// <summary>

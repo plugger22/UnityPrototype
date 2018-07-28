@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
-
+using packageAPI;
 
 /// <summary>
 /// handles all message matters
@@ -168,10 +168,11 @@ public class MessageManager : MonoBehaviour
     /// <param name="numNeeded"></param>
     /// <param name="numRolled"></param>
     /// <returns></returns>
-    public Message GeneralRandom(string text, int numNeeded, int numRolled)
+    public void GeneralRandom(string text, int numNeeded, int numRolled)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
+            //Message
             Message message = new Message();
             message.text = text;
             message.type = MessageType.GENERAL;
@@ -179,10 +180,17 @@ public class MessageManager : MonoBehaviour
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.data0 = numNeeded;
             message.data1 = numRolled;
-            return message;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = text;
+            data.topText = "Random Result";
+            data.bottomText = "A random roll was made using a percentage (1d100) die";
+            data.priority = ItemPriority.Low;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
     }
 
     //

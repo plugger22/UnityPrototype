@@ -21,12 +21,12 @@ public class MainInfoUI : MonoBehaviour
     public Button buttonBack;
     public Button buttonForward;
 
-    [Header("RHS Miscellanous")]
+    [Header("LHS Miscellanous")]
     public TextMeshProUGUI page_header;
     public GameObject scrollBarObject;
     public GameObject scrollBackground;         //needed to get scrollRect component in order to manually disable scrolling when not needed
 
-    [Header("RHS Items")]
+    [Header("LHS Items")]
     //main tab -> parent backgrounds (full set of twenty, only a max of 10 shown at a time)
     public GameObject main_item_0;
     public GameObject main_item_1;
@@ -49,7 +49,7 @@ public class MainInfoUI : MonoBehaviour
     public GameObject main_item_18;
     public GameObject main_item_19;
 
-    [Header("RHS Active tabs")]
+    [Header("LHS Active tabs")]
     //page tabs -> active
     public Image tab_active_0;
     public Image tab_active_1;
@@ -58,7 +58,7 @@ public class MainInfoUI : MonoBehaviour
     public Image tab_active_4;
     public Image tab_active_5;
 
-    [Header("RHS Passive tabs")]
+    [Header("LHS Passive tabs")]
     //page tabs -> passive
     public Image tab_passive_0;
     public Image tab_passive_1;
@@ -67,7 +67,7 @@ public class MainInfoUI : MonoBehaviour
     public Image tab_passive_4;
     public Image tab_passive_5;
 
-    [Header("LHS details")]
+    [Header("RHS details")]
     public TextMeshProUGUI details_text_top;
     public TextMeshProUGUI details_text_bottom;
     public Image details_image;
@@ -100,8 +100,10 @@ public class MainInfoUI : MonoBehaviour
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
     //data sets (one per tab)
-    private Dictionary<int, List<String>> dictOfData;                   //cached data, one entry for each page for current turn
+    private Dictionary<int, List<String>> dictOfStringData;                   //cached data, one entry for each page for current turn
+    private Dictionary<int, List<ItemData>> dictOfItemData;
     List<string> listOfCurrentPageData;                                     //current data for currently displayed page
+    List<ItemData> listOfCurrentPageItemData;
 
     //colours
     string colourDefault;
@@ -147,8 +149,10 @@ public class MainInfoUI : MonoBehaviour
         arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
-        dictOfData = new Dictionary<int, List<String>>();
+        dictOfStringData = new Dictionary<int, List<String>>();
+        dictOfItemData = new Dictionary<int, List<ItemData>>();
         listOfCurrentPageData = new List<string>();
+        listOfCurrentPageItemData = new List<ItemData>();
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
         Debug.Assert(buttonInfo != null, "Invalid buttonInfo (Null)");
@@ -358,7 +362,8 @@ public class MainInfoUI : MonoBehaviour
                 OpenTab((int)Param);
                 break;
             case EventType.MainInfoShowDetails:
-                ShowDetails((int)Param);
+                /*ShowDetails((int)Param);*/
+                ShowItemDetails((int)Param);
                 break;
             case EventType.MainInfoHome:
                 ExecuteButtonHome();
@@ -438,23 +443,29 @@ public class MainInfoUI : MonoBehaviour
     private void UpdateData(MainInfoData data)
     {
         //clear out dictionary
-        dictOfData.Clear();
+        dictOfStringData.Clear();
         //populate new data (excludes help)
         if (data.listOfData_0 != null)
-        { dictOfData.Add(0, data.listOfData_0); }
+        { dictOfStringData.Add(0, data.listOfData_0); }
         else { Debug.LogWarning("Invaid data.listOfData_0 (Null)"); }
         if (data.listOfData_1 != null)
-        { dictOfData.Add(1, data.listOfData_1); }
+        { dictOfStringData.Add(1, data.listOfData_1); }
         else { Debug.LogWarning("Invaid data.listOfData_1 (Null)"); }
         if (data.listOfData_2 != null)
-        { dictOfData.Add(2, data.listOfData_2); }
+        { dictOfStringData.Add(2, data.listOfData_2); }
         else { Debug.LogWarning("Invaid data.listOfData_2 (Null)"); }
-        if (data.listOfData_3 != null)
-        { dictOfData.Add(3, data.listOfData_3); }
-        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }
+        /*if (data.listOfData_3 != null)
+        { dictOfStringData.Add(3, data.listOfData_3); }
+        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }*/
         if (data.listOfData_4 != null)
-        { dictOfData.Add(4, data.listOfData_4); }
+        { dictOfStringData.Add(4, data.listOfData_4); }
         else { Debug.LogWarning("Invaid data.listOfData_4 (Null)"); }
+
+        //clear out dictionary
+        dictOfItemData.Clear();
+        //populate new data (excludes help)
+        if (data.listOfData_3 != null)
+        { dictOfItemData.Add(3, data.listOfData_3); }
     }
 
 
@@ -467,8 +478,8 @@ public class MainInfoUI : MonoBehaviour
         //clear out current data
         listOfCurrentPageData.Clear();
         //get data
-        if (dictOfData.ContainsKey(tabIndex) == true)
-        { listOfCurrentPageData.AddRange(dictOfData[tabIndex]); }
+        if (dictOfStringData.ContainsKey(tabIndex) == true)
+        { listOfCurrentPageData.AddRange(dictOfStringData[tabIndex]); }
         //display routine
         if (listOfCurrentPageData != null)
         {
@@ -509,7 +520,72 @@ public class MainInfoUI : MonoBehaviour
             //set header
             SetPageHeader(numOfItemsCurrent);
         }
-        else { Debug.LogWarning("Invalid MainInofData.listOfMainText (Null)"); }
+        else { Debug.LogWarning("Invalid MainInfoData.listOfMainText (Null)"); }
+        //manually activate / deactivate scrollBar as needed (because you've got daactivated objects in the scroll list the bar shows regardless unless you override here)
+        if (numOfItemsCurrent <= numOfVisibleItems)
+        {
+            scrollRect.verticalScrollbar = null;
+            scrollBarObject.SetActive(false);
+        }
+        else
+        {
+            scrollBarObject.SetActive(true);
+            scrollRect.verticalScrollbar = scrollBar;
+        }
+    }
+
+    /// <summary>
+    /// sub Method to display a particular page drawing from cached data in dictOfItemData
+    /// </summary>
+    /// <param name="tab"></param>
+    private void DisplayItemPage(int tabIndex)
+    {
+        //clear out current data
+        listOfCurrentPageItemData.Clear();
+        //get data
+        if (dictOfItemData.ContainsKey(tabIndex) == true)
+        { listOfCurrentPageItemData.AddRange(dictOfItemData[tabIndex]); }
+        //display routine
+        if (listOfCurrentPageItemData != null)
+        {
+            numOfItemsCurrent = listOfCurrentPageItemData.Count;
+            if (numOfItemsCurrent > 0)
+            {
+                //update max number of items
+                numOfMaxItem = numOfItemsCurrent;
+                //populate current messages for the main tab
+                for (int index = 0; index < arrayItemText.Length; index++)
+                {
+                    if (index < numOfItemsCurrent)
+                    {
+                        //populate text and set item to active
+                        arrayItemText[index].text = listOfCurrentPageItemData[index].itemText;
+                        arrayItemMain[index].gameObject.SetActive(true);
+                    }
+                    else if (index < numOfItemsPrevious)
+                    {
+                        //efficient -> only disables items that were previously active, not the whole set
+                        arrayItemText[index].text = "";
+                        arrayItemMain[index].gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                //no data, blank previous items (not necessarily all), disable line
+                for (int index = 0; index < numOfItemsPrevious; index++)
+                {
+                    arrayItemText[index].text = "";
+                    arrayItemMain[index].gameObject.SetActive(false);
+                }
+
+            }
+            //update previous count to current
+            numOfItemsPrevious = numOfItemsCurrent;
+            //set header
+            SetPageHeader(numOfItemsCurrent);
+        }
+        else { Debug.LogWarning("Invalid MainInfoData.listOfMainText (Null)"); }
         //manually activate / deactivate scrollBar as needed (because you've got daactivated objects in the scroll list the bar shows regardless unless you override here)
         if (numOfItemsCurrent <= numOfVisibleItems)
         {
@@ -567,19 +643,21 @@ public class MainInfoUI : MonoBehaviour
             if (index == tabIndex)
             { tabActiveArray[index].gameObject.SetActive(true); }
             else { tabActiveArray[index].gameObject.SetActive(false); }
-            //blank LHS
+            //blank RHS
             details_text_top.text = "";
             details_text_bottom.text = "";
         }
         //redrawn main page
-        DisplayPage(tabIndex);
+        if (tabIndex != 3)
+        { DisplayPage(tabIndex); }
+        else { DisplayItemPage(tabIndex); }
         //update indexes
         highlightIndex = -1;
         currentTabIndex = tabIndex;
     }
 
     /// <summary>
-    /// called by clicking on an item on RHS which will then show details of the item on the LHS
+    /// called by clicking on an item on LHS which will then show details of the item on the RHS
     /// </summary>
     /// <param name="itemIndex"></param>
     private void ShowDetails(int itemIndex)
@@ -597,6 +675,31 @@ public class MainInfoUI : MonoBehaviour
             //highlight item -> show as yellow
             arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
         }
+    }
+
+    /// <summary>
+    /// ItemData details
+    /// </summary>
+    /// <param name="itemIndex"></param>
+    private void ShowItemDetails(int itemIndex)
+    {
+        ItemData data = listOfCurrentPageItemData[itemIndex];
+        if (data != null)
+        {
+            details_text_top.text = data.topText;
+            details_text_bottom.text = data.bottomText;
+        //remove highlight
+        if (highlightIndex != itemIndex)
+            {
+                //reset currently highlighted back to default
+                if (highlightIndex > -1)
+                { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageData[itemIndex], colourEnd); }
+                highlightIndex = itemIndex;
+                //highlight item -> show as yellow
+                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid ItemData for listOfCurrentPageItemData[{0}]", itemIndex); }
     }
 
     /// <summary>

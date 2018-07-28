@@ -2222,15 +2222,13 @@ public class ActionManager : MonoBehaviour
                     //random roll
                     Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
                     text = string.Format("Target {0} attempt SUCCESS need < {1}, rolled {2}", target.name, chance, roll);
-                    message = GameManager.instance.messageScript.GeneralRandom(text, chance, roll);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GeneralRandom(text, chance, roll);
                 }
                 else
                 {
                     Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt FAILED need < {0}, rolled {1}{2}", chance, roll, "\n");
                     text = string.Format("Target {0} attempt FAILED need < {1}, rolled {2}", target.name, chance, roll);
-                    Message message = GameManager.instance.messageScript.GeneralRandom(text, chance, roll);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GeneralRandom(text, chance, roll);
                 }
                 //set isTargetKnown -> auto if success, % chance otherwise
                 if (isSuccessful == true) { node.isTargetKnown = true; }
@@ -2245,15 +2243,13 @@ public class ActionManager : MonoBehaviour
                             node.isTargetKnown = true;
                             Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt KNOWN need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
                             text = string.Format("Target {0} attempt KNOWN need < {1}, rolled {2}", target.name, failedTargetChance, roll);
-                            Message message = GameManager.instance.messageScript.GeneralRandom(text, failedTargetChance, roll);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.GeneralRandom(text, failedTargetChance, roll);
                         }
                         else
                         {
                             Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
                             text = string.Format("Target {0} attempt UNDETECTED need < {1}, rolled {2}", target.name, failedTargetChance, roll);
-                            Message message = GameManager.instance.messageScript.GeneralRandom(text, failedTargetChance, roll);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.GeneralRandom(text, failedTargetChance, roll);
                         }
                     }
                     //if zero invisibility then target auto known to authorities

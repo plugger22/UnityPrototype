@@ -2227,8 +2227,7 @@ public class NodeManager : MonoBehaviour
                                         GameManager.instance.dataScript.AddMessage(message);
                                         //random
                                         msgText = string.Format("{0} ID {1}, CRISIS erupts, need < {2}, rolled {3}", node.Arc.name, node.nodeID, chance, rnd);
-                                        message = GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
-                                        GameManager.instance.dataScript.AddMessage(message);
+                                        GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
                                     }
                                     else
                                     {
