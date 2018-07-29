@@ -1744,8 +1744,7 @@ public class NodeManager : MonoBehaviour
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
                 //message
                 string text = string.Format("Player has moved to {0}", destination);
-                Message message = GameManager.instance.messageScript.PlayerMove(text, node.nodeID);
-                if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                GameManager.instance.messageScript.PlayerMove(text, node.nodeID);
                 //
                 // - - - Invisibility - - -
                 //
@@ -1780,14 +1779,12 @@ public class NodeManager : MonoBehaviour
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
                             node.nodeName, node.Arc.name, moveDetails.nodeID);
-                        Message messageAI = GameManager.instance.messageScript.AIConnectionActivity(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
-                        GameManager.instance.dataScript.AddMessage(messageAI);
+                        GameManager.instance.messageScript.AIConnectionActivity(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
                         //AI Immediate message
                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                         {
-                            Message messageImmediate = GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
+                            GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
                                 GameManager.instance.globalScript.sideAuthority, moveDetails.nodeID, moveDetails.connectionID);
-                            GameManager.instance.dataScript.AddMessage(messageImmediate);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }
@@ -2123,8 +2120,7 @@ public class NodeManager : MonoBehaviour
                                     node.launcher.StopSmoke();
                                     //admin
                                     msgText = string.Format("{0}, {1}, ID {2} crisis AVERTED", node.nodeName, node.Arc.name, node.nodeID);
-                                    Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
-                                    GameManager.instance.dataScript.AddMessage(message);
+                                    GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
                                 }
                                 else
                                 {
@@ -2138,8 +2134,7 @@ public class NodeManager : MonoBehaviour
                                         //warning message
                                         msgText = string.Format("{0} crisis in {1}, {2}, ({3} turn{4} left to Resolve)", node.crisis.tag, node.nodeName, node.Arc.name,
                                             node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
-                                        Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                                        GameManager.instance.dataScript.AddMessage(message);
+                                        GameManager.instance.messageScript.GeneralWarning(msgText);
                                     }
                                     else
                                     {
@@ -2150,11 +2145,9 @@ public class NodeManager : MonoBehaviour
                                         GameManager.instance.cityScript.CityLoyalty = loyalty;
                                         //admin                                
                                         msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.nodeName, node.Arc.name, node.crisis.tag);
-                                        Message messageCrisis = GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID, crisisCityLoyalty);
-                                        GameManager.instance.dataScript.AddMessage(messageCrisis);
+                                        GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID, crisisCityLoyalty);
                                         msgText = string.Format("{0} Loyalty falls by -{1} to {2} ({3} crisis)", city.name, crisisCityLoyalty, loyalty, node.crisis.tag);
-                                        Message messageCity = GameManager.instance.messageScript.CityLoyalty(msgText, loyalty, crisisCityLoyalty * -1);
-                                        GameManager.instance.dataScript.AddMessage(messageCity);
+                                        GameManager.instance.messageScript.CityLoyalty(msgText, loyalty, crisisCityLoyalty * -1);
                                         //set variables
                                         node.waitTimer = nodeWaitTimer;
                                         node.crisis = null;
@@ -2223,8 +2216,7 @@ public class NodeManager : MonoBehaviour
                                         Debug.LogFormat("[Rnd] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, CRISIS need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);
                                         msgText = string.Format("{0}, {1}, ID {2} crisis COMMENCES ({3})", node.nodeName, node.Arc.name, node.nodeID, node.crisis.tag);
-                                        Message message = GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
-                                        GameManager.instance.dataScript.AddMessage(message);
+                                        GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
                                         //random
                                         msgText = string.Format("{0} ID {1}, CRISIS erupts, need < {2}, rolled {3}", node.Arc.name, node.nodeID, chance, rnd);
                                         GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);

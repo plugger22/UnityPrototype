@@ -169,8 +169,7 @@ public class PlayerManager : MonoBehaviour
         GetRandomStartSecret();
         //message
         string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
-        Message message = GameManager.instance.messageScript.PlayerMove(text, nodeID);
-        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+        GameManager.instance.messageScript.PlayerMove(text, nodeID);
         //register event listeners
         EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
     }
@@ -515,8 +514,7 @@ public class PlayerManager : MonoBehaviour
                         {
                             //message
                             string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.name, gear.type.name);
-                            Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                             RemoveGearItem(gear, true);
                         }
                         else
@@ -525,8 +523,7 @@ public class PlayerManager : MonoBehaviour
                             ResetGearItem(gear);
                             gearSavedName = gear.name.ToUpper();
                             string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.name, gear.type.name);
-                            Message message = GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.GearCompromised(msgText, gear.gearID);
                         }
                     }
                     else
@@ -570,8 +567,7 @@ public class PlayerManager : MonoBehaviour
                 listOfConditions.Add(condition);
                 //message
                 string msgText = string.Format("Player gains condition \"{0}\"", condition.name);
-                Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
             }
         }
         else { Debug.LogError("Invalid condition (Null)"); }
@@ -638,8 +634,7 @@ public class PlayerManager : MonoBehaviour
                         listOfConditions.RemoveAt(i);
                         //message
                         string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
-                        Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
-                        GameManager.instance.dataScript.AddMessage(message);
+                        GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
                         return true;
                     }
                 }
@@ -742,8 +737,7 @@ public class PlayerManager : MonoBehaviour
                     listOfSecrets.Add(secret);
                     secret.status = secretStatusActive;
                     //Msg
-                    Message message = GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret.secretID);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret.secretID);
                 }
                 else { Debug.LogWarning("Secret NOT added as not enough space"); }
             }
@@ -982,8 +976,7 @@ public class PlayerManager : MonoBehaviour
                             { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
                             text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
                             //message
-                            Message message = GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), GameManager.instance.nodeScript.nodePlayer, gearID);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), GameManager.instance.nodeScript.nodePlayer, gearID);
                         }
                     }
                 }

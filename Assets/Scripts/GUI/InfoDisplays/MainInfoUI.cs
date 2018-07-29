@@ -100,9 +100,9 @@ public class MainInfoUI : MonoBehaviour
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
     //data sets (one per tab)
-    private Dictionary<int, List<String>> dictOfStringData;                   //cached data, one entry for each page for current turn
+    /*private Dictionary<int, List<String>> dictOfStringData;                   //cached data, one entry for each page for current turn*/
     private Dictionary<int, List<ItemData>> dictOfItemData;
-    List<string> listOfCurrentPageData;                                     //current data for currently displayed page
+    /*List<string> listOfCurrentPageData;                                     //current data for currently displayed page*/
     List<ItemData> listOfCurrentPageItemData;
 
     //colours
@@ -149,9 +149,9 @@ public class MainInfoUI : MonoBehaviour
         arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
-        dictOfStringData = new Dictionary<int, List<String>>();
+        /*dictOfStringData = new Dictionary<int, List<String>>();*/
         dictOfItemData = new Dictionary<int, List<ItemData>>();
-        listOfCurrentPageData = new List<string>();
+        /*listOfCurrentPageData = new List<string>();*/
         listOfCurrentPageItemData = new List<ItemData>();
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
@@ -442,7 +442,7 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="data"></param>
     private void UpdateData(MainInfoData data)
     {
-        //clear out dictionary
+        /*//clear out dictionary
         dictOfStringData.Clear();
         //populate new data (excludes help)
         if (data.listOfData_0 != null)
@@ -454,22 +454,35 @@ public class MainInfoUI : MonoBehaviour
         if (data.listOfData_2 != null)
         { dictOfStringData.Add(2, data.listOfData_2); }
         else { Debug.LogWarning("Invaid data.listOfData_2 (Null)"); }
-        /*if (data.listOfData_3 != null)
+        if (data.listOfData_3 != null)
         { dictOfStringData.Add(3, data.listOfData_3); }
-        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }*/
+        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }
         if (data.listOfData_4 != null)
         { dictOfStringData.Add(4, data.listOfData_4); }
-        else { Debug.LogWarning("Invaid data.listOfData_4 (Null)"); }
+        else { Debug.LogWarning("Invaid data.listOfData_4 (Null)"); }*/
 
         //clear out dictionary
         dictOfItemData.Clear();
         //populate new data (excludes help)
+        if (data.listOfData_0 != null)
+        { dictOfItemData.Add(0, data.listOfData_0); }
+        else { Debug.LogWarning("Invaid data.listOfData_0 (Null)"); }
+        if (data.listOfData_1 != null)
+        { dictOfItemData.Add(1, data.listOfData_1); }
+        else { Debug.LogWarning("Invaid data.listOfData_1 (Null)"); }
+        if (data.listOfData_2 != null)
+        { dictOfItemData.Add(2, data.listOfData_2); }
+        else { Debug.LogWarning("Invaid data.listOfData_2 (Null)"); }
         if (data.listOfData_3 != null)
         { dictOfItemData.Add(3, data.listOfData_3); }
+        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }
+        if (data.listOfData_4 != null)
+        { dictOfItemData.Add(4, data.listOfData_4); }
+        else { Debug.LogWarning("Invaid data.listOfData_4 (Null)"); }
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// sub Method to display a particular page drawing from cached data in dictOfData
     /// </summary>
     /// <param name="tab"></param>
@@ -532,7 +545,7 @@ public class MainInfoUI : MonoBehaviour
             scrollBarObject.SetActive(true);
             scrollRect.verticalScrollbar = scrollBar;
         }
-    }
+    }*/
 
     /// <summary>
     /// sub Method to display a particular page drawing from cached data in dictOfItemData
@@ -648,15 +661,13 @@ public class MainInfoUI : MonoBehaviour
             details_text_bottom.text = "";
         }
         //redrawn main page
-        if (tabIndex != 3)
-        { DisplayPage(tabIndex); }
-        else { DisplayItemPage(tabIndex); }
+       DisplayItemPage(tabIndex);
         //update indexes
         highlightIndex = -1;
         currentTabIndex = tabIndex;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// called by clicking on an item on LHS which will then show details of the item on the RHS
     /// </summary>
     /// <param name="itemIndex"></param>
@@ -675,7 +686,7 @@ public class MainInfoUI : MonoBehaviour
             //highlight item -> show as yellow
             arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
         }
-    }
+    }*/
 
     /// <summary>
     /// ItemData details
@@ -693,10 +704,10 @@ public class MainInfoUI : MonoBehaviour
             {
                 //reset currently highlighted back to default
                 if (highlightIndex > -1)
-                { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageData[itemIndex], colourEnd); }
+                { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageItemData[itemIndex], colourEnd); }
                 highlightIndex = itemIndex;
                 //highlight item -> show as yellow
-                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
+                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageItemData[itemIndex], colourEnd);
             }
         }
         else { Debug.LogWarningFormat("Invalid ItemData for listOfCurrentPageItemData[{0}]", itemIndex); }

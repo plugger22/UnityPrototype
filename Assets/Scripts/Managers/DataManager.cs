@@ -3065,8 +3065,7 @@ public class DataManager : MonoBehaviour
                 {
                     dictOfOngoingID.Add(ongoing.ongoingID, text);
                     //generate message
-                    Message message = GameManager.instance.messageScript.OngoingEffectCreated(text, nodeID);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.OngoingEffectCreated(text, nodeID);
                 }
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoing.ongoingID, text)); }
@@ -3103,8 +3102,7 @@ public class DataManager : MonoBehaviour
                 dictOfOngoingID.Remove(ongoing.ongoingID);
                 //generate message
                 string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);
-                Message message = GameManager.instance.messageScript.OngoingEffectExpired(text, dataID);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.OngoingEffectExpired(text, dataID);
             }
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }

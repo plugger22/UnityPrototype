@@ -47,8 +47,7 @@ public class AuthorityManager : MonoBehaviour
                 default:
                     break;
             }
-            Message message = GameManager.instance.messageScript.DecisionGlobal(descriptor, 0, globalBoth, isPublic);
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.messageScript.DecisionGlobal(descriptor, 0, globalBoth, isPublic);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
         return isDone;

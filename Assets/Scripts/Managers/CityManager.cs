@@ -331,8 +331,7 @@ public class CityManager : MonoBehaviour
                     loyaltyMinTimer = loyaltyCountdownTimer;
                     //message
                     string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
-                    Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GeneralWarning(msgText);
                 }
                 else
                 {
@@ -354,8 +353,7 @@ public class CityManager : MonoBehaviour
                     {
                         //message
                         string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
-                        Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                        GameManager.instance.dataScript.AddMessage(message);
+                        GameManager.instance.messageScript.GeneralWarning(msgText);
                     }
                 }
             }
@@ -370,8 +368,7 @@ public class CityManager : MonoBehaviour
                     loyaltyMaxTimer = loyaltyCountdownTimer;
                     //message
                     string msgText = string.Format("{0} Loyalty at MAX. Resistance wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
-                    Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GeneralWarning(msgText);
                 }
                 else
                 {
@@ -393,8 +390,7 @@ public class CityManager : MonoBehaviour
                     {
                         //message
                         string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
-                        Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                        GameManager.instance.dataScript.AddMessage(message);
+                        GameManager.instance.messageScript.GeneralWarning(msgText);
                     }
                 }
             }

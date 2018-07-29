@@ -1308,15 +1308,13 @@ public class EffectManager : MonoBehaviour
                                         int delay;
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
-                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
+                                        GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
                                             dataInput.textOrigin), node.nodeID, GameManager.instance.playerScript.actorID, delay);
-                                        GameManager.instance.dataScript.AddMessage(messageAI);
                                         //AI Immediate message
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
-                                            Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
+                                            GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
                                                 dataInput.textOrigin), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1);
-                                            GameManager.instance.dataScript.AddMessage(message);
                                         }
                                     }
                                     break;
@@ -1382,15 +1380,13 @@ public class EffectManager : MonoBehaviour
                                         int delay;
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
-                                        Message messageAI = GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
+                                        GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
                                             dataInput.textOrigin, actor.arc.name), node.nodeID, actor.actorID, delay);
-                                        GameManager.instance.dataScript.AddMessage(messageAI);
                                         //AI Immediate message
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
-                                            Message message = GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
+                                            GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
                                                 dataInput.textOrigin, actor.arc.name), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
-                                            GameManager.instance.dataScript.AddMessage(message);
                                         }
                                         //Coward trait -> gets Stressed everytime they lose invisibility
                                         if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)

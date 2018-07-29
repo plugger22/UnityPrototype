@@ -2830,9 +2830,7 @@ public class ActorManager : MonoBehaviour
                             //message
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
-                            Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID,
-                                GameManager.instance.globalScript.sideResistance);
-                            if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                            GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, globalResistance);
                             //Process any other effects, if acquisition was successfull, ignore otherwise
                             Action action = actorCurrent.arc.nodeAction;
                             Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
@@ -2952,9 +2950,7 @@ public class ActorManager : MonoBehaviour
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
-                        Message message = GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID,
-                            GameManager.instance.globalScript.sideAuthority);
-                        if (message != null) { GameManager.instance.dataScript.AddMessage(message); }
+                        GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, globalAuthority);
                         //actor successfully recruited
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
@@ -3010,13 +3006,14 @@ public class ActorManager : MonoBehaviour
     {
         bool proceedFlag;
         StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         string outputMsg = "Unknown";
         if (actor != null)
         {
             //trait -> Team Player (avoids conflicts)
             if (actor.CheckTraitEffect(actorConflictNone) == false)
             {
-                GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+                
                 GlobalType typeGood = GameManager.instance.globalScript.typeGood;
                 List<ActorConflict> listSelectionPool = new List<ActorConflict>();
                 Dictionary<int, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
@@ -3151,8 +3148,7 @@ public class ActorManager : MonoBehaviour
 
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1})", actor.arc.name, outputMsg);
-                                Message message = GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, actorConflict.conflictID, GameManager.instance.sideScript.PlayerSide);
-                                GameManager.instance.dataScript.AddMessage(message);
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, actorConflict.conflictID, playerSide);
                                 //
                                 // - - - Effect - - -
                                 //
@@ -3201,8 +3197,7 @@ public class ActorManager : MonoBehaviour
                                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                                Message message = GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, actorConflict.conflictID, GameManager.instance.sideScript.PlayerSide);
-                                GameManager.instance.dataScript.AddMessage(message);
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, actorConflict.conflictID, playerSide);
                             }
                         }
                         else
@@ -3212,8 +3207,7 @@ public class ActorManager : MonoBehaviour
                             builder.AppendFormat("{0}{1} Nothing happens{2}", "\n", colourGood, colourEnd);
                             //message
                             string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                            Message message = GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, 0, GameManager.instance.sideScript.PlayerSide);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, 0, playerSide);
                         }
                     }
                     else { Debug.LogWarning("No records in dictOfActorConflicts"); }
@@ -3228,8 +3222,7 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                 //message
                 string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                Message message = GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, 0, GameManager.instance.sideScript.PlayerSide);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, 0, playerSide);
             }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
@@ -3286,8 +3279,7 @@ public class ActorManager : MonoBehaviour
                     { outputMsg = string.Format("{0}{1} killed by {2}{3}", colourBad, actorVictim.arc.name, actorKiller.arc.name, colourEnd); }
                     //victim message
                     string msgText = string.Format("{0} has been killed by {1}", actorVictim.arc.name, actorKiller.arc.name);
-                    Message message = GameManager.instance.messageScript.ActorStatus(msgText, actorVictim.actorID, side, true);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.ActorStatus(msgText, actorVictim.actorID, side, true);
                 }
                 else { outputMsg = string.Format("{0}{1} failed to kill somebody{2}", colourNeutral, actorKiller.arc.name, colourEnd); }
             }
@@ -3507,8 +3499,7 @@ public class ActorManager : MonoBehaviour
                                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                         //message -> status change
                                         string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
-                                        Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, globalResistance, true);
-                                        GameManager.instance.dataScript.AddMessage(message);
+                                        GameManager.instance.messageScript.ActorStatus(text, actor.actorID, globalResistance, true);
                                         //check if actor has stressed condition
                                         if (actor.CheckConditionPresent(conditionStressed) == true)
                                         {
@@ -3516,8 +3507,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 //message -> condition change
                                                 text = string.Format("{0}, {1}, is no longer Stressed (Lie Low)", actor.arc.name, actor.actorName);
-                                                message = GameManager.instance.messageScript.ActorCondition(text, actor.actorID, globalResistance, true);
-                                                GameManager.instance.dataScript.AddMessage(message);
+                                                GameManager.instance.messageScript.ActorCondition(text, actor.actorID, globalResistance, true);
                                             }
                                         }
                                     }
@@ -3531,8 +3521,7 @@ public class ActorManager : MonoBehaviour
                                     actor.tooltipStatus = ActorTooltip.None;
                                     GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                    Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalResistance, true);
-                                    GameManager.instance.dataScript.AddMessage(messageBreakdown);
+                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalResistance, true);
                                     break;
                             }
                         }
@@ -3570,8 +3559,7 @@ public class ActorManager : MonoBehaviour
                 if (listOfBadConditions.Count > 0)
                 {
                     //warning message
-                    Message message = GameManager.instance.messageScript.GeneralWarning("Your subordinates are considering resigning (over your status)");
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GeneralWarning("Your subordinates are considering resigning (over your status)");
                 }
                 //
                 // - - - loop Active actors - - -
@@ -3647,8 +3635,7 @@ public class ActorManager : MonoBehaviour
                 if (listOfBadConditions.Count > 0)
                 {
                     //warning message
-                    Message message = GameManager.instance.messageScript.GeneralWarning("Your subordinates are considering resigning (over your status)");
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GeneralWarning("Your subordinates are considering resigning (over your status)");
                 }
                 //loop actors
                 for (int i = 0; i < arrayOfActors.Length; i++)
@@ -3754,8 +3741,7 @@ public class ActorManager : MonoBehaviour
                 isResolved = true;
                 //message
                 string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
-                Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
             }
             else
             { TraitLogMessage(actor, "to avoid being bought-off"); }
@@ -3776,8 +3762,7 @@ public class ActorManager : MonoBehaviour
                     StringBuilder builder = new StringBuilder();
                     //message
                     string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                    Message message = GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {
@@ -3798,8 +3783,7 @@ public class ActorManager : MonoBehaviour
                                 if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                                 {
                                     string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
-                                    Message messageSecret = GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
-                                    GameManager.instance.dataScript.AddMessage(messageSecret);
+                                    GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
                                 }
                             }
                         }
@@ -3819,8 +3803,7 @@ public class ActorManager : MonoBehaviour
                 //warning message
                 string textWarning = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
                     actor.blackmailTimer != 1 ? "s" : "");
-                Message message = GameManager.instance.messageScript.GeneralWarning(textWarning);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.GeneralWarning(textWarning);
             }
         }
         return text;
@@ -4018,8 +4001,7 @@ public class ActorManager : MonoBehaviour
                                     actor.tooltipStatus = ActorTooltip.None;
                                     GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                    Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalAuthority, true);
-                                    GameManager.instance.dataScript.AddMessage(messageBreakdown);
+                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, actor.actorID, globalAuthority, true);
                                     break;
                             }
                         }
@@ -4047,8 +4029,7 @@ public class ActorManager : MonoBehaviour
             GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
             //message (public)
             string text = string.Format("{0}, {1}, has suffered a Breakdown (Stressed)", actor.actorName, actor.arc.name);
-            Message message = GameManager.instance.messageScript.ActorStatus(text, actor.actorID, side, true);
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.messageScript.ActorStatus(text, actor.actorID, side, true);
         }
         else { Debug.LogError("Invalid actor (Null)"); }
     }
@@ -4073,8 +4054,7 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
-                        Message messageBreakdown = GameManager.instance.messageScript.ActorStatus(textBreakdown, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
-                        GameManager.instance.dataScript.AddMessage(messageBreakdown);
+                        GameManager.instance.messageScript.ActorStatus(textBreakdown, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                         //update AI side tab status
                         GameManager.instance.aiScript.UpdateSideTabData();
                         break;
@@ -4094,8 +4074,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             //message -> status change
                             string text = string.Format("{0} has automatically reactivated", playerName);
-                            Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, globalResistance, true);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, globalResistance, true);
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
                             {
@@ -4103,8 +4082,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //message -> condition change
                                     text = string.Format("{0} is no longer Stressed (Lie Low)", playerName);
-                                    message = GameManager.instance.messageScript.ActorCondition(text, GameManager.instance.playerScript.actorID, globalResistance, true);
-                                    GameManager.instance.dataScript.AddMessage(message);
+                                    GameManager.instance.messageScript.ActorCondition(text, GameManager.instance.playerScript.actorID, globalResistance, true);
                                 }
                             }
                         }
@@ -4133,8 +4111,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                 //message (public)
                                 string text = "Player has suffered a Breakdown (Stressed)";
-                                Message message = GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
-                                GameManager.instance.dataScript.AddMessage(message);
+                                GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                 text = string.Format("Player Stress check FAILED -> need < {0}, rolled {1}", breakdownChance, rnd);

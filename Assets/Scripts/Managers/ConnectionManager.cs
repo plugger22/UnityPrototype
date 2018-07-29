@@ -240,8 +240,7 @@ public class ConnectionManager : MonoBehaviour
             //message
             string descriptor = string.Format("ConnID {0}, Security Level now LOW (btwn nodeID's {1} & {2})",
                 connection.connID, connection.node1.nodeID, connection.node2.nodeID);
-            Message message = GameManager.instance.messageScript.DecisionConnection(descriptor, connection.connID, (int)ConnectionType.LOW);
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.messageScript.DecisionConnection(descriptor, connection.connID, (int)ConnectionType.LOW);
         }
         else
         { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }

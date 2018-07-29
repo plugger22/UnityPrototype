@@ -3279,11 +3279,9 @@ public class AIManager : MonoBehaviour
         }
         //admin
         string msgText = string.Format("Authority implements {0} policy city wide", policyName);
-        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure(msgText);
         msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyName);
-        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         return true;
     }
 
@@ -3342,11 +3340,9 @@ public class AIManager : MonoBehaviour
         }
         //admin
         string msgText = string.Format("Authority implements {0} policy city wide", task.name0);
-        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure(msgText);
         msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.name, loyaltyChange, task.name0);
-        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         return true;
     }
 
@@ -3388,8 +3384,7 @@ public class AIManager : MonoBehaviour
             numOfUnsuccessfulResourceRequests++;
             amount = 0;
         }
-        Message message = GameManager.instance.messageScript.DecisionRequestResources(text, globalAuthority, amount);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.DecisionRequestResources(text, globalAuthority, amount);
         return isSuccess;
     }
 
@@ -3474,8 +3469,7 @@ public class AIManager : MonoBehaviour
         else
         { msgText = "Request for Team DENIED"; }
         //message
-        Message message = GameManager.instance.messageScript.DecisionRequestTeam(msgText, teamID);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.DecisionRequestTeam(msgText, teamID);
         return isDone;
     }
 
@@ -3491,8 +3485,7 @@ public class AIManager : MonoBehaviour
         { timerTraceBack = aiCounterMeasureTimer * 2; }
         else { timerTraceBack = aiCounterMeasureTimer; }
         //Message
-        Message message = GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack), timerTraceBack);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack), timerTraceBack);
         return isTraceBack;
     }
 
@@ -3508,8 +3501,7 @@ public class AIManager : MonoBehaviour
         { timerScreamer = aiCounterMeasureTimer * 2; }
         else { timerScreamer = aiCounterMeasureTimer; }
         //Message
-        Message message = GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer), timerScreamer);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer), timerScreamer);
         return isScreamer;
     }
 
@@ -3525,8 +3517,7 @@ public class AIManager : MonoBehaviour
         { timerOffline = aiCounterMeasureTimer * 2; }
         else { timerOffline = aiCounterMeasureTimer; }
         //Message
-        Message message = GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline), timerOffline);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline), timerOffline);
         return isOffline;
     }
 
@@ -3540,8 +3531,7 @@ public class AIManager : MonoBehaviour
         aiSecurityProtocolLevel++;
         //Message
         string msgText = string.Format("AI increases SECURITY PROTOCOL to level {0}", aiSecurityProtocolLevel);
-        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText, -1, aiSecurityProtocolLevel);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, -1, aiSecurityProtocolLevel);
         return true;
     }
 
@@ -3682,8 +3672,7 @@ public class AIManager : MonoBehaviour
         UpdateSideTabData();
         //message
         Debug.LogFormat("[Aim] AIManager.cs -> RebootCommence: rebootTimer set to {0}{1}", rebootTimer, "\n");
-        Message message = GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer);
         //reset any active ai countermeasures
         if (isTraceBack == true)
         { CancelTraceBack(); }
@@ -3707,8 +3696,7 @@ public class AIManager : MonoBehaviour
         //reset Alert status to low
         aiAlertStatus = Priority.Low;
         //message
-        Message message = GameManager.instance.messageScript.AIReboot("AI completes Rebooting Security Systems", hackingCurrentCost, rebootTimer);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AIReboot("AI completes Rebooting Security Systems", hackingCurrentCost, rebootTimer);
     }
 
     /// <summary>
@@ -3765,8 +3753,7 @@ public class AIManager : MonoBehaviour
             {
                 //warning notification
                 msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
-                Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.GeneralWarning(msgText);
                 Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerPolicy now {0}{1}", timerPolicy, "\n");
             }
         }
@@ -3826,8 +3813,7 @@ public class AIManager : MonoBehaviour
                             traceBackDelay = 2;
                             //Message
                             string textLow = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            Message messageLow = GameManager.instance.messageScript.AIAlertStatus(textLow, chance, rnd);
-                            GameManager.instance.dataScript.AddMessage(messageLow);
+                            GameManager.instance.messageScript.AIAlertStatus(textLow, chance, rnd);
                             break;
                         case Priority.Medium:
                             aiAlertStatus = Priority.High;
@@ -3835,8 +3821,7 @@ public class AIManager : MonoBehaviour
                             traceBackDelay = 1;
                             //Message
                             string textMedium = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            Message messageMedium = GameManager.instance.messageScript.AIAlertStatus(textMedium, chance, rnd);
-                            GameManager.instance.dataScript.AddMessage(messageMedium);
+                            GameManager.instance.messageScript.AIAlertStatus(textMedium, chance, rnd);
                             break;
                         case Priority.High:
                             //stays High (auto reset to Low by RebootComplete) -> Trigger Reboot 
@@ -3845,8 +3830,7 @@ public class AIManager : MonoBehaviour
                             aiAlertStatus = Priority.Critical;
                             //Message
                             string textHigh = "AI detects hacking activity. AlertStatus now CRITICAL";
-                            Message messageHigh = GameManager.instance.messageScript.AIAlertStatus(textHigh, chance, rnd);
-                            GameManager.instance.dataScript.AddMessage(messageHigh);
+                            GameManager.instance.messageScript.AIAlertStatus(textHigh, chance, rnd);
                             RebootCommence();
                             break;
                         default:
@@ -3878,13 +3862,11 @@ public class AIManager : MonoBehaviour
                             {
                                 immediateFlagResistance = true;
                                 text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
-                                Message messageImmediate = GameManager.instance.messageScript.AIImmediateActivity(text, globalResistance, GameManager.instance.nodeScript.nodePlayer, -1);
-                                GameManager.instance.dataScript.AddMessage(messageImmediate);
+                                GameManager.instance.messageScript.AIImmediateActivity(text, globalResistance, GameManager.instance.nodeScript.nodePlayer, -1);
                             }
                             //AI notification
                             text = "AI Hacking attempt detected (TraceBack)";
-                            Message messageDetected = GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);
-                            GameManager.instance.dataScript.AddMessage(messageDetected);
+                            GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);
                         }
                         else
                         {
@@ -4148,8 +4130,7 @@ public class AIManager : MonoBehaviour
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
         GameManager.instance.playerScript.Renown = renown;
         //message
-        Message message = GameManager.instance.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, true);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, true);
     }
 
 
@@ -4400,8 +4381,7 @@ public class AIManager : MonoBehaviour
         isTraceBack = false;
         timerTraceBack = -1;
         //message
-        Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure TRACEBACK Cancelled");
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure TRACEBACK Cancelled");
     }
 
     /// <summary>
@@ -4413,8 +4393,7 @@ public class AIManager : MonoBehaviour
         isScreamer = false;
         timerScreamer = -1;
         //message
-        Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure SCREAMER Cancelled");
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure SCREAMER Cancelled");
     }
 
     /// <summary>
@@ -4426,8 +4405,7 @@ public class AIManager : MonoBehaviour
         isOffline = false;
         timerOffline = -1;
         //message
-        Message message = GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure OFFLINE Cancelled");
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure("AI Countermeasure OFFLINE Cancelled");
     }
 
     /// <summary>
@@ -4444,11 +4422,9 @@ public class AIManager : MonoBehaviour
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         //admin
         string msgText = string.Format("{0} policy is no longer in effect", policyName);
-        Message message = GameManager.instance.messageScript.AICounterMeasure(msgText);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICounterMeasure(msgText);
         msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.name, policyEffectLoyalty, policyName);
-        message = GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
         //reset vars
         isPolicy = false;
         timerPolicy = -1;

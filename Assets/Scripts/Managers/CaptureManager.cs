@@ -123,8 +123,7 @@ public class CaptureManager : MonoBehaviour
         { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
         builder.Append(string.Format("{0}Player has been Captured{1}{2}{3}", colourBad, colourEnd, "\n", "\n"));
         //message
-        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.teamID);
-        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.teamID);
         //update node trackers
         GameManager.instance.nodeScript.nodePlayer = -1;
         GameManager.instance.nodeScript.nodeCaptured = details.node.nodeID;
@@ -204,9 +203,7 @@ public class CaptureManager : MonoBehaviour
         string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", details.actor.actorName, details.node.nodeName, details.node.Arc.name);
         builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name, colourEnd, "\n", "\n"));
         //message
-        Message message = GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.teamID, details.actor.actorID);
-        GameManager.instance.dataScript.AddMessage(message);
-
+        GameManager.instance.messageScript.AICapture(text, details.node.nodeID, details.team.teamID, details.actor.actorID);
         //raise city loyalty
         int cause = GameManager.instance.cityScript.CityLoyalty;
         cause += actorCaptured;
@@ -272,8 +269,7 @@ public class CaptureManager : MonoBehaviour
         if (node != null)
         {
             string text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
-            Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, GameManager.instance.playerScript.actorID);
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.messageScript.AIRelease(text, nodeID, GameManager.instance.playerScript.actorID);
             //player released outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
@@ -321,8 +317,7 @@ public class CaptureManager : MonoBehaviour
                 GameManager.instance.actorScript.numOfActiveActors++;
                 //message
                 string text = string.Format("{0} released from captivity", details.actor.actorName);
-                Message message = GameManager.instance.messageScript.AIRelease(text, nodeID, details.actor.actorID);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.AIRelease(text, nodeID, details.actor.actorID);
                 //player released outcome window
                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                 {

@@ -405,8 +405,7 @@ public class GearManager : MonoBehaviour
                                 {
                                     //let player know that gear will be available
                                     string msgText = string.Format("{0} gear held by {1}, available next turn", gear.name, actor.arc.name);
-                                    Message message = GameManager.instance.messageScript.GearAvailable(msgText, gear.gearID, actor.actorID);
-                                    GameManager.instance.dataScript.AddMessage(message);
+                                    GameManager.instance.messageScript.GearAvailable(msgText, gear.gearID, actor.actorID);
                                 }
                             //grace period exceeded
                             if (timer > actorGearGracePeriod)
@@ -436,8 +435,7 @@ public class GearManager : MonoBehaviour
                                         gear.name, actor.arc.name,  chance, traitName, rnd, "\n");
                                     //message
                                     string msgText = string.Format("{0} gear lost by {1}, {2}{3}", gear.name, actor.actorName, actor.arc.name, traitName);
-                                    Message message = GameManager.instance.messageScript.GearLost(msgText, gear.gearID, actor.actorID);
-                                    GameManager.instance.dataScript.AddMessage(message);
+                                    GameManager.instance.messageScript.GearLost(msgText, gear.gearID, actor.actorID);
                                     //random
                                     msgText = string.Format("Gear {0} LOST, need < {1}, rolled {2}", gear.name, chance, rnd);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
@@ -1073,18 +1071,16 @@ public class GearManager : MonoBehaviour
                                 else { isNewActionActor = true; }
                                 //message
                                 string textMsg;
-                                Message messageGear;
                                 if (isPlayer == true)
                                 {
                                     textMsg = string.Format("{0} ({1}) has been acquired ( by PLAYER)", gear.name, gear.type.name);
-                                    messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
+                                    GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID);
                                 }
                                 else
                                 {
                                     textMsg = string.Format("{0} ({1}) has been acquired ( by {2})", gear.name, gear.type.name, actor.arc.name);
-                                    messageGear = GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID, actor.actorID);
+                                    GameManager.instance.messageScript.GearObtained(textMsg, node.nodeID, gear.gearID, actor.actorID);
                                 }
-                                if (messageGear != null) { GameManager.instance.dataScript.AddMessage(messageGear); }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;
                                 EffectDataInput dataInput = new EffectDataInput();
@@ -1193,8 +1189,7 @@ public class GearManager : MonoBehaviour
                 gear.reasonUsed = string.Format("Used to {0}", descriptorUsedTo);
                 //message
                 string msgText = string.Format("{0} used to {1}", gear.name, descriptorUsedTo);
-                Message message = GameManager.instance.messageScript.GearUsed(msgText, gear.gearID);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.GearUsed(msgText, gear.gearID);
             }
             else { Debug.LogWarning("Invalid descriptorUsedTo parameter (Null)"); }
         }
@@ -1214,8 +1209,7 @@ public class GearManager : MonoBehaviour
         GameManager.instance.playerScript.Renown = renown;
         //message
         string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
-        Message messageRenown = GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
-        if (messageRenown != null) { GameManager.instance.dataScript.AddMessage(messageRenown); }
+        GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
     }

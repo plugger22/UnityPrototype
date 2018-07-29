@@ -268,8 +268,7 @@ public class FactionManager : MonoBehaviour
                 supportZeroTimer = factionFirePlayerTimer;
                 //message
                 string msgText = string.Format("Faction support Zero. Faction will FIRE you in {0} turn{1}", supportZeroTimer, supportZeroTimer != 1 ? "s" : "");
-                Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.messageScript.GeneralWarning(msgText);
             }
             else
             {
@@ -291,8 +290,7 @@ public class FactionManager : MonoBehaviour
                 {
                     //message
                     string msgText = string.Format("Faction support Zero. Faction will FIRE you in {0} turn{1}", supportZeroTimer, supportZeroTimer != 1 ? "s" : "");
-                    Message message = GameManager.instance.messageScript.GeneralWarning(msgText);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GeneralWarning(msgText);
                 }
             }
         }

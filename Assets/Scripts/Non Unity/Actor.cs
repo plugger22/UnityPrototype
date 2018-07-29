@@ -208,8 +208,7 @@ namespace gameAPI
                         }
                         //message
                         string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
-                        Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
-                        GameManager.instance.dataScript.AddMessage(message);
+                        GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
                     }
                 }
             }
@@ -265,8 +264,7 @@ namespace gameAPI
                             listOfConditions.RemoveAt(i);
                             //message
                             string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.name);
-                            Message message = GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
-                            GameManager.instance.dataScript.AddMessage(message);
+                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
                             return true;
                         }
                     }
@@ -314,8 +312,7 @@ namespace gameAPI
                         listOfSecrets.Add(secret);
                         //message
                         string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
-                        Message message = GameManager.instance.messageScript.ActorSecret(msgText, actorID, secret.secretID);
-                        GameManager.instance.dataScript.AddMessage(message);
+                        GameManager.instance.messageScript.ActorSecret(msgText, actorID, secret.secretID);
                     }
                     else { Debug.LogWarning("Secret NOT added as no space available"); }
                 }
@@ -486,8 +483,7 @@ namespace gameAPI
                     { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gearOld.name, gearOld.gearID); }
                     //let player know that gear has been Lost
                     string msgText = string.Format("{0} ({1}), has been GIVEN TO HQ by {2}", gearOld.name, gearOld.type.name, arc.name);
-                    Message message = GameManager.instance.messageScript.GearLost(msgText, gearOld.gearID, actorID);
-                    GameManager.instance.dataScript.AddMessage(message);
+                    GameManager.instance.messageScript.GearLost(msgText, gearOld.gearID, actorID);
                 }
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
             }
