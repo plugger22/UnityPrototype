@@ -2801,6 +2801,10 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Add itemData to system
+    /// </summary>
+    /// <param name="data"></param>
     public void AddItemData(ItemData data)
     {
         if (data != null)

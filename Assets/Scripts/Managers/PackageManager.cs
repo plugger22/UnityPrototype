@@ -273,5 +273,6 @@ namespace packageAPI
         public string bottomText;
         public Image sprite;
         public ItemPriority priority;
+        public GlobalSide side;
     }
 }
