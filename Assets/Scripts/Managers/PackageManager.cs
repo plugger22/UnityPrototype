@@ -221,22 +221,11 @@ namespace packageAPI
     /// </summary>
     public class MainInfoData
     {
-        public List<ItemData> listOfData_0;         //list of strings (one per line) for main tab
-        public List<ItemData> listOfData_1;         //list of strings (one per line) for HQ tab
-        public List<ItemData> listOfData_2;         //list of strings (one per line) for People tab
-        public List<ItemData> listOfData_3;         //list of ItemData (one per line) for Random tab
-        public List<ItemData> listOfData_4;         //list of strings (one per line) for Ongoing Effects tab
 
-        public List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];
+        public List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
 
         public MainInfoData()
         {
-            listOfData_0 = new List<ItemData>();
-            listOfData_1 = new List<ItemData>();
-            listOfData_2 = new List<ItemData>();
-            listOfData_3 = new List<ItemData>();
-            listOfData_4 = new List<ItemData>();
-
             //initialise arrayOfLists
             for (int i = 0; i < (int)ItemTab.Count; i++)
             { arrayOfItemData[i] = new List<ItemData>(); }
@@ -248,12 +237,6 @@ namespace packageAPI
         /// <param name="dataCopy"></param>
         public MainInfoData(MainInfoData dataCopy)
         {
-            listOfData_0 = new List<ItemData>(dataCopy.listOfData_0);
-            listOfData_1 = new List<ItemData>(dataCopy.listOfData_1);
-            listOfData_2 = new List<ItemData>(dataCopy.listOfData_2);
-            listOfData_3 = new List<ItemData>(dataCopy.listOfData_3);
-            listOfData_4 = new List<ItemData>(dataCopy.listOfData_4);
-
             for (int i = 0; i < (int)ItemTab.Count; i++)
             { arrayOfItemData[i] = new List<ItemData>(dataCopy.arrayOfItemData[i]); }
         }
@@ -263,12 +246,6 @@ namespace packageAPI
         /// </summary>
         public void Reset()
         {
-            listOfData_0.Clear();
-            listOfData_1.Clear();
-            listOfData_2.Clear();
-            listOfData_3.Clear();
-            listOfData_4.Clear();
-
             for (int i = 0; i < (int)ItemTab.Count; i++)
             { arrayOfItemData[i].Clear(); }
         }

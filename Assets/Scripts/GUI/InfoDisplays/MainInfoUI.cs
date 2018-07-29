@@ -99,12 +99,9 @@ public class MainInfoUI : MonoBehaviour
     private int currentTabIndex = -1;
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
-    //data sets (one per tab)
-    /*private Dictionary<int, List<String>> dictOfStringData;                   //cached data, one entry for each page for current turn
-    private Dictionary<int, List<ItemData>> dictOfItemData;*/
-    private List<ItemData>[] arrayOfItemData= new List<ItemData>[(int)ItemTab.Count];
-    /*List<string> listOfCurrentPageData;                                     //current data for currently displayed page*/
-    List<ItemData> listOfCurrentPageItemData;
+    //ItemData
+    private List<ItemData>[] arrayOfItemData= new List<ItemData>[(int)ItemTab.Count];       //One dataset for each tab (excluding Help tab)
+    List<ItemData> listOfCurrentPageItemData;                                               //current data for currently displayed page
 
     //colours
     string colourDefault;
@@ -152,9 +149,6 @@ public class MainInfoUI : MonoBehaviour
         tabPassiveArray = new Image[numOfTabs];
         for (int i = 0; i < (int)ItemTab.Count; i++)
         { arrayOfItemData[i] = new List<ItemData>(); }
-        /*dictOfStringData = new Dictionary<int, List<String>>();
-        dictOfItemData = new Dictionary<int, List<ItemData>>();
-        listOfCurrentPageData = new List<string>();*/
         listOfCurrentPageItemData = new List<ItemData>();
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
@@ -453,71 +447,6 @@ public class MainInfoUI : MonoBehaviour
     }
 
 
-    /*/// <summary>
-    /// sub Method to display a particular page drawing from cached data in dictOfData
-    /// </summary>
-    /// <param name="tab"></param>
-    private void DisplayPage(int tabIndex)
-    {
-        //clear out current data
-        listOfCurrentPageData.Clear();
-        //get data
-        if (dictOfStringData.ContainsKey(tabIndex) == true)
-        { listOfCurrentPageData.AddRange(dictOfStringData[tabIndex]); }
-        //display routine
-        if (listOfCurrentPageData != null)
-        {
-            numOfItemsCurrent = listOfCurrentPageData.Count;
-            if (numOfItemsCurrent > 0)
-            {
-                //update max number of items
-                numOfMaxItem = numOfItemsCurrent;
-                //populate current messages for the main tab
-                for (int index = 0; index < arrayItemText.Length; index++)
-                {
-                    if (index < numOfItemsCurrent)
-                    {
-                        //populate text and set item to active
-                        arrayItemText[index].text = listOfCurrentPageData[index];
-                        arrayItemMain[index].gameObject.SetActive(true);
-                    }
-                    else if (index < numOfItemsPrevious)
-                    {
-                        //efficient -> only disables items that were previously active, not the whole set
-                        arrayItemText[index].text = "";
-                        arrayItemMain[index].gameObject.SetActive(false);
-                    }
-                }
-            }
-            else
-            {
-                //no data, blank previous items (not necessarily all), disable line
-                for (int index = 0; index < numOfItemsPrevious; index++)
-                {
-                    arrayItemText[index].text = "";
-                    arrayItemMain[index].gameObject.SetActive(false);
-                }
-
-            }
-            //update previous count to current
-            numOfItemsPrevious = numOfItemsCurrent;
-            //set header
-            SetPageHeader(numOfItemsCurrent);
-        }
-        else { Debug.LogWarning("Invalid MainInfoData.listOfMainText (Null)"); }
-        //manually activate / deactivate scrollBar as needed (because you've got daactivated objects in the scroll list the bar shows regardless unless you override here)
-        if (numOfItemsCurrent <= numOfVisibleItems)
-        {
-            scrollRect.verticalScrollbar = null;
-            scrollBarObject.SetActive(false);
-        }
-        else
-        {
-            scrollBarObject.SetActive(true);
-            scrollRect.verticalScrollbar = scrollBar;
-        }
-    }*/
-
     /// <summary>
     /// sub Method to display a particular page drawing from cached data in dictOfItemData
     /// </summary>
@@ -642,27 +571,6 @@ public class MainInfoUI : MonoBehaviour
         currentTabIndex = tabIndex;
     }
 
-    /*/// <summary>
-    /// called by clicking on an item on LHS which will then show details of the item on the RHS
-    /// </summary>
-    /// <param name="itemIndex"></param>
-    private void ShowDetails(int itemIndex)
-    {
-        //debug
-        int rnd = UnityEngine.Random.Range(0, 1000);
-        details_text_top.text = string.Format("itemIndex {0}, Random {1}", itemIndex, rnd);
-        //remove highlight
-        if (highlightIndex != itemIndex)
-        {
-            //reset currently highlighted back to default
-            if (highlightIndex > -1)
-            { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageData[itemIndex], colourEnd); }
-            highlightIndex = itemIndex;
-            //highlight item -> show as yellow
-            arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageData[itemIndex], colourEnd);
-        }
-    }*/
-
     /// <summary>
     /// ItemData details
     /// </summary>
@@ -679,10 +587,10 @@ public class MainInfoUI : MonoBehaviour
             {
                 //reset currently highlighted back to default
                 if (highlightIndex > -1)
-                { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageItemData[itemIndex], colourEnd); }
+                { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageItemData[itemIndex].itemText, colourEnd); }
                 highlightIndex = itemIndex;
                 //highlight item -> show as yellow
-                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageItemData[itemIndex], colourEnd);
+                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageItemData[itemIndex].itemText, colourEnd);
             }
         }
         else { Debug.LogWarningFormat("Invalid ItemData for listOfCurrentPageItemData[{0}]", itemIndex); }

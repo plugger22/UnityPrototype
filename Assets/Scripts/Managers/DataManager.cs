@@ -120,8 +120,6 @@ public class DataManager : MonoBehaviour
 
     //ItemData
     private MainInfoData currentInfoData = new MainInfoData();                                      //rolling current turn MainInfoData package
-    private List<ItemData> listOfRandomLatestMessages = new List<ItemData>();                                 //all latest random messages
-    private List<string> listOfArchiveLatestMessages = new List<string>();                                //all latest archived messages
     private List<ItemData>[,] arrayOfItemDataByPriority = new List<ItemData>[(int)ItemTab.Count, 3];
 
     //Adjustments
@@ -289,72 +287,6 @@ public class DataManager : MonoBehaviour
     //
     // - - - Info Flow (Notifications)- - - 
     //
-
-    /* /// <summary>
-     /// Master method to update current MainInfoData package with all relevant data and to send it to calling method in TurnManager.cs & archive in dictionaryOfNotifications
-     /// </summary>
-     /// <returns></returns>
-     public MainInfoData UpdateCurrentNotifications()
-     {
-         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-         //empty out data package prior to updating
-         currentInfoData.Reset();
-         //
-         // - - - current messages - - - 
-         //
-         Dictionary<int, Message> dictOfMessages = GetMessageDict(MessageCategory.Current);
-         List<string> listOfMessages = new List<string>();
-         if (dictOfMessages != null)
-         {
-             //populate current messages to pass to info app for display
-             foreach (var message in dictOfMessages)
-             {
-                 if (message.Value != null)
-                 {
-                     //player side message
-                     if (message.Value.side.level == playerSide.level)
-                     { listOfMessages.Add(message.Value.text); }
-                 }
-                 else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", message.Key); }
-             }
-         }
-         else { Debug.LogWarning("Invalid dictOfMessages (Null)"); }
-         currentInfoData.listOfData_0.AddRange(listOfMessages);
-         //add archived messages at the bottom
-         if (listOfArchiveLatestMessages.Count > 0)
-         {
-             currentInfoData.listOfData_0.AddRange(listOfArchiveLatestMessages);
-             //empty list ready for next set of messages
-             listOfArchiveLatestMessages.Clear();
-         }
-         //
-         // - - - random messages (latest) - - -
-         //
-         if (listOfRandomLatestMessages.Count > 0)
-         {
-             currentInfoData.listOfData_3.AddRange(listOfRandomLatestMessages);
-             //empty list ready for next set of messages
-             listOfRandomLatestMessages.Clear();
-         }
-
-         //
-         // - - - add History dataset for turn - - -
-         //
-         if (dictOfHistory != null)
-         {
-             //pass by value, not reference (otherwise duplicate data for each turn)
-             MainInfoData historyData = new MainInfoData(currentInfoData);
-             int turn = GameManager.instance.turnScript.Turn;
-             try
-             { dictOfHistory.Add(turn, historyData); }
-             catch (ArgumentNullException)
-             { Debug.LogError("Invalid currentInfoData (Null)"); }
-             catch (ArgumentException)
-             { Debug.LogErrorFormat("Duplicate record exists for MainInfoData turn {0}", turn); }
-         }
-         //send package to TurnManager.cs -> InitialiseInfoApp
-         return currentInfoData;
-     }*/
 
     /// <summary>
     /// Add itemData to arrayOfCurrentItemData according to tab and priorty
@@ -2769,9 +2701,6 @@ public class DataManager : MonoBehaviour
         {
             case MessageCategory.Archive:
                 dictOfMessages = dictOfArchiveMessages;
-                //exclude public messages (they have already been covered directly by dictOfCurrentMessages) to avoid repetition
-                if (message.isPublic == false)
-                { CheckMessageClearingHouse(message); }
                 break;
             case MessageCategory.Pending:
                 dictOfMessages = dictOfPendingMessages;
@@ -2842,32 +2771,6 @@ public class DataManager : MonoBehaviour
         }
         return successFlag;
     }
-
-    /// <summary>
-    /// checks incoming messages (into Archives) to see if they need to be hived off (copied) to a separate list for InfoApp display
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="category"></param>
-    private void CheckMessageClearingHouse(Message message)
-    {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        switch (message.type)
-        {
-            case MessageType.GENERAL:
-                switch(message.subType)
-                {
-                    case MessageSubType.General_Random:
-                        /*listOfRandomLatestMessages.Add(message.text);*/
-                        break;
-                }
-                break;
-            default:
-                if (playerSide.level == message.side.level)
-                { listOfArchiveLatestMessages.Add(message.text); }
-                break;
-        }
-    }
-
 
     /// <summary>
     /// Gets a message of a specified ID from the specified dictionary (category). Returns null if not found
