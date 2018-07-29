@@ -118,10 +118,11 @@ public class DataManager : MonoBehaviour
     private Queue<AITracker> queueRecentNodes = new Queue<AITracker>();
     private Queue<AITracker> queueRecentConnections = new Queue<AITracker>();
 
-    //Notifications
+    //ItemData
     private MainInfoData currentInfoData = new MainInfoData();                                      //rolling current turn MainInfoData package
     private List<ItemData> listOfRandomLatestMessages = new List<ItemData>();                                 //all latest random messages
     private List<string> listOfArchiveLatestMessages = new List<string>();                                //all latest archived messages
+    private List<ItemData>[,] arrayOfItemDataByPriority = new List<ItemData>[(int)ItemTab.Count, 3];
 
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
@@ -218,6 +219,12 @@ public class DataManager : MonoBehaviour
             Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
         }
         else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
+        //array Of ItemData
+        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+        {
+            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+            {  arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
+        }
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "DataManager");
     }
@@ -283,56 +290,117 @@ public class DataManager : MonoBehaviour
     // - - - Info Flow (Notifications)- - - 
     //
 
+    /* /// <summary>
+     /// Master method to update current MainInfoData package with all relevant data and to send it to calling method in TurnManager.cs & archive in dictionaryOfNotifications
+     /// </summary>
+     /// <returns></returns>
+     public MainInfoData UpdateCurrentNotifications()
+     {
+         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+         //empty out data package prior to updating
+         currentInfoData.Reset();
+         //
+         // - - - current messages - - - 
+         //
+         Dictionary<int, Message> dictOfMessages = GetMessageDict(MessageCategory.Current);
+         List<string> listOfMessages = new List<string>();
+         if (dictOfMessages != null)
+         {
+             //populate current messages to pass to info app for display
+             foreach (var message in dictOfMessages)
+             {
+                 if (message.Value != null)
+                 {
+                     //player side message
+                     if (message.Value.side.level == playerSide.level)
+                     { listOfMessages.Add(message.Value.text); }
+                 }
+                 else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", message.Key); }
+             }
+         }
+         else { Debug.LogWarning("Invalid dictOfMessages (Null)"); }
+         currentInfoData.listOfData_0.AddRange(listOfMessages);
+         //add archived messages at the bottom
+         if (listOfArchiveLatestMessages.Count > 0)
+         {
+             currentInfoData.listOfData_0.AddRange(listOfArchiveLatestMessages);
+             //empty list ready for next set of messages
+             listOfArchiveLatestMessages.Clear();
+         }
+         //
+         // - - - random messages (latest) - - -
+         //
+         if (listOfRandomLatestMessages.Count > 0)
+         {
+             currentInfoData.listOfData_3.AddRange(listOfRandomLatestMessages);
+             //empty list ready for next set of messages
+             listOfRandomLatestMessages.Clear();
+         }
+
+         //
+         // - - - add History dataset for turn - - -
+         //
+         if (dictOfHistory != null)
+         {
+             //pass by value, not reference (otherwise duplicate data for each turn)
+             MainInfoData historyData = new MainInfoData(currentInfoData);
+             int turn = GameManager.instance.turnScript.Turn;
+             try
+             { dictOfHistory.Add(turn, historyData); }
+             catch (ArgumentNullException)
+             { Debug.LogError("Invalid currentInfoData (Null)"); }
+             catch (ArgumentException)
+             { Debug.LogErrorFormat("Duplicate record exists for MainInfoData turn {0}", turn); }
+         }
+         //send package to TurnManager.cs -> InitialiseInfoApp
+         return currentInfoData;
+     }*/
+
     /// <summary>
-    /// Master method to update current MainInfoData package with all relevant data and to send it to calling method in TurnManager.cs & archive in dictionaryOfNotifications
+    /// Add itemData to arrayOfCurrentItemData according to tab and priorty
+    /// </summary>
+    /// <param name="data"></param>
+    public void AddItemData(ItemData data)
+    {
+        if (data != null)
+        {
+            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+            arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data);
+        }
+        else { Debug.LogWarning("Invalid ItemData (Null)"); }
+    }
+
+    /// <summary>
+    /// Master method to take all ItemData's for the turn, add them to the array of Lists by tab and priority, package them into a MainInfoData ready for MainInfoUI.cs
     /// </summary>
     /// <returns></returns>
-    public MainInfoData UpdateCurrentNotifications()
+    public MainInfoData UpdateCurrentItemData()
     {
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        List<ItemData> tempList = new List<ItemData>();
         //empty out data package prior to updating
         currentInfoData.Reset();
-        //
-        // - - - current messages - - - 
-        //
-        Dictionary<int, Message> dictOfMessages = GetMessageDict(MessageCategory.Current);
-        List<string> listOfMessages = new List<string>();
-        if (dictOfMessages != null)
+        //package up all three priorities for each tab into a single list and add to currentInfoData
+        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
         {
-            //populate current messages to pass to info app for display
-            foreach (var message in dictOfMessages)
-            {
-                if (message.Value != null)
-                {
-                    //player side message
-                    if (message.Value.side.level == playerSide.level)
-                    { listOfMessages.Add(message.Value.text); }
-                }
-                else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", message.Key); }
-            }
+            //add in order of priority -> High (top) / Med / Low (bottom)
+            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.High]);
+            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Medium]);
+            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Low]);
+            //add to current info data
+            currentInfoData.arrayOfItemData[outer].AddRange(tempList);
+            //check list length -> need to know if too long so I can adjust to accommodate max. possible
+            Debug.Assert(tempList.Count <= 20, string.Format("tempList has {0} records for tab {1}", tempList.Count, outer));
+            //empty out temp list ready for next tab data set
+            tempList.Clear();
         }
-        else { Debug.LogWarning("Invalid dictOfMessages (Null)"); }
-        currentInfoData.listOfData_0.AddRange(listOfMessages);
-        //add archived messages at the bottom
-        if (listOfArchiveLatestMessages.Count > 0)
+        //empty out array lists ready for next turn
+        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
         {
-            currentInfoData.listOfData_0.AddRange(listOfArchiveLatestMessages);
-            //empty list ready for next set of messages
-            listOfArchiveLatestMessages.Clear();
+            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+            { arrayOfItemDataByPriority[outer, inner].Clear(); }
         }
-        //
-        // - - - random messages (latest) - - -
-        //
-        if (listOfRandomLatestMessages.Count > 0)
-        {
-            currentInfoData.listOfData_3.AddRange(listOfRandomLatestMessages);
-            //empty list ready for next set of messages
-            listOfRandomLatestMessages.Clear();
-        }
-
-        //
-        // - - - add History dataset for turn - - -
-        //
+        // archive to History dict
         if (dictOfHistory != null)
         {
             //pass by value, not reference (otherwise duplicate data for each turn)
@@ -345,7 +413,6 @@ public class DataManager : MonoBehaviour
             catch (ArgumentException)
             { Debug.LogErrorFormat("Duplicate record exists for MainInfoData turn {0}", turn); }
         }
-        //send package to TurnManager.cs -> InitialiseInfoApp
         return currentInfoData;
     }
 
@@ -2801,28 +2868,6 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Add itemData to system
-    /// </summary>
-    /// <param name="data"></param>
-    public void AddItemData(ItemData data)
-    {
-        if (data != null)
-        {
-            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-            switch (data.priority)
-            {
-                case ItemPriority.Low:
-                    listOfRandomLatestMessages.Add(data);
-                    break;
-                    /*default:
-                        if (playerSide.level == message.side.level)
-                        { listOfArchiveLatestMessages.Add(message.text); }
-                        break;*/
-            }
-        }
-        else { Debug.LogWarning("Invalid ItemData (Null)"); }
-    }
 
     /// <summary>
     /// Gets a message of a specified ID from the specified dictionary (category). Returns null if not found

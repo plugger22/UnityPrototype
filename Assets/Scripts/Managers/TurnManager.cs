@@ -311,7 +311,7 @@ public class TurnManager : MonoBehaviour
     public void InitialiseInfoApp(GlobalSide playerSide)
     {
         MainInfoData data = new MainInfoData();
-        data = GameManager.instance.dataScript.UpdateCurrentNotifications();
+        data = GameManager.instance.dataScript.UpdateCurrentItemData();
         //turn on info App
         EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn");
     }

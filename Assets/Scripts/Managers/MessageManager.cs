@@ -139,6 +139,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Info Alert";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -169,6 +170,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Warning";
             data.bottomText = text;
             data.priority = ItemPriority.Medium;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -202,6 +204,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Random Result";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Random;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -236,6 +239,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Moved";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -268,6 +272,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gain Secret";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -302,6 +307,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Use Renown";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -339,6 +345,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Status Change";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -372,6 +379,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Spoken To";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -406,6 +414,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Condition Change";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -440,6 +449,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Blackmail";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -475,6 +485,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Learns Secret";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -512,6 +523,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Recruited";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -548,6 +560,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Relationship Conflict";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -712,6 +725,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Captured";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -747,6 +761,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Release from Capture";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -781,6 +796,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Hacking Detected";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -814,6 +830,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Reboot";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -847,6 +864,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Countermeasures";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -880,6 +898,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "AI Alert Status";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -918,6 +937,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Decision Made";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -953,6 +973,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Connection Security";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -987,6 +1008,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Request Resources";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1019,6 +1041,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Request Team";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1054,6 +1077,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Add Team";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1091,6 +1115,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Deploy Team";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1131,6 +1156,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Team Autorecalled";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1167,6 +1193,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Team Withdrawn";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1203,6 +1230,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Team Outcome";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1242,6 +1270,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Team Neutralised";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1283,6 +1312,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Give Gear";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1318,6 +1348,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Compromised";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1358,6 +1389,7 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Gear Used";
                 data.bottomText = text;
                 data.priority = ItemPriority.Low;
+                data.tab = ItemTab.Mail;
                 //add
                 GameManager.instance.dataScript.AddMessage(message);
                 GameManager.instance.dataScript.AddItemData(data);
@@ -1395,6 +1427,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Lost";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1430,6 +1463,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Available";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1465,6 +1499,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Obtained";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1510,6 +1545,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Attempt Target";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1547,6 +1583,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Target Contained";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1584,6 +1621,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Ongoing Effect";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1616,6 +1654,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Ongoing Effect Finished";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1653,6 +1692,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Faction Support";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1690,6 +1730,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "District Crisis";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1727,6 +1768,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "City Loyalty";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

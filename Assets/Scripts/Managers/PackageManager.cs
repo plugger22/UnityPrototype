@@ -227,6 +227,8 @@ namespace packageAPI
         public List<ItemData> listOfData_3;         //list of ItemData (one per line) for Random tab
         public List<ItemData> listOfData_4;         //list of strings (one per line) for Ongoing Effects tab
 
+        public List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];
+
         public MainInfoData()
         {
             listOfData_0 = new List<ItemData>();
@@ -234,6 +236,10 @@ namespace packageAPI
             listOfData_2 = new List<ItemData>();
             listOfData_3 = new List<ItemData>();
             listOfData_4 = new List<ItemData>();
+
+            //initialise arrayOfLists
+            for (int i = 0; i < (int)ItemTab.Count; i++)
+            { arrayOfItemData[i] = new List<ItemData>(); }
         }
 
         /// <summary>
@@ -247,6 +253,9 @@ namespace packageAPI
             listOfData_2 = new List<ItemData>(dataCopy.listOfData_2);
             listOfData_3 = new List<ItemData>(dataCopy.listOfData_3);
             listOfData_4 = new List<ItemData>(dataCopy.listOfData_4);
+
+            for (int i = 0; i < (int)ItemTab.Count; i++)
+            { arrayOfItemData[i] = new List<ItemData>(dataCopy.arrayOfItemData[i]); }
         }
 
         /// <summary>
@@ -259,6 +268,9 @@ namespace packageAPI
             listOfData_2.Clear();
             listOfData_3.Clear();
             listOfData_4.Clear();
+
+            for (int i = 0; i < (int)ItemTab.Count; i++)
+            { arrayOfItemData[i].Clear(); }
         }
     }
 
@@ -273,6 +285,7 @@ namespace packageAPI
         public string bottomText;
         public Image sprite;
         public ItemPriority priority;
+        public ItemTab tab;
         public GlobalSide side;
     }
 }

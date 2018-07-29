@@ -95,13 +95,14 @@ public class MainInfoUI : MonoBehaviour
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
     //hardwired tabs at top -> 6
-    private int numOfTabs = 6;
+    public int numOfTabs = 6;
     private int currentTabIndex = -1;
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
     //data sets (one per tab)
-    /*private Dictionary<int, List<String>> dictOfStringData;                   //cached data, one entry for each page for current turn*/
-    private Dictionary<int, List<ItemData>> dictOfItemData;
+    /*private Dictionary<int, List<String>> dictOfStringData;                   //cached data, one entry for each page for current turn
+    private Dictionary<int, List<ItemData>> dictOfItemData;*/
+    private List<ItemData>[] arrayOfItemData= new List<ItemData>[(int)ItemTab.Count];
     /*List<string> listOfCurrentPageData;                                     //current data for currently displayed page*/
     List<ItemData> listOfCurrentPageItemData;
 
@@ -149,9 +150,11 @@ public class MainInfoUI : MonoBehaviour
         arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
-        /*dictOfStringData = new Dictionary<int, List<String>>();*/
+        for (int i = 0; i < (int)ItemTab.Count; i++)
+        { arrayOfItemData[i] = new List<ItemData>(); }
+        /*dictOfStringData = new Dictionary<int, List<String>>();
         dictOfItemData = new Dictionary<int, List<ItemData>>();
-        /*listOfCurrentPageData = new List<string>();*/
+        listOfCurrentPageData = new List<string>();*/
         listOfCurrentPageItemData = new List<ItemData>();
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
@@ -442,43 +445,11 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="data"></param>
     private void UpdateData(MainInfoData data)
     {
-        /*//clear out dictionary
-        dictOfStringData.Clear();
-        //populate new data (excludes help)
-        if (data.listOfData_0 != null)
-        { dictOfStringData.Add(0, data.listOfData_0); }
-        else { Debug.LogWarning("Invaid data.listOfData_0 (Null)"); }
-        if (data.listOfData_1 != null)
-        { dictOfStringData.Add(1, data.listOfData_1); }
-        else { Debug.LogWarning("Invaid data.listOfData_1 (Null)"); }
-        if (data.listOfData_2 != null)
-        { dictOfStringData.Add(2, data.listOfData_2); }
-        else { Debug.LogWarning("Invaid data.listOfData_2 (Null)"); }
-        if (data.listOfData_3 != null)
-        { dictOfStringData.Add(3, data.listOfData_3); }
-        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }
-        if (data.listOfData_4 != null)
-        { dictOfStringData.Add(4, data.listOfData_4); }
-        else { Debug.LogWarning("Invaid data.listOfData_4 (Null)"); }*/
-
-        //clear out dictionary
-        dictOfItemData.Clear();
-        //populate new data (excludes help)
-        if (data.listOfData_0 != null)
-        { dictOfItemData.Add(0, data.listOfData_0); }
-        else { Debug.LogWarning("Invaid data.listOfData_0 (Null)"); }
-        if (data.listOfData_1 != null)
-        { dictOfItemData.Add(1, data.listOfData_1); }
-        else { Debug.LogWarning("Invaid data.listOfData_1 (Null)"); }
-        if (data.listOfData_2 != null)
-        { dictOfItemData.Add(2, data.listOfData_2); }
-        else { Debug.LogWarning("Invaid data.listOfData_2 (Null)"); }
-        if (data.listOfData_3 != null)
-        { dictOfItemData.Add(3, data.listOfData_3); }
-        else { Debug.LogWarning("Invaid data.listOfData_3 (Null)"); }
-        if (data.listOfData_4 != null)
-        { dictOfItemData.Add(4, data.listOfData_4); }
-        else { Debug.LogWarning("Invaid data.listOfData_4 (Null)"); }
+        for (int i = 0; i < (int)ItemTab.Count; i++)
+        {
+            arrayOfItemData[i].Clear();
+            arrayOfItemData[i].AddRange(data.arrayOfItemData[i]);
+        }
     }
 
 
@@ -553,11 +524,15 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="tab"></param>
     private void DisplayItemPage(int tabIndex)
     {
+        Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
         //clear out current data
         listOfCurrentPageItemData.Clear();
         //get data
-        if (dictOfItemData.ContainsKey(tabIndex) == true)
-        { listOfCurrentPageItemData.AddRange(dictOfItemData[tabIndex]); }
+
+        /*if (dictOfItemData.ContainsKey(tabIndex) == true)
+        { listOfCurrentPageItemData.AddRange(dictOfItemData[tabIndex]); }*/
+
+        listOfCurrentPageItemData.AddRange(arrayOfItemData[tabIndex]);
         //display routine
         if (listOfCurrentPageItemData != null)
         {

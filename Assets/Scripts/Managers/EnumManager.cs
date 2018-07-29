@@ -67,7 +67,8 @@
     //
     // - - - ItemData - - -
     //
-    public enum ItemPriority { Low, Medium, High }
+    public enum ItemPriority { Low, Medium, High, Count }                            //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
+    public enum ItemTab { Mail, Request, Meeting, Effects, Random, Count}            //PackageManager.cs -> MainInfoData array keyed off this (NOTE: 'Help' is not an active tab and is excluded)
 
     //
     // - - - Actors - - -
