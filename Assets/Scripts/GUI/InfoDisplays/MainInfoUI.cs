@@ -21,6 +21,7 @@ public class MainInfoUI : MonoBehaviour
     public Button buttonBack;
     public Button buttonForward;
     public Button buttonHelp;                       //bottom of RHS panel
+    public Button buttonDecision;                   //bottom of RHS panel
 
     [Header("LHS Miscellanous")]
     public TextMeshProUGUI page_header;
@@ -78,6 +79,8 @@ public class MainInfoUI : MonoBehaviour
     private ButtonInteraction buttonInteractionHome;
     private ButtonInteraction buttonInteractionBack;
     private ButtonInteraction buttonInteractionForward;
+    /*private ButtonInteraction buttonInteractionHelp;*/
+    private ButtonInteraction buttonInteractionDecision;
 
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
@@ -158,19 +161,24 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonForward != null, "Invalid buttonForward (Null)");
         Debug.Assert(buttonHelp != null, "Invalid buttonHelp (Null)");
+        Debug.Assert(buttonDecision != null, "Invalid buttonDecisions (Null)");
         //set button interaction events
         buttonInteractionClose = buttonClose.GetComponent<ButtonInteraction>();
         buttonInteractionHome = buttonHome.GetComponent<ButtonInteraction>();
         buttonInteractionBack = buttonBack.GetComponent<ButtonInteraction>();
         buttonInteractionForward = buttonForward.GetComponent<ButtonInteraction>();
+        /*buttonInteractionHelp = buttonHelp.GetComponent<ButtonInteraction>();*/
+        buttonInteractionDecision = buttonDecision.GetComponent<ButtonInteraction>();
         Debug.Assert(buttonInteractionClose != null, "Invalid buttonInteractionClose (Null)");
         Debug.Assert(buttonInteractionHome != null, "Invalid buttonInteractionHome (Null)");
         Debug.Assert(buttonInteractionBack != null, "Invalid buttonInteractionBack (Null)");
         Debug.Assert(buttonInteractionForward != null, "Invalid buttonInteractionForward (Null)");
-        buttonInteractionClose.SetEvent(EventType.MainInfoClose);
-        buttonInteractionHome.SetEvent(EventType.MainInfoHome);
-        buttonInteractionBack.SetEvent(EventType.MainInfoBack);
-        buttonInteractionForward.SetEvent(EventType.MainInfoForward);
+        /*Debug.Assert(buttonInteractionHelp != null, "Invalid buttonInteractionHelp (Null)");*/
+        Debug.Assert(buttonInteractionDecision != null, "Invalid buttonInteractionDecision (Null)");
+        buttonInteractionClose.SetButton(EventType.MainInfoClose);
+        buttonInteractionHome.SetButton(EventType.MainInfoHome);
+        buttonInteractionBack.SetButton(EventType.MainInfoBack);
+        buttonInteractionForward.SetButton(EventType.MainInfoForward);
         //scrollRect & ScrollBar
         Debug.Assert(scrollBackground != null, "Invalid scrollBackground (Null)");
         Debug.Assert(scrollBarObject != null, "Invalid scrollBarObject (Null)");
@@ -566,8 +574,11 @@ public class MainInfoUI : MonoBehaviour
             details_text_top.text = "";
             details_text_bottom.text = "";
         }
+        //hide both RHS buttons (help and decision)
+        buttonHelp.gameObject.SetActive(false);
+        buttonDecision.gameObject.SetActive(false);
         //redrawn main page
-       DisplayItemPage(tabIndex);
+        DisplayItemPage(tabIndex);
         //update indexes
         highlightIndex = -1;
         currentTabIndex = tabIndex;
@@ -586,6 +597,24 @@ public class MainInfoUI : MonoBehaviour
             details_text_bottom.text = data.bottomText;
             if (data.sprite != null)
             { details_image.sprite = data.sprite; }
+            //display button if event & data present
+            if (data.buttonEvent > EventType.None && data.buttonData != -1)
+            {
+                //set button event
+                buttonInteractionDecision.SetButton(data.buttonEvent, data.buttonData);
+                //hide help and make button active
+                buttonDecision.gameObject.SetActive(true);
+                buttonHelp.gameObject.SetActive(false);
+            }
+            else
+            {
+                //hide button and display help button
+
+                //set tooltip interaction -> TO DO
+
+                buttonDecision.gameObject.SetActive(false);
+                buttonHelp.gameObject.SetActive(true);
+            }
         //remove highlight
         if (highlightIndex != itemIndex)
             {

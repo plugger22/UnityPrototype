@@ -50,12 +50,12 @@ public class ModalTeamPicker : MonoBehaviour
         //confirm button event
         ButtonInteraction buttonInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
         if (buttonInteraction != null)
-        { buttonInteraction.SetEvent(EventType.ConfirmTeamChoice); }
+        { buttonInteraction.SetButton(EventType.ConfirmTeamChoice); }
         else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
         //cancel button event
         buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
         if (buttonInteraction != null)
-        { buttonInteraction.SetEvent(EventType.CloseTeamPicker); }
+        { buttonInteraction.SetButton(EventType.CloseTeamPicker); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
     }
 

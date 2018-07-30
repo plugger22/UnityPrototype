@@ -72,17 +72,17 @@ public class ModalGenericPicker : MonoBehaviour
         //confirm button event
         buttonConfirmInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
         if (buttonConfirmInteraction != null)
-        { buttonConfirmInteraction.SetEvent(EventType.ConfirmGenericChoice); }
+        { buttonConfirmInteraction.SetButton(EventType.ConfirmGenericChoice); }
         else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
         //cancel button event
         buttonCancelInteraction = buttonCancel.GetComponent<ButtonInteraction>();
         if (buttonCancelInteraction != null)
-        { buttonCancelInteraction.SetEvent(EventType.CancelButtonGeneric); }
+        { buttonCancelInteraction.SetButton(EventType.CancelButtonGeneric); }
         else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
         //Back button event (default -> can be set dynamically using 'SetBackButton' method
         buttonBackInteraction = buttonBack.GetComponent<ButtonInteraction>();
         if (buttonBackInteraction != null)
-        { buttonBackInteraction.SetEvent(EventType.BackButtonGeneric); }
+        { buttonBackInteraction.SetButton(EventType.BackButtonGeneric); }
         else { Debug.LogError("Invalid buttonBackInteraction (Null)"); }
         backReturnEvent = EventType.None;
     }

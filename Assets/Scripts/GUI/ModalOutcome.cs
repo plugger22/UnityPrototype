@@ -51,7 +51,7 @@ public class ModalOutcome : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
         ButtonInteraction buttonInteract = confirmButton.GetComponent<ButtonInteraction>();
         if (buttonInteract != null)
-        { buttonInteract.SetEvent(EventType.CloseOutcomeWindow); }
+        { buttonInteract.SetButton(EventType.CloseOutcomeWindow); }
         else { Debug.LogError("Invalid buttonInteract (Null)"); }
         //register a listener
         EventManager.instance.AddListener(EventType.OpenOutcomeWindow, OnEvent, "ModalOutcome");

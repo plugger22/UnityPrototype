@@ -57,7 +57,7 @@ public class ModalInventoryUI : MonoBehaviour
         //cancel button event
         buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
         if (buttonInteraction != null)
-        { buttonInteraction.SetEvent(EventType.InventoryCloseUI); }
+        { buttonInteraction.SetButton(EventType.InventoryCloseUI); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfInventoryOptions.Length;

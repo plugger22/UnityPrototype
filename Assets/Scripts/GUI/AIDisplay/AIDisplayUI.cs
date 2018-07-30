@@ -102,8 +102,8 @@ public class AIDisplayUI : MonoBehaviour
         proceedInteraction = proceedButton.GetComponent<ButtonInteraction>();
         Debug.Assert(cancelInteraction != null, "Invalid cancelInteraction (Null)");
         Debug.Assert(proceedInteraction != null, "Invalid proceedInteraction (Null)");
-        cancelInteraction.SetEvent(EventType.AIDisplayClose);
-        proceedInteraction.SetEvent(EventType.AIDisplayPanelOpen);
+        cancelInteraction.SetButton(EventType.AIDisplayClose);
+        proceedInteraction.SetButton(EventType.AIDisplayPanelOpen);
     }
 
 

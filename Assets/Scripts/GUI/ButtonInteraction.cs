@@ -12,45 +12,19 @@ using UnityEngine.UI;
 public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
 {
 
-    [Tooltip("Select the  event that is triggered when the button is clicked (REQUIRED)")]
-    private EventType eventType = EventType.None;
-
-    /*[Tooltip("Does the  button event return <int> data when clicked? (Optional)")]
-    public bool isReturn = false;*/
-
-    /*[Tooltip("Select the Second event that is triggered when the button is clicked (Optional)")]
-    public EventType eventType2 = EventType.None;
-    [Tooltip("Does the Second button event return GenericReturnData value when clicked? (Optional)")]
-    public bool isReturn2 = false;*/
-
-    /*private GenericReturnData returnData;           //there is only one set of return data, it can be returned by either the first or second event
-
-    /// <summary>
-    /// internal initialisation
-    /// </summary>
-    private void Awake()
-    {
-        //returnData = new GenericReturnData();
-    }
+    private EventType eventType = EventType.None;               //The  event that is triggered when the button is clicked (get component in code and call SetButton)
+    private int returnData = -1;                                      //optional int data parameter that you can supply (SetButton) which is passed back as a parameter when button clicked
 
 
     /// <summary>
-    /// Data to be returned if isReturn = true
-    /// </summary>
-    /// <param name="data"></param>
-    public void SetReturnDataOption(int data)
-    { returnData.optionID = data; }
-
-    public void SetReturnDataNode(int data)
-    { returnData.nodeID = data; }
-    */
-
-    /// <summary>
-    /// set Event Type
+    /// set Event Type and optional data to pass as a parameter once button clicked
     /// </summary>
     /// <param name="type"></param>
-    public void SetEvent(EventType type)
-    { eventType = type; }
+    public void SetButton(EventType type, int returnData = -1)
+    {
+        eventType = type;
+        this.returnData = returnData;
+    }
 
     public EventType GetEvent()
     { return eventType; }
@@ -64,7 +38,7 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
         //event 1
         if (eventType != EventType.None)
         {
-            EventManager.instance.PostNotification(eventType, this, null, "ButtonInteraction.cs -> OnPointerClick");
+            EventManager.instance.PostNotification(eventType, this, returnData, "ButtonInteraction.cs -> OnPointerClick");
         }
     }
 }

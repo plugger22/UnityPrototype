@@ -71,7 +71,7 @@ public class CityInfoUI : MonoBehaviour
         //close button event
         buttonInteraction = buttonClose.GetComponent<ButtonInteraction>();
         if (buttonInteraction != null)
-        { buttonInteraction.SetEvent(EventType.CityInfoClose); }
+        { buttonInteraction.SetButton(EventType.CityInfoClose); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
         //tooltips
         districtTooltip = subPanelLeft.GetComponent<GenericTooltipUI>();
