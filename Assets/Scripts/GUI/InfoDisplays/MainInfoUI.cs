@@ -74,6 +74,7 @@ public class MainInfoUI : MonoBehaviour
     public TextMeshProUGUI details_text_top;
     public TextMeshProUGUI details_text_bottom;
     public Image details_image;
+    public Sprite details_image_sprite;
 
     //button script handlers
     private ButtonInteraction buttonInteractionClose;
@@ -255,6 +256,11 @@ public class MainInfoUI : MonoBehaviour
         tabPassiveArray[3] = tab_passive_3;
         tabPassiveArray[4] = tab_passive_4;
         tabPassiveArray[5] = tab_passive_5;
+        //RHS
+        Debug.Assert(details_image != null, "Invalid details_image (Null)");
+        Debug.Assert(details_image_sprite != null, "Invalid details_image_sprite (Null)");
+        Debug.Assert(details_text_top != null, "Invalid details_text_top (Null)");
+        Debug.Assert(details_text_bottom != null, "Invalid details_text_bottom (Null)");
     }
 
     public void Start()
@@ -586,6 +592,9 @@ public class MainInfoUI : MonoBehaviour
         {
             //redrawn main page
             DisplayItemPage(tabIndex);
+            //assign default info icon
+            details_image.gameObject.SetActive(true);
+            details_image.sprite = details_image_sprite;
         }
         else
         {
@@ -682,9 +691,11 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case ItemTab.Request:
                 textTop = "Make a Request";
-                builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}",colourHighlight, colourEnd, "\n", "\n");
-                builder.AppendFormat("You are allowed {0}<b>ONE</b>{1} request{2}per Day", colourHighlight, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}Any requested meeting will be{2}conducted at the {3}<b>Start</b>{4}{5}of the next Day", "\n", "\n", "\n", colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}<b>OTHER PARTIES</b>{4} can request a meeting with you{5}{6}",colourHighlight, colourEnd, "\n", 
+                    colourAlert, colourEnd, "\n", "\n");
+                builder.AppendFormat("You can choose {0}<b>ONE</b>{1} request{2}per day", colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}Any requested meeting will be{2}conducted at the {3}<b>Start</b>{4}{5}of the {6}<b>Next</b>{7} day", "\n", "\n", "\n", 
+                    colourHighlight, colourEnd, "\n", colourHighlight, colourEnd);
                 break;
             case ItemTab.Meeting:
                 textTop = "Resolve a Meeting";
@@ -697,9 +708,17 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case ItemTab.Effects:
                 textTop = "Ongoing Effects";
+                builder.AppendFormat("All effects currently impacting{0}the game", "\n");
+                builder.AppendLine(); builder.AppendLine();
+                builder.AppendFormat("Sorted by type{0}{1}Mouseover {2}<b>Icons</b>{3} to see type", "\n", "\n", colourHighlight, colourEnd);
                 break;
             case ItemTab.Random:
                 textTop = "Random Outcomes";
+                builder.AppendFormat("All important events that required{0}a random roll are shown here", "\n");
+                builder.AppendLine(); builder.AppendLine();
+                builder.AppendFormat("Events are for the {0}<b>Previous Day</b>{1}", colourHighlight, colourEnd);
+                builder.AppendLine(); builder.AppendLine();
+                builder.AppendFormat("All rolls use a{0}{1}<b>Percentage</b>{2}{3}(1d100) die", "\n", colourHighlight, colourEnd, "\n");
                 break;
             default:
                 //Help tab
