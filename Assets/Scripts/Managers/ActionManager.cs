@@ -2056,7 +2056,7 @@ public class ActionManager : MonoBehaviour
                                     GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Total, +1);
                                     //message
                                     string msgText = string.Format("{0} {1} added to Reserves", team.arc.name, team.teamName);
-                                    GameManager.instance.messageScript.TeamAdd(msgText, team.teamID, true);
+                                    GameManager.instance.messageScript.TeamAdd(msgText, team, true);
                                     builder.AppendFormat(string.Format("{0}{1}{2}{3}{4}", "\n", "\n", colourGood, msgText, colourEnd));
                                 }
                                 else { Debug.LogWarningFormat("Invalid teamArcID {0} for {1}", teamArc.TeamArcID, teamArc.name); }

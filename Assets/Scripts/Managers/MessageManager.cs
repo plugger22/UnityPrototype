@@ -1060,9 +1060,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="teamID"></param>
     /// <returns></returns>
-    public Message TeamAdd(string text, int teamID, bool isPublic = false)
+    public Message TeamAdd(string text, Team team, bool isPublic = false)
     {
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(team != null, "Invalid team (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1070,13 +1070,14 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Add;
             message.side = globalAuthority;
-            message.data0 = teamID;
+            message.data0 = team.teamID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Add Team";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = team.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1133,10 +1134,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message TeamAutoRecall(string text, int nodeID, int teamID, int actorID)
+    public Message TeamAutoRecall(string text, int nodeID, Team team, int actorID)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(team != null, "Invalid team (Null)");
         if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
         { Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID)); }
         if (string.IsNullOrEmpty(text) == false)
@@ -1149,7 +1150,7 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             message.displayDelay = 0;
             message.data0 = nodeID;
-            message.data1 = teamID;
+            message.data1 = team.teamID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
@@ -1157,6 +1158,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Team Autorecalled";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = team.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1173,10 +1175,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="teamID"></param>
     /// <returns></returns>
-    public Message TeamWithdraw(string text, int nodeID, int teamID, int actorID)
+    public Message TeamWithdraw(string text, int nodeID, Team team, int actorID)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(team != null, "Invalid team (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1186,7 +1188,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Team_Withdraw;
             message.side = globalAuthority;
             message.data0 = nodeID;
-            message.data1 = teamID;
+            message.data1 = team.teamID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
@@ -1194,6 +1196,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Team Withdrawn";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = team.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1211,10 +1214,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message TeamEffect(string text, int nodeID, int teamID)
+    public Message TeamEffect(string text, int nodeID, Team team)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(team != null, "Invalid team (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1224,13 +1227,14 @@ public class MessageManager : MonoBehaviour
             message.side = globalAuthority;
             message.isPublic = true;
             message.data0 = nodeID;
-            message.data1 = teamID;
+            message.data1 = team.teamID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Team Outcome";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = team.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1248,10 +1252,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message TeamNeutralise(string text, int nodeID, int teamID, int actorID)
+    public Message TeamNeutralise(string text, int nodeID, Team team, int actorID)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(team != null, "Invalid team (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1263,7 +1267,7 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             message.displayDelay = 0;
             message.data0 = nodeID;
-            message.data1 = teamID;
+            message.data1 = team.teamID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
@@ -1271,6 +1275,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Team Neutralised";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = team.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1694,7 +1699,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
-            data.help = 1;
+            data.help = 1; //debug
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

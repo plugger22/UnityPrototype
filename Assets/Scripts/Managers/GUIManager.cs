@@ -26,7 +26,9 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Flash interval (in real seconds) for nodes")]
     [Range(0.1f, 1.0f)] public float flashNodeTime = 0.4f;
     [Tooltip("Flash interval (in real seconds) for connections")]
-    [Range(0.1f, 1.0f)] public float flashConnectiontTime = 0.4f; 
+    [Range(0.1f, 1.0f)] public float flashConnectiontTime = 0.4f;
+    [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
+    [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
 
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]

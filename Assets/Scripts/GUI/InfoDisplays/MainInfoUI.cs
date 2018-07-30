@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using packageAPI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -113,6 +114,9 @@ public class MainInfoUI : MonoBehaviour
     //flashers
     private bool isRequestFlasherOn;
     private bool isMeetingFlasherOn;
+    private Coroutine myCoroutineRequest;
+    private Coroutine myCoroutineMeeting;
+    private float flashTimer = -1.0f;
 
     //colours
     string colourDefault;
@@ -339,6 +343,9 @@ public class MainInfoUI : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid GameObject (Null) for mainItemArray[{0}]", index); }
         }
+        //flashing alert over tabs
+        flashTimer = GameManager.instance.guiScript.flashInfoTabTime;
+        Debug.Assert(flashTimer > -1.0f, "Invalid flashTimer (-1f)");
         //Set starting Initialisation states
         InitialiseItems();
     }
@@ -485,6 +492,7 @@ public class MainInfoUI : MonoBehaviour
         {
             flasher_requestTab.gameObject.SetActive(true);
             //commence flashing
+            myCoroutineRequest = StartCoroutine("FlashRequestTab");
         }
         else { flasher_requestTab.gameObject.SetActive(false); }
         //meeting tab
@@ -492,6 +500,7 @@ public class MainInfoUI : MonoBehaviour
         {
             flasher_meetingTab.gameObject.SetActive(true);
             //commence flashing
+            myCoroutineMeeting = StartCoroutine("FlashMeetingTab");
         }
         else { flasher_meetingTab.gameObject.SetActive(false); }
     }
@@ -508,13 +517,36 @@ public class MainInfoUI : MonoBehaviour
             {
                 flasher_requestTab.gameObject.SetActive(true);
                 isRequestFlasherOn = true;
-                yield return new WaitForSecondsRealtime(1);
+                yield return new WaitForSecondsRealtime(flashTimer);
             }
             else
             {
                 flasher_requestTab.gameObject.SetActive(false);
                 isRequestFlasherOn = false;
-                yield return new WaitForSecondsRealtime(1);
+                yield return new WaitForSecondsRealtime(flashTimer);
+            }
+        }
+    }
+
+    /// <summary>
+    /// coroutine to flash alert (white ball) icon above meeting tab
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FlashMeetingTab()
+    {
+        for (; ; )
+        {
+            if (isMeetingFlasherOn == false)
+            {
+                flasher_meetingTab.gameObject.SetActive(true);
+                isMeetingFlasherOn = true;
+                yield return new WaitForSecondsRealtime(flashTimer);
+            }
+            else
+            {
+                flasher_meetingTab.gameObject.SetActive(false);
+                isMeetingFlasherOn = false;
+                yield return new WaitForSecondsRealtime(flashTimer);
             }
         }
     }
@@ -613,6 +645,11 @@ public class MainInfoUI : MonoBehaviour
         GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         mainInfoObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
+        //switch off coroutines
+        if (myCoroutineRequest != null)
+        { StopCoroutine(myCoroutineRequest); }
+        if (myCoroutineMeeting != null)
+        { StopCoroutine(myCoroutineMeeting); }
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
@@ -637,7 +674,6 @@ public class MainInfoUI : MonoBehaviour
             details_text_top.text = results.Item1;
             details_text_bottom.text = results.Item2;
         }
-
         //hide both RHS buttons (help and decision)
         buttonHelp.gameObject.SetActive(false);
         buttonDecision.gameObject.SetActive(false);
@@ -736,18 +772,18 @@ public class MainInfoUI : MonoBehaviour
         {
             case ItemTab.Mail:
                 textTop = "Incoming Mail";
-                builder.AppendFormat("Items are ordered by priority, highest first");
+                builder.AppendFormat("{0}<b>Click</b>{1} on an {2}<b>Item</b>{3}{4}for more information", colourHighlight, colourEnd, colourHighlight, colourEnd, "\n");
+                builder.AppendLine(); builder.AppendLine();
+                builder.Append("Items are ordered by priority");
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("{0}<b>No action required</b>{1}", colourHighlight, colourEnd);
-                builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("Mail items are for{0}information only", "\n");
                 break;
             case ItemTab.Request:
                 textTop = "Make a Request";
                 builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}<b>OTHER PARTIES</b>{4} can request a meeting with you{5}{6}",colourHighlight, colourEnd, "\n", 
                     colourAlert, colourEnd, "\n", "\n");
-                builder.AppendFormat("You can choose {0}<b>ONE</b>{1} request{2}per day", colourHighlight, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}Any requested meeting will be{2}conducted at the {3}<b>Start</b>{4}{5}of the {6}<b>Next</b>{7} day", "\n", "\n", "\n", 
+                builder.AppendFormat("You can, if you wish,{0}select {1}<b>ONE</b>{2} request", "\n", colourHighlight, colourEnd);
+                builder.AppendFormat("{0}{1}The meeting will be at the {2}<b>Start</b>{3}{4}of the {5}<b>Next</b>{6} day", "\n", "\n", 
                     colourHighlight, colourEnd, "\n", colourHighlight, colourEnd);
                 break;
             case ItemTab.Meeting:
@@ -771,7 +807,7 @@ public class MainInfoUI : MonoBehaviour
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("Events are for the {0}<b>Previous Day</b>{1}", colourHighlight, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("All rolls use a{0}{1}<b>Percentage</b>{2}{3}(1d100) die", "\n", colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("All rolls use a{0}{1}<b>Percentage</b>{2}{3}1d100 die", "\n", colourHighlight, colourEnd, "\n");
                 break;
             default:
                 //Help tab
