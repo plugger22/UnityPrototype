@@ -28,6 +28,8 @@ public class MainInfoUI : MonoBehaviour
     public TextMeshProUGUI page_header;
     public GameObject scrollBarObject;
     public GameObject scrollBackground;         //needed to get scrollRect component in order to manually disable scrolling when not needed
+    public Image flasher_requestTab;            //flashing alerts sitting over the top of their respective tabs
+    public Image flasher_meetingTab;
 
     [Header("LHS Items")]
     //main tab -> parent backgrounds (full set of twenty, only a max of 10 shown at a time)
@@ -108,6 +110,9 @@ public class MainInfoUI : MonoBehaviour
     //ItemData
     private List<ItemData>[] arrayOfItemData= new List<ItemData>[(int)ItemTab.Count];       //One dataset for each tab (excluding Help tab)
     List<ItemData> listOfCurrentPageItemData;                                               //current data for currently displayed page
+    //flashers
+    private bool isRequestFlasherOn;
+    private bool isMeetingFlasherOn;
 
     //colours
     string colourDefault;
@@ -261,6 +266,9 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(details_image_sprite != null, "Invalid details_image_sprite (Null)");
         Debug.Assert(details_text_top != null, "Invalid details_text_top (Null)");
         Debug.Assert(details_text_bottom != null, "Invalid details_text_bottom (Null)");
+        //LHS
+        Debug.Assert(flasher_requestTab != null, "Invalid flashing_requestTab (Null)");
+        Debug.Assert(flasher_meetingTab != null, "Invalid flashing_meetingTab (Null)");
     }
 
     public void Start()
@@ -439,6 +447,8 @@ public class MainInfoUI : MonoBehaviour
             UpdateNavigationStatus();
             // GUI
             mainInfoObject.SetActive(true);
+            //flashers -> Request
+            SetTabFlashers();
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
@@ -465,6 +475,49 @@ public class MainInfoUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// switch flashers on/off depending on contents of respective tabs (Request & Meeting, ON for both if items present)
+    /// </summary>
+    private void SetTabFlashers()
+    {
+        //request tab
+        if (arrayOfItemData[(int)ItemTab.Request].Count > 0)
+        {
+            flasher_requestTab.gameObject.SetActive(true);
+            //commence flashing
+        }
+        else { flasher_requestTab.gameObject.SetActive(false); }
+        //meeting tab
+        if (arrayOfItemData[(int)ItemTab.Meeting].Count > 0)
+        {
+            flasher_meetingTab.gameObject.SetActive(true);
+            //commence flashing
+        }
+        else { flasher_meetingTab.gameObject.SetActive(false); }
+    }
+
+    /// <summary>
+    /// coroutine to flash alert (white ball) icon above request tab
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FlashRequestTab()
+    {
+        for( ; ; )
+        {
+            if (isRequestFlasherOn == false)
+            {
+                flasher_requestTab.gameObject.SetActive(true);
+                isRequestFlasherOn = true;
+                yield return new WaitForSecondsRealtime(1);
+            }
+            else
+            {
+                flasher_requestTab.gameObject.SetActive(false);
+                isRequestFlasherOn = false;
+                yield return new WaitForSecondsRealtime(1);
+            }
+        }
+    }
 
     /// <summary>
     /// sub Method to display a particular page drawing from cached data in dictOfItemData
