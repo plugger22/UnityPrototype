@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using packageAPI;
+using gameAPI;
 
 /// <summary>
 /// handles mouse interactions for top widget objective Turn indicator (2D polygon collider attached to game object)
@@ -12,7 +13,7 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
-    private float mouseOverFade;                        //tooltip
+    //private float mouseOverFade;                        //tooltip
     private Coroutine myCoroutine;
 
     [HideInInspector] public string tooltipHeader;
@@ -23,7 +24,7 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
     public void Start()
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        //mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
     }
 
     /// <summary>
@@ -72,7 +73,7 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true)
+        if (onMouseFlag == true && GameManager.instance.inputScript.GameState == GameState.Normal)
         {
             //do once
             Vector3 screenPos = transform.position;
@@ -86,7 +87,7 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
                 GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
-            //fade in
+            /*//fade in
             float alphaCurrent;
             while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
             {
@@ -94,7 +95,7 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
                 alphaCurrent += Time.deltaTime / mouseOverFade;
                 GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
                 yield return null;
-            }
+            }*/
         }
     }
 

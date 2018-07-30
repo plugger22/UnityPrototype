@@ -2,6 +2,7 @@
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -111,11 +112,12 @@ public class MainInfoUI : MonoBehaviour
     string colourDefault;
     string colourHighlight;
     string colourGrey;
+    string colourAlert;
     /*string colourNormal;
     string colourAlert;
     string colourHighlight;
     string colourResistance;
-    string colourBad;
+    
     string colourGood;
     string colourError;
     string colourInvalid;
@@ -395,8 +397,9 @@ public class MainInfoUI : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
@@ -570,15 +573,25 @@ public class MainInfoUI : MonoBehaviour
             if (index == tabIndex)
             { tabActiveArray[index].gameObject.SetActive(true); }
             else { tabActiveArray[index].gameObject.SetActive(false); }
-            //blank RHS
-            details_text_top.text = "";
-            details_text_bottom.text = "";
+            //display tab help in RHS panel
+            Tuple<string, string> results = GetTabHelp(tabIndex);
+            details_text_top.text = results.Item1;
+            details_text_bottom.text = results.Item2;
         }
+
         //hide both RHS buttons (help and decision)
         buttonHelp.gameObject.SetActive(false);
         buttonDecision.gameObject.SetActive(false);
-        //redrawn main page
-        DisplayItemPage(tabIndex);
+        if (tabIndex < 5)
+        {
+            //redrawn main page
+            DisplayItemPage(tabIndex);
+        }
+        else
+        {
+            //help
+            DisplayHelpPage();
+        }
         //update indexes
         highlightIndex = -1;
         currentTabIndex = tabIndex;
@@ -596,7 +609,12 @@ public class MainInfoUI : MonoBehaviour
             details_text_top.text = data.topText;
             details_text_bottom.text = data.bottomText;
             if (data.sprite != null)
-            { details_image.sprite = data.sprite; }
+            {
+                details_image.sprite = data.sprite;
+                details_image.gameObject.SetActive(true);
+            }
+            //if no sprite, switch off default info sprite and leave blak
+            else { details_image.gameObject.SetActive(false); }
             //display button if event & data present
             if (data.buttonEvent > EventType.None && data.buttonData != -1)
             {
@@ -613,7 +631,10 @@ public class MainInfoUI : MonoBehaviour
                 //set tooltip interaction -> TO DO
 
                 buttonDecision.gameObject.SetActive(false);
-                buttonHelp.gameObject.SetActive(true);
+                //display help only if available
+                if (data.help > -1)
+                { buttonHelp.gameObject.SetActive(true); }
+                else { buttonHelp.gameObject.SetActive(false); }
             }
         //remove highlight
         if (highlightIndex != itemIndex)
@@ -627,6 +648,66 @@ public class MainInfoUI : MonoBehaviour
             }
         }
         else { Debug.LogWarningFormat("Invalid ItemData for listOfCurrentPageItemData[{0}]", itemIndex); }
+    }
+
+    /// <summary>
+    /// Special method for the last tab, Help (hard wired info, not dynamic)
+    /// </summary>
+    private void DisplayHelpPage()
+    {
+
+        //TO DO
+
+    }
+
+    /// <summary>
+    /// provides pre-formatted help text for RHS detail panel when tabs are first opened
+    /// </summary>
+    /// <param name="tabIndex"></param>
+    /// <returns></returns>
+    private Tuple<string, string> GetTabHelp(int tabIndex)
+    {
+        string textTop = "";
+        string textBottom = "";
+        StringBuilder builder = new StringBuilder();
+        switch ((ItemTab)tabIndex)
+        {
+            case ItemTab.Mail:
+                textTop = "Incoming Mail";
+                builder.AppendFormat("Items are ordered by priority, highest first");
+                builder.AppendLine(); builder.AppendLine();
+                builder.AppendFormat("{0}<b>No action required</b>{1}", colourHighlight, colourEnd);
+                builder.AppendLine(); builder.AppendLine();
+                builder.AppendFormat("Mail items are for{0}information only", "\n");
+                break;
+            case ItemTab.Request:
+                textTop = "Make a Request";
+                builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}",colourHighlight, colourEnd, "\n", "\n");
+                builder.AppendFormat("You are allowed {0}<b>ONE</b>{1} request{2}per Day", colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}Any requested meeting will be{2}conducted at the {3}<b>Start</b>{4}{5}of the next Day", "\n", "\n", "\n", colourHighlight, colourEnd, "\n");
+                break;
+            case ItemTab.Meeting:
+                textTop = "Resolve a Meeting";
+                builder.AppendFormat("During your Meeting you can{0}choose {1}<b>ONE</b>{2} option", "\n", colourHighlight, colourEnd);
+                builder.AppendLine(); builder.AppendLine();
+                builder.AppendFormat("If you decide to do nothing{0}the {1}<b>DEFAULT OPTION</b>{2}{3}will be chosen for you", "\n", colourAlert, colourEnd, "\n");
+                builder.AppendLine(); builder.AppendLine();
+                builder.AppendFormat("There will be a {0}<b>Cooldown period</b>{1}{2}before you can meet this{3}person, faction or organisation{4}again", colourHighlight, colourEnd, 
+                    "\n", "\n", "\n");
+                break;
+            case ItemTab.Effects:
+                textTop = "Ongoing Effects";
+                break;
+            case ItemTab.Random:
+                textTop = "Random Outcomes";
+                break;
+            default:
+                //Help tab
+                textTop = "Game Help";
+                break;
+        }
+        textBottom = builder.ToString();
+        return new Tuple<string, string>(textTop, textBottom);
     }
 
     /// <summary>
@@ -728,6 +809,8 @@ public class MainInfoUI : MonoBehaviour
         { buttonForward.gameObject.SetActive(true); }
         else { buttonForward.gameObject.SetActive(false); }
     }
+
+
 
 
     /// <summary>

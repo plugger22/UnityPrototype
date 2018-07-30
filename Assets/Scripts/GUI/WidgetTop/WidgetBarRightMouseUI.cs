@@ -12,7 +12,7 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
-    private float mouseOverFade;                        //tooltip
+    //private float mouseOverFade;                        //tooltip
     private Coroutine myCoroutine;
     private GlobalSide playerSide;
 
@@ -24,7 +24,7 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
     public void Start()
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        //mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
                 GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
-            //fade in
+            /*//fade in
             float alphaCurrent;
             while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
             {
@@ -98,7 +98,7 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
                 alphaCurrent += Time.deltaTime / mouseOverFade;
                 GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
                 yield return null;
-            }
+            }*/
         }
     }
 
