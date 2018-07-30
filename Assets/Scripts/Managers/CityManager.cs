@@ -10,8 +10,8 @@ using UnityEngine;
 /// </summary>
 public class CityManager : MonoBehaviour
 {
-    [Tooltip("City Loyalty (same for both sides) range from 0 to this amount")]
-    [Range(0, 10)] public int maxCityLoyalty = 10;
+    [Tooltip("City Loyalty towards the Authority (same for both sides)")]
+    [Range(1, 9)] public int maxCityLoyalty = 9;
 
     [Header("GUI data")]
     [Tooltip("Opacity of the 3 grey background subPanels in the city tooltip")]
@@ -340,6 +340,8 @@ public class CityManager : MonoBehaviour
                     //fire player at zero
                     if (loyaltyMinTimer == 0)
                     {
+                        GameManager.instance.win = WinState.Resistance;
+                        GameManager.instance.messageScript.GeneralWarning(string.Format("{0} Loyalty at zero. Resistance wins", city.name));
                         //Loyalty at Min -> Resistance wins
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                         outcomeDetails.side = side;
@@ -367,7 +369,7 @@ public class CityManager : MonoBehaviour
                     //set timer
                     loyaltyMaxTimer = loyaltyCountdownTimer;
                     //message
-                    string msgText = string.Format("{0} Loyalty at MAX. Resistance wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
+                    string msgText = string.Format("{0} Loyalty at MAX. Authority wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
                     GameManager.instance.messageScript.GeneralWarning(msgText);
                 }
                 else
@@ -377,6 +379,9 @@ public class CityManager : MonoBehaviour
                     //fire player at zero
                     if (loyaltyMaxTimer == 0)
                     {
+                        GameManager.instance.win = WinState.Authority;
+                        //message
+                        GameManager.instance.messageScript.GeneralWarning(string.Format("{0} Loyalty at MAX. Authority wins", city.name));
                         //Loyalty at Max -> Authority wins
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                         outcomeDetails.side = side;
@@ -389,7 +394,7 @@ public class CityManager : MonoBehaviour
                     else
                     {
                         //message
-                        string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
+                        string msgText = string.Format("{0} Loyalty at MAX. Authority wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
                         GameManager.instance.messageScript.GeneralWarning(msgText);
                     }
                 }

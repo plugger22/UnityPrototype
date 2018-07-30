@@ -277,6 +277,8 @@ public class FactionManager : MonoBehaviour
                 //fire player at zero
                 if (supportZeroTimer == 0)
                 {
+                    GameManager.instance.win = WinState.Authority;
+                    GameManager.instance.messageScript.GeneralWarning("Faction support Zero. Player Fired. Authority wins");
                     //Player fired -> outcome
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                     outcomeDetails.side = side;

@@ -16,10 +16,11 @@ public class MainInfoUI : MonoBehaviour
 
     [Header("Buttons")]
     public Button buttonClose;
-    public Button buttonInfo;
+    public Button buttonInfo;                       //next to panel close button
     public Button buttonHome;
     public Button buttonBack;
     public Button buttonForward;
+    public Button buttonHelp;                       //bottom of RHS panel
 
     [Header("LHS Miscellanous")]
     public TextMeshProUGUI page_header;
@@ -156,6 +157,7 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(buttonHome != null, "Invalid buttonHome (Null)");
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonForward != null, "Invalid buttonForward (Null)");
+        Debug.Assert(buttonHelp != null, "Invalid buttonHelp (Null)");
         //set button interaction events
         buttonInteractionClose = buttonClose.GetComponent<ButtonInteraction>();
         buttonInteractionHome = buttonHome.GetComponent<ButtonInteraction>();
@@ -582,6 +584,8 @@ public class MainInfoUI : MonoBehaviour
         {
             details_text_top.text = data.topText;
             details_text_bottom.text = data.bottomText;
+            if (data.sprite != null)
+            { details_image.sprite = data.sprite; }
         //remove highlight
         if (highlightIndex != itemIndex)
             {

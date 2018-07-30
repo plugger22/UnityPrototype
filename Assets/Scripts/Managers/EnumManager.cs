@@ -7,6 +7,7 @@
     //
     // - - - Game Manager - - -
     //
+    public enum WinState { None, Authority, Resistance }                                                                //none indicates nobody has yet won
     public enum GameState { Normal, ModalUI}                                                                            //main game states
     public enum ResistanceState { Normal }                                                                              //specific Resistance states (Player or AI)
     public enum AuthoritySecurityState { Normal, APB, SecurityAlert, SurveillanceCrackdown }                            //specific Authority Security states (Player or AI)   

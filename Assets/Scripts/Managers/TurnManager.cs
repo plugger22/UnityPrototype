@@ -172,14 +172,23 @@ public class TurnManager : MonoBehaviour
                 { finishedProcessing = true; }
             }
             while (finishedProcessing == false);
-            //only do for player
-            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-            if (playerSide != null && currentSide.level == playerSide.level)
+            //Nobody has yet won
+            if (GameManager.instance.win == WinState.None)
             {
-                //switch off any node Alerts
-                GameManager.instance.alertScript.CloseAlertUI(true);
-                //info App
-                InitialiseInfoApp(playerSide);
+                //only do for player
+                GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+                if (playerSide != null && currentSide.level == playerSide.level)
+                {
+                    //switch off any node Alerts
+                    GameManager.instance.alertScript.CloseAlertUI(true);
+                    //info App
+                    InitialiseInfoApp(playerSide);
+                }
+            }
+            //There is a winner
+            else
+            {
+                //Game Over, somebody has won -> TO DO
             }
         }
     }

@@ -260,9 +260,10 @@ namespace packageAPI
         public string itemText;
         public string topText;
         public string bottomText;
-        public Image sprite;
+        public Sprite sprite;
         public ItemPriority priority;
         public ItemTab tab;
         public GlobalSide side;
+        public int help;                            //key to dictOfHelp for info button down at bottom
     }
 }

@@ -1093,10 +1093,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="teamID"></param>
     /// <returns></returns>
-    public Message TeamDeploy(string text, int nodeID, int teamID, int actorID)
+    public Message TeamDeploy(string text, int nodeID, Team team, int actorID)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(team != null, "Invalid teamID {Null}");
         if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
         { Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID)); }
         if (string.IsNullOrEmpty(text) == false)
@@ -1107,14 +1107,15 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Team_Deploy;
             message.side = globalAuthority;
             message.data0 = nodeID;
-            message.data1 = teamID;
+            message.data1 = team.teamID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
-            data.topText = "Deploy Team";
+            data.topText = "Team Deployed";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = team.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);

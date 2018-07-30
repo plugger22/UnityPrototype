@@ -87,6 +87,8 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("Switch ON to get a performance log of initialisation ")]
     public bool isPerformanceLog;
+
+    [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
     
     private List<StartMethod> listOfStartMethods = new List<StartMethod>();
     
