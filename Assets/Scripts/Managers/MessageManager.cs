@@ -295,6 +295,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gain Secret";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = playerSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -329,6 +330,7 @@ public class MessageManager : MonoBehaviour
             data.itemText = text;
             data.topText = "Use Renown";
             data.bottomText = text;
+            data.sprite = playerSprite;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
             //add

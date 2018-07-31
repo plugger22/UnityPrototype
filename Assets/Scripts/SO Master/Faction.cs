@@ -35,7 +35,6 @@ public class Faction : ScriptableObject
     private void OnEnable()
     {
         Debug.Assert(sprite != null, "Invalid sprite (Null)");
-        Debug.Assert(trait != null, "Invalid trait (Null)");
     }
 
     //
