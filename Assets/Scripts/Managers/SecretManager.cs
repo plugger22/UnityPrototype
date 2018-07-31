@@ -29,7 +29,19 @@ public class SecretManager : MonoBehaviour
     //fast access
     private Condition conditionBlackmail;
 
+    //colours
+    string colourDefault;
+    string colourNormal;
+    string colourAlert;
+    string colourResistance;
+    string colourBad;
+    string colourNeutral;
+    string colourGood;
+    string colourEnd;
 
+    /// <summary>
+    /// Initialise Secrets
+    /// </summary>
     public void Initialise()
     {
         //
@@ -139,7 +151,154 @@ public class SecretManager : MonoBehaviour
         //
         conditionBlackmail = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         Debug.Assert(conditionBlackmail != null, "Invalid conditionBlackmail (Null)");
+        //
+        // - - - Event listeners
+        //
+        SetColours();
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "SecretManager");
     }
+
+    /// <summary>
+    /// event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //detect event type
+        switch (eventType)
+        {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Set colour palette for tooltip
+    /// </summary>
+    public void SetColours()
+    {
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
+
+    /// <summary>
+    /// returns a colour formatted string for ItemData string message (Player Secret)
+    /// NOTE: Secret checked for null by calling method -> MessageManager.cs -> PlayerSecret
+    /// </summary>
+    /// <param name="secret"></param>
+    /// <returns></returns>
+    public string GetPlayerSecretDetails(Secret secret, bool isGained)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2}", secret.descriptor, "\n", "\n");
+        if (isGained == true)
+        {
+            //secret gained
+            builder.AppendFormat("<b>Effects if Secret revealed</b>");
+            List<Effect> listOfEffects = secret.GetListOfEffects();
+            if (listOfEffects != null)
+            {
+                if (listOfEffects.Count > 0)
+                {
+                    foreach (Effect effect in listOfEffects)
+                    { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, effect.textTag, colourEnd); }
+                }
+                else { builder.AppendFormat("{0}No effect", "\n"); }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for secretID {0}", secret.secretID); }
+            builder.AppendFormat("{0}{1}{2}<b>Nobody</b>{3} currently knows this secret", "\n", "\n", colourNeutral, colourEnd);
+        }
+        else
+        {
+            //secret lost
+            builder.AppendFormat("Your secret is gone and all those who know it have {0}forgotten{1} about it", colourNeutral, colourEnd);
+        }
+        return builder.ToString();
+    }
+
+
+
+    /// <summary>
+    /// Removes a given secret from all actors and player. If calling for a deleted secret then set to true, otherwise, for a normal revealed secret situation, default false
+    /// This ensures that if a secret is deleted from an actor who is currently blackmailing then their blackmailer status is removed if they end up with no secrets remaining
+    /// Returns true if successfully removed secret/s, false otherwise
+    /// </summary>
+    /// <param name="secretID"></param>
+    public bool RemoveSecretFromAll(int secretID, bool isDeletedSecret = false)
+    {
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        Secret secret = GameManager.instance.dataScript.GetSecret(secretID);
+        bool isSuccess = true;
+        if (secret != null)
+        {
+            //remove from player
+            GameManager.instance.playerScript.RemoveSecret(secretID);
+            if (isDeletedSecret == true)
+            {
+                //message
+                string playerMsg = string.Format("Player loses secret \"{0}\"", secret.tag);
+                GameManager.instance.messageScript.PlayerSecret(playerMsg, secret, false);
+            }
+            //loop actors
+            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+            if (arrayOfActors != null)
+            {
+                for (int i = 0; i < arrayOfActors.Length; i++)
+                {
+                    //check actor is present in slot (not vacant)
+                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                    {
+                        Actor actor = arrayOfActors[i];
+                        if (actor != null)
+                        {
+                            actor.RemoveSecret(secretID);
+                            //blackmail check -> if actor is blackmailing and they end up with zero secrets then the condition is removed
+                            if (isDeletedSecret == true)
+                            {
+                                //message (any situation where a blackmail check is needed is going to be a deleted secret, hence the need for a message
+                                string msgText = string.Format("{0} loses secret \"{1}\"", actor.arc.name, secret.tag);
+                                GameManager.instance.messageScript.ActorSecret(msgText, actor, secretID);
+                                if (actor.CheckConditionPresent(conditionBlackmail) == true)
+                                {
+                                    if (actor.CheckNumOfSecrets() == 0)
+                                    {
+                                        actor.RemoveCondition(conditionBlackmail);
+                                        //additional explanatory message (why has condition gone?)
+                                        string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
+                                        GameManager.instance.messageScript.ActorSecret(blackText, actor, secretID);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            isSuccess = false;
+            Debug.LogWarningFormat("Invalid secret (Null) for secretID {0} -> Not removed", secretID);
+        }
+        return isSuccess;
+    }
+
+
+    //
+    // - - - Debug - - -
+    //
 
     /// <summary>
     /// debug method to display data
@@ -195,71 +354,6 @@ public class SecretManager : MonoBehaviour
         }
 
         return builder.ToString();
-    }
-
-
-    /// <summary>
-    /// Removes a given secret from all actors and player. If calling for a deleted secret then set to true, otherwise, for a normal revealed secret situation, default false
-    /// This ensures that if a secret is deleted from an actor who is currently blackmailing then their blackmailer status is removed if they end up with no secrets remaining
-    /// Returns true if successfully removed secret/s, false otherwise
-    /// </summary>
-    /// <param name="secretID"></param>
-    public bool RemoveSecretFromAll(int secretID, bool isDeletedSecret = false)
-    {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Secret secret = GameManager.instance.dataScript.GetSecret(secretID);
-        bool isSuccess = true;
-        if (secret != null)
-        {
-            //remove from player
-            GameManager.instance.playerScript.RemoveSecret(secretID);
-            if (isDeletedSecret == true)
-            {
-                //message
-                string playerMsg = string.Format("Player loses secret \"{0}\"", secret.tag);
-                GameManager.instance.messageScript.PlayerSecret(playerMsg, secretID);
-            }
-            //loop actors
-            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
-            if (arrayOfActors != null)
-            {
-                for (int i = 0; i < arrayOfActors.Length; i++)
-                {
-                    //check actor is present in slot (not vacant)
-                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
-                    {
-                        Actor actor = arrayOfActors[i];
-                        if (actor != null)
-                        {
-                            actor.RemoveSecret(secretID);
-                            //blackmail check -> if actor is blackmailing and they end up with zero secrets then the condition is removed
-                            if (isDeletedSecret == true)
-                            {
-                                //message (any situation where a blackmail check is needed is going to be a deleted secret, hence the need for a message
-                                string msgText = string.Format("{0} loses secret \"{1}\"", actor.arc.name, secret.tag);
-                                GameManager.instance.messageScript.ActorSecret(msgText, actor, secretID);
-                                if (actor.CheckConditionPresent(conditionBlackmail) == true)
-                                {
-                                    if (actor.CheckNumOfSecrets() == 0)
-                                    {
-                                        actor.RemoveCondition(conditionBlackmail);
-                                        //additional explanatory message (why has condition gone?)
-                                        string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
-                                        GameManager.instance.messageScript.ActorSecret(blackText, actor, secretID);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            isSuccess = false;
-            Debug.LogWarningFormat("Invalid secret (Null) for secretID {0} -> Not removed", secretID);
-        }
-        return isSuccess;
     }
 
     /// <summary>

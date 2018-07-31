@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
 using packageAPI;
+using System.Text;
 
 /// <summary>
 /// handles all message matters
@@ -277,9 +278,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="secretID"></param>
     /// <returns></returns>
-    public Message PlayerSecret(string text, int secretID)
+    public Message PlayerSecret(string text, Secret secret, bool isGained = true)
     {
-        Debug.Assert(secretID >= 0, string.Format("Invalid secretID {0}", secretID));
+        Debug.Assert(secret != null, "Invalid secret (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -287,13 +288,24 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Secret;
             message.side = GameManager.instance.sideScript.PlayerSide;
-            message.data0 = secretID;
+            message.data0 = secret.secretID;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Gain Secret";
-            data.bottomText = text;
+            if (isGained == true)
+            {
+                data.itemText = "Player gains a Secret";
+                data.topText = secret.tag;
+                data.bottomText = GameManager.instance.secretScript.GetPlayerSecretDetails(secret, true);
+            }
+            else
+            {
+                //secret lost
+                data.itemText = "Player loses a Secret";
+                data.topText = secret.tag;
+                data.bottomText = GameManager.instance.secretScript.GetPlayerSecretDetails(secret, false);
+            }
+
             data.priority = ItemPriority.Low;
             data.sprite = playerSprite;
             data.tab = ItemTab.Mail;

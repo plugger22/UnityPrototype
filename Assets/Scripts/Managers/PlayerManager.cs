@@ -737,7 +737,7 @@ public class PlayerManager : MonoBehaviour
                     listOfSecrets.Add(secret);
                     secret.status = secretStatusActive;
                     //Msg
-                    GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret.secretID);
+                    GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
                 }
                 else { Debug.LogWarning("Secret NOT added as not enough space"); }
             }

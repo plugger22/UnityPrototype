@@ -257,7 +257,7 @@ namespace packageAPI
     /// </summary>
     public class ItemData
     {
-        public string itemText;
+        public string itemText;                     //what is shown for the item
         public string topText;
         public string bottomText;
         public Sprite sprite;

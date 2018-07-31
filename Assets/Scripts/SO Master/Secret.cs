@@ -77,6 +77,11 @@ public class Secret : ScriptableObject
     public int CheckNumOfActorsWhoKnow()
     { return listOfActors.Count; }
 
-
+    /// <summary>
+    /// returns list of effects if secret revealed
+    /// </summary>
+    /// <returns></returns>
+    public List<Effect> GetListOfEffects()
+    { return listOfEffects; }
 
 }
