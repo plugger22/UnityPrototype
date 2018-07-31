@@ -138,7 +138,8 @@ public class MessageManager : MonoBehaviour
             data.itemText = text;
             data.topText = "Info Alert";
             data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.alertInformationSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -169,7 +170,8 @@ public class MessageManager : MonoBehaviour
             data.itemText = text;
             data.topText = "Warning";
             data.bottomText = text;
-            data.priority = ItemPriority.Medium;
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.alertWarningSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -204,6 +206,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Random Result";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.alertRandomSprite;
             data.tab = ItemTab.Random;
             //add
             GameManager.instance.dataScript.AddMessage(message);

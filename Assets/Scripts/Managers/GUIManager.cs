@@ -49,50 +49,15 @@ public class GUIManager : MonoBehaviour
     public Sprite capturedSprite;
     [Tooltip("Used for Player being Fired by their Faction")]
     public Sprite firedSprite;
-    [Tooltip("Default City Arc sprite (512 x 150 png")]
+    [Tooltip("Default City Arc sprite (512 x 150 png)")]
     public Sprite cityArcDefaultSprite;
+    [Tooltip("Used for message Information Alerts (152 x 160 png)")]
+    public Sprite alertInformationSprite;
+    [Tooltip("Used for message Warning Alerts (152 x 160 png)")]
+    public Sprite alertWarningSprite;
+    [Tooltip("Used for message Random (152 x 160 png)")]
+    public Sprite alertRandomSprite;
 
-    #region archived fields
-    /*//Actor display at bottom
-    private GameObject Actor0;
-    private GameObject Actor1;
-    private GameObject Actor2;
-    private GameObject Actor3;
-    private GameObject ActorPlayer;
-
-    private Image picture0;
-    private Image picture1;
-    private Image picture2;
-    private Image picture3;
-    private Image picturePlayer;
-
-    private TextMeshProUGUI type0;
-    private TextMeshProUGUI type1;
-    private TextMeshProUGUI type2;
-    private TextMeshProUGUI type3;
-    private TextMeshProUGUI typePlayer;
-
-    private Image renownCircle0;
-    private Image renownCircle1;
-    private Image renownCircle2;
-    private Image renownCircle3;
-    private Image renownCirclePlayer;
-
-    private TextMeshProUGUI renownText0;
-    private TextMeshProUGUI renownText1;
-    private TextMeshProUGUI renownText2;
-    private TextMeshProUGUI renownText3;
-    private TextMeshProUGUI renownTextPlayer;
-
-    private CanvasGroup canvas0;
-    private CanvasGroup canvas1;
-    private CanvasGroup canvas2;
-    private CanvasGroup canvas3;
-    private CanvasGroup canvasPlayer;*/
-
-    /*List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();       //actors (not player)
-    List<Image> listOfActorPortraits = new List<Image>();                       //actors (not player)*/
-    #endregion
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -106,6 +71,24 @@ public class GUIManager : MonoBehaviour
     private string colourBad;
     //private string colourNormal;
     private string colourEnd;
+
+    public void Awake()
+    {
+        //Check sprites are present
+        Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
+        Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
+        Debug.Assert(errorSprite != null, "Invalid errorSprite (Null)");
+        Debug.Assert(infoSprite != null, "Invalid infoSprite (Null)");
+        Debug.Assert(alarmSprite != null, "Invalid alarmSprite (Null)");
+        Debug.Assert(targetSuccessSprite != null, "Invalid targetSuccessSprite (Null)");
+        Debug.Assert(targetFailSprite != null, "Invalid targetFailSprite (Null)");
+        Debug.Assert(capturedSprite != null, "Invalid capturedSprite (Null)");
+        Debug.Assert(firedSprite != null, "Invalid firedSprite (Null)");
+        Debug.Assert(cityArcDefaultSprite != null, "Invalid cityArcDefaultSprite (Null)");
+        Debug.Assert(alertInformationSprite != null, "Invalid alertInformationSprite (Null)");
+        Debug.Assert(alertWarningSprite != null, "Invalid alertWarningSprite (Null)");
+        Debug.Assert(alertRandomSprite != null, "Invalid alertRandomSprite (Null)");
+    }
 
     /// <summary>
     /// Initialises GUI with all relevant data
