@@ -12,6 +12,8 @@ public class Mayor : ScriptableObject
     public Faction faction;
     [Tooltip("Motto of Mayor in 6 words or less")]
     public string motto;
+    [Tooltip("Portrait sprite (152 x 160 png)")]
+    public Sprite sprite;
 
     [HideInInspector] public int mayorID;
 
@@ -21,6 +23,14 @@ public class Mayor : ScriptableObject
     public bool isTestOff = false;
 
     private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
+
+    /// <summary>
+    /// initialisation
+    /// </summary>
+    private void OnEnable()
+    {
+        Debug.Assert(sprite != null, "Invalid sprite (Null)");
+    }
 
     //
     // - - -  Trait - - -

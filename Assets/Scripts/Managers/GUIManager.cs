@@ -61,7 +61,16 @@ public class GUIManager : MonoBehaviour
     public Sprite alertRandomSprite;
     [Tooltip("Used for ai reboot messages (152 x 160 png)")]
     public Sprite aiRebootSprite;
-
+    [Tooltip("Used for ai countermeasures (152 x 160 png)")]
+    public Sprite aiCountermeasureSprite;
+    [Tooltip("Used for ai alert status changes (152 x 160 png)")]
+    public Sprite aiAlertSprite;
+    [Tooltip("Used for ongoing effects (152 x 160 png")]
+    public Sprite ongoingEffectSprite;
+    [Tooltip("Used for node Crisis (152 x 160 png")]
+    public Sprite nodeCrisisSprite;
+    [Tooltip("Used for city loyalty changes (152 x 160 png)")]
+    public Sprite cityLoyaltySprite;
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -94,6 +103,11 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(alertWarningSprite != null, "Invalid alertWarningSprite (Null)");
         Debug.Assert(alertRandomSprite != null, "Invalid alertRandomSprite (Null)");
         Debug.Assert(aiRebootSprite != null, "Invalid aiRebootSpirte (Null)");
+        Debug.Assert(aiCountermeasureSprite != null, "Invalid aiCountermeasureSprite (Null)");
+        Debug.Assert(aiAlertSprite != null, "Invalid aiAlertSprite (Null)");
+        Debug.Assert(ongoingEffectSprite != null, "Invalid ongoingEffectSprite (Null)");
+        Debug.Assert(nodeCrisisSprite != null, "Invalid nodeCrisisSprite (Null)");
+        Debug.Assert(cityLoyaltySprite != null, "Invalid cityLoyaltySprite (Null)");
     }
 
     /// <summary>

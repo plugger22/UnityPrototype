@@ -23,12 +23,20 @@ public class Faction : ScriptableObject
     [Range(0, 3)] public int resourcesAllowance = 0;
     [Tooltip("The starting pool of AI Resources used for Decisions")]
     [Range(1, 10)] public int resourcesStarting = 5;
+    [Tooltip("Pictorial representation of faction (152 x 160 png)")]
+    public Sprite sprite;
 
     
     [HideInInspector] public int factionID;         //dynamically assigned by DataManager.cs on import
 
     private Trait trait;
     private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
+
+    private void OnEnable()
+    {
+        Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        Debug.Assert(trait != null, "Invalid trait (Null)");
+    }
 
     //
     // - - -  Trait - - -

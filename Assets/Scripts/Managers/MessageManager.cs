@@ -16,22 +16,35 @@ public class MessageManager : MonoBehaviour
     private GlobalSide globalBoth;
     private int playerActorID = -1;
     private Sprite playerSprite;
+    private Mayor mayor;
 
     /// <summary>
     /// Set up at start
     /// </summary>
-    public void Initialise()
+    public void InitialiseEarly()
     {
         playerActorID = GameManager.instance.playerScript.actorID;
         playerSprite = GameManager.instance.playerScript.sprite;
+        
         Debug.Assert(playerActorID > -1, "Invalid playerActorID (-1)");
         Debug.Assert(playerSprite != null, "Invalid playerSprite (Null)");
+
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalBoth = GameManager.instance.globalScript.sideBoth;
+
         //event Listeners
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
         EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "MessageManager");
+    }
+
+    /// <summary>
+    /// needed due to gameManager initialisation sequence
+    /// </summary>
+    public void InitialiseLate()
+    {
+        mayor = GameManager.instance.cityScript.GetCity().mayor;
+        Debug.Assert(mayor != null, "Invalid mayor (Null)");
     }
 
 
@@ -933,6 +946,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Countermeasures";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -967,6 +981,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "AI Alert Status";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1006,6 +1021,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Decision Made";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = mayor.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1042,6 +1058,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Connection Security";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = mayor.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1077,6 +1094,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Request Resources";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = mayor.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1110,6 +1128,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Request Team";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = mayor.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1698,6 +1717,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Ongoing Effect";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1731,6 +1751,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Ongoing Effect Finished";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1740,6 +1761,10 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    //
+    // - - - Faction - - -
+    //
+
     /// <summary>
     /// Faction support (renown) that is given/declined at the beginning of each turn
     /// </summary>
@@ -1748,8 +1773,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="playerRenownBefore"></param>
     /// <param name="supportGiven"></param>
     /// <returns></returns>
-    public Message FactionSupport(string text, int factionSupportLevel, int playerRenownBefore, int supportGiven = -1)
+    public Message FactionSupport(string text, Faction faction, int factionSupportLevel, int playerRenownBefore, int supportGiven = -1)
     {
+        Debug.Assert(faction != null, "Invalid faction (Null)");
         Debug.Assert(factionSupportLevel > -1, "Invalid factionSupportLevel ( < zero)");
         Debug.Assert(playerRenownBefore > -1, "Invalid playerRenownBefore ( < zero)");
         if (string.IsNullOrEmpty(text) == false)
@@ -1770,6 +1796,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
+            data.sprite = faction.sprite;
             data.help = 1; //debug
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1789,9 +1816,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public Message NodeCrisis(string text, int nodeID, int reductionInCityLoyalty = -1)
+    public Message NodeCrisis(string text, Node node, int reductionInCityLoyalty = -1)
     {
-        Debug.Assert(nodeID > -1, "Invalid nodeID ( < zero)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1800,7 +1828,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Node_Crisis;
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = reductionInCityLoyalty;
             //ItemData
             ItemData data = new ItemData();
@@ -1808,6 +1836,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "District Crisis";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.nodeCrisisSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1846,6 +1875,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "City Loyalty";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.cityLoyaltySprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);

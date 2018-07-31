@@ -185,7 +185,7 @@ public class FactionManager : MonoBehaviour
                         //Support Provided
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
-                        message = GameManager.instance.messageScript.FactionSupport(msgText, _supportAuthority, GameManager.instance.playerScript.Renown, 1);
+                        message = GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _supportAuthority, GameManager.instance.playerScript.Renown, 1);
                         //random
                         string text = string.Format("Faction support GIVEN, need < {0}, rolled {1}",  threshold, rnd);
                         GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
@@ -197,7 +197,7 @@ public class FactionManager : MonoBehaviour
                         //Support declined
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
-                        GameManager.instance.messageScript.FactionSupport(msgText, _supportAuthority, GameManager.instance.playerScript.Renown);
+                        GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _supportAuthority, GameManager.instance.playerScript.Renown);
                         //random
                         string text = string.Format("Faction support DECLINED, need < {0}, rolled {1}", threshold, rnd);
                         GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
@@ -211,7 +211,7 @@ public class FactionManager : MonoBehaviour
                         //Support Provided
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
-                        message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown, 1);
+                        message = GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _supportResistance, GameManager.instance.playerScript.Renown, 1);
                         //random
                         string text = string.Format("Faction support GIVEN, need < {0}, rolled {1}", threshold, rnd);
                         GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
@@ -223,7 +223,7 @@ public class FactionManager : MonoBehaviour
                         //Support declined
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
-                        message = GameManager.instance.messageScript.FactionSupport(msgText, _supportResistance, GameManager.instance.playerScript.Renown);
+                        message = GameManager.instance.messageScript.FactionSupport(msgText,factionResistance, _supportResistance, GameManager.instance.playerScript.Renown);
                         //random
                         string text = string.Format("Faction support DECLINED, need < {0}, rolled {1}", threshold, rnd);
                         GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);

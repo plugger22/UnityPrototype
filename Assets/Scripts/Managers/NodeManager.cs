@@ -2120,7 +2120,7 @@ public class NodeManager : MonoBehaviour
                                     node.launcher.StopSmoke();
                                     //admin
                                     msgText = string.Format("{0}, {1}, ID {2} crisis AVERTED", node.nodeName, node.Arc.name, node.nodeID);
-                                    GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
+                                    GameManager.instance.messageScript.NodeCrisis(msgText, node);
                                 }
                                 else
                                 {
@@ -2145,7 +2145,7 @@ public class NodeManager : MonoBehaviour
                                         GameManager.instance.cityScript.CityLoyalty = loyalty;
                                         //admin                                
                                         msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.nodeName, node.Arc.name, node.crisis.tag);
-                                        GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID, crisisCityLoyalty);
+                                        GameManager.instance.messageScript.NodeCrisis(msgText, node, crisisCityLoyalty);
                                         msgText = string.Format("{0} Loyalty falls by -{1} to {2} ({3} crisis)", city.name, crisisCityLoyalty, loyalty, node.crisis.tag);
                                         GameManager.instance.messageScript.CityLoyalty(msgText, loyalty, crisisCityLoyalty * -1);
                                         //set variables
@@ -2216,7 +2216,7 @@ public class NodeManager : MonoBehaviour
                                         Debug.LogFormat("[Rnd] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, CRISIS need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);
                                         msgText = string.Format("{0}, {1}, ID {2} crisis COMMENCES ({3})", node.nodeName, node.Arc.name, node.nodeID, node.crisis.tag);
-                                        GameManager.instance.messageScript.NodeCrisis(msgText, node.nodeID);
+                                        GameManager.instance.messageScript.NodeCrisis(msgText, node);
                                         //random
                                         msgText = string.Format("{0} ID {1}, CRISIS erupts, need < {2}, rolled {3}", node.Arc.name, node.nodeID, chance, rnd);
                                         GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);

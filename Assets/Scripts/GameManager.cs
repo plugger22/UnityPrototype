@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "ColourManager";
         listOfStartMethods.Add(startMethod);
         //Message Manager -> after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
-        startMethod.handler = GameManager.instance.messageScript.Initialise;
+        startMethod.handler = GameManager.instance.messageScript.InitialiseEarly;
         startMethod.className = "MessageManager";
         listOfStartMethods.Add(startMethod);
         //Tooltip Node
@@ -240,7 +240,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.guiScript.Initialise;
         startMethod.className = "GUIManager";
         listOfStartMethods.Add(startMethod);
-        //City Manager -> before levelScript
+        //City Manager InitialiseEarly -> before levelScript
         startMethod.handler = GameManager.instance.cityScript.InitialiseEarly;
         startMethod.className = "CityManager";
         listOfStartMethods.Add(startMethod);
@@ -271,6 +271,10 @@ public class GameManager : MonoBehaviour
         //City Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
         startMethod.className = "CityManager";
+        listOfStartMethods.Add(startMethod);
+        //Message Manager -> InitialseLate -> after CityManager
+        startMethod.handler = GameManager.instance.messageScript.InitialiseLate;
+        startMethod.className = "MessageManager";
         listOfStartMethods.Add(startMethod);
         //Secret Manager -> after dataScript and before playerScript
         startMethod.handler = GameManager.instance.secretScript.Initialise;
