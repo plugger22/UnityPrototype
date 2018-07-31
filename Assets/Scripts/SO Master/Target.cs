@@ -23,6 +23,8 @@ public class Target : ScriptableObject
     public ActorArc actorArc;
     [Tooltip("Gear arc with special bonus for target resolution (max. 1)")]
     public GearType gear;
+    [Tooltip("Target pic")]
+    public Sprite sprite;
 
     [HideInInspector] public Status targetStatus;      //default status of Dormant
     [HideInInspector] public int infoLevel;                        //from 1 to 3 but can be zero in some cases

@@ -1744,7 +1744,7 @@ public class NodeManager : MonoBehaviour
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
                 //message
                 string text = string.Format("Player has moved to {0}", destination);
-                GameManager.instance.messageScript.PlayerMove(text, node.nodeID);
+                GameManager.instance.messageScript.PlayerMove(text, node);
                 //
                 // - - - Invisibility - - -
                 //

@@ -222,9 +222,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public Message PlayerMove(string text, int nodeID)
+    public Message PlayerMove(string text, Node node)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -232,13 +232,14 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Move;
             message.side = globalResistance;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Moved";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = node.Arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1298,10 +1299,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="gearID"></param>
     /// <param name="motivation"></param>
     /// <returns></returns>
-    public Message SwapGive(string text, int actorID, int gearID, int motivation)
+    public Message GearSwapOrGive(string text, int actorID, Gear gear, int motivation)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
-        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        Debug.Assert(gear != null, "Invalid gear (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1310,7 +1311,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Given;
             message.side = globalResistance;
             message.data0 = actorID;
-            message.data1 = gearID;
+            message.data1 = gear.gearID;
             message.data2 = motivation;
             //ItemData
             ItemData data = new ItemData();
@@ -1318,6 +1319,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Give Gear";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1335,9 +1337,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearCompromised(string text, int gearID, int nodeID = -1)
+    public Message GearCompromised(string text, Gear gear, int nodeID = -1)
     {
-        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        Debug.Assert(gear != null, "Invalid gear (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1346,7 +1348,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Comprised;
             message.side = globalResistance;
             message.isPublic = true;
-            message.data0 = gearID;
+            message.data0 = gear.gearID;
             message.data1 = nodeID;
             //ItemData
             ItemData data = new ItemData();
@@ -1354,6 +1356,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Compromised";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1370,39 +1373,34 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearUsed(string text, int gearID, int nodeID = -1)
+    public Message GearUsed(string text, Gear gear, int nodeID = -1)
     {
-        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
-        //gear needed for gear stat
-        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-        if (gear != null)
+        Debug.Assert(gear != null, "Invalid gear (Null)");
+        //gear stat
+        gear.statTimesUsed++;
+        //message
+        if (string.IsNullOrEmpty(text) == false)
         {
-            //gear stat
-            gear.statTimesUsed++;
-            //message
-            if (string.IsNullOrEmpty(text) == false)
-            {
-                Message message = new Message();
-                message.text = text;
-                message.type = MessageType.GEAR;
-                message.subType = MessageSubType.Gear_Used;
-                message.side = globalResistance;
-                message.data0 = gearID;
-                message.data1 = nodeID;
-                //ItemData
-                ItemData data = new ItemData();
-                data.itemText = text;
-                data.topText = "Gear Used";
-                data.bottomText = text;
-                data.priority = ItemPriority.Low;
-                data.tab = ItemTab.Mail;
-                //add
-                GameManager.instance.dataScript.AddMessage(message);
-                GameManager.instance.dataScript.AddItemData(data);
-            }
-            else { Debug.LogWarning("Invalid text (Null or empty)"); }
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GEAR;
+            message.subType = MessageSubType.Gear_Used;
+            message.side = globalResistance;
+            message.data0 = gear.gearID;
+            message.data1 = nodeID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = text;
+            data.topText = "Gear Used";
+            data.bottomText = text;
+            data.priority = ItemPriority.Low;
+            data.sprite = gear.sprite;
+            data.tab = ItemTab.Mail;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
         }
-        else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
 
@@ -1413,9 +1411,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="gearID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message GearLost(string text, int gearID, int actorID)
+    public Message GearLost(string text, Gear gear, int actorID)
     {
-        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        Debug.Assert(gear != null, "Invalid gear (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1425,7 +1423,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Lost;
             message.side = globalResistance;
             message.isPublic = true;
-            message.data0 = gearID;
+            message.data0 = gear.gearID;
             message.data1 = actorID;
             //ItemData
             ItemData data = new ItemData();
@@ -1433,6 +1431,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Lost";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1449,9 +1448,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="gearID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message GearAvailable(string text, int gearID, int actorID)
+    public Message GearAvailable(string text, Gear gear, int actorID)
     {
-        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        Debug.Assert(gear != null, "Invalid gear (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1461,7 +1460,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Available;
             message.side = globalResistance;
             message.isPublic = true;
-            message.data0 = gearID;
+            message.data0 = gear.gearID;
             message.data1 = actorID;
             //ItemData
             ItemData data = new ItemData();
@@ -1469,6 +1468,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Available";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1485,10 +1485,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearObtained(string text, int nodeID, int gearID, int actorID = 999)
+    public Message GearObtained(string text, int nodeID, Gear gear, int actorID = 999)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(gearID >= 0, string.Format("Invalid gearID {0}", gearID));
+        Debug.Assert(gear != null, "Invalid gear (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1497,7 +1497,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Obtained;
             message.side = globalResistance;
             message.data0 = nodeID;
-            message.data1 = gearID;
+            message.data1 = gear.gearID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
@@ -1505,6 +1505,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Gear Obtained";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1530,11 +1531,11 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public Message TargetAttempt(string text, int nodeID, int actorID, int targetID)
+    public Message TargetAttempt(string text, int nodeID, int actorID, Target target)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
-        Debug.Assert(targetID >= 0, string.Format("Invalid targetID {0}", nodeID));
+        Debug.Assert(target != null, "Invalid target (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1544,13 +1545,14 @@ public class MessageManager : MonoBehaviour
             message.side = globalResistance;
             message.data0 = nodeID;
             message.data1 = actorID;
-            message.data2 = targetID;
+            message.data2 = target.targetID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Attempt Target";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = target.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1568,11 +1570,11 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public Message TargetContained(string text, int nodeID, int teamID, int targetID)
+    public Message TargetContained(string text, int nodeID, int teamID, Target target)
     {
         Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
-        Debug.Assert(targetID >= 0, string.Format("Invalid targetID {0}", nodeID));
+        Debug.Assert(target != null, "Invalid target (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1582,13 +1584,14 @@ public class MessageManager : MonoBehaviour
             message.side = globalBoth;
             message.data0 = nodeID;
             message.data1 = teamID;
-            message.data2 = targetID;
+            message.data2 = target.targetID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Target Contained";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = target.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);

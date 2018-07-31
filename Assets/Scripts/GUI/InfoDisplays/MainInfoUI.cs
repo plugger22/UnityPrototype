@@ -782,7 +782,7 @@ public class MainInfoUI : MonoBehaviour
                 textTop = "Make a Request";
                 builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}<b>OTHER PARTIES</b>{4} can request a meeting with you{5}{6}",colourHighlight, colourEnd, "\n", 
                     colourAlert, colourEnd, "\n", "\n");
-                builder.AppendFormat("You can, if you wish,{0}select {1}<b>ONE</b>{2} request", "\n", colourHighlight, colourEnd);
+                builder.AppendFormat("You can, <i>if you wish</i>,{0}select {1}<b>ONE</b>{2} request", "\n", colourHighlight, colourEnd);
                 builder.AppendFormat("{0}{1}The meeting will be at the {2}<b>Start</b>{3}{4}of the {5}<b>Next</b>{6} day", "\n", "\n", 
                     colourHighlight, colourEnd, "\n", colourHighlight, colourEnd);
                 break;

@@ -1385,7 +1385,7 @@ public class ActionManager : MonoBehaviour
             actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            GameManager.instance.messageScript.SwapGive(text, actor.actorID, gear.gearID, motivationBoost);
+            GameManager.instance.messageScript.GearSwapOrGive(text, actor.actorID, gear, motivationBoost);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -1498,7 +1498,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = builder.ToString();
             //message
             string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            GameManager.instance.messageScript.SwapGive(text, actor.actorID, gear.gearID, motivationCost);
+            GameManager.instance.messageScript.GearSwapOrGive(text, actor.actorID, gear, motivationCost);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -2205,7 +2205,7 @@ public class ActionManager : MonoBehaviour
                         node.targetID = -1;
                     }
                     text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
-                    GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
+                    GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target);
                     //random roll
                     Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
                     text = string.Format("Target {0} attempt SUCCESS need < {1}, rolled {2}", target.name, chance, roll);
@@ -2266,7 +2266,7 @@ public class ActionManager : MonoBehaviour
                     else
                     { builderBottom.AppendFormat("{0}Authorities are aware of the attempt (due to Zero Invisibility){1}", colourBad, colourEnd); }
                     text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
-                    GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target.targetID);
+                    GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target);
                 }
                 //Process effects
                 EffectDataReturn effectReturn = new EffectDataReturn();

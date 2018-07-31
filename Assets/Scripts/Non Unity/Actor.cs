@@ -483,7 +483,7 @@ namespace gameAPI
                     { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gearOld.name, gearOld.gearID); }
                     //let player know that gear has been Lost
                     string msgText = string.Format("{0} ({1}), has been GIVEN TO HQ by {2}", gearOld.name, gearOld.type.name, arc.name);
-                    GameManager.instance.messageScript.GearLost(msgText, gearOld.gearID, actorID);
+                    GameManager.instance.messageScript.GearLost(msgText, gearOld, actorID);
                 }
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
             }

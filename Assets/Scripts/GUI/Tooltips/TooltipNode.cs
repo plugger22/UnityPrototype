@@ -272,7 +272,9 @@ public class TooltipNode : MonoBehaviour
         //
         // - - - Crisis - - -
         //
-        int numOfCrisis = data.listOfCrisis.Count;
+        int numOfCrisis = 0;
+        if (data.listOfCrisis != null)
+        { numOfCrisis = data.listOfCrisis.Count; }
         if ( numOfCrisis > 0)
         {
             StringBuilder builderCrisis = new StringBuilder();

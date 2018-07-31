@@ -693,7 +693,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.NodeSecurity:
                             //bad -> security
-                            tempList.Add(string.Format("{0}<size=95%>Node Security {1}{2}</size>{3}", colourBad, node.Security > 0 ? "-" : "", node.Security, colourEnd));
+                            tempList.Add(string.Format("{0}<size=95%>District Security {1}{2}</size>{3}", colourBad, node.Security > 0 ? "-" : "", node.Security, colourEnd));
                             break;
                         case TargetFactors.TargetLevel:
                             //bad -> target level

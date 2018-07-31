@@ -14,4 +14,6 @@ public class NodeArc : ScriptableObject
     [Tooltip("Values between 0 and 3 only")] [Range(0,3)] public int Stability;
     [Tooltip("Values between 0 and 3 only")] [Range(0, 3)] public int Support;
     [Tooltip("Values between 0 and 3 only")] [Range(0, 3)] public int Security;
+
+    public Sprite sprite;
 }
