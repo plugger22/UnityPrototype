@@ -237,7 +237,7 @@ public class SecretManager : MonoBehaviour
                             {
                                 //message (any situation where a blackmail check is needed is going to be a deleted secret, hence the need for a message
                                 string msgText = string.Format("{0} loses secret \"{1}\"", actor.arc.name, secret.tag);
-                                GameManager.instance.messageScript.ActorSecret(msgText, actor.actorID, secretID);
+                                GameManager.instance.messageScript.ActorSecret(msgText, actor, secretID);
                                 if (actor.CheckConditionPresent(conditionBlackmail) == true)
                                 {
                                     if (actor.CheckNumOfSecrets() == 0)
@@ -245,7 +245,7 @@ public class SecretManager : MonoBehaviour
                                         actor.RemoveCondition(conditionBlackmail);
                                         //additional explanatory message (why has condition gone?)
                                         string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
-                                        GameManager.instance.messageScript.ActorSecret(blackText, actor.actorID, secretID);
+                                        GameManager.instance.messageScript.ActorSecret(blackText, actor, secretID);
                                     }
                                 }
                             }

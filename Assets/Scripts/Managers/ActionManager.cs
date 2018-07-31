@@ -277,7 +277,7 @@ public class ActionManager : MonoBehaviour
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                 if (effectReturn != null)
                                 {
-                                    outcomeDetails.sprite = actor.arc.actionSprite;
+                                    outcomeDetails.sprite = actor.arc.sprite;
                                     //update stringBuilder texts
                                     if (string.IsNullOrEmpty(effectReturn.topText) == false)
                                     {
@@ -1074,7 +1074,7 @@ public class ActionManager : MonoBehaviour
                 actor.isLieLowFirstturn = true;
                 numOfTurns = 3 - actor.datapoint2;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
-                outcomeDetails.sprite = actor.arc.baseSprite;
+                outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -1207,7 +1207,7 @@ public class ActionManager : MonoBehaviour
                 actor.tooltipStatus = ActorTooltip.None;
                 outcomeDetails.textTop = string.Format(" {0} {1} has been Recalled", actor.arc.name, actor.actorName);
                 outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
-                outcomeDetails.sprite = actor.arc.baseSprite;
+                outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -1378,7 +1378,7 @@ public class ActionManager : MonoBehaviour
             //Remove Gear
             if (gear != null)
             { GameManager.instance.playerScript.RemoveGear(gear.gearID); }
-            outcomeDetails.sprite = actor.arc.baseSprite;
+            outcomeDetails.sprite = actor.arc.sprite;
             outcomeDetails.textBottom = builder.ToString();
             //give actor motivation boost
             actor.datapoint1 += motivationBoost;
@@ -1675,7 +1675,7 @@ public class ActionManager : MonoBehaviour
                     actor.arc.name, actor.actorName);
                 outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7} can't be Reassured again{8}", colourGood, actor.actorName,
                     benefit, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
-                outcomeDetails.sprite = actor.arc.baseSprite;
+                outcomeDetails.sprite = actor.arc.sprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
                 actor.isReassured = true;
@@ -1740,7 +1740,7 @@ public class ActionManager : MonoBehaviour
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("{0}{1} can be Threatened again (not if Unhappy){2}", colourNeutral, actor.actorName, colourEnd);
                 outcomeDetails.textBottom = builder.ToString();
-                outcomeDetails.sprite = actor.arc.baseSprite;
+                outcomeDetails.sprite = actor.arc.sprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
                 //Deduct Player renown
@@ -1839,7 +1839,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textTop = string.Format("{0} {1} reluctantly returns to the recruitment pool and asks that you keep them in mind", actor.arc.name,
                     actor.actorName);
                 outcomeDetails.textBottom = builder.ToString();
-                outcomeDetails.sprite = actor.arc.baseSprite;
+                outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1} has been Let Go (Reserve Pool)", actor.arc.name, actor.actorName);
                 GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -1950,7 +1950,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textTop = string.Format("{0} {1} curses and spits at your feet before walking out the door", actor.arc.name,
                     actor.actorName);
                 outcomeDetails.textBottom = builder.ToString();
-                outcomeDetails.sprite = actor.arc.baseSprite;
+                outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1} has been Fired (Reserve Pool)", actor.arc.name, actor.actorName);
                 GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -2070,7 +2070,7 @@ public class ActionManager : MonoBehaviour
                     outcomeDetails.textTop = string.Format("{0} {1} bounds forward and enthusiastically shakes your hand", actor.arc.name,
                         actor.actorName);
                     outcomeDetails.textBottom = builder.ToString();
-                    outcomeDetails.sprite = actor.arc.baseSprite;
+                    outcomeDetails.sprite = actor.arc.sprite;
                     //message
                     string text = string.Format("{0} {1} called for Active Duty (Reserve Pool)", actor.arc.name, actor.actorName);
                     GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
@@ -2370,7 +2370,7 @@ public class ActionManager : MonoBehaviour
                     if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.ReservePool) == true)
                     {
                         //sprite of recruited actor
-                        sprite = actor.arc.baseSprite;
+                        sprite = actor.arc.sprite;
                         //authority actor?
                         if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                         {
@@ -2531,7 +2531,7 @@ public class ActionManager : MonoBehaviour
                         if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, status) == true)
                         {
                             //sprite of recruited actor
-                            sprite = actor.arc.baseSprite;
+                            sprite = actor.arc.sprite;
                             //authority actor?
                             if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                             {
@@ -2685,7 +2685,7 @@ public class ActionManager : MonoBehaviour
                         if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Killed) == true)
                         {
                             //sprite of recruited actor
-                            sprite = actor.arc.baseSprite;
+                            sprite = actor.arc.sprite;
                             //authority actor?
                             if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                             {

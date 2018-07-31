@@ -312,7 +312,7 @@ namespace gameAPI
                         listOfSecrets.Add(secret);
                         //message
                         string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
-                        GameManager.instance.messageScript.ActorSecret(msgText, actorID, secret.secretID);
+                        GameManager.instance.messageScript.ActorSecret(msgText, this, secret.secretID);
                     }
                     else { Debug.LogWarning("Secret NOT added as no space available"); }
                 }

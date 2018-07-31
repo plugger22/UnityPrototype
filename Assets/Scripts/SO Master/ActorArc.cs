@@ -12,9 +12,7 @@ public class ActorArc : ScriptableObject
     public string ActorTag { get; set; }              //4 letter tag, UPPERCASE eg. 'FIXE', 'HACK' -> assigned automatically by DataManager.Initialise
     public int ActorArcID { get; set; }               //unique #, zero based -> assigned automatically by DataManager.Initialise
     [Tooltip("Face of actor -> NOTE: should be a list with a few variations, perhaps?")]
-    public Sprite baseSprite;
-    [Tooltip("Sprite used when carrying out an action")]
-    public Sprite actionSprite;
+    public Sprite sprite;
     public string description;
     public string actorName;
     [Tooltip("One action for interacting with nodes")]

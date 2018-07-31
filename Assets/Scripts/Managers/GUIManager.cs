@@ -45,8 +45,10 @@ public class GUIManager : MonoBehaviour
     public Sprite targetSuccessSprite;
     [Tooltip("Used for Target attempts that fail")]
     public Sprite targetFailSprite;
-    [Tooltip("Used for Player or Actor having been captured")]
+    [Tooltip("Used for Player or Actor having been captured (152 x 160 png)")]
     public Sprite capturedSprite;
+    [Tooltip("Used for Player or Actor being released from captivity (152 x 160 png)")]
+    public Sprite releasedSprite;
     [Tooltip("Used for Player being Fired by their Faction")]
     public Sprite firedSprite;
     [Tooltip("Default City Arc sprite (512 x 150 png)")]
@@ -57,6 +59,8 @@ public class GUIManager : MonoBehaviour
     public Sprite alertWarningSprite;
     [Tooltip("Used for message Random (152 x 160 png)")]
     public Sprite alertRandomSprite;
+    [Tooltip("Used for ai reboot messages (152 x 160 png)")]
+    public Sprite aiRebootSprite;
 
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
@@ -83,11 +87,13 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(targetSuccessSprite != null, "Invalid targetSuccessSprite (Null)");
         Debug.Assert(targetFailSprite != null, "Invalid targetFailSprite (Null)");
         Debug.Assert(capturedSprite != null, "Invalid capturedSprite (Null)");
+        Debug.Assert(releasedSprite != null, "Invalid releasedSprite (Null)");
         Debug.Assert(firedSprite != null, "Invalid firedSprite (Null)");
         Debug.Assert(cityArcDefaultSprite != null, "Invalid cityArcDefaultSprite (Null)");
         Debug.Assert(alertInformationSprite != null, "Invalid alertInformationSprite (Null)");
         Debug.Assert(alertWarningSprite != null, "Invalid alertWarningSprite (Null)");
         Debug.Assert(alertRandomSprite != null, "Invalid alertRandomSprite (Null)");
+        Debug.Assert(aiRebootSprite != null, "Invalid aiRebootSpirte (Null)");
     }
 
     /// <summary>

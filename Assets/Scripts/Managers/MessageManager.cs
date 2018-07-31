@@ -11,15 +11,21 @@ public class MessageManager : MonoBehaviour
 {
 
     //fast access
-    GlobalSide globalResistance;
-    GlobalSide globalAuthority;
-    GlobalSide globalBoth;
+    private GlobalSide globalResistance;
+    private GlobalSide globalAuthority;
+    private GlobalSide globalBoth;
+    private int playerActorID = -1;
+    private Sprite playerSprite;
 
     /// <summary>
     /// Set up at start
     /// </summary>
     public void Initialise()
     {
+        playerActorID = GameManager.instance.playerScript.actorID;
+        playerSprite = GameManager.instance.playerScript.sprite;
+        Debug.Assert(playerActorID > -1, "Invalid playerActorID (-1)");
+        Debug.Assert(playerSprite != null, "Invalid playerSprite (Null)");
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalBoth = GameManager.instance.globalScript.sideBoth;
@@ -350,6 +356,22 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
+            //data depends on whether an actor or player
+            if (actorID == playerActorID)
+            {
+                //player
+                data.sprite = playerSprite;
+            }
+            else
+            {
+                //actor
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    data.sprite = actor.arc.sprite;
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -357,6 +379,8 @@ public class MessageManager : MonoBehaviour
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
+
+
 
     /// <summary>
     /// Actor in Reserve Pool is reassured or threatened
@@ -384,6 +408,22 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
+            //data depends on whether an actor or player
+            if (actorID == playerActorID)
+            {
+                //player
+                data.sprite = playerSprite;
+            }
+            else
+            {
+                //actor
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    data.sprite = actor.arc.sprite;
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -419,6 +459,22 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
+            //data depends on whether an actor or player
+            if (actorID == playerActorID)
+            {
+                //player
+                data.sprite = playerSprite;
+            }
+            else
+            {
+                //actor
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    data.sprite = actor.arc.sprite;
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -434,9 +490,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     ///<param name="secretID"></param>
     /// <returns></returns>
-    public Message ActorBlackmail(string text, int actorID, int secretID = -1)
+    public Message ActorBlackmail(string text, Actor actor, int secretID = -1)
     {
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -445,7 +501,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Actor_Blackmail;
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
-            message.data0 = actorID;
+            message.data0 = actor.actorID;
             message.data1 = secretID;
             //ItemData
             ItemData data = new ItemData();
@@ -453,6 +509,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Blackmail";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -469,9 +526,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="secretID"></param>
     /// <returns></returns>
-    public Message ActorSecret(string text, int actorID, int secretID)
+    public Message ActorSecret(string text, Actor actor, int secretID)
     {
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(secretID >= 0, string.Format("Invalid secretID {0}", secretID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -481,7 +538,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Actor_Secret;
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
-            message.data0 = actorID;
+            message.data0 = actor.actorID;
             message.data1 = secretID;
             //ItemData
             ItemData data = new ItemData();
@@ -489,7 +546,9 @@ public class MessageManager : MonoBehaviour
             data.topText = "Learns Secret";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;
+
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -506,10 +565,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message ActorRecruited(string text, int nodeID, int actorID, GlobalSide side)
+    public Message ActorRecruited(string text, int nodeID, Actor actor, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         if (side.level == globalResistance.level)
         { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
         if (string.IsNullOrEmpty(text) == false)
@@ -520,13 +579,14 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Actor_Recruited;
             message.side = side;
             message.data0 = nodeID;
-            message.data1 = actorID;
+            message.data1 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Recruited";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -544,9 +604,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="conflictID"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message ActorConflict(string text, int actorID, int conflictID, GlobalSide side)
+    public Message ActorConflict(string text, Actor actor, int conflictID, GlobalSide side)
     {
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(conflictID >= 0, string.Format("Invalid conflictID {0}", conflictID));
         Debug.Assert(side != null, "Invalid side (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -556,7 +616,7 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Conflict;
             message.side = side;
-            message.data0 = actorID;
+            message.data0 = actor.actorID;
             message.data1 = conflictID;
             //ItemData
             ItemData data = new ItemData();
@@ -564,6 +624,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Relationship Conflict";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -729,6 +790,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Captured";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.capturedSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -765,6 +827,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Release from Capture";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.releasedSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -800,6 +863,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Hacking Detected";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.alarmSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -834,6 +898,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Reboot";
             data.bottomText = text;
             data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.aiRebootSprite;
             data.tab = ItemTab.Mail;
             //add
             GameManager.instance.dataScript.AddMessage(message);

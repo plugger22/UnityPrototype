@@ -197,7 +197,7 @@ public class ActorPanelUI : MonoBehaviour
                             if (GameManager.instance.dataScript.CheckActorSlotStatus(index, side) == true)
                             {
                                 listOfActorTypes[index].text = arrayOfActors[index].arc.name;
-                                listOfActorPortraits[index].sprite = arrayOfActors[index].arc.baseSprite;
+                                listOfActorPortraits[index].sprite = arrayOfActors[index].arc.sprite;
                             }
                             else
                             {

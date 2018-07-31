@@ -2468,7 +2468,7 @@ public class ActorManager : MonoBehaviour
                             GenericOptionDetails optionDetails = new GenericOptionDetails();
                             optionDetails.optionID = actor.actorID;
                             optionDetails.text = actor.arc.name;
-                            optionDetails.sprite = actor.arc.baseSprite;
+                            optionDetails.sprite = actor.arc.sprite;
                             //tooltip
                             GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
                             //arc type and name
@@ -2620,7 +2620,7 @@ public class ActorManager : MonoBehaviour
                         if (actor != null)
                         {
                             InventoryOptionData optionData = new InventoryOptionData();
-                            optionData.sprite = actor.arc.baseSprite;
+                            optionData.sprite = actor.arc.sprite;
                             optionData.textUpper = actor.arc.name;
                             //unhappy situation
                             if (actor.CheckConditionPresent(conditionUnhappy) == true)
@@ -2737,7 +2737,7 @@ public class ActorManager : MonoBehaviour
                     if (actor != null)
                     {
                         InventoryOptionData optionData = new InventoryOptionData();
-                        optionData.sprite = actor.arc.baseSprite;
+                        optionData.sprite = actor.arc.sprite;
                         optionData.textUpper = actor.arc.name;
                         //unhappy situation
                         if (actor.CheckConditionPresent(conditionUnhappy) == true)
@@ -2817,7 +2817,7 @@ public class ActorManager : MonoBehaviour
                             //remove actor from appropriate pool list
                             GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, playerSide);
                             //sprite of recruited actor
-                            sprite = actorRecruited.arc.baseSprite;
+                            sprite = actorRecruited.arc.sprite;
                             //initiliase unhappy timer
                             actorRecruited.unhappyTimer = recruitedReserveTimer;
                             actorRecruited.isNewRecruit = true;
@@ -2830,7 +2830,7 @@ public class ActorManager : MonoBehaviour
                             //message
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
-                            GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, globalResistance);
+                            GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, globalResistance);
                             //Process any other effects, if acquisition was successfull, ignore otherwise
                             Action action = actorCurrent.arc.nodeAction;
                             Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
@@ -2943,14 +2943,14 @@ public class ActorManager : MonoBehaviour
                         //remove actor from appropriate pool list
                         GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
                         //sprite of recruited actor
-                        sprite = actorRecruited.arc.baseSprite;
+                        sprite = actorRecruited.arc.sprite;
                         //initiliase unhappy timer
                         actorRecruited.unhappyTimer = recruitedReserveTimer;
                         actorRecruited.isNewRecruit = true;
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
-                        GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited.actorID, globalAuthority);
+                        GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, globalAuthority);
                         //actor successfully recruited
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
@@ -3148,7 +3148,7 @@ public class ActorManager : MonoBehaviour
 
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1})", actor.arc.name, outputMsg);
-                                GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, actorConflict.conflictID, playerSide);
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor, actorConflict.conflictID, playerSide);
                                 //
                                 // - - - Effect - - -
                                 //
@@ -3197,7 +3197,7 @@ public class ActorManager : MonoBehaviour
                                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                                GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, actorConflict.conflictID, playerSide);
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor, actorConflict.conflictID, playerSide);
                             }
                         }
                         else
@@ -3207,7 +3207,7 @@ public class ActorManager : MonoBehaviour
                             builder.AppendFormat("{0}{1} Nothing happens{2}", "\n", colourGood, colourEnd);
                             //message
                             string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                            GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, 0, playerSide);
+                            GameManager.instance.messageScript.ActorConflict(msgText, actor, 0, playerSide);
                         }
                     }
                     else { Debug.LogWarning("No records in dictOfActorConflicts"); }
@@ -3222,7 +3222,7 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                 //message
                 string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                GameManager.instance.messageScript.ActorConflict(msgText, actor.actorID, 0, playerSide);
+                GameManager.instance.messageScript.ActorConflict(msgText, actor, 0, playerSide);
             }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
@@ -3741,7 +3741,7 @@ public class ActorManager : MonoBehaviour
                 isResolved = true;
                 //message
                 string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
-                GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID);
+                GameManager.instance.messageScript.ActorBlackmail(msgText, actor);
             }
             else
             { TraitLogMessage(actor, "to avoid being bought-off"); }
@@ -3762,7 +3762,7 @@ public class ActorManager : MonoBehaviour
                     StringBuilder builder = new StringBuilder();
                     //message
                     string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor.actorID, secret.secretID);
+                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.secretID);
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {
@@ -3783,7 +3783,7 @@ public class ActorManager : MonoBehaviour
                                 if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                                 {
                                     string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
-                                    GameManager.instance.messageScript.ActorBlackmail(textSecret, actor.actorID, secret.secretID);
+                                    GameManager.instance.messageScript.ActorBlackmail(textSecret, actor, secret.secretID);
                                 }
                             }
                         }
