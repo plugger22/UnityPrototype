@@ -317,7 +317,7 @@ public class SecretManager : MonoBehaviour
                                         actor.RemoveCondition(conditionBlackmail);
                                         //additional explanatory message (why has condition gone?)
                                         string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
-                                        GameManager.instance.messageScript.ActorSecret(blackText, actor, secret, false);
+                                        GameManager.instance.messageScript.ActorBlackmail(blackText, actor, secret.secretID);
                                     }
                                 }
                             }

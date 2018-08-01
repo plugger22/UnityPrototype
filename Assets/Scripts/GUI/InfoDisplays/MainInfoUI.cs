@@ -488,7 +488,7 @@ public class MainInfoUI : MonoBehaviour
     private void SetTabFlashers()
     {
         //request tab
-        if (arrayOfItemData[(int)ItemTab.Request].Count == 0)
+        if (arrayOfItemData[(int)ItemTab.Request].Count > 0)
         {
             flasher_requestTab.gameObject.SetActive(true);
             //commence flashing
@@ -496,7 +496,7 @@ public class MainInfoUI : MonoBehaviour
         }
         else { flasher_requestTab.gameObject.SetActive(false); }
         //meeting tab
-        if (arrayOfItemData[(int)ItemTab.Meeting].Count == 0)
+        if (arrayOfItemData[(int)ItemTab.Meeting].Count > 0)
         {
             flasher_meetingTab.gameObject.SetActive(true);
             //commence flashing
@@ -739,7 +739,7 @@ public class MainInfoUI : MonoBehaviour
             {
                 //reset currently highlighted back to default
                 if (highlightIndex > -1)
-                { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageItemData[itemIndex].itemText, colourEnd); }
+                { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageItemData[highlightIndex].itemText, colourEnd); }
                 highlightIndex = itemIndex;
                 //highlight item -> show as yellow
                 arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageItemData[itemIndex].itemText, colourEnd);

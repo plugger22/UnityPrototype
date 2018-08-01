@@ -3848,8 +3848,8 @@ public class ActorManager : MonoBehaviour
                         }
                         if (isProceed == true)
                         {
-                            //secret can only be learned one turn AFTER player gains secret
-                            if (secret.gainedWhen > GameManager.instance.turnScript.Turn)
+                            //secret can only be learned one turn AFTER player gains secret (the '+1' is to get around the messaging system)
+                            if ((secret.gainedWhen + 1) < GameManager.instance.turnScript.Turn)
                             {
                                 //does actor learn of secret
                                 rnd = Random.Range(0, 100);
@@ -3871,6 +3871,7 @@ public class ActorManager : MonoBehaviour
                                     }
                                 }
                             }
+                            /*else { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessSecrets: Can't learn secret, gained turn {0}, current turn {1}", secret.gainedWhen, GameManager.instance.turnScript.Turn); }*/
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
