@@ -3800,8 +3800,7 @@ public class AIManager : MonoBehaviour
                 {
                     //AI DETECTS hacking attempt
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                    text = string.Format("Hacking attempt DETECTED, need < {0}, rolled {1}", chance, rnd);
-                    GameManager.instance.messageScript.GeneralRandom(text, chance, rnd);
+                    GameManager.instance.messageScript.GeneralRandom("Hacking attempt DETECTED", chance, rnd);
                     isDetected = true;
                     hackingAttemptsDetected++;
                     //increase alert status
@@ -3909,8 +3908,7 @@ public class AIManager : MonoBehaviour
                 else
                 {
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt Undetected, need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                    text = string.Format("Hacking attempt Undetected, need < {0}, rolled {1}", chance, rnd);
-                    GameManager.instance.messageScript.GeneralRandom(text, chance, rnd);
+                    GameManager.instance.messageScript.GeneralRandom("Hacking attempt Undetected", chance, rnd);
                     //no change to status
                     switch (aiAlertStatus)
                     {

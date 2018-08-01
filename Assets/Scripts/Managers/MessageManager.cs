@@ -202,7 +202,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Random roll results (only ones that matter, don't spam). Auto player side.
+    /// Random roll results (only ones that matter, don't spam). Auto player side. Format text as "Faction support Declined" with NO need, rolled, etc.
     /// </summary>
     /// <param name="text"></param>
     /// <param name="numNeeded"></param>
@@ -1800,10 +1800,20 @@ public class MessageManager : MonoBehaviour
             message.data2 = supportGiven;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Faction Support";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            if (supportGiven > 0)
+            {
+                //support Approved
+                data.itemText = string.Format("Support request to {0} HQ APPROVED", faction.name);
+                data.topText = "Support APPROVED";
+            }
+            else
+            {
+                //support Declined
+                data.itemText = string.Format("Support request to {0} HQ declined", faction.name);
+                data.topText = "Support Declined";
+            }
+            data.bottomText = GameManager.instance.factionScript.GetFactionSupportDetails(faction, factionSupportLevel, supportGiven);
+            data.priority = ItemPriority.Medium;
             data.tab = ItemTab.Mail;
             data.sprite = faction.sprite;
             data.help = 1; //debug

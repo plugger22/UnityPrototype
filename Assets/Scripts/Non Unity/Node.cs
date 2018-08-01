@@ -1,11 +1,10 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using modalAPI;
+using packageAPI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using modalAPI;
-using gameAPI;
-using packageAPI;
-using System.Text;
-using System;
 
 public class Node : MonoBehaviour
 {
@@ -352,7 +351,7 @@ public class Node : MonoBehaviour
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over node
-        if (onMouseFlag == true)
+        if (onMouseFlag == true && GameManager.instance.inputScript.GameState == GameState.Normal)
         {
             //check modal block isn't in place
             if (GameManager.instance.guiScript.CheckIsBlocked() == false)

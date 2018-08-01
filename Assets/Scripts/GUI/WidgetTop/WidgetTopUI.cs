@@ -152,10 +152,10 @@ public class WidgetTopUI : MonoBehaviour
         switch(side.level)
         {
             case 1:
-                SetFactionBar(GameManager.instance.factionScript.SupportAuthority);
+                SetFactionBar(GameManager.instance.factionScript.ApprovalAuthority);
                 break;
             case 2:
-                SetFactionBar(GameManager.instance.factionScript.SupportResistance);
+                SetFactionBar(GameManager.instance.factionScript.ApprovalResistance);
                 break;
         }
     }

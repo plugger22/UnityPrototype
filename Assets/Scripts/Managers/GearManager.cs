@@ -320,7 +320,7 @@ public class GearManager : MonoBehaviour
                                     //admin
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                     Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
-                                    string msgText = string.Format("Gear {0} COMPROMISED, need < {1}, rolled {2}", gear.name, chance, rnd);
+                                    string msgText = string.Format("Gear {0} COMPROMISED", gear.name);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
                                     //stat
                                     gear.statTimesCompromised++;
@@ -437,7 +437,7 @@ public class GearManager : MonoBehaviour
                                     string msgText = string.Format("{0} gear lost by {1}, {2}{3}", gear.name, actor.actorName, actor.arc.name, traitName);
                                     GameManager.instance.messageScript.GearLost(msgText, gear, actor.actorID);
                                     //random
-                                    msgText = string.Format("Gear {0} LOST, need < {1}, rolled {2}", gear.name, chance, rnd);
+                                    msgText = string.Format("Gear {0} LOST", gear.name);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
                                     //remove gear AFTER message
                                     actor.RemoveGear();
@@ -635,17 +635,16 @@ public class GearManager : MonoBehaviour
                             gearID = tempRareGear[index];
                             tempRareGear.RemoveAt(index);
                             Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear Success, need < {0} roll {1}{2}", chance, rnd, "\n");
-                            //random
-                            string msgText = string.Format("Gear Choice, Rare gear SUCCESS, need < {0}, rolled {1}", chance, rnd);
-                            GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
+                            GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear SUCCESS", chance, rnd);
                         }
-                        //if failed chance for rare gear then need to get common
                         else if (tempCommonGear.Count > 0)
                         {
+                            //if failed chance for rare gear then need to get common
                             index = Random.Range(0, tempCommonGear.Count);
                             gearID = tempCommonGear[index];
                             tempCommonGear.RemoveAt(index);
                             Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear FAIL, need < {0} roll {1}{2}", chance, rnd, "\n");
+                            GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear FAILED", chance, rnd);
                         }
                     }
                     //common gear

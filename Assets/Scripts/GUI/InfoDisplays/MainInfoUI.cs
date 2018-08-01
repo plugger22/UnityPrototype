@@ -79,6 +79,9 @@ public class MainInfoUI : MonoBehaviour
     public Image details_image;
     public Sprite details_image_sprite;
 
+
+
+
     //button script handlers
     private ButtonInteraction buttonInteractionClose;
     private ButtonInteraction buttonInteractionHome;
@@ -97,10 +100,15 @@ public class MainInfoUI : MonoBehaviour
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
     private int numOfMaxItem = -1;                                   // (max) count of items in current list / page
     private GameObject[] arrayItemMain;
+    private TextMeshProUGUI[] arrayItemText;
     private Image[] arrayItemIcon;
     private Image[] arrayItemBorder;
     private Image[] arrayItemBackground;
-    private TextMeshProUGUI[] arrayItemText;
+    private Sprite priorityHigh;
+    private Sprite priorityMedium;
+    private Sprite priorityLow;
+
+
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
     //hardwired tabs at top -> 6
@@ -277,6 +285,13 @@ public class MainInfoUI : MonoBehaviour
 
     public void Start()
     {
+        //priority icons
+        priorityHigh = GameManager.instance.guiScript.priorityHighSprite;
+        priorityMedium = GameManager.instance.guiScript.priorityMediumSprite;
+        priorityLow = GameManager.instance.guiScript.priorityLowSprite;
+        Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
+        Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
+        Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MainInfoUI");
@@ -561,10 +576,6 @@ public class MainInfoUI : MonoBehaviour
         //clear out current data
         listOfCurrentPageItemData.Clear();
         //get data
-
-        /*if (dictOfItemData.ContainsKey(tabIndex) == true)
-        { listOfCurrentPageItemData.AddRange(dictOfItemData[tabIndex]); }*/
-
         listOfCurrentPageItemData.AddRange(arrayOfItemData[tabIndex]);
         //display routine
         if (listOfCurrentPageItemData != null)
@@ -582,6 +593,23 @@ public class MainInfoUI : MonoBehaviour
                         //populate text and set item to active
                         arrayItemText[index].text = listOfCurrentPageItemData[index].itemText;
                         arrayItemMain[index].gameObject.SetActive(true);
+                        //assign icon
+                        switch (listOfCurrentPageItemData[index].priority)
+                        {
+                            case ItemPriority.High:
+                                arrayItemIcon[index].sprite = priorityHigh;
+                                break;
+                            case ItemPriority.Medium:
+                                arrayItemIcon[index].sprite = priorityMedium;
+                                break;
+                            case ItemPriority.Low:
+                                arrayItemIcon[index].sprite = priorityLow;
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Invalid priority \"{0}\"", listOfCurrentPageItemData[index].priority);
+                                break;
+                        }
+
                     }
                     else if (index < numOfItemsPrevious)
                     {

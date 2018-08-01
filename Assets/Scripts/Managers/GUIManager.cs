@@ -71,6 +71,13 @@ public class GUIManager : MonoBehaviour
     public Sprite nodeCrisisSprite;
     [Tooltip("Used for city loyalty changes (152 x 160 png)")]
     public Sprite cityLoyaltySprite;
+    [Tooltip("Used for itemData priority High in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
+    public Sprite priorityHighSprite;
+    [Tooltip("Used for itemData priority Medium in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
+    public Sprite priorityMediumSprite;
+    [Tooltip("Used for itemData priority Low in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
+    public Sprite priorityLowSprite;
+
 
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -108,6 +115,9 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(ongoingEffectSprite != null, "Invalid ongoingEffectSprite (Null)");
         Debug.Assert(nodeCrisisSprite != null, "Invalid nodeCrisisSprite (Null)");
         Debug.Assert(cityLoyaltySprite != null, "Invalid cityLoyaltySprite (Null)");
+        Debug.Assert(priorityHighSprite != null, "Invalid priorityHighSprite (Null)");
+        Debug.Assert(priorityMediumSprite != null, "Invalid priorityMediumSprite (Null)");
+        Debug.Assert(priorityLowSprite != null, "Invalid priorityLowSprite (Null)");
     }
 
     /// <summary>

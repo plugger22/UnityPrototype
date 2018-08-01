@@ -10,24 +10,26 @@ using UnityEngine;
 /// </summary>
 public class FactionManager : MonoBehaviour
 {
-    [Tooltip("Support for both sides factions range from 0 to this amount")]
-    [Range(0, 10)] public int maxFactionSupport = 10;
+    [Tooltip("Approval for both sides factions range from 0 to this amount")]
+    [Range(0, 10)] public int maxFactionApproval = 10;
+    [Tooltip("How much Renown will the faction give per turn if they decide to support the Player")]
+    [Range(1, 3)] public int renownPerTurn = 1;
 
     [Header("Actor Influence")]
-    [Tooltip("Amount Faction Support drops by whenever an Actor resigns for whatever reason")]
-    [Range(0, 3)] public int factionSupportActorResigns = 1;
+    [Tooltip("Amount Faction Approval drops by whenever an Actor resigns for whatever reason")]
+    [Range(0, 3)] public int factionApprovalActorResigns = 1;
 
     [Header("Faction Matters")]
-    [Tooltip("Timer set when faction support is first zero. Decrements each turn and when zero the Player is fired. Reset if support rises above zero")]
+    [Tooltip("Timer set when faction approval is first zero. Decrements each turn and when zero the Player is fired. Reset if approval rises above zero")]
     [Range(1, 10)] public int factionFirePlayerTimer = 3;
 
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
 
-    private int supportZeroTimer;                           //countdown timer once support at zero. Player fired when timer reaches zero.
+    private int approvalZeroTimer;                           //countdown timer once approval at zero. Player fired when timer reaches zero.
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
-    private int _supportAuthority;                          //level of faction support (out of 10) enjoyed by authority side (Player/AI)
-    private int _supportResistance;                         //level of faction support (out of 10) enjoyed by resistance side (Player/AI)
+    private int _approvalAuthority;                          //level of faction approval (out of 10) enjoyed by authority side (Player/AI)
+    private int _approvalResistance;                         //level of faction approval (out of 10) enjoyed by resistance side (Player/AI)
 
 
     //fast access
@@ -46,29 +48,29 @@ public class FactionManager : MonoBehaviour
     private string colourEnd;
 
 
-    public int SupportAuthority
+    public int ApprovalAuthority
     {
-        get { return _supportAuthority; }
+        get { return _approvalAuthority; }
         private set
         {
-            _supportAuthority = value;
-            _supportAuthority = Mathf.Clamp(_supportAuthority, 0, maxFactionSupport);
+            _approvalAuthority = value;
+            _approvalAuthority = Mathf.Clamp(_approvalAuthority, 0, maxFactionApproval);
             //update top widget bar if current side is authority
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportAuthority, "FactionManager.cs -> SupportAuthority"); }
+            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _approvalAuthority, "FactionManager.cs -> ApprovalAuthority"); }
         }
     }
 
-    public int SupportResistance
+    public int ApprovalResistance
     {
-        get { return _supportResistance; }
+        get { return _approvalResistance; }
         private set
         {
-            _supportResistance = value;
-            _supportResistance = Mathf.Clamp(_supportResistance, 0, maxFactionSupport);
+            _approvalResistance = value;
+            _approvalResistance = Mathf.Clamp(_approvalResistance, 0, maxFactionApproval);
             //update top widget bar if current side is resistance
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _supportResistance, "FactionManager.cs -> SupportResistance"); }
+            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _approvalResistance, "FactionManager.cs -> ApprovalResistance"); }
         }
     }
 
@@ -96,11 +98,11 @@ public class FactionManager : MonoBehaviour
         //set AI resource levels
         GameManager.instance.aiScript.resourcesGainResistance = factionResistance.resourcesAllowance;
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);
-        //support levels
-        SupportAuthority = Random.Range(1, 10);
-        SupportResistance = Random.Range(1, 10);
-        Debug.Log(string.Format("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}",
-            factionResistance, factionAuthority, "\n"));
+        //approval levels
+        ApprovalAuthority = Random.Range(1, 10);
+        ApprovalResistance = Random.Range(1, 10);
+        Debug.LogFormat("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}",
+            factionResistance, factionAuthority, "\n");
         //update colours for AI Display tooltip data
         SetColours();
         //register listener
@@ -165,7 +167,7 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks if player given support (+1 renown) from faction based on a random roll vs. level of faction support
+    /// checks if player given support (+1 renown) from faction based on a random roll vs. level of faction approval
     /// </summary>
     private void CheckFactionRenownSupport()
     {
@@ -178,54 +180,50 @@ public class FactionManager : MonoBehaviour
             {
                 case 1:
                     //Authority
-                    threshold = _supportAuthority * 10;
+                    threshold = _approvalAuthority * 10;
                     if (rnd < threshold)
                     {
                         //Support Provided
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
-                        GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _supportAuthority, GameManager.instance.playerScript.Renown, 1);
+                        GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
                         //random
-                        string text = string.Format("Faction support GIVEN, need < {0}, rolled {1}",  threshold, rnd);
-                        GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", threshold, rnd);
                         //Support given
-                        GameManager.instance.playerScript.Renown++;
+                        GameManager.instance.playerScript.Renown += renownPerTurn;
                     }
                     else
                     {
                         //Support declined
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
-                        GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _supportAuthority, GameManager.instance.playerScript.Renown);
+                        GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
                         //random
-                        string text = string.Format("Faction support DECLINED, need < {0}, rolled {1}", threshold, rnd);
-                        GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", threshold, rnd);
                     }
                     break;
                 case 2:
                     //Resistance
-                    threshold = _supportResistance * 10;
+                    threshold = _approvalResistance * 10;
                     if (rnd < threshold)
                     {
                         //Support Provided
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
-                        GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _supportResistance, GameManager.instance.playerScript.Renown, 1);
+                        GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
                         //random
-                        string text = string.Format("Faction support GIVEN, need < {0}, rolled {1}", threshold, rnd);
-                        GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", threshold, rnd);
                         //Support given
-                        GameManager.instance.playerScript.Renown++;
+                        GameManager.instance.playerScript.Renown += renownPerTurn;
                     }
                     else
                     {
                         //Support declined
                         Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
-                        GameManager.instance.messageScript.FactionSupport(msgText,factionResistance, _supportResistance, GameManager.instance.playerScript.Renown);
+                        GameManager.instance.messageScript.FactionSupport(msgText,factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
                         //random
-                        string text = string.Format("Faction support DECLINED, need < {0}, rolled {1}", threshold, rnd);
-                        GameManager.instance.messageScript.GeneralRandom(text, threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", threshold, rnd);
                     }
                     break;
                 default:
@@ -236,48 +234,48 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if support zero, sets timer, counts down each turn and fires player when timer expired. Timer cancelled if support rises
+    /// Checks if approval zero, sets timer, counts down each turn and fires player when timer expired. Timer cancelled if approval rises
     /// </summary>
     public void CheckFactionFirePlayer()
     {
-        //get support
-        int support = -1;
+        //get approval
+        int approval = -1;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         switch(side.level)
         {
             case 1:
                 //Authority
-                support = _supportAuthority;
+                approval = _approvalAuthority;
                 break;
             case 2:
                 //Resistance
-                support = _supportResistance;
+                approval = _approvalResistance;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid side \"{0}\"", side);
                 break;
         }
         //only check once per turn
-        if (support == 0 && isZeroTimerThisTurn == false)
+        if (approval == 0 && isZeroTimerThisTurn == false)
         {
             isZeroTimerThisTurn = true;
-            if (supportZeroTimer == 0)
+            if (approvalZeroTimer == 0)
             {
                 //set timer
-                supportZeroTimer = factionFirePlayerTimer;
+                approvalZeroTimer = factionFirePlayerTimer;
                 //message
-                string msgText = string.Format("Faction support Zero. Faction will FIRE you in {0} turn{1}", supportZeroTimer, supportZeroTimer != 1 ? "s" : "");
+                string msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
                 GameManager.instance.messageScript.GeneralWarning(msgText);
             }
             else
             {
                 //decrement timer
-                supportZeroTimer--;
+                approvalZeroTimer--;
                 //fire player at zero
-                if (supportZeroTimer == 0)
+                if (approvalZeroTimer == 0)
                 {
                     GameManager.instance.win = WinState.Authority;
-                    GameManager.instance.messageScript.GeneralWarning("Faction support Zero. Player Fired. Authority wins");
+                    GameManager.instance.messageScript.GeneralWarning("Faction approval Zero. Player Fired. Authority wins");
                     //Player fired -> outcome
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                     outcomeDetails.side = side;
@@ -290,15 +288,15 @@ public class FactionManager : MonoBehaviour
                 else
                 {
                     //message
-                    string msgText = string.Format("Faction support Zero. Faction will FIRE you in {0} turn{1}", supportZeroTimer, supportZeroTimer != 1 ? "s" : "");
+                    string msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
                     GameManager.instance.messageScript.GeneralWarning(msgText);
                 }
             }
         }
         else
         {
-            //timer set to default (support > 0)
-            supportZeroTimer = 0;
+            //timer set to default (approval > 0)
+            approvalZeroTimer = 0;
         }
     }
 
@@ -377,10 +375,10 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current faction support level for specified side in colour formatted string
+    /// returns current faction approval level for specified side in colour formatted string
     /// </summary>
     /// <returns></returns>
-    public string GetFactionSupportLevel(GlobalSide side)
+    public string GetFactionApprovalLevel(GlobalSide side)
     {
         string description = "Unknown";
         if (side != null)
@@ -388,10 +386,10 @@ public class FactionManager : MonoBehaviour
             switch (side.level)
             {
                 case 1:
-                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _supportAuthority, colourEnd, maxFactionSupport);
+                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalAuthority, colourEnd, maxFactionApproval);
                     break;
                 case 2:
-                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _supportResistance, colourEnd, maxFactionSupport);
+                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalResistance, colourEnd, maxFactionApproval);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -449,10 +447,10 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// use this to adjust faction support level (auto checks for various faction mechanics & generates a message)
+    /// use this to adjust faction approval level (auto checks for various faction mechanics & generates a message)
     /// </summary>
     /// <param name="amount"></param>
-    public void ChangeFactionSupport(int amountToChange, string reason)
+    public void ChangeFactionApproval(int amountToChange, string reason)
     {
         if (string.IsNullOrEmpty(reason) == true) { reason = "Unknown"; }
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
@@ -460,18 +458,45 @@ public class FactionManager : MonoBehaviour
         {
             case 1:
                 //Authority
-                SupportAuthority += amountToChange;
-                Debug.LogFormat("[Fac] Authority Faction Support: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, SupportAuthority, reason, "\n");
+                ApprovalAuthority += amountToChange;
+                Debug.LogFormat("[Fac] Authority Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
                 break;
             case 2:
                 //Resistance
-                SupportResistance += amountToChange;
-                Debug.LogFormat("[Fac] Resistance Faction Support: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, SupportResistance, reason, "\n");
+                ApprovalResistance += amountToChange;
+                Debug.LogFormat("[Fac] Resistance Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
                 break;
             default:
                 Debug.LogWarningFormat("Invalid PlayerSide \"{0}\"", side);
                 break;
         }
+    }
+
+    /// <summary>
+    /// returns a colour formatted string for ItemData string Message
+    /// NOTE: faction has been checked for null by the calling method: MessageManager.cs -> FactionSupport
+    /// </summary>
+    /// <param name="supportGiven"></param>
+    /// <returns></returns>
+    public string GetFactionSupportDetails(Faction faction, int factionApproval, int supportGiven)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (supportGiven > 0)
+        {
+            //support approved
+            builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", faction.name, "\n", "\n");
+            builder.AppendFormat("{0}Renown +{1}{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval {4} out of {5}", colourNeutral, factionApproval * 10, colourEnd, "\n", 
+                factionApproval, maxFactionApproval);
+        }
+        else
+        {
+            //support declined
+            builder.AppendFormat("{0} HQ couldn't agree{1}{2}{3}<b>No Support provided</b>{4}{5}{6}", faction.name, "\n", "\n", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval {4} out of {5}", colourNeutral, factionApproval * 10, colourEnd, "\n", 
+                factionApproval, maxFactionApproval);
+        }
+        return builder.ToString();
     }
 
     //
