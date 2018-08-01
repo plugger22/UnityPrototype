@@ -196,7 +196,7 @@ public class SecretManager : MonoBehaviour
 
     /// <summary>
     /// returns a colour formatted string for ItemData string message (Player Secret)
-    /// NOTE: Secret checked for null by calling method -> MessageManager.cs -> PlayerSecret
+    /// NOTE: Secret checked for null by calling method: MessageManager.cs -> PlayerSecret
     /// </summary>
     /// <param name="secret"></param>
     /// <returns></returns>
@@ -207,18 +207,7 @@ public class SecretManager : MonoBehaviour
         if (isGained == true)
         {
             //secret gained
-            builder.AppendFormat("<b>Effects if Secret revealed</b>");
-            List<Effect> listOfEffects = secret.GetListOfEffects();
-            if (listOfEffects != null)
-            {
-                if (listOfEffects.Count > 0)
-                {
-                    foreach (Effect effect in listOfEffects)
-                    { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, effect.textTag, colourEnd); }
-                }
-                else { builder.AppendFormat("{0}No effect", "\n"); }
-            }
-            else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for secretID {0}", secret.secretID); }
+            GetSecretEffects(builder, secret);
             builder.AppendFormat("{0}{1}{2}<b>Nobody</b>{3} currently knows this secret", "\n", "\n", colourNeutral, colourEnd);
         }
         else
@@ -229,7 +218,55 @@ public class SecretManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// returns a colour formatted string for ItemData string message (Actor Secret)
+    /// NOTE: Actor and secret checked for Null by calling method: MessageManager.cs -> ActorSecret
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="secret"></param>
+    /// <param name="isGained"></param>
+    /// <returns></returns>
+    public string GetActorSecretDetails(Actor actor, Secret secret, bool isGained)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2}", secret.descriptor, "\n", "\n");
+        if (isGained == true)
+        {
+            //secret gained
+            GetSecretEffects(builder, secret);
+            builder.AppendFormat("{0}{1}Unless {2}<b>provoked</b>{3}, {4} will keep your secret", "\n", "\n", colourNeutral, colourEnd, actor.actorName);
+        }
+        else
+        {
+            //secret lost
+            builder.AppendFormat("{0} can {1}no longer remember{2} the details of your secret", actor.actorName, colourNeutral, colourEnd);
+        }
+        return builder.ToString();
+    }
 
+    /// <summary>
+    /// subMethod to add Secret effects to builder string for GetPlayerSecretDetails and GetActorSecretDetails
+    /// NOTE: secret checked for null by calling method
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="secret"></param>
+    /// <returns></returns>
+    private StringBuilder GetSecretEffects(StringBuilder builder, Secret secret)
+    {
+        builder.AppendFormat("<b>Effects if Secret revealed</b>");
+        List<Effect> listOfEffects = secret.GetListOfEffects();
+        if (listOfEffects != null)
+        {
+            if (listOfEffects.Count > 0)
+            {
+                foreach (Effect effect in listOfEffects)
+                { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, effect.textTag, colourEnd); }
+            }
+            else { builder.AppendFormat("{0}No effect", "\n"); }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for secretID {0}", secret.secretID); }
+        return builder;
+    }
 
     /// <summary>
     /// Removes a given secret from all actors and player. If calling for a deleted secret then set to true, otherwise, for a normal revealed secret situation, default false
@@ -252,6 +289,8 @@ public class SecretManager : MonoBehaviour
                 string playerMsg = string.Format("Player loses secret \"{0}\"", secret.tag);
                 GameManager.instance.messageScript.PlayerSecret(playerMsg, secret, false);
             }
+            //remove actors from secret list
+            secret.RemoveAllActors();
             //loop actors
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
             if (arrayOfActors != null)
@@ -270,7 +309,7 @@ public class SecretManager : MonoBehaviour
                             {
                                 //message (any situation where a blackmail check is needed is going to be a deleted secret, hence the need for a message
                                 string msgText = string.Format("{0} loses secret \"{1}\"", actor.arc.name, secret.tag);
-                                GameManager.instance.messageScript.ActorSecret(msgText, actor, secretID);
+                                GameManager.instance.messageScript.ActorSecret(msgText, actor, secret, false);
                                 if (actor.CheckConditionPresent(conditionBlackmail) == true)
                                 {
                                     if (actor.CheckNumOfSecrets() == 0)
@@ -278,7 +317,7 @@ public class SecretManager : MonoBehaviour
                                         actor.RemoveCondition(conditionBlackmail);
                                         //additional explanatory message (why has condition gone?)
                                         string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
-                                        GameManager.instance.messageScript.ActorSecret(blackText, actor, secretID);
+                                        GameManager.instance.messageScript.ActorSecret(blackText, actor, secret, false);
                                     }
                                 }
                             }

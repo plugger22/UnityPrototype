@@ -488,7 +488,7 @@ public class MainInfoUI : MonoBehaviour
     private void SetTabFlashers()
     {
         //request tab
-        if (arrayOfItemData[(int)ItemTab.Request].Count > 0)
+        if (arrayOfItemData[(int)ItemTab.Request].Count == 0)
         {
             flasher_requestTab.gameObject.SetActive(true);
             //commence flashing
@@ -496,7 +496,7 @@ public class MainInfoUI : MonoBehaviour
         }
         else { flasher_requestTab.gameObject.SetActive(false); }
         //meeting tab
-        if (arrayOfItemData[(int)ItemTab.Meeting].Count > 0)
+        if (arrayOfItemData[(int)ItemTab.Meeting].Count == 0)
         {
             flasher_meetingTab.gameObject.SetActive(true);
             //commence flashing

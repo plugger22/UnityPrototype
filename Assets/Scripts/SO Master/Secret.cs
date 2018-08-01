@@ -23,6 +23,7 @@ public class Secret : ScriptableObject
 
     [HideInInspector] public SecretStatus status;           //SO enum -> Inactive 0, Active 1, Revealed 2, Deleted 3
     [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
+    [HideInInspector] public int gainedWhen;                //turn player gains secret
     [HideInInspector] public int revealedWho;               //actorID of person who revealed the secret
     [HideInInspector] public int revealedWhen;              //turn revealed
     [HideInInspector] public int deletedWhen;               //turn deleted (removed from game without being revealed)
@@ -62,12 +63,37 @@ public class Secret : ScriptableObject
     }
 
     /// <summary>
+    /// remove an actor from list of actors who know the secret
+    /// </summary>
+    /// <param name="actorID"></param>
+    public void RemoveActor(int actorID)
+    {
+        //reverse loop through and remove secret
+        for (int i = listOfActors.Count - 1; i >= 0; i--)
+        {
+            if (listOfActors[i] == actorID)
+            {
+                listOfActors.RemoveAt(i);
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// clear out all actors, nobody knows secret
+    /// </summary>
+    public void RemoveAllActors()
+    { listOfActors.Clear(); }
+
+    /// <summary>
     /// returns true if actorID is on list Of actors who already know of the secret, false otherwise
     /// </summary>
     /// <param name="actorID"></param>
     /// <returns></returns>
     public bool CheckActorPresent(int actorID)
     { return listOfActors.Exists(x => x == actorID); }
+
+
 
 
     /// <summary>

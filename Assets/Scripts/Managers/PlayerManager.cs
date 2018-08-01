@@ -736,6 +736,7 @@ public class PlayerManager : MonoBehaviour
                     //add secret & make active
                     listOfSecrets.Add(secret);
                     secret.status = secretStatusActive;
+                    secret.gainedWhen = GameManager.instance.turnScript.Turn;
                     //Msg
                     GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
                 }

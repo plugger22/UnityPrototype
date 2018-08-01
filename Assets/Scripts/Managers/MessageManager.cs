@@ -292,20 +292,12 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
+            data.topText = secret.tag;
+            data.bottomText = GameManager.instance.secretScript.GetPlayerSecretDetails(secret, isGained);
             if (isGained == true)
-            {
-                data.itemText = "Player gains a Secret";
-                data.topText = secret.tag;
-                data.bottomText = GameManager.instance.secretScript.GetPlayerSecretDetails(secret, true);
-            }
+            { data.itemText = "Player gains a Secret"; }
             else
-            {
-                //secret lost
-                data.itemText = "Player loses a Secret";
-                data.topText = secret.tag;
-                data.bottomText = GameManager.instance.secretScript.GetPlayerSecretDetails(secret, false);
-            }
-
+            { data.itemText = "Player loses a Secret"; }
             data.priority = ItemPriority.Low;
             data.sprite = playerSprite;
             data.tab = ItemTab.Mail;
@@ -553,10 +545,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="secretID"></param>
     /// <returns></returns>
-    public Message ActorSecret(string text, Actor actor, int secretID)
+    public Message ActorSecret(string text, Actor actor, Secret secret, bool isLearnt = true)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
-        Debug.Assert(secretID >= 0, string.Format("Invalid secretID {0}", secretID));
+        Debug.Assert(secret != null, "Invalid secret (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -566,12 +558,15 @@ public class MessageManager : MonoBehaviour
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secretID;
+            message.data1 = secret.secretID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Learns Secret";
-            data.bottomText = text;
+            data.topText = secret.tag;
+            data.bottomText = GameManager.instance.secretScript.GetActorSecretDetails(actor, secret, isLearnt);
+            if (isLearnt == true)
+            { data.itemText = string.Format("{0} learns one of your Secrets", actor.arc.name);  }
+            else
+            {  data.itemText = string.Format("{0} forgets one of your Secrets", actor.arc.name);  }
             data.priority = ItemPriority.Low;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;

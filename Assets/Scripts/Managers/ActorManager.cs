@@ -3848,23 +3848,27 @@ public class ActorManager : MonoBehaviour
                         }
                         if (isProceed == true)
                         {
-                            //does actor learn of secret
-                            rnd = Random.Range(0, 100);
-                            if (rnd < chance)
+                            //secret can only be learned one turn AFTER player gains secret
+                            if (secret.gainedWhen > GameManager.instance.turnScript.Turn)
                             {
-                                //actor learns of secret
-                                actor.AddSecret(secret);
-                                secret.AddActor(actor.actorID);
-                                //Admin
-                                Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                string text = string.Format("{0}, {1}, learned SECRET need < {2}, rolled {3}", actor.actorName, actor.arc.name, chance, rnd);
-                                GameManager.instance.messageScript.GeneralRandom(text, chance, rnd);
-                                //trait Blabbermouth
-                                if (actor.CheckTraitEffect(actorSecretTellAll) == true)
+                                //does actor learn of secret
+                                rnd = Random.Range(0, 100);
+                                if (rnd < chance)
                                 {
-                                    //actor passes secret onto all other actors
-                                    int numTold = ProcessSecretTellAll(secret, actor);
-                                    TraitLogMessage(actor, string.Format("tell {0} other {1} about the secret", numTold, numTold != 1 ? "people" : "person"));
+                                    //actor learns of secret
+                                    actor.AddSecret(secret);
+                                    secret.AddActor(actor.actorID);
+                                    //Admin
+                                    Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                                    string text = string.Format("{0}, {1}, learned SECRET need < {2}, rolled {3}", actor.actorName, actor.arc.name, chance, rnd);
+                                    GameManager.instance.messageScript.GeneralRandom(text, chance, rnd);
+                                    //trait Blabbermouth
+                                    if (actor.CheckTraitEffect(actorSecretTellAll) == true)
+                                    {
+                                        //actor passes secret onto all other actors
+                                        int numTold = ProcessSecretTellAll(secret, actor);
+                                        TraitLogMessage(actor, string.Format("tell {0} other {1} about the secret", numTold, numTold != 1 ? "people" : "person"));
+                                    }
                                 }
                             }
                         }
