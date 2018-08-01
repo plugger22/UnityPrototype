@@ -328,6 +328,9 @@ public class InputManager : MonoBehaviour
                                     EventManager.instance.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessInput");
                                     return;
                                 }
+                                float y_axis = Input.GetAxis("Vertical");
+                                if (y_axis != 0)
+                                { Debug.LogFormat("[Tst] InputManager.cs -> ProcessInput: x_axis {0}", y_axis); }
                                 break;
                             default:
                                 Debug.LogWarningFormat("Invalid _modalInfoState \"{0}\"", _modalInfoState);

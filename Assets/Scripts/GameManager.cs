@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ResistanceManager rebelScript;           //Resistance Manager
     [HideInInspector] public AuthorityManager authorityScript;        //Authority Manager
     [HideInInspector] public MessageManager messageScript;            //Message Manager
+    [HideInInspector] public ItemDataManager itemDataScript;                  //ItemData Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TestManager testScript;                  //Test Manager
@@ -138,6 +139,7 @@ public class GameManager : MonoBehaviour
         teamScript = GetComponent<TeamManager>();
         gearScript = GetComponent<GearManager>();
         messageScript = GetComponent<MessageManager>();
+        itemDataScript = GetComponent<ItemDataManager>();
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
         testScript = GetComponent<TestManager>();
@@ -219,6 +221,10 @@ public class GameManager : MonoBehaviour
         //Message Manager -> after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
         startMethod.handler = GameManager.instance.messageScript.InitialiseEarly;
         startMethod.className = "MessageManager";
+        listOfStartMethods.Add(startMethod);
+        //ItemData Manager
+        startMethod.handler = GameManager.instance.itemDataScript.Initialise;
+        startMethod.className = "ItemDataManager";
         listOfStartMethods.Add(startMethod);
         //Tooltip Node
         startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;

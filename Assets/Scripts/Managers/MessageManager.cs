@@ -223,8 +223,8 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
-            data.topText = "Random Result";
-            data.bottomText = text;
+            data.topText = "Random Outcome";
+            data.bottomText = GameManager.instance.itemDataScript.GetRandomDetails(numNeeded, numRolled);
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.instance.guiScript.alertRandomSprite;
             data.tab = ItemTab.Random;
@@ -293,7 +293,7 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
-            data.bottomText = GameManager.instance.secretScript.GetPlayerSecretDetails(secret, isGained);
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerSecretDetails(secret, isGained);
             if (isGained == true)
             { data.itemText = "Player gains a Secret"; }
             else
@@ -562,7 +562,7 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
-            data.bottomText = GameManager.instance.secretScript.GetActorSecretDetails(actor, secret, isLearnt);
+            data.bottomText = GameManager.instance.itemDataScript.GetActorSecretDetails(actor, secret, isLearnt);
             if (isLearnt == true)
             { data.itemText = string.Format("{0} learns one of your Secrets", actor.arc.name);  }
             else
@@ -1812,7 +1812,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("Support request to {0} HQ declined", faction.name);
                 data.topText = "Support Declined";
             }
-            data.bottomText = GameManager.instance.factionScript.GetFactionSupportDetails(faction, factionSupportLevel, supportGiven);
+            data.bottomText = GameManager.instance.itemDataScript.GetFactionSupportDetails(faction, factionSupportLevel, supportGiven);
             data.priority = ItemPriority.Medium;
             data.tab = ItemTab.Mail;
             data.sprite = faction.sprite;

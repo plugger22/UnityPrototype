@@ -302,6 +302,10 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MainInfoHome, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoBack, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoForward, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoUpArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoDownArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoLeftArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoRightArrow, OnEvent, "MainInfoUI");
     }
 
     public void Initialise()
@@ -407,7 +411,6 @@ public class MainInfoUI : MonoBehaviour
                 OpenTab((int)Param);
                 break;
             case EventType.MainInfoShowDetails:
-                /*ShowDetails((int)Param);*/
                 ShowItemDetails((int)Param);
                 break;
             case EventType.MainInfoHome:
@@ -418,6 +421,18 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case EventType.MainInfoForward:
                 ExecuteButtonForward();
+                break;
+            case EventType.MainInfoUpArrow:
+                ExecuteUpArrow();
+                break;
+            case EventType.MainInfoDownArrow:
+                ExecuteDownArrow();
+                break;
+            case EventType.MainInfoLeftArrow:
+                ExecuteLeftArrow();
+                break;
+            case EventType.MainInfoRightArrow:
+                ExecuteRightArrow();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -922,6 +937,40 @@ public class MainInfoUI : MonoBehaviour
             UpdateNavigationStatus();
         }
         else { Debug.LogWarning("Invalid data (Null)"); }
+    }
+
+    /// <summary>
+    /// Up arrow (up next item on page)
+    /// </summary>
+    private void ExecuteUpArrow()
+    {
+        if (highlightIndex < numOfItemsCurrent)
+        { ShowItemDetails(highlightIndex + 1); }
+    }
+
+    /// <summary>
+    /// Down arrow (down next item on page)
+    /// </summary>
+    private void ExecuteDownArrow()
+    {
+        if (highlightIndex > 0)
+        { ShowItemDetails(highlightIndex - 1); }
+    }
+
+    /// <summary>
+    /// Left arrow (left to next tab)
+    /// </summary>
+    private void ExecuteLeftArrow()
+    {
+
+    }
+
+    /// <summary>
+    /// Right arrow (right to next tab)
+    /// </summary>
+    private void ExecuteRightArrow()
+    {
+
     }
 
     /// <summary>

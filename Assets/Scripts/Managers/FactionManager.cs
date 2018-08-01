@@ -472,32 +472,7 @@ public class FactionManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// returns a colour formatted string for ItemData string Message
-    /// NOTE: faction has been checked for null by the calling method: MessageManager.cs -> FactionSupport
-    /// </summary>
-    /// <param name="supportGiven"></param>
-    /// <returns></returns>
-    public string GetFactionSupportDetails(Faction faction, int factionApproval, int supportGiven)
-    {
-        StringBuilder builder = new StringBuilder();
-        if (supportGiven > 0)
-        {
-            //support approved
-            builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", faction.name, "\n", "\n");
-            builder.AppendFormat("{0}Renown +{1}{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval {4} out of {5}", colourNeutral, factionApproval * 10, colourEnd, "\n", 
-                factionApproval, maxFactionApproval);
-        }
-        else
-        {
-            //support declined
-            builder.AppendFormat("{0} HQ couldn't agree{1}{2}{3}<b>No Support provided</b>{4}{5}{6}", faction.name, "\n", "\n", colourBad, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval {4} out of {5}", colourNeutral, factionApproval * 10, colourEnd, "\n", 
-                factionApproval, maxFactionApproval);
-        }
-        return builder.ToString();
-    }
+
 
     //
     // - - - Debug - - -
