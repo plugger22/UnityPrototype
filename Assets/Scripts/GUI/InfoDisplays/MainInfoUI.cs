@@ -92,6 +92,7 @@ public class MainInfoUI : MonoBehaviour
 
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
+    private int maxHighlightIndex = -1;
     private int viewTurnNumber = -1;                                 //turn number of data being viewed
     private int currentTurn = -1;                                    //cached current turn # (SetMainInfo)
     private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 20
@@ -114,6 +115,7 @@ public class MainInfoUI : MonoBehaviour
     //hardwired tabs at top -> 6
     public int numOfTabs = 6;
     private int currentTabIndex = -1;
+    private int maxTabIndex = 5;
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
     //ItemData
@@ -596,6 +598,7 @@ public class MainInfoUI : MonoBehaviour
         if (listOfCurrentPageItemData != null)
         {
             numOfItemsCurrent = listOfCurrentPageItemData.Count;
+            maxHighlightIndex = numOfItemsCurrent - 1;
             if (numOfItemsCurrent > 0)
             {
                 //update max number of items
@@ -940,21 +943,27 @@ public class MainInfoUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Up arrow (up next item on page)
-    /// </summary>
-    private void ExecuteUpArrow()
-    {
-        if (highlightIndex < numOfItemsCurrent)
-        { ShowItemDetails(highlightIndex + 1); }
-    }
-
-    /// <summary>
     /// Down arrow (down next item on page)
     /// </summary>
     private void ExecuteDownArrow()
     {
-        if (highlightIndex > 0)
-        { ShowItemDetails(highlightIndex - 1); }
+        if (highlightIndex > -1)
+        {
+            if (highlightIndex < (maxHighlightIndex) )
+            { ShowItemDetails(highlightIndex + 1); }
+        }
+    }
+
+    /// <summary>
+    /// Up arrow (up next item on page)
+    /// </summary>
+    private void ExecuteUpArrow()
+    {
+        if (highlightIndex > -1)
+        {
+            if (highlightIndex > 0)
+            { ShowItemDetails(highlightIndex - 1); }
+        }
     }
 
     /// <summary>
@@ -962,6 +971,9 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     private void ExecuteLeftArrow()
     {
+        //change tab
+        
+        //open page
 
     }
 
