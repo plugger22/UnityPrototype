@@ -115,7 +115,7 @@ public class MainInfoUI : MonoBehaviour
     //hardwired tabs at top -> 6
     public int numOfTabs = 6;
     private int currentTabIndex = -1;
-    private int maxTabIndex = 5;
+    private int maxTabIndex;
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
     //ItemData
@@ -176,6 +176,8 @@ public class MainInfoUI : MonoBehaviour
         for (int i = 0; i < (int)ItemTab.Count; i++)
         { arrayOfItemData[i] = new List<ItemData>(); }
         listOfCurrentPageItemData = new List<ItemData>();
+        //max tabs
+        maxTabIndex = numOfTabs - 1;
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
         Debug.Assert(buttonInfo != null, "Invalid buttonInfo (Null)");
@@ -952,6 +954,11 @@ public class MainInfoUI : MonoBehaviour
             if (highlightIndex < (maxHighlightIndex) )
             { ShowItemDetails(highlightIndex + 1); }
         }
+        else if (maxHighlightIndex > -1)
+        {
+            //at tab, jump to first entry if present
+            ShowItemDetails(0);
+        }
     }
 
     /// <summary>
@@ -963,6 +970,12 @@ public class MainInfoUI : MonoBehaviour
         {
             if (highlightIndex > 0)
             { ShowItemDetails(highlightIndex - 1); }
+            else
+            {
+                //at top of page, go to tab
+                highlightIndex = -1;
+                OpenTab(currentTabIndex);
+            }
         }
     }
 
@@ -972,9 +985,14 @@ public class MainInfoUI : MonoBehaviour
     private void ExecuteLeftArrow()
     {
         //change tab
-        
-        //open page
-
+        if (currentTabIndex > -1)
+        {
+            if (currentTabIndex > 0)
+            {
+                currentTabIndex -= 1;
+                OpenTab(currentTabIndex);
+            }
+        }
     }
 
     /// <summary>
@@ -982,7 +1000,14 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     private void ExecuteRightArrow()
     {
-
+        if (currentTabIndex > -1)
+        {
+            if (currentTabIndex < maxTabIndex)
+            {
+                currentTabIndex += 1;
+                OpenTab(currentTabIndex);
+            }
+        }
     }
 
     /// <summary>

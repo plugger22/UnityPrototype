@@ -337,6 +337,14 @@ public class InputManager : MonoBehaviour
                                     else if (y_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessInput"); }
                                 }
+                                if (Input.GetButtonDown("Horizontal"))
+                                {
+                                    x_axis = Input.GetAxisRaw("Horizontal");
+                                    if (x_axis > 0)
+                                    { EventManager.instance.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessInput"); }
+                                    else if (x_axis < 0)
+                                    { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessInput"); }
+                                }
                                 break;
                             default:
                                 Debug.LogWarningFormat("Invalid _modalInfoState \"{0}\"", _modalInfoState);
