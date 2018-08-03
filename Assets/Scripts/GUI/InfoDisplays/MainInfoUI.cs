@@ -79,8 +79,14 @@ public class MainInfoUI : MonoBehaviour
     public Image details_image;
     public Sprite details_image_sprite;
 
+    [Header("Moving Flares")]
+    public Image flare_SW;
 
 
+    [Header("Globals")]
+    [Tooltip("Change this at your peril (default 6) as data collections and indexes all flow from it")]
+    public int numOfTabs = 6;
+    [Tooltip("")]
 
     //button script handlers
     private ButtonInteraction buttonInteractionClose;
@@ -109,11 +115,15 @@ public class MainInfoUI : MonoBehaviour
     private Sprite priorityMedium;
     private Sprite priorityLow;
 
-
+    //scroll bar LHS
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
-    //hardwired tabs at top -> 6
-    public int numOfTabs = 6;
+    //flares
+    private RectTransform rectFlareSW;
+    private Coroutine myCoroutineFlareSW;
+    private Vector3 startFlarePosition;
+
+
     private int currentTabIndex = -1;
     private int maxTabIndex;
     private Image[] tabActiveArray;
@@ -285,6 +295,11 @@ public class MainInfoUI : MonoBehaviour
         //LHS
         Debug.Assert(flasher_requestTab != null, "Invalid flashing_requestTab (Null)");
         Debug.Assert(flasher_meetingTab != null, "Invalid flashing_meetingTab (Null)");
+        //Moving Flares
+        Debug.Assert(flare_SW != null, "Invalid flare_SW (Null");
+        rectFlareSW = flare_SW.GetComponent<RectTransform>();
+        Debug.Assert(rectFlareSW != null, "Invalid rectFlareSW (Null)");
+        startFlarePosition = flare_SW.transform.position;
     }
 
     public void Start()
@@ -488,8 +503,10 @@ public class MainInfoUI : MonoBehaviour
             UpdateNavigationStatus();
             // GUI
             mainInfoObject.SetActive(true);
-            //flashers -> Request
+            //flashers -> Request & Meeting tabs
             SetTabFlashers();
+            //flares -> moving inwards towards App
+            SetFlares();
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
@@ -545,7 +562,7 @@ public class MainInfoUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator FlashRequestTab()
     {
-        for( ; ; )
+        while (true)
         {
             if (isRequestFlasherOn == false)
             {
@@ -568,7 +585,7 @@ public class MainInfoUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator FlashMeetingTab()
     {
-        for (; ; )
+        while (true)
         {
             if (isMeetingFlasherOn == false)
             {
@@ -582,6 +599,66 @@ public class MainInfoUI : MonoBehaviour
                 isMeetingFlasherOn = false;
                 yield return new WaitForSecondsRealtime(flashTimer);
             }
+        }
+    }
+
+    /// <summary>
+    /// Start flares moving inwards towards app in a continuous loop while ever app is open
+    /// </summary>
+    private void SetFlares()
+    {
+        //reset to start position off screen
+        /*Vector3 position = rectFlareSW.position;
+        position.x = -126f;
+        position.y = -100f;
+        rectFlareSW.transform.position = position;*/
+        flare_SW.transform.position = startFlarePosition;
+        //start movement loop
+        myCoroutineFlareSW = StartCoroutine("FlareSW");
+    }
+
+    /// <summary>
+    /// Stop flare coroutines
+    /// </summary>
+    private void StopFlares()
+    {
+        if (myCoroutineFlareSW != null)
+        { StopCoroutine(myCoroutineFlareSW); }
+    }
+
+    /// <summary>
+    /// moves flare up SW line towards APP in a continuous loop
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FlareSW()
+    {
+        //NOTE: need anchored Position, not 'pooition' as flare object is a child of a parent object with relative positions to the parent
+        Vector3 position = rectFlareSW.anchoredPosition;
+        //endless loop
+        while (true)
+        {
+            if (position.y < 74f)
+            {
+                //moving up vertical
+                position.y += 1f;
+            }
+            else
+            {
+                //moving along horizontal
+                if (position.x < 30f)
+                {
+                    //still moving
+                    position.x += 1f;
+                }
+                else
+                {
+                    //reached end point, reset
+                    position = startFlarePosition;
+                }
+            }
+            //Problem is that transform position is setting screen coords and that I'm feeding it coords of the flare relative to it's parent.
+            flare_SW.transform.position = position;
+            yield return null;
         }
     }
 
@@ -698,6 +775,7 @@ public class MainInfoUI : MonoBehaviour
         { StopCoroutine(myCoroutineRequest); }
         if (myCoroutineMeeting != null)
         { StopCoroutine(myCoroutineMeeting); }
+        StopFlares();
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
