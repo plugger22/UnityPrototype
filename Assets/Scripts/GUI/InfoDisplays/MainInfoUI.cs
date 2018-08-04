@@ -119,9 +119,8 @@ public class MainInfoUI : MonoBehaviour
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
     //flares
-    private RectTransform rectFlareSW;
     private Coroutine myCoroutineFlareSW;
-    private Vector3 startFlarePosition;
+    private Vector3 startFlareLocalPosition;
 
 
     private int currentTabIndex = -1;
@@ -297,9 +296,7 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(flasher_meetingTab != null, "Invalid flashing_meetingTab (Null)");
         //Moving Flares
         Debug.Assert(flare_SW != null, "Invalid flare_SW (Null");
-        rectFlareSW = flare_SW.GetComponent<RectTransform>();
-        Debug.Assert(rectFlareSW != null, "Invalid rectFlareSW (Null)");
-        startFlarePosition = flare_SW.transform.position;
+        startFlareLocalPosition = flare_SW.transform.localPosition;
     }
 
     public void Start()
@@ -612,7 +609,7 @@ public class MainInfoUI : MonoBehaviour
         position.x = -126f;
         position.y = -100f;
         rectFlareSW.transform.position = position;*/
-        flare_SW.transform.position = startFlarePosition;
+        flare_SW.transform.localPosition = startFlareLocalPosition;
         //start movement loop
         myCoroutineFlareSW = StartCoroutine("FlareSW");
     }
@@ -632,32 +629,32 @@ public class MainInfoUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator FlareSW()
     {
-        //NOTE: need anchored Position, not 'pooition' as flare object is a child of a parent object with relative positions to the parent
-        Vector3 position = rectFlareSW.anchoredPosition;
+        //NOTE: need Local Position, not 'position' as flare object is a child of a parent object with relative positions to the parent
+        Vector3 position = flare_SW.transform.localPosition;
         //endless loop
         while (true)
         {
-            if (position.y < 74f)
+            if (position.y < 74)
             {
                 //moving up vertical
-                position.y += 1f;
+                position.y += 3;
             }
             else
             {
                 //moving along horizontal
-                if (position.x < 30f)
+                if (position.x < 30)
                 {
                     //still moving
-                    position.x += 1f;
+                    position.x += 3;
                 }
                 else
                 {
                     //reached end point, reset
-                    position = startFlarePosition;
+                    position = startFlareLocalPosition;
                 }
             }
-            //Problem is that transform position is setting screen coords and that I'm feeding it coords of the flare relative to it's parent.
-            flare_SW.transform.position = position;
+            //reassign flare to new position
+            flare_SW.transform.localPosition = position;
             yield return null;
         }
     }
