@@ -18932,8 +18932,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 2467.32, y: 38}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2849.74, y: 38}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1029709315
 MonoBehaviour:
@@ -18969,11 +18969,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: \tthe world is about to end by this time tommorrow but it isn't as bad as
     you think.In breaking news riots have broken out across the length and breadth
-    of Goth city. Mayor Greene issued a statement this afternoon asking for all parties
-    involved to have a greater degree of understanding and tolerance\t
+    of Gotham city. Mayor Greene issued a statement this afternoon on CNN Live\t
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -19035,13 +19034,13 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0.2895949, w: 0}
+  m_margin: {x: 0, y: 0, z: 150, w: 0}
   m_textInfo:
     textComponent: {fileID: 1029709316}
-    characterCount: 301
+    characterCount: 227
     spriteCount: 0
-    spaceCount: 54
-    wordCount: 55
+    spaceCount: 43
+    wordCount: 44
     linkCount: 0
     lineCount: 1
     pageCount: 1

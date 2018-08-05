@@ -53,6 +53,7 @@ public class TickerTextScroller : MonoBehaviour
     {
         //float width = textMeshComponent.preferredWidth * textRectTransform.lossyScale.x;
         float width = textMeshComponent.preferredWidth;
+        Debug.LogFormat("[Tst] 0: width -> {0}{1}", width, "\n");
         Vector3 startPosition = textRectTransform.position;
 
         float scrollPosition = 0;
@@ -67,12 +68,18 @@ public class TickerTextScroller : MonoBehaviour
             }
 
             cloneTextObject.rectTransform.position = new Vector3(cloneTextObject.rectTransform.position.x, startPosition.y, cloneTextObject.rectTransform.position.z);
+            Debug.LogFormat("[Tst] 1: Clone.position.x {0}{1}", cloneTextObject.rectTransform.position.x, "\n");
             if (cloneTextObject.rectTransform.position.x <= -15)
-            { scrollPosition = -cloneTextObject.rectTransform.position.x; }
+            {
+                scrollPosition = -cloneTextObject.rectTransform.position.x;
+            }
 
             //scroll the text across the screen by moving the RectTransform
             textRectTransform.position = new Vector3(-scrollPosition % width, startPosition.y, startPosition.z);
+
+            Debug.LogFormat("[Tst] 2: Normal.position.x -> {0}{1}",textRectTransform.position.x, "\n");
             scrollPosition += ScrollSpeed * 20 * Time.deltaTime;
+            Debug.LogFormat("[Tst] 3: ScrollPosition (changed) -> {0}{1}", scrollPosition, "\n");
             yield return null;
         }
 	}
