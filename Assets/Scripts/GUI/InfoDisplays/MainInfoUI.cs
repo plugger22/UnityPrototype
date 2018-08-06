@@ -144,8 +144,6 @@ public class MainInfoUI : MonoBehaviour
     private RectTransform tickerRectTransform;
     private RectTransform cloneRectTransform;
     private Coroutine myCoroutineTicker;
-    private string sourceText;
-    private bool hasTextChanged;
 
     //colours
     string colourDefault;
@@ -318,7 +316,9 @@ public class MainInfoUI : MonoBehaviour
         cloneRectTransform.anchorMin = new Vector2(1, 0.5f);
         cloneRectTransform.anchorMax = new Vector2(1, 0.5f);
         cloneRectTransform.localScale = new Vector3(1, 1, 1);
-        
+        cloneRectTransform.position = new Vector3(tickerRectTransform.position.x, tickerRectTransform.position.y, tickerRectTransform.position.z);
+        tickerObject.SetActive(true);
+        cloneTickerText.gameObject.SetActive(true);
     }
 
     public void Start()
@@ -1160,75 +1160,33 @@ public class MainInfoUI : MonoBehaviour
         {
             string sourceText = text.ToUpper();
             tickerText.text = sourceText;
+            //lossyScale prevents scrolling jitters
+            float width = tickerText.preferredWidth * tickerRectTransform.lossyScale.x;
+            //need to calc width before populating clone as width takes into account length of both (clone is a child of tickerText)
             cloneTickerText.text = sourceText;
             
-            tickerObject.SetActive(true);
-            cloneTickerText.gameObject.SetActive(true);
-            myCoroutineTicker = StartCoroutine("TickerTape");
+
+            myCoroutineTicker = StartCoroutine("TickerTape", width);
         }
         else { Debug.LogWarning("Invalid ticker text (Null or Empty)"); }
     }
 
-    /*private void OnEnable()
-    {
-        //subscribe to event fired when text object has been regenerated
-        TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
-    }
-
-    private void OnDisable()
-    {
-        TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
-    }
-
-    /// <summary>
-    /// checks to see if text has changed
-    /// </summary>
-    /// <param name="obj"></param>
-    private void ON_TEXT_CHANGED(UnityEngine.Object obj)
-    {
-        if (obj == tickerText)
-        { hasTextChanged = true; }
-    }*/
 
     /// <summary>
     /// Run ticker tape across the top of the info App
     /// </summary>
     /// <returns></returns>
-    private IEnumerator TickerTape()
+    private IEnumerator TickerTape(float width)
     {
         float scrollPosition = 0;
-        float width = tickerText.preferredWidth;
-        //float width = tickerText.preferredWidth * tickerRectTransform.lossyScale.x;
-        /*Debug.LogFormat("[Tst] 0: width -> {0}{1}", width, "\n");*/
         Vector3 startPosition = tickerRectTransform.position;
-        cloneRectTransform.position = new Vector3(startPosition.x + width/4, startPosition.y, startPosition.z);
-
-        /*Vector3 cloneLocalPosition = cloneRectTransform.localPosition;
-        Vector3 cloneAnchoredPosition = cloneRectTransform.anchoredPosition;*/
-
-        yield return new WaitForSecondsRealtime(0.5f);
-
         while (true)
         {
-            /*//Recompute the width of the RectTransform if the text object has changed
-            if (hasTextChanged)
-            {
-                width = tickerText.preferredWidth;
-                cloneTickerText.text = tickerText.text;
-            }*/
-
-            /*cloneTickerText.rectTransform.position = new Vector3(cloneTickerText.rectTransform.position.x, startPosition.y, cloneTickerText.rectTransform.position.z);*/
-            /*Debug.LogFormat("[Tst] 1: Clone.position.x {0}{1}", cloneTickerText.rectTransform.position.x, "\n");*/
-            /*if (cloneTickerText.rectTransform.position.x <= -15)
-            { scrollPosition = -cloneTickerText.rectTransform.position.x; }*/
-
             //scroll the text across the screen by moving the RectTransform (everytime the scrollPosition gets bigger than the width, it'll warp back to zero, giving us our loop)
             tickerRectTransform.position = new Vector3(-scrollPosition % width, startPosition.y, startPosition.z);
             if (scrollPosition >= width) { scrollPosition = 0; }
-            Debug.LogFormat("[Tst] scrollPosition -> {0}, width -> {1}, scrollPosition % width -> {2}{3}", scrollPosition, width, scrollPosition % width, "\n");
-            /*Debug.LogFormat("[Tst] 2: Normal.position.x -> {0}{1}", tickerRectTransform.position.x, "\n");*/
-            scrollPosition += ScrollSpeed * 20 * Time.deltaTime;
-            /*Debug.LogFormat("[Tst] 3: ScrollPosition (changed) -> {0}{1}", scrollPosition, "\n");*/
+            /*Debug.LogFormat("[Tst] scrollPosition -> {0}, width -> {1}, scrollPosition % width -> {2}{3}", scrollPosition, width, scrollPosition % width, "\n");*/
+            scrollPosition += ScrollSpeed * 10 * Time.deltaTime;
             yield return null;
         }
     }
