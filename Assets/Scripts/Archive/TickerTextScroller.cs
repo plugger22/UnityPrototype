@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+/*
 /// <summary>
 /// Scrolls ticker text across the screen in a continuous loop
 /// </summary>
@@ -128,3 +128,4 @@ public class TickerTextScroller : MonoBehaviour
         { hasTextChanged = true; }
     }
 }
+*/

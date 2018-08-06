@@ -12565,6 +12565,10 @@ MonoBehaviour:
   tickerObject: {fileID: 0}
   textMeshComponent: {fileID: 1029709316}
   ScrollSpeed: 5
+  cloneTextObject: {fileID: 0}
+  textRectTransform: {fileID: 0}
+  hasTextChanged: 0
+  sourceText: 
 --- !u!114 &615421573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18853,7 +18857,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2394.64, y: 38}
+  m_SizeDelta: {x: 945.46, y: 38}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1029709315
 MonoBehaviour:
@@ -18887,9 +18891,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: \tthe world is about to end by this time tommorrow but it isn't as bad as
-    you think.In breaking news riots have broken out across the length and breadth
-    of Gotham city. Mayor Greene issued a statement this afternoon on CNN Live\t
+  m_text: /ttest text one two three four fve six seven eight nine ten elven ttwelve
+    thirteen fifteen sixtenn seventeen eighteen/t
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18938,8 +18941,8 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
-  m_enableKerning: 0
-  m_enableExtraPadding: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
@@ -18954,13 +18957,13 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 400, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1029709316}
-    characterCount: 227
+    characterCount: 119
     spriteCount: 0
-    spaceCount: 43
-    wordCount: 44
+    spaceCount: 18
+    wordCount: 20
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -36023,7 +36026,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 30, y: -10}
   m_SizeDelta: {x: 1010, y: 38}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1985563925
@@ -36045,7 +36048,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 900af24891a4eda4f9571c0632200bc6, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -39026,11 +39029,11 @@ RectTransform:
   m_Father: {fileID: 1333065203}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 30, y: -10}
-  m_SizeDelta: {x: 1010, y: 38}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2144363809
 MonoBehaviour:
   m_ObjectHideFlags: 0

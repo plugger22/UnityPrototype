@@ -142,6 +142,7 @@ public class MainInfoUI : MonoBehaviour
     //ticker
     private TextMeshProUGUI cloneTickerText;
     private RectTransform tickerRectTransform;
+    private RectTransform cloneRectTransform;
     private Coroutine myCoroutineTicker;
     private string sourceText;
     private bool hasTextChanged;
@@ -309,14 +310,15 @@ public class MainInfoUI : MonoBehaviour
         //Ticker
         tickerRectTransform = tickerText.GetComponent<RectTransform>();
         cloneTickerText = Instantiate(tickerText) as TextMeshProUGUI;
-        RectTransform cloneRectTransform = cloneTickerText.GetComponent<RectTransform>();
+        cloneRectTransform = cloneTickerText.GetComponent<RectTransform>();
         Debug.Assert(tickerRectTransform != null, "Invalid tickerRectTransform (Null)");
         Debug.Assert(cloneTickerText != null, "Invalid cloneTextTickerObject (Null)");
         Debug.Assert(cloneRectTransform != null, "Invalid cloneRectTransform (Null)");
         cloneRectTransform.SetParent(tickerRectTransform);
         cloneRectTransform.anchorMin = new Vector2(1, 0.5f);
-        //cloneRectTransform.anchorMax = new Vector2(1, 0.5f);
+        cloneRectTransform.anchorMax = new Vector2(1, 0.5f);
         cloneRectTransform.localScale = new Vector3(1, 1, 1);
+        
     }
 
     public void Start()
@@ -621,7 +623,7 @@ public class MainInfoUI : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Start flares moving inwards towards app in a continuous loop while ever app is open
     /// </summary>
     private void SetFlares()
@@ -675,7 +677,7 @@ public class MainInfoUI : MonoBehaviour
             flare_SW.transform.localPosition = position;
             yield return null;
         }
-    }
+    }*/
 
     /// <summary>
     /// sub Method to display a particular page drawing from cached data in dictOfItemData
@@ -792,7 +794,7 @@ public class MainInfoUI : MonoBehaviour
         { StopCoroutine(myCoroutineMeeting); }
         if (myCoroutineTicker != null)
         { StopCoroutine(myCoroutineTicker); }
-        StopFlares();
+        /*StopFlares();*/
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
@@ -1156,9 +1158,12 @@ public class MainInfoUI : MonoBehaviour
     {
         if (String.IsNullOrEmpty(text) == false)
         {
-            sourceText = text.ToUpper();
+            string sourceText = text.ToUpper();
             tickerText.text = sourceText;
+            cloneTickerText.text = sourceText;
+            
             tickerObject.SetActive(true);
+            cloneTickerText.gameObject.SetActive(true);
             myCoroutineTicker = StartCoroutine("TickerTape");
         }
         else { Debug.LogWarning("Invalid ticker text (Null or Empty)"); }
@@ -1191,12 +1196,17 @@ public class MainInfoUI : MonoBehaviour
     /// <returns></returns>
     private IEnumerator TickerTape()
     {
+        float scrollPosition = 0;
         float width = tickerText.preferredWidth;
         //float width = tickerText.preferredWidth * tickerRectTransform.lossyScale.x;
         /*Debug.LogFormat("[Tst] 0: width -> {0}{1}", width, "\n");*/
         Vector3 startPosition = tickerRectTransform.position;
-        float scrollPosition = 0;
-        cloneTickerText.text = tickerText.text;
+        cloneRectTransform.position = new Vector3(startPosition.x + width/4, startPosition.y, startPosition.z);
+
+        /*Vector3 cloneLocalPosition = cloneRectTransform.localPosition;
+        Vector3 cloneAnchoredPosition = cloneRectTransform.anchoredPosition;*/
+
+        yield return new WaitForSecondsRealtime(0.5f);
 
         while (true)
         {
@@ -1208,16 +1218,17 @@ public class MainInfoUI : MonoBehaviour
             }*/
 
             /*cloneTickerText.rectTransform.position = new Vector3(cloneTickerText.rectTransform.position.x, startPosition.y, cloneTickerText.rectTransform.position.z);*/
-            Debug.LogFormat("[Tst] 1: Clone.position.x {0}{1}", cloneTickerText.rectTransform.position.x, "\n");
+            /*Debug.LogFormat("[Tst] 1: Clone.position.x {0}{1}", cloneTickerText.rectTransform.position.x, "\n");*/
             /*if (cloneTickerText.rectTransform.position.x <= -15)
             { scrollPosition = -cloneTickerText.rectTransform.position.x; }*/
 
-            //scroll the text across the screen by moving the RectTransform
+            //scroll the text across the screen by moving the RectTransform (everytime the scrollPosition gets bigger than the width, it'll warp back to zero, giving us our loop)
             tickerRectTransform.position = new Vector3(-scrollPosition % width, startPosition.y, startPosition.z);
-
-            Debug.LogFormat("[Tst] 2: Normal.position.x -> {0}{1}", tickerRectTransform.position.x, "\n");
+            if (scrollPosition >= width) { scrollPosition = 0; }
+            Debug.LogFormat("[Tst] scrollPosition -> {0}, width -> {1}, scrollPosition % width -> {2}{3}", scrollPosition, width, scrollPosition % width, "\n");
+            /*Debug.LogFormat("[Tst] 2: Normal.position.x -> {0}{1}", tickerRectTransform.position.x, "\n");*/
             scrollPosition += ScrollSpeed * 20 * Time.deltaTime;
-            Debug.LogFormat("[Tst] 3: ScrollPosition (changed) -> {0}{1}", scrollPosition, "\n");
+            /*Debug.LogFormat("[Tst] 3: ScrollPosition (changed) -> {0}{1}", scrollPosition, "\n");*/
             yield return null;
         }
     }
