@@ -82,6 +82,11 @@ public class MainInfoUI : MonoBehaviour
     [Header("Moving Flares")]
     public Image flare_SW;
 
+    [Header("Ticker Text")]
+    public GameObject tickerObject;
+    public TextMeshProUGUI tickerText;
+    public float ScrollSpeed = 10;
+
 
     [Header("Globals")]
     [Tooltip("Change this at your peril (default 6) as data collections and indexes all flow from it")]
@@ -114,21 +119,19 @@ public class MainInfoUI : MonoBehaviour
     private Sprite priorityHigh;
     private Sprite priorityMedium;
     private Sprite priorityLow;
-
     //scroll bar LHS
     private ScrollRect scrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
     //flares
     private Coroutine myCoroutineFlareSW;
     private Vector3 startFlareLocalPosition;
-
-
+    //tabs
     private int currentTabIndex = -1;
     private int maxTabIndex;
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
     //ItemData
-    private List<ItemData>[] arrayOfItemData= new List<ItemData>[(int)ItemTab.Count];       //One dataset for each tab (excluding Help tab)
+    private List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];       //One dataset for each tab (excluding Help tab)
     List<ItemData> listOfCurrentPageItemData;                                               //current data for currently displayed page
     //flashers
     private bool isRequestFlasherOn;
@@ -136,6 +139,12 @@ public class MainInfoUI : MonoBehaviour
     private Coroutine myCoroutineRequest;
     private Coroutine myCoroutineMeeting;
     private float flashTimer = -1.0f;
+    //ticker
+    private TextMeshProUGUI cloneTickerText;
+    private RectTransform tickerRectTransform;
+    private Coroutine myCoroutineTicker;
+    private string sourceText;
+    private bool hasTextChanged;
 
     //colours
     string colourDefault;
@@ -297,6 +306,17 @@ public class MainInfoUI : MonoBehaviour
         //Moving Flares
         Debug.Assert(flare_SW != null, "Invalid flare_SW (Null");
         startFlareLocalPosition = flare_SW.transform.localPosition;
+        //Ticker
+        tickerRectTransform = tickerText.GetComponent<RectTransform>();
+        cloneTickerText = Instantiate(tickerText) as TextMeshProUGUI;
+        RectTransform cloneRectTransform = cloneTickerText.GetComponent<RectTransform>();
+        Debug.Assert(tickerRectTransform != null, "Invalid tickerRectTransform (Null)");
+        Debug.Assert(cloneTickerText != null, "Invalid cloneTextTickerObject (Null)");
+        Debug.Assert(cloneRectTransform != null, "Invalid cloneRectTransform (Null)");
+        cloneRectTransform.SetParent(tickerRectTransform);
+        cloneRectTransform.anchorMin = new Vector2(1, 0.5f);
+        //cloneRectTransform.anchorMax = new Vector2(1, 0.5f);
+        cloneRectTransform.localScale = new Vector3(1, 1, 1);
     }
 
     public void Start()
@@ -502,8 +522,10 @@ public class MainInfoUI : MonoBehaviour
             mainInfoObject.SetActive(true);
             //flashers -> Request & Meeting tabs
             SetTabFlashers();
-            //flares -> moving inwards towards App
-            SetFlares();
+            /*//flares -> moving inwards towards App
+            SetFlares();*/
+            //ticker tap
+            SetTicker(data.tickerText);
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
@@ -605,10 +627,6 @@ public class MainInfoUI : MonoBehaviour
     private void SetFlares()
     {
         //reset to start position off screen
-        /*Vector3 position = rectFlareSW.position;
-        position.x = -126f;
-        position.y = -100f;
-        rectFlareSW.transform.position = position;*/
         flare_SW.transform.localPosition = startFlareLocalPosition;
         //start movement loop
         myCoroutineFlareSW = StartCoroutine("FlareSW");
@@ -772,6 +790,8 @@ public class MainInfoUI : MonoBehaviour
         { StopCoroutine(myCoroutineRequest); }
         if (myCoroutineMeeting != null)
         { StopCoroutine(myCoroutineMeeting); }
+        if (myCoroutineTicker != null)
+        { StopCoroutine(myCoroutineTicker); }
         StopFlares();
         //set game state
         GameManager.instance.inputScript.ResetStates();
@@ -857,8 +877,8 @@ public class MainInfoUI : MonoBehaviour
                 { buttonHelp.gameObject.SetActive(true); }
                 else { buttonHelp.gameObject.SetActive(false); }
             }
-        //remove highlight
-        if (highlightIndex != itemIndex)
+            //remove highlight
+            if (highlightIndex != itemIndex)
             {
                 //reset currently highlighted back to default
                 if (highlightIndex > -1)
@@ -903,10 +923,10 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case ItemTab.Request:
                 textTop = "Make a Request";
-                builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}<b>OTHER PARTIES</b>{4} can request a meeting with you{5}{6}",colourHighlight, colourEnd, "\n", 
+                builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}<b>OTHER PARTIES</b>{4} can request a meeting with you{5}{6}", colourHighlight, colourEnd, "\n",
                     colourAlert, colourEnd, "\n", "\n");
                 builder.AppendFormat("You can, <i>if you wish</i>,{0}select {1}<b>ONE</b>{2} request", "\n", colourHighlight, colourEnd);
-                builder.AppendFormat("{0}{1}The meeting will be at the {2}<b>Start</b>{3}{4}of the {5}<b>Next</b>{6} day", "\n", "\n", 
+                builder.AppendFormat("{0}{1}The meeting will be at the {2}<b>Start</b>{3}{4}of the {5}<b>Next</b>{6} day", "\n", "\n",
                     colourHighlight, colourEnd, "\n", colourHighlight, colourEnd);
                 break;
             case ItemTab.Meeting:
@@ -915,7 +935,7 @@ public class MainInfoUI : MonoBehaviour
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("If you decide to do nothing{0}the {1}<b>DEFAULT OPTION</b>{2}{3}will be chosen for you", "\n", colourAlert, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("There will be a {0}<b>Cooldown period</b>{1}{2}before you can meet this{3}person, faction or organisation{4}again", colourHighlight, colourEnd, 
+                builder.AppendFormat("There will be a {0}<b>Cooldown period</b>{1}{2}before you can meet this{3}person, faction or organisation{4}again", colourHighlight, colourEnd,
                     "\n", "\n", "\n");
                 break;
             case ItemTab.Effects:
@@ -1026,7 +1046,7 @@ public class MainInfoUI : MonoBehaviour
     {
         if (highlightIndex > -1)
         {
-            if (highlightIndex < (maxHighlightIndex) )
+            if (highlightIndex < (maxHighlightIndex))
             { ShowItemDetails(highlightIndex + 1); }
         }
         else if (maxHighlightIndex > -1)
@@ -1125,6 +1145,80 @@ public class MainInfoUI : MonoBehaviour
             case 2:
 
                 break;
+        }
+    }
+
+    /// <summary>
+    /// start ticker tape each turn provided there is news to display
+    /// </summary>
+    /// <param name="text"></param>
+    private void SetTicker(string text)
+    {
+        if (String.IsNullOrEmpty(text) == false)
+        {
+            sourceText = text.ToUpper();
+            tickerText.text = sourceText;
+            tickerObject.SetActive(true);
+            myCoroutineTicker = StartCoroutine("TickerTape");
+        }
+        else { Debug.LogWarning("Invalid ticker text (Null or Empty)"); }
+    }
+
+    /*private void OnEnable()
+    {
+        //subscribe to event fired when text object has been regenerated
+        TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
+    }
+
+    private void OnDisable()
+    {
+        TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
+    }
+
+    /// <summary>
+    /// checks to see if text has changed
+    /// </summary>
+    /// <param name="obj"></param>
+    private void ON_TEXT_CHANGED(UnityEngine.Object obj)
+    {
+        if (obj == tickerText)
+        { hasTextChanged = true; }
+    }*/
+
+    /// <summary>
+    /// Run ticker tape across the top of the info App
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator TickerTape()
+    {
+        float width = tickerText.preferredWidth;
+        //float width = tickerText.preferredWidth * tickerRectTransform.lossyScale.x;
+        /*Debug.LogFormat("[Tst] 0: width -> {0}{1}", width, "\n");*/
+        Vector3 startPosition = tickerRectTransform.position;
+        float scrollPosition = 0;
+        cloneTickerText.text = tickerText.text;
+
+        while (true)
+        {
+            /*//Recompute the width of the RectTransform if the text object has changed
+            if (hasTextChanged)
+            {
+                width = tickerText.preferredWidth;
+                cloneTickerText.text = tickerText.text;
+            }*/
+
+            /*cloneTickerText.rectTransform.position = new Vector3(cloneTickerText.rectTransform.position.x, startPosition.y, cloneTickerText.rectTransform.position.z);*/
+            Debug.LogFormat("[Tst] 1: Clone.position.x {0}{1}", cloneTickerText.rectTransform.position.x, "\n");
+            /*if (cloneTickerText.rectTransform.position.x <= -15)
+            { scrollPosition = -cloneTickerText.rectTransform.position.x; }*/
+
+            //scroll the text across the screen by moving the RectTransform
+            tickerRectTransform.position = new Vector3(-scrollPosition % width, startPosition.y, startPosition.z);
+
+            Debug.LogFormat("[Tst] 2: Normal.position.x -> {0}{1}", tickerRectTransform.position.x, "\n");
+            scrollPosition += ScrollSpeed * 20 * Time.deltaTime;
+            Debug.LogFormat("[Tst] 3: ScrollPosition (changed) -> {0}{1}", scrollPosition, "\n");
+            yield return null;
         }
     }
 

@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 114184360560951246}
   - component: {fileID: 114558055555623972}
   - component: {fileID: 114762690547149900}
+  - component: {fileID: 114656342642216484}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -709,6 +710,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783cb3395c68d66429addeaac3adf909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114656342642216484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70d2947015c6e9e41baecbba8aa0be73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114656477723242970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -908,6 +920,7 @@ MonoBehaviour:
   guiScript: {fileID: 0}
   globalScript: {fileID: 0}
   tooltipScript: {fileID: 0}
+  newsScript: {fileID: 0}
   actorScript: {fileID: 0}
   actionScript: {fileID: 0}
   sideScript: {fileID: 0}
@@ -941,7 +954,6 @@ MonoBehaviour:
   tooltipActorScript: {fileID: 0}
   tooltipPlayerScript: {fileID: 0}
   tooltipGenericScript: {fileID: 0}
-  tickerScript: {fileID: 0}
   actionMenuScript: {fileID: 0}
   outcomeScript: {fileID: 0}
   teamPickerScript: {fileID: 0}

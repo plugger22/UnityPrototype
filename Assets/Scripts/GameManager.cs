@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
     [HideInInspector] public GlobalManager globalScript;              //Global Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
+    [HideInInspector] public NewsManager newsScript;                  //News Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
@@ -64,7 +65,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipActor tooltipActorScript;         //actor tooltip static instance
     [HideInInspector] public TooltipPlayer tooltipPlayerScript;       //player tooltip static instance
     [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tooltip static instance
-    [HideInInspector] public TickerTextScroller tickerScript;         //Ticker Text Scroller
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
     [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
     [HideInInspector] public ModalTeamPicker teamPickerScript;        //Modal Team Picker window
@@ -144,6 +144,7 @@ public class GameManager : MonoBehaviour
         colourScript = GetComponent<ColourManager>();
         testScript = GetComponent<TestManager>();
         tooltipScript = GetComponent<TooltipManager>();
+        newsScript = GetComponent<NewsManager>();
         sideScript = GetComponent<SideManager>();
         helpScript = GetComponent<HelpManager>();
         turnScript = GetComponent<TurnManager>();
@@ -158,7 +159,6 @@ public class GameManager : MonoBehaviour
         tooltipActorScript = TooltipActor.Instance();
         tooltipPlayerScript = TooltipPlayer.Instance();
         tooltipGenericScript = TooltipGeneric.Instance();
-        tickerScript = TickerTextScroller.Instance();
         actionMenuScript = ModalActionMenu.Instance();
         outcomeScript = ModalOutcome.Instance();
         teamPickerScript = ModalTeamPicker.Instance();

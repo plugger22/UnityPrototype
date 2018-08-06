@@ -345,6 +345,8 @@ public class DataManager : MonoBehaviour
             catch (ArgumentException)
             { Debug.LogErrorFormat("Duplicate record exists for MainInfoData turn {0}", turn); }
         }
+        //Get news
+        currentInfoData.tickerText = GameManager.instance.newsScript.GetNews();
         return currentInfoData;
     }
 

@@ -223,6 +223,7 @@ namespace packageAPI
     {
 
         public List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
+        public string tickerText;
 
         public MainInfoData()
         {

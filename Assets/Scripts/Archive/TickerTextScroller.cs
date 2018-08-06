@@ -13,12 +13,10 @@ public class TickerTextScroller : MonoBehaviour
     public float ScrollSpeed = 10;
 
     private TextMeshProUGUI cloneTextObject;
-
     private RectTransform textRectTransform;
-    //private string sourceText;
-    //private string tempText;
     private bool hasTextChanged;
     private static TickerTextScroller ticker;
+    private string sourceText;
 
     /// <summary>
     /// provide a static reference to ticker that can be accessed from any script
@@ -38,7 +36,6 @@ public class TickerTextScroller : MonoBehaviour
     private void Awake() 
     {
         textRectTransform = textMeshComponent.GetComponent<RectTransform>();
-        
         cloneTextObject = Instantiate(textMeshComponent) as TextMeshProUGUI;
         RectTransform cloneRectTransform = cloneTextObject.GetComponent<RectTransform>();
         cloneRectTransform.SetParent(textRectTransform);
@@ -70,9 +67,7 @@ public class TickerTextScroller : MonoBehaviour
             cloneTextObject.rectTransform.position = new Vector3(cloneTextObject.rectTransform.position.x, startPosition.y, cloneTextObject.rectTransform.position.z);
             Debug.LogFormat("[Tst] 1: Clone.position.x {0}{1}", cloneTextObject.rectTransform.position.x, "\n");
             if (cloneTextObject.rectTransform.position.x <= -15)
-            {
-                scrollPosition = -cloneTextObject.rectTransform.position.x;
-            }
+            { scrollPosition = -cloneTextObject.rectTransform.position.x; }
 
             //scroll the text across the screen by moving the RectTransform
             textRectTransform.position = new Vector3(-scrollPosition % width, startPosition.y, startPosition.z);
@@ -85,26 +80,20 @@ public class TickerTextScroller : MonoBehaviour
 	}
 
 
-    private void OnEnable()
-    {
-        //subscribe to event fired when text object has been regenerated
-        TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
-    }
 
-    private void OnDisable()
-    {
-        TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
-    }
 
     /// <summary>
-    /// checks to see if text has changed
+    /// Set text
     /// </summary>
-    /// <param name="obj"></param>
-    private void ON_TEXT_CHANGED(Object obj)
+    /// <param name="text"></param>
+    public void SetTickerText(string text)
     {
-        if (obj == textMeshComponent)
-        { hasTextChanged = true; }
+        if (string.IsNullOrEmpty(text) == false)
+        { sourceText = text.ToUpper(); }
+        else { Debug.LogWarning("Invalid text (Null or Empty"); }
     }
+
+
 
     /// <summary>
     /// Toggles ticker on/off
@@ -117,4 +106,25 @@ public class TickerTextScroller : MonoBehaviour
         { tickerObject.SetActive(true); }
     }
 
+
+    private void OnEnable()
+    {
+        //subscribe to event fired when text object has been regenerated
+        TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
+    }
+
+    private void OnDisable()
+    {
+        TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
+    }
+    
+    /// <summary>
+    /// checks to see if text has changed
+    /// </summary>
+    /// <param name="obj"></param>
+    private void ON_TEXT_CHANGED(Object obj)
+    {
+        if (obj == textMeshComponent)
+        { hasTextChanged = true; }
+    }
 }
