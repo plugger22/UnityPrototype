@@ -258,9 +258,9 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Moved";
-            data.bottomText = text;
+            data.itemText = "Player moves";
+            data.topText = "Move";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoveDetails(node);
             data.priority = ItemPriority.Low;
             data.sprite = node.Arc.sprite;
             data.tab = ItemTab.Mail;

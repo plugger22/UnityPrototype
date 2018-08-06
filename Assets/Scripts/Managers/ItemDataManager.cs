@@ -18,7 +18,7 @@ public class ItemDataManager : MonoBehaviour
     private string colourGood;
     private string colourBad;
     private string colourGrey;
-    //private string colourAlert;
+    private string colourAlert;
     private string colourSide;
     private string colourEnd;
 
@@ -62,12 +62,32 @@ public class ItemDataManager : MonoBehaviour
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
+    }
+
+    //
+    // - - - Player - - -
+    //
+
+    /// <summary>
+    /// Returns a colour formatted string for ItemData string message
+    /// NOTE: Node & playerName have been checked for null by the calling method -> MessageManager.cs -> PlayerMove
+    /// </summary>
+    /// <returns></returns>
+    public string GetPlayerMoveDetails(Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} now at{3}", colourAlert, GameManager.instance.playerScript.PlayerName, colourEnd, "\n");
+        builder.AppendFormat("{0},{1}", node.nodeName, "\n");
+        builder.AppendFormat("{0}{1}{2} district", colourNeutral, node.Arc.name, colourEnd);
+        if (GameManager.instance.optionScript.debugData == true)
+        { builder.AppendFormat(", ID {0}", node.nodeID); }
+        return builder.ToString();
     }
 
     //

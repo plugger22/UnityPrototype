@@ -1164,8 +1164,6 @@ public class MainInfoUI : MonoBehaviour
             float width = tickerText.preferredWidth * tickerRectTransform.lossyScale.x;
             //need to calc width before populating clone as width takes into account length of both (clone is a child of tickerText)
             cloneTickerText.text = sourceText;
-            
-
             myCoroutineTicker = StartCoroutine("TickerTape", width);
         }
         else { Debug.LogWarning("Invalid ticker text (Null or Empty)"); }
