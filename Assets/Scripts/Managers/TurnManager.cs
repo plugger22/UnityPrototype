@@ -36,6 +36,7 @@ public class TurnManager : MonoBehaviour
     private int _actionsTotal;                                                  //total number of actions available to the player this turn (adjustments + limit)
 
     private bool allowQuitting = false;
+    private Coroutine myCoroutineInfoApp;
 
     //fast access
     private int teamArcErasure = -1;
@@ -186,7 +187,8 @@ public class TurnManager : MonoBehaviour
                     //switch off any node Alerts
                     GameManager.instance.alertScript.CloseAlertUI(true);
                     //info App
-                    InitialiseInfoApp(playerSide);
+                    myCoroutineInfoApp = StartCoroutine("InfoApp", playerSide);
+                    /*InitialiseInfoApp(playerSide);*/
                 }
             }
             //There is a winner
@@ -195,6 +197,14 @@ public class TurnManager : MonoBehaviour
                 //Game Over, somebody has won -> TO DO
             }
         }
+    }
+
+
+    IEnumerator InfoApp(GlobalSide playerSide)
+    {
+        yield return new WaitUntil(() => haltExecution == false);
+        InitialiseInfoApp(playerSide);
+        yield return null;
     }
 
 
