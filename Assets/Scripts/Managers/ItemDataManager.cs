@@ -90,6 +90,17 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Player used renown, returns colour formatted string
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public string GetPlayerRenownUseDetails(int amount, string reason)
+    {
+        return string.Format("{0}{1}{2} Renown used{3}to {4}", colourNeutral, amount, colourEnd, "\n", reason);
+    }
+
     //
     // - - - Faction - - -
     //

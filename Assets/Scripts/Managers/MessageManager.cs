@@ -310,16 +310,17 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player renown expended. 'dataID' is multipurpose (gearID if compromised, etc.) defaults to Player side.
+    /// Player renown expended. 'dataID' is multipurpose (gearID if compromised, etc.) defaults to Player side. 'Reason' is a short text tag for ItemData giving a reason why renown was used. format 'to ....'
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <param name="dataID"></param>
     /// <returns></returns>
-    public Message RenownUsedPlayer(string text, int nodeID, int dataID)
+    public Message RenownUsedPlayer(string text, string reason, int amount, int dataID, int nodeID = -1)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
         Debug.Assert(dataID >= 0, string.Format("Invalid dataID {0}", dataID));
+        Debug.Assert(amount > 0, "Invalid amount (<= 0)");
+        Debug.Assert(string.IsNullOrEmpty(reason) == false, "Invalid reason (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -327,13 +328,14 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Renown;
             message.side = GameManager.instance.sideScript.PlayerSide;
-            message.data0 = nodeID;
+            message.data0 = amount;
             message.data1 = dataID;
+            message.data2 = nodeID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = "Player Renown used";
             data.topText = "Use Renown";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerRenownUseDetails(amount, reason);
             data.sprite = playerSprite;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;

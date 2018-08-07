@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 {
     #region variables
     public static GameManager instance = null;      //static instance of GameManager which allows it to be accessed by any other script
+    [HideInInspector] public StartManager startScript;                //Start Manager
     [HideInInspector] public LevelManager levelScript;                //Level Manager
     [HideInInspector] public ImportManager importScript;              //Import Manager
     [HideInInspector] public MetaManager metaScript;                  //Meta Manager
@@ -117,6 +118,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Seed: " + seed);
         Random.InitState(seed);
         //Get component references
+        startScript = GetComponent<StartManager>();
         levelScript = GetComponent<LevelManager>();
         importScript = GetComponent<ImportManager>();
         metaScript = GetComponent<MetaManager>();

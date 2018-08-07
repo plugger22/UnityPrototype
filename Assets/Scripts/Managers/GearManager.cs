@@ -1208,7 +1208,7 @@ public class GearManager : MonoBehaviour
         GameManager.instance.playerScript.Renown = renown;
         //message
         string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
-        GameManager.instance.messageScript.RenownUsedPlayer(textMsg, node.nodeID, gear.gearID);
+        GameManager.instance.messageScript.RenownUsedPlayer(textMsg, string.Format("save {0} gear", gear.name), amount, gear.gearID, node.nodeID);
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
     }
