@@ -462,6 +462,7 @@ public class GearManager : MonoBehaviour
         genericDetails.returnEvent = EventType.GenericCompromisedGear;
         genericDetails.side = globalResistance;
         genericDetails.textHeader = "Compromised Gear";
+        genericDetails.isHaltExecution = true;
         //state
         genericDetails.subState = ModalGenericPickerSubState.CompromisedGear;
         //picker text

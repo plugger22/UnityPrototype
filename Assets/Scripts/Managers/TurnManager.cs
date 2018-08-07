@@ -26,6 +26,7 @@ public class TurnManager : MonoBehaviour
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthoritySecurityState authoritySecurityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
+    [HideInInspector] public bool haltExecution;             //used to stop program execution at turn end until all interactions are done prior to opening InfoApp
 
     [SerializeField, HideInInspector]
     private int _turn;
@@ -143,7 +144,8 @@ public class TurnManager : MonoBehaviour
     private void ProcessNewTurn()
     {
         bool finishedProcessing = false;
-        int safetyCircuit = 0;
+        int numOfAITurns = 0;
+        int limitAITurns = GameManager.instance.startScript.aiTestRun;
         //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
         if (GameManager.instance.inputScript.GameState == GameState.Normal)
         {
@@ -151,6 +153,7 @@ public class TurnManager : MonoBehaviour
             do
             {
                 //end the current turn
+                haltExecution = false;
                 EndTurnAI();
                 EndTurnEarly();
                 EndTurnLate();
@@ -159,12 +162,12 @@ public class TurnManager : MonoBehaviour
                 StartTurnLate();
                 if (StartTurnFinal() == false)
                 {
-                    //safety switch to prevent endless loop -> debug only
-                    safetyCircuit++;
-                    if (safetyCircuit > 10)
+                    //run game ai vs. ai for set number of turns
+                    numOfAITurns++;
+                    if (numOfAITurns > limitAITurns)
                     {
                         finishedProcessing = true;
-                        Debug.LogError("TurnManagers.cs -> ProcessNewTurn -> SafetyCircuit triggered");
+                        Debug.Log("TurnManagers.cs -> ProcessNewTurn -> AI turns completed");
                         Quit();
                     }
                 }
@@ -172,6 +175,7 @@ public class TurnManager : MonoBehaviour
                 { finishedProcessing = true; }
             }
             while (finishedProcessing == false);
+
             //Nobody has yet won
             if (GameManager.instance.win == WinState.None)
             {

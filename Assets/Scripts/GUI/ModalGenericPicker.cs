@@ -210,7 +210,9 @@ public class ModalGenericPicker : MonoBehaviour
         if (backReturnEvent == EventType.None)
         { buttonBack.gameObject.SetActive(false); }
         else { buttonBack.gameObject.SetActive(true); }
-
+        //halt execution, until picker is processed, if indicated
+        if (details.isHaltExecution == true)
+        { GameManager.instance.turnScript.haltExecution = true; }
         //canvasGroup.alpha = 100;
 
         //populate dialogue
@@ -339,7 +341,7 @@ public class ModalGenericPicker : MonoBehaviour
 
 
     /// <summary>
-    /// close Action Menu
+    /// close Gemeric picker
     /// </summary>
     private void CloseGenericPicker()
     {
@@ -353,6 +355,8 @@ public class ModalGenericPicker : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalGenericPicker.cs -> CloseGenericPicker", "\n");
+        //resume execution regardless as outcome window has been dealt with
+        GameManager.instance.turnScript.haltExecution = false;
     }
 
     /// <summary>

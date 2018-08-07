@@ -177,6 +177,7 @@ namespace modalAPI
         public int nodeID;
         public int actorSlotID;
         public int data;                                                                           //general purpose datapoint, can be ignored
+        public bool isHaltExecution;                                                               //if true execution is halted until outcome obtained, ignore otherwise
         public ModalGenericPickerSubState subState;                                                         //can be ignored unless needed
         public GenericOptionDetails[] arrayOfOptions = new GenericOptionDetails[3];                 //only the first three are recognised
         public GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];              //same [index] for both arrays. Keep in synch!!
