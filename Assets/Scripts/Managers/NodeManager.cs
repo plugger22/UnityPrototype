@@ -2219,7 +2219,7 @@ public class NodeManager : MonoBehaviour
                                         GameManager.instance.messageScript.NodeCrisis(msgText, node);
                                         //random
                                         msgText = string.Format("{0} ID {1}, CRISIS erupts", node.Arc.name, node.nodeID);
-                                        GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
+                                        GameManager.instance.messageScript.GeneralRandom(msgText, "District Crisis", chance, rnd, true);
                                     }
                                     else
                                     {

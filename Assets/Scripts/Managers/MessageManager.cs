@@ -204,13 +204,15 @@ public class MessageManager : MonoBehaviour
     /// <summary>
     /// Random roll results (only ones that matter, don't spam). Auto player side. Format text as "Faction support Declined" with NO need, rolled, etc. 
     /// Set 'isReversed' to true if you want item data to show a Success for failing roll, eg. in case of Gear Compromise check a success is failing the roll
+    /// 'typeOfCheck' is InfoApp RHS header in format '... Check', eg. 'Compromise'. Keep short
     /// </summary>
     /// <param name="text"></param>
     /// <param name="numNeeded"></param>
     /// <param name="numRolled"></param>
     /// <returns></returns>
-    public void GeneralRandom(string text, int numNeeded, int numRolled, bool isReversed = false)
+    public void GeneralRandom(string text, string typeOfCheck, int numNeeded, int numRolled, bool isReversed = false)
     {
+        Debug.Assert(string.IsNullOrEmpty(typeOfCheck) == false, "Invalid typeOfCheck (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
         {
             //Message
@@ -224,7 +226,7 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
-            data.topText = "Random Outcome";
+            data.topText = GameManager.instance.itemDataScript.GetRandomTopText(typeOfCheck, isReversed);
             data.bottomText = GameManager.instance.itemDataScript.GetRandomDetails(numNeeded, numRolled, isReversed);
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.instance.guiScript.alertRandomSprite;
@@ -1466,7 +1468,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gear has been used (not compromised). Returns null if text invalid. Also updates gear.statTimesUsed
+    /// Gear has been used (not compromised). Returns null if text invalid.
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>

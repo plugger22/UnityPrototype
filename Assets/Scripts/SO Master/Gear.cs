@@ -28,19 +28,35 @@ public class Gear : ScriptableObject
     public Effect aiHackingEffect;
 
     [HideInInspector] public int gearID;
-    [HideInInspector] public int timesUsed = 0;                 //# of times used in any given turn (reset to zero each turn)
-    [HideInInspector] public bool isCompromised = false;        //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
+    [HideInInspector] public int timesUsed;                     //# of times used in any given turn (reset to zero each turn)
+    [HideInInspector] public bool isCompromised;                //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
     [HideInInspector] public string reasonUsed;                 //tag showing reason gear used (reset each turn), set by GearManager.cs -> SetGearUsed
     [HideInInspector] public int chanceOfCompromise;            //set at time of use, cleared with a new turn
 
     //stats
-    [HideInInspector] public int statTurnObtained = 0;              //turn gear was first obtained
-    [HideInInspector] public int statTurnLost = 0;                  //turn gear was lost
-    [HideInInspector] public int statTimesUsed = 0;                 //times used (total)
-    [HideInInspector] public int statTimesGiven = 0;                //times given to another actor
-    [HideInInspector] public int statTimesCompromised = 0;          //times compromised
-    [HideInInspector] public int statTimesSaved = 0;                //times compromised gear is Saved
-    [HideInInspector] public int statRenownSpent = 0;               //total renown spent on gear
+    [HideInInspector] public int statTurnObtained;              //turn gear was first obtained
+    [HideInInspector] public int statTurnLost;                  //turn gear was lost
+    [HideInInspector] public int statTimesUsed;                 //times used (total)
+    [HideInInspector] public int statTimesGiven;                //times given to another actor
+    [HideInInspector] public int statTimesCompromised;          //times compromised
+    [HideInInspector] public int statTimesSaved;                //times compromised gear is Saved
+    [HideInInspector] public int statRenownSpent;               //total renown spent on gear
 
+
+    /// <summary>
+    /// called by GearManager.cs -> Initialise to zero all values as SO's carry values over between sessions
+    /// </summary>
+    public void Reset()
+    {
+        timesUsed = 0;
+        isCompromised = false;
+        statTurnObtained = 0;
+        statTurnLost = 0;
+        statTimesUsed = 0;
+        statTimesGiven = 0;
+        statTimesCompromised = 0;
+        statTimesSaved = 0;
+        statRenownSpent = 0;
+    }
 
 }

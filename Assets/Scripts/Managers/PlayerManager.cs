@@ -12,7 +12,6 @@ public class PlayerManager : MonoBehaviour
 {
     public Sprite sprite;
 
-
     [HideInInspector] public int numOfRecruits;
     //[HideInInspector] public int Invisibility;
     [HideInInspector] public int actorID = 999;

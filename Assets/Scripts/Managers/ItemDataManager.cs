@@ -105,10 +105,9 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
         builder.AppendFormat("{0}{1}{2}", gear.reasonUsed, "\n", "\n");
-        int timesUsed = GameManager.instance.turnScript.Turn - gear.statTurnObtained;
-        builder.AppendFormat("Owned for {0}{1}{2} turn{3}{4}", colourNeutral, timesUsed, colourEnd, timesUsed != 1 ? "s" : "", "\n");
-        builder.AppendFormat("Used {0}{1}{2} time{3}{4}", colourNeutral, gear.statTimesUsed, colourEnd, gear.statTimesUsed != 1 ? "s" : "", "\n");
-        builder.AppendFormat("Compromised {0}{1}{2} time{3}", colourNeutral, gear.statTimesCompromised, colourEnd, gear.statTimesCompromised != 1 ? "s": "");
+        int turnsOwned = GameManager.instance.turnScript.Turn - gear.statTurnObtained;
+        builder.AppendFormat("Owned for {0}{1}{2} turn{3}{4}", colourNeutral, turnsOwned, colourEnd, turnsOwned != 1 ? "s" : "", "\n");
+        builder.AppendFormat("Used {0}{1}{2} time{3}", colourNeutral, gear.statTimesUsed, colourEnd, gear.statTimesUsed != 1 ? "s" : "");
         return builder.ToString();
     }
     
@@ -283,4 +282,16 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// returns colour formatted string in style '[typeOfCheck] Check' with typeOfCheck being colour coded where Green indicates a success on the check is a good thing for the player
+    /// </summary>
+    /// <param name="typeOfCheck"></param>
+    /// <param name="isReversed"></param>
+    /// <returns></returns>
+    public string GetRandomTopText(string typeOfCheck, bool isReversed)
+    {
+        if (isReversed == false)
+        { return string.Format("{0}{1}{2} check", colourGood, typeOfCheck, colourEnd); }
+        else { return string.Format("{0}{1}{2} check", colourBad, typeOfCheck, colourEnd); }
+    }
 }

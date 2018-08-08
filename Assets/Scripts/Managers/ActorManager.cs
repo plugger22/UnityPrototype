@@ -3712,7 +3712,7 @@ public class ActorManager : MonoBehaviour
                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need < {0}, rolled {1}{2}",
                     chance, rnd, "\n");
                 string text = string.Format("{0}, {1}, Stress check FAILED", actor.actorName, actor.arc.name);
-                GameManager.instance.messageScript.GeneralRandom(text, chance, rnd);
+                GameManager.instance.messageScript.GeneralRandom(text, "Stress Breakdown", chance, rnd, true);
             }
         }
         else { actor.isBreakdown = false; }
@@ -3861,7 +3861,7 @@ public class ActorManager : MonoBehaviour
                                     //Admin
                                     Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                                     string text = string.Format("{0}, {1}, learned SECRET", actor.actorName, actor.arc.name);
-                                    GameManager.instance.messageScript.GeneralRandom(text, chance, rnd);
+                                    GameManager.instance.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
                                     //trait Blabbermouth
                                     if (actor.CheckTraitEffect(actorSecretTellAll) == true)
                                     {
@@ -3946,7 +3946,7 @@ public class ActorManager : MonoBehaviour
                     {
                         Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: RESIGNS need < {0}, rolled {1}{2}", chance, rnd, "\n");
                         string text = string.Format("{0}, {1}, RESIGNS", actor.actorName, actor.arc.name);
-                        GameManager.instance.messageScript.GeneralRandom(text, chance, rnd);
+                        GameManager.instance.messageScript.GeneralRandom(text, "Resignation", chance, rnd, true);
                         //actor resigns
                         if (GameManager.instance.dataScript.RemoveCurrentActor(side, actor, ActorStatus.Resigned) == true)
                         {
@@ -4119,7 +4119,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
-                                GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", breakdownChance, rnd);
+                                GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
                                 //update AI side tab status
                                 GameManager.instance.aiScript.UpdateSideTabData();
                             }

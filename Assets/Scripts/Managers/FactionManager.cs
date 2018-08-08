@@ -188,7 +188,7 @@ public class FactionManager : MonoBehaviour
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
                         GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
                         //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
                         //Support given
                         GameManager.instance.playerScript.Renown += renownPerTurn;
                     }
@@ -199,7 +199,7 @@ public class FactionManager : MonoBehaviour
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
                         GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
                         //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
                     }
                     break;
                 case 2:
@@ -212,7 +212,7 @@ public class FactionManager : MonoBehaviour
                         string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
                         GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
                         //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
                         //Support given
                         GameManager.instance.playerScript.Renown += renownPerTurn;
                     }
@@ -223,7 +223,7 @@ public class FactionManager : MonoBehaviour
                         string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
                         GameManager.instance.messageScript.FactionSupport(msgText,factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
                         //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", threshold, rnd);
+                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
                     }
                     break;
                 default:

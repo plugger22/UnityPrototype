@@ -189,6 +189,8 @@ public class GearManager : MonoBehaviour
                 //check appropriate for metaLevel (same level or 'none', both are acceptable)
                 if (gearEntry.Value.metaLevel == null || gearEntry.Value.metaLevel.level == gameLevel)
                 {
+                    //reset stats (SO carries values over between sessions)
+                    gearEntry.Value.Reset();
                     //assign to a list based on rarity
                     int index = gearEntry.Value.rarity.level;
                     arrayOfGearLists[index].Add(gearEntry.Key);
@@ -302,8 +304,6 @@ public class GearManager : MonoBehaviour
                         //gear has been used?
                         if (gear.timesUsed > 0)
                         {
-                            //stat
-                            gear.statTimesUsed += gear.timesUsed;
                             //check to see if compromised
                             chance = GetChanceOfCompromise(gear.gearID);
                             for (int j = 0; j < gear.timesUsed; j++)
@@ -317,13 +317,14 @@ public class GearManager : MonoBehaviour
                                     gear.chanceOfCompromise = chance;
                                     //add to list (used for outcome dialogues)
                                     listOfCompromisedGear.Add(gear.name.ToUpper());
+                                    //stat (before message)
+                                    gear.statTimesCompromised++;
                                     //admin
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                     Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
                                     string msgText = string.Format("Gear {0} COMPROMISED", gear.name);
-                                    GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd, true);
-                                    //stat
-                                    gear.statTimesCompromised++;
+                                    GameManager.instance.messageScript.GeneralRandom(msgText, "Compromised Gear", chance, rnd, true);
+
                                     break;
                                 }
                                 else
@@ -331,6 +332,8 @@ public class GearManager : MonoBehaviour
                                     //gear not compromised
                                     gear.chanceOfCompromise = chance;
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} NOT compromised, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
+                                    string msgText = string.Format("Gear {0} NOT Compromised", gear.name);
+                                    GameManager.instance.messageScript.GeneralRandom(msgText, "Compromised Gear", chance, rnd, true);
                                 }
                             }
                         }
@@ -438,7 +441,7 @@ public class GearManager : MonoBehaviour
                                     GameManager.instance.messageScript.GearLost(msgText, gear, actor.actorID);
                                     //random
                                     msgText = string.Format("Gear {0} LOST", gear.name);
-                                    GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd, true);
+                                    GameManager.instance.messageScript.GeneralRandom(msgText, "Gear Lost", chance, rnd, true);
                                     //remove gear AFTER message
                                     actor.RemoveGear();
 
@@ -635,8 +638,19 @@ public class GearManager : MonoBehaviour
                             index = Random.Range(0, tempRareGear.Count);
                             gearID = tempRareGear[index];
                             tempRareGear.RemoveAt(index);
-                            Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear Success, need < {0} roll {1}{2}", chance, rnd, "\n");
-                            GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear SUCCESS", chance, rnd);
+                            Gear rareGear = GameManager.instance.dataScript.GetGear(gearID);
+                            if (rareGear != null)
+                            {
+                                Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear ({0}) Success, need < {1} roll {2}{3}", rareGear.name, chance, rnd, "\n");
+                                GameManager.instance.messageScript.GeneralRandom(string.Format("Gear Choice, Rare gear ({0}) SUCCESS", rareGear.name), "Rare Gear", chance, rnd);
+                            }
+                            else
+                            {
+                                Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear Success, need < {0} roll {1}{2}", chance, rnd, "\n");
+                                GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear SUCCESS", "Rare Gear", chance, rnd);
+                               Debug.LogWarningFormat("Invalid rare gear (Null) for gearID {0}", gearID);
+                            }
+                            
                         }
                         else if (tempCommonGear.Count > 0)
                         {
@@ -645,7 +659,7 @@ public class GearManager : MonoBehaviour
                             gearID = tempCommonGear[index];
                             tempCommonGear.RemoveAt(index);
                             Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear FAIL, need < {0} roll {1}{2}", chance, rnd, "\n");
-                            GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear FAILED", chance, rnd);
+                            GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear FAILED", "Rare Gear", chance, rnd);
                         }
                     }
                     //common gear
@@ -1187,6 +1201,7 @@ public class GearManager : MonoBehaviour
             if (string.IsNullOrEmpty(descriptorUsedTo) == false)
             {
                 gear.timesUsed++;
+                gear.statTimesUsed++;
                 gear.reasonUsed = string.Format("Used to {0}", descriptorUsedTo);
                 //message
                 string msgText = string.Format("{0} used to {1}", gear.name, descriptorUsedTo);
