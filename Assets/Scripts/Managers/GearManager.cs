@@ -321,7 +321,7 @@ public class GearManager : MonoBehaviour
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
                                     Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
                                     string msgText = string.Format("Gear {0} COMPROMISED", gear.name);
-                                    GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
+                                    GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd, true);
                                     //stat
                                     gear.statTimesCompromised++;
                                     break;
@@ -438,7 +438,7 @@ public class GearManager : MonoBehaviour
                                     GameManager.instance.messageScript.GearLost(msgText, gear, actor.actorID);
                                     //random
                                     msgText = string.Format("Gear {0} LOST", gear.name);
-                                    GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd);
+                                    GameManager.instance.messageScript.GeneralRandom(msgText, chance, rnd, true);
                                     //remove gear AFTER message
                                     actor.RemoveGear();
 

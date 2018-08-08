@@ -494,7 +494,7 @@ public class PlayerManager : MonoBehaviour
 
     /// <summary>
     /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. savedGearID is the compromised gear that the player chose to save. Resets all gear
-    /// returns name of gear saved (UPPER), if any. Otherwise returns Empty string
+    /// returns name of gear saved (UPPER) [assumes only one piece of gear can be saved per turn], if any. Otherwise returns Empty string
     /// </summary>
     public string UpdateGear(int renownUsed = -1, int savedGearID = -1)
     {

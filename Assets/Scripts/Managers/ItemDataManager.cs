@@ -95,6 +95,24 @@ public class ItemDataManager : MonoBehaviour
     //
 
     /// <summary>
+    /// Gear Used. 
+    /// Note: Gear checked for null by calling method, MessageManager.cs -> GearUsed
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <returns></returns>
+    public string GetGearUsedDetails(Gear gear)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1}{2}", gear.reasonUsed, "\n", "\n");
+        int timesUsed = GameManager.instance.turnScript.Turn - gear.statTurnObtained;
+        builder.AppendFormat("Owned for {0}{1}{2} turn{3}{4}", colourNeutral, timesUsed, colourEnd, timesUsed != 1 ? "s" : "", "\n");
+        builder.AppendFormat("Used {0}{1}{2} time{3}{4}", colourNeutral, gear.statTimesUsed, colourEnd, gear.statTimesUsed != 1 ? "s" : "", "\n");
+        builder.AppendFormat("Compromised {0}{1}{2} time{3}", colourNeutral, gear.statTimesCompromised, colourEnd, gear.statTimesCompromised != 1 ? "s": "");
+        return builder.ToString();
+    }
+    
+    /// <summary>
     /// Gear Compromised -> Saved or Compromised depending on renownUsed (saved if > 0)
     /// </summary>
     /// <param name="gear"></param>
@@ -233,25 +251,34 @@ public class ItemDataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// returns a colour formatted string for ItemData string message (Random roll)
+    /// returns a colour formatted string for ItemData string message (Random roll). Shows red for a bad outcome and green for a good (to do this you need to use the isReversed setting depending on roll type)
     /// </summary>
     /// <param name="numNeeded"></param>
     /// <param name="numRolled"></param>
     /// <returns></returns>
-    public string GetRandomDetails(int numNeeded, int numRolled)
+    public string GetRandomDetails(int numNeeded, int numRolled, bool isReversed)
     {
         StringBuilder builder = new StringBuilder();
+        //reverse colours in case of a success indicating a bad outcome, eg. gear is compromised (so shows SUCCESS but in red, not green)
+        string colourSuccess = colourGood;
+        string colourFail = colourBad;
+        if (isReversed == true)
+        {
+            colourSuccess = colourBad;
+            colourFail = colourGood;
+        }
         builder.AppendFormat("Need less than {0}<b>{1}</b>{2}", colourNeutral, numNeeded, colourEnd);
-        if (numRolled < numNeeded)
-        {
-            builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourGood, numRolled, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>SUCCESS</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
-        }
-        else
-        {
-            builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourBad, numRolled, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>FAILED</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
-        }
+
+            if (numRolled < numNeeded)
+            {
+                builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourSuccess, numRolled, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}<b>SUCCESS</b>{1}{2}{3}", colourSuccess, colourEnd, "\n", "\n");
+            }
+            else
+            {
+                builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourFail, numRolled, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}<b>FAILED</b>{1}{2}{3}", colourFail, colourEnd, "\n", "\n");
+            }
         builder.AppendFormat("A {0}Percentage die{1} (1d00) is used", colourNeutral, colourEnd);
         return builder.ToString();
     }

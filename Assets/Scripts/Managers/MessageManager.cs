@@ -202,13 +202,14 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Random roll results (only ones that matter, don't spam). Auto player side. Format text as "Faction support Declined" with NO need, rolled, etc.
+    /// Random roll results (only ones that matter, don't spam). Auto player side. Format text as "Faction support Declined" with NO need, rolled, etc. 
+    /// Set 'isReversed' to true if you want item data to show a Success for failing roll, eg. in case of Gear Compromise check a success is failing the roll
     /// </summary>
     /// <param name="text"></param>
     /// <param name="numNeeded"></param>
     /// <param name="numRolled"></param>
     /// <returns></returns>
-    public void GeneralRandom(string text, int numNeeded, int numRolled)
+    public void GeneralRandom(string text, int numNeeded, int numRolled, bool isReversed = false)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -224,7 +225,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Random Outcome";
-            data.bottomText = GameManager.instance.itemDataScript.GetRandomDetails(numNeeded, numRolled);
+            data.bottomText = GameManager.instance.itemDataScript.GetRandomDetails(numNeeded, numRolled, isReversed);
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.instance.guiScript.alertRandomSprite;
             data.tab = ItemTab.Random;
@@ -1471,11 +1472,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearUsed(string text, Gear gear, int nodeID = -1)
+    public Message GearUsed(string text, Gear gear)
     {
         Debug.Assert(gear != null, "Invalid gear (Null)");
-        //gear stat
-        gear.statTimesUsed++;
         //message
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1485,12 +1484,11 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Used;
             message.side = globalResistance;
             message.data0 = gear.gearID;
-            message.data1 = nodeID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} gear Used", gear.name);
             data.topText = "Gear Used";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetGearUsedDetails(gear);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
@@ -1528,7 +1526,7 @@ public class MessageManager : MonoBehaviour
             data.itemText = text;
             data.topText = "Gear Lost";
             data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.priority = ItemPriority.Medium;
             data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
             //add

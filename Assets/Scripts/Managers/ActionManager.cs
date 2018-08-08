@@ -489,7 +489,7 @@ public class ActionManager : MonoBehaviour
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
             if (gear != null)
             {
-                GameManager.instance.gearScript.SetGearUsed(gear, string.Format("affect district {0}", node.nodeName));
+                GameManager.instance.gearScript.SetGearUsed(gear, string.Format("affect {0} district", node.nodeName));
                 //generate a create modal outcome dialogue
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction");
             }

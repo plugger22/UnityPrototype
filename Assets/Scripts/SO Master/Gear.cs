@@ -34,11 +34,13 @@ public class Gear : ScriptableObject
     [HideInInspector] public int chanceOfCompromise;            //set at time of use, cleared with a new turn
 
     //stats
-    [HideInInspector] public int statTurnObtained;              //turn gear was first obtained
-    [HideInInspector] public int statTurnLost;                  //turn gear was lost
-    [HideInInspector] public int statTimesUsed;                 //times used (total)
-    [HideInInspector] public int statTimesGiven;                //times given to another actor
-    [HideInInspector] public int statTimesCompromised;          //times compromised
-    [HideInInspector] public int statTimesSaved;                //times compromised gear is Saved
-    [HideInInspector] public int statRenownSpent;               //total renown spent on gear
+    [HideInInspector] public int statTurnObtained = 0;              //turn gear was first obtained
+    [HideInInspector] public int statTurnLost = 0;                  //turn gear was lost
+    [HideInInspector] public int statTimesUsed = 0;                 //times used (total)
+    [HideInInspector] public int statTimesGiven = 0;                //times given to another actor
+    [HideInInspector] public int statTimesCompromised = 0;          //times compromised
+    [HideInInspector] public int statTimesSaved = 0;                //times compromised gear is Saved
+    [HideInInspector] public int statRenownSpent = 0;               //total renown spent on gear
+
+
 }
