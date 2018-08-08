@@ -133,7 +133,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 GameManager.instance.tooltipGenericScript.SetTooltip (data);
                 yield return null;
             }
-            //fade in
+            /*//fade in
             float alphaCurrent;
             while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
             {
@@ -141,7 +141,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 alphaCurrent += Time.deltaTime / mouseOverFade;
                 GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
                 yield return null;
-            }
+            }*/
         }
     }
 

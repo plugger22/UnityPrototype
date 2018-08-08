@@ -90,7 +90,7 @@ public class ModalTeamPicker : MonoBehaviour
                             //assign to text (name of teamArc)
                             teamUI.teamText.text = arc.name;
                         }
-                        else { Debug.LogError("Invalid TeamChoicUI component (Null)"); }
+                        else { Debug.LogError("Invalid TeamChoiceUI component (Null)"); }
 
 
                     }

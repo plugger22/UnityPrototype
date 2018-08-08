@@ -509,6 +509,7 @@ MonoBehaviour:
   resistanceState: 0
   authoritySecurityState: 0
   currentSide: {fileID: 0}
+  haltExecution: 0
   _turn: 0
 --- !u!114 &114371659991772562
 MonoBehaviour:
@@ -693,6 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce13aa4ddd60ac438ee74fdb1d1ed28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aiTestRun: 10
 --- !u!114 &114653740805270716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -981,7 +983,7 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 12288
+  seed: 23854
   isPerformanceLog: 1
   win: 0
 --- !u!114 &114762690547149900
