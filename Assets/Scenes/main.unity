@@ -9370,7 +9370,13 @@ Prefab:
       propertyPath: m_IgnoreParentGroups
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114207975559297128, guid: 1650e2e396657354790770309c90a300, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 1650e2e396657354790770309c90a300, type: 2}
   m_IsPrefabAsset: 0
 --- !u!224 &467089272 stripped
@@ -9383,6 +9389,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1066478997064600, guid: 1650e2e396657354790770309c90a300,
     type: 2}
   m_PrefabInternal: {fileID: 467089271}
+--- !u!114 &467089277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 467089276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!1001 &473872101
 Prefab:
   m_ObjectHideFlags: 0
@@ -15698,8 +15724,14 @@ Prefab:
       propertyPath: m_BlocksRaycasts
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 114207975559297128, guid: 1650e2e396657354790770309c90a300, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 1650e2e396657354790770309c90a300, type: 2}
   m_IsPrefabAsset: 0
 --- !u!224 &863184187 stripped
@@ -15712,6 +15744,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1066478997064600, guid: 1650e2e396657354790770309c90a300,
     type: 2}
   m_PrefabInternal: {fileID: 863184186}
+--- !u!114 &863184192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 863184191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!1 &864892821 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b,
@@ -33303,7 +33355,7 @@ Prefab:
     - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_RaycastTarget
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224004020219459248, guid: 1650e2e396657354790770309c90a300,
         type: 2}
@@ -33312,6 +33364,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 114207975559297128, guid: 1650e2e396657354790770309c90a300, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 1650e2e396657354790770309c90a300, type: 2}
   m_IsPrefabAsset: 0
 --- !u!224 &1821763710 stripped
@@ -33324,6 +33377,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1066478997064600, guid: 1650e2e396657354790770309c90a300,
     type: 2}
   m_PrefabInternal: {fileID: 1821763709}
+--- !u!114 &1821763715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1821763714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!1 &1832992231
 GameObject:
   m_ObjectHideFlags: 0

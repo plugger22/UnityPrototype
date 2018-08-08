@@ -273,6 +273,7 @@ public class ModalGenericPicker : MonoBehaviour
                                             tooltipUI.tooltipHeader = details.arrayOfTooltips[i].textHeader;
                                             tooltipUI.tooltipMain = details.arrayOfTooltips[i].textMain;
                                             tooltipUI.tooltipDetails = details.arrayOfTooltips[i].textDetails;
+                                            tooltipUI.x_offset = 55;
                                         }
                                         else { Debug.LogError(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                                     }
