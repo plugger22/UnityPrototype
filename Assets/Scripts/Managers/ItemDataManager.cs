@@ -90,15 +90,32 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    //
+    // - - - Gear - - -
+    //
+
     /// <summary>
-    /// Player used renown, returns colour formatted string
+    /// Gear Compromised -> Saved or Compromised depending on renownUsed (saved if > 0)
     /// </summary>
-    /// <param name="amount"></param>
-    /// <param name="reason"></param>
+    /// <param name="gear"></param>
+    /// <param name="renownUsed"></param>
     /// <returns></returns>
-    public string GetPlayerRenownUseDetails(int amount, string reason)
+    public string GetGearCompromisedDetails(Gear gear, int renownUsed)
     {
-        return string.Format("{0}{1}{2} Renown used{3}to {4}", colourNeutral, amount, colourEnd, "\n", reason);
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
+        if (renownUsed > 0)
+        {
+            builder.AppendFormat("has been {0}<b>SAVED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>{1}</b>{2} Renown used", colourNeutral, renownUsed, colourEnd);
+        }
+        else
+        {
+            builder.AppendFormat("has been {0}<b>COMPROMISED</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}Gear has been lost{1}", colourBad, colourEnd);
+        }
+
+        return builder.ToString();
     }
 
     //

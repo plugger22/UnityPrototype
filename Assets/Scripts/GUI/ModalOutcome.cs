@@ -221,6 +221,8 @@ public class ModalOutcome : MonoBehaviour
         //end of turn check
         if (isAction == true)
         { EventManager.instance.PostNotification(EventType.UseAction, this, reason, "ModalOutcome.cs -> CloseModalOutcome"); }
+        //auto set haltExecution to false (in case execution halted at end of turn, waiting on Outcome dialogue to be sorted)
+        GameManager.instance.turnScript.haltExecution = false;
     }
 
 

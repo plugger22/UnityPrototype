@@ -316,11 +316,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="dataID"></param>
     /// <returns></returns>
-    public Message RenownUsedPlayer(string text, string reason, int amount, int dataID, int nodeID = -1)
+    public Message RenownUsedPlayer(string text, int amount, int dataID, int nodeID = -1)
     {
         Debug.Assert(dataID >= 0, string.Format("Invalid dataID {0}", dataID));
         Debug.Assert(amount > 0, "Invalid amount (<= 0)");
-        Debug.Assert(string.IsNullOrEmpty(reason) == false, "Invalid reason (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -331,17 +330,17 @@ public class MessageManager : MonoBehaviour
             message.data0 = amount;
             message.data1 = dataID;
             message.data2 = nodeID;
-            //ItemData
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            /*//ItemData
             ItemData data = new ItemData();
             data.itemText = "Player Renown used";
             data.topText = "Use Renown";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerRenownUseDetails(amount, reason);
             data.sprite = playerSprite;
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.instance.dataScript.AddItemData(data);*/
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1435,7 +1434,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearCompromised(string text, Gear gear, int nodeID = -1)
+    public Message GearCompromised(string text, Gear gear, int renownUsed, int nodeID = -1)
     {
         Debug.Assert(gear != null, "Invalid gear (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -1447,12 +1446,13 @@ public class MessageManager : MonoBehaviour
             message.side = globalResistance;
             message.isPublic = true;
             message.data0 = gear.gearID;
-            message.data1 = nodeID;
+            message.data1 = renownUsed;
+            message.data2 = nodeID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} gear Compromised", gear.name);
             data.topText = "Gear Compromised";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetGearCompromisedDetails(gear, renownUsed);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;

@@ -186,9 +186,8 @@ public class TurnManager : MonoBehaviour
                 {
                     //switch off any node Alerts
                     GameManager.instance.alertScript.CloseAlertUI(true);
-                    //info App
+                    //info App displayed AFTER any end of turn Player interactions
                     myCoroutineInfoApp = StartCoroutine("InfoApp", playerSide);
-                    /*InitialiseInfoApp(playerSide);*/
                 }
             }
             //There is a winner
@@ -199,7 +198,11 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Coroutine to delay initialisation and display of InfoApp until any end of turn player interaction is resolved, eg. Generic Picker for Compromised Gear
+    /// </summary>
+    /// <param name="playerSide"></param>
+    /// <returns></returns>
     IEnumerator InfoApp(GlobalSide playerSide)
     {
         yield return new WaitUntil(() => haltExecution == false);

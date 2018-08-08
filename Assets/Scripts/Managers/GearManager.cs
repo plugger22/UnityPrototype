@@ -953,8 +953,7 @@ public class GearManager : MonoBehaviour
     {
         if (data != null)
         {
-            //retain saved gear, remove any unsaved gear
-            string gearSavedName = GameManager.instance.playerScript.UpdateGear(data.optionID);
+
             //deduct renown
             if (data.optionID > -1)
             {
@@ -966,6 +965,8 @@ public class GearManager : MonoBehaviour
                     renown = 0;
                 }
                 GameManager.instance.playerScript.Renown = renown;
+                //retain saved gear, remove any unsaved gear
+                string gearSavedName = GameManager.instance.playerScript.UpdateGear(gearSaveCurrentCost, data.optionID);
                 //stats
                 Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
                 if (gear != null)
@@ -1196,7 +1197,7 @@ public class GearManager : MonoBehaviour
         else { Debug.LogWarning("Invalid gear (Null)"); }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// subMethod to handle admin for Player renown expenditure
     /// </summary>
     /// <param name="amount"></param>
@@ -1212,7 +1213,7 @@ public class GearManager : MonoBehaviour
         GameManager.instance.messageScript.RenownUsedPlayer(textMsg, string.Format("save {0} gear", gear.name), amount, gear.gearID, node.nodeID);
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
-    }
+    }*/
 
     /// <summary>
     /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem.

@@ -355,8 +355,6 @@ public class ModalGenericPicker : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalGenericPicker.cs -> CloseGenericPicker", "\n");
-        //resume execution regardless as outcome window has been dealt with
-        GameManager.instance.turnScript.haltExecution = false;
     }
 
     /// <summary>
