@@ -1391,17 +1391,17 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Player gifts an actor with gear and gains motivation in return (extra if it's the actor's preferred gear type)
-    /// Or player takes gear from actor and it costs a set amount of motivation (extra if preferred) to the actor to do so
+    /// Player gifts an actor with gear ('isGiven' defaults to true) and gains motivation in return (extra if it's the actor's preferred gear type)
+    /// Or player takes gear from actor('isGiven' set to false) and it costs a set amount of motivation (extra if preferred) to the actor to do so
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="gearID"></param>
     /// <param name="motivation"></param>
     /// <returns></returns>
-    public Message GearSwapOrGive(string text, int actorID, Gear gear, int motivation)
+    public Message GearTakeOrGive(string text, Actor actor, Gear gear, int motivation, bool isGiven = true)
     {
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(gear != null, "Invalid gear (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1410,14 +1410,22 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Gear_Given;
             message.side = globalResistance;
-            message.data0 = actorID;
+            message.data0 = actor.actorID;
             message.data1 = gear.gearID;
             message.data2 = motivation;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Give Gear";
-            data.bottomText = text;
+            if (isGiven == true)
+            {
+                data.itemText = string.Format("{0} gear Given", gear.name);
+                data.topText = "Give Gear";
+            }
+            else
+            {
+                string.Format("{0} gear Taken", gear.name);
+                data.topText = "Gear Taken";
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, motivation, isGiven);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
@@ -1503,16 +1511,16 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gear possessed by an Actor has been Lost. Returns null if text invalid
+    /// Gear possessed by an Actor has been Lost. Returns null if text invalid. 'isGivenToHQ' set true if gear given to actor who already has gear (old gear given to HQ)
     /// </summary>
     /// <param name="text"></param>
     /// <param name="gearID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message GearLost(string text, Gear gear, int actorID)
+    public Message GearLost(string text, Gear gear, Actor actor, bool isGivenToHQ = false)
     {
         Debug.Assert(gear != null, "Invalid gear (Null)");
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1522,12 +1530,12 @@ public class MessageManager : MonoBehaviour
             message.side = globalResistance;
             message.isPublic = true;
             message.data0 = gear.gearID;
-            message.data1 = actorID;
+            message.data1 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} gear Lost", gear.name);
             data.topText = "Gear Lost";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetGearLostDetails(gear, actor, isGivenToHQ);
             data.priority = ItemPriority.Medium;
             data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
@@ -1546,10 +1554,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="gearID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message GearAvailable(string text, Gear gear, int actorID)
+    public Message GearAvailable(string text, Gear gear, Actor actor)
     {
         Debug.Assert(gear != null, "Invalid gear (Null)");
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1559,13 +1567,13 @@ public class MessageManager : MonoBehaviour
             message.side = globalResistance;
             message.isPublic = true;
             message.data0 = gear.gearID;
-            message.data1 = actorID;
+            message.data1 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} gear Available", gear.name);
             data.topText = "Gear Available";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetGearAvailableDetails(gear, actor);
+            data.priority = ItemPriority.Medium;
             data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
             //add
@@ -1577,16 +1585,17 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gear obtained. Returns null if text invalid
+    /// Gear obtained. If player has got the gear, leave actor as default '999'. Returns null if text invalid
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public Message GearObtained(string text, int nodeID, Gear gear, int actorID = 999)
+    public Message GearObtained(string text, Node node, Gear gear, int actorID = 999)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(gear != null, "Invalid gear (Null)");
+        Debug.Assert(actorID >= 0, "Invalid actorID (less than Zero)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1594,12 +1603,12 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Obtained;
             message.side = globalResistance;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = gear.gearID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} gear Obtained", gear.name);
             data.topText = "Gear Obtained";
             data.bottomText = text;
             data.priority = ItemPriority.Low;

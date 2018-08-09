@@ -1385,7 +1385,7 @@ public class ActionManager : MonoBehaviour
             actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            GameManager.instance.messageScript.GearSwapOrGive(text, actor.actorID, gear, motivationBoost);
+            GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationBoost);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
@@ -1498,7 +1498,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = builder.ToString();
             //message
             string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
-            GameManager.instance.messageScript.GearSwapOrGive(text, actor.actorID, gear, motivationCost);
+            GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationCost, false);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)

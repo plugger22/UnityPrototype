@@ -135,6 +135,80 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Gear Lost -> either by actor losing it or by you giving gear to an actor who already has gear (isGivenToHQ 'true')
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <param name="actor"></param>
+    /// <param name="isGivenToHQ"></param>
+    /// <returns></returns>
+    public string GetGearLostDetails(Gear gear, Actor actor, bool isGivenToHQ)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
+        if (isGivenToHQ == true)
+        {
+            //gear lost 'cause you overloaded the actor with gear
+            builder.AppendFormat("{0}Donated to Faction HQ{1}{2}{3}", colourBad, colourEnd, "\n");
+            builder.AppendFormat("by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}Minions can only have one item of Gear{1}", colourAlert, colourEnd);
+        }
+        else
+        {
+            //gear lost through actor doing so
+            builder.AppendFormat("{0}Lost, sold or Used{1}{2}{3}", colourBad, colourEnd, "\n");
+            builder.AppendFormat("by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}Minions won't hold gear forever{1}", colourAlert, colourEnd);
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Gear Available -> you can recover gear from an actor if need be
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public string GetGearAvailableDetails(Gear gear, Actor actor)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
+        builder.AppendFormat("{0}Can be acquired{1}{2}{3}", colourGood, colourEnd, "\n");
+        builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}Asking for your gear back <i>may</i> upset your Minion{1}", colourAlert, colourEnd);
+        return builder.ToString();
+    }
+
+
+    /// <summary>
+    /// Gear Taken or Given
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="gear"></param>
+    /// <param name="motivation"></param>
+    /// <param name="isGiven"></param>
+    /// <returns></returns>
+    public string GetGearTakeOrGiveDetails(Actor actor, Gear gear, int motivation, bool isGiven)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
+        if (isGiven == true)
+        {
+            //gear given
+            builder.AppendFormat("has been given{0}", "\n");
+            builder.AppendFormat("to {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0} {1}Motivation +{2}{3}", actor.arc.name, colourGood, colourEnd);
+        }
+        else
+        {
+            //gear Taken back from actor
+            builder.AppendFormat("has been taken back{0}", "\n");
+            builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0} {1}Motivation {2}{3}", actor.arc.name, colourBad, colourEnd);
+        }
+        return builder.ToString();
+    }
+
     //
     // - - - Faction - - -
     //

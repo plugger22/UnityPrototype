@@ -976,7 +976,8 @@ public class PlayerManager : MonoBehaviour
                             { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
                             text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
                             //message
-                            GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), GameManager.instance.nodeScript.nodePlayer, gear);
+                            Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                            GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), nodePlayer, gear);
                         }
                     }
                 }
