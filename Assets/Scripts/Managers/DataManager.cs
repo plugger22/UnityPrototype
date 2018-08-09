@@ -296,8 +296,12 @@ public class DataManager : MonoBehaviour
     {
         if (data != null)
         {
+            Debug.Assert(data.side != null, "Invalid ItemData side (Null)");
             GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-            arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data);
+            //only take those from the same side or those aimed at both sides
+            if (data.side.level == playerSide.level || data.side.level == GameManager.instance.globalScript.sideBoth.level)
+            { arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data); }
+            else { Debug.LogFormat("[Tst] ItemData NOT retained -> {0}", data.itemText); }
         }
         else { Debug.LogWarning("Invalid ItemData (Null)"); }
     }
