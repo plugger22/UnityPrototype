@@ -810,7 +810,7 @@ public class GearManager : MonoBehaviour
                         Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                         if (gear != null)
                         {
-                            GenericTooltipDetails tooltipDetails = GameManager.instance.gearScript.GetGearTooltip(gear);
+                            GenericTooltipDetails tooltipDetails = GetGearTooltip(gear);
                             if (tooltipDetails != null)
                             {
                                 InventoryOptionData optionData = new InventoryOptionData();
@@ -865,7 +865,7 @@ public class GearManager : MonoBehaviour
             }
             else
             {
-                //No actor in reserve
+                //No gear in inventory
                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                 {
                     side = GameManager.instance.sideScript.PlayerSide,
@@ -925,7 +925,7 @@ public class GearManager : MonoBehaviour
                     Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                     if (gear != null)
                     {
-                        GenericTooltipDetails tooltipDetails = GameManager.instance.gearScript.GetGearTooltip(gear);
+                        GenericTooltipDetails tooltipDetails = GetGearTooltip(gear);
                         if (tooltipDetails != null)
                         {
                             InventoryOptionData optionData = new InventoryOptionData();

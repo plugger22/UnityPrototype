@@ -193,6 +193,7 @@ public class ModalInventoryUI : MonoBehaviour
                                     arrayOfTooltips[i].tooltipHeader = details.arrayOfTooltips[i].textHeader;
                                     arrayOfTooltips[i].tooltipMain = details.arrayOfTooltips[i].textMain;
                                     arrayOfTooltips[i].tooltipDetails = details.arrayOfTooltips[i].textDetails;
+                                    arrayOfTooltips[i].x_offset = 55;
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                             }

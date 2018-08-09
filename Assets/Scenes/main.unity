@@ -9278,22 +9278,22 @@ Prefab:
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
@@ -9303,17 +9303,17 @@ Prefab:
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 18
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
         type: 2}
@@ -9373,7 +9373,12 @@ Prefab:
     - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_RaycastTarget
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_FillCenter
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114207975559297128, guid: 1650e2e396657354790770309c90a300, type: 2}
@@ -15727,7 +15732,52 @@ Prefab:
     - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_RaycastTarget
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_FillCenter
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -33355,12 +33405,52 @@ Prefab:
     - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_RaycastTarget
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224004020219459248, guid: 1650e2e396657354790770309c90a300,
         type: 2}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114208060934142652, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_FillCenter
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224791062699836540, guid: 1650e2e396657354790770309c90a300,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}

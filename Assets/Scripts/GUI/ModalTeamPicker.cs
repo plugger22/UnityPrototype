@@ -367,6 +367,7 @@ public class ModalTeamPicker : MonoBehaviour
                 optionTooltip.tooltipHeader = listOfTeamTooltipsHeader[teamIndex];
                 optionTooltip.tooltipMain = listOfTeamTooltipsMain[teamIndex];
                 optionTooltip.tooltipDetails = listOfTeamTooltipsDetails[teamIndex];
+                optionTooltip.x_offset = 50;
             }
             else { Debug.LogWarning(string.Format("teamIndex \"{0}\" has exceeded limit \"{1}\"", teamIndex, limit)); }
         }
