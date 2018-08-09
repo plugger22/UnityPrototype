@@ -26,7 +26,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private bool isNodeHighlightOn;                             //true if Node highlight currently on
     private bool isConnectionHighlightOn;                       //true if Connection highlight currently on
     private float mouseOverDelay;
-    private float mouseOverFade;
+    /*private float mouseOverFade;*/
     private bool onMouseFlag;
     private Coroutine myCoroutine;
 
@@ -46,7 +46,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private void Start()
     {
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        /*mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;*/
     }
 
     /// <summary>

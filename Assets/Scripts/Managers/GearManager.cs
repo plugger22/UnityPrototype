@@ -403,6 +403,7 @@ public class GearManager : MonoBehaviour
                         {
                             actor.IncrementGearTimer();
                             int timer = actor.GetGearTimer();
+                            timer -= 1;
                             //grace period about to be exceeded
                             if (timer == actorGearGracePeriod)
                                 {
@@ -445,6 +446,12 @@ public class GearManager : MonoBehaviour
                                     //remove gear AFTER message
                                     actor.RemoveGear();
 
+                                }
+                                else
+                                {
+                                    //random
+                                    string msgText = string.Format("{0} gear, {1}, retained", actor.arc.name, gear.name);
+                                    GameManager.instance.messageScript.GeneralRandom(msgText, "Gear Lost", chance, rnd, true);
                                 }
                             }
                         }

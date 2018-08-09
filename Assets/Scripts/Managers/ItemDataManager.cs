@@ -82,9 +82,8 @@ public class ItemDataManager : MonoBehaviour
     public string GetPlayerMoveDetails(Node node)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1}{2} now at{3}", colourAlert, GameManager.instance.playerScript.PlayerName, colourEnd, "\n");
-        builder.AppendFormat("{0},{1}", node.nodeName, "\n");
-        builder.AppendFormat("{0}{1}{2} district", colourNeutral, node.Arc.name, colourEnd);
+        builder.AppendFormat("{0}{1}{2} now at{3}{4}", colourNeutral, GameManager.instance.playerScript.PlayerName, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}, a {1}{2}{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         if (GameManager.instance.optionScript.debugData == true)
         { builder.AppendFormat(", ID {0}", node.nodeID); }
         return builder.ToString();
@@ -149,16 +148,16 @@ public class ItemDataManager : MonoBehaviour
         if (isGivenToHQ == true)
         {
             //gear lost 'cause you overloaded the actor with gear
-            builder.AppendFormat("{0}Donated to Faction HQ{1}{2}{3}", colourBad, colourEnd, "\n");
-            builder.AppendFormat("by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}Minions can only have one item of Gear{1}", colourAlert, colourEnd);
+            builder.AppendFormat("{0}Donated to Faction HQ{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("Subordinates can only have{0}{1}one item of Gear{2}", "\n", colourAlert, colourEnd);
         }
         else
         {
             //gear lost through actor doing so
-            builder.AppendFormat("{0}Lost, sold or Used{1}{2}{3}", colourBad, colourEnd, "\n");
-            builder.AppendFormat("by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}Minions won't hold gear forever{1}", colourAlert, colourEnd);
+            builder.AppendFormat("{0}Lost, sold or Used{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("Subordinates won't hold gear {0}forever{1}", colourAlert, colourEnd);
         }
         return builder.ToString();
     }
@@ -173,9 +172,9 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
-        builder.AppendFormat("{0}Can be acquired{1}{2}{3}", colourGood, colourEnd, "\n");
-        builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}Asking for your gear back <i>may</i> upset your Minion{1}", colourAlert, colourEnd);
+        builder.AppendFormat("{0}Can be acquired{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("Asking for your gear back {0}may{1} upset {2}", colourBad, colourEnd, actor.actorName);
         return builder.ToString();
     }
 
@@ -196,15 +195,47 @@ public class ItemDataManager : MonoBehaviour
         {
             //gear given
             builder.AppendFormat("has been given{0}", "\n");
-            builder.AppendFormat("to {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0} {1}Motivation +{2}{3}", actor.arc.name, colourGood, colourEnd);
+            builder.AppendFormat("to {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1} Motivation +{2}{3}", actor.actorName, colourGood, motivation, colourEnd);
         }
         else
         {
             //gear Taken back from actor
             builder.AppendFormat("has been taken back{0}", "\n");
-            builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourNeutral, actor.arc.name, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0} {1}Motivation {2}{3}", actor.arc.name, colourBad, colourEnd);
+            builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0} {1}<b>Motivation -{2}</b>{3}", actor.actorName, colourBad, motivation, colourEnd);
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Gear Obtained by player or actor
+    /// </summary>
+    /// <param name="gear"></param>
+    /// <param name="node"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public string GetGearObtainedDetails(Gear gear, Node node, int actorID)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
+        if (actorID != 999)
+        {
+            //actor got gear
+            Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+            if (actor != null)
+            {
+                builder.AppendFormat("Sourced by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
+                builder.AppendFormat("at {0}, a {1}{2}{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+            }
+            else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID);
+                builder.Append("Unknown"); }
+        }
+        else
+        {
+            //player got gear
+            builder.AppendFormat("Sourced by {0}, {1}Player{2}{3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
+            builder.AppendFormat("at {0}, a {1}{2}{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         }
         return builder.ToString();
     }
@@ -311,7 +342,7 @@ public class ItemDataManager : MonoBehaviour
             if (listOfEffects.Count > 0)
             {
                 foreach (Effect effect in listOfEffects)
-                { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, effect.textTag, colourEnd); }
+                { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, effect.textTag, colourEnd); }
             }
             else { builder.AppendFormat("{0}No effect", "\n"); }
         }

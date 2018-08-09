@@ -557,6 +557,8 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void Quit()
     {
+        if (myCoroutineInfoApp != null)
+        { StopCoroutine(myCoroutineInfoApp); }
         //show thank you splash screen before quitting
         if (SceneManager.GetActiveScene().name != "End_Game")
         { StartCoroutine("DelayedQuit"); }

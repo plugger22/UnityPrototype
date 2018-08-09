@@ -13,7 +13,7 @@ using UnityEngine.UI;
 /// </summary>
 public class MainInfoUI : MonoBehaviour
 {
-
+    public Canvas mainInfoCanvas;
     public GameObject mainInfoObject;
 
     [Header("Buttons")]
@@ -110,7 +110,7 @@ public class MainInfoUI : MonoBehaviour
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
-    private int numOfMaxItem = -1;                                   // (max) count of items in current list / page
+    /*private int numOfMaxItem = -1;                                   // (max) count of items in current list / page*/
     private GameObject[] arrayItemMain;
     private TextMeshProUGUI[] arrayItemText;
     private Image[] arrayItemIcon;
@@ -124,7 +124,7 @@ public class MainInfoUI : MonoBehaviour
     private Scrollbar scrollBar;
     //flares
     private Coroutine myCoroutineFlareSW;
-    private Vector3 startFlareLocalPosition;
+    /*private Vector3 startFlareLocalPosition;*/
     //tabs
     private int currentTabIndex = -1;
     private int maxTabIndex;
@@ -195,6 +195,10 @@ public class MainInfoUI : MonoBehaviour
         listOfCurrentPageItemData = new List<ItemData>();
         //max tabs
         maxTabIndex = numOfTabs - 1;
+        //main
+        Debug.Assert(mainInfoCanvas != null, "Invalid mainInfoCanvas (Null)");
+        Debug.Assert(mainInfoObject != null, "Invalid mainInfoObject (Null)");
+        mainInfoObject.SetActive(true);
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
         Debug.Assert(buttonInfo != null, "Invalid buttonInfo (Null)");
@@ -304,7 +308,7 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(flasher_meetingTab != null, "Invalid flashing_meetingTab (Null)");
         //Moving Flares
         Debug.Assert(flare_SW != null, "Invalid flare_SW (Null");
-        startFlareLocalPosition = flare_SW.transform.localPosition;
+        /*startFlareLocalPosition = flare_SW.transform.localPosition;*/
         //Ticker
         tickerRectTransform = tickerText.GetComponent<RectTransform>();
         cloneTickerText = Instantiate(tickerText) as TextMeshProUGUI;
@@ -521,7 +525,8 @@ public class MainInfoUI : MonoBehaviour
             // Navigation buttons
             UpdateNavigationStatus();
             // GUI
-            mainInfoObject.SetActive(true);
+            mainInfoCanvas.gameObject.SetActive(true);
+            
             //flashers -> Request & Meeting tabs
             SetTabFlashers();
             /*//flares -> moving inwards towards App
@@ -697,8 +702,8 @@ public class MainInfoUI : MonoBehaviour
             maxHighlightIndex = numOfItemsCurrent - 1;
             if (numOfItemsCurrent > 0)
             {
-                //update max number of items
-                numOfMaxItem = numOfItemsCurrent;
+                /*//update max number of items
+                numOfMaxItem = numOfItemsCurrent;*/
                 //populate current messages for the main tab
                 for (int index = 0; index < arrayItemText.Length; index++)
                 {
@@ -785,7 +790,7 @@ public class MainInfoUI : MonoBehaviour
     private void CloseMainInfo()
     {
         GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
-        mainInfoObject.SetActive(false);
+        mainInfoCanvas.gameObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //switch off coroutines
         if (myCoroutineRequest != null)

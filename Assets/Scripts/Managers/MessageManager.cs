@@ -1422,7 +1422,7 @@ public class MessageManager : MonoBehaviour
             }
             else
             {
-                string.Format("{0} gear Taken", gear.name);
+                data.itemText = string.Format("{0} gear Taken", gear.name);
                 data.topText = "Gear Taken";
             }
             data.bottomText = GameManager.instance.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, motivation, isGiven);
@@ -1610,7 +1610,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Obtained", gear.name);
             data.topText = "Gear Obtained";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetGearObtainedDetails(gear, node, actorID);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.tab = ItemTab.Mail;
