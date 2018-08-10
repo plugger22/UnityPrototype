@@ -119,6 +119,21 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Actor in Reserves has been spoken to
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public string GetActorSpokenTooDetails(Actor actor, string reason, int benefit)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}, currently in the {4}Reserves{5}{6}{7}", actor.actorName, colourAlert, actor.arc.name, colourEnd, colourNeutral, colourEnd, "\n", "\n");
+        builder.AppendFormat("Has been spoken to and {0}<b>{1}</b>{2}{3}{4}", colourNeutral, reason, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0} {1}Unhappy Timer +{2}{3}", actor.actorName, colourGood, benefit, colourEnd);
+        return builder.ToString();
+    }
+
     //
     // - - - Gear - - -
     //

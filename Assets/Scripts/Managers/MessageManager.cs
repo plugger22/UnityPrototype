@@ -414,49 +414,36 @@ public class MessageManager : MonoBehaviour
 
 
     /// <summary>
-    /// Actor in Reserve Pool is reassured or threatened
+    /// Actor in Reserve Pool is reassured or threatened, defaults to player side
+    /// 'reason' is why the actor has been spoken to and is in format '[Actor] has been [reason]'
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorSpokenToo(string text, int actorID, GlobalSide side, bool isPublic = false)
+    public Message ActorSpokenToo(string text, string reason, Actor actor, int benefit, bool isPublic = false)
     {
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Reassured;
-            message.side = side;
+            message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = isPublic;
-            message.data0 = actorID;
+            message.data0 = actor.actorID;
+            message.data1 = benefit;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Spoken To";
-            data.bottomText = text;
+            data.itemText = string.Format("{0} has been Spoken too", actor.arc.name);
+            data.topText = "You've had words";
+            data.bottomText = GameManager.instance.itemDataScript.GetActorSpokenTooDetails(actor, reason, benefit);
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
             data.side = message.side;
             data.help = 1;
-            //data depends on whether an actor or player
-            if (actorID == playerActorID)
-            {
-                //player
-                data.sprite = playerSprite;
-            }
-            else
-            {
-                //actor
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
-                if (actor != null)
-                {
-                    data.sprite = actor.arc.sprite;
-                }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
-            }
+            data.sprite = actor.arc.sprite;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

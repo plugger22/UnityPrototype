@@ -281,7 +281,7 @@ public class ActionManager : MonoBehaviour
                                     //update stringBuilder texts
                                     if (string.IsNullOrEmpty(effectReturn.topText) == false)
                                     {
-                                        builderTop.AppendLine(); builderTop.AppendLine();
+                                        if (builderTop.Length > 0) { builderTop.AppendLine(); builderTop.AppendLine(); }
                                         builderTop.Append(effectReturn.topText);
                                     }
                                     if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
@@ -421,11 +421,8 @@ public class ActionManager : MonoBehaviour
                             {
                                 outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                                 //update stringBuilder texts
-                                if (effectReturn.topText.Length > 0)
-                                {
-                                    builderTop.AppendLine(); builderTop.AppendLine();
-                                    builderTop.Append(effectReturn.topText);
-                                }
+                                if (effectReturn.topText.Length > 0) { builderTop.AppendLine(); builderTop.AppendLine(); }
+                                builderTop.Append(effectReturn.topText);
                                 if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                 builderBottom.Append(effectReturn.bottomText);
                                 //exit effect loop on error
@@ -1681,7 +1678,7 @@ public class ActionManager : MonoBehaviour
                 actor.isReassured = true;
                 //message
                 string text = string.Format("{0} {1} has been Reassured (Reserve Pool)", actor.arc.name, actor.actorName);
-                GameManager.instance.messageScript.ActorSpokenToo(text, actor.actorID, details.side);
+                GameManager.instance.messageScript.ActorSpokenToo(text, "Reassured", actor, benefit);
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1747,7 +1744,7 @@ public class ActionManager : MonoBehaviour
                 GameManager.instance.playerScript.Renown -= renownCost;
                 //message
                 string text = string.Format("{0} {1} has been Threatened (Reserve Pool)", actor.arc.name, actor.actorName);
-                GameManager.instance.messageScript.ActorSpokenToo(text, actor.actorID, details.side);
+                GameManager.instance.messageScript.ActorSpokenToo(text, "Threatened", actor, benefit);
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -2290,16 +2287,10 @@ public class ActionManager : MonoBehaviour
                         if (effectReturn != null)
                         {
                             //update stringBuilder texts (Bottom only)
-                            if (builderBottom.Length > 0)
-                            {
-                                builderBottom.AppendLine();
-                                builderBottom.AppendLine();
-                            }
+                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                             builderBottom.Append(effectReturn.bottomText);
                             //exit effect loop on error
                             if (effectReturn.errorFlag == true) { break; }
-                            /*//valid action? -> only has to be true once for an action to be valid
-                            if (effectReturn.isAction == true) { isAction = true; }*/
                         }
                         else
                         {
@@ -2436,11 +2427,9 @@ public class ActionManager : MonoBehaviour
                                         EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
                                         if (effectReturn != null)
                                         {
-                                            if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)
-                                            { builderTop.AppendLine(); }
+                                            if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)  { builderTop.AppendLine(); }
                                             builderTop.Append(effectReturn.topText);
-                                            if (builderBottom.Length > 0)
-                                            { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                             builderBottom.Append(effectReturn.bottomText);
                                             //exit effect loop on error
                                             if (effectReturn.errorFlag == true) { break; }
@@ -2595,11 +2584,9 @@ public class ActionManager : MonoBehaviour
                                             EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
                                             if (effectReturn != null)
                                             {
-                                                if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)
-                                                { builderTop.AppendLine(); }
+                                                if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0) { builderTop.AppendLine(); }
                                                 builderTop.Append(effectReturn.topText);
-                                                if (builderBottom.Length > 0)
-                                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                                 builderBottom.Append(effectReturn.bottomText);
                                                 //exit effect loop on error
                                                 if (effectReturn.errorFlag == true) { break; }
@@ -2752,11 +2739,9 @@ public class ActionManager : MonoBehaviour
                                             EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
                                             if (effectReturn != null)
                                             {
-                                                if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)
-                                                { builderTop.AppendLine(); }
+                                                if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0) { builderTop.AppendLine(); }
                                                 builderTop.Append(effectReturn.topText);
-                                                if (builderBottom.Length > 0)
-                                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                                 builderBottom.Append(effectReturn.bottomText);
                                                 //exit effect loop on error
                                                 if (effectReturn.errorFlag == true) { break; }
