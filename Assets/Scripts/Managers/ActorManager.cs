@@ -4137,6 +4137,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void UpdateReserveActors()
     {
+        string msgText, itemText, reason, warning;
         List<int> listOfActors = null;
         int chance;
         //
@@ -4156,6 +4157,15 @@ public class ActorManager : MonoBehaviour
                     {
                         actor.unhappyTimer--;
                         Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                        if (actor.unhappyTimer == 1)
+                        {
+                            //unhappy in one turn warning
+                            msgText = "";
+                            itemText = "";
+                            reason = "";
+                            warning = "";
+                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "About to be Unhappy", reason, warning, false);
+                        }
                         //if timer now zero, gain condition "Unhappy"
                         if (actor.unhappyTimer == 0)
                         {

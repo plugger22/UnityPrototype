@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ResistanceManager rebelScript;           //Resistance Manager
     [HideInInspector] public AuthorityManager authorityScript;        //Authority Manager
     [HideInInspector] public MessageManager messageScript;            //Message Manager
-    [HideInInspector] public ItemDataManager itemDataScript;                  //ItemData Manager
+    [HideInInspector] public ItemDataManager itemDataScript;          //ItemData Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TestManager testScript;                  //Test Manager
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalTeamPicker teamPickerScript;        //Modal Team Picker window
     [HideInInspector] public ModalGenericPicker genericPickerScript;  //Modal Generic Picker window
     [HideInInspector] public ModalInventoryUI inventoryScript;        //Modal InventoryUI window
-    /*[HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window*/
+    /*[HideInInspector] public ModalDiceUI diceScript;                //Modal Dice UI window*/
     [HideInInspector] public ModalGUI modalGUIScropt;                 //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
     [HideInInspector] public WidgetTopUI widgetTopScript;             //Widget Top UI

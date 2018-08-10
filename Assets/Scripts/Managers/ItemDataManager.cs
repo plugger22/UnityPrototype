@@ -70,6 +70,73 @@ public class ItemDataManager : MonoBehaviour
         else { colourSide = colourRebel; }
     }
 
+
+    //
+    // - - - General - - -
+    //
+
+    /// <summary>
+    /// returns a colour formatted string for ItemData string message (Random roll). Shows red for a bad outcome and green for a good (to do this you need to use the isReversed setting depending on roll type)
+    /// </summary>
+    /// <param name="numNeeded"></param>
+    /// <param name="numRolled"></param>
+    /// <returns></returns>
+    public string GetRandomDetails(int numNeeded, int numRolled, bool isReversed)
+    {
+        StringBuilder builder = new StringBuilder();
+        //reverse colours in case of a success indicating a bad outcome, eg. gear is compromised (so shows SUCCESS but in red, not green)
+        string colourSuccess = colourGood;
+        string colourFail = colourBad;
+        if (isReversed == true)
+        {
+            colourSuccess = colourBad;
+            colourFail = colourGood;
+        }
+        builder.AppendFormat("Need less than {0}<b>{1}</b>{2}", colourNeutral, numNeeded, colourEnd);
+        //success or failure
+        if (numRolled < numNeeded)
+        {
+            builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourSuccess, numRolled, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>SUCCESS</b>{1}{2}{3}", colourSuccess, colourEnd, "\n", "\n");
+        }
+        else
+        {
+            builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourFail, numRolled, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>FAILED</b>{1}{2}{3}", colourFail, colourEnd, "\n", "\n");
+        }
+        builder.AppendFormat("A {0}Percentage die{1} (1d00) is used", colourNeutral, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns colour formatted string in style '[typeOfCheck] Check' with typeOfCheck being colour coded where Green indicates a success on the check is a good thing for the player
+    /// </summary>
+    /// <param name="typeOfCheck"></param>
+    /// <param name="isReversed"></param>
+    /// <returns></returns>
+    public string GetRandomTopText(string typeOfCheck, bool isReversed)
+    {
+        if (isReversed == false)
+        { return string.Format("{0}{1}{2} check", colourGood, typeOfCheck, colourEnd); }
+        else { return string.Format("{0}{1}{2} check", colourBad, typeOfCheck, colourEnd); }
+    }
+
+
+    /// <summary>
+    /// General Warning (could be anything)
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <param name="warning"></param>
+    /// <returns></returns>
+    public string GetGeneralWarningDetails(string reason, string warning)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>Alert!</b>{1}{2}{3}{4}{5}", colourNeutral, colourEnd, "\n", reason, "\n", "\n");
+        builder.AppendFormat("{0}{1}{2}", colourBad, warning, colourEnd);
+        return builder.ToString();
+    }
+
+
     //
     // - - - Player - - -
     //
@@ -106,7 +173,7 @@ public class ItemDataManager : MonoBehaviour
         if (actor == null)
         {
             //Player
-            builder.AppendFormat("{0}Player{1}, {2}, status now {3}<b>{4}</b>{5}{6}{7}", colourAlert, colourEnd, GameManager.instance.playerScript.PlayerName, 
+            builder.AppendFormat("{0}Player{1}, {2}, status now {3}<b>{4}</b>{5}{6}{7}", colourAlert, colourEnd, GameManager.instance.playerScript.PlayerName,
                 colourNeutral, GameManager.instance.playerScript.status, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}Player{1} {2}", colourAlert, colourEnd, reason);
         }
@@ -154,7 +221,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("Used {0}{1}{2} time{3}", colourNeutral, gear.statTimesUsed, colourEnd, gear.statTimesUsed != 1 ? "s" : "");
         return builder.ToString();
     }
-    
+
     /// <summary>
     /// Gear Compromised -> Saved or Compromised depending on renownUsed (saved if > 0)
     /// </summary>
@@ -273,8 +340,11 @@ public class ItemDataManager : MonoBehaviour
                 builder.AppendFormat("Sourced by {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
                 builder.AppendFormat("at {0}, a {1}{2}{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
             }
-            else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID);
-                builder.Append("Unknown"); }
+            else
+            {
+                Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID);
+                builder.Append("Unknown");
+            }
         }
         else
         {
@@ -395,53 +465,4 @@ public class ItemDataManager : MonoBehaviour
         return builder;
     }
 
-    //
-    // - - - General - - -
-    //
-
-    /// <summary>
-    /// returns a colour formatted string for ItemData string message (Random roll). Shows red for a bad outcome and green for a good (to do this you need to use the isReversed setting depending on roll type)
-    /// </summary>
-    /// <param name="numNeeded"></param>
-    /// <param name="numRolled"></param>
-    /// <returns></returns>
-    public string GetRandomDetails(int numNeeded, int numRolled, bool isReversed)
-    {
-        StringBuilder builder = new StringBuilder();
-        //reverse colours in case of a success indicating a bad outcome, eg. gear is compromised (so shows SUCCESS but in red, not green)
-        string colourSuccess = colourGood;
-        string colourFail = colourBad;
-        if (isReversed == true)
-        {
-            colourSuccess = colourBad;
-            colourFail = colourGood;
-        }
-        builder.AppendFormat("Need less than {0}<b>{1}</b>{2}", colourNeutral, numNeeded, colourEnd);
-
-            if (numRolled < numNeeded)
-            {
-                builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourSuccess, numRolled, colourEnd, "\n", "\n");
-                builder.AppendFormat("{0}<b>SUCCESS</b>{1}{2}{3}", colourSuccess, colourEnd, "\n", "\n");
-            }
-            else
-            {
-                builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourFail, numRolled, colourEnd, "\n", "\n");
-                builder.AppendFormat("{0}<b>FAILED</b>{1}{2}{3}", colourFail, colourEnd, "\n", "\n");
-            }
-        builder.AppendFormat("A {0}Percentage die{1} (1d00) is used", colourNeutral, colourEnd);
-        return builder.ToString();
-    }
-
-    /// <summary>
-    /// returns colour formatted string in style '[typeOfCheck] Check' with typeOfCheck being colour coded where Green indicates a success on the check is a good thing for the player
-    /// </summary>
-    /// <param name="typeOfCheck"></param>
-    /// <param name="isReversed"></param>
-    /// <returns></returns>
-    public string GetRandomTopText(string typeOfCheck, bool isReversed)
-    {
-        if (isReversed == false)
-        { return string.Format("{0}{1}{2} check", colourGood, typeOfCheck, colourEnd); }
-        else { return string.Format("{0}{1}{2} check", colourBad, typeOfCheck, colourEnd); }
-    }
 }
