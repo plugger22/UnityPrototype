@@ -355,15 +355,17 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Actor status changes, eg. Active -> Lie Low, Lie Low -> Active as a result of an Actor action
+    /// Actor / Player status changes, eg. Active -> Lie Low, Lie Low -> Active as a result of an Actor action
+    /// 'Reason' is a short text tag for ItemData, in format '[Actor] ... Lying Low'
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorStatus(string text, int actorID, GlobalSide side, bool isPublic = false)
+    public Message ActorStatus(string text, string reason, int actorID, GlobalSide side, bool isPublic = false)
     {
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID ({0})", actorID));
+        Debug.Assert(side != null, "Invalid side (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -375,9 +377,9 @@ public class MessageManager : MonoBehaviour
             message.data0 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            
             data.topText = "Status Change";
-            data.bottomText = text;
+            
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.Mail;
             data.side = message.side;
@@ -385,8 +387,9 @@ public class MessageManager : MonoBehaviour
             //data depends on whether an actor or player
             if (actorID == playerActorID)
             {
-                //player
+                data.itemText = "Player changes Status";
                 data.sprite = playerSprite;
+                data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, null);
             }
             else
             {
@@ -394,7 +397,9 @@ public class MessageManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
+                    data.itemText = string.Format("{0} changes Status", actor.arc.name);
                     data.sprite = actor.arc.sprite;
+                    data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, actor);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }

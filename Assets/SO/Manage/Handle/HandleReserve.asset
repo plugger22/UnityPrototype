@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Send actor to the reserve pool
   manage: {fileID: 11400000, guid: d6d39ff7a475f654b8a492055d712fc7, type: 2}
-  sprite: {fileID: 21300002, guid: a0fc465d6cf04254a2938578735e2383, type: 3}
+  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
   optionTitle: RESERVE
   tooltipMain: Send to the Reserve Pool where you may call on them again
   tooltipDetails: can be moved to the Reserves (various options)

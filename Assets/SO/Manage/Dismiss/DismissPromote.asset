@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Recommend for Promotion
   manage: {fileID: 11400000, guid: 26d41044020eece48a4f909569982bff, type: 2}
-  sprite: {fileID: 21300020, guid: a0fc465d6cf04254a2938578735e2383, type: 3}
+  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
   optionTitle: PROMOTE
   tooltipMain: It's good to have friends in high places
   tooltipDetails: will be Promoted (no longer available but will provide help in the

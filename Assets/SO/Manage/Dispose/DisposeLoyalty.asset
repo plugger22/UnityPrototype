@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor's loyalty is suspect
   manage: {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}
-  sprite: {fileID: 21300014, guid: a0fc465d6cf04254a2938578735e2383, type: 3}
+  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
   optionTitle: LOYALTY
   tooltipMain: Loyalty is everything. Once there is a question mark it lingers like
     a bad smell

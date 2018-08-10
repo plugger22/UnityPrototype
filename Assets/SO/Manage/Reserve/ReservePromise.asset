@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: You promise that the actor will return within a set period
   manage: {fileID: 11400000, guid: 5bb5a4cb6573bea4591ec48e31222031, type: 2}
-  sprite: {fileID: 21300000, guid: a0fc465d6cf04254a2938578735e2383, type: 3}
+  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
   optionTitle: PROMISE
   tooltipMain: You reassure them that it's only temporary
   tooltipDetails: will go willingly provided they are recalled within a reasonable

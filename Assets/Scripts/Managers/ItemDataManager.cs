@@ -89,6 +89,36 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    //
+    // - - - Actor - - -
+    //
+
+    /// <summary>
+    /// Actor / Player status change
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public string GetActorStatusDetails(string reason, Actor actor)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (actor == null)
+        {
+            //Player
+            builder.AppendFormat("{0}Player{1}, {2}, status now {3}<b>{4}</b>{5}{6}{7}", colourAlert, colourEnd, GameManager.instance.playerScript.PlayerName, 
+                colourNeutral, GameManager.instance.playerScript.status, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}Player{1} {2}", colourAlert, colourEnd, reason);
+        }
+        else
+        {
+            //Actor
+            builder.AppendFormat("{0}, {1}{2}{3}, status now {4}<b>{5}</b>{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, colourNeutral, actor.Status, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}, {1}{2}{3}, {4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, reason);
+        }
+        return builder.ToString();
+    }
+
     //
     // - - - Gear - - -
     //

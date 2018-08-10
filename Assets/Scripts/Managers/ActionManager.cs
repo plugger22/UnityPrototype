@@ -1077,7 +1077,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                GameManager.instance.messageScript.ActorStatus(text, "is Lying Low", actor.actorID, details.side);
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1133,7 +1133,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
             //message
             string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
-            GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, details.side);
+            GameManager.instance.messageScript.ActorStatus(text, "is Lying Low", GameManager.instance.playerScript.actorID, details.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1210,7 +1210,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                GameManager.instance.messageScript.ActorStatus(text, "has been Recalled", actor.actorID, details.side);
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1267,7 +1267,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
                 //message
                 string text = string.Format("{0} has emerged from hiding early. Status: {1}", playerName, GameManager.instance.playerScript.status);
-                GameManager.instance.messageScript.ActorStatus(text, GameManager.instance.playerScript.actorID, details.side);
+                GameManager.instance.messageScript.ActorStatus(text, "has been Recalled", GameManager.instance.playerScript.actorID, details.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1842,7 +1842,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1} has been Let Go (Reserve Pool)", actor.arc.name, actor.actorName);
-                GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                GameManager.instance.messageScript.ActorStatus(text, "has been Let Go", actor.actorID, details.side);
 
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
@@ -1953,7 +1953,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1} has been Fired (Reserve Pool)", actor.arc.name, actor.actorName);
-                GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                GameManager.instance.messageScript.ActorStatus(text, "has been Fired", actor.actorID, details.side);
 
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
@@ -2073,7 +2073,7 @@ public class ActionManager : MonoBehaviour
                     outcomeDetails.sprite = actor.arc.sprite;
                     //message
                     string text = string.Format("{0} {1} called for Active Duty (Reserve Pool)", actor.arc.name, actor.actorName);
-                    GameManager.instance.messageScript.ActorStatus(text, actor.actorID, details.side);
+                    GameManager.instance.messageScript.ActorStatus(text, "has been called for Active Duty", actor.actorID, details.side);
                 }
                 else { Debug.LogError("There are no vacancies on map for the actor to be recalled to Active Duty"); errorFlag = true; }
             }
@@ -2367,7 +2367,7 @@ public class ActionManager : MonoBehaviour
                 if (actor != null)
                 {
                     //add actor to reserve pool
-                    if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.ReservePool) == true)
+                    if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
                     {
                         //sprite of recruited actor
                         sprite = actor.arc.sprite;
@@ -2419,7 +2419,7 @@ public class ActionManager : MonoBehaviour
                         }
                         //message
                         string text = string.Format("{0} {1} moved to the Reserves ({2})", actor.arc.name, actor.actorName, msgText);
-                        GameManager.instance.messageScript.ActorStatus(text, actor.actorID, playerSide);
+                        GameManager.instance.messageScript.ActorStatus(text, "has been moved to the Reserves", actor.actorID, playerSide);
                         //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
                         ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
                         if (manageAction != null)
@@ -2509,6 +2509,7 @@ public class ActionManager : MonoBehaviour
         bool successFlag = true;
         string msgTextStatus = "Unknown";
         string msgTextMain = "Who Knows?";
+        string msgReason = "Unknown";
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -2546,6 +2547,7 @@ public class ActionManager : MonoBehaviour
                                     builderTop.AppendFormat("{0}{1} {2} shakes your hand and heads off to bigger things{3}", colourNormal, actor.arc.name,
                                         actor.actorName, colourEnd);
                                     msgTextStatus = "Promoted";
+                                    msgReason = "Promoted";
                                     msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName, 
                                         GameManager.instance.factionScript.GetCurrentFaction().name);
                                     break;
@@ -2553,12 +2555,14 @@ public class ActionManager : MonoBehaviour
                                     builderTop.AppendFormat("{0}{1} {2} scowls and curses before stomping off{3}",
                                         colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Incompetent";
+                                    msgReason = "dismissed for Incompetence";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 case "DismissUnsuited":
                                     builderTop.AppendFormat("{0}{1} {2} lets you know that they won't forget this{3}",
                                         colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Unsuited";
+                                    msgReason = "dismissed as Unsuited for role";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 default:
@@ -2574,7 +2578,7 @@ public class ActionManager : MonoBehaviour
                                 numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                             //message
-                            GameManager.instance.messageScript.ActorStatus(msgTextMain, actor.actorID, playerSide);
+                            GameManager.instance.messageScript.ActorStatus(msgTextMain, string.Format("has been ", msgReason), actor.actorID, playerSide);
                             //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
                             ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
                             if (manageAction != null)
@@ -2666,6 +2670,7 @@ public class ActionManager : MonoBehaviour
         bool successFlag = true;
         string msgTextStatus = "Unknown";
         string msgTextMain = "Who Knows?";
+        string msgReason = "Unknown";
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -2700,18 +2705,21 @@ public class ActionManager : MonoBehaviour
                                     builderTop.AppendFormat("{0}{1} {2} vehemently denies being disployal but nobody is listening{3}", colourNormal, actor.arc.name,
                                         actor.actorName, colourEnd);
                                     msgTextStatus = "Loyalty";
+                                    msgReason = "Disloyal";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 case "DisposeCorrupt":
                                     builderTop.AppendFormat("{0}{1} {2} protests their innocence but don't they all?{3}",
                                         colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Corrupt";
+                                    msgReason = "Corrupt";
                                     msgTextMain = string.Format("{0} {1} has been killed({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 case "DisposeHabit":
                                     builderTop.AppendFormat("{0}{1} {2} smiles and says that they will be waiting for you in hell{3}",
                                         colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgTextStatus = "Habit";
+                                    msgReason = "Bad Habit";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 default:
@@ -2727,7 +2735,7 @@ public class ActionManager : MonoBehaviour
                                 numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                             //message
-                            GameManager.instance.messageScript.ActorStatus(msgTextMain, actor.actorID, playerSide);
+                            GameManager.instance.messageScript.ActorStatus(msgTextMain, string.Format("has been disposed off ({0})", msgReason), actor.actorID, playerSide);
                             //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
                             ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
                             if (manageAction != null)
