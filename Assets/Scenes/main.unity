@@ -3849,12 +3849,12 @@ Prefab:
     - target: {fileID: 224952120437344228, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 330
+      value: 340
       objectReference: {fileID: 0}
     - target: {fileID: 224952120437344228, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -162.43
+      value: -154.93
       objectReference: {fileID: 0}
     - target: {fileID: 224952120437344228, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
@@ -6522,8 +6522,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 330, y: -116.875}
-  m_SizeDelta: {x: 240, y: 21.11}
+  m_AnchoredPosition: {x: 365, y: -109.375}
+  m_SizeDelta: {x: 250, y: 21.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &362411884
 MonoBehaviour:
@@ -6578,7 +6578,7 @@ MonoBehaviour:
   m_fontSizeMin: 14
   m_fontSizeMax: 16
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 513
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -6609,7 +6609,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -11.975578, z: 0, w: -19.674055}
+  m_margin: {x: 10, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 362411884}
     characterCount: 8
@@ -6620,11 +6620,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -8845,11 +8845,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 140
+    m_Left: 240
     m_Right: 0
-    m_Top: 30
+    m_Top: 0
     m_Bottom: 30
-  m_ChildAlignment: 4
+  m_ChildAlignment: 3
   m_Spacing: 15
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
@@ -20789,7 +20789,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 39.5, y: -133.7}
-  m_SizeDelta: {x: 150, y: 160}
+  m_SizeDelta: {x: 152, y: 160}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1094272325
 MonoBehaviour:
@@ -28139,8 +28139,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 330, y: -79.445}
-  m_SizeDelta: {x: 240, y: 23.75}
+  m_AnchoredPosition: {x: 365, y: -71.945}
+  m_SizeDelta: {x: 250, y: 23.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1531997086
 MonoBehaviour:
@@ -28195,7 +28195,7 @@ MonoBehaviour:
   m_fontSizeMin: 14
   m_fontSizeMax: 18
   m_fontStyle: 0
-  m_textAlignment: 1026
+  m_textAlignment: 1025
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -28226,7 +28226,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -21.3849, z: 0, w: 0}
+  m_margin: {x: 10, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1531997086}
     characterCount: 8
@@ -28237,11 +28237,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
