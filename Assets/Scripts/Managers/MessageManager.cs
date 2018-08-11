@@ -139,11 +139,12 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// General Info message
+    /// General Info message. 'itemText' is itemData.text, 'reason' is a self-contained sentence, 'warning' is a self-contained and is shown in Red if 'isBad' true, otherwise Green
+    /// 'isHighPriority' if true, Medium priority othewise. 'topText' is RHS short tag. Default playerSide and medium priority
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public Message GeneralInfo(string text)
+    public Message GeneralInfo(string text, string itemText, string topText, string reason, string explanation, bool isBad = true)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -155,9 +156,9 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Info Alert";
-            data.bottomText = text;
+            data.itemText = itemText;
+            data.topText = topText;
+            data.bottomText = GameManager.instance.itemDataScript.GetGeneralInfoDetails(reason, explanation, isBad);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.alertInformationSprite;
             data.tab = ItemTab.Mail;

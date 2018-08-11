@@ -123,6 +123,22 @@ public class ItemDataManager : MonoBehaviour
 
 
     /// <summary>
+    /// General Info (could be anything). 'explanation' shown in Red if 'isBad' true, otherwise in Green
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <param name="warning"></param>
+    /// <returns></returns>
+    public string GetGeneralInfoDetails(string reason, string explanation, bool isBad)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>Info Alert!</b>{1}{2}{3}{4}{5}", colourNeutral, colourEnd, "\n", reason, "\n", "\n");
+        if (isBad == true)
+        { builder.AppendFormat("{0}{1}{2}", colourBad, explanation, colourEnd); }
+        else { builder.AppendFormat("{0}{1}{2}", colourGood, explanation, colourEnd); }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// General Warning (could be anything)
     /// </summary>
     /// <param name="reason"></param>
