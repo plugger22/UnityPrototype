@@ -214,7 +214,7 @@ public class MessageManager : MonoBehaviour
 
     /// <summary>
     /// Random roll results (only ones that matter, don't spam). Auto player side. Format text as "Faction support Declined" with NO need, rolled, etc. 
-    /// Set 'isReversed' to true if you want item data to show a Success for failing roll, eg. in case of Gear Compromise check a success is failing the roll
+    /// Set 'isReversed' to true if success means a bad outcome, eg. in case of Gear Compromise check a success is failing the roll
     /// 'typeOfCheck' is InfoApp RHS header in format '... Check', eg. 'Compromise'. Keep short
     /// </summary>
     /// <param name="text"></param>

@@ -4139,7 +4139,7 @@ public class ActorManager : MonoBehaviour
     {
         string msgText, itemText, reason, warning;
         List<int> listOfActors = null;
-        int chance;
+        int chance, rnd;
         //
         // - - - Resistance - - -
         //
@@ -4160,17 +4160,23 @@ public class ActorManager : MonoBehaviour
                         if (actor.unhappyTimer == 1)
                         {
                             //unhappy in one turn warning
-                            msgText = "";
-                            itemText = "";
-                            reason = "";
-                            warning = "";
-                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "About to be Unhappy", reason, warning, false);
+                            msgText = string.Format("{0}, {1}, in Reserves, will be Unhappy in 1 turn", actor.actorName, actor.arc.name);
+                            itemText = string.Format("Reserve {0} about to become Unhappy", actor.arc.name);
+                            reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                            warning = string.Format("An {0}<b>UNHAPPY</b>{1} subordinate will, at some point, {2}express their displeasure{3}", colourNeutral, colourEnd, colourBad, colourEnd);
+                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy next turn", reason, warning, false);
                         }
                         //if timer now zero, gain condition "Unhappy"
                         if (actor.unhappyTimer == 0)
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                             actor.AddCondition(condition);
+                            //unhappy now warning
+                            msgText = string.Format("{0}, {1}, in Reserves, has become UNHAPPY", actor.actorName, actor.arc.name);
+                            itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
+                            reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                            warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
+                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy Now", reason, warning);
                         }
                     }
                     else
@@ -4183,11 +4189,27 @@ public class ActorManager : MonoBehaviour
                             //chance is 100% if actor was promised
                             if (actor.isPromised == true)
                             { chance = 100; }
-                            if (Random.Range(0, 100) < chance)
+                            rnd = Random.Range(0, 100);
+                            if ( rnd < chance)
                             {
                                 actor.datapoint1--;
-                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, 
-                                    actor.datapoint1, "\n"));
+                                Debug.LogFormat("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, 
+                                    actor.datapoint1, "\n");
+                                //lost motivation warning
+                                msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} lost Motivation", actor.arc.name);
+                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = string.Format("{0} {1}Motivation -1{2}", actor.actorName, colourBad, colourEnd);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Lost Motivation", reason, warning);
+                            }
+                            else
+                            {
+                                //unhappy  warning
+                                msgText = string.Format("{0}, {1}, in Reserves, is UNHAPPY", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
+                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy", reason, warning);
                             }
                         }
                         else
@@ -4197,10 +4219,20 @@ public class ActorManager : MonoBehaviour
                             //if actor has previously been reassured, double chance of action
                             if (actor.isReassured == true)
                             { chance *= 2; }
-                            if (Random.Range(0, 100) < chance)
+                            rnd = Random.Range(0, 100);
+                            if ( rnd < chance)
                             {
                                 Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {2}", actor.arc.name, actor.actorName, "\n"));
                                 TakeAction(actor);
+                            }
+                            else
+                            {
+                                //actor about to take action warning
+                                msgText = string.Format("{0}, {1}, in Reserves, is about to Act", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} us about to Act", actor.arc.name);
+                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = string.Format("{0} is about to {1}<b>TAKE DECISIVE ACTION</b>{2}", actor.actorName, colourBad, colourEnd);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "On the Edge", reason, warning);
                             }
                         }
                     }
@@ -4226,11 +4258,26 @@ public class ActorManager : MonoBehaviour
                     {
                         actor.unhappyTimer--;
                         Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                        if (actor.unhappyTimer == 1)
+                        {
+                            //unhappy in one turn warning
+                            msgText = string.Format("{0}, {1}, in Reserves, will be Unhappy in 1 turn", actor.actorName, actor.arc.name);
+                            itemText = string.Format("Reserve {0} about to become Unhappy", actor.arc.name);
+                            reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                            warning = string.Format("An {0}<b>UNHAPPY</b>{1} subordinate will, at some point, {2}express their displeasure{3}", colourNeutral, colourEnd, colourBad, colourEnd);
+                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy next turn", reason, warning, false);
+                        }
                         //if timer now zero, gain condition "Unhappy"
                         if (actor.unhappyTimer == 0)
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                             actor.AddCondition(condition);
+                            //unhappy now warning
+                            msgText = string.Format("{0}, {1}, in Reserves, has become UNHAPPY", actor.actorName, actor.arc.name);
+                            itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
+                            reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                            warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
+                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy Now", reason, warning);
                         }
                     }
                     else
@@ -4243,11 +4290,27 @@ public class ActorManager : MonoBehaviour
                             //chance is 100% if actor was promised
                             if (actor.isPromised == true)
                             { chance = 100; }
-                            if (Random.Range(0, 100) < chance)
+                            rnd = Random.Range(0, 100);
+                            if ( rnd < chance)
                             {
                                 actor.datapoint1--;
-                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name, 
-                                    actor.actorName, actor.datapoint1, chance, "\n"));
+                                Debug.LogFormat("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name, 
+                                    actor.actorName, actor.datapoint1, chance, "\n");
+                                //lost motivation warning
+                                msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} lost Motivation", actor.arc.name);
+                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = string.Format("{0} {1}Motivation -1{2}", actor.actorName, colourBad, colourEnd);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Lost Motivation", reason, warning);
+                            }
+                            else
+                            {
+                                //unhappy  warning
+                                msgText = string.Format("{0}, {1}, in Reserves, is UNHAPPY", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
+                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy", reason, warning);
                             }
                         }
                         else
@@ -4257,11 +4320,21 @@ public class ActorManager : MonoBehaviour
                             //if actor has previously been reassured, double chance of action
                             if (actor.isReassured == true)
                             { chance *= 2; }
-                            if (Random.Range(0, 100) < chance)
+                            rnd = Random.Range(0, 100);
+                            if ( rnd < chance)
                             {
                                 Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION, chance {2}{3}", actor.arc.name, actor.actorName, 
                                     chance, "\n"));
                                 TakeAction(actor);
+                            }
+                            else
+                            {
+                                //actor about to take action warning
+                                msgText = string.Format("{0}, {1}, in Reserves, is about to Act", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} us about to Act", actor.arc.name);
+                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = string.Format("{0} is about to {1}<b>TAKE DECISIVE ACTION</b>{2}", actor.actorName, colourBad, colourEnd);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "On the Edge", reason, warning);
                             }
                         }
                     }
