@@ -3753,7 +3753,14 @@ public class AIManager : MonoBehaviour
             {
                 //warning notification
                 msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
-                GameManager.instance.messageScript.GeneralWarning(msgText);
+                string itemText = string.Format("City Wide {0} policy in force", policyName);
+                string reason = string.Format("{0} policy, {1} turn{2} remaining{3}{4}", policyName, timerPolicy, timerPolicy != 1 ? "s" : "", "\n", "\n");
+                string warning = string.Format("District Crisis chance -{0} %", policyEffectCrisis);
+                //display warning as Red normally, Green if player is Authority
+                bool isBad = true;
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                { isBad = false; }
+                else { GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Policy In Force", reason, warning, false, isBad); }
                 Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerPolicy now {0}{1}", timerPolicy, "\n");
             }
         }

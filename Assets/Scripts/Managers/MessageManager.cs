@@ -174,12 +174,12 @@ public class MessageManager : MonoBehaviour
 
 
     /// <summary>
-    /// General Warning message. 'itemText' is itemData.text, 'reason' is a self-contained sentence, 'warning' is a self-contained  explaining what might happen if no action is taken (shown in red)
+    /// General Warning message. 'itemText' is itemData.text, 'reason' is a self-contained sentence, 'warning' is a self-contained (shown Red is 'isBad' true, otherwise Green)
     /// 'isHighPriority' if true, Medium priority othewise. 'topText' is RHS short tag. Default playerSide
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public Message GeneralWarning(string text, string itemText, string topText, string reason, string warning, bool isHighPriority = true)
+    public Message GeneralWarning(string text, string itemText, string topText, string reason, string warning, bool isHighPriority = true, bool isBad = true)
     {
         Debug.Assert(string.IsNullOrEmpty(itemText) == false, "Invalid itemText (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(reason) == false, "Invalid reason (Null or Empty");
@@ -197,7 +197,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = topText;
-            data.bottomText = GameManager.instance.itemDataScript.GetGeneralWarningDetails(reason, warning);
+            data.bottomText = GameManager.instance.itemDataScript.GetGeneralWarningDetails(reason, warning, isBad);
             if (isHighPriority == true)
             { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }

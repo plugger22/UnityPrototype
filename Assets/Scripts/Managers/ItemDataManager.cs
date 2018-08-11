@@ -144,11 +144,13 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="reason"></param>
     /// <param name="warning"></param>
     /// <returns></returns>
-    public string GetGeneralWarningDetails(string reason, string warning)
+    public string GetGeneralWarningDetails(string reason, string warning, bool isBad)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>Alert!</b>{1}{2}{3}{4}{5}", colourNeutral, colourEnd, "\n", reason, "\n", "\n");
-        builder.AppendFormat("{0}{1}{2}", colourBad, warning, colourEnd);
+        if (isBad == true)
+        { builder.AppendFormat("{0}{1}{2}", colourBad, warning, colourEnd); }
+        else { builder.AppendFormat("{0}{1}{2}", colourGood, warning, colourEnd); }
         return builder.ToString();
     }
 

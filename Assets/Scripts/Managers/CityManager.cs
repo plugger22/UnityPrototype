@@ -310,6 +310,8 @@ public class CityManager : MonoBehaviour
         bool isAtLimit = false;
         bool isMaxLoyalty = false;
         bool isMinLoyalty = false;
+        string msgText, itemText, reason, warning;
+        bool isBad;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //check if loyalty at limit
         if (_cityLoyalty == 0) { isAtLimit = true; isMinLoyalty = true; }
@@ -330,8 +332,14 @@ public class CityManager : MonoBehaviour
                     //set timer
                     loyaltyMinTimer = loyaltyCountdownTimer;
                     //message
-                    string msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
-                    GameManager.instance.messageScript.GeneralWarning(msgText);
+                    msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
+                    itemText = string.Format("{0} Loyalty at ZERO", city.name);
+                    reason = string.Format("{0} Loyalty has Flat Lined", city.name);
+                    warning = string.Format("Resistance wins in {0} turn{1}", loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
+                    //good for Resistance, bad for Authority player
+                    isBad = false;
+                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }
+                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "City Loyalty Crisis", reason, warning, true, isBad);
                 }
                 else
                 {
