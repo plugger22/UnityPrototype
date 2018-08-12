@@ -3763,7 +3763,8 @@ public class ActorManager : MonoBehaviour
                 isResolved = true;
                 //message
                 string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
-                GameManager.instance.messageScript.ActorBlackmail(msgText, actor);
+                string reason = string.Format("{0} has regained MAXIMUM Motivation", actor.arc.name);
+                GameManager.instance.messageScript.ActorBlackmail(msgText, actor, -1, true, reason);
             }
             else
             { TraitLogMessage(actor, "to avoid being bought-off"); }
@@ -3801,12 +3802,12 @@ public class ActorManager : MonoBehaviour
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
                                 if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
                                 builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);
-                                //temp message
+                                /*//temp message
                                 if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                                 {
                                     string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
                                     GameManager.instance.messageScript.ActorBlackmail(textSecret, actor, secret.secretID);
-                                }
+                                }*/
                             }
                         }
                         else { Debug.LogWarning("Invalid player node (Null)"); }
@@ -3826,9 +3827,9 @@ public class ActorManager : MonoBehaviour
                 string msgText = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
                     actor.blackmailTimer != 1 ? "s" : "");
                 string itemText = string.Format("{0} is Blackmailing you", actor.arc.name);
-                string reason = string.Format("This is a result of a conflict between you");
+                string reason = string.Format("This is a result of a conflict between you and {0}, {1}", actor.actorName, actor.arc.name);
                 string warning = string.Format("{0} will reveal your Secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer, actor.blackmailTimer != 1 ? "s" : "");
-                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Blackmail", warning, reason);
+                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Blackmail", reason, warning);
             }
         }
         return text;

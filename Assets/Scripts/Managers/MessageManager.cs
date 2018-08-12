@@ -515,12 +515,13 @@ public class MessageManager : MonoBehaviour
 
     /// <summary>
     /// Actor blackmail outcome -> either drops threat (motivation max) or carries out reveal of a player secret. SecretID only if reveal, ignore otherwise
+    /// 'isThreatDropped' true if no longer blackmailing and 'reason' is why in format '[The threat has been dropped because]...'
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     ///<param name="secretID"></param>
     /// <returns></returns>
-    public Message ActorBlackmail(string text, Actor actor, int secretID = -1)
+    public Message ActorBlackmail(string text, Actor actor, int secretID = -1, bool isThreatDropped = false, string reason = null)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -535,10 +536,10 @@ public class MessageManager : MonoBehaviour
             message.data1 = secretID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Blackmail";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.itemText = string.Format("{0} Blackmail threat resolved", actor.arc.name);
+            data.topText = "Blackmail Resolved";
+            data.bottomText = GameManager.instance.itemDataScript.GetActorBlackmailDetails(actor, secretID, isThreatDropped, reason);
+            data.priority = ItemPriority.Medium;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;
             data.side = message.side;

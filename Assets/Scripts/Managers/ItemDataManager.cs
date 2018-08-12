@@ -219,6 +219,41 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Actor resolves blackmail -> either carries out threat or drops threat (isThreatDropped 'true' and 'reason' why) due to max. motivation
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="secretID"></param>
+    /// <param name="isThreatDropped"></param>
+    /// <returns></returns>
+    public string GetActorBlackmailDetails(Actor actor, int secretID, bool isThreatDropped, string reason)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (isThreatDropped == true)
+        {
+            //blackmail threat dropped
+            builder.AppendFormat("{0}, {1}{2}{3} has{4}{5}Dropped their Threat of Blackmail{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
+            if (string.IsNullOrEmpty(reason) == false)
+            { builder.AppendFormat("The threat has been dropped because{0}{1}{2}{3}", "\n", colourNeutral, reason, colourEnd); }
+        }
+        else
+        {
+            //blackmail threat carried out -> Secret Revealed
+            if (secretID > -1)
+            {
+                Secret secret = GameManager.instance.dataScript.GetSecret(secretID);
+                if (secret != null)
+                {
+                    builder.AppendFormat("{0}, {1}{2}{3}{4}{5}has carried out their threat{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd, "\n", "\n");
+                    builder.AppendFormat("<b>Your Secret is Revealed</b>{0}", colourNeutral, colourEnd, "\n");
+                    GetSecretEffects(builder, secret);
+                }
+                else { Debug.LogWarningFormat("Invalid secret (Null) for secretID {0}", secretID); }
+            }
+        }
+        return builder.ToString();
+    }
+
     //
     // - - - Gear - - -
     //
@@ -422,6 +457,7 @@ public class ItemDataManager : MonoBehaviour
         if (isGained == true)
         {
             //secret gained
+            builder.AppendFormat("<b>Effects if Secret revealed</b>{0}", "\n");
             GetSecretEffects(builder, secret);
             builder.AppendFormat("{0}{1}{2}<b>Nobody</b>{3} currently knows this secret", "\n", "\n", colourNeutral, colourEnd);
         }
@@ -448,6 +484,7 @@ public class ItemDataManager : MonoBehaviour
         if (isGained == true)
         {
             //secret gained
+            builder.AppendFormat("<b>Effects if Secret revealed</b>{0}", "\n");
             GetSecretEffects(builder, secret);
             builder.AppendFormat("{0}{1}Unless {2}<b>provoked</b>{3}, {4} will keep your secret", "\n", "\n", colourNeutral, colourEnd, actor.actorName);
         }
@@ -460,7 +497,7 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod to add Secret effects to builder string for GetPlayerSecretDetails and GetActorSecretDetails
+    /// subMethod to add Secret effects to builder string (colour Formatted) for GetPlayerSecretDetails and GetActorSecretDetails
     /// NOTE: secret checked for null by calling method
     /// </summary>
     /// <param name="builder"></param>
@@ -468,7 +505,6 @@ public class ItemDataManager : MonoBehaviour
     /// <returns></returns>
     private StringBuilder GetSecretEffects(StringBuilder builder, Secret secret)
     {
-        builder.AppendFormat("<b>Effects if Secret revealed</b>");
         List<Effect> listOfEffects = secret.GetListOfEffects();
         if (listOfEffects != null)
         {
