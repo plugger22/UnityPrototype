@@ -29,7 +29,7 @@ public class SecretManager : MonoBehaviour
     //fast access
     private Condition conditionBlackmail;
 
-    //colours
+    /*//colours
     string colourDefault;
     string colourNormal;
     string colourAlert;
@@ -37,7 +37,7 @@ public class SecretManager : MonoBehaviour
     string colourBad;
     string colourNeutral;
     string colourGood;
-    string colourEnd;
+    string colourEnd;*/
 
     /// <summary>
     /// Initialise Secrets
@@ -154,11 +154,11 @@ public class SecretManager : MonoBehaviour
         //
         // - - - Event listeners
         //
-        SetColours();
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "SecretManager");
+        /*SetColours();
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "SecretManager");*/
     }
 
-    /// <summary>
+    /*/// <summary>
     /// event handler
     /// </summary>
     /// <param name="eventType"></param>
@@ -176,9 +176,9 @@ public class SecretManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }
+    }*/
 
-    /// <summary>
+    /*/// <summary>
     /// Set colour palette for tooltip
     /// </summary>
     public void SetColours()
@@ -191,7 +191,7 @@ public class SecretManager : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
-    }
+    }*/
 
 
 

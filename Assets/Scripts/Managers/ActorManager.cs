@@ -3567,9 +3567,9 @@ public class ActorManager : MonoBehaviour
                     //warning message
                     string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
                     string itemText = "Your Reputation is poor. Subordinates may resign";
-                    string reason = string.Format("You are{0}{1}<b>{2}</b>{3}{4}{5}", "\n", colourBad, builder.ToString(), colourEnd, "\n", "\n");
-                    string warning = string.Format("There is a chance that your Subordinates may resign unless you {0}<b>Improve your Reputation</b>(1)", colourNeutral, colourEnd);
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unrest", reason, warning);
+                    string reason = string.Format("You are {0}<b>{1}</b>{2}{3}{4}", colourBad, builder.ToString(), colourEnd, "\n", "\n");
+                    string warning = string.Format("Your Subordinates may resign unless you {0}<b>Improve your Reputation</b>{1}", colourNeutral, colourEnd);
+                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
                 }
                 //
                 // - - - loop Active actors - - -
@@ -3655,9 +3655,9 @@ public class ActorManager : MonoBehaviour
                     //warning message
                     msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
                     itemText = "Your Reputation is poor. Subordinates may resign";
-                    reason = string.Format("You are{0}{1}<b>{2}</b>{3}{4}{5}", "\n", colourBad, builder.ToString(), colourEnd, "\n", "\n");
-                    warning = string.Format("There is a chance that your Subordinates may resign unless you {0}<b>Improve your Reputation</b>(1)", colourNeutral, colourEnd);
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unrest", reason, warning);
+                    reason = string.Format("You are {0}<b>{1}</b>{2}{3}{4}", colourBad, builder.ToString(), colourEnd, "\n", "\n");
+                    warning = string.Format("Your Subordinates may resign unless you {0}<b>Improve your Reputation</b>{1}", colourNeutral, colourEnd);
+                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
                 }
                 //loop actors
                 for (int i = 0; i < arrayOfActors.Length; i++)

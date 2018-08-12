@@ -14,7 +14,7 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   description: 
   actorName: Butterbean
-  sprite: {fileID: 21300000, guid: c93a1dbc0955b8648b0505eb1d5e4a38, type: 3}
+  sprite: {fileID: 21300000, guid: 7bbf2ee2c617a774f898a6889352d063, type: 3}
   nodeAction: {fileID: 11400000, guid: bf622e4d53db3d340998f7259104ff06, type: 2}
   preferredTeam: {fileID: 0}
   listPrefPrimary:

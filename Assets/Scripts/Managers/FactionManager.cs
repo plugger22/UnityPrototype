@@ -238,23 +238,28 @@ public class FactionManager : MonoBehaviour
     /// </summary>
     public void CheckFactionFirePlayer()
     {
+        string msgText, itemText, reason, warning;
         //get approval
         int approval = -1;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        Faction playerFaction = null;
         switch(side.level)
         {
             case 1:
                 //Authority
                 approval = _approvalAuthority;
+                playerFaction = factionAuthority;
                 break;
             case 2:
                 //Resistance
                 approval = _approvalResistance;
+                playerFaction = factionResistance;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid side \"{0}\"", side);
                 break;
         }
+        Debug.Assert(playerFaction != null, "Invalid playerFaction (Null)");
         //only check once per turn
         if (approval == 0 && isZeroTimerThisTurn == false)
         {
@@ -264,8 +269,11 @@ public class FactionManager : MonoBehaviour
                 //set timer
                 approvalZeroTimer = factionFirePlayerTimer;
                 //message
-                string msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                GameManager.instance.messageScript.GeneralWarning(msgText);
+                msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
+                itemText = string.Format("{0} faction approval at ZERO", playerFaction.name);
+                reason = string.Format("{0} faction have lost faith in you", playerFaction.name);
+                warning = string.Format("You will be FIRED in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
+                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Faction Approval", reason, warning);
             }
             else
             {
@@ -274,8 +282,18 @@ public class FactionManager : MonoBehaviour
                 //fire player at zero
                 if (approvalZeroTimer == 0)
                 {
+                    //you lost, opposite side won
                     GameManager.instance.win = WinState.Authority;
-                    GameManager.instance.messageScript.GeneralWarning("Faction approval Zero. Player Fired. Authority wins");
+                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                    {
+                        //Resistance side wins
+                        GameManager.instance.win = WinState.Resistance;
+                    }
+                    msgText = string.Format("{0} faction approval Zero. Player Fired. Authority wins", playerFaction.name);
+                    itemText = string.Format("{0} faction has LOST PATIENCE", playerFaction.name);
+                    reason = string.Format("{0} faction approval at ZERO for an extended period", playerFaction.name);
+                    warning = "You've been FIRED, game over";
+                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "You're FIRED", reason, warning);
                     //Player fired -> outcome
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                     outcomeDetails.side = side;
@@ -288,8 +306,11 @@ public class FactionManager : MonoBehaviour
                 else
                 {
                     //message
-                    string msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                    GameManager.instance.messageScript.GeneralWarning(msgText);
+                    msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
+                    itemText = string.Format("{0} faction about to FIRE you", playerFaction.name);
+                    reason = string.Format("{0} faction are displeased with your performance", playerFaction.name);
+                    warning = string.Format("You will be FIRED in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
+                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Faction Unhappy", reason, warning);
                 }
             }
         }

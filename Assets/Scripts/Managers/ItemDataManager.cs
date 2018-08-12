@@ -11,15 +11,15 @@ public class ItemDataManager : MonoBehaviour
 {
 
 
-    private string colourRebel;
-    private string colourAuthority;
+    //private string colourRebel;
+    //private string colourAuthority;
     private string colourNeutral;
-    private string colourNormal;
+    //private string colourNormal;
     private string colourGood;
     private string colourBad;
-    private string colourGrey;
+    //private string colourGrey;
     private string colourAlert;
-    private string colourSide;
+    //private string colourSide;
     private string colourEnd;
 
     public void Initialise()
@@ -57,17 +57,17 @@ public class ItemDataManager : MonoBehaviour
     public void SetColours()
     {
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        //colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        //colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
-        else { colourSide = colourRebel; }
+        else { colourSide = colourRebel; }*/
     }
 
 
