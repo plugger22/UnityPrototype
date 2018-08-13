@@ -266,7 +266,7 @@ public class ItemDataManager : MonoBehaviour
         if (conflictID > -1)
         {
             //CONFLICT
-            builder.AppendFormat("{0}, {1}{2}{3}has a{4}Relationship Confict with you{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
+            builder.AppendFormat("{0}, {1}{2}{3} has a{4}Relationship Conflict with you{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
             ActorConflict conflict = GameManager.instance.dataScript.GetActorConflict(conflictID);
             if (conflict != null)
             {  builder.AppendFormat("{0} threatens to{1}{2}{3}{4}", actor.actorName, "\n", colourBad, conflict.threatText, colourEnd); }
@@ -397,7 +397,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}{1}{2} gear{3}", colourNeutral, gear.name, colourEnd, "\n");
-        builder.AppendFormat("{0}Can be acquired{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}Can be acquired{1}{2}", colourGood, colourEnd, "\n");
         builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("Asking for your gear back {0}may{1} upset {2}", colourBad, colourEnd, actor.actorName);
         return builder.ToString();

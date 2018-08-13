@@ -104,7 +104,7 @@ namespace packageAPI
         public GlobalSide side;                                              //used to determine colouring of good/bad effects
         public int ongoingID;                                                //used only if there are going to be ongoing effects, ignore otherwise
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
-        public string textOrigin;                                            //name of thing that caused the effect, eg. gear name
+        public string originText;                                            //name of thing that caused the effect, eg. gear name
 
 
         public EffectDataInput()

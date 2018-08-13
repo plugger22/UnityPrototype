@@ -853,7 +853,7 @@ public class EffectManager : MonoBehaviour
                     if (node != null)
                     {
                         //it's OK to pass a null actor provided it's a player condition
-                        EffectDataResolve resolve = ResolveConditionData(effect, node, actor);
+                        EffectDataResolve resolve = ResolveConditionData(effect, node, dataInput, actor);
                         if (resolve.isError == true)
                         { effectReturn.errorFlag = true; }
                         else
@@ -1100,13 +1100,13 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Add":
-                                    GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.textOrigin);
+                                    GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.originText);
                                     effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
                                         GameManager.instance.factionScript.factionAuthority.name, colourEnd);
                                     effectReturn.bottomText = string.Format("{0}Faction Approval +{1}{2}", colourGood, effect.value, colourEnd);
                                     break;
                                 case "Subtract":
-                                    GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.textOrigin);
+                                    GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.originText);
                                     effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
                                         GameManager.instance.factionScript.factionAuthority.name, colourEnd);
                                     effectReturn.bottomText = string.Format("{0}Faction Approval -{1}{2}", colourBad, effect.value, colourEnd);
@@ -1241,12 +1241,12 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
                                         GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
-                                            dataInput.textOrigin), node.nodeID, GameManager.instance.playerScript.actorID, delay);
+                                            dataInput.originText), node.nodeID, GameManager.instance.playerScript.actorID, delay);
                                         //AI Immediate message
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
                                             GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
-                                                dataInput.textOrigin), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1);
+                                                dataInput.originText), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1);
                                         }
                                     }
                                     break;
@@ -1313,12 +1313,12 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
                                         GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
-                                            dataInput.textOrigin, actor.arc.name), node.nodeID, actor.actorID, delay);
+                                            dataInput.originText, actor.arc.name), node.nodeID, actor.actorID, delay);
                                         //AI Immediate message
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
                                             GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
-                                                dataInput.textOrigin, actor.arc.name), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
+                                                dataInput.originText, actor.arc.name), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
                                         }
                                         //Coward trait -> gets Stressed everytime they lose invisibility
                                         if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)
@@ -1328,7 +1328,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 if (actor.CheckConditionPresent(conditionStressed) == false)
                                                 {
-                                                    actor.AddCondition(conditionStressed);
+                                                    actor.AddCondition(conditionStressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
                                                     GameManager.instance.actorScript.TraitLogMessage(actor, " and becomes STRESSED after losing invisibility");
                                                     StringBuilder builder = new StringBuilder();
                                                     builder.Append(effectReturn.bottomText);
@@ -2306,7 +2306,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private EffectDataResolve ResolveConditionData(Effect effect, Node node, Actor actor = null)
+    private EffectDataResolve ResolveConditionData(Effect effect, Node node, EffectDataInput dataInput, Actor actor = null)
     {
         //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
         string colourEffect = colourDefault;
@@ -2381,7 +2381,7 @@ public class EffectManager : MonoBehaviour
                                 //only add condition if NOT already present
                                 if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
                                 {
-                                    GameManager.instance.playerScript.AddCondition(condition);
+                                    GameManager.instance.playerScript.AddCondition(condition, string.Format("Due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.name, colourEnd);
                                 }
                                 break;
@@ -2389,7 +2389,7 @@ public class EffectManager : MonoBehaviour
                                 //only remove  condition if present
                                 if (GameManager.instance.playerScript.CheckConditionPresent(condition) == true)
                                 {
-                                    GameManager.instance.playerScript.RemoveCondition(condition);
+                                    GameManager.instance.playerScript.RemoveCondition(condition, string.Format("Due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.name, colourEnd);
                                 }
                                 break;
@@ -2410,7 +2410,7 @@ public class EffectManager : MonoBehaviour
                                     //only add condition if NOT already present
                                     if (actor.CheckConditionPresent(condition) == false)
                                     {
-                                        actor.AddCondition(condition);
+                                        actor.AddCondition(condition, string.Format("Due to {0}", dataInput.originText));
                                         effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.name, colourEnd);
                                     }
                                     break;
@@ -2418,7 +2418,7 @@ public class EffectManager : MonoBehaviour
                                     //only remove  condition if present
                                     if (actor.CheckConditionPresent(condition) == true)
                                     {
-                                        actor.RemoveCondition(condition);
+                                        actor.RemoveCondition(condition, string.Format("Due to {0}", dataInput.originText));
                                         effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.name, colourEnd);
                                     }
                                     break;
@@ -2474,7 +2474,7 @@ public class EffectManager : MonoBehaviour
                                         conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
                                         if (conditionRandom != null)
                                         {
-                                            GameManager.instance.playerScript.AddCondition(conditionRandom);
+                                            GameManager.instance.playerScript.AddCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
                                         }
                                         else
@@ -2486,7 +2486,7 @@ public class EffectManager : MonoBehaviour
                                         if (conditionRandom != null)
                                         {
                                             //remove condition
-                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom);
+                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
                                         }
                                         else
@@ -2559,7 +2559,7 @@ public class EffectManager : MonoBehaviour
                                             conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
                                             if (conditionRandom != null)
                                             {
-                                                actor.AddCondition(conditionRandom);
+                                                actor.AddCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
                                                 effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
                                             }
                                             else
@@ -2571,7 +2571,7 @@ public class EffectManager : MonoBehaviour
                                             if (conditionRandom != null)
                                             {
                                                 //remove condition
-                                                actor.RemoveCondition(conditionRandom);
+                                                actor.RemoveCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
                                                 effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
                                             }
                                             else
@@ -2870,7 +2870,7 @@ public class EffectManager : MonoBehaviour
                         case "Single":
                             //once off effect -> Note: timer is 2 because it will be immediately knocked down to 1 at the end of this turn
                             actionAdjustment.timer = 2;
-                            actionAdjustment.descriptor = dataInput.textOrigin;
+                            actionAdjustment.descriptor = dataInput.originText;
                             switch (effect.operand.name)
                             {
                                 case "Add":
@@ -2893,7 +2893,7 @@ public class EffectManager : MonoBehaviour
                         case "Ongoing":
                             //NOTE: Ongoing effects are handled differently here than a standard ongoing effect (there is also an extra +1 due to decrement at end of turn)
                             actionAdjustment.timer = GameManager.instance.effectScript.ongoingEffectTimer + 1;
-                            actionAdjustment.descriptor = dataInput.textOrigin;
+                            actionAdjustment.descriptor = dataInput.originText;
                             switch (effect.operand.name)
                             {
                                 case "Add":

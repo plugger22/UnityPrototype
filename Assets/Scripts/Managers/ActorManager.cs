@@ -2845,7 +2845,7 @@ public class ActorManager : MonoBehaviour
                                 if (listOfEffects.Count > 0)
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
-                                    dataInput.textOrigin = "Recruit Actor";
+                                    dataInput.originText = "Recruit Actor";
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
@@ -3154,7 +3154,7 @@ public class ActorManager : MonoBehaviour
                                 //data packages
                                 effectReturn = new EffectDataReturn();
                                 EffectDataInput effectInput = new EffectDataInput();
-                                effectInput.textOrigin = "Relationship Conflict";
+                                effectInput.originText = "Relationship Conflict";
 
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1})", actor.arc.name, threatMsg);
@@ -3389,7 +3389,7 @@ public class ActorManager : MonoBehaviour
         if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
         {
             //add condition
-            GameManager.instance.playerScript.AddCondition(condition, "Debug ability");
+            GameManager.instance.playerScript.AddCondition(condition, "Debug action");
             text = string.Format("Condition {0} added to Player", condition.name);
         }
         else { text = string.Format("Player already has Condition {0}", condition.name); }
@@ -3578,7 +3578,7 @@ public class ActorManager : MonoBehaviour
                     //warning message
                     string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
                     string itemText = "Your Reputation is poor. Subordinates may resign";
-                    string reason = string.Format("You are {0}<b>{1}</b>{2}{3}{4}", colourBad, builder.ToString(), colourEnd, "\n", "\n");
+                    string reason = string.Format("You are {0}<b>{1}</b>{2}{3}", colourBad, builder.ToString(), colourEnd, "\n");
                     string warning = string.Format("Your Subordinates may resign unless you {0}{1}<b>Improve your Reputation</b>{2}", "\n", colourNeutral, colourEnd);
                     GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
                 }
@@ -3770,7 +3770,7 @@ public class ActorManager : MonoBehaviour
             if (actor.CheckTraitEffect(actorAppeaseNone) == false)
             {
                 //Motivation at max value, Blackmailer condition cancelled
-                actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has {1} trait", actor.arc.name, actor.GetTrait().tag));
+                actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has Maximum Motivation", actor.arc.name));
                 isResolved = true;
                 //message
                 string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
@@ -3803,7 +3803,7 @@ public class ActorManager : MonoBehaviour
                         //data packages
                         EffectDataReturn effectReturn = new EffectDataReturn();
                         EffectDataInput effectInput = new EffectDataInput();
-                        effectInput.textOrigin = "Reveal Secret";
+                        effectInput.originText = "Reveal Secret";
                         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                         if (node != null)
                         {
@@ -3825,8 +3825,8 @@ public class ActorManager : MonoBehaviour
                         //return builder output (all effects colour formatted, two lines each and a double space betweeen
                         text = builder.ToString();
                     }
-                    //Motivation at max value, Blackmailer condition cancelled
-                    actor.RemoveCondition(conditionBlackmailer, string.Format("{0} regains Maximum Motivation", actor.arc.name));
+                    //attempt executed, Blackmailer condition cancelled
+                    actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has carried out their Threat", actor.arc.name));
                     //remove secret from all actors and player
                     GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID);
                 }
@@ -3839,7 +3839,7 @@ public class ActorManager : MonoBehaviour
                     actor.blackmailTimer != 1 ? "s" : "");
                 string itemText = string.Format("{0} is Blackmailing you", actor.arc.name);
                 string reason = string.Format("This is a result of a conflict between you and {0}, {1}", actor.actorName, actor.arc.name);
-                string warning = string.Format("{0} will reveal your Secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer, actor.blackmailTimer != 1 ? "s" : "");
+                string warning = string.Format("<b>{0} will reveal your Secret in {1} turn{2}</b>", actor.arc.name, actor.blackmailTimer, actor.blackmailTimer != 1 ? "s" : "");
                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Blackmail", reason, warning);
             }
         }

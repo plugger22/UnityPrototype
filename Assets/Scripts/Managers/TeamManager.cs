@@ -1096,7 +1096,7 @@ public class TeamManager : MonoBehaviour
                                 if (listOfEffects.Count > 0)
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
-                                    dataInput.textOrigin = "Neutralise Team";
+                                    dataInput.originText = "Neutralise Team";
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
@@ -1165,7 +1165,7 @@ public class TeamManager : MonoBehaviour
                 if (listOfEffects != null)
                 {
                     EffectDataInput dataInput = new EffectDataInput();
-                    dataInput.textOrigin = team.arc.name;
+                    dataInput.originText = team.arc.name;
                     foreach(Effect effect in listOfEffects)
                     {
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);

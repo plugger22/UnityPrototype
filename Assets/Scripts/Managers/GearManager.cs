@@ -1106,7 +1106,7 @@ public class GearManager : MonoBehaviour
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
                                 Action action = actor.arc.nodeAction;
                                 EffectDataInput dataInput = new EffectDataInput();
-                                dataInput.textOrigin = "Gear";
+                                dataInput.originText = "Gear";
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)
                                 {
