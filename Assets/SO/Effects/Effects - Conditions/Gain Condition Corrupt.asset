@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Gain Condition Corrupt
   m_EditorClassIdentifier: 
   effectID: 3
-  description: Gains CORRUPT condition
+  description: Gain CORRUPT condition
   textTag: Actor is corrupt
   listOfCriteria: []
   apply: {fileID: 11400000, guid: a0ec099052c4e824f80755099258ca2f, type: 2}

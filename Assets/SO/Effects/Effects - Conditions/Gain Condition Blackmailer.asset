@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Gain Condition Blackmailer
   m_EditorClassIdentifier: 
   effectID: 6
-  description: Gains BLACKMAILER condition
+  description: Gain BLACKMAILER condition
   textTag: Actor is a Star performer
   listOfCriteria: []
   apply: {fileID: 11400000, guid: a0ec099052c4e824f80755099258ca2f, type: 2}

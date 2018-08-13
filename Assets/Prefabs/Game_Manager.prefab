@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d584344e0f087ea4eb1626b1bb7fdf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretLearnBaseChance: 4
+  secretLearnBaseChance: 97
   secretBlackmailTimer: 4
   secretMaxNum: 4
   secretTypePlayer: {fileID: 0}
@@ -983,7 +983,7 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 9347
   isPerformanceLog: 1
   win: 0
 --- !u!114 &114762690547149900

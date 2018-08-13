@@ -245,11 +245,39 @@ public class ItemDataManager : MonoBehaviour
                 if (secret != null)
                 {
                     builder.AppendFormat("{0}, {1}{2}{3}{4}{5}has carried out their threat{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd, "\n", "\n");
-                    builder.AppendFormat("<b>Your Secret is Revealed</b>{0}", colourNeutral, colourEnd, "\n");
+                    builder.Append("<b>Your Secret is Revealed</b>");
                     GetSecretEffects(builder, secret);
                 }
                 else { Debug.LogWarningFormat("Invalid secret (Null) for secretID {0}", secretID); }
             }
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Actor confict with Player
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public string GetActorConflictDetails(Actor actor, int conflictID, string reasonNoConflict)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (conflictID > -1)
+        {
+            //CONFLICT
+            builder.AppendFormat("{0}, {1}{2}{3}has a{4}Relationship Confict with you{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
+            ActorConflict conflict = GameManager.instance.dataScript.GetActorConflict(conflictID);
+            if (conflict != null)
+            {  builder.AppendFormat("{0} threatens to{1}{2}{3}{4}", actor.actorName, "\n", colourBad, conflict.threatText, colourEnd); }
+            else { Debug.LogWarningFormat("Invalid actorConflict (Null) for conflictID {0}", conflictID); }
+        }
+        else
+        {
+            //Conflict didn't happen
+            builder.AppendFormat("{0}, {1}{2}{3}{4}{5}Chose not to start a Conflict{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
+            if (string.IsNullOrEmpty(reasonNoConflict) == false)
+            { builder.AppendFormat("because{0}{1}{2}{3}", "\n", colourNeutral, reasonNoConflict, colourEnd); }
         }
         return builder.ToString();
     }
@@ -457,7 +485,7 @@ public class ItemDataManager : MonoBehaviour
         if (isGained == true)
         {
             //secret gained
-            builder.AppendFormat("<b>Effects if Secret revealed</b>{0}", "\n");
+            builder.Append("<b>Effects if Secret revealed</b>");
             GetSecretEffects(builder, secret);
             builder.AppendFormat("{0}{1}{2}<b>Nobody</b>{3} currently knows this secret", "\n", "\n", colourNeutral, colourEnd);
         }
@@ -484,7 +512,7 @@ public class ItemDataManager : MonoBehaviour
         if (isGained == true)
         {
             //secret gained
-            builder.AppendFormat("<b>Effects if Secret revealed</b>{0}", "\n");
+            builder.Append("<b>Effects if Secret revealed</b>");
             GetSecretEffects(builder, secret);
             builder.AppendFormat("{0}{1}Unless {2}<b>provoked</b>{3}, {4} will keep your secret", "\n", "\n", colourNeutral, colourEnd, actor.actorName);
         }

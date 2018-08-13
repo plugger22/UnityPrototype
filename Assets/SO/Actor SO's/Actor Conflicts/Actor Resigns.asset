@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Actor Resigns
   m_EditorClassIdentifier: 
   description: Actor storms off in a huff
+  threatText: Resign in disgust
   outcomeText: resigns in disgust
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
@@ -19,5 +20,5 @@ MonoBehaviour:
   listOfCriteria: []
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   effect: {fileID: 11400000, guid: ecfd7bee7bfef1646be47c7c8edd3138, type: 2}
-  isTestOff: 0
+  isTestOff: 1
   conflictID: 8

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Gain Condition Incompetent
   m_EditorClassIdentifier: 
   effectID: 4
-  description: Gains INCOMPETENT condition
+  description: Gain INCOMPETENT condition
   textTag: Actor is incompetent at their job
   listOfCriteria: []
   apply: {fileID: 11400000, guid: a0ec099052c4e824f80755099258ca2f, type: 2}

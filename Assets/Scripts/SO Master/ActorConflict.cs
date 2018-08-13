@@ -10,6 +10,8 @@ public class ActorConflict : ScriptableObject
 {
     [Tooltip("Not used in-game, descriptive only")]
     public string description;
+    [Tooltip("What will happen in event of conflict (Message -> ItemData) in format '[Actor threatens to] ...'")]
+    public string threatText;
     [Tooltip("Outcome text (outcome dialogue, single line, keep short) in format  '[arc.name] ...'")]
     public string outcomeText;
     [Tooltip("Which side does it apply too (or 'Both') Used internally by ActorManager.cs -> GetActorConflict to correctly set up call to EffectManager.cs -> ProcessEffect")]

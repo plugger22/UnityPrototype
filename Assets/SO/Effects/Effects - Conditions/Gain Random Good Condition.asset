@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Gain Random Good Condition
   m_EditorClassIdentifier: 
   effectID: 9
-  description: Gains a Random Good condition
+  description: Gain a Random Good condition
   textTag: Gains a Random Good condition
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 79f0b951cfec28c4089a01d4e9bda0e5, type: 2}

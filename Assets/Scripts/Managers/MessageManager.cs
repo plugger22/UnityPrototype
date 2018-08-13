@@ -461,7 +461,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor condition gained or removed, eg. 'Stressed'
+    /// Actor condition gained or removed, eg. 'Stressed'. Creates ItemData only if 'isPublic' true
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
@@ -480,34 +480,37 @@ public class MessageManager : MonoBehaviour
             message.side = side;
             message.isPublic = isPublic;
             message.data0 = actorID;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Condition Change";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
-            data.tab = ItemTab.Mail;
-            data.side = message.side;
-            data.help = 1;
-            //data depends on whether an actor or player
-            if (actorID == playerActorID)
-            {
-                //player
-                data.sprite = playerSprite;
-            }
-            else
-            {
-                //actor
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
-                if (actor != null)
-                {
-                    data.sprite = actor.arc.sprite;
-                }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
-            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            //ItemData -> Only if isPublic
+            if (isPublic == true)
+            {
+                ItemData data = new ItemData();
+                data.itemText = text;
+                data.topText = "Condition Change";
+                data.bottomText = text;
+                data.priority = ItemPriority.Low;
+                data.tab = ItemTab.Mail;
+                data.side = message.side;
+                data.help = 1;
+                //data depends on whether an actor or player
+                if (actorID == playerActorID)
+                {
+                    //player
+                    data.sprite = playerSprite;
+                }
+                else
+                {
+                    //actor
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    {
+                        data.sprite = actor.arc.sprite;
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                }
+                GameManager.instance.dataScript.AddItemData(data);
+            }           
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -636,33 +639,31 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor initiates a Relationship Conflict due to motivation dropping below zero
+    /// Actor initiates a Relationship Conflict due to motivation dropping below zero (default playerSide). If 'Nothing Happens' then conflictID -1 and provide a reasonNoConflict (format '[because]...')
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="conflictID"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message ActorConflict(string text, Actor actor, int conflictID, GlobalSide side)
+    public Message ActorConflict(string text, Actor actor, int conflictID = -1, string reasonNoConflict = null)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
-        Debug.Assert(conflictID >= 0, string.Format("Invalid conflictID {0}", conflictID));
-        Debug.Assert(side != null, "Invalid side (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Conflict;
-            message.side = side;
+            message.side = GameManager.instance.sideScript.PlayerSide;
             message.data0 = actor.actorID;
             message.data1 = conflictID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} Relationship Conflict", actor.arc.name);
             data.topText = "Relationship Conflict";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetActorConflictDetails(actor, conflictID, reasonNoConflict);
+            data.priority = ItemPriority.High;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;
             data.side = message.side;

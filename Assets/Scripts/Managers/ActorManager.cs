@@ -3008,6 +3008,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         string outputMsg = "Unknown";
+        string threatMsg = "Unknown";
         if (actor != null)
         {
             //trait -> Team Player (avoids conflicts)
@@ -3125,17 +3126,26 @@ public class ActorManager : MonoBehaviour
                             {
                                 case "Actor Resigns":
                                     if (actor.CheckTraitEffect(actorNeverResigns) == true)
-                                    { outputMsg = string.Format("{0}does NOT Resign{1}", colourGood, colourEnd); }
+                                    {
+                                        outputMsg = string.Format("{0}does NOT Resign{1}", colourGood, colourEnd);
+                                        threatMsg = "does NOT Resign";
+                                    }
                                     else
                                     {
                                         if (string.IsNullOrEmpty(actorConflict.outcomeText) == false)
-                                        { outputMsg = string.Format("{0}{1}{2}", colourAlert, actorConflict.outcomeText, colourEnd); }
+                                        {
+                                            outputMsg = string.Format("{0}{1}{2}", colourAlert, actorConflict.outcomeText, colourEnd);
+                                            threatMsg = actorConflict.outcomeText;
+                                        }
                                     }
                                     break;
                                 default:
                                     //normally use ActorConflict.outcomeText for top line
                                     if (string.IsNullOrEmpty(actorConflict.outcomeText) == false)
-                                    { outputMsg = string.Format("{0}{1}{2}", colourAlert, actorConflict.outcomeText, colourEnd); }
+                                    {
+                                        outputMsg = string.Format("{0}{1}{2}", colourAlert, actorConflict.outcomeText, colourEnd);
+                                        threatMsg = actorConflict.outcomeText;
+                                    }
                                     break;
                             }
                             //Implement effect
@@ -3147,8 +3157,8 @@ public class ActorManager : MonoBehaviour
                                 effectInput.textOrigin = "Relationship Conflict";
 
                                 //message
-                                string msgText = string.Format("{0} Relationship Conflict ({1})", actor.arc.name, outputMsg);
-                                GameManager.instance.messageScript.ActorConflict(msgText, actor, actorConflict.conflictID, playerSide);
+                                string msgText = string.Format("{0} Relationship Conflict ({1})", actor.arc.name, threatMsg);
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor, actorConflict.conflictID);
                                 //
                                 // - - - Effect - - -
                                 //
@@ -3197,17 +3207,17 @@ public class ActorManager : MonoBehaviour
                                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                                GameManager.instance.messageScript.ActorConflict(msgText, actor, actorConflict.conflictID, playerSide);
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor, -1, "DO NOTHING");
                             }
                         }
                         else
                         {
-                            Debug.LogWarning("ActorManager.cs -> GetActorConflict: The selection Pool has no entries in it");
+                            Debug.LogWarning("ActorManager.cs -> ProcessActorConflict: The selection Pool has no entries in it");
                             builder.AppendFormat("{0}{1} stamps their feet{2}", colourAlert, actor.arc.name, colourEnd);
                             builder.AppendFormat("{0}{1} Nothing happens{2}", "\n", colourGood, colourEnd);
                             //message
                             string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                            GameManager.instance.messageScript.ActorConflict(msgText, actor, 0, playerSide);
+                            GameManager.instance.messageScript.ActorConflict(msgText, actor, -1, "DO NOTHING");
                         }
                     }
                     else { Debug.LogWarning("No records in dictOfActorConflicts"); }
@@ -3221,8 +3231,8 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("{0}{1} has {2}{3}{4}{5} trait{6}", colourNormal, actor.arc.name, colourNeutral, actor.GetTrait().tag, colourEnd, colourNormal, colourEnd);
                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                 //message
-                string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                GameManager.instance.messageScript.ActorConflict(msgText, actor, 0, playerSide);
+                string msgText = string.Format("{0} Relationship Conflict (Nothing Happens)", actor.arc.name, colourGood, colourEnd);
+                GameManager.instance.messageScript.ActorConflict(msgText, actor, -1, "Do Nothing because they are a TEAM PLAYER");
             }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
@@ -3568,7 +3578,7 @@ public class ActorManager : MonoBehaviour
                     string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
                     string itemText = "Your Reputation is poor. Subordinates may resign";
                     string reason = string.Format("You are {0}<b>{1}</b>{2}{3}{4}", colourBad, builder.ToString(), colourEnd, "\n", "\n");
-                    string warning = string.Format("Your Subordinates may resign unless you {0}<b>Improve your Reputation</b>{1}", colourNeutral, colourEnd);
+                    string warning = string.Format("Your Subordinates may resign unless you {0}{1}<b>Improve your Reputation</b>{2}", "\n", colourNeutral, colourEnd);
                     GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
                 }
                 //

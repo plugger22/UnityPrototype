@@ -554,9 +554,7 @@ public class DataManager : MonoBehaviour
     {
         ActorArc arc = null;
         if (dictOfActorArcs.TryGetValue(actorArcID, out arc))
-        {
-            return arc;
-        }
+        { return arc; }
         return null;
     }
 
@@ -575,6 +573,19 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, ActorConflict> GetDictOfActorConflicts()
     { return dictOfActorConflicts; }
+
+    /// <summary>
+    /// Gets specified actor Conflict, returns null if not found
+    /// </summary>
+    /// <param name="actorArcID"></param>
+    /// <returns></returns>
+    public ActorConflict GetActorConflict(int conflictID)
+    {
+        ActorConflict conflict = null;
+        if (dictOfActorConflicts.TryGetValue(conflictID, out conflict))
+        { return conflict; }
+        return null;
+    }
 
     //
     // - - - Traits - - -
