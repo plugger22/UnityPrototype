@@ -150,6 +150,7 @@
         Actor_Secret,
         Actor_Reassured,
         Actor_Conflict,
+        Actor_Trait,
         //Target
         Target_Attempt,
         Target_Contained,

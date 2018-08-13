@@ -306,11 +306,44 @@ public class ItemDataManager : MonoBehaviour
         }
         else { Debug.LogFormat("Invalid condition.type (Null) for condition \"{0}\"", condition.name); }
         if (isGained == true)
-        { builder.AppendFormat("{0}, {1}{2}{3} gains condition{4}{5}<b>{6}</b>{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourCondition, condition.name, colourEnd, "\n", "\n"); }
+        { builder.AppendFormat("{0}, {1}{2}{3}{4}gains condition{5}{6}<b>{7}</b>{8}{9}{10}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", "\n",
+            colourCondition, condition.name, colourEnd, "\n", "\n"); }
         else
-        { builder.AppendFormat("{0}, {1}{2}{3} loses condition{4}{5}{6}{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourNeutral, condition.name, colourEnd, "\n", "\n"); }
+        { { builder.AppendFormat("{0}, {1}{2}{3}{4}loses condition{5}{6}<b>{7}</b>{8}{9}{10}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", "\n", 
+            colourCondition, condition.name, colourEnd, "\n", "\n"); } }
         if (string.IsNullOrEmpty(reason) == false)
         { builder.Append(reason); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Actor uses a trait
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="trait"></param>
+    /// <param name="forText"></param>
+    /// <param name="toText"></param>
+    /// <returns></returns>
+    public string GetActorTraitDetails(Actor actor, Trait trait, string forText, string toText)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3} uses{4}<b>{5}</b>{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, trait.tag, colourEnd, "\n");
+        if (string.IsNullOrEmpty(forText) == false)
+        { builder.AppendFormat("{0}{1}{2}", forText, "\n", "\n"); }
+        else { Debug.LogWarning("Invalid forText (Null or Empty)"); }
+        if (string.IsNullOrEmpty(toText) == false)
+        {
+            string colourTrait = colourGood;
+            switch (trait.typeOfTrait.level)
+            {
+                case 0: colourTrait = colourBad; break;
+                case 1: colourTrait = colourNeutral; break;
+                case 2: colourTrait = colourGood; break;
+                default: colourTrait = colourNeutral; break;
+            }
+            builder.AppendFormat("{0}{1}{2}", colourTrait, toText, colourEnd);
+        }
+        else { Debug.LogWarning("Invalid toText (Null or Empty)"); }
         return builder.ToString();
     }
 

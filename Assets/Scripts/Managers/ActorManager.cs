@@ -4550,18 +4550,33 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// Generates a log message indicating use of a trait. Input skillCheck as "Actor uses x trait ...... (for a Nervous Breakdown check / to prevent Stressed)"
+    /// 'Reason' in format '[for an] End Blackmail [check]', 'isBad' true for a good (for player), isBad true if a Bad trait, false if a good one (helps player)
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="skillCheck"></param>
-    public void TraitLogMessage(Actor actor, string skillCheck)
+    public void TraitLogMessage(Actor actor, Trait trait, string forText, string toText)
     {
         if (actor != null)
         {
-            if (string.IsNullOrEmpty(skillCheck) == false)
-            { Debug.LogFormat("[Trt] {0}, {1}, uses \"{2}\" trait {3}", actor.actorName, actor.arc.name, actor.GetTrait().tag, skillCheck); }
-            else { Debug.LogError("Invalid skillCheck parameter (Null or empty)"); }
+            if (trait != null)
+            {
+                if (string.IsNullOrEmpty(toText) == false)
+                {
+                    if (string.IsNullOrEmpty(forText) == false)
+                    {
+                        Debug.LogFormat(string.Format("[Trt] {0}, {1}, uses \"{2}\" trait {3}", actor.actorName, actor.arc.name, trait.tag, toText));
+                        //message
+                        string msgText = string.Format("{0}, {1}, uses \"{2}\" trait {3}", actor.actorName, actor.arc.name, actor.GetTrait().tag, toText);
+                        string itemText = string.Format("{0} uses {1} trait", actor.arc.name, trait.tag);
+                        GameManager.instance.messageScript.ActorTrait(msgText, actor, trait, forText, toText);
+                    }
+                    else { Debug.LogWarning("Invalid forText (Null or Empty)"); }
+                }
+                else { Debug.LogWarning("Invalid skillCheck parameter (Null or Empty)"); }
+            }
+            else { Debug.LogWarning("Invalid trait (Null)"); }
         }
-        else { Debug.LogError("Invalid actor (Null)"); }
+        else { Debug.LogWarning("Invalid actor (Null)"); }
     }
 
 

@@ -140,7 +140,7 @@ public class MessageManager : MonoBehaviour
 
     /// <summary>
     /// General Info message. 'itemText' is itemData.text, 'reason' is a self-contained sentence, 'warning' is a self-contained and is shown in Red if 'isBad' true, otherwise Green
-    /// 'isHighPriority' if true, Medium priority othewise. 'topText' is RHS short tag. Default playerSide and medium priority
+    /// 'topText' is RHS short tag. Default playerSide, Medium priority.
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -694,6 +694,46 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Mail;
             data.side = message.side;
             data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+    /// <summary>
+    /// Actor uses a trait, forText and toText are self-contained, eg. 'for an End Blackmail check', 'to avoid being paid off'. Comes directly from ActorManager.cs -> TraitLogMessage
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="traitID"></param>
+    /// <param name="forText"></param>
+    /// <param name="toText"></param>
+    /// <returns></returns>
+    public Message ActorTrait(string text, Actor actor, Trait trait, string forText, string toText)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(trait != null, "Invalid trait (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Trait;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = actor.actorID;
+            message.data1 = trait.traitID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0} uses {1} ", actor.arc.name, trait.tag);
+            data.topText = string.Format("{0} trait used", trait.tag);
+            data.bottomText = GameManager.instance.itemDataScript.GetActorTraitDetails(actor, trait, forText, toText);
+            data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
+            data.tab = ItemTab.Mail;
+            data.side = message.side;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

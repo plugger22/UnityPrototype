@@ -638,6 +638,19 @@ public class DataManager : MonoBehaviour
         return trait;
     }
 
+    /*/// <summary>
+    /// Gets specified Trait by trait ID, returns null if not found
+    /// </summary>
+    /// <param name="traitID"></param>
+    /// <returns></returns>
+    public Trait GetTrait(int traitID)
+    {
+        Trait trait = null;
+        if (dictOfTraits.TryGetValue(traitID, out trait))
+        { return trait; }
+        return null;
+    }*/
+
     public Dictionary<int, Trait> GetDictOfTraits()
     { return dictOfTraits; }
 
