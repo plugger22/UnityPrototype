@@ -3889,7 +3889,7 @@ public class AIManager : MonoBehaviour
                         //gear can negate Screamer
                         if (CheckAIGearEffectPresent(screamerEffectText) == false)
                         {
-                            GameManager.instance.playerScript.AddCondition(conditionStressed);
+                            GameManager.instance.playerScript.AddCondition(conditionStressed, "Acquired due to Screamer countermeasures");
                         }
                         else
                         {

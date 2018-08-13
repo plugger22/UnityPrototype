@@ -308,10 +308,10 @@ public class ActionManager : MonoBehaviour
                                 Condition stressed = GameManager.instance.dataScript.GetCondition("STRESSED");
                                 if (stressed != null)
                                 {
-                                    actor.AddCondition(stressed);
+                                    actor.AddCondition(stressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
                                     if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                    builderBottom.AppendFormat("{0}Gains {1}{2}STRESSED{3}{4} condition due to{5}{6} Nervous{7}{8} trait{9}", colourBad, colourEnd,
-                                        colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd);
+                                    builderBottom.AppendFormat("{0}Gains {1}{2}STRESSED{3}{4} condition due to{5}{6}{7}{8}{9} trait{10}", colourBad, colourEnd,
+                                        colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd, colourBad, colourEnd);
                                     GameManager.instance.actorScript.TraitLogMessage(actor, "and gains STRESSED condition");
                                 }
                                 else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
@@ -2016,7 +2016,7 @@ public class ActionManager : MonoBehaviour
                     Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                     if (condition != null)
                     {
-                        if (GameManager.instance.playerScript.RemoveCondition(condition) == true)
+                        if (GameManager.instance.playerScript.RemoveCondition(condition, string.Format("{0} is no longer Unhappy", actor.actorName)) == true)
                         {
                             builder.AppendLine(); builder.AppendLine();
                             builder.AppendFormat("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd);

@@ -542,13 +542,19 @@ public class PlayerManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Add a new condition to list provided it isn't already present, ignored if it is
+    /// Add a new condition to list provided it isn't already present, ignored if it is. Reason is a short self-contained sentence
     /// </summary>
     /// <param name="condition"></param>
-    public void AddCondition(Condition condition)
+    public void AddCondition(Condition condition, string reason)
     {
         if (condition != null)
         {
+            //keep going if reason not provided
+            if (string.IsNullOrEmpty(reason) == true)
+            {
+                reason = "Unknown";
+                Debug.LogWarning("Invalid reason (Null or Empty)");
+            }
             //use correct list for the player side
             List<Condition> listOfConditions;
             if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
@@ -566,7 +572,7 @@ public class PlayerManager : MonoBehaviour
                 listOfConditions.Add(condition);
                 //message
                 string msgText = string.Format("Player gains condition \"{0}\"", condition.name);
-                GameManager.instance.messageScript.ActorCondition(msgText, actorID);
+                GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
             }
         }
         else { Debug.LogError("Invalid condition (Null)"); }
@@ -609,10 +615,16 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="condition"></param>
     /// <returns></returns>
-    public bool RemoveCondition(Condition condition)
+    public bool RemoveCondition(Condition condition, string reason)
     {
         if (condition != null)
         {
+            //keep going if reason not provided
+            if (string.IsNullOrEmpty(reason) == true)
+            {
+                reason = "Unknown";
+                Debug.LogWarning("Invalid reason (Null or Empty)");
+            }
             //use correct list for the player side
             List<Condition> listOfConditions;
             if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
@@ -633,7 +645,7 @@ public class PlayerManager : MonoBehaviour
                         listOfConditions.RemoveAt(i);
                         //message
                         string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
-                        GameManager.instance.messageScript.ActorCondition(msgText, actorID);
+                        GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
                         return true;
                     }
                 }

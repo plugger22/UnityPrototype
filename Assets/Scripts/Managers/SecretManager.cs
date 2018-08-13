@@ -242,7 +242,7 @@ public class SecretManager : MonoBehaviour
                                 {
                                     if (actor.CheckNumOfSecrets() == 0)
                                     {
-                                        actor.RemoveCondition(conditionBlackmail);
+                                        actor.RemoveCondition(conditionBlackmail, "Secret no longer has any effect");
                                         //additional explanatory message (why has condition gone?)
                                         string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
                                         string reason = "The secret they hold has no value";

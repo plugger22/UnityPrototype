@@ -293,8 +293,20 @@ public class ItemDataManager : MonoBehaviour
     public string GetActorConditionDetails(string genericActorName, string genericActorArc, Condition condition, bool isGained, string reason)
     {
         StringBuilder builder = new StringBuilder();
+        string colourCondition = colourNeutral;
+        if (condition.type != null)
+        {
+            switch (condition.type.level)
+            {
+                case 0: colourCondition = colourBad; break;
+                case 1: colourCondition = colourNeutral; break;
+                case 2: colourCondition = colourGood; break;
+                default: colourCondition = colourNeutral; break;
+            }
+        }
+        else { Debug.LogFormat("Invalid condition.type (Null) for condition \"{0}\"", condition.name); }
         if (isGained == true)
-        { builder.AppendFormat("{0}, {1}{2}{3} gains condition{4}{5}{6}{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourNeutral, condition.name, colourEnd, "\n", "\n"); }
+        { builder.AppendFormat("{0}, {1}{2}{3} gains condition{4}{5}<b>{6}</b>{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourCondition, condition.name, colourEnd, "\n", "\n"); }
         else
         { builder.AppendFormat("{0}, {1}{2}{3} loses condition{4}{5}{6}{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourNeutral, condition.name, colourEnd, "\n", "\n"); }
         if (string.IsNullOrEmpty(reason) == false)

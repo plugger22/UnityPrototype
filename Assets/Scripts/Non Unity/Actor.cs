@@ -150,13 +150,19 @@ namespace gameAPI
         /// Add a new condition to list provided it isn't already present. Returns true is successful
         /// </summary>
         /// <param name="condition"></param>
-        public bool AddCondition(Condition condition)
+        public bool AddCondition(Condition condition, string reason)
         {
             bool proceedFlag = false;
             if (condition != null)
             {
+                //keep going if reason not provided
+                if (string.IsNullOrEmpty(reason) == true)
+                {
+                    reason = "Unknown";
+                    Debug.LogWarning("Invalid reason (Null or Empty)");
+                }
                 //Checks (traits and other)
-                switch(condition.name)
+                switch (condition.name)
                 {
                     case "STRESSED":
                         if (CheckTraitEffect(actorStressNone) == true)
@@ -208,7 +214,7 @@ namespace gameAPI
                         }
                         //message
                         string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
-                        GameManager.instance.messageScript.ActorCondition(msgText, actorID);
+                        GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
                     }
                 }
             }
@@ -243,12 +249,18 @@ namespace gameAPI
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public bool RemoveCondition(Condition condition)
+        public bool RemoveCondition(Condition condition, string reason)
         {
             if (condition != null)
             {
                 if (listOfConditions.Count > 0)
                 {
+                    //keep going if reason not provided
+                    if (string.IsNullOrEmpty(reason) == true)
+                    {
+                        reason = "Unknown";
+                        Debug.LogWarning("Invalid reason (Null or Empty)");
+                    }
                     //reverse loop -> delete and return if found
                     for (int i = listOfConditions.Count - 1; i >= 0; i--)
                     {
@@ -264,7 +276,7 @@ namespace gameAPI
                             listOfConditions.RemoveAt(i);
                             //message
                             string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.name);
-                            GameManager.instance.messageScript.ActorCondition(msgText, actorID);
+                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
                             return true;
                         }
                     }

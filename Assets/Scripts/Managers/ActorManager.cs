@@ -3389,7 +3389,7 @@ public class ActorManager : MonoBehaviour
         if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
         {
             //add condition
-            GameManager.instance.playerScript.AddCondition(condition);
+            GameManager.instance.playerScript.AddCondition(condition, "Debug ability");
             text = string.Format("Condition {0} added to Player", condition.name);
         }
         else { text = string.Format("Player already has Condition {0}", condition.name); }
@@ -3418,7 +3418,7 @@ public class ActorManager : MonoBehaviour
                 if (actor.CheckConditionPresent(condition) == false)
                 {
                     //add condition
-                    if (actor.AddCondition(condition) == true)
+                    if (actor.AddCondition(condition, "Debug Action") == true)
                     { text = string.Format("Condition {0} added to {1}, {2}", condition.name, actor.arc.name, actor.actorName); }
                     else { text = string.Format("Condition {0} NOT added", condition.name); }
                 }
@@ -3513,12 +3513,13 @@ public class ActorManager : MonoBehaviour
                                         //check if actor has stressed condition
                                         if (actor.CheckConditionPresent(conditionStressed) == true)
                                         {
-                                            if (actor.RemoveCondition(conditionStressed) == true)
+                                            actor.RemoveCondition(conditionStressed, "Lying Low removes Stress");
+                                            /*if (actor.RemoveCondition(conditionStressed) == true)
                                             {
-                                                //message -> condition change
+                                                //message -> condition change [EDIT] not needed as Actor.cs handles this
                                                 text = string.Format("{0}, {1}, is no longer Stressed (Lie Low)", actor.arc.name, actor.actorName);
-                                                GameManager.instance.messageScript.ActorCondition(text, actor.actorID, true, false, conditionStressed, "Lying Low removes Stress");
-                                            }
+                                                GameManager.instance.messageScript.ActorCondition(text, actor.actorID, false, conditionStressed, "Lying Low removes Stress");
+                                            }*/
                                         }
                                     }
                                     else
@@ -3769,7 +3770,7 @@ public class ActorManager : MonoBehaviour
             if (actor.CheckTraitEffect(actorAppeaseNone) == false)
             {
                 //Motivation at max value, Blackmailer condition cancelled
-                actor.RemoveCondition(conditionBlackmailer);
+                actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has {1} trait", actor.arc.name, actor.GetTrait().tag));
                 isResolved = true;
                 //message
                 string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
@@ -3825,7 +3826,7 @@ public class ActorManager : MonoBehaviour
                         text = builder.ToString();
                     }
                     //Motivation at max value, Blackmailer condition cancelled
-                    actor.RemoveCondition(conditionBlackmailer);
+                    actor.RemoveCondition(conditionBlackmailer, string.Format("{0} regains Maximum Motivation", actor.arc.name));
                     //remove secret from all actors and player
                     GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID);
                 }
@@ -4134,12 +4135,14 @@ public class ActorManager : MonoBehaviour
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
                             {
+                                GameManager.instance.playerScript.RemoveCondition(conditionStressed, "Lying Low removes Stress");
+                                /*
                                 if (GameManager.instance.playerScript.RemoveCondition(conditionStressed) == true)
                                 {
-                                    //message -> condition change
+                                    //message -> condition change [EDIT] No need as PlayerManager handles this
                                     text = string.Format("{0} is no longer Stressed (Lie Low)", playerName);
                                     GameManager.instance.messageScript.ActorCondition(text, GameManager.instance.playerScript.actorID, true, false, conditionStressed, "Lying Low removes Stress");
-                                }
+                                }*/
                             }
                         }
                         else
@@ -4221,7 +4224,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.unhappyTimer == 0)
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
-                            actor.AddCondition(condition);
+                            actor.AddCondition(condition, string.Format("{0} upset at being left in the Reserves", actor.arc.name));
                             //unhappy now warning
                             msgText = string.Format("{0}, {1}, in Reserves, has become UNHAPPY", actor.actorName, actor.arc.name);
                             itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
@@ -4340,7 +4343,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.unhappyTimer == 0)
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
-                            actor.AddCondition(condition);
+                            actor.AddCondition(condition, string.Format("{0} upset at being left in the Reserves", actor.arc.name));
                             //unhappy now warning
                             msgText = string.Format("{0}, {1}, in Reserves, has become UNHAPPY", actor.actorName, actor.arc.name);
                             itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
