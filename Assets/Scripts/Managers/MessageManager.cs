@@ -461,14 +461,14 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor condition gained or removed, eg. 'Stressed'. Creates ItemData only if 'isPublic' true
+    /// Player / Actor condition gained or removed, eg. 'Stressed'. Creates ItemData only if 'isPublic' true (if so provide a 'reason' in a self-contained format, plus isGained / Lost and condition)
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="side"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorCondition(string text, int actorID, GlobalSide side, bool isPublic = false)
+    public Message ActorCondition(string text, int actorID, bool isPublic = false, bool isGained = true, Condition condition = null,  string reason = null)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
@@ -477,7 +477,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Condition;
-            message.side = side;
+            message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = isPublic;
             message.data0 = actorID;
             //add
@@ -486,10 +486,31 @@ public class MessageManager : MonoBehaviour
             if (isPublic == true)
             {
                 ItemData data = new ItemData();
-                data.itemText = text;
+                string genericActorName = "Unknown";
+                string genericActorArc = "Unknown";
+                if (actorID == 999)
+                {
+                    //player
+                    genericActorName = GameManager.instance.playerScript.PlayerName;
+                    genericActorArc = "Player";
+                }
+                else
+                {
+                    //actor
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    {
+                        genericActorName = actor.actorName;
+                        genericActorArc = actor.arc.name;
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                }
+                if (isGained == true)
+                { data.itemText = string.Format("{0} gains {1} condition", genericActorArc, condition.name); }
+                else { data.itemText = string.Format("{0} loses {1} condition", genericActorArc, condition.name); }
                 data.topText = "Condition Change";
-                data.bottomText = text;
-                data.priority = ItemPriority.Low;
+                data.bottomText = GameManager.instance.itemDataScript.GetActorConditionDetails(genericActorName, genericActorArc, condition, isGained, reason);
+                data.priority = ItemPriority.Medium;
                 data.tab = ItemTab.Mail;
                 data.side = message.side;
                 data.help = 1;

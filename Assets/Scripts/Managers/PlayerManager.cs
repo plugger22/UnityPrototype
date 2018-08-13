@@ -566,7 +566,7 @@ public class PlayerManager : MonoBehaviour
                 listOfConditions.Add(condition);
                 //message
                 string msgText = string.Format("Player gains condition \"{0}\"", condition.name);
-                GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                GameManager.instance.messageScript.ActorCondition(msgText, actorID);
             }
         }
         else { Debug.LogError("Invalid condition (Null)"); }
@@ -633,7 +633,7 @@ public class PlayerManager : MonoBehaviour
                         listOfConditions.RemoveAt(i);
                         //message
                         string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
-                        GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                        GameManager.instance.messageScript.ActorCondition(msgText, actorID);
                         return true;
                     }
                 }

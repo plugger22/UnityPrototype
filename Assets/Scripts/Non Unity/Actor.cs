@@ -208,7 +208,7 @@ namespace gameAPI
                         }
                         //message
                         string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
-                        GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                        GameManager.instance.messageScript.ActorCondition(msgText, actorID);
                     }
                 }
             }
@@ -264,7 +264,7 @@ namespace gameAPI
                             listOfConditions.RemoveAt(i);
                             //message
                             string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.name);
-                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, GameManager.instance.sideScript.PlayerSide);
+                            GameManager.instance.messageScript.ActorCondition(msgText, actorID);
                             return true;
                         }
                     }

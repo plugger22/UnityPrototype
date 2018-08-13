@@ -3517,7 +3517,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 //message -> condition change
                                                 text = string.Format("{0}, {1}, is no longer Stressed (Lie Low)", actor.arc.name, actor.actorName);
-                                                GameManager.instance.messageScript.ActorCondition(text, actor.actorID, globalResistance, true);
+                                                GameManager.instance.messageScript.ActorCondition(text, actor.actorID, true, false, conditionStressed, "Lying Low removes Stress");
                                             }
                                         }
                                     }
@@ -4138,7 +4138,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //message -> condition change
                                     text = string.Format("{0} is no longer Stressed (Lie Low)", playerName);
-                                    GameManager.instance.messageScript.ActorCondition(text, GameManager.instance.playerScript.actorID, globalResistance, true);
+                                    GameManager.instance.messageScript.ActorCondition(text, GameManager.instance.playerScript.actorID, true, false, conditionStressed, "Lying Low removes Stress");
                                 }
                             }
                         }

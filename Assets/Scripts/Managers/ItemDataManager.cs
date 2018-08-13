@@ -282,6 +282,26 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Player / Actor gained or lost a Condition
+    /// </summary>
+    /// <param name="genericActorName"></param>
+    /// <param name="genericActorArc"></param>
+    /// <param name="condition"></param>
+    /// <param name="isGained"></param>
+    /// <returns></returns>
+    public string GetActorConditionDetails(string genericActorName, string genericActorArc, Condition condition, bool isGained, string reason)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (isGained == true)
+        { builder.AppendFormat("{0}, {1}{2}{3} gains condition{4}{5}{6}{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourNeutral, condition.name, colourEnd, "\n", "\n"); }
+        else
+        { builder.AppendFormat("{0}, {1}{2}{3} loses condition{4}{5}{6}{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourNeutral, condition.name, colourEnd, "\n", "\n"); }
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.Append(reason); }
+        return builder.ToString();
+    }
+
     //
     // - - - Gear - - -
     //
