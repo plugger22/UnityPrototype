@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d584344e0f087ea4eb1626b1bb7fdf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretLearnBaseChance: 4
+  secretLearnBaseChance: 38
   secretBlackmailTimer: 4
   secretMaxNum: 4
   secretTypePlayer: {fileID: 0}
@@ -759,11 +759,9 @@ MonoBehaviour:
   renownCostThreaten: 1
   manageReserveRenown: 1
   manageDismissRenown: 2
+  manageDismissSecrets: 1
   manageDisposeRenown: 4
-  chanceOfUnhappy: 20
-  unhappyPromiseFactor: 3
-  unhappyWarningPeriod: 2
-  unhappyLoseMotivationChance: 50
+  unhappyLoseMotivationChance: 40
   unhappyTakeActionChance: 25
   unhappyRevealSecretChance: 50
   unhappyLeaveChance: 25

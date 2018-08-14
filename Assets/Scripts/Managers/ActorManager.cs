@@ -42,16 +42,18 @@ public class ActorManager : MonoBehaviour
     [Range(1, 5)] public int manageReserveRenown = 1;
     [Tooltip("Base Renown cost for carrying out Manage Dismiss Actor actions")]
     [Range(1, 5)] public int manageDismissRenown = 2;
+    [Tooltip("Extra renown cost to dismiss or displose per secret known, added to base  costs before other modifiers")]
+    [Range(0, 3)] public int manageSecretCost = 1;
     [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
     [Range(1, 5)] public int manageDisposeRenown = 3;
-    [Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their unhappyTimer expires")]
+    /*[Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their unhappyTimer expires")]
     [Range(1, 50)] public int chanceOfUnhappy = 20;
     [Tooltip("Multiplier to the chanceOfUnhappy for an actor who has been promised that they will be recalled within a set time period")]
     [Range(1, 5)] public int unhappyPromiseFactor = 3;
     [Tooltip("Once actor has taken action as a result of being unhappy this is the number of turns warning period you get before they carry out their action")]
-    [Range(1, 5)] public int unhappyWarningPeriod = 2;
+    [Range(1, 5)] public int unhappyWarningPeriod = 2;*/
     [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
-    [Range(1, 99)] public int unhappyLoseMotivationChance = 50;
+    [Range(1, 99)] public int unhappyLoseMotivationChance = 40;
     [Tooltip("Once actor is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
     [Range(1, 99)] public int unhappyTakeActionChance = 25;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the first check made (ignored if actor has no secrets")]
@@ -2173,15 +2175,19 @@ public class ActorManager : MonoBehaviour
             builderTooltip.AppendLine();
             builderTooltip.AppendFormat("{0}Can be recruited again{1}", colourNeutral, colourEnd);
             builderTooltip.AppendLine();
+            int costToDismiss = manageDismissRenown;
+            //base cost to dismiss increased by one for every secret actor has learned
+            renownCost = costToDismiss;
+            renownCost += actor.GetListOfSecrets().Count * manageSecretCost;
             //double renown cost if actor threatening to take action against player
             if (actor.isThreatening == false)
             {
-                renownCost = manageDismissRenown;
+                renownCost = costToDismiss;
                 builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
             }
             else
             {
-                renownCost = manageDismissRenown * 2;
+                renownCost = costToDismiss * 2;
                 builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builderTooltip.AppendLine();
                 builderTooltip.AppendFormat("{0}Double Renown cost as {1} is Threatening you{2}", colourCancel, actor.actorName, colourEnd);
@@ -4333,7 +4339,9 @@ public class ActorManager : MonoBehaviour
                         {
                             //actor is Unhappy and has 0 motivation. Do they take action?
                             chance = unhappyTakeActionChance;
-                            //if actor has previously been reassured, double chance of action
+                            //if actor has previously been promised or reassured, double chance of action (4X if both promised and reassured)
+                            if (actor.isPromised == true)
+                            { chance *= 2; }
                             if (actor.isReassured == true)
                             { chance *= 2; }
                             rnd = Random.Range(0, 100);
@@ -4452,7 +4460,9 @@ public class ActorManager : MonoBehaviour
                         {
                             //actor is Unhappy and has 0 motivation. Do they take action?
                             chance = unhappyTakeActionChance;
-                            //if actor has previously been reassured, double chance of action
+                            //if actor has previously been promised or reassured, double chance of action (4X if both promised and reassured)
+                            if (actor.isPromised == true)
+                            { chance *= 2; }
                             if (actor.isReassured == true)
                             { chance *= 2; }
                             rnd = Random.Range(0, 100);
@@ -4497,7 +4507,9 @@ public class ActorManager : MonoBehaviour
     {
         int rnd, chance;
         string msgText;
-        //Check for secrets first
+        //
+        // - - - Reveal Secret (check first)
+        //
         if (actor.CheckNumOfSecrets() > 0)
         {
             rnd = Random.Range(0, 100);
@@ -4521,7 +4533,9 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
             }
         }
-        //Check for Leaving second
+        //
+        // - - -  Resign (check second)
+        //
         if (actor.isComplaining == false)
         {
             rnd = Random.Range(0, 100);
@@ -4534,7 +4548,10 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
 
                 //TO DO
-                Debug.LogFormat("Unhappy Actor: {0} {1} Threatens to Leave{2}", actor.arc.name, actor.actorName, "\n");
+                if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                {
+                    //resigns in frustration
+                }
                 return;
             }
             else
@@ -4558,7 +4575,10 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
 
                 //TO DO
-                Debug.LogFormat("Unhappy Actor: {0} {1} Threatens to Leave{2}", actor.arc.name, actor.actorName, "\n");
+                if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                {
+                    //resigns in frustration
+                }
                 return;
             }
             else
@@ -4569,7 +4589,9 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave (Complained)", chance, rnd, true);
             }
         }
-        //Check for Complaint third (skip check if actor has already complained)
+        //
+        // - - - Complain (check last)
+        //
         if (actor.isComplaining == false)
         {
             rnd = Random.Range(0, 100);
@@ -4594,8 +4616,9 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
             }
         }
-
-        //NO Action take -> WARNING message
+        //
+        // - - - NO Action take -> WARNING message
+        //
         msgText = string.Format("{0}, {1}, in Reserves, Failed to Act, but will", actor.actorName, actor.arc.name);
         string itemText = string.Format("Reserve {0} Failed to Act, but will", actor.arc.name);
         string reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
