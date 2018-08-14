@@ -3719,6 +3719,11 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (listOfBadConditions.Count > 0)
                                 { ProcessCompatibility(actor, listOfBadConditions); }
+                                //
+                                // - - - Motivation Warning - - -
+                                //
+                                if (actor.datapoint1 == 0)
+                                { ProcessMotivationWarning(actor); }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
@@ -4060,7 +4065,11 @@ public class ActorManager : MonoBehaviour
     /// <param name="actor"></param>
     private void ProcessInvisibilityWarning(Actor actor)
     {
-
+        string msgText = string.Format("{0} Invisibility Zero. Risk of capture", actor.arc.name);
+        string itemText = string.Format("{0} at risk of Capture", actor.arc.name);
+        string reason = string.Format("{0}, {1}{2}{3}{4}Invisibility at Zero", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
+        string warning = "Can be CAPTURED";
+        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Invisibility Zero", reason, warning, false);
     }
 
     /// <summary>
@@ -4069,7 +4078,11 @@ public class ActorManager : MonoBehaviour
     /// <param name="actor"></param>
     private void ProcessMotivationWarning(Actor actor)
     {
-
+        string msgText = string.Format("{0} Motivation Zero. Risk of a Relationship Conflict.", actor.arc.name);
+        string itemText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
+        string reason = string.Format("{0}, {1}{2}{3}{4}Motivation at Zero", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
+        string warning = "Can develop a RELATIONSHIP CONFLICT";
+        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Motivation Zero", reason, warning, false);
     }
 
     /// <summary>

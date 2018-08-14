@@ -20,5 +20,5 @@ MonoBehaviour:
   listOfCriteria: []
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   effect: {fileID: 11400000, guid: ecfd7bee7bfef1646be47c7c8edd3138, type: 2}
-  isTestOff: 1
+  isTestOff: 0
   conflictID: 8

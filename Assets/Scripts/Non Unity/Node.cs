@@ -296,9 +296,16 @@ public class Node : MonoBehaviour
             //Right click node -> Show either move options (node highlights) or Move Menu
             if (Input.GetMouseButtonDown(1) == true)
             {
+                /*//exit any tooltip
+                if (onMouseFlag == true)
+                { onMouseFlag = false; }*/
                 //exit any tooltip
                 if (onMouseFlag == true)
-                { onMouseFlag = false; }
+                {
+                    onMouseFlag = false;
+                    StopCoroutine("ShowTooltip");
+                    GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
+                }
                 //move action invalid if resistance player is captured, etc.
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {

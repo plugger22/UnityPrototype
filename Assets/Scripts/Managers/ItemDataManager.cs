@@ -149,7 +149,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>Alert!</b>{1}{2}{3}{4}{5}", colourNeutral, colourEnd, "\n", reason, "\n", "\n");
         if (isBad == true)
-        { builder.AppendFormat("{0}{1}{2}", colourBad, warning, colourEnd); }
+        { builder.AppendFormat("{0}<b>{1}</b>{2}", colourBad, warning, colourEnd); }
         else { builder.AppendFormat("{0}<b>{1}</b>{2}", colourGood, warning, colourEnd); }
         return builder.ToString();
     }
