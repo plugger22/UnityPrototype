@@ -570,6 +570,7 @@ public class PlayerManager : MonoBehaviour
             if (CheckConditionPresent(condition) == false)
             {
                 listOfConditions.Add(condition);
+                Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0}, Player, gains {1} condition{2}", PlayerName, condition.name, "\n");
                 //message
                 string msgText = string.Format("Player gains condition \"{0}\"", condition.name);
                 GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
@@ -643,6 +644,7 @@ public class PlayerManager : MonoBehaviour
                     if (listOfConditions[i].name.Equals(condition.name) == true)
                     {
                         listOfConditions.RemoveAt(i);
+                        Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0}, Player, lost {1} condition{2}", PlayerName, condition.name, "\n");
                         //message
                         string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
                         GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);

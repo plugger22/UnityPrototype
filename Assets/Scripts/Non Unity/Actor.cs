@@ -224,6 +224,7 @@ namespace gameAPI
                                 blackmailTimer = timer;
                                 break;
                         }
+                        Debug.LogFormat("[Con] Actor.cs -> AddCondition: {0}, {1} gained {2} condition{3}", actorName, arc.name, condition.name, "\n");
                         //message
                         string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
                         GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
@@ -286,6 +287,7 @@ namespace gameAPI
                                     break;
                             }
                             listOfConditions.RemoveAt(i);
+                            Debug.LogFormat("[Con] Actor.cs -> RemoveCondition: {0}, {1} lost {2} condition{3}", actorName, arc.name, condition.name, "\n");
                             //message
                             string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.name);
                             GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
