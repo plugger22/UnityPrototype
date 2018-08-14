@@ -704,7 +704,8 @@ public class MessageManager : MonoBehaviour
 
 
     /// <summary>
-    /// Actor uses a trait, forText and toText are self-contained, eg. 'for an End Blackmail check', 'to avoid being paid off'. Comes directly from ActorManager.cs -> TraitLogMessage
+    /// Actor uses a trait, forText and toText are self-contained, eg. 'for an End Blackmail check', 'to avoid being paid off'. 
+    /// NOTE: access via ActorManager.cs -> TraitLogMessage
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actor"></param>
@@ -727,7 +728,7 @@ public class MessageManager : MonoBehaviour
             message.data1 = trait.traitID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} uses {1} ", actor.arc.name, trait.tag);
+            data.itemText = string.Format("{0} uses {1} trait", actor.arc.name, trait.tag);
             data.topText = string.Format("{0} trait used", trait.tag);
             data.bottomText = GameManager.instance.itemDataScript.GetActorTraitDetails(actor, trait, forText, toText);
             data.priority = ItemPriority.Low;
@@ -1110,7 +1111,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message DecisionGlobal(string text, int decID, GlobalSide side, bool isPublic = false)
+    public Message DecisionGlobal(string text, string warning, int decID, GlobalSide side, bool isPublic = false)
     {
         Debug.Assert(decID >= 0, string.Format("Invalid decID {0}", decID));
         if (string.IsNullOrEmpty(text) == false)
@@ -1125,9 +1126,9 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
-            data.topText = "Decision Made";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.topText = "City Wide Decision";
+            data.bottomText = GameManager.instance.itemDataScript.GetDecisionGlobalDetails(text, warning);
+            data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
             data.tab = ItemTab.Mail;
             data.side = message.side;

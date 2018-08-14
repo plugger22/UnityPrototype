@@ -1329,7 +1329,7 @@ public class EffectManager : MonoBehaviour
                                                 if (actor.CheckConditionPresent(conditionStressed) == false)
                                                 {
                                                     actor.AddCondition(conditionStressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
-                                                    GameManager.instance.actorScript.TraitLogMessage(actor, " and becomes STRESSED after losing invisibility");
+                                                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Stress check", "to become STRESSED due to a loss of Invisibility");
                                                     StringBuilder builder = new StringBuilder();
                                                     builder.Append(effectReturn.bottomText);
 
@@ -1398,7 +1398,7 @@ public class EffectManager : MonoBehaviour
                                             effectReturn.bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBadSide, actor.arc.name, effect.value * 2, colourEnd,
                                                 colourNeutral, actor.GetTrait().tag, colourEnd);
                                             //logger
-                                            GameManager.instance.actorScript.TraitLogMessage(actor, "to gain double renown");
+                                            GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
                                         }
                                         else
                                         {
@@ -2811,7 +2811,7 @@ public class EffectManager : MonoBehaviour
                 else
                 {
                     //trait actorResignNone "Loyal"
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "to decline Resigning");
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
                     effectResolve.bottomText = string.Format("{0}{1} has {2}{3}{4}{5}{6} trait{7}", colourAlert, actor.arc.name, colourEnd,
                         colourNeutral, actor.GetTrait().tag, colourEnd, colourAlert, colourEnd);
                 }

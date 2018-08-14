@@ -167,7 +167,7 @@ public class CaptureManager : MonoBehaviour
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //set security state back to normal
-        GameManager.instance.authorityScript.SetAuthoritySecurityState("Player Captured: Security measures have been cancelled");
+        GameManager.instance.authorityScript.SetAuthoritySecurityState("Security measures have been cancelled", string.Format("{0}, Player, has been CAPTURED", GameManager.instance.playerScript.PlayerName));
         //switch off flashing red indicator on top widget UI
         EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
         //reduce player alpha to show inactive (sprite and text)

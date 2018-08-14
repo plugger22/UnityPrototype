@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Name: Survelliance Crackdown
   m_EditorClassIdentifier: 
   descriptor: Authority declares a Survelliance crackdown
+  warning: Can't Lie Low and DOUBLE chance of Breakdowns
   tooltipDescriptor: During a Survelliance Crackdown Resistance members can't <b>Lie
     Low</b> and the chance of a <b>Nervous Breakdown</b> (Stress) is doubled
   type: {fileID: 11400000, guid: 6f4be2b8a57da9249b95c752414cbd66, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 3
-  aiDecID: 14
+  aiDecID: 20

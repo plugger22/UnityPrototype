@@ -583,8 +583,8 @@ public class ActorManager : MonoBehaviour
                                     if (actorTemp.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
                                     {
                                         targetProceed = false;
-                                        infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actorTemp.arc.name, colourNeutral, colourEnd);
-                                        TraitLogMessage(actorTemp, "and is prevented from attempting a Target");
+                                        infoBuilder.AppendFormat("{0} is {1}{2}{3} (Trait) due to Security Measures", actorTemp.arc.name, colourNeutral, actorTemp.GetTrait().tag, colourEnd);
+                                        TraitLogMessage(actorTemp, "for an attempt on a Target", "to CANCEL attempt due to Security Measures");
                                     }
                                     else { targetProceed = true; }
                                 }
@@ -657,7 +657,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                             infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actor.arc.name, colourNeutral, colourEnd);
-                                            TraitLogMessage(actor, "and is prevented from carrying out a Node Action");
+                                            TraitLogMessage(actor, "for a district action", "to CANCEL action due to Security Measures");
                                             proceedFlag = false;
                                         }
                                     }
@@ -1227,6 +1227,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 builderTooltip.AppendFormat("{0}{1} has {2}{3}{4} trait{5}{6}(Refuses to return Gear){7}", "\n", actor.arc.name, colourNeutral,
                                                     actor.GetTrait().tag, colourEnd, "\n", colourBad, colourEnd);
+                                                GameManager.instance.actorScript.TraitLogMessage(actor, "for Returning Gear", "to AVOID doing so");
                                             }
 
                                             //existing gear
@@ -1352,7 +1353,7 @@ public class ActorManager : MonoBehaviour
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                     infoBuilder.AppendFormat("Can't TAKE gear{0}{1}({2}{3} {4}{5}{6}{7} trait){8}", "\n", colourBad, actor.arc.name, colourEnd,
                                         colourNeutral, actor.GetTrait().tag, colourEnd, colourBad, colourEnd);
-                                    TraitLogMessage(actor, "to Refuse to handback Gear");
+                                    TraitLogMessage(actor, "for a return of Gear", "to REFUSE to handback Gear");
                                 }
                             }
                             else
@@ -1388,7 +1389,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
                         {
                             proceedFlag = false;
-                            TraitLogMessage(actor, "and is prevented from Activating (Lying Low)");
+                            TraitLogMessage(actor, "for becoming Active after Lying Low", "to CANCEL Activation due to Security Measures");
                         }
                         if (proceedFlag == true)
                         {
@@ -3064,7 +3065,7 @@ public class ActorManager : MonoBehaviour
                                 if (proceedFlag == true && conflict.Value.type == typeGood && actor.CheckTraitEffect(actorConflictNoGoodOptions) == true)
                                 {
                                     proceedFlag = false;
-                                    TraitLogMessage(actor, "to eliminate Good options in a Conflict");
+                                    TraitLogMessage(actor, "for determining the type of Relationship Conflict", "to ELIMINATE any Good options");
                                 }
                                 //test flag
                                 if (proceedFlag == true && conflict.Value.isTestOff == true)
@@ -3129,6 +3130,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         outputMsg = string.Format("{0}does NOT Resign{1}", colourGood, colourEnd);
                                         threatMsg = "does NOT Resign";
+                                        TraitLogMessage(actor, "for a Resign conflict outcome", "to AVOID Resigning");
                                     }
                                     else
                                     {
@@ -3227,7 +3229,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //trait actorConflictNone (Team Player)
-                TraitLogMessage(actor, "to avoid a Relationship Conflict");
+                TraitLogMessage(actor, "for a Relationship Conflict check", "to AVOID any type of Conflict");
                 builder.AppendFormat("{0}{1} has {2}{3}{4}{5} trait{6}", colourNormal, actor.arc.name, colourNeutral, actor.GetTrait().tag, colourEnd, colourNormal, colourEnd);
                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                 //message
@@ -3283,7 +3285,7 @@ public class ActorManager : MonoBehaviour
                         //add trait to output
                         outputMsg = string.Format("{0}{1} killed by {2}{3}{4}{5}{6} {7}{8}  ", colourBad, actorVictim.arc.name, colourEnd, colourNeutral, actorKiller.GetTrait().tag, 
                             colourEnd, colourBad, actorKiller.arc.name, colourEnd);
-                        TraitLogMessage(actorKiller, "to kill a friend");
+                        TraitLogMessage(actorKiller, "for a Relationship Conflict outcome",  "to kill a fellow Subordinate");
                     }
                     else
                     { outputMsg = string.Format("{0}{1} killed by {2}{3}", colourBad, actorVictim.arc.name, actorKiller.arc.name, colourEnd); }
@@ -3622,6 +3624,16 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (listOfBadConditions.Count > 0)
                                 { ProcessCompatibility(actor, listOfBadConditions); }
+                                //
+                                // - - - Invisibility Zero warning - - -
+                                //
+                                if (actor.datapoint2 == 0)
+                                { ProcessInvisibilityWarning(actor); }
+                                //
+                                // - - - Motivation Warning - - -
+                                //
+                                if (actor.datapoint1 == 0)
+                                { ProcessMotivationWarning(actor); }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
@@ -3731,11 +3743,11 @@ public class ActorManager : MonoBehaviour
         {
             //Trait Check
             if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
-            { chance *= 2; TraitLogMessage(actor, "for a Nervous Breakdown check (doubled)"); }
+            { chance *= 2; TraitLogMessage(actor, "for a Nervous Breakdown check", "to DOUBLE the chance of a breakdown"); }
             else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
-            { chance /= 2; TraitLogMessage(actor, " for a Nervous Breakdown check (halved)"); }
+            { chance /= 2; TraitLogMessage(actor, "for a Nervous Breakdown check", "to HALVE the chance of a breakdown"); }
             else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
-            { chance = 0; TraitLogMessage(actor, "to prevent a Nervous Breakdown"); }
+            { chance = 0; TraitLogMessage(actor, "for a Nervous Breakdown check", "to PREVENT a breakdown"); }
             //test
             int rnd = Random.Range(0, 100);
             if (rnd < chance)
@@ -3761,6 +3773,7 @@ public class ActorManager : MonoBehaviour
     private string ProcessBlackmail(Actor actor)
     {
         string text = null;
+        string msgText, reason;
         bool isResolved = false;
         //decrement timer
         actor.blackmailTimer--;
@@ -3773,12 +3786,12 @@ public class ActorManager : MonoBehaviour
                 actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has Maximum Motivation", actor.arc.name));
                 isResolved = true;
                 //message
-                string msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
-                string reason = string.Format("{0} has regained MAXIMUM Motivation", actor.arc.name);
+                msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
+                reason = string.Format("{0} has regained MAXIMUM Motivation", actor.arc.name);
                 GameManager.instance.messageScript.ActorBlackmail(msgText, actor, -1, true, reason);
             }
             else
-            { TraitLogMessage(actor, "to avoid being bought-off"); }
+            { TraitLogMessage(actor, "for a Stop Blackmail check", "to REFUSE being bought-off"); }
         }
         if (isResolved == false)
         {
@@ -3795,7 +3808,7 @@ public class ActorManager : MonoBehaviour
                     secret.status = GameManager.instance.secretScript.secretStatusRevealed;
                     StringBuilder builder = new StringBuilder();
                     //message
-                    string msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
+                    msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
                     GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.secretID);
                     //carry out effects
                     if (secret.listOfEffects != null)
@@ -3835,10 +3848,10 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //warning message
-                string msgText = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
+                msgText = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
                     actor.blackmailTimer != 1 ? "s" : "");
                 string itemText = string.Format("{0} is Blackmailing you", actor.arc.name);
-                string reason = string.Format("This is a result of a conflict between you and {0}, {1}", actor.actorName, actor.arc.name);
+                reason = string.Format("This is a result of a conflict between you and {0}, {1}", actor.actorName, actor.arc.name);
                 string warning = string.Format("<b>{0} will reveal your Secret in {1} turn{2}</b>", actor.arc.name, actor.blackmailTimer, actor.blackmailTimer != 1 ? "s" : "");
                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Blackmail", reason, warning);
             }
@@ -3860,12 +3873,15 @@ public class ActorManager : MonoBehaviour
             bool isProceed;
             //actor already knows any secrets
             bool knowSecret = false;
-            if (actor.CheckNumOfSecrets() > 0) { knowSecret = true; }
+            int actorSecrets = actor.CheckNumOfSecrets();
+            if (actorSecrets > 0) { knowSecret = true; }
             //trait Detective
             if (actor.CheckTraitEffect(actorSecretChanceHigh) == true)
             {
                 chance *= 3;
-                TraitLogMessage(actor, "triple chance of learning Secrets");
+                //only do trait message if there is a secret to learn to avoid message spam (can't learn secret on first turn as player doesn't gain it until after in sequence)
+                if (GameManager.instance.turnScript.Turn > 1 && actorSecrets < listOfSecrets.Count)
+                { TraitLogMessage(actor, "for a Learn Secret check", "to TRIPLE chance of learning a Secret"); }
             }
             //trait Blind
             if (actor.CheckTraitEffect(actorSecretChanceNone) == false)
@@ -3904,8 +3920,13 @@ public class ActorManager : MonoBehaviour
                                     {
                                         //actor passes secret onto all other actors
                                         int numTold = ProcessSecretTellAll(secret, actor);
-                                        TraitLogMessage(actor, string.Format("tell {0} other {1} about the secret", numTold, numTold != 1 ? "people" : "person"));
+                                        TraitLogMessage(actor, "for passing on secrets", "to TELL ALL about secret");
                                     }
+                                }
+                                else
+                                {
+                                    string text = string.Format("{0}, {1}, didn't learned Secret", actor.actorName, actor.arc.name);
+                                    GameManager.instance.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
                                 }
                             }
                             /*else { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessSecrets: Can't learn secret, gained turn {0}, current turn {1}", secret.gainedWhen, GameManager.instance.turnScript.Turn); }*/
@@ -3914,7 +3935,7 @@ public class ActorManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
                 }
             }
-            else { TraitLogMessage(actor, "to not learn Secrets"); }
+            else { TraitLogMessage(actor, "for a Learn Secret check", "to AVOID learning any secrets"); }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
     }
@@ -3979,7 +4000,10 @@ public class ActorManager : MonoBehaviour
                     chance = playerBadResignChance * numOfBadConditions;
                     //trait check -> 'Ethical' (triple chance of resigning)
                     if (actor.CheckTraitEffect(actorResignHigh) == true)
-                    { chance *= 3; }
+                    {
+                        chance *= 3;
+                        TraitLogMessage(actor, "for a Resignation check", "to TRIPLE chance of Resigning");
+                    }
                     rnd = Random.Range(0, 100);
                     if (rnd < chance)
                     {
@@ -4016,7 +4040,7 @@ public class ActorManager : MonoBehaviour
                 else
                 {
                     //trait actorResignNone "Loyal"
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "to decline Resigning");
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
                     //General Info message
                     msgText = string.Format("{0} considered Resigning but didn't because they are LOYAL", actor.arc.name);
                     itemText = string.Format("{0} almost RESIGNS", actor.arc.name);
@@ -4028,6 +4052,24 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfBadConditions (empty)"); }
         }
         else { Debug.LogWarning("Invalid listOfBadConditions (Null)"); }
+    }
+
+    /// <summary>
+    /// Warning if actor Invisibility Zero
+    /// </summary>
+    /// <param name="actor"></param>
+    private void ProcessInvisibilityWarning(Actor actor)
+    {
+
+    }
+
+    /// <summary>
+    /// Warning if actor Motivation Zero
+    /// </summary>
+    /// <param name="actor"></param>
+    private void ProcessMotivationWarning(Actor actor)
+    {
+
     }
 
     /// <summary>
@@ -4549,15 +4591,16 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Generates a log message indicating use of a trait. Input skillCheck as "Actor uses x trait ...... (for a Nervous Breakdown check / to prevent Stressed)"
-    /// 'Reason' in format '[for an] End Blackmail [check]', 'isBad' true for a good (for player), isBad true if a Bad trait, false if a good one (helps player)
+    /// Generates a log message indicating use of a trait. Output format is  "Actor uses x trait' 
+    /// 'forText' (self-contained), eg.'for an attempt on a Target', 'toText (self-Contained), eg. 'to CANCEL attempt due to Security Measures' (Key word in CAPS, usually verb)
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="skillCheck"></param>
-    public void TraitLogMessage(Actor actor, Trait trait, string forText, string toText)
+    public void TraitLogMessage(Actor actor, string forText, string toText)
     {
         if (actor != null)
         {
+            Trait trait = actor.GetTrait();
             if (trait != null)
             {
                 if (string.IsNullOrEmpty(toText) == false)

@@ -27,7 +27,7 @@ public class AuthorityManager : MonoBehaviour
     /// Method generates a DecisionGlobal message using descriptor
     /// </summary>
     /// <param name="state"></param>
-    public bool SetAuthoritySecurityState(string descriptor, AuthoritySecurityState state = AuthoritySecurityState.Normal)
+    public bool SetAuthoritySecurityState(string descriptor, string warning, AuthoritySecurityState state = AuthoritySecurityState.Normal)
     {
         bool isPublic = false;
         bool isDone = false;
@@ -47,7 +47,7 @@ public class AuthorityManager : MonoBehaviour
                 default:
                     break;
             }
-            GameManager.instance.messageScript.DecisionGlobal(descriptor, 0, globalBoth, isPublic);
+            GameManager.instance.messageScript.DecisionGlobal(descriptor, warning, 0, globalBoth, isPublic);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
         return isDone;

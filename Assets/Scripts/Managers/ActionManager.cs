@@ -312,7 +312,7 @@ public class ActionManager : MonoBehaviour
                                     if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                     builderBottom.AppendFormat("{0}Gains {1}{2}STRESSED{3}{4} condition due to{5}{6}{7}{8}{9} trait{10}", colourBad, colourEnd,
                                         colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd, colourBad, colourEnd);
-                                    GameManager.instance.actorScript.TraitLogMessage(actor, "and gains STRESSED condition");
+                                    GameManager.instance.actorScript.TraitLogMessage(actor, "for carrying out a district action", "to become STRESSED due to Security Measures");
                                 }
                                 else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                             }
@@ -1347,6 +1347,7 @@ public class ActionManager : MonoBehaviour
                             //trait -> (Pack Rat) refuses to hand back gear
                             builder.AppendFormat("{0}{1}{2} has {3}{4}{5} trait{6}{7}REFUSES to handback gear{8}", "\n", "\n", actor.arc.name, colourNeutral, actor.GetTrait().tag,
                                 colourEnd, "\n", colourBad, colourEnd);
+                            GameManager.instance.actorScript.TraitLogMessage(actor, "for Returning Gear", "to AVOID doing so");
                         }
                         if (string.IsNullOrEmpty(textGear) == false)
                         {

@@ -150,7 +150,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}<b>Alert!</b>{1}{2}{3}{4}{5}", colourNeutral, colourEnd, "\n", reason, "\n", "\n");
         if (isBad == true)
         { builder.AppendFormat("{0}{1}{2}", colourBad, warning, colourEnd); }
-        else { builder.AppendFormat("{0}{1}{2}", colourGood, warning, colourEnd); }
+        else { builder.AppendFormat("{0}<b>{1}</b>{2}", colourGood, warning, colourEnd); }
         return builder.ToString();
     }
 
@@ -269,7 +269,7 @@ public class ItemDataManager : MonoBehaviour
             builder.AppendFormat("{0}, {1}{2}{3} has a{4}Relationship Conflict with you{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
             ActorConflict conflict = GameManager.instance.dataScript.GetActorConflict(conflictID);
             if (conflict != null)
-            {  builder.AppendFormat("{0} threatens to{1}{2}{3}{4}", actor.actorName, "\n", colourBad, conflict.threatText, colourEnd); }
+            {  builder.AppendFormat("{0} threatens to{1}{2}<b>{3}</b>{4}", actor.actorName, "\n", colourBad, conflict.threatText, colourEnd); }
             else { Debug.LogWarningFormat("Invalid actorConflict (Null) for conflictID {0}", conflictID); }
         }
         else
@@ -327,7 +327,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetActorTraitDetails(Actor actor, Trait trait, string forText, string toText)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3} uses{4}<b>{5}</b>{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, trait.tag, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}{2}{3} uses{4}{5}<b>{6}</b>{7} trait{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, trait.tag, colourEnd, "\n");
         if (string.IsNullOrEmpty(forText) == false)
         { builder.AppendFormat("{0}{1}{2}", forText, "\n", "\n"); }
         else { Debug.LogWarning("Invalid forText (Null or Empty)"); }
@@ -341,7 +341,7 @@ public class ItemDataManager : MonoBehaviour
                 case 2: colourTrait = colourGood; break;
                 default: colourTrait = colourNeutral; break;
             }
-            builder.AppendFormat("{0}{1}{2}", colourTrait, toText, colourEnd);
+            builder.AppendFormat("{0}<b>{1}</b>{2}", colourTrait, toText, colourEnd);
         }
         else { Debug.LogWarning("Invalid toText (Null or Empty)"); }
         return builder.ToString();
@@ -610,6 +610,27 @@ public class ItemDataManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for secretID {0}", secret.secretID); }
         return builder;
+    }
+
+
+    //
+    // - - - AI - - -
+    //
+
+    /// <summary>
+    /// city wide decision, eg. Surveillane crackdown
+    /// </summary>
+    /// <param name="descriptor"></param>
+    /// <param name="warning"></param>
+    /// <returns></returns>
+    public string GetDecisionGlobalDetails(string descriptor, string warning)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(descriptor) == false)
+        { builder.AppendFormat("<b>{0}</b>{1}{2}{3}{4}", GameManager.instance.cityScript.GetCityName(), "\n", descriptor, "\n", "\n"); }
+        if (string.IsNullOrEmpty(warning) == false)
+        { builder.AppendFormat("{0}<b>{1}</b>{2}", colourBad, warning, colourEnd); }
+        return builder.ToString();
     }
 
 }

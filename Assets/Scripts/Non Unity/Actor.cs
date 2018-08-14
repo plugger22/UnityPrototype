@@ -44,6 +44,7 @@ namespace gameAPI
         private int actorStressNone;
         private int actorCorruptNone;
         private int actorUnhappyNone;
+        private int actorBlackmailNone;
         private int actorBlackmailTimerHigh;
         private int actorBlackmailTimerLow;
         private int maxNumOfSecrets = -1;
@@ -100,6 +101,7 @@ namespace gameAPI
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
             actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
+            actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
             actorBlackmailTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerHigh");
             actorBlackmailTimerLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerLow");
             maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
@@ -107,6 +109,7 @@ namespace gameAPI
             Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
             Debug.Assert(actorStressNone > -1, "Invalid actorCorruptNone (-1)");
             Debug.Assert(actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
+            Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
             Debug.Assert(actorBlackmailTimerHigh > -1, "Invalid actorBlackmailTimerHigh (-1)");
             Debug.Assert(actorBlackmailTimerLow > -1, "Invalid actorBlackmailTimerLow (-1)");
         }
@@ -166,24 +169,29 @@ namespace gameAPI
                 {
                     case "STRESSED":
                         if (CheckTraitEffect(actorStressNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "to prevent STRESSED Condition");  }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Stressed check", "to AVOID becoming Stressed");  }
                         else { proceedFlag = true; }
                         break;
                     case "CORRUPT":
                         if (CheckTraitEffect(actorCorruptNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "to prevent CORRUPT Condition"); }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Corrupt check", "to AVOID becoming Corrupt"); }
                         else { proceedFlag = true; }
                         break;
                     case "UNHAPPY":
                         if (CheckTraitEffect(actorUnhappyNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "to prevent UNHAPPY Condition");  }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Unhappy check", "to AVOID becoming Unhappy");  }
                         else { proceedFlag = true; }
                         break;
                     case "BLACKMAILER":
                         //need to have at least one secret
                         if (listOfSecrets.Count == 0)
                         { Debug.Log("Actor.cs -> AddCondition: BLACKMAIL condition NOT added (Actor has no Secrets)"); }
-                        else { proceedFlag = true; }
+                        else
+                        {
+                            if (CheckTraitEffect(actorBlackmailNone) == true)
+                            { GameManager.instance.actorScript.TraitLogMessage(this, "for a Blackmailer check", "to AVOID Blackmailing"); }
+                            else { proceedFlag = true; }
+                        }
                         break;
                     default:
                         //All O.K
@@ -203,11 +211,15 @@ namespace gameAPI
                                 int timer = GameManager.instance.secretScript.secretBlackmailTimer;
                                 //traits
                                 if (CheckTraitEffect(actorBlackmailTimerHigh) == true)
-                                { timer *= 3; }
+                                {
+                                    timer *= 3;
+                                    GameManager.instance.actorScript.TraitLogMessage(this, "for a Blackmailer Timer check", "to TRIPLE Blackmail timer");
+                                }
                                 if (CheckTraitEffect(actorBlackmailTimerLow) == true)
                                 {
                                     timer /= 2;
                                     timer = Mathf.Max(0, timer);
+                                    GameManager.instance.actorScript.TraitLogMessage(this, "for a Blackmailer Timer check", "to HALVE Blackmail timer");
                                 }
                                 blackmailTimer = timer;
                                 break;

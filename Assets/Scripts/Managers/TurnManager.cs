@@ -618,7 +618,7 @@ public class TurnManager : MonoBehaviour
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
                         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");}
                         //set state
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.APB);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.APB);
                         
                         break;
                     case "sec":
@@ -629,7 +629,7 @@ public class TurnManager : MonoBehaviour
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
                         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SecurityAlert);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SecurityAlert);
                         break;
                     case "sur":
                     case "SUR":
@@ -639,13 +639,13 @@ public class TurnManager : MonoBehaviour
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
                         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, AuthoritySecurityState.SurveillanceCrackdown);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SurveillanceCrackdown);
                         break;
                     case "nor":
                     case "NOR":
                         //reset back to normal
                         text = string.Format("AuthorityState reset to {0}", state);
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text);
+                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action");
                         //stop flashing red alarm
                         EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");
                         break;
@@ -684,7 +684,7 @@ public class TurnManager : MonoBehaviour
             //if no Erasure teams currently on map, revert state to normal
             if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap) <= 0)
             {
-                GameManager.instance.authorityScript.SetAuthoritySecurityState(text);
+                GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Security Measures Cancelled");
                 //switch off flashing red indicator on top widget UI
                 EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> UpdateStates");
             }

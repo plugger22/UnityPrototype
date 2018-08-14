@@ -10,6 +10,8 @@ public class DecisionAI : ScriptableObject
 {
     [Tooltip("Used for task description in the AIDisplayUI")]
     public string descriptor;
+    [Tooltip("Used for warning in ItemData notification")]
+    public string warning;
     [TextArea]
     [Tooltip("Used for task tooltip (further explanation) in the AIDisplayUI. Use Rich text formatting where needed (eg. '<b> </b>')")]
     public string tooltipDescriptor;
