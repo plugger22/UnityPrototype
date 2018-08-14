@@ -4306,10 +4306,10 @@ public class ActorManager : MonoBehaviour
                                     actor.datapoint1, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
-                                itemText = string.Format("Reserve {0} lost Motivation", actor.arc.name);
+                                itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
                                 reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                 warning = string.Format("{0} {1}Motivation -1{2}", actor.actorName, colourBad, colourEnd);
-                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Lost Motivation", reason, warning);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Loses Motivation", reason, warning);
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                                 msgText = string.Format("Unhappy {0} Motivation check SUCCESS", actor.arc.name);
@@ -4356,7 +4356,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //actor about to take action warning
                                 msgText = string.Format("{0}, {1}, in Reserves, is about to Act", actor.actorName, actor.arc.name);
-                                itemText = string.Format("Reserve {0} us about to Act", actor.arc.name);
+                                itemText = string.Format("Reserve {0} is about to Act", actor.arc.name);
                                 reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                 warning = string.Format("{0} is about to {1}<b>TAKE DECISIVE ACTION</b>{2}", actor.actorName, colourBad, colourEnd);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "On the Edge", reason, warning);
@@ -4391,7 +4391,7 @@ public class ActorManager : MonoBehaviour
                             msgText = string.Format("{0}, {1}, in Reserves, will be Unhappy in 1 turn", actor.actorName, actor.arc.name);
                             itemText = string.Format("Reserve {0} about to become Unhappy", actor.arc.name);
                             reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                            warning = string.Format("An {0}<b>UNHAPPY</b>{1} subordinate will, at some point, {2}express their displeasure{3}", colourNeutral, colourEnd, colourBad, colourEnd);
+                            warning = "An <b>UNHAPPY</b> subordinate is unpredictable";
                             GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy next turn", reason, warning, false);
                         }
                         //if timer now zero, gain condition "Unhappy"
@@ -4403,7 +4403,7 @@ public class ActorManager : MonoBehaviour
                             msgText = string.Format("{0}, {1}, in Reserves, has become UNHAPPY", actor.actorName, actor.arc.name);
                             itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
                             reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                            warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
+                            warning = string.Format("{0} is threatening action", actor.actorName);
                             GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy Now", reason, warning);
                         }
                     }
@@ -4425,10 +4425,10 @@ public class ActorManager : MonoBehaviour
                                     actor.actorName, actor.datapoint1, chance, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
-                                itemText = string.Format("Reserve {0} lost Motivation", actor.arc.name);
+                                itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
                                 reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                                warning = string.Format("{0} {1}Motivation -1{2}", actor.actorName, colourBad, colourEnd);
-                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Lost Motivation", reason, warning);
+                                warning = string.Format("{0} <b>Motivation -1</b>", actor.actorName);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Loses Motivation", reason, warning);
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                                 msgText = string.Format("Unhappy {0} Motivation check SUCCESS", actor.arc.name);
@@ -4440,7 +4440,7 @@ public class ActorManager : MonoBehaviour
                                 msgText = string.Format("{0}, {1}, in Reserves, is UNHAPPY", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
                                 reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                                warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
+                                warning = string.Format("{0} is threatening action", actor.actorName);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy", reason, warning);
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
@@ -4474,9 +4474,9 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //actor about to take action warning
                                 msgText = string.Format("{0}, {1}, in Reserves, is about to Act", actor.actorName, actor.arc.name);
-                                itemText = string.Format("Reserve {0} us about to Act", actor.arc.name);
+                                itemText = string.Format("Reserve {0} is about to Act", actor.arc.name);
                                 reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                                warning = string.Format("{0} is about to {1}<b>TAKE DECISIVE ACTION</b>{2}", actor.actorName, colourBad, colourEnd);
+                                warning = string.Format("{0} is about to <b>TAKE DECISIVE ACTION</b>", actor.actorName);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "On the Edge", reason, warning);
                             }
                         }

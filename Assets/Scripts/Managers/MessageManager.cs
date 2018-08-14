@@ -176,6 +176,7 @@ public class MessageManager : MonoBehaviour
     /// <summary>
     /// General Warning message. 'itemText' is itemData.text, 'reason' is a self-contained sentence, 'warning' is a self-contained (shown Red is 'isBad' true, otherwise Green)
     /// 'isHighPriority' if true, Medium priority othewise. 'topText' is RHS short tag. Default playerSide
+    /// NOTE: Don't put any formatting (colour or extra linefeeds) in 'warning'
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
