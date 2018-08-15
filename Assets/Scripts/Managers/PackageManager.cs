@@ -271,4 +271,13 @@ namespace packageAPI
 
 
     }
+
+    /// <summary>
+    /// Used to return data from ActorManager.cs -> GetManageRenownCost for extra costs incurred due to actor knowing secrets and/ or threatening player
+    /// </summary>
+    public class ManageRenownCost
+    {
+        public int renownCost;
+        public string tooltip;
+    }
 }

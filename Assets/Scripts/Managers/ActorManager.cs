@@ -4802,5 +4802,52 @@ public class ActorManager : MonoBehaviour
         return data;
     }
 
+
+    /// <summary>
+    /// sub method used to calculate adjusted renown cost for dismissing, firing , disposing off actors (where a cost is involved) due to actor threatening player and/or knowing secrets
+    /// Returns a ManageRenown data package giving adjusted cost and a colour formatted tooltip string (starts on next line) explaining why, eg. '(HEAVY knows 1 secret, +1 Renown cost)'
+    /// Returns baseCost and null for tooltip if no change
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="baseCost"></param>
+    /// <returns></returns>
+    public ManageRenownCost GetManageRenownCost(Actor actor, int baseCost)
+    {
+        ManageRenownCost manageRenown = new ManageRenownCost();
+        //default values returned
+        manageRenown.tooltip = "";
+        manageRenown.renownCost = baseCost;
+        //proceed with a valid actor
+        if (actor != null)
+        {
+            
+            int numOfSecrets = actor.CheckNumOfSecrets();
+            int extraSecretCost = 0;
+            //calculate adjusted renown cost
+            if (numOfSecrets > 0)
+            {
+                extraSecretCost = numOfSecrets * manageSecretCost;
+                manageRenown.renownCost += extraSecretCost;
+            }
+            if (actor.isThreatening == true) { manageRenown.renownCost *= 2; }
+            //generate tooltip
+            StringBuilder builder = new StringBuilder();
+            if (numOfSecrets > 0)
+            {
+                builder.AppendLine();
+                builder.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost{5})", colourBad, actor.arc.name, numOfSecrets,
+                    numOfSecrets != 1 ? "s" : "", extraSecretCost, colourEnd);
+            }
+            if (actor.isThreatening == true)
+            {
+                builder.AppendLine();
+                builder.AppendFormat("({0}Double Renown cost as {1} is Threatening you{2})", colourBad, actor.arc.name, colourEnd);
+            }
+            manageRenown.tooltip = builder.ToString();
+        }
+        else { Debug.LogWarning("Invalid Actor (Null)"); }
+        return manageRenown;
+    }
+
     //new methods above here
 }
