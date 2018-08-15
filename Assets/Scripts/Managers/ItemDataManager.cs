@@ -345,6 +345,20 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Actor recruited
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="unhappyTimer"></param>
+    /// <returns></returns>
+    public string GetActorRecruitedDetails(Actor actor, int unhappyTimer)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}has been Recruited{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
+        builder.AppendFormat("{0} awaits your command in the Reserves{1}{2}{3} Unhappy in {4} turn{5}{6}", actor.actorName, "\n", colourBad, actor.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "", colourEnd);
+        return builder.ToString();
+    }
+
     //
     // - - - Gear - - -
     //

@@ -632,10 +632,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message ActorRecruited(string text, int nodeID, Actor actor, GlobalSide side)
+    public Message ActorRecruited(string text, int nodeID, Actor actor, int unhappyTimer)
     {
-        Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(actor != null, "Invalid actor (Null)");
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         if (side.level == globalResistance.level)
         { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
         if (string.IsNullOrEmpty(text) == false)
@@ -647,11 +647,12 @@ public class MessageManager : MonoBehaviour
             message.side = side;
             message.data0 = nodeID;
             message.data1 = actor.actorID;
+            message.data2 = unhappyTimer;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} Recruited", actor.arc.name);
             data.topText = "Recruited";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetActorRecruitedDetails(actor, unhappyTimer);
             data.priority = ItemPriority.Low;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;

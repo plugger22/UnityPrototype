@@ -2667,9 +2667,26 @@ public class ActorManager : MonoBehaviour
                             int numOfSecrets = actor.CheckNumOfSecrets();
                             if (numOfSecrets > 0)
                             {
+                                builderDetails.AppendFormat("{0}{1}Secrets{2}", "\n", colourAlert, colourEnd);
+                                List<string> listOfSecrets = actor.GetSecretsTooltipList();
+                                if (listOfSecrets != null)
+                                {
+                                    foreach(String secret in listOfSecrets)
+                                    { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, secret, colourEnd); }
+                                }
+                                else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
 
                             }
                             //gear
+                            int gearID = actor.GetGearID();
+                            if (gearID > -1)
+                            {
+                                builderDetails.AppendFormat("{0}{1}Gear{2}", "\n", colourAlert, colourEnd);
+                                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                if (gear != null)
+                                { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, gear.name, colourEnd); }
+                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gearID {0}", gearID); }
+                            }
 
                             tooltipDetails.textDetails = builderDetails.ToString();
                             //add to arrays
@@ -2850,7 +2867,7 @@ public class ActorManager : MonoBehaviour
                             //message
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
-                            GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, globalResistance);
+                            GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, actorRecruited.unhappyTimer);
                             //Process any other effects, if acquisition was successfull, ignore otherwise
                             Action action = actorCurrent.arc.nodeAction;
                             Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
@@ -2970,7 +2987,7 @@ public class ActorManager : MonoBehaviour
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
-                        GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, globalAuthority);
+                        GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, actorRecruited.unhappyTimer);
                         //actor successfully recruited
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
@@ -4301,15 +4318,9 @@ public class ActorManager : MonoBehaviour
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                             actor.AddCondition(condition, string.Format("{0} upset at being left in the Reserves", actor.arc.name));
-                            /*//unhappy now warning-> Not needed, Duplicate to condition message
-                            msgText = string.Format("{0}, {1}, in Reserves, has become UNHAPPY", actor.actorName, actor.arc.name);
-                            itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
-                            reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                            warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
-                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy Now", reason, warning);*/
                         }
-                        }
-                        else
+                    }
+                    else
                     {
                         //unhappy timer has reached zero. Is actor's motivation > 0?
                         if (actor.datapoint1 > 0)
@@ -4320,10 +4331,10 @@ public class ActorManager : MonoBehaviour
                             if (actor.isPromised == true)
                             { chance = 100; }
                             rnd = Random.Range(0, 100);
-                            if ( rnd < chance)
+                            if (rnd < chance)
                             {
                                 actor.datapoint1--;
-                                Debug.LogFormat("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName, 
+                                Debug.LogFormat("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName,
                                     actor.datapoint1, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
@@ -4360,7 +4371,7 @@ public class ActorManager : MonoBehaviour
                             if (actor.isReassured == true)
                             { chance *= 2; }
                             rnd = Random.Range(0, 100);
-                            if ( rnd < chance)
+                            if (rnd < chance)
                             {
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Action check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
@@ -4369,7 +4380,6 @@ public class ActorManager : MonoBehaviour
                                 //action taken
                                 Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {2}", actor.arc.name, actor.actorName, "\n"));
                                 TakeAction(actor);
-
                             }
                             else
                             {
@@ -4422,12 +4432,6 @@ public class ActorManager : MonoBehaviour
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                             actor.AddCondition(condition, string.Format("{0} upset at being left in the Reserves", actor.arc.name));
-                            /*//unhappy now warning -> Not needed, Duplicate to condition message
-                            msgText = string.Format("{0}, {1}, in Reserves, has become UNHAPPY", actor.actorName, actor.arc.name);
-                            itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
-                            reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                            warning = string.Format("{0} is threatening action", actor.actorName);
-                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy Now", reason, warning);*/
                         }
                     }
                     else

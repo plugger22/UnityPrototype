@@ -1333,8 +1333,11 @@ public class EffectManager : MonoBehaviour
                                                     StringBuilder builder = new StringBuilder();
                                                     builder.Append(effectReturn.bottomText);
 
-                                                    builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
-                                                        colourBadSide, colourEnd, colourAlert, colourEnd, colourBadSide, colourEnd, colourNeutral, colourEnd, colourBadSide, colourEnd);
+                                                    /*builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
+                                                        colourBadSide, colourEnd, colourAlert, colourEnd, colourBadSide, colourEnd, colourNeutral, colourEnd, colourBadSide, colourEnd);*/
+                                                    builder.AppendLine(); builder.AppendLine();
+                                                    builder.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
+                                                        colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
                                                     effectReturn.bottomText = builder.ToString();
                                                 }
                                             }

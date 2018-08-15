@@ -310,8 +310,8 @@ public class ActionManager : MonoBehaviour
                                 {
                                     actor.AddCondition(stressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
                                     if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                    builderBottom.AppendFormat("{0}Gains {1}{2}STRESSED{3}{4} condition due to{5}{6}{7}{8}{9} trait{10}", colourBad, colourEnd,
-                                        colourAlert, colourEnd, colourBad, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd, colourBad, colourEnd);
+                                    builderBottom.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
+                                        colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
                                     GameManager.instance.actorScript.TraitLogMessage(actor, "for carrying out a district action", "to become STRESSED due to Security Measures");
                                 }
                                 else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
@@ -2345,6 +2345,7 @@ public class ActionManager : MonoBehaviour
         bool successFlag = true;
         string msgText = "Unknown";
         int numOfTeams = 0;
+        int gearID;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.guiScript.errorSprite;
@@ -2357,6 +2358,7 @@ public class ActionManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                 if (actor != null)
                 {
+                    gearID = actor.GetGearID();
                     //add actor to reserve pool
                     if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
                     {
@@ -2400,6 +2402,21 @@ public class ActionManager : MonoBehaviour
                                 { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                 builderBottom.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
                                 numOfTeams != 1 ? "s" : "", colourEnd);
+                            }
+                            //gear
+                            if (gearID > -1)
+                            {
+                                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                if (gear != null)
+                                {
+                                    if (builderBottom.Length > 0)
+                                    { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                    builderBottom.AppendFormat("{0}{1} gear Lost{2}", colourBad, gear.name, colourEnd);
+                                    //message
+                                    string gearText = string.Format("{0} gear lost by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                    GameManager.instance.messageScript.GearLost(gearText, gear, actor);
+                                }
+                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gearID {0}", gearID); }
                             }
                         }
                         else
