@@ -587,25 +587,28 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "RenownDismissMin":
                                                 //player -> extra cost for actor knowing secrets and threatening player
-                                                ManageRenownCost manageRenownCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
-                                                int renownDismiss = manageRenownCost.renownCost;
+                                                ManageRenownCost manageDismissCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
+                                                int renownDismiss = manageDismissCost.renownCost;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDismiss)
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
                                                       colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
-                                                    if (String.IsNullOrEmpty(manageRenownCost.tooltip) == false)
-                                                    { result.Append(manageRenownCost.tooltip); }
+                                                    if (String.IsNullOrEmpty(manageDismissCost.tooltip) == false)
+                                                    { result.Append(manageDismissCost.tooltip); }
                                                 }
                                                 break;
                                             case "RenownDisposeMin":
-                                                //player
-                                                int renownDispose = GameManager.instance.actorScript.manageDisposeRenown;
+                                                //player -> extra cost for actor knowing secrets and threatening player
+                                                ManageRenownCost manageDisposeCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDisposeRenown);
+                                                int renownDispose = manageDisposeCost.renownCost;
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDispose)
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose,
                                                       colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                    if (String.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
+                                                    { result.Append(manageDisposeCost.tooltip); }
                                                 }
                                                 break;
                                             case "RenownNOTZero":
@@ -2761,14 +2764,24 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 break;
             case "ManageDismissRenown":
-                data = GameManager.instance.actorScript.manageDismissRenown;
+                ManageRenownCost manageDismissCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
+                data = manageDismissCost.renownCost;
                 GameManager.instance.playerScript.Renown -= data;
-                effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                StringBuilder builderDismiss = new StringBuilder();
+                builderDismiss.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                if (String.IsNullOrEmpty(manageDismissCost.tooltip) == false)
+                { builderDismiss.Append(manageDismissCost.tooltip); }
+                effectResolve.bottomText = builderDismiss.ToString();
                 break;
             case "ManageDisposeRenown":
-                data = GameManager.instance.actorScript.manageDisposeRenown;
+                ManageRenownCost manageDisposeCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDisposeRenown);
+                data = manageDisposeCost.renownCost;
                 GameManager.instance.playerScript.Renown -= data;
-                effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                StringBuilder builderDispose = new StringBuilder();
+                builderDispose.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                if (String.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
+                { builderDispose.Append(manageDisposeCost.tooltip); }
+                effectResolve.bottomText = builderDispose.ToString();
                 break;
             case "UnhappyTimerRest":
                 data = GameManager.instance.actorScript.restReserveTimer;

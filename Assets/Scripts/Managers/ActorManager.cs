@@ -2175,25 +2175,13 @@ public class ActorManager : MonoBehaviour
             builderTooltip.AppendLine();
             builderTooltip.AppendFormat("{0}Can be recruited again{1}", colourNeutral, colourEnd);
             builderTooltip.AppendLine();
-            //base cost to dismiss increased by one for every secret actor has learned
-            int numOfSecrets = actor.GetListOfSecrets().Count;
-            renownCost = manageDismissRenown;
-            renownCost += ( numOfSecrets * manageSecretCost);
-            //double renown cost if actor threatening to take action against player
-            if (actor.isThreatening == true)
-            { renownCost *= 2; }
+            //allow for secrets and threats
+            ManageRenownCost manageRenownCost = GetManageRenownCost(actor, manageDismissRenown);
+            renownCost = manageRenownCost.renownCost;
             //tooltip
             builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
-            if (numOfSecrets > 0)
-            {
-                builderTooltip.AppendLine();
-                builderTooltip.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost{5})", colourCancel, actor.arc.name, numOfSecrets, numOfSecrets != 1 ? "s" : "", numOfSecrets * manageSecretCost, colourEnd);
-            }
-            if (actor.isThreatening == true)
-            {
-                builderTooltip.AppendLine();
-                builderTooltip.AppendFormat("({0}Double Renown cost as {1} is Threatening you{2})", colourCancel, actor.arc.name, colourEnd);
-            }
+            if (String.IsNullOrEmpty(manageRenownCost.tooltip) == false)
+            { builderTooltip.Append(manageRenownCost.tooltip); }
             //only show button if player has enough renown to cover the cost of firing
             if (playerRenown >= renownCost)
             {
@@ -4835,13 +4823,13 @@ public class ActorManager : MonoBehaviour
             if (numOfSecrets > 0)
             {
                 builder.AppendLine();
-                builder.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost{5})", colourBad, actor.arc.name, numOfSecrets,
+                builder.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost){5}", colourAlert, actor.arc.name, numOfSecrets,
                     numOfSecrets != 1 ? "s" : "", extraSecretCost, colourEnd);
             }
             if (actor.isThreatening == true)
             {
                 builder.AppendLine();
-                builder.AppendFormat("({0}Double Renown cost as {1} is Threatening you{2})", colourBad, actor.arc.name, colourEnd);
+                builder.AppendFormat("({0}Double Renown cost as {1} is Threatening you){2}", colourAlert, actor.arc.name, colourEnd);
             }
             manageRenown.tooltip = builder.ToString();
         }
