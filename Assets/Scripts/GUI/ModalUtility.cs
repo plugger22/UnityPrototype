@@ -58,6 +58,7 @@ namespace modalAPI
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
         public int gearID;                                              //Resistance only: special node gear actions
         public Action gearAction;                                       //Resistance only: Special node Gear actions, eg. gearKinetic
+        public int renownCost;                                          //renown cost of an action, eg. dismiss, dispose off
 
         public ModalActionDetails()
         {

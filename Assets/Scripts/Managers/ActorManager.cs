@@ -2175,26 +2175,31 @@ public class ActorManager : MonoBehaviour
             builderTooltip.AppendLine();
             builderTooltip.AppendFormat("{0}Can be recruited again{1}", colourNeutral, colourEnd);
             builderTooltip.AppendLine();
-            int costToDismiss = manageDismissRenown;
             //base cost to dismiss increased by one for every secret actor has learned
-            renownCost = costToDismiss;
-            renownCost += actor.GetListOfSecrets().Count * manageSecretCost;
+            int numOfSecrets = actor.GetListOfSecrets().Count;
+            renownCost = manageDismissRenown;
+            renownCost += ( numOfSecrets * manageSecretCost);
             //double renown cost if actor threatening to take action against player
-            if (actor.isThreatening == false)
+            if (actor.isThreatening == true)
+            { renownCost *= 2; }
+            //tooltip
+            builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+            if (numOfSecrets > 0)
             {
-                renownCost = costToDismiss;
-                builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
-            }
-            else
-            {
-                renownCost = costToDismiss * 2;
-                builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builderTooltip.AppendLine();
-                builderTooltip.AppendFormat("{0}Double Renown cost as {1} is Threatening you{2}", colourCancel, actor.actorName, colourEnd);
+                builderTooltip.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost{5})", colourCancel, actor.arc.name, numOfSecrets, numOfSecrets != 1 ? "s" : "", numOfSecrets * manageSecretCost, colourEnd);
+            }
+            if (actor.isThreatening == true)
+            {
+                builderTooltip.AppendLine();
+                builderTooltip.AppendFormat("({0}Double Renown cost as {1} is Threatening you{2})", colourCancel, actor.arc.name, colourEnd);
             }
             //only show button if player has enough renown to cover the cost of firing
             if (playerRenown >= renownCost)
             {
+                //pass through renown cost
+                actorActionDetails.renownCost = renownCost;
+                //action button
                 EventButtonDetails actorDetails = new EventButtonDetails()
                 {
                     buttonTitle = "FIRE",
@@ -2215,9 +2220,7 @@ public class ActorManager : MonoBehaviour
             }
         }
         else
-        {
-            Debug.LogError(string.Format("Invalid actor (Null) for actorID {0}", actorID));
-        }
+        { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         //Debug
         if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
 
@@ -2657,8 +2660,18 @@ public class ActorManager : MonoBehaviour
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
-                            tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", 
+                            StringBuilder builderDetails = new StringBuilder();
+                            builderDetails.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
                                 actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                            //secrets
+                            int numOfSecrets = actor.CheckNumOfSecrets();
+                            if (numOfSecrets > 0)
+                            {
+
+                            }
+                            //gear
+
+                            tooltipDetails.textDetails = builderDetails.ToString();
                             //add to arrays
                             data.arrayOfOptions[i] = optionData;
                             data.arrayOfTooltips[i] = tooltipDetails;
@@ -3297,7 +3310,7 @@ public class ActorManager : MonoBehaviour
                     { outputMsg = string.Format("{0}{1} killed by {2}{3}", colourBad, actorVictim.arc.name, actorKiller.arc.name, colourEnd); }
                     //victim message
                     string msgText = string.Format("{0} has been killed by {1}", actorVictim.arc.name, actorKiller.arc.name);
-                    GameManager.instance.messageScript.ActorStatus(msgText, string.Format("has been killed by {0}", actorKiller.arc.name), actorVictim.actorID, side, true);
+                    GameManager.instance.messageScript.ActorStatus(msgText, "Killed", string.Format("has been killed by {0}", actorKiller.arc.name), actorVictim.actorID, side, true);
                 }
                 else { outputMsg = string.Format("{0}{1} failed to kill somebody{2}", colourNeutral, actorKiller.arc.name, colourEnd); }
             }
@@ -3517,7 +3530,7 @@ public class ActorManager : MonoBehaviour
                                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                         //message -> status change
                                         string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
-                                        GameManager.instance.messageScript.ActorStatus(text, "has finished Lying Low", actor.actorID, globalResistance, true);
+                                        GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance, true);
                                         //check if actor has stressed condition
                                         if (actor.CheckConditionPresent(conditionStressed) == true)
                                         {
@@ -3540,7 +3553,7 @@ public class ActorManager : MonoBehaviour
                                     actor.tooltipStatus = ActorTooltip.None;
                                     GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, "has recovered from their Breakdown", actor.actorID, globalResistance, true);
+                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalResistance, true);
                                     break;
                             }
                         }
@@ -3930,7 +3943,7 @@ public class ActorManager : MonoBehaviour
                                     if (actor.CheckTraitEffect(actorSecretTellAll) == true)
                                     {
                                         //actor passes secret onto all other actors
-                                        int numTold = ProcessSecretTellAll(secret, actor);
+                                        ProcessSecretTellAll(secret, actor);
                                         TraitLogMessage(actor, "for passing on secrets", "to TELL ALL about secret");
                                     }
                                 }
@@ -4038,7 +4051,7 @@ public class ActorManager : MonoBehaviour
                         }
                         //message
                         if (String.IsNullOrEmpty(msgText) == false)
-                        { GameManager.instance.messageScript.ActorStatus(msgText, "has resigned because of Player reputation", actor.actorID, side, true); }
+                        { GameManager.instance.messageScript.ActorStatus(msgText, "Resigned", "has resigned because of Player reputation", actor.actorID, side, true); }
                     }
                     else
                     {
@@ -4119,7 +4132,7 @@ public class ActorManager : MonoBehaviour
                                     actor.tooltipStatus = ActorTooltip.None;
                                     GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, "has recovered from their Breakdown", actor.actorID, globalAuthority, true);
+                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority, true);
                                     break;
                             }
                         }
@@ -4147,7 +4160,7 @@ public class ActorManager : MonoBehaviour
             GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
             //message (public)
             string text = string.Format("{0}, {1}, has suffered a Breakdown (Stressed)", actor.actorName, actor.arc.name);
-            GameManager.instance.messageScript.ActorStatus(text, "has suffered a Breakdown", actor.actorID, side, true);
+            GameManager.instance.messageScript.ActorStatus(text, "has suffered a Breakdown", "has suffered a Breakdown", actor.actorID, side, true);
         }
         else { Debug.LogError("Invalid actor (Null)"); }
     }
@@ -4172,7 +4185,8 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
-                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has recovered from their breakdown", GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
+                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their breakdown", 
+                            GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                         //update AI side tab status
                         GameManager.instance.aiScript.UpdateSideTabData();
                         break;
@@ -4192,7 +4206,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             //message -> status change
                             string text = string.Format("{0} has automatically reactivated", playerName);
-                            GameManager.instance.messageScript.ActorStatus(text, "has finished Lying Low", GameManager.instance.playerScript.actorID, globalResistance, true);
+                            GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", GameManager.instance.playerScript.actorID, globalResistance, true);
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
                             {
@@ -4231,7 +4245,8 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                 //message (public)
                                 string text = "Player has suffered a Breakdown (Stressed)";
-                                GameManager.instance.messageScript.ActorStatus(text, "has suffered a Breakdown", GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
+                                GameManager.instance.messageScript.ActorStatus(text, "has suffered a Breakdown", "has suffered a Breakdown", 
+                                    GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, true);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                 GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
@@ -4646,7 +4661,6 @@ public class ActorManager : MonoBehaviour
                         Debug.LogFormat(string.Format("[Trt] {0}, {1}, uses \"{2}\" trait {3}", actor.actorName, actor.arc.name, trait.tag, toText));
                         //message
                         string msgText = string.Format("{0}, {1}, uses \"{2}\" trait {3}", actor.actorName, actor.arc.name, actor.GetTrait().tag, toText);
-                        string itemText = string.Format("{0} uses {1} trait", actor.arc.name, trait.tag);
                         GameManager.instance.messageScript.ActorTrait(msgText, actor, trait, forText, toText);
                     }
                     else { Debug.LogWarning("Invalid forText (Null or Empty)"); }

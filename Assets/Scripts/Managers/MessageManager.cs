@@ -364,14 +364,14 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Actor / Player status changes, eg. Active -> Lie Low, Lie Low -> Active as a result of an Actor action
+    /// Actor / Player status changes, eg. Active -> Lie Low, Lie Low -> Active as a result of an Actor action. itemText in format '[Actor] ...', eg. 'sent to Reserves', 'Recalled', 'Let Go'
     /// 'Reason' is a short text tag for ItemData, in format '[Actor] ... Lying Low'
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorStatus(string text, string reason, int actorID, GlobalSide side, bool isPublic = false)
+    public Message ActorStatus(string text, string itemText, string reason, int actorID, GlobalSide side, bool isPublic = false)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID ({0})", actorID));
         Debug.Assert(side != null, "Invalid side (Null)");
@@ -396,7 +396,7 @@ public class MessageManager : MonoBehaviour
             //data depends on whether an actor or player
             if (actorID == playerActorID)
             {
-                data.itemText = "Player changes Status";
+                data.itemText = string.Format("Player {0}", itemText);
                 data.sprite = playerSprite;
                 data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, null);
             }
@@ -406,7 +406,7 @@ public class MessageManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
-                    data.itemText = string.Format("{0} changes Status", actor.arc.name);
+                    data.itemText = string.Format("{0} {1}", actor.arc.name, itemText);
                     data.sprite = actor.arc.sprite;
                     data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, actor);
                 }
