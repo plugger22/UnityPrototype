@@ -840,7 +840,7 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textMain = manageAction.tooltipMain;
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                                {  tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
                                 else
                                 { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
                             }

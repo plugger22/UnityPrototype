@@ -587,11 +587,31 @@ public class EffectManager : MonoBehaviour
                                             case "RenownDismissMin":
                                                 //player
                                                 int renownDismiss = GameManager.instance.actorScript.manageDismissRenown;
+                                                //extra cost for actor knowing secrets and threatening player
+                                                int numOfSecrets = actor.CheckNumOfSecrets();
+                                                int extraSecretCost = 0;
+                                                if (numOfSecrets > 0)
+                                                {
+                                                    extraSecretCost = numOfSecrets * GameManager.instance.actorScript.manageSecretCost;
+                                                    renownDismiss += extraSecretCost;
+                                                }
+                                                if (actor.isThreatening == true) { renownDismiss *= 2; }
                                                 playerRenown = GameManager.instance.playerScript.Renown;
                                                 if (playerRenown < renownDismiss)
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
                                                       colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                    if (numOfSecrets > 0)
+                                                    {
+                                                        result.AppendLine();
+                                                        result.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost{5})", colourAlert, actor.arc.name, numOfSecrets, 
+                                                            numOfSecrets != 1 ? "s" : "", extraSecretCost, colourEnd);
+                                                    }
+                                                    if (actor.isThreatening == true)
+                                                    {
+                                                        result.AppendLine();
+                                                        result.AppendFormat("({0}Double Renown cost as {1} is Threatening you{2})", colourAlert, actor.arc.name, colourEnd);
+                                                    }
                                                 }
                                                 break;
                                             case "RenownDisposeMin":
