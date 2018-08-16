@@ -1701,7 +1701,8 @@ public class DataManager : MonoBehaviour
         {
             case ActorStatus.Resigned:
                 //if actor resigned, loose -1 faction support
-                GameManager.instance.factionScript.ChangeFactionApproval(GameManager.instance.factionScript.factionApprovalActorResigns * -1, string.Format("{0} Resigned", actor.arc.name));
+                int approvalChange = GameManager.instance.factionScript.factionApprovalActorResigns * -1;
+                GameManager.instance.factionScript.ChangeFactionApproval(approvalChange, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
                 //lose secrets
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
                 break;
@@ -2279,6 +2280,8 @@ public class DataManager : MonoBehaviour
         builder.Append(GetActorList(authorityActorDismissed));
         builder.Append(string.Format("{0} - Authority DisposedOf List{1}", "\n", "\n"));
         builder.Append(GetActorList(authorityActorDisposedOf));
+        builder.Append(string.Format("{0} - Authority Resigned List{1}", "\n", "\n"));
+        builder.Append(GetActorList(authorityActorResigned));
         //resistance
         builder.Append(string.Format("{0} - Resistance Reserve List{1}", "\n", "\n"));
         builder.Append(GetActorList(resistanceActorReserve));
@@ -2288,6 +2291,8 @@ public class DataManager : MonoBehaviour
         builder.Append(GetActorList(resistanceActorDismissed));
         builder.Append(string.Format("{0} - Resistance DisposedOf List{1}", "\n", "\n"));
         builder.Append(GetActorList(resistanceActorDisposedOf));
+        builder.Append(string.Format("{0} - Resistance Resigned List{1}", "\n", "\n"));
+        builder.Append(GetActorList(resistanceActorResigned));
         return builder.ToString();
     }
 

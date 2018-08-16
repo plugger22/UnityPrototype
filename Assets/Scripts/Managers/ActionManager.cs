@@ -1895,7 +1895,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="actorID"></param>
     private void ProcessFireActor(ModalActionDetails details)
     {
-        int motivationLoss = GameManager.instance.actorScript.motivationLossFire;
+        /*int motivationLoss = GameManager.instance.actorScript.motivationLossFire;*/
         bool errorFlag = false;
         int numOfTeams = 0;
         int renownCost = details.renownCost;

@@ -1971,7 +1971,16 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-
+    /// <summary>
+    /// Change of Approval level, 'change' in +/-, 'reason' is self-contained
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="reason"></param>
+    /// <param name="faction"></param>
+    /// <param name="oldLevel"></param>
+    /// <param name="change"></param>
+    /// <param name="newLevel"></param>
+    /// <returns></returns>
     public Message FactionApproval(string text, string reason, Faction faction, int oldLevel, int change, int newLevel)
     {
         Debug.Assert(faction != null, "Invalid faction (Null)");
@@ -1994,7 +2003,7 @@ public class MessageManager : MonoBehaviour
             else
             {  data.itemText = string.Format("{0} faction Approval DECREASES", faction.name); }
             data.topText = "Approval Changes";
-            data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, oldLevel, change, newLevel);
+            data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, change, newLevel);
             data.priority = ItemPriority.Medium;
             data.tab = ItemTab.Mail;
             data.side = message.side;

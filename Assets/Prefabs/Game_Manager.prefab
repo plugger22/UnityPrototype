@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d584344e0f087ea4eb1626b1bb7fdf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretLearnBaseChance: 38
+  secretLearnBaseChance: 4
   secretBlackmailTimer: 4
   secretMaxNum: 4
   secretTypePlayer: {fileID: 0}
@@ -752,9 +752,7 @@ MonoBehaviour:
   numOfQualities: 3
   maxStatValue: 3
   minStatValue: 0
-  promiseReserveTimer: 10
-  noPromiseReserveTimer: 10
-  restReserveTimer: 10
+  currentReserveTimer: 10
   recruitedReserveTimer: 5
   renownCostThreaten: 1
   manageReserveRenown: 1

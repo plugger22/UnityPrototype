@@ -473,19 +473,27 @@ public class FactionManager : MonoBehaviour
     /// <param name="amount"></param>
     public void ChangeFactionApproval(int amountToChange, string reason)
     {
+        int oldApproval;
+        string msgText;
         if (string.IsNullOrEmpty(reason) == true) { reason = "Unknown"; }
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         switch(side.level)
         {
             case 1:
                 //Authority
+                oldApproval = ApprovalAuthority;
                 ApprovalAuthority += amountToChange;
                 Debug.LogFormat("[Fac] Authority Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
+                msgText = string.Format("{0} faction approval {1}{2}", factionAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
+                GameManager.instance.messageScript.FactionApproval(msgText, reason, factionAuthority, oldApproval, amountToChange, ApprovalAuthority);
                 break;
             case 2:
                 //Resistance
+                oldApproval = ApprovalResistance;
                 ApprovalResistance += amountToChange;
                 Debug.LogFormat("[Fac] Resistance Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
+                msgText = string.Format("{0} faction approval {1}{2}", factionResistance.name, amountToChange > 0 ? "+" : "", amountToChange);
+                GameManager.instance.messageScript.FactionApproval(msgText, reason, factionResistance, oldApproval, amountToChange, ApprovalResistance);
                 break;
             default:
                 Debug.LogWarningFormat("Invalid PlayerSide \"{0}\"", side);

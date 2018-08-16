@@ -553,10 +553,18 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="change"></param>
     /// <param name="newLevel"></param>
     /// <returns></returns>
-    public string GetFactionApprovalDetails(Faction faction, string reason, int oldLevel, int change, int newLevel)
+    public string GetFactionApprovalDetails(Faction faction, string reason, int change, int newLevel)
     {
         StringBuilder builder = new StringBuilder();
-
+        if (change > 0)
+        { builder.AppendFormat("{0} faction{1}Approval {2}<b>+{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.name, "\n", colourGood, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("{0} faction{1}Approval {2}<b>{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.name, "\n", colourBad, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
+        if (string.IsNullOrEmpty(reason) == false)
+        {
+            if (change > 0)
+            { builder.AppendFormat("{0}{1}{2}", colourGood, reason, colourEnd); }
+            else { builder.AppendFormat("{0}{1}{2}", colourBad, reason, colourEnd); }
+        }
         return builder.ToString();
     }
 

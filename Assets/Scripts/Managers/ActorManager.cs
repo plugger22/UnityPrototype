@@ -4306,7 +4306,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.unhappyTimer == 0)
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
-                            actor.AddCondition(condition, string.Format("{0} upset at being left in the Reserves", actor.arc.name));
+                            actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
                         }
                     }
                     else
@@ -4329,7 +4329,7 @@ public class ActorManager : MonoBehaviour
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
                                 reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                                warning = string.Format("{0} {1}Motivation -1{2}", actor.actorName, colourBad, colourEnd);
+                                warning = string.Format("{0} Motivation -1", actor.actorName);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Loses Motivation", reason, warning);
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
@@ -4420,7 +4420,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.unhappyTimer == 0)
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
-                            actor.AddCondition(condition, string.Format("{0} upset at being left in the Reserves", actor.arc.name));
+                            actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
                         }
                     }
                     else
@@ -4561,8 +4561,8 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.dataScript.RemoveActorFromReservePool(GameManager.instance.sideScript.PlayerSide, actor);
                     //change status message
                     msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
-                    itemText = string.Format("{0} resigns in disgust", actor.arc.name);
-                    reason = string.Format("{0} Unhappy at being left in Reserves", actor.actorName);
+                    itemText = "resigns in disgust";
+                    reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
                     GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
                 }
                 else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
@@ -4595,8 +4595,8 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.dataScript.RemoveActorFromReservePool(GameManager.instance.sideScript.PlayerSide, actor);
                     //change status message
                     msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
-                    itemText = string.Format("{0} resigns in disgust", actor.arc.name);
-                    reason = string.Format("{0} Unhappy at being left in Reserves", actor.actorName);
+                    itemText = "resigns in disgust";
+                    reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
                     GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
                 }
                 return;
