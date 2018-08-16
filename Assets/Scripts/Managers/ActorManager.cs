@@ -2169,14 +2169,13 @@ public class ActorManager : MonoBehaviour
             }
 
             //
-            // - - - Fire - - -
+            // - - - Fire (Dismiss) - - -
             //
             //generic tooltip (depends if actor is threatening or not)
             StringBuilder builderTooltip = new StringBuilder();
-            builderTooltip.AppendFormat("{0}{1}'s Motivation -{2}{3}", colourBad, actor.actorName, motivationLossFire, colourEnd);
-            builderTooltip.AppendLine();
-            builderTooltip.AppendFormat("{0}Can be recruited again{1}", colourNeutral, colourEnd);
-            builderTooltip.AppendLine();
+            /*builderTooltip.AppendFormat("{0}{1}'s Motivation -{2}{3}", colourBad, actor.actorName, motivationLossFire, colourEnd);
+            builderTooltip.AppendLine();*/
+
             //allow for secrets and threats
             ManageRenownCost manageRenownCost = GetManageRenownCost(actor, manageDismissRenown);
             renownCost = manageRenownCost.renownCost;
@@ -2192,21 +2191,21 @@ public class ActorManager : MonoBehaviour
                 //action button
                 EventButtonDetails actorDetails = new EventButtonDetails()
                 {
-                    buttonTitle = "FIRE",
+                    buttonTitle = "DISMISS",
                     buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                     buttonTooltipMain = string.Format(string.Format("You inform {0} that their services are no longer needed, or desired", actor.actorName)),
                     buttonTooltipDetail = builderTooltip.ToString(),
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.InventoryFire, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
                 };
-                //add Fire button to list
+                //add Dismiss button to list
                 eventList.Add(actorDetails);
             }
             else
             {
                 //not enough renown
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}Insufficient Renown to Fire (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
+                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
             }
         }
         else
@@ -3914,7 +3913,7 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.instance.turnScript.Turn > 1 && actorSecrets < listOfSecrets.Count)
                 { TraitLogMessage(actor, "for a Learn Secret check", "to TRIPLE chance of learning a Secret"); }
             }
-            //trait Blind
+            //trait Bedazzled
             if (actor.CheckTraitEffect(actorSecretChanceNone) == false)
             {
                 //loop through Player secrets
@@ -3973,7 +3972,7 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// subMethod for ProcessSecrets to handle trait Blabbermouth where an actor tells all other actors about the secret they have learned. Actor is the actor who learned of secret
-    /// NOTE: actorTrait & secret checked for null by calling method. Actors are told of secret regardless whether they are active or inactive or have 'Blind' trait
+    /// NOTE: actorTrait & secret checked for null by calling method. Actors are told of secret regardless whether they are active or inactive or have 'Bedazzled' trait
     /// </summary>
     /// <param name="secret"></param>
     /// <returns></returns>
@@ -4560,6 +4559,15 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
                 {
                     //resigns in frustration
+                    if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                    {
+                        //remove from reserve pool
+
+                        //change status message
+
+                        //faction message (elsewhere)
+                    }
+                    else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
                 }
                 return;
             }
@@ -4738,9 +4746,10 @@ public class ActorManager : MonoBehaviour
     {
         GenericTooltipData data = new GenericTooltipData();
         data.header = "Renown";
-        data.main = string.Format("{0}Is a measure of how well known a person is and their level support{1}", colourNormal, colourEnd);
-        data.details = string.Format("{0}Somebody with high renown gains {1}{2}influential friends{3}{4} and is harder to {5}{6}Fire{7}{8} or {9}{10}Dispose Off{11}",
-            colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);
+        data.main = string.Format("{0}Is a measure of how well known a person is within the Organisation{1}", colourNormal, colourEnd);
+        /*data.details = string.Format("{0}Somebody with high renown gains {1}{2}influential friends{3}{4} and is harder to {5}{6}Dismiss{7}{8} or {9}{10}Dispose Off{11}",
+            colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);*/
+        data.details = string.Format("{0}The higher a Subordinates Renown, the greater their chance of joining HQ. If Promoted they will be your friends, if Dismissed, your enemies{1}", colourAlert, colourEnd);
         return data;
     }
 
@@ -4753,8 +4762,7 @@ public class ActorManager : MonoBehaviour
         GenericTooltipData data = new GenericTooltipData();
         data.header = "Renown";
         data.main = string.Format("{0}The more the better{1}", colourNeutral, colourEnd);
-        data.details = string.Format("{0}Renown is the currency you use to do many things such as Hack the AI, Manage your subordinates, make decision, etc.{1}",
-            colourNormal, colourEnd);
+        data.details = string.Format("{0}Renown is the currency you use to do many things such as Hack the AI, Manage your subordinates, make decision, etc.{1}", colourNormal, colourEnd);
         return data;
     }
 

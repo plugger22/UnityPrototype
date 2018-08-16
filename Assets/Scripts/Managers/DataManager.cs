@@ -1696,11 +1696,44 @@ public class DataManager : MonoBehaviour
         arrayOfActors[side.level, actor.actorSlotID] = null;
         arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
         actor.Status = status;
-        //if actor resigned, loose -1 faction support
-        if (status == ActorStatus.Resigned)
-        {  GameManager.instance.factionScript.ChangeFactionApproval(GameManager.instance.factionScript.factionApprovalActorResigns * -1, string.Format("{0} Resigned", actor.arc.name)); }
+        //handle special cases
+        switch (status)
+        {
+            case ActorStatus.Resigned:
+                //if actor resigned, loose -1 faction support
+                GameManager.instance.factionScript.ChangeFactionApproval(GameManager.instance.factionScript.factionApprovalActorResigns * -1, string.Format("{0} Resigned", actor.arc.name));
+                //lose secrets
+                GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
+                break;
+            case ActorStatus.Dismissed:
+            case ActorStatus.Promoted:
+            case ActorStatus.Killed:
+            case ActorStatus.RecruitPool:
+                //lose secrets
+                GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
+                break;
+        }
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
+    }
+
+    /// <summary>
+    /// Remove actor from reserve pool list
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public bool RemoveActorFromReservePool(GlobalSide side, Actor actor)
+    {
+        bool isSuccess = true;
+        List<int> reservePoolList = GetActorList(side, ActorList.Reserve);
+        if (reservePoolList != null)
+        {
+            if (reservePoolList.Remove(actor.actorID) == false)
+            { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID);  isSuccess = false; }
+        }
+        else { Debug.LogWarningFormat("Invalid reservePoolList (Null) for GlobalSide {0}", side); isSuccess = false; }
+        return isSuccess;
     }
     
     /// <summary>

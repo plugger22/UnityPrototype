@@ -1836,14 +1836,18 @@ public class ActionManager : MonoBehaviour
                     builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
                 else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side); }
-                //remove actor from reserve list
+               
+                /*//remove actor from reserve list
                 List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
                 if (reservePoolList != null)
                 {
                     if (reservePoolList.Remove(actor.actorID) == false)
                     { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); }
                 }
-                else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); }
+                else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); }*/
+
+                //remove actor from reserve list
+                GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
                 //teams
                 if (numOfTeams > 0)
                 {
@@ -1917,7 +1921,7 @@ public class ActionManager : MonoBehaviour
                     //remove all active teams connected with this actor
                     numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
                 }
-                //pay Player renown cost
+                //pay Player renown cost (passed in by data package)
                 int playerRenown = GameManager.instance.playerScript.Renown;
                 playerRenown -= renownCost;
                 playerRenown = Mathf.Max(0, playerRenown);
@@ -1930,14 +1934,17 @@ public class ActionManager : MonoBehaviour
                     builder.AppendFormat("{0}{1} is no longer a threat{2}", colourGood, actor.actorName, colourEnd);
                 }
                 builder.AppendLine(); builder.AppendLine();
-                //lower actors motivation
+
+                /*//lower actors motivation
                 actor.datapoint1 -= motivationLoss;
                 actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                builder.AppendFormat("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd);
+                builder.AppendFormat("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd);*/
+
                 //change actors status
-                actor.Status = ActorStatus.RecruitPool;
+                actor.Status = ActorStatus.Dismissed;
                 actor.ResetStates();
-                //place actor back in the appropriate recruit pool
+
+                /*//place actor back in the appropriate recruit pool [Edit] same as dismissed -> actor gone from level
                 List<int> recruitPoolList = GameManager.instance.dataScript.GetActorRecruitPool(actor.level, details.side);
                 if (recruitPoolList != null)
                 {
@@ -1945,15 +1952,22 @@ public class ActionManager : MonoBehaviour
                     builder.AppendLine(); builder.AppendLine();
                     builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
-                else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side); }
+                else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side); }*/
+
                 //remove actor from reserve list
-                List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
+                /*List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
                 if (reservePoolList != null)
                 {
                     if (reservePoolList.Remove(actor.actorID) == false)
                     { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); }
                 }
-                else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); }
+                else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); }*/
+
+                //remove actor from reserve list
+                GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
+                //remove actor from map & handle admin
+                if (GameManager.instance.dataScript.RemoveCurrentActor(details.side, actor, actor.Status) == false)
+                { Debug.LogErrorFormat("Actor \"{0}\", {1}, actorID {2}, not removed", actor.actorName, actor.arc.name, actor.actorID); }
                 //teams
                 if (numOfTeams > 0)
                 {
@@ -1967,8 +1981,8 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.arc.sprite;
                 //message
-                string text = string.Format("{0} {1} has been Fired (Reserve Pool)", actor.arc.name, actor.actorName);
-                GameManager.instance.messageScript.ActorStatus(text, "Fired", "has been Fired", actor.actorID, details.side);
+                string text = string.Format("{0} {1} has been Dismissed (Reserve Pool)", actor.arc.name, actor.actorName);
+                GameManager.instance.messageScript.ActorStatus(text, "Dismissed", "has been Fired from the Reserves", actor.actorID, details.side);
 
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorDataID {0}", details.actorDataID); errorFlag = true; }
@@ -1986,7 +2000,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             outcomeDetails.isAction = true;
-            outcomeDetails.reason = "Fire Actor";
+            outcomeDetails.reason = "Dismiss Actor";
             //is there a delegate method that needs processing?
             details.handler?.Invoke();
         }
@@ -2044,14 +2058,18 @@ public class ActionManager : MonoBehaviour
                     { Debug.LogError("Unhappy condition not found (Null)"); errorFlag = true; }
                     //place actor on Map (reset states)
                     GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);
-                    //remove actor from reserve list
+
+                    /*//remove actor from reserve list
                     List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
                     if (reservePoolList != null)
                     {
                         if (reservePoolList.Remove(actor.actorID) == false)
                         { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); }
                     }
-                    else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); errorFlag = true; }
+                    else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); errorFlag = true; }*/
+
+                    //remove actor from reserve list
+                    GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
                     //Authority Actor brings team with them (if space available)
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                     {

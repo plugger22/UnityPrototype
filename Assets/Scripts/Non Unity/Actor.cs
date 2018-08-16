@@ -320,6 +320,9 @@ namespace gameAPI
         public bool CheckSecretPresent(int secretID)
         { return listOfSecrets.Exists(x => x.secretID == secretID); }
 
+        public void RemoveAllSecrets()
+        { listOfSecrets.Clear(); }
+
         /// <summary>
         /// Add a Player secret, checks for duplicates and won't add if one found (warning msg)
         /// </summary>

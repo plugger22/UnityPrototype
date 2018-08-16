@@ -263,6 +263,38 @@ public class SecretManager : MonoBehaviour
         return isSuccess;
     }
 
+    /// <summary>
+    /// used when actor leaves map -> fired / dismissed / disposed off. Called by DataManager.cs -> RemoveActorAdmin
+    /// </summary>
+    /// <param name="actor"></param>
+    public void RemoveAllSecretsFromActor(Actor actor)
+    {
+        if (actor != null)
+        {
+            //lose any secrets
+            if (actor.CheckNumOfSecrets() > 0)
+            {
+                List<Secret> listOfSecrets = actor.GetListOfSecrets();
+                if (listOfSecrets != null)
+                {
+                    foreach (Secret secret in listOfSecrets)
+                    {
+                        if (secret != null)
+                        {
+                            //remove actor from secret list
+                            secret.RemoveActor(actor.actorID);
+                        }
+                        else { Debug.LogWarning("Invalid secret (Null)"); }
+                    }
+                    //delete all secrets from actor
+                    actor.RemoveAllSecrets();
+                }
+                else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
+            }
+        }
+        else { Debug.LogWarning("Invalid actor (Null)"); }
+    }
+
 
     //
     // - - - Debug - - -
