@@ -1923,14 +1923,14 @@ public class MessageManager : MonoBehaviour
     /// Faction support (renown) that is given/declined at the beginning of each turn
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="factionSupportLevel"></param>
+    /// <param name="factionApprovalLevel"></param>
     /// <param name="playerRenownBefore"></param>
     /// <param name="supportGiven"></param>
     /// <returns></returns>
-    public Message FactionSupport(string text, Faction faction, int factionSupportLevel, int playerRenownBefore, int supportGiven = -1)
+    public Message FactionSupport(string text, Faction faction, int factionApprovalLevel, int playerRenownBefore, int supportGiven = -1)
     {
         Debug.Assert(faction != null, "Invalid faction (Null)");
-        Debug.Assert(factionSupportLevel > -1, "Invalid factionSupportLevel ( < zero)");
+        Debug.Assert(factionApprovalLevel > -1, "Invalid factionSupportLevel ( < zero)");
         Debug.Assert(playerRenownBefore > -1, "Invalid playerRenownBefore ( < zero)");
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1940,7 +1940,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Faction_Support;
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
-            message.data0 = factionSupportLevel;
+            message.data0 = factionApprovalLevel;
             message.data1 = playerRenownBefore;
             message.data2 = supportGiven;
             //ItemData
@@ -1957,7 +1957,44 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("Support request to {0} HQ declined", faction.name);
                 data.topText = "Support Declined";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetFactionSupportDetails(faction, factionSupportLevel, supportGiven);
+            data.bottomText = GameManager.instance.itemDataScript.GetFactionSupportDetails(faction, factionApprovalLevel, supportGiven);
+            data.priority = ItemPriority.Medium;
+            data.tab = ItemTab.Mail;
+            data.side = message.side;
+            data.sprite = faction.sprite;
+            data.help = 1; //debug
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+    public Message FactionApproval(string text, string reason, Faction faction, int oldLevel, int change, int newLevel)
+    {
+        Debug.Assert(faction != null, "Invalid faction (Null)");
+        Debug.Assert(change != 0, "Invalid change (Zero)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.FACTION;
+            message.subType = MessageSubType.Faction_Approval;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = oldLevel;
+            message.data1 = change;
+            message.data2 = newLevel;
+            //ItemData
+            ItemData data = new ItemData();
+            if (change > 0)
+            { data.itemText = string.Format("{0} faction Approval INCREASES", faction.name); }
+            else
+            {  data.itemText = string.Format("{0} faction Approval DECREASES", faction.name); }
+            data.topText = "Approval Changes";
+            data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, oldLevel, change, newLevel);
             data.priority = ItemPriority.Medium;
             data.tab = ItemTab.Mail;
             data.side = message.side;

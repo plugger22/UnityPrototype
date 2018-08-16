@@ -4514,7 +4514,7 @@ public class ActorManager : MonoBehaviour
     private void TakeAction(Actor actor)
     {
         int rnd, chance;
-        string msgText;
+        string msgText, itemText, reason;
         //
         // - - - Reveal Secret (check first)
         //
@@ -4554,21 +4554,18 @@ public class ActorManager : MonoBehaviour
                 Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Leave SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
-
-                //TO DO
+                //resigns in frustration
                 if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
                 {
-                    //resigns in frustration
-                    if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
-                    {
-                        //remove from reserve pool
-
-                        //change status message
-
-                        //faction message (elsewhere)
-                    }
-                    else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
+                    //remove from reserve pool
+                    GameManager.instance.dataScript.RemoveActorFromReservePool(GameManager.instance.sideScript.PlayerSide, actor);
+                    //change status message
+                    msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
+                    itemText = string.Format("{0} resigns in disgust", actor.arc.name);
+                    reason = string.Format("{0} Unhappy at being left in Reserves", actor.actorName);
+                    GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
                 }
+                else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
                 return;
             }
             else
@@ -4591,10 +4588,16 @@ public class ActorManager : MonoBehaviour
                 msgText = string.Format("Unhappy {0} Leave (already Complained) SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
 
-                //TO DO
+                //resigns in frustration
                 if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
                 {
-                    //resigns in frustration
+                    //remove from reserve pool
+                    GameManager.instance.dataScript.RemoveActorFromReservePool(GameManager.instance.sideScript.PlayerSide, actor);
+                    //change status message
+                    msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
+                    itemText = string.Format("{0} resigns in disgust", actor.arc.name);
+                    reason = string.Format("{0} Unhappy at being left in Reserves", actor.actorName);
+                    GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
                 }
                 return;
             }
@@ -4637,8 +4640,8 @@ public class ActorManager : MonoBehaviour
         // - - - NO Action take -> WARNING message
         //
         msgText = string.Format("{0}, {1}, in Reserves, Failed to Act, but will", actor.actorName, actor.arc.name);
-        string itemText = string.Format("Reserve {0} Failed to Act, but will", actor.arc.name);
-        string reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        itemText = string.Format("Reserve {0} Failed to Act, but will", actor.arc.name);
+        reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
         string warning = string.Format("{0} will {1}<b>TAKE DECISIVE ACTION</b>{2}, but didn't this turn", actor.actorName, colourBad, colourEnd);
         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Taking Action", reason, warning);
     }

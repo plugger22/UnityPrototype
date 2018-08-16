@@ -162,7 +162,8 @@
         //City
         City_Loyalty,
         //Faction
-        Faction_Support
+        Faction_Support,
+        Faction_Approval
 
     }
 

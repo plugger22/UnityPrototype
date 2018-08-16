@@ -544,6 +544,22 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Faction Approval level changes
+    /// </summary>
+    /// <param name="faction"></param>
+    /// <param name="reason"></param>
+    /// <param name="oldLevel"></param>
+    /// <param name="change"></param>
+    /// <param name="newLevel"></param>
+    /// <returns></returns>
+    public string GetFactionApprovalDetails(Faction faction, string reason, int oldLevel, int change, int newLevel)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        return builder.ToString();
+    }
+
 
     //
     // - - - Secrets - - -
