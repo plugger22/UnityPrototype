@@ -759,7 +759,7 @@ MonoBehaviour:
   renownCostThreaten: 1
   manageReserveRenown: 1
   manageDismissRenown: 2
-  manageDismissSecrets: 1
+  manageSecretCost: 2
   manageDisposeRenown: 4
   unhappyLoseMotivationChance: 40
   unhappyTakeActionChance: 25

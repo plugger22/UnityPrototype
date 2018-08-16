@@ -16,7 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
   optionTitle: NO PROMISE
   tooltipMain: It's off to the Reserves and we'll see how it goes from there
-  tooltipDetails: will become Unhappy sooner
+  tooltipDetails: ', if UNHAPPY, will be slower to act'
   order: 3
   listOfCriteria:
   - {fileID: 11400000, guid: acd75f14285e592468890d46f7ae4a9f, type: 2}

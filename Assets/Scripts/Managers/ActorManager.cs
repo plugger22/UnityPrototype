@@ -28,12 +28,14 @@ public class ActorManager : MonoBehaviour
     [Range(2, 4)] public int minStatValue = 0;
 
     [Header("Management")]
-    [Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
+    /*[Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int promiseReserveTimer = 10;
     [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int noPromiseReserveTimer = 10;
     [Tooltip("Actor sent to Reserves to Rest. Their unhappy timer will be set to this number of turns.")]
-    [Range(1, 10)] public int restReserveTimer = 10;
+    [Range(1, 10)] public int restReserveTimer = 10;*/
+    [Tooltip("OnMap actor sent to Reserves. Their unhappy timer will be set to the this number of turns")]
+    [Range(5, 15)] public int currentReserveTimer = 10;
     [Tooltip("Actor Recruited and placed in Reserves. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int recruitedReserveTimer = 5;
     [Tooltip("Renown cost for threatening an actor in the Reserve Pool")]

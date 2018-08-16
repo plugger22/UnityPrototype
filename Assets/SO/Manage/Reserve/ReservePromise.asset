@@ -16,8 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
   optionTitle: PROMISE
   tooltipMain: You reassure them that it's only temporary
-  tooltipDetails: will go willingly provided they are recalled within a reasonable
-    period
+  tooltipDetails: ', if UNHAPPY, will act forcefully'
   order: 2
   listOfCriteria: []
   listOfEffects:

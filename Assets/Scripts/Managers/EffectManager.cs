@@ -2784,19 +2784,19 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = builderDispose.ToString();
                 break;
             case "UnhappyTimerRest":
-                data = GameManager.instance.actorScript.restReserveTimer;
+                data = GameManager.instance.actorScript.currentReserveTimer;
                 actor.unhappyTimer = data;
                 effectResolve.bottomText = string.Format("{0}{1}'s Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data,
                     data != 1 ? "s" : "", colourEnd);
                 break;
             case "UnhappyTimerPromise":
-                data = GameManager.instance.actorScript.promiseReserveTimer;
+                data = GameManager.instance.actorScript.currentReserveTimer;
                 actor.unhappyTimer = data;
                 effectResolve.bottomText = string.Format("{0}{1}'s Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data,
                     data != 1 ? "s" : "", colourEnd);
                 break;
             case "UnhappyTimerNoPromise":
-                data = GameManager.instance.actorScript.noPromiseReserveTimer;
+                data = GameManager.instance.actorScript.currentReserveTimer;
                 actor.unhappyTimer = data;
                 effectResolve.bottomText = string.Format("{0}{1}'s Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data, 
                     data != 1 ? "s" : "", colourEnd);
