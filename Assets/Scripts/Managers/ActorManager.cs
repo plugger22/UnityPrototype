@@ -28,12 +28,6 @@ public class ActorManager : MonoBehaviour
     [Range(2, 4)] public int minStatValue = 0;
 
     [Header("Management")]
-    /*[Tooltip("Actor sent to Reserves and Player promises to recall them within this number of turns. Their unhappy timer will be set to this number of turns.")]
-    [Range(1, 10)] public int promiseReserveTimer = 10;
-    [Tooltip("Actor sent to Reserves and Player did NOT promise anything. Their unhappy timer will be set to this number of turns.")]
-    [Range(1, 10)] public int noPromiseReserveTimer = 10;
-    [Tooltip("Actor sent to Reserves to Rest. Their unhappy timer will be set to this number of turns.")]
-    [Range(1, 10)] public int restReserveTimer = 10;*/
     [Tooltip("OnMap actor sent to Reserves. Their unhappy timer will be set to the this number of turns")]
     [Range(5, 15)] public int currentReserveTimer = 10;
     [Tooltip("Actor Recruited and placed in Reserves. Their unhappy timer will be set to this number of turns.")]
@@ -48,12 +42,6 @@ public class ActorManager : MonoBehaviour
     [Range(0, 3)] public int manageSecretCost = 1;
     [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
     [Range(1, 5)] public int manageDisposeRenown = 3;
-    /*[Tooltip("% Chance of an actor in the Reserve Pool becoming unhappy each turn once their unhappyTimer expires")]
-    [Range(1, 50)] public int chanceOfUnhappy = 20;
-    [Tooltip("Multiplier to the chanceOfUnhappy for an actor who has been promised that they will be recalled within a set time period")]
-    [Range(1, 5)] public int unhappyPromiseFactor = 3;
-    [Tooltip("Once actor has taken action as a result of being unhappy this is the number of turns warning period you get before they carry out their action")]
-    [Range(1, 5)] public int unhappyWarningPeriod = 2;*/
     [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
     [Range(1, 99)] public int unhappyLoseMotivationChance = 40;
     [Tooltip("Once actor is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
@@ -61,7 +49,7 @@ public class ActorManager : MonoBehaviour
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the first check made (ignored if actor has no secrets")]
     [Range(1, 99)] public int unhappyRevealSecretChance = 50;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the second check made. Double chance if actor has previously complained")]
-    [Range(1, 99)] public int unhappyLeaveChance = 25;
+    [Range(1, 99)] public int unhappyResignChance = 25;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the third check made. An actor can only complain once")]
     [Range(1, 99)] public int unhappyComplainChance = 50;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
@@ -4575,7 +4563,7 @@ public class ActorManager : MonoBehaviour
         if (actor.isComplaining == false)
         {
             rnd = Random.Range(0, 100);
-            chance = unhappyLeaveChance;
+            chance = unhappyResignChance;
             if (rnd < chance)
             {
                 //random message
@@ -4607,7 +4595,7 @@ public class ActorManager : MonoBehaviour
         else
         {
             rnd = Random.Range(0, 100);
-            chance = unhappyLeaveChance * 2;
+            chance = unhappyResignChance * 2;
             //double chance if actor has already complained
             if (rnd < chance)
             {
