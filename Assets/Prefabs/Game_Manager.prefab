@@ -764,8 +764,8 @@ MonoBehaviour:
   unhappyRevealSecretChance: 50
   unhappyResignChance: 40
   unhappyComplainChance: 50
-  unhappyReassureBoost: 5
-  unhappyThreatenBoost: 5
+  unhappyReassureBoost: 2
+  unhappyThreatenBoost: 2
   motivationLossLetGo: 1
   motivationLossFire: 2
   motivationGainActiveDuty: 2

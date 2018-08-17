@@ -18,10 +18,8 @@ namespace gameAPI
         [HideInInspector] public int actorSlotID;                    //actor slot ID (eg, 0 to 3)
         [HideInInspector] public int actorID;
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
-        //[HideInInspector] public int Renown;                    //starts at '0' and goes up (no limit)
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
-        [HideInInspector] public int timesThreatened;           //number of times threatened (cost to threaten increases in line with this)
         [HideInInspector] public int blackmailTimer;            //default 0 but set to new global value once actor gains Blackmailer condition
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
@@ -98,7 +96,6 @@ namespace gameAPI
             gearTimer = 0;
             gearTimesTaken = 0;
             blackmailTimer = 0;
-            timesThreatened = 0;
             //fast access & cached
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
@@ -126,7 +123,6 @@ namespace gameAPI
             isReassured = false;
             isThreatening = false;
             isComplaining = false;
-            timesThreatened = 0;
         }
 
         /// <summary>
