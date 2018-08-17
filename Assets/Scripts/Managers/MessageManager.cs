@@ -541,8 +541,8 @@ public class MessageManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             if (isGained == true)
-            { data.itemText = string.Format("{0} gains {1} condition", genericActorArc, condition.name); }
-            else { data.itemText = string.Format("{0} loses {1} condition", genericActorArc, condition.name); }
+            { data.itemText = string.Format("{0} is now {1}", genericActorArc, condition.name); }
+            else { data.itemText = string.Format("{0} is no longer {1}", genericActorArc, condition.name); }
             data.topText = "Condition Change";
             if (condition != null)
             { data.bottomText = GameManager.instance.itemDataScript.GetActorConditionDetails(genericActorName, genericActorArc, condition, isGained, reason); }

@@ -4379,7 +4379,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //actor about to take action warning
                                 msgText = string.Format("{0}, {1}, in Reserves, is about to Act", actor.actorName, actor.arc.name);
-                                itemText = string.Format("Reserve {0} is about to ACT", actor.arc.name);
+                                itemText = string.Format("{0}, in Reserves, will ACT", actor.arc.name);
                                 reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                 warning = string.Format("{0} is about to {1}<b>TAKE DECISIVE ACTION</b>{2}", actor.actorName, colourBad, colourEnd);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "On the Edge", reason, warning);
@@ -4536,9 +4536,6 @@ public class ActorManager : MonoBehaviour
                     secret.revealedWho = actor.actorID;
                     secret.revealedWhen = GameManager.instance.turnScript.Turn;
                     secret.status = GameManager.instance.secretScript.secretStatusRevealed;
-                    //message
-                    msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.secretID);
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {

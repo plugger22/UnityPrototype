@@ -197,7 +197,7 @@ public class SecretManager : MonoBehaviour
 
 
     /// <summary>
-    /// Removes a given secret from all actors and player. If calling for a deleted secret then set to true, otherwise, for a normal revealed secret situation, default false
+    /// Removes a given secret from all actors (OnMap and Reserve) and player. If calling for a deleted secret then set to true, otherwise, for a normal revealed secret situation, default false
     /// This ensures that if a secret is deleted from an actor who is currently blackmailing then their blackmailer status is removed if they end up with no secrets remaining
     /// Returns true if successfully removed secret/s, false otherwise
     /// </summary>
@@ -219,7 +219,9 @@ public class SecretManager : MonoBehaviour
             }
             //remove actors from secret list
             secret.RemoveAllActors();
-            //loop actors
+            //Create a list of all current actors plus all actors in Reserve
+            List<Actor> listOfActors = new List<Actor>();
+            //add current actors
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
             if (arrayOfActors != null)
             {
@@ -227,28 +229,43 @@ public class SecretManager : MonoBehaviour
                 {
                     //check actor is present in slot (not vacant)
                     if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                    { listOfActors.Add(arrayOfActors[i]); }
+                }
+            }
+            else { Debug.LogWarning("Invalid arrayOfActors (Null)"); }
+            //add reserve actors
+            List<int> listOfReserveActors = GameManager.instance.dataScript.GetActorList(GameManager.instance.sideScript.PlayerSide, ActorList.Reserve);
+            if (listOfReserveActors.Count > 0)
+            {
+                for (int i = 0; i < listOfReserveActors.Count; i++)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
+                    if (actor != null)
+                    { listOfActors.Add(actor); }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfReserveActors[i]); }
+                }
+            }
+            //loop all actors
+            foreach (Actor actor in listOfActors)
+            {
+                if (actor != null)
+                {
+                    actor.RemoveSecret(secretID);
+                    //blackmail check -> if actor is blackmailing and they end up with zero secrets then the condition is removed
+                    if (isDeletedSecret == true)
                     {
-                        Actor actor = arrayOfActors[i];
-                        if (actor != null)
+                        //message (any situation where a blackmail check is needed is going to be a deleted secret, hence the need for a message
+                        string msgText = string.Format("{0} loses secret \"{1}\"", actor.arc.name, secret.tag);
+                        GameManager.instance.messageScript.ActorSecret(msgText, actor, secret, false);
+                        if (actor.CheckConditionPresent(conditionBlackmail) == true)
                         {
-                            actor.RemoveSecret(secretID);
-                            //blackmail check -> if actor is blackmailing and they end up with zero secrets then the condition is removed
-                            if (isDeletedSecret == true)
+                            if (actor.CheckNumOfSecrets() == 0)
                             {
-                                //message (any situation where a blackmail check is needed is going to be a deleted secret, hence the need for a message
-                                string msgText = string.Format("{0} loses secret \"{1}\"", actor.arc.name, secret.tag);
-                                GameManager.instance.messageScript.ActorSecret(msgText, actor, secret, false);
-                                if (actor.CheckConditionPresent(conditionBlackmail) == true)
-                                {
-                                    if (actor.CheckNumOfSecrets() == 0)
-                                    {
-                                        actor.RemoveCondition(conditionBlackmail, "Secret no longer has any effect");
-                                        //additional explanatory message (why has condition gone?)
-                                        string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
-                                        string reason = "The secret they hold has no value";
-                                        GameManager.instance.messageScript.ActorBlackmail(blackText, actor, secret.secretID, true, reason);
-                                    }
-                                }
+                                actor.RemoveCondition(conditionBlackmail, "Secret no longer has any effect");
+                                //additional explanatory message (why has condition gone?)
+                                string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
+                                string reason = "The secret they hold has no value";
+                                GameManager.instance.messageScript.ActorBlackmail(blackText, actor, secret.secretID, true, reason);
                             }
                         }
                     }

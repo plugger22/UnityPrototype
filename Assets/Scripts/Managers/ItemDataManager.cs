@@ -245,8 +245,8 @@ public class ItemDataManager : MonoBehaviour
                 if (secret != null)
                 {
                     builder.AppendFormat("{0}, {1}{2}{3}{4}{5}has carried out their threat{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd, "\n", "\n");
-                    builder.Append("<b>Your Secret is Revealed</b>");
-                    GetSecretEffects(builder, secret);
+                    builder.AppendFormat("<b>\"{0}\" is Revealed</b>", secret.tag);
+                    /*GetSecretEffects(builder, secret);*/
                 }
                 else { Debug.LogWarningFormat("Invalid secret (Null) for secretID {0}", secretID); }
             }
@@ -357,11 +357,11 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(reason) == false)
-        { builder.AppendFormat("{0}, {1}{2}{3} Complains", actor.actorName, colourAlert, actor.arc.name, colourEnd); }
+        { builder.AppendFormat("{0}, {1}{2}{3}", actor.actorName, colourAlert, actor.arc.name, colourEnd); }
         if (string.IsNullOrEmpty(reason) == false)
-        { builder.AppendFormat("{0}{1}", "\n", reason); }
+        { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourNeutral, reason, colourEnd); }
         if (string.IsNullOrEmpty(warning) == false)
-        { builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourBad, warning, colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourBad, warning, colourEnd); }
         return builder.ToString();
     }
 
@@ -657,8 +657,9 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}{2}{3}", actor.actorName, colourAlert, actor.arc.name, colourEnd);
         if (string.IsNullOrEmpty(reason) == false)
-        { builder.AppendFormat("{{0}{1}{2}{3}", "\n", colourBad, reason, colourEnd); }
-        builder.AppendFormat("{0}{1}Secret Revealed{2}{3}<b>{4}</b>{5}", "\n", "\n", "\n", colourBad, GetSecretEffects(builder, secret), colourEnd);
+        { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, reason, colourEnd); }
+        builder.AppendFormat("{0}{1}Secret Revealed{2}", "\n", "\n", "\n");
+        GetSecretEffects(builder, secret);
         return builder.ToString();
     }
 
