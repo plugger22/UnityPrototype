@@ -22,5 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c269039c72e1934c86cc932229472fc, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 304f0f8a220595b4f8b1f9ca668d3e78, type: 2}
-  - {fileID: 11400000, guid: 4f0c3535e8a8e814485c43f8170f63c1, type: 2}
+  - {fileID: 11400000, guid: 55d743b81da2f9244b9c873d612fbb1a, type: 2}
   isRenownCost: 0

@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: Unhappy Timer Promise
+  m_Name: Actor Promised
   m_EditorClassIdentifier: 
   effectID: 0
-  description: actor unhappy timer set for Promise action
+  description: actor promised
   textTag: 
   listOfCriteria: []
   apply: {fileID: 0}
-  outcome: {fileID: 11400000, guid: 227ae6786499800409217d09492078c9, type: 2}
+  outcome: {fileID: 11400000, guid: 560ee4e69b3883347828d34419f5ffdb, type: 2}
   operand: {fileID: 0}
   typeOfEffect: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}

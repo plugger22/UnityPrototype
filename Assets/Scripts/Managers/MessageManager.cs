@@ -420,7 +420,43 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-
+    /// <summary>
+    /// Actor complains, 'reason' is Short, self-contained with '[Actor]' above, 'warnng' is self-contained and unformatted
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="reason"></param>
+    /// <param name="warning"></param>
+    /// <returns></returns>
+    public Message ActorComplains(string text, Actor actor, string reason, string warning)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Complains;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = actor.actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0} has COMPLAINED", actor.arc.name);
+            data.topText = "Complaint Lodged";
+            data.bottomText = GameManager.instance.itemDataScript.GetActorComplainsDetails(actor, reason, warning);
+            data.priority = ItemPriority.Medium;
+            data.tab = ItemTab.Mail;
+            data.side = message.side;
+            data.help = 1;
+            data.sprite = actor.arc.sprite;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
 
     /// <summary>
     /// Actor in Reserve Pool is reassured or threatened, defaults to player side
@@ -612,6 +648,46 @@ public class MessageManager : MonoBehaviour
             else
             {  data.itemText = string.Format("{0} forgets one of your Secrets", actor.arc.name);  }
             data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
+            data.tab = ItemTab.Mail;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Secret revealed due to blackmail or unhappy actor in reserves. 
+    /// 'reason' is short & self-contained & NOT colour formatted, with '[Actor]' in line above, eg. 'Unhappy in being left in Reserves' or 'Carries out Blackmail threat'
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="secret"></param>
+    /// <returns></returns>
+    public Message ActorRevealSecret(string text, Actor actor, Secret secret, string reason)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(secret != null, "Invalid secret (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Secret;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = actor.actorID;
+            message.data1 = secret.secretID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = secret.tag;
+            data.bottomText = GameManager.instance.itemDataScript.GetActorRevealSecretDetails(actor, secret, reason);
+            data.itemText = string.Format("{0} reveals your SECRET", actor.arc.name);
+            data.priority = ItemPriority.High;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Mail;
             data.side = message.side;

@@ -146,6 +146,7 @@
         Actor_Action,
         Actor_Status,
         Actor_Condition,
+        Actor_Complains,
         Actor_Blackmail,
         Actor_Secret,
         Actor_Reassured,

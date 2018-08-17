@@ -900,9 +900,8 @@ public class EffectManager : MonoBehaviour
                 case "ManageDismissRenown":
                 case "ManageDisposeRenown":
                 case "ManageReserveRenown":
-                case "UnhappyTimerNoPromise":
-                case "UnhappyTimerPromise":
-                case "UnhappyTimerRest":
+                case "UnhappyTimerCurrent":
+                case "ActorPromised":
                     if (actor != null)
                     {
                         EffectDataResolve resolve = ResolveManageData(effect, actor);
@@ -2783,13 +2782,15 @@ public class EffectManager : MonoBehaviour
                 { builderDispose.Append(manageDisposeCost.tooltip); }
                 effectResolve.bottomText = builderDispose.ToString();
                 break;
-            case "UnhappyTimerRest":
-            case "UnhappyTimerPromise":
-            case "UnhappyTimerNoPromise":
+            case "UnhappyTimerCurrent":
                 data = GameManager.instance.actorScript.currentReserveTimer;
                 actor.unhappyTimer = data;
                 effectResolve.bottomText = string.Format("{0}{1}'s Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data,
                     data != 1 ? "s" : "", colourEnd);
+                break;
+            case "ActorPromised":
+                actor.isPromised = true;
+                effectResolve.bottomText = string.Format("{0}{1} has been Promised{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));

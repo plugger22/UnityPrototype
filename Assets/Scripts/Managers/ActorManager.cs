@@ -3637,12 +3637,11 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (actor.blackmailTimer > 0)
                                 {
-                                    string blackmailOutcome = ProcessBlackmail(actor);
+                                    ProcessBlackmail(actor);
+
+                                    /*string blackmailOutcome = ProcessBlackmail(actor);
                                     if (string.IsNullOrEmpty(blackmailOutcome) == false)
-                                    {
-                                        //TO DO -> Notification to player of black mail outcome (start turn) -> already done via Messages -> improve Notification system needed
-                                        
-                                    }
+                                    { }*/
                                 }
                                 //
                                 // - - - Compatibility - - -
@@ -3733,11 +3732,11 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (actor.blackmailTimer > 0)
                                 {
-                                    string blackmailOutcome = ProcessBlackmail(actor);
+                                    ProcessBlackmail(actor);
+
+                                    /*string blackmailOutcome = ProcessBlackmail(actor);
                                     if (string.IsNullOrEmpty(blackmailOutcome) == false)
-                                    {
-                                        //TO DO -> Notification to player of black mail outcome (start turn)
-                                    }
+                                    { }*/
                                 }
                                 //
                                 // - - - Compatibility - - -
@@ -3795,14 +3794,13 @@ public class ActorManager : MonoBehaviour
 
 
     /// <summary>
-    /// sub Method to check Blackmail condition each turn. Called by CheckActive(Resistance/Authority)Actors. Returns builder string of effects or null if none.
+    /// sub Method to check Blackmail condition each turn. Called by CheckActive(Resistance/Authority)Actors. 
     /// NOTE: Actor has been checked for null by calling method
     /// </summary>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private string ProcessBlackmail(Actor actor)
+    private void ProcessBlackmail(Actor actor)
     {
-        string text = null;
         string msgText, reason;
         bool isResolved = false;
         //decrement timer
@@ -3836,7 +3834,7 @@ public class ActorManager : MonoBehaviour
                     secret.revealedWho = actor.actorID;
                     secret.revealedWhen = GameManager.instance.turnScript.Turn;
                     secret.status = GameManager.instance.secretScript.secretStatusRevealed;
-                    StringBuilder builder = new StringBuilder();
+                    /*StringBuilder builder = new StringBuilder();*/
                     //message
                     msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
                     GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.secretID);
@@ -3844,7 +3842,9 @@ public class ActorManager : MonoBehaviour
                     if (secret.listOfEffects != null)
                     {
                         //data packages
-                        EffectDataReturn effectReturn = new EffectDataReturn();
+
+                        /*EffectDataReturn effectReturn = new EffectDataReturn();*/
+
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.originText = "Reveal Secret";
                         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
@@ -3853,21 +3853,18 @@ public class ActorManager : MonoBehaviour
                             //loop effects
                             foreach (Effect effect in secret.listOfEffects)
                             {
-                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
-                                if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                                builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);
-                                /*//temp message
-                                if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
-                                {
-                                    string textSecret = string.Format("Secret Revealed ({0})", effectReturn.bottomText);
-                                    GameManager.instance.messageScript.ActorBlackmail(textSecret, actor, secret.secretID);
-                                }*/
+                                GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+
+                                /*effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);*/
                             }
                         }
                         else { Debug.LogWarning("Invalid player node (Null)"); }
-                        //return builder output (all effects colour formatted, two lines each and a double space betweeen
-                        text = builder.ToString();
+
                     }
+                    //message detailing effects
+                    GameManager.instance.messageScript.ActorRevealSecret(msgText, actor, secret, "Carries out Blackmail threat");
                     //attempt executed, Blackmailer condition cancelled
                     actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has carried out their Threat", actor.arc.name));
                     //remove secret from all actors and player
@@ -3886,7 +3883,6 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Blackmail", reason, warning);
             }
         }
-        return text;
     }
 
     /// <summary>
@@ -4354,17 +4350,22 @@ public class ActorManager : MonoBehaviour
                         {
                             //actor is Unhappy and has 0 motivation. Do they take action?
                             chance = unhappyTakeActionChance;
+                            string situation = "";
                             //if actor has previously been promised or reassured, double chance of action (4X if both promised and reassured)
                             if (actor.isPromised == true)
-                            { chance *= 2; }
+                            { chance *= 2; situation = "Promised"; }
                             if (actor.isReassured == true)
-                            { chance *= 2; }
+                            {
+                                chance *= 2;
+                                if (situation.Length > 0) { situation += ", Reassured"; }
+                                else { situation = "Reassured"; }
+                            }
                             rnd = Random.Range(0, 100);
                             if (rnd < chance)
                             {
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Action check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                msgText = string.Format("Unhappy {0} Action check SUCCESS", actor.arc.name);
+                                msgText = string.Format("Unhappy {0} Action check SUCCESS {1}", actor.arc.name, situation.Length > 0 ? "(" + situation + ")" : "");
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //action taken
                                 Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {2}", actor.arc.name, actor.actorName, "\n"));
@@ -4374,7 +4375,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Action check FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                msgText = string.Format("Unhappy {0} Action check FAILED", actor.arc.name);
+                                msgText = string.Format("Unhappy {0} Action check FAILED {1}", actor.arc.name, situation.Length > 0 ? "(" + situation + ")" : "");
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //actor about to take action warning
                                 msgText = string.Format("{0}, {1}, in Reserves, is about to Act", actor.actorName, actor.arc.name);
@@ -4529,8 +4530,38 @@ public class ActorManager : MonoBehaviour
                 msgText = string.Format("Unhappy {0} Reveal Secret SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
 
-                //TO DO
-                Debug.LogFormat("Unhappy Actor: {0} {1} Threatens to reveal a Secret{2}", actor.arc.name, actor.actorName, "\n");
+                Secret secret = actor.GetSecret();
+                if (secret != null)
+                {
+                    secret.revealedWho = actor.actorID;
+                    secret.revealedWhen = GameManager.instance.turnScript.Turn;
+                    secret.status = GameManager.instance.secretScript.secretStatusRevealed;
+                    //message
+                    msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
+                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.secretID);
+                    //carry out effects
+                    if (secret.listOfEffects != null)
+                    {
+                        //data packages
+                        /*EffectDataReturn effectReturn = new EffectDataReturn();*/
+                        EffectDataInput effectInput = new EffectDataInput();
+                        effectInput.originText = "Reveal Secret";
+                        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                        if (node != null)
+                        {
+                            //loop effects
+                            foreach (Effect effect in secret.listOfEffects)
+                            {  GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);  }
+                        }
+                        else { Debug.LogWarning("Invalid player node (Null)"); }
+                    }
+                    //remove secret from all actors and player
+                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID);
+                    //message
+                    GameManager.instance.messageScript.ActorRevealSecret(string.Format("{0} Reveals your SECRET", actor.arc.name), actor, secret, "Unhappy at being left in Reserve");
+                }
+                else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
+
                 return;
             }
             else
@@ -4622,9 +4653,8 @@ public class ActorManager : MonoBehaviour
                 Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Complain SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Complain SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
-
-                //TO DO
-                Debug.LogFormat("Unhappy Actor: {0} {1} Threatens to Complain{2}", actor.arc.name, actor.actorName, "\n");
+                msgText = string.Format("{0} Complains about being left in Reserves", actor.arc.name);
+                GameManager.instance.messageScript.ActorComplains(msgText, actor, "Unhappy at being left in Reserve", "Higher chance of Resigning or Revealing a Secret");
                 actor.isComplaining = true;
                 return;
             }

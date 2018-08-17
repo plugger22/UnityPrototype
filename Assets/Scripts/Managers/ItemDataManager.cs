@@ -345,6 +345,26 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    /// <summary>
+    /// Actor complains
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="reason"></param>
+    /// <param name="warning"></param>
+    /// <returns></returns>
+    public string GetActorComplainsDetails(Actor actor, string reason, string warning)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{0}, {1}{2}{3} Complains", actor.actorName, colourAlert, actor.arc.name, colourEnd); }
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{0}{1}", "\n", reason); }
+        if (string.IsNullOrEmpty(warning) == false)
+        { builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourBad, warning, colourEnd); }
+        return builder.ToString();
+    }
+
     /// <summary>
     /// Actor recruited
     /// </summary>
@@ -622,6 +642,23 @@ public class ItemDataManager : MonoBehaviour
             //secret lost
             builder.AppendFormat("{0} can {1}no longer remember{2} the details of your secret", actor.actorName, colourNeutral, colourEnd);
         }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Whenever secret revealed, shows reason why and specific effects
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="secret"></param>
+    /// <param name="secretEffect"></param>
+    /// <returns></returns>
+    public string GetActorRevealSecretDetails(Actor actor, Secret secret, string reason)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{{0}{1}{2}{3}", "\n", colourBad, reason, colourEnd); }
+        builder.AppendFormat("{0}{1}Secret Revealed{2}{3}<b>{4}</b>{5}", "\n", "\n", "\n", colourBad, GetSecretEffects(builder, secret), colourEnd);
         return builder.ToString();
     }
 
