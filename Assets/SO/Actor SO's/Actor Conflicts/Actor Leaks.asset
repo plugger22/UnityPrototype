@@ -21,5 +21,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e7e531d54edce21418ded7985d8430d6, type: 2}
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   effect: {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  isTestOff: 0
+  isTestOff: 1
   conflictID: 3
