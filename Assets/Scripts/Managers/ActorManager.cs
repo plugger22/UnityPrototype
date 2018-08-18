@@ -54,8 +54,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 99)] public int unhappyComplainChance = 50;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
     [Range(1, 10)] public int unhappyReassureBoost = 5;
-    [Tooltip("Increase to the actor's Unhappy Timer after they have been Threatened")]
-    [Range(1, 10)] public int unhappyThreatenBoost = 5;
+    [Tooltip("Increase to the actor's Unhappy Timer after they have been Bullied")]
+    [Range(1, 10)] public int unhappyBullyBoost = 5;
     [Tooltip("Amount of motivation lost when actor let go from reserve pool")]
     [Range(1, 3)] public int motivationLossLetGo = 1;
     [Tooltip("Amount of motivation lost when actor fired")]
@@ -2116,24 +2116,24 @@ public class ActorManager : MonoBehaviour
                 infoBuilder.AppendFormat("{0}Can't Let Go if Unhappy.{1}", colourBad, colourEnd);
             }
             //
-            // - - - Threaten - - -
+            // - - - Bully - - -
             //
             if (actor.unhappyTimer > 0)
             {
-                renownCost = renownCostThreaten;
+                renownCost = actor.numOfTimesBullied + 1;
                 if (playerRenown >= renownCost)
                 {
                     StringBuilder builder = new StringBuilder();
-                    builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyThreatenBoost, colourEnd);
+                    builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyBullyBoost, colourEnd);
                     builder.AppendLine();
-                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCostThreaten, colourEnd);
+                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                     builder.AppendLine();
-                    builder.AppendFormat("{0}Can be Threatened again provided not Unhappy{1}", colourNeutral, colourEnd);
+                    builder.AppendFormat("{0}Can be Bullied again{1}{2}{3}(Renown cost +1){4}", colourNeutral, colourEnd, "\n", colourBad, colourEnd);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
-                        buttonTitle = "Threaten",
+                        buttonTitle = "Bully",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("You eyeball {0} and threaten that if they don't stop complaining you'll speak to HQ", actor.actorName),
+                        buttonTooltipMain = string.Format("You eyeball {0} and tell them that if they don't stop complaining you'll speak to HQ", actor.actorName),
                         buttonTooltipDetail = builder.ToString(),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.InventoryThreaten, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
@@ -2146,14 +2146,14 @@ public class ActorManager : MonoBehaviour
                 {
                     //not enough renown
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.AppendFormat("{0}Insufficient Renown to Threaten (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
+                    infoBuilder.AppendFormat("{0}Insufficient Renown to Bully (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
                 }
             }
             else
             {
                 //can't threaten somebody who is already unhappy
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}Can't Threaten if Unhappy.{1}", colourBad, colourEnd);
+                infoBuilder.AppendFormat("{0}Can't Bully if Unhappy.{1}", colourBad, colourEnd);
             }
 
             //
@@ -2193,7 +2193,8 @@ public class ActorManager : MonoBehaviour
             {
                 //not enough renown
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
+                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}{2}{3}{4}{5}, currently have {6}{7}{8}{9}){10}", colourBad, colourEnd, colourAlert, renownCost, colourEnd, colourBad,
+                    colourAlert, playerRenown, colourEnd, colourBad, colourEnd);
             }
         }
         else
@@ -4836,7 +4837,6 @@ public class ActorManager : MonoBehaviour
         //proceed with a valid actor
         if (actor != null)
         {
-            
             int numOfSecrets = actor.CheckNumOfSecrets();
             int extraSecretCost = 0;
             //calculate adjusted renown cost
@@ -4851,13 +4851,13 @@ public class ActorManager : MonoBehaviour
             if (numOfSecrets > 0)
             {
                 builder.AppendLine();
-                builder.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost){5}", colourAlert, actor.arc.name, numOfSecrets,
+                builder.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost){5}", colourBad, actor.arc.name, numOfSecrets,
                     numOfSecrets != 1 ? "s" : "", extraSecretCost, colourEnd);
             }
             if (actor.isThreatening == true)
             {
                 builder.AppendLine();
-                builder.AppendFormat("({0}Double Renown cost as {1} is Threatening you){2}", colourAlert, actor.arc.name, colourEnd);
+                builder.AppendFormat("({0}Double Renown cost as {1} is Threatening you){2}", colourBad, actor.arc.name, colourEnd);
             }
             manageRenown.tooltip = builder.ToString();
         }

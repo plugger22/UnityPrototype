@@ -144,7 +144,7 @@ public class ActionManager : MonoBehaviour
                 break;
             case EventType.InventoryThreaten:
                 ModalActionDetails detailsThreaten = Param as ModalActionDetails;
-                ProcessThreatenActor(detailsThreaten);
+                ProcessBullyActor(detailsThreaten);
                 break;
             case EventType.InventoryLetGo:
                 ModalActionDetails detailsLetGo = Param as ModalActionDetails;
@@ -1724,14 +1724,13 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Reserve pool actor is Threatened via the right click action menu
+    /// Reserve pool actor is Bullied via the right click action menu
     /// NOTE: calling method checks unhappyTimer > 0 & that sufficient renown onhand
     /// </summary>
     /// <param name="actorID"></param>
-    private void ProcessThreatenActor(ModalActionDetails details)
+    private void ProcessBullyActor(ModalActionDetails details)
     {
-        int benefit = GameManager.instance.actorScript.unhappyThreatenBoost;
-        int renownCost = GameManager.instance.actorScript.renownCostThreaten;
+        int benefit = GameManager.instance.actorScript.unhappyBullyBoost;
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         Actor actor = null;
@@ -1747,14 +1746,16 @@ public class ActionManager : MonoBehaviour
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
             if (actor != null)
             {
+                int renownCost = actor.numOfTimesBullied + 1;
+                actor.numOfTimesBullied++;
                 outcomeDetails.textTop = string.Format("{0} {1} has been pulled into line and told to smarten up their attitude",
                     actor.arc.name, actor.actorName);
                 StringBuilder builder = new StringBuilder();
-                builder.AppendFormat("{0}{1}'s Unhappy timer +{2}{3}", colourGood, actor.actorName, benefit, colourEnd);
+                builder.AppendFormat("{0}{1}'s{2}Unhappy timer +{3}{4}", colourGood, actor.actorName,"\n", benefit, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("{0}{1} can be Threatened again (not if Unhappy){2}", colourNeutral, actor.actorName, colourEnd);
+                builder.AppendFormat("{0}{1} can be Bullied again for {2} Renown{3}", colourNeutral, actor.actorName, actor.numOfTimesBullied + 1, colourEnd);
                 outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.arc.sprite;
                 //Give boost to Unhappy timer

@@ -21,6 +21,7 @@ namespace gameAPI
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public int blackmailTimer;            //default 0 but set to new global value once actor gains Blackmailer condition
+        [HideInInspector] public int numOfTimesBullied;         //tracked in order to calculate cost of bullying
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
         [HideInInspector] public bool isReassured;              //true if actor has been reassured, false if not (can only be reassured once)
@@ -96,6 +97,7 @@ namespace gameAPI
             gearTimer = 0;
             gearTimesTaken = 0;
             blackmailTimer = 0;
+            numOfTimesBullied = 0;
             //fast access & cached
             actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
             actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
@@ -184,7 +186,7 @@ namespace gameAPI
                     case "BLACKMAILER":
                         //need to have at least one secret
                         if (listOfSecrets.Count == 0)
-                        { Debug.Log("Actor.cs -> AddCondition: BLACKMAIL condition NOT added (Actor has no Secrets)"); }
+                        { Debug.LogWarning("Actor.cs -> AddCondition: BLACKMAIL condition NOT added (Actor has no Secrets)"); }
                         else
                         {
                             if (CheckTraitEffect(actorBlackmailNone) == true)
@@ -207,6 +209,9 @@ namespace gameAPI
                         switch (condition.name)
                         {
                             case "BLACKMAILER":
+                                //actor is threatening player
+                                isThreatening = true;
+                                //blackmail timer
                                 int timer = GameManager.instance.secretScript.secretBlackmailTimer;
                                 //traits
                                 if (CheckTraitEffect(actorBlackmailTimerHigh) == true)
@@ -283,6 +288,7 @@ namespace gameAPI
                             {
                                 case "BLACKMAILER":
                                     blackmailTimer = 0;
+                                    isThreatening = false;
                                     break;
                             }
                             listOfConditions.RemoveAt(i);
