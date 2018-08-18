@@ -28,13 +28,15 @@ public class EffectManager : MonoBehaviour
     private int teamArcDamage = -1;
     private int teamArcErasure = -1;
     //fast access -> traits
-    private int actorStressedOverInvisibility;
-    private int actorDoubleRenown;
-    private int actorBlackmailNone;
-    private int actorConflictPoison;
-    private int actorConflictKill;
-    private int actorNeverResigns;
-    
+    private int actorStressedOverInvisibility = -1;
+    private int actorDoubleRenown = -1;
+    private int actorBlackmailNone = -1;
+    private int actorConflictPoison = -1;
+    private int actorConflictKill = -1;
+    private int actorNeverResigns = -1;
+    private int actorReserveTimerDoubled = -1;
+    private int actorReserveTimerHalved = -1;
+
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -69,6 +71,8 @@ public class EffectManager : MonoBehaviour
         actorConflictPoison = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictPoison");
         actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
         actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
+        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
+        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
@@ -81,6 +85,8 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(actorConflictPoison > -1, "Invalid actorPoisonYes (-1)");
         Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
         Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
+        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
+        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
@@ -2784,9 +2790,22 @@ public class EffectManager : MonoBehaviour
                 break;
             case "UnhappyTimerCurrent":
                 data = GameManager.instance.actorScript.currentReserveTimer;
+                //traits that affect unhappy timer
+                string traitText = "";
+                if (actor.CheckTraitEffect(actorReserveTimerDoubled) == true)
+                {
+                    data *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
+                }
+                else if (actor.CheckTraitEffect(actorReserveTimerHalved) == true)
+                {
+                    data /= 2; data = Mathf.Max(1, data); traitText = string.Format(" ({0})", actor.GetTrait().tag);
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
+                }
+                //set timer
                 actor.unhappyTimer = data;
-                effectResolve.bottomText = string.Format("{0}{1}'s Unhappy Timer set to {2} turn{3}{4}", colourEffect, actor.actorName, data,
-                    data != 1 ? "s" : "", colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1}'s Unhappy Timer set to {2} turn{3}{4}{5}", colourEffect, actor.actorName, data,
+                    data != 1 ? "s" : "", traitText, colourEnd);
                 break;
             case "ActorPromised":
                 actor.isPromised = true;

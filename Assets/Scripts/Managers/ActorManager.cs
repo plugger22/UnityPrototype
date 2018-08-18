@@ -109,7 +109,10 @@ public class ActorManager : MonoBehaviour
     private int actorNeverResigns;
     private int actorConflictKill;
     private int actorResignHigh;
-    
+    private int actorReserveTimerDoubled = -1;
+    private int actorReserveTimerHalved = -1;
+    private int actorReserveActionNone = -1;
+
 
     //gear
     private int maxNumOfGear;
@@ -199,6 +202,9 @@ public class ActorManager : MonoBehaviour
         actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
         actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
         actorResignHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorResignHigh");
+        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
+        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
+        actorReserveActionNone = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionNone");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
@@ -212,6 +218,9 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
         Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
         Debug.Assert(actorResignHigh > -1, "Invalid actorResignHigh (-1)");
+        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
+        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
+        Debug.Assert(actorReserveActionNone > -1, "Invalid actorReserveActionNone (-1) ");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -1219,7 +1228,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 builderTooltip.AppendFormat("{0}{1} has {2}{3}{4} trait{5}{6}(Refuses to return Gear){7}", "\n", actor.arc.name, colourNeutral,
                                                     actor.GetTrait().tag, colourEnd, "\n", colourBad, colourEnd);
-                                                GameManager.instance.actorScript.TraitLogMessage(actor, "for Returning Gear", "to AVOID doing so");
+                                                TraitLogMessage(actor, "for Returning Gear", "to AVOID doing so");
                                             }
 
                                             //existing gear
@@ -2052,20 +2061,31 @@ public class ActorManager : MonoBehaviour
             {
                 if (actor.isReassured == false)
                 {
-                    tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
-                        unhappyReassureBoost, colourEnd, "\n", colourNeutral, colourEnd);
-                    EventButtonDetails actorDetails = new EventButtonDetails()
+                    //trait Cranky
+                    if (actor.CheckTraitEffect(actorReserveActionNone) == false)
                     {
-                        buttonTitle = "Reassure",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
-                        buttonTooltipDetail = tooltipText,
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.InventoryReassure, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
+                        tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
+                            unhappyReassureBoost, colourEnd, "\n", colourNeutral, colourEnd);
+                        EventButtonDetails actorDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "Reassure",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                            buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
+                            buttonTooltipDetail = tooltipText,
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.InventoryReassure, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
 
-                    };
-                    //add Lie Low button to list
-                    eventList.Add(actorDetails);
+                        };
+                        //add Lie Low button to list
+                        eventList.Add(actorDetails);
+                    }
+                    else
+                    {
+                        //not allowed due to trait (Cranky)
+                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                        infoBuilder.AppendFormat("{0} can't be Reassured ({1} trait)", actor.actorName, actor.GetTrait().tag);
+                        TraitLogMessage(actor, "for, possibly, being Reassured", "to PREVENT a Reassurance attempt");
+                    }
                 }
                 else
                 {
@@ -2123,24 +2143,34 @@ public class ActorManager : MonoBehaviour
                 renownCost = actor.numOfTimesBullied + 1;
                 if (playerRenown >= renownCost)
                 {
-                    StringBuilder builder = new StringBuilder();
-                    builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyBullyBoost, colourEnd);
-                    builder.AppendLine();
-                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
-                    builder.AppendLine();
-                    builder.AppendFormat("{0}Can be Bullied again{1}{2}{3}(Renown cost +1){4}", colourNeutral, colourEnd, "\n", colourBad, colourEnd);
-                    EventButtonDetails actorDetails = new EventButtonDetails()
+                    if (actor.CheckTraitEffect(actorReserveActionNone) == false)
                     {
-                        buttonTitle = "Bully",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("You eyeball {0} and tell them that if they don't stop complaining you'll speak to HQ", actor.actorName),
-                        buttonTooltipDetail = builder.ToString(),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.InventoryThreaten, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
+                        StringBuilder builder = new StringBuilder();
+                        builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyBullyBoost, colourEnd);
+                        builder.AppendLine();
+                        builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+                        builder.AppendLine();
+                        builder.AppendFormat("{0}Can be Bullied again{1}{2}{3}(Renown cost +1){4}", colourNeutral, colourEnd, "\n", colourBad, colourEnd);
+                        EventButtonDetails actorDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "Bully",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                            buttonTooltipMain = string.Format("You eyeball {0} and tell them that if they don't stop complaining you'll speak to HQ", actor.actorName),
+                            buttonTooltipDetail = builder.ToString(),
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.InventoryThreaten, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
 
-                    };
-                    //add Lie Low button to list
-                    eventList.Add(actorDetails);
+                        };
+                        //add Lie Low button to list
+                        eventList.Add(actorDetails);
+                    }
+                    else
+                    {
+                        //not allowed due to trait (Cranky)
+                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                        infoBuilder.AppendFormat("{0} can't be Bullied ({1} trait)", actor.actorName, actor.GetTrait().tag);
+                        TraitLogMessage(actor, "for, possibly, being Bullied", "to PREVENT being Bullied");
+                    }
                 }
                 else
                 {
@@ -2809,6 +2839,7 @@ public class ActorManager : MonoBehaviour
     private void ProcessRecruitChoiceResistance(GenericReturnData data)
     {
         bool successFlag = true;
+        int unhappyTimer = recruitedReserveTimer;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.guiScript.errorSprite;
@@ -2827,6 +2858,18 @@ public class ActorManager : MonoBehaviour
                         //add actor to reserve pool
                         if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, playerSide) == true)
                         {
+                            //traits that affect unhappy timer
+                            string traitText = "";
+                            if (actorRecruited.CheckTraitEffect(actorReserveTimerDoubled) == true)
+                            {
+                                unhappyTimer *= 2; traitText = string.Format(" ({0})", actorRecruited.GetTrait().tag);
+                                TraitLogMessage(actorRecruited, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
+                            }
+                            else if (actorRecruited.CheckTraitEffect(actorReserveTimerHalved) == true)
+                            {
+                                unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer); traitText = string.Format(" ({0})", actorRecruited.GetTrait().tag);
+                                TraitLogMessage(actorRecruited, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
+                            }
                             //change actor's status
                             actorRecruited.Status = ActorStatus.Reserve;
                             //remove actor from appropriate pool list
@@ -2834,14 +2877,14 @@ public class ActorManager : MonoBehaviour
                             //sprite of recruited actor
                             sprite = actorRecruited.arc.sprite;
                             //initiliase unhappy timer
-                            actorRecruited.unhappyTimer = recruitedReserveTimer;
+                            actorRecruited.unhappyTimer = unhappyTimer;
                             actorRecruited.isNewRecruit = true;
                             //actor successfully recruited
                             builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                             builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
                                 actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
-
-
+                            builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {3} turn{4}{5}{6}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                                traitText, colourEnd);
                             //message
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
@@ -2938,6 +2981,7 @@ public class ActorManager : MonoBehaviour
     private void ProcessRecruitChoiceAuthority(GenericReturnData data)
     {
         bool successFlag = true;
+        int unhappyTimer = recruitedReserveTimer;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.guiScript.errorSprite;
@@ -2953,6 +2997,18 @@ public class ActorManager : MonoBehaviour
                     //add actor to reserve pool
                     if (GameManager.instance.dataScript.AddActorToReserve(actorRecruited.actorID, side) == true)
                     {
+                        //traits that affect unhappy timer
+                        string traitText = "";
+                        if (actorRecruited.CheckTraitEffect(actorReserveTimerDoubled) == true)
+                        {
+                            unhappyTimer *= 2; traitText = string.Format(" ({0})", actorRecruited.GetTrait().tag);
+                            TraitLogMessage(actorRecruited, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
+                        }
+                        else if (actorRecruited.CheckTraitEffect(actorReserveTimerHalved) == true)
+                        {
+                            unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer); traitText = string.Format(" ({0})", actorRecruited.GetTrait().tag);
+                            TraitLogMessage(actorRecruited, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
+                        }
                         //change actor's status
                         actorRecruited.Status = ActorStatus.Reserve;
                         //remove actor from appropriate pool list
@@ -2960,7 +3016,7 @@ public class ActorManager : MonoBehaviour
                         //sprite of recruited actor
                         sprite = actorRecruited.arc.sprite;
                         //initiliase unhappy timer
-                        actorRecruited.unhappyTimer = recruitedReserveTimer;
+                        actorRecruited.unhappyTimer = unhappyTimer;
                         actorRecruited.isNewRecruit = true;
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
@@ -2970,6 +3026,8 @@ public class ActorManager : MonoBehaviour
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
                             actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
+                        builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {3} turn{4}{5}{6}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                            traitText, colourEnd);
                         //reset cached recruit actor flag
                         isNewActionAuthority = true;
                     }
@@ -4055,7 +4113,7 @@ public class ActorManager : MonoBehaviour
                 else
                 {
                     //trait actorResignNone "Loyal"
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
+                    TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
                     //General Info message
                     msgText = string.Format("{0} considered Resigning but didn't because they are LOYAL", actor.arc.name);
                     itemText = string.Format("{0} almost RESIGNS", actor.arc.name);

@@ -23,6 +23,9 @@ public class ActionManager : MonoBehaviour
     //traits
     private int actorStressedDuringSecurity = -1;
     private int actorKeepGear = -1;
+    private int actorReserveTimerDoubled = -1;
+    private int actorReserveTimerHalved = -1;
+    private int actorReserveActionDoubled = -1;
 
     //colour palette for Modal Outcome
     private string colourNormal;
@@ -42,12 +45,18 @@ public class ActionManager : MonoBehaviour
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
         actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
+        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
+        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
+        actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
         Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
         Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
+        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
+        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
+        Debug.Assert(actorReserveActionDoubled > -1, "Invalid actorReserveActionDoubled (-1) ");
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
@@ -677,6 +686,13 @@ public class ActionManager : MonoBehaviour
                 int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
                 for (int i = 0; i < numOfOptions; i++)
                 {
+                    //traits that affect unhappy timer
+                    string traitText = "";
+                    if (actor.CheckTraitEffect(actorReserveTimerDoubled) == true)
+                    { unhappyTimer *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag); }
+                    else if (actor.CheckTraitEffect(actorReserveTimerHalved) == true)
+                    { unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer); traitText = string.Format(" ({0})", actor.GetTrait().tag); }
+                    //manageAction
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
                     {
@@ -706,10 +722,11 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textMain = manageAction.tooltipMain;
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turns{8}", tooltipText, "\n", colourBad, renownCost, colourEnd, 
-                                    "\n", colourAlert, unhappyTimer, colourEnd); }
+                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turns{8}{9}", tooltipText, "\n", colourBad, renownCost, colourEnd, 
+                                    "\n", colourAlert, unhappyTimer, traitText, colourEnd); }
                                 else
-                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turns{7}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, colourEnd); }
+                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turns{7}{8}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, 
+                                    traitText, colourEnd); }
                             }
                             else
                             {
@@ -735,11 +752,12 @@ public class ActionManager : MonoBehaviour
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                             if (manageAction.isRenownCost == true)
                             {
-                                tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turns{8}", tooltipText, "\n", colourBad, renownCost, colourEnd,
-                                  "\n", colourAlert, unhappyTimer, colourEnd);
+                                tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turns{8}{9}", tooltipText, "\n", colourBad, renownCost, colourEnd,
+                                  "\n", colourAlert, unhappyTimer, traitText, colourEnd);
                             }
                             else
-                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turns{7}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, colourEnd); }
+                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turns{7}{8}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, 
+                                traitText, colourEnd); }
                         }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
@@ -1687,10 +1705,18 @@ public class ActionManager : MonoBehaviour
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
             if (actor != null)
             {
+                //traits
+                string traitText = "";
+                if (actor.CheckTraitEffect(actorReserveActionDoubled) == true)
+                {
+                    benefit *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "for being Reassured", "to DOUBLE effect of being Reassured");
+                }
+                //outcome
                 outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty",
                     actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7} can't be Reassured again{8}", colourGood, actor.actorName,
-                    benefit, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
+                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7}{8} can't be Reassured again{9}", colourGood, actor.actorName,
+                    benefit, traitText, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
                 outcomeDetails.sprite = actor.arc.sprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
@@ -1746,12 +1772,21 @@ public class ActionManager : MonoBehaviour
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
             if (actor != null)
             {
+                //renown Cost
                 int renownCost = actor.numOfTimesBullied + 1;
                 actor.numOfTimesBullied++;
+                //traits
+                string traitText = "";
+                if (actor.CheckTraitEffect(actorReserveActionDoubled) == true)
+                {
+                    benefit *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "for being Bullied", "to DOUBLE effect of being Bullied");
+                }
+                //outcome
                 outcomeDetails.textTop = string.Format("{0} {1} has been pulled into line and told to smarten up their attitude",
                     actor.arc.name, actor.actorName);
                 StringBuilder builder = new StringBuilder();
-                builder.AppendFormat("{0}{1}'s{2}Unhappy timer +{3}{4}", colourGood, actor.actorName,"\n", benefit, colourEnd);
+                builder.AppendFormat("{0}{1}'s{2}Unhappy timer +{3}{4}{5}", colourGood, actor.actorName,"\n", benefit, traitText, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
