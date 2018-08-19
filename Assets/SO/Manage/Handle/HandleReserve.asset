@@ -20,5 +20,6 @@ MonoBehaviour:
   order: 1
   listOfCriteria:
   - {fileID: 11400000, guid: 6dbfbcb6aa6254a408120078c8b04b81, type: 2}
+  - {fileID: 11400000, guid: dae35e80e83b6b24687c68f6103c188f, type: 2}
   listOfEffects: []
   isRenownCost: 0

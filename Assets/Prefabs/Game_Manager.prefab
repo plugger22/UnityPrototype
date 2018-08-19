@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d584344e0f087ea4eb1626b1bb7fdf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretLearnBaseChance: 50
+  secretLearnBaseChance: 4
   secretBlackmailTimer: 4
   secretMaxNum: 4
   secretTypePlayer: {fileID: 0}
@@ -752,7 +752,7 @@ MonoBehaviour:
   numOfQualities: 3
   maxStatValue: 3
   minStatValue: 0
-  currentReserveTimer: 5
+  currentReserveTimer: 10
   recruitedReserveTimer: 5
   renownCostThreaten: 1
   manageReserveRenown: 1
@@ -762,10 +762,10 @@ MonoBehaviour:
   unhappyLoseMotivationChance: 40
   unhappyTakeActionChance: 25
   unhappyRevealSecretChance: 50
-  unhappyResignChance: 40
+  unhappyResignChance: 25
   unhappyComplainChance: 50
-  unhappyReassureBoost: 2
-  unhappyThreatenBoost: 2
+  unhappyReassureBoost: 5
+  unhappyBullyBoost: 5
   motivationLossLetGo: 1
   motivationLossFire: 2
   motivationGainActiveDuty: 2
@@ -979,7 +979,7 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 9347
+  seed: 0
   isPerformanceLog: 1
   win: 0
 --- !u!114 &114762690547149900

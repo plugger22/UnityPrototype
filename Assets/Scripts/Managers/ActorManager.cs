@@ -2016,7 +2016,7 @@ public class ActorManager : MonoBehaviour
                     StringBuilder builderActive = new StringBuilder();
                     builderActive.AppendFormat("{0}{1} Motivation +{2}{3}{4}", colourGood, actor.actorName, motivationGainActiveDuty, colourEnd, "\n");
                     builderActive.AppendFormat("{0}{1} joins others On Map{2}{3}", colourNeutral, actor.actorName, colourEnd, "\n");
-                    builderActive.AppendFormat("{0}{1} will no longer Threaten or be Unhappy{2}{3}", colourGood, actor.actorName, colourEnd, "\n");
+                    builderActive.AppendFormat("{0}{1} will no longer be Unhappy or Complain{2}{3}", colourGood, actor.actorName, colourEnd, "\n");
                     if (playerSide.level == globalAuthority.level)
                     {
                         //will or won't bring a team with them
