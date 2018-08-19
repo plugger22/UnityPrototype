@@ -352,7 +352,10 @@ public class ModalGenericPicker : MonoBehaviour
         GameManager.instance.tooltipGenericScript.CloseTooltip("ModalGenericPicker.cs -> CloseGenericPicker");
         //deselect all generic options to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this, null, "ModalGenericPicker.cs -> CloseGenericPicker");
+        //reset GUI elements to default
         SetConfirmButton(false);
+        SetBackButton(EventType.None);
+        nestedDetails = null;
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalGenericPicker.cs -> CloseGenericPicker", "\n");

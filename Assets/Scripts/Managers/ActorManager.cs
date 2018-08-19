@@ -109,9 +109,10 @@ public class ActorManager : MonoBehaviour
     private int actorNeverResigns;
     private int actorConflictKill;
     private int actorResignHigh;
-    private int actorReserveTimerDoubled = -1;
-    private int actorReserveTimerHalved = -1;
-    private int actorReserveActionNone = -1;
+    private int actorReserveTimerDoubled;
+    private int actorReserveTimerHalved;
+    private int actorReserveActionNone;
+    private int actorReserveActionDoubled;
 
 
     //gear
@@ -205,6 +206,7 @@ public class ActorManager : MonoBehaviour
         actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
         actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
         actorReserveActionNone = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionNone");
+        actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
@@ -2064,8 +2066,16 @@ public class ActorManager : MonoBehaviour
                     //trait Cranky
                     if (actor.CheckTraitEffect(actorReserveActionNone) == false)
                     {
-                        tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
-                            unhappyReassureBoost, colourEnd, "\n", colourNeutral, colourEnd);
+                        if (actor.CheckTraitEffect(actorReserveActionDoubled) == false)
+                        {
+                            tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
+                              unhappyReassureBoost, colourEnd, "\n", colourNeutral, colourEnd);
+                        }
+                        else
+                        {
+                            tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2} ({3}){4}{5}{6}Can only be Reassured once{7}", colourGood, actor.actorName,
+                              unhappyReassureBoost * 2, colourEnd, actor.GetTrait().tag, "\n", colourNeutral, colourEnd);
+                        }
                         EventButtonDetails actorDetails = new EventButtonDetails()
                         {
                             buttonTitle = "Reassure",
@@ -2140,11 +2150,12 @@ public class ActorManager : MonoBehaviour
             //
             if (actor.unhappyTimer > 0)
             {
-                renownCost = actor.numOfTimesBullied + 1;
-                if (playerRenown >= renownCost)
+                if (actor.CheckTraitEffect(actorReserveActionNone) == false)
                 {
-                    if (actor.CheckTraitEffect(actorReserveActionNone) == false)
+                    renownCost = actor.numOfTimesBullied + 1;
+                    if (playerRenown >= renownCost)
                     {
+
                         StringBuilder builder = new StringBuilder();
                         builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyBullyBoost, colourEnd);
                         builder.AppendLine();
@@ -2166,17 +2177,17 @@ public class ActorManager : MonoBehaviour
                     }
                     else
                     {
-                        //not allowed due to trait (Cranky)
+                        //not enough renown
                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                        infoBuilder.AppendFormat("{0} can't be Bullied ({1} trait)", actor.actorName, actor.GetTrait().tag);
-                        TraitLogMessage(actor, "for, possibly, being Bullied", "to PREVENT being Bullied");
+                        infoBuilder.AppendFormat("{0}Insufficient Renown to Bully (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
                     }
                 }
                 else
                 {
-                    //not enough renown
+                    //not allowed due to trait (Cranky)
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                    infoBuilder.AppendFormat("{0}Insufficient Renown to Bully (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
+                    infoBuilder.AppendFormat("{0} can't be Bullied ({1} trait)", actor.actorName, actor.GetTrait().tag);
+                    TraitLogMessage(actor, "for, possibly, being Bullied", "to PREVENT being Bullied");
                 }
             }
             else
@@ -2223,8 +2234,7 @@ public class ActorManager : MonoBehaviour
             {
                 //not enough renown
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}{2}{3}{4}{5}, currently have {6}{7}{8}{9}){10}", colourBad, colourEnd, colourAlert, renownCost, colourEnd, colourBad,
-                    colourAlert, playerRenown, colourEnd, colourBad, colourEnd);
+                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
             }
         }
         else
@@ -2883,7 +2893,7 @@ public class ActorManager : MonoBehaviour
                             builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                             builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
                                 actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
-                            builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {3} turn{4}{5}{6}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                            builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
                                 traitText, colourEnd);
                             //message
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
@@ -3026,7 +3036,7 @@ public class ActorManager : MonoBehaviour
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
                             actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
-                        builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {3} turn{4}{5}{6}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                        builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
                             traitText, colourEnd);
                         //reset cached recruit actor flag
                         isNewActionAuthority = true;

@@ -28,14 +28,14 @@ public class EffectManager : MonoBehaviour
     private int teamArcDamage = -1;
     private int teamArcErasure = -1;
     //fast access -> traits
-    private int actorStressedOverInvisibility = -1;
-    private int actorDoubleRenown = -1;
-    private int actorBlackmailNone = -1;
-    private int actorConflictPoison = -1;
-    private int actorConflictKill = -1;
-    private int actorNeverResigns = -1;
-    private int actorReserveTimerDoubled = -1;
-    private int actorReserveTimerHalved = -1;
+    private int actorStressedOverInvisibility;
+    private int actorDoubleRenown;
+    private int actorBlackmailNone;
+    private int actorConflictPoison;
+    private int actorConflictKill;
+    private int actorNeverResigns;
+    private int actorReserveTimerDoubled;
+    private int actorReserveTimerHalved;
 
     //fast access -> conditions
     private Condition conditionStressed;

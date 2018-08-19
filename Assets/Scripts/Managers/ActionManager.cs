@@ -654,7 +654,8 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         string title, colourSide, criteriaText, tooltipText;
         int renownCost = GameManager.instance.actorScript.manageReserveRenown;
-        int unhappyTimer = GameManager.instance.actorScript.currentReserveTimer;
+        int unhappyTimerBase = GameManager.instance.actorScript.currentReserveTimer;
+        int unhappyTimer;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -686,6 +687,7 @@ public class ActionManager : MonoBehaviour
                 int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
                 for (int i = 0; i < numOfOptions; i++)
                 {
+                    unhappyTimer = unhappyTimerBase;
                     //traits that affect unhappy timer
                     string traitText = "";
                     if (actor.CheckTraitEffect(actorReserveTimerDoubled) == true)
@@ -722,11 +724,11 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textMain = manageAction.tooltipMain;
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turns{8}{9}", tooltipText, "\n", colourBad, renownCost, colourEnd, 
-                                    "\n", colourAlert, unhappyTimer, traitText, colourEnd); }
+                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turn{8}{9}{10}", tooltipText, "\n", colourBad, renownCost, colourEnd, 
+                                    "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd); }
                                 else
-                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turns{7}{8}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, 
-                                    traitText, colourEnd); }
+                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n", 
+                                    colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd); }
                             }
                             else
                             {
@@ -752,12 +754,12 @@ public class ActionManager : MonoBehaviour
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                             if (manageAction.isRenownCost == true)
                             {
-                                tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turns{8}{9}", tooltipText, "\n", colourBad, renownCost, colourEnd,
-                                  "\n", colourAlert, unhappyTimer, traitText, colourEnd);
+                                tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turn{8}{9}{10}", tooltipText, "\n", colourBad, renownCost, colourEnd,
+                                  "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "",  traitText, colourEnd);
                             }
                             else
-                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turns{7}{8}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, 
-                                traitText, colourEnd); }
+                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, 
+                                unhappyTimer != 1 ? "s" : "", traitText, colourEnd); }
                         }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
