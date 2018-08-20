@@ -3465,11 +3465,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -4280,11 +4280,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -4573,7 +4573,7 @@ GameObject:
   - component: {fileID: 273415382}
   - component: {fileID: 273415381}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4692,11 +4692,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -6625,7 +6625,7 @@ GameObject:
   - component: {fileID: 362451779}
   - component: {fileID: 362451778}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8409,7 +8409,7 @@ GameObject:
   - component: {fileID: 448675575}
   - component: {fileID: 448675574}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13062,12 +13062,24 @@ MonoBehaviour:
   tab_active_3: {fileID: 2126007295}
   tab_active_4: {fileID: 2055619303}
   tab_active_5: {fileID: 1503292240}
+  tab_active_text_0: {fileID: 1077550300}
+  tab_active_text_1: {fileID: 1033952478}
+  tab_active_text_2: {fileID: 362451778}
+  tab_active_text_3: {fileID: 1962053176}
+  tab_active_text_4: {fileID: 448675574}
+  tab_active_text_5: {fileID: 834136508}
   tab_passive_0: {fileID: 9275696}
   tab_passive_1: {fileID: 400861167}
   tab_passive_2: {fileID: 1372659869}
   tab_passive_3: {fileID: 70581223}
   tab_passive_4: {fileID: 1042306361}
   tab_passive_5: {fileID: 334290422}
+  tab_passive_text_0: {fileID: 1476439887}
+  tab_passive_text_1: {fileID: 883722576}
+  tab_passive_text_2: {fileID: 1843677695}
+  tab_passive_text_3: {fileID: 1900186438}
+  tab_passive_text_4: {fileID: 1151706007}
+  tab_passive_text_5: {fileID: 273415381}
   details_text_top: {fileID: 1451464579}
   details_text_bottom: {fileID: 176182879}
   details_image: {fileID: 2082941762}
@@ -14932,7 +14944,7 @@ GameObject:
   - component: {fileID: 834136509}
   - component: {fileID: 834136508}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15917,7 +15929,7 @@ GameObject:
   - component: {fileID: 883722577}
   - component: {fileID: 883722576}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16036,11 +16048,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -19077,11 +19089,11 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -19113,7 +19125,7 @@ GameObject:
   - component: {fileID: 1033952479}
   - component: {fileID: 1033952478}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19886,11 +19898,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -20348,7 +20360,7 @@ GameObject:
   - component: {fileID: 1077550301}
   - component: {fileID: 1077550300}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21201,7 +21213,7 @@ GameObject:
   - component: {fileID: 1151706008}
   - component: {fileID: 1151706007}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21320,11 +21332,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -26365,11 +26377,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -26439,7 +26451,7 @@ GameObject:
   - component: {fileID: 1476439888}
   - component: {fileID: 1476439887}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26482,7 +26494,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'MAIL
+  m_text: 'Mum
 
 '
   m_isRightToLeft: 0
@@ -26560,11 +26572,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -33732,7 +33744,7 @@ GameObject:
   - component: {fileID: 1843677696}
   - component: {fileID: 1843677695}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33851,11 +33863,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -34618,7 +34630,7 @@ GameObject:
   - component: {fileID: 1900186439}
   - component: {fileID: 1900186438}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34739,11 +34751,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -35928,7 +35940,7 @@ GameObject:
   - component: {fileID: 1962053177}
   - component: {fileID: 1962053176}
   m_Layer: 5
-  m_Name: text_tab
+  m_Name: text_tab_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

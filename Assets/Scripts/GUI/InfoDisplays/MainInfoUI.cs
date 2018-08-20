@@ -64,6 +64,13 @@ public class MainInfoUI : MonoBehaviour
     public Image tab_active_4;
     public Image tab_active_5;
 
+    public TextMeshProUGUI tab_active_text_0;
+    public TextMeshProUGUI tab_active_text_1;
+    public TextMeshProUGUI tab_active_text_2;
+    public TextMeshProUGUI tab_active_text_3;
+    public TextMeshProUGUI tab_active_text_4;
+    public TextMeshProUGUI tab_active_text_5;
+
     [Header("LHS Passive tabs")]
     //page tabs -> passive
     public Image tab_passive_0;
@@ -72,6 +79,13 @@ public class MainInfoUI : MonoBehaviour
     public Image tab_passive_3;
     public Image tab_passive_4;
     public Image tab_passive_5;
+
+    public TextMeshProUGUI tab_passive_text_0;
+    public TextMeshProUGUI tab_passive_text_1;
+    public TextMeshProUGUI tab_passive_text_2;
+    public TextMeshProUGUI tab_passive_text_3;
+    public TextMeshProUGUI tab_passive_text_4;
+    public TextMeshProUGUI tab_passive_text_5;
 
     [Header("RHS details")]
     public TextMeshProUGUI details_text_top;
@@ -130,6 +144,8 @@ public class MainInfoUI : MonoBehaviour
     private int maxTabIndex;
     private Image[] tabActiveArray;
     private Image[] tabPassiveArray;
+    private TextMeshProUGUI[] tabActiveTextArray;
+    private TextMeshProUGUI[] tabPassiveTextArray;
     //ItemData
     private List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];       //One dataset for each tab (excluding Help tab)
     List<ItemData> listOfCurrentPageItemData;                                               //current data for currently displayed page
@@ -190,6 +206,8 @@ public class MainInfoUI : MonoBehaviour
         arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
+        tabActiveTextArray = new TextMeshProUGUI[numOfTabs];
+        tabPassiveTextArray = new TextMeshProUGUI[numOfTabs];
         for (int i = 0; i < (int)ItemTab.Count; i++)
         { arrayOfItemData[i] = new List<ItemData>(); }
         listOfCurrentPageItemData = new List<ItemData>();
@@ -285,6 +303,18 @@ public class MainInfoUI : MonoBehaviour
         tabActiveArray[3] = tab_active_3;
         tabActiveArray[4] = tab_active_4;
         tabActiveArray[5] = tab_active_5;
+        Debug.Assert(tab_active_text_0 != null, "Invalid tab_active_text_0 (Null)");
+        Debug.Assert(tab_active_text_1 != null, "Invalid tab_active_text_1 (Null)");
+        Debug.Assert(tab_active_text_2 != null, "Invalid tab_active_text_2 (Null)");
+        Debug.Assert(tab_active_text_3 != null, "Invalid tab_active_text_3 (Null)");
+        Debug.Assert(tab_active_text_4 != null, "Invalid tab_active_text_4 (Null)");
+        Debug.Assert(tab_active_text_5 != null, "Invalid tab_active_text_5 (Null)");
+        tabActiveTextArray[0] = tab_active_text_0;
+        tabActiveTextArray[1] = tab_active_text_1;
+        tabActiveTextArray[2] = tab_active_text_2;
+        tabActiveTextArray[3] = tab_active_text_3;
+        tabActiveTextArray[4] = tab_active_text_4;
+        tabActiveTextArray[5] = tab_active_text_5;
         //passive tab array
         Debug.Assert(tab_passive_0 != null, "Invalid tab_passive_0 (Null)");
         Debug.Assert(tab_passive_1 != null, "Invalid tab_passive_1 (Null)");
@@ -298,6 +328,18 @@ public class MainInfoUI : MonoBehaviour
         tabPassiveArray[3] = tab_passive_3;
         tabPassiveArray[4] = tab_passive_4;
         tabPassiveArray[5] = tab_passive_5;
+        Debug.Assert(tab_passive_text_0 != null, "Invalid tab_passive_text_0 (Null)");
+        Debug.Assert(tab_passive_text_1 != null, "Invalid tab_passive_text_1 (Null)");
+        Debug.Assert(tab_passive_text_2 != null, "Invalid tab_passive_text_2 (Null)");
+        Debug.Assert(tab_passive_text_3 != null, "Invalid tab_passive_text_3 (Null)");
+        Debug.Assert(tab_passive_text_4 != null, "Invalid tab_passive_text_4 (Null)");
+        Debug.Assert(tab_passive_text_5 != null, "Invalid tab_passive_text_5 (Null)");
+        tabPassiveTextArray[0] = tab_passive_text_0;
+        tabPassiveTextArray[1] = tab_passive_text_1;
+        tabPassiveTextArray[2] = tab_passive_text_2;
+        tabPassiveTextArray[3] = tab_passive_text_3;
+        tabPassiveTextArray[4] = tab_passive_text_4;
+        tabPassiveTextArray[5] = tab_passive_text_5;
         //RHS
         Debug.Assert(details_image != null, "Invalid details_image (Null)");
         Debug.Assert(details_image_sprite != null, "Invalid details_image_sprite (Null)");
@@ -364,6 +406,9 @@ public class MainInfoUI : MonoBehaviour
             if (tab != null)
             { tab.SetTabIndex(index); }
             else { Debug.LogWarningFormat("Invalid MainInfoRightTabUI component (Null) for tabActiveArray[{0}]", index); }
+            //initialise Tab texts
+            tabActiveTextArray[index].text = Convert.ToString((ItemTab)index);
+            tabPassiveTextArray[index].text = Convert.ToString((ItemTab)index);
         }
         //initialise items & populate arrays
         for (int index = 0; index < arrayItemMain.Length; index++)
@@ -911,7 +956,7 @@ public class MainInfoUI : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         switch ((ItemTab)tabIndex)
         {
-            case ItemTab.Mail:
+            case ItemTab.MAIL:
                 textTop = "Incoming Mail";
                 builder.AppendFormat("{0}<b>Click</b>{1} on an {2}<b>Item</b>{3}{4}for more information", colourHighlight, colourEnd, colourHighlight, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
