@@ -811,7 +811,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetActorTraitDetails(actor, trait, forText, toText);
             data.priority = ItemPriority.Low;
             data.sprite = actor.arc.sprite;
-            data.tab = ItemTab.Mail;
+            data.tab = ItemTab.Traits;
             data.side = message.side;
             //add
             GameManager.instance.dataScript.AddMessage(message);

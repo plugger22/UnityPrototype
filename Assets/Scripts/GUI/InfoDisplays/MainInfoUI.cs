@@ -812,6 +812,7 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="tabIndex"></param>
     private void OpenTab(int tabIndex)
     {
+        Debug.Assert(tabIndex > -1 && tabIndex < 6, string.Format("Invalid tab index {0}", tabIndex));
         //reset Active tabs to reflect new status
         for (int index = 0; index < tabActiveArray.Length; index++)
         {
@@ -827,19 +828,11 @@ public class MainInfoUI : MonoBehaviour
         //hide both RHS buttons (help and decision)
         buttonHelp.gameObject.SetActive(false);
         buttonDecision.gameObject.SetActive(false);
-        if (tabIndex < 5)
-        {
-            //redrawn main page
-            DisplayItemPage(tabIndex);
-            //assign default info icon
-            details_image.gameObject.SetActive(true);
-            details_image.sprite = details_image_sprite;
-        }
-        else
-        {
-            //help
-            DisplayHelpPage();
-        }
+        //redrawn main page
+        DisplayItemPage(tabIndex);
+        //assign default info icon
+        details_image.gameObject.SetActive(true);
+        details_image.sprite = details_image_sprite;
         //update indexes
         highlightIndex = -1;
         currentTabIndex = tabIndex;
@@ -898,15 +891,13 @@ public class MainInfoUI : MonoBehaviour
         else { Debug.LogWarningFormat("Invalid ItemData for listOfCurrentPageItemData[{0}]", itemIndex); }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Special method for the last tab, Help (hard wired info, not dynamic)
     /// </summary>
     private void DisplayHelpPage()
     {
-
         //TO DO
-
-    }
+    }*/
 
     /// <summary>
     /// provides pre-formatted help text for RHS detail panel when tabs are first opened
@@ -951,17 +942,21 @@ public class MainInfoUI : MonoBehaviour
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("Sorted by type{0}{1}Mouseover {2}<b>Icons</b>{3} to see type", "\n", "\n", colourHighlight, colourEnd);
                 break;
+            case ItemTab.Traits:
+                textTop = "Traits Used";
+                builder.AppendFormat("{0}All traits used by Subordinates{1}{2}at the start of this or the previous day", colourHighlight, colourEnd, "\n");
+                break;
             case ItemTab.Random:
                 textTop = "Random Outcomes";
-                builder.AppendFormat("All important events that required{0}a random roll are shown here", "\n");
+                builder.AppendFormat("{0}All important events that required{1}{2}a random roll are shown here", colourHighlight, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("Events are for the {0}<b>Previous Day</b>{1}", colourHighlight, colourEnd);
+                builder.Append("Events are for the start of this or the Previous day");
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("All rolls use a{0}{1}<b>Percentage</b>{2}{3}1d100 die", "\n", colourHighlight, colourEnd, "\n");
                 break;
             default:
-                //Help tab
-                textTop = "Game Help";
+                //Mystery tab, doesn't exist
+                textTop = "Unknown";
                 break;
         }
         textBottom = builder.ToString();
