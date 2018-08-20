@@ -16,6 +16,7 @@ public class MessageManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalBoth;
     private int playerActorID = -1;
+    private string playerName;
     private Sprite playerSprite;
     private Mayor mayor;
 
@@ -26,6 +27,7 @@ public class MessageManager : MonoBehaviour
     {
         playerActorID = GameManager.instance.playerScript.actorID;
         playerSprite = GameManager.instance.playerScript.sprite;
+        playerName = GameManager.instance.playerScript.PlayerName;
         
         Debug.Assert(playerActorID > -1, "Invalid playerActorID (-1)");
         Debug.Assert(playerSprite != null, "Invalid playerSprite (Null)");
@@ -526,7 +528,7 @@ public class MessageManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player
-                genericActorName = GameManager.instance.playerScript.PlayerName;
+                genericActorName = playerName;
                 genericActorArc = "Player";
             }
             else
@@ -955,11 +957,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message AICapture(string text, int nodeID, int teamID, int actorID = 999)
+    public Message AICapture(string text, Node node, Team team, int actorID = 999)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid NodeID {0}", nodeID));
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(node != null, "Invalid Node (Null)");
+        Debug.Assert(team != null, "Invalid team (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -968,15 +969,32 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.AI_Capture;
             message.side = globalAuthority;
             message.isPublic = true;
-            message.data0 = nodeID;
-            message.data1 = teamID;
+            message.data0 = node.nodeID;
+            message.data1 = team.teamID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Captured";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            if (actorID == 999)
+            {
+                //player captured
+                data.itemText = string.Format("{0}, Player, has been CAPTURED", playerName);
+                data.topText = "Player Captured";
+                data.bottomText = GameManager.instance.itemDataScript.GetAICaptureDetails(playerName, "Player", node, team);
+            }
+            else
+            {
+                //actor captured
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    data.itemText = string.Format("{0}, {1}, has been CAPTURED", actor.actorName, actor.arc.name);
+                    data.topText = string.Format("{0} Captured", actor.arc.name);
+                    data.bottomText = GameManager.instance.itemDataScript.GetAICaptureDetails(actor.actorName, actor.arc.name, node, team);
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
+
+            data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.capturedSprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;

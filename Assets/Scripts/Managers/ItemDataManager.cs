@@ -689,9 +689,29 @@ public class ItemDataManager : MonoBehaviour
         return builder;
     }
 
-
     //
     // - - - AI - - -
+    //
+
+    /// <summary>
+    /// actor or player were captured
+    /// </summary>
+    /// <param name="actorName"></param>
+    /// <param name="actorArcName"></param>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public string GetAICaptureDetails(string actorName, string actorArcName, Node node, Team team)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>has been CAPTURED</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
+        builder.AppendFormat("at {0}, {1}{2}by {3} {4}", node.nodeName, node.Arc.name, "\n", team.arc.name, team.teamName);
+        return builder.ToString();
+    }
+
+    //
+    // - - - Decisions - - -
     //
 
     /// <summary>
