@@ -1083,10 +1083,12 @@ public class MessageManager : MonoBehaviour
             message.data0 = currentRenownCost;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = "Resistance HACKS AI";
             data.topText = "Hacking Detected";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetAIHackedDetails(isDetected);
             data.priority = ItemPriority.Low;
+            if (isDetected == true) { data.priority = ItemPriority.Medium; }
+            else { data.priority = ItemPriority.Low; }
             data.sprite = GameManager.instance.guiScript.alarmSprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;

@@ -979,7 +979,7 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 9616
   isPerformanceLog: 1
   win: 0
 --- !u!114 &114762690547149900

@@ -728,7 +728,32 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
         builder.AppendFormat("{0}<b>has been RELEASED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
         builder.AppendFormat("at {0}, {1}{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
-        builder.AppendFormat("{0}{1} is under a cloud of suspicion as a result of their time with the Authority{2}", colourBad, actorArcName, colourEnd);
+        builder.AppendFormat("{0}{1} is under a cloud of suspicion as a result of their time with the Authority{2}", colourBad, actorName, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// AI hacked, detected or not
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="currentRenownCost"></param>
+    /// <param name="isDetected"></param>
+    /// <returns></returns>
+    public string GetAIHackedDetails(bool isDetected)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (isDetected == true)
+        {
+            builder.Append("AI hacked by Resistance");
+            builder.AppendFormat("{0}{1}<b>DETECTED</b>{2}{3}{4}", "\n", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("AI Alert status now {0}<b>{1}</b>{2}", colourBad, GameManager.instance.aiScript.aiAlertStatus, colourEnd);
+        }
+        else
+        {
+            builder.AppendFormat("AI hacked by Resistance{0}", "\n");
+            builder.AppendFormat("(0}<b>Undetected</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}No Change to AI Alert Status{1}", colourNeutral, colourEnd);
+        }
         return builder.ToString();
     }
 
