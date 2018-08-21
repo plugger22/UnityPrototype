@@ -3953,6 +3953,9 @@ public class AIManager : MonoBehaviour
                         break;
                 }
             }
+            //deduct renown cost for hacking
+            UpdateHackingCost(isDetected, hackingAttemptsDetected, hackingAttemptsTotal);
+
             //
             // - - - Tooltip - - - 
             //
@@ -4122,7 +4125,7 @@ public class AIManager : MonoBehaviour
     /// <summary>
     /// Player is hacking AI -> pays cost in renown, called from AIDisplayUI.cs -> OpenAIDisplayPanel
     /// </summary>
-    public void UpdateHackingCost()
+    public void UpdateHackingCost(bool isDetected, int attemptsDetected, int attemptsTotal)
     {
         //deduct cost
         int renown = GameManager.instance.playerScript.Renown;
@@ -4135,7 +4138,7 @@ public class AIManager : MonoBehaviour
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
         GameManager.instance.playerScript.Renown = renown;
         //message
-        GameManager.instance.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, true);
+        GameManager.instance.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, isDetected, attemptsDetected, attemptsTotal);
     }
 
 

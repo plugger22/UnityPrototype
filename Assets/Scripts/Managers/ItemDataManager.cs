@@ -739,21 +739,30 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="currentRenownCost"></param>
     /// <param name="isDetected"></param>
     /// <returns></returns>
-    public string GetAIHackedDetails(bool isDetected)
+    public string GetAIHackedDetails(bool isDetected, int attemptsDetected, int attemptsTotal)
     {
         StringBuilder builder = new StringBuilder();
         if (isDetected == true)
         {
             builder.Append("AI hacked by Resistance");
             builder.AppendFormat("{0}{1}<b>DETECTED</b>{2}{3}{4}", "\n", colourBad, colourEnd, "\n", "\n");
-            builder.AppendFormat("AI Alert status now {0}<b>{1}</b>{2}", colourBad, GameManager.instance.aiScript.aiAlertStatus, colourEnd);
+            string colourAlertStatus = colourGood;
+            //alert status coloured good/neutral/bad depending on low / med / high priority
+            switch (GameManager.instance.aiScript.aiAlertStatus)
+            {
+                case Priority.High: colourAlertStatus = colourBad; break;
+                case Priority.Medium: colourAlertStatus = colourNeutral; break;
+            }
+            builder.AppendFormat("AI Alert status now {0}<b>{1}</b>{2}", colourAlertStatus, GameManager.instance.aiScript.aiAlertStatus, colourEnd);
         }
         else
         {
             builder.AppendFormat("AI hacked by Resistance{0}", "\n");
-            builder.AppendFormat("(0}<b>Undetected</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}Undetected{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}No Change to AI Alert Status{1}", colourNeutral, colourEnd);
         }
+        //attempts (same for both)
+        builder.AppendFormat("{0}{1}AI has detected {2}<b>{3}</b>{4} of {5}<b>{6}</b>{7} attempts", "\n", "\n", colourNeutral, attemptsDetected, colourEnd, colourNeutral, attemptsTotal, colourEnd);
         return builder.ToString();
     }
 

@@ -394,8 +394,10 @@ public class AIDisplayUI : MonoBehaviour
     {
         renownPanel.gameObject.SetActive(false);
         isFree = true;
-        //deduct cost
-        GameManager.instance.aiScript.UpdateHackingCost();
+
+        /*//deduct cost [Edit] built into UpdateHackingStatus, made more sense [/edit]
+        GameManager.instance.aiScript.UpdateHackingCost();*/
+
         //update hacking status
         if (GameManager.instance.aiScript.UpdateHackingStatus() == true)
         {

@@ -1068,7 +1068,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="currentRenownCost"></param>
     /// <param name="isDetected"></param>
     /// <returns></returns>
-    public Message AIHacked(string text, int currentRenownCost, bool isDetected)
+    public Message AIHacked(string text, int currentRenownCost, bool isDetected, int attemptsDetected, int attemptsTotal)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1085,7 +1085,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Resistance HACKS AI";
             data.topText = "Hacking Detected";
-            data.bottomText = GameManager.instance.itemDataScript.GetAIHackedDetails(isDetected);
+            data.bottomText = GameManager.instance.itemDataScript.GetAIHackedDetails(isDetected, attemptsDetected, attemptsTotal);
             data.priority = ItemPriority.Low;
             if (isDetected == true) { data.priority = ItemPriority.Medium; }
             else { data.priority = ItemPriority.Low; }
@@ -1194,19 +1194,9 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             message.data0 = chanceOfIncrease;
             message.data1 = randomRoll;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "AI Alert Status";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
-            data.tab = ItemTab.MAIL;
-            data.side = message.side;
-            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            /*GameManager.instance.dataScript.AddItemData(data);*/
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
