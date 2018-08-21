@@ -16,7 +16,6 @@ public class MessageManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalBoth;
     private int playerActorID = -1;
-    private string playerName;
     private Sprite playerSprite;
     private Mayor mayor;
 
@@ -27,8 +26,6 @@ public class MessageManager : MonoBehaviour
     {
         playerActorID = GameManager.instance.playerScript.actorID;
         playerSprite = GameManager.instance.playerScript.sprite;
-        playerName = GameManager.instance.playerScript.PlayerName;
-        
         Debug.Assert(playerActorID > -1, "Invalid playerActorID (-1)");
         Debug.Assert(playerSprite != null, "Invalid playerSprite (Null)");
 
@@ -528,7 +525,7 @@ public class MessageManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player
-                genericActorName = playerName;
+                genericActorName = GameManager.instance.playerScript.PlayerName;
                 genericActorArc = "Player";
             }
             else
@@ -967,13 +964,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Capture;
-            message.side = globalAuthority;
+            message.side = globalBoth;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
+            string playerName = GameManager.instance.playerScript.PlayerName;
             if (actorID == 999)
             {
                 //player captured
@@ -1014,9 +1012,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message AIRelease(string text, int nodeID, int actorID = 999)
+    public Message AIRelease(string text, Node node, int actorID = 999)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid NodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid Node (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1024,16 +1022,33 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Capture;
-            message.side = globalResistance;
+            message.side = globalBoth;
             message.isPublic = true;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Release from Capture";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            string playerName = GameManager.instance.playerScript.PlayerName;
+            if (actorID == 999)
+            {
+                //player captured
+                data.itemText = string.Format("{0}, Player, has been RELEASED", playerName);
+                data.topText = "Player Released";
+                data.bottomText = GameManager.instance.itemDataScript.GetAIReleaseDetails(playerName, "Player", node);
+            }
+            else
+            {
+                //actor captured
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    data.itemText = string.Format("{0}, {1}, has been RELEASED", actor.actorName, actor.arc.name);
+                    data.topText = string.Format("{0} Released", actor.arc.name);
+                    data.bottomText = GameManager.instance.itemDataScript.GetAIReleaseDetails(actor.actorName, actor.arc.name, node);
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
+            data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.releasedSprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;

@@ -23,6 +23,7 @@ public class CaptureManager : MonoBehaviour
 
     //fast access
     private int teamErasureID;
+    private Condition conditionQuestionable;
 
     private string colourGood;
     private string colourNeutral;
@@ -35,6 +36,8 @@ public class CaptureManager : MonoBehaviour
         //fast access
         teamErasureID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
         Debug.Assert(teamErasureID > -1, "Invalid teamErasureID");
+        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
         EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
@@ -130,6 +133,7 @@ public class CaptureManager : MonoBehaviour
         //change player state
         /*GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;*/
         GameManager.instance.playerScript.status = ActorStatus.Captured;
+        GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
         //add renown to authority actor who owns the team (only if they are still OnMap
         if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
         {
@@ -200,7 +204,7 @@ public class CaptureManager : MonoBehaviour
         //any carry over text?
         if (string.IsNullOrEmpty(details.effects) == false)
         { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
-        string text = string.Format("Rebel {0} Captured at \"{1}\", {2}", details.actor.actorName, details.node.nodeName, details.node.Arc.name);
+        string text = string.Format("{0}, {1}, Captured at \"{2}\", {3}", details.actor.actorName, details.actor.arc.name, details.node.nodeName, details.node.Arc.name);
         builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name, colourEnd, "\n", "\n"));
         //message
         GameManager.instance.messageScript.AICapture(text, details.node, details.team, details.actor.actorID);
@@ -220,6 +224,7 @@ public class CaptureManager : MonoBehaviour
         //admin
         GameManager.instance.actorScript.numOfActiveActors--;
         details.actor.Status = ActorStatus.Captured;
+        details.actor.tooltipStatus = ActorTooltip.Captured;
         details.actor.nodeCaptured = details.node.nodeID;
         //actor captured outcome window
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -246,7 +251,9 @@ public class CaptureManager : MonoBehaviour
         //reset state
         /*GameManager.instance.turnScript.resistanceState = ResistanceState.Normal;*/
         GameManager.instance.playerScript.status = ActorStatus.Active;
-
+        GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+        //actor gains condition questionable
+        GameManager.instance.playerScript.AddCondition(conditionQuestionable, "has been interrogated by Authority");
         //decrease city loyalty
         int cause = GameManager.instance.cityScript.CityLoyalty;
         cause -= actorReleased;
@@ -269,7 +276,7 @@ public class CaptureManager : MonoBehaviour
         if (node != null)
         {
             string text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
-            GameManager.instance.messageScript.AIRelease(text, nodeID, GameManager.instance.playerScript.actorID);
+            GameManager.instance.messageScript.AIRelease(text, node, GameManager.instance.playerScript.actorID);
             //player released outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
@@ -290,16 +297,22 @@ public class CaptureManager : MonoBehaviour
     /// <param name="actorID"></param>
     public void ReleaseActor(CaptureDetails details)
     {
+        string text = "unknown";
         if (details.actor != null)
         {
             if (details.actor.Status == ActorStatus.Captured)
             {
                 StringBuilder builder = new StringBuilder();
-                //node (needed only for record keeping / messaging purposes
-                int nodeID = details.actor.nodeCaptured;
+                //node (needed only for record keeping / messaging purposes NOTE: needs to be done here as it's reset to -1 thereafter
+                Node node = GameManager.instance.dataScript.GetNode(details.actor.nodeCaptured);
+                if (node == null)
+                { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", details.actor.nodeCaptured); }
                 details.actor.nodeCaptured = -1;
                 //reset actor state
                 details.actor.Status = ActorStatus.Active;
+                details.actor.tooltipStatus = ActorTooltip.None;
+                //actor gains condition questionable
+                details.actor.AddCondition(conditionQuestionable, "has been interrogated by Authority");
                 //decrease City loyalty
                 int cause = GameManager.instance.cityScript.CityLoyalty;
                 cause -= actorReleased;
@@ -315,9 +328,13 @@ public class CaptureManager : MonoBehaviour
                 GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                 //admin
                 GameManager.instance.actorScript.numOfActiveActors++;
-                //message
-                string text = string.Format("{0} released from captivity", details.actor.actorName);
-                GameManager.instance.messageScript.AIRelease(text, nodeID, details.actor.actorID);
+                if (node != null)
+                {
+                    //message
+                    text = string.Format("{0} released from captivity", details.actor.actorName);
+                    if (node != null)
+                    { GameManager.instance.messageScript.AIRelease(text, node, details.actor.actorID); }
+                }
                 //player released outcome window
                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                 {

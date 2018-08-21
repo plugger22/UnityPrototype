@@ -4795,8 +4795,11 @@ public class ActorManager : MonoBehaviour
                     data.details = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
                         actor.actorName, colourNeutral, colourEnd);
                     break;
-                case ActorTooltip.Talk:
-
+                case ActorTooltip.Captured:
+                    data.header = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
+                    data.main = string.Format("{0}<size=120%>Currently{1} {2}CAPTURED{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                        colourBad, colourEnd, colourNormal, colourEnd);
+                    data.details = string.Format("{0}{1}'s future is in the hands of the Authority{2}", colourBad, actor.actorName, colourEnd);
                     break;
                 default:
                     data.main = "Unknown"; data.header = "Unknown"; data.details = "Unknown";

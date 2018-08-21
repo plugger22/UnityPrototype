@@ -378,9 +378,12 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}{2}{3}{4}has been Recruited{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
-        builder.AppendFormat("{0} awaits your command in the Reserves{1}{2}{3} Unhappy in {4} turn{5}{6}", actor.actorName, "\n", colourBad, actor.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "", colourEnd);
+        builder.AppendFormat("{0} awaits your command in the Reserves{1}{2}{3}{4} Unhappy in {5} turn{6}{7}", actor.actorName, "\n", "\n", colourBad, actor.arc.name, 
+            unhappyTimer, unhappyTimer != 1 ? "s" : "", colourEnd);
         return builder.ToString();
     }
+
+
 
     //
     // - - - Gear - - -
@@ -706,7 +709,26 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
         builder.AppendFormat("{0}<b>has been CAPTURED</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
-        builder.AppendFormat("at {0}, {1}{2}by {3} {4}", node.nodeName, node.Arc.name, "\n", team.arc.name, team.teamName);
+        builder.AppendFormat("at {0}, {1}{2}{3}by {4} {5}{6}", node.nodeName, node.Arc.name, "\n", colourNeutral, team.arc.name, team.teamName, colourEnd);
+        return builder.ToString();
+    }
+
+
+
+    /// <summary>
+    /// actor or player have been released from captivity
+    /// </summary>
+    /// <param name="actorName"></param>
+    /// <param name="actorArcName"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string GetAIReleaseDetails(string actorName, string actorArcName, Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>has been RELEASED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("at {0}, {1}{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
+        builder.AppendFormat("{0}{1} is under a cloud of suspicion as a result of their time with the Authority{2}", colourBad, actorArcName, colourEnd);
         return builder.ToString();
     }
 
