@@ -766,6 +766,31 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// AI reboots, if rebootTimer > 0 then commences, otherwise completes Reboot
+    /// </summary>
+    /// <param name="rebootTimer"></param>
+    /// <returns></returns>
+    public string GetAIRebootDetails(int rebootTimer, int currentRenownCost)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (rebootTimer > 0)
+        {
+            //Commenced
+            builder.AppendFormat("AI Reboot {0}<b>COMMENCED</b>{1}{2}{3}AI is Offline{4}{5}{6}", colourNeutral, colourEnd, "\n", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("AI Returns in {0}<b>{1}</b>{2} turn{3}{4}{5}", colourNeutral, rebootTimer, colourEnd, rebootTimer != 1 ? "s" : "", "\n", "\n");
+            builder.Append("Any existing AI Countermeasures are cancelled");
+        }
+        else
+        {
+            //Completed
+            builder.AppendFormat("AI Reboot {0}<b>COMPLETED</b>{1}{2}{3}AI is Online{4}{5}{6}", colourNeutral, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
+            builder.AppendFormat("Cost to hack AI now{0}{1}{2} Renown{3}{4}{5}", "\n", colourNeutral, currentRenownCost, colourEnd, "\n", "\n");
+            builder.AppendFormat("AI Alert Status {0}<b>Low</b>{1}", colourGood, colourEnd);
+        }
+        return builder.ToString();
+    }
+
     //
     // - - - Decisions - - -
     //

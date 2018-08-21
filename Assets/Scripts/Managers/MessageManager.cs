@@ -1122,10 +1122,11 @@ public class MessageManager : MonoBehaviour
             message.data1 = rebootTimer;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Reboot";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            if (rebootTimer > 0) { data.itemText = "AI REBOOTS Commences"; }
+            else { data.itemText = "AI REBOOT Completed"; }
+            data.topText = "AI Reboots";
+            data.bottomText = GameManager.instance.itemDataScript.GetAIRebootDetails(rebootTimer, currentRenownCost);
+            data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiRebootSprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;
@@ -2059,7 +2060,9 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Support Declined";
             }
             data.bottomText = GameManager.instance.itemDataScript.GetFactionSupportDetails(faction, factionApprovalLevel, supportGiven);
-            data.priority = ItemPriority.Medium;
+            //high priority if given
+            if (supportGiven > 0) { data.priority = ItemPriority.High; }
+            else { data.priority = ItemPriority.Medium; }
             data.tab = ItemTab.MAIL;
             data.side = message.side;
             data.sprite = faction.sprite;

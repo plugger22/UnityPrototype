@@ -244,7 +244,7 @@ public class AIManager : MonoBehaviour
     [Tooltip("% base chance that each hacking attempt will lead to an increase in AI Alert Level")]
     [Range(1, 100)] public int hackingDetectBaseChance = 50;
     [Tooltip("How many turns (inclusive of current) does it take to reboot the AI' Security Systems (hacking isn't possible during a reboot")]
-    [Range(0, 10)] public int hackingRebootTimer = 2;
+    [Range(2, 10)] public int hackingRebootTimer = 3;
     [Tooltip("How much of a modifier is a 'Lower Detection' gear effect have on your chances of being detected while hacking AI")]
     [Range(0, 50)] public int hackingLowDetectionEffect = 20;
     [Tooltip("How much of a modifier does the Player being STRESSED have on their chances of being detected while hacking AI")]
@@ -3672,7 +3672,7 @@ public class AIManager : MonoBehaviour
         UpdateSideTabData();
         //message
         Debug.LogFormat("[Aim] AIManager.cs -> RebootCommence: rebootTimer set to {0}{1}", rebootTimer, "\n");
-        GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer);
+        GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer - 1);
         //reset any active ai countermeasures
         if (isTraceBack == true)
         { CancelTraceBack(); }
@@ -4096,6 +4096,7 @@ public class AIManager : MonoBehaviour
             case Priority.Low: colourStatus = colourGood; break;
             case Priority.Medium: colourStatus = colourNeutral; break;
             case Priority.High: colourStatus = colourBad; break;
+            case Priority.Critical: colourStatus = colourBad; break;
             default:
                 Debug.LogWarningFormat("Invalid aiAlertStatus \"{0}\"", aiAlertStatus);
                 break;
