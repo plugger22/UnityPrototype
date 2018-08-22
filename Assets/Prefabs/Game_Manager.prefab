@@ -140,7 +140,7 @@ MonoBehaviour:
   hackingBaseCost: 1
   hackingIncrement: 1
   hackingDetectBaseChance: 50
-  hackingRebootTimer: 2
+  hackingRebootTimer: 3
   hackingLowDetectionEffect: 20
   hackingStressedDetectionEffect: 25
   hackingSecurityProtocolFactor: 10
@@ -979,7 +979,7 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 15486
   isPerformanceLog: 1
   win: 0
 --- !u!114 &114762690547149900

@@ -696,6 +696,13 @@ public class ItemDataManager : MonoBehaviour
     // - - - AI - - -
     //
 
+    public string GetAIDetectedDetails(int nodeID, int delay)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        return builder.ToString();
+    }
+
     /// <summary>
     /// actor or player were captured
     /// </summary>

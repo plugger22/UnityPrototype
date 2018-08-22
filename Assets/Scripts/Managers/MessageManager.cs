@@ -909,8 +909,19 @@ public class MessageManager : MonoBehaviour
             message.displayDelay = delay;
             message.data0 = nodeID;
             message.data1 = GameManager.instance.playerScript.actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "AI Traceback DETECTS Player";
+            data.topText = "Detected!";
+            data.bottomText = GameManager.instance.itemDataScript.GetAIDetectedDetails(nodeID, delay);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
+            data.tab = ItemTab.MAIL;
+            data.side = message.side;
+            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
