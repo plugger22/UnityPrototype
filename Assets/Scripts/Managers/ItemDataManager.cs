@@ -699,7 +699,15 @@ public class ItemDataManager : MonoBehaviour
     public string GetAIDetectedDetails(int nodeID, int delay)
     {
         StringBuilder builder = new StringBuilder();
-
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            string playerName = GameManager.instance.playerScript.PlayerName;
+            builder.AppendFormat("AI Traceback countermeasures{0}has {1}<b>DETECTED</b>{2} {3}{4}{5}", "\n", colourBad, colourEnd, playerName, "\n", "\n");
+            builder.AppendFormat("{0}'s location known in{1}{2}<b>{3}</b>{4} turn{5}", playerName, "\n", colourNeutral, delay, colourEnd, delay != 1 ? "s" : "");
+            builder.AppendFormat("{0}{1}{2}{3}'s Invisibility -1{4}", "\n", "\n", colourBad, playerName, colourEnd);
+        }
+        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); builder.Append("Unknown"); }
         return builder.ToString();
     }
 

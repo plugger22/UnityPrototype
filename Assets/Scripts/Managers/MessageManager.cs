@@ -904,14 +904,16 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Detected;
-            message.side = globalAuthority;
+            message.side = globalBoth;
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = nodeID;
             message.data1 = GameManager.instance.playerScript.actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = "AI Traceback DETECTS Player";
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            { data.itemText = "AI Traceback DETECTS Resistance leader"; }
+            else { data.itemText = "AI Traceback DETECTS you"; }
             data.topText = "Detected!";
             data.bottomText = GameManager.instance.itemDataScript.GetAIDetectedDetails(nodeID, delay);
             data.priority = ItemPriority.High;
@@ -937,7 +939,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message AIImmediateActivity(string text, GlobalSide side, int nodeID, int connID, int actorID = 999)
+    public Message AIImmediateActivity(string text, int nodeID, int connID, int actorID = 999)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
@@ -946,12 +948,25 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Immediate;
-            message.side = side;
+            message.side = globalBoth;
             message.data0 = nodeID;
             message.data1 = connID;
             message.data2 = actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            { data.itemText = "AI knows Resistance leader's CURRENT LOCATION"; }
+            else { data.itemText = "AI know your CURRENT LOCATION"; }
+            data.topText = "Location Known";
+            data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(nodeID, connID, actorID);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.MAIL;
+            data.side = message.side;
+            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
