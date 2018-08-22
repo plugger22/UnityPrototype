@@ -930,7 +930,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// AI notification of Player/Actor activity that results in immediateAuthorityFlag/immediateResistanceFlag being set true
+    /// AI notification of Player/Actor activity that results in immediateAuthorityFlag/immediateResistanceFlag being set true. 'reason' in format '[due to] ...'
     /// use either nodeID or connID and set the other to -1
     /// </summary>
     /// <param name="text"></param>
@@ -939,7 +939,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message AIImmediateActivity(string text, int nodeID, int connID, int actorID = 999)
+    public Message AIImmediateActivity(string text, string reason, int nodeID, int connID, int actorID = 999)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
@@ -956,9 +956,22 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
             { data.itemText = "AI knows Resistance leader's CURRENT LOCATION"; }
-            else { data.itemText = "AI know your CURRENT LOCATION"; }
+            else { data.itemText = "AI knows your CURRENT LOCATION"; }
             data.topText = "Location Known";
-            data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(nodeID, connID, actorID);
+            if (actorID == 999)
+            { data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, GameManager.instance.playerScript.PlayerName, "Player"); }
+            else
+            {
+                //actor
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {  data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, actor.actorName, actor.arc.name); }
+                else
+                {
+                    Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID);
+                    data.bottomText = "Unknown";
+                }
+            }
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.MAIL;

@@ -696,6 +696,12 @@ public class ItemDataManager : MonoBehaviour
     // - - - AI - - -
     //
 
+    /// <summary>
+    /// AI traceback
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <param name="delay"></param>
+    /// <returns></returns>
     public string GetAIDetectedDetails(int nodeID, int delay)
     {
         StringBuilder builder = new StringBuilder();
@@ -704,10 +710,49 @@ public class ItemDataManager : MonoBehaviour
         {
             string playerName = GameManager.instance.playerScript.PlayerName;
             builder.AppendFormat("AI Traceback countermeasures{0}has {1}<b>DETECTED</b>{2} {3}{4}{5}", "\n", colourBad, colourEnd, playerName, "\n", "\n");
-            builder.AppendFormat("{0}'s location known in{1}{2}<b>{3}</b>{4} turn{5}", playerName, "\n", colourNeutral, delay, colourEnd, delay != 1 ? "s" : "");
-            builder.AppendFormat("{0}{1}{2}{3}'s Invisibility -1{4}", "\n", "\n", colourBad, playerName, colourEnd);
+            if (delay > 0)
+            { builder.AppendFormat("{0}'s location known in{1}{2}<b>{3}</b>{4} turn{5}{6}{7}", playerName, "\n", colourNeutral, delay, colourEnd, delay != 1 ? "s" : "", "\n", "\n"); }
+            builder.AppendFormat("{0}{1}'s Invisibility -1{2}", colourBad, playerName, colourEnd);
         }
         else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); builder.Append("Unknown"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Resistance leader invis < zero with immediate detection
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="connID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public string GetAIImmediateActivityDetails(string reason, int nodeID, int connID, string actorName, string actorArcName)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>CURRENT LOCATION KNOWN</b>{1}{2}", colourBad, colourEnd, "\n");
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("due to {0}<b>{1}</b>{2}{3}", colourNeutral, reason, colourEnd, "\n"); }
+        if (nodeID > 0)
+        {
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node != null)
+            {
+                builder.AppendFormat("{0}Spotted at {1}, {2}{3}{4}", "\n", node.nodeName, node.Arc.name, "\n", "\n");
+                builder.AppendFormat("{0}{1}'s Invisibility dropped below Zero{2}", colourNeutral, actorName, colourEnd);
+            }
+            else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+        }
+        else if (connID > 0)
+        {
+            Connection conn = GameManager.instance.dataScript.GetConnection(connID);
+            if (conn != null)
+            {
+                builder.AppendFormat("{0}Spotted moving between {1}, {2} and {3}, {4}{5}{6}", "\n", conn.node1.nodeName, conn.node1.Arc.name, conn.node2.nodeName, conn.node2.Arc.name, "\n", "\n");
+                builder.AppendFormat("{0}{1}'s Invisibility dropped below Zero{2}", colourNeutral, actorName, colourEnd);
+            }
+            else { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
+        }
         return builder.ToString();
     }
 

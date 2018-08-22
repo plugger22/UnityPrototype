@@ -1784,7 +1784,7 @@ public class NodeManager : MonoBehaviour
                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                         {
                             GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
-                                GameManager.instance.globalScript.sideAuthority, moveDetails.nodeID, moveDetails.connectionID);
+                                "Moving", moveDetails.nodeID, moveDetails.connectionID);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }

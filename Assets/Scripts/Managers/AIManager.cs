@@ -3868,7 +3868,7 @@ public class AIManager : MonoBehaviour
                             {
                                 immediateFlagResistance = true;
                                 text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
-                                GameManager.instance.messageScript.AIImmediateActivity(text, globalResistance, GameManager.instance.nodeScript.nodePlayer, -1);
+                                GameManager.instance.messageScript.AIImmediateActivity(text, "AI Traceback", GameManager.instance.nodeScript.nodePlayer, -1);
                             }
                             //AI notification
                             text = "AI Hacking attempt detected (TraceBack)";

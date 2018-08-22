@@ -1258,7 +1258,7 @@ public class EffectManager : MonoBehaviour
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
                                             GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
-                                                dataInput.originText), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1);
+                                                dataInput.originText), dataInput.originText, node.nodeID, -1);
                                         }
                                     }
                                     break;
@@ -1330,7 +1330,7 @@ public class EffectManager : MonoBehaviour
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
                                             GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
-                                                dataInput.originText, actor.arc.name), GameManager.instance.globalScript.sideAuthority, node.nodeID, -1, actor.actorID);
+                                                dataInput.originText, actor.arc.name), dataInput.originText, node.nodeID, -1, actor.actorID);
                                         }
                                         //Coward trait -> gets Stressed everytime they lose invisibility
                                         if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)
