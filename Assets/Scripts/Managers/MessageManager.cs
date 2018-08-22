@@ -257,12 +257,13 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Message -> player movement from one node to another. Returns null if text invalid.
+    /// Message -> player movement from one node to another. Returns null if text invalid. 'isStart' is only for player's starting location
+    /// 'changeInvisibility' and 'aiDelay' only if spotted
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public Message PlayerMove(string text, Node node)
+    public Message PlayerMove(string text, Node node, int changeInvisibility = 0, int aiDelay = 0,  bool isStart = false)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -275,9 +276,17 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = "Player moves";
-            data.topText = "Move";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoveDetails(node);
+            if (isStart == true)
+            {
+                data.itemText = "Player starting location";
+                data.topText = "Start Location";
+            }
+            else
+            {
+                data.itemText = "Player moves";
+                data.topText = "Move";
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoveDetails(node, changeInvisibility, aiDelay);
             data.priority = ItemPriority.Low;
             data.sprite = node.Arc.sprite;
             data.tab = ItemTab.MAIL;

@@ -164,13 +164,19 @@ public class ItemDataManager : MonoBehaviour
     /// NOTE: Node & playerName have been checked for null by the calling method -> MessageManager.cs -> PlayerMove
     /// </summary>
     /// <returns></returns>
-    public string GetPlayerMoveDetails(Node node)
+    public string GetPlayerMoveDetails(Node node, int changeInvisibility, int aiDelay)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}{1}{2} now at{3}{4}", colourNeutral, GameManager.instance.playerScript.PlayerName, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}, a {1}{2}{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         if (GameManager.instance.optionScript.debugData == true)
         { builder.AppendFormat(", ID {0}", node.nodeID); }
+        if (changeInvisibility != 0)
+        {
+            builder.AppendFormat("{0}{1}{2}Player SPOTTED{3}<b>Invisibility {4}</b>{5}", "\n", "\n", colourBad, "\n", changeInvisibility, colourEnd);
+            if (aiDelay > 0)
+            { builder.AppendFormat("{0}{1}Authority will know in {2}<b>{3}</b>{4}{5} turn{6}{7}", "\n", colourAlert, colourNeutral, aiDelay, colourEnd, colourAlert, aiDelay != 1 ? "s" : "", colourEnd); }
+        }
         return builder.ToString();
     }
 
@@ -732,7 +738,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
         builder.AppendFormat("{0}<b>CURRENT LOCATION KNOWN</b>{1}{2}", colourBad, colourEnd, "\n");
         if (string.IsNullOrEmpty(reason) == false)
-        { builder.AppendFormat("due to {0}<b>{1}</b>{2}{3}", colourNeutral, reason, colourEnd, "\n"); }
+        { builder.AppendFormat("due to {0}{1}{2}{3}", colourNeutral, reason, colourEnd, "\n"); }
         if (nodeID > 0)
         {
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
