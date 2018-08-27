@@ -1779,7 +1779,7 @@ public class NodeManager : MonoBehaviour
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
                             node.nodeName, node.Arc.name, moveDetails.nodeID);
-                        GameManager.instance.messageScript.AIConnectionActivity(textAI, moveDetails.nodeID, moveDetails.connectionID, moveDetails.ai_Delay);
+                        GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
                         //AI Immediate message
                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                         {

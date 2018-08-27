@@ -841,10 +841,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="connectionID"></param>
     /// <param name="delay"></param>
     /// <returns></returns>
-    public Message AIConnectionActivity(string text, int destinationNodeID, int connectionID, int delay)
+    public Message AIConnectionActivity(string text, Node destinationNode, Connection connection, int delay)
     {
-        Debug.Assert(destinationNodeID >= 0, string.Format("Invalid destinationNodeID {0}", destinationNodeID));
-        Debug.Assert(connectionID >= 0, string.Format("Invalid connectionID {0}", connectionID));
+        Debug.Assert(destinationNode != null, "Invalid destinationNode (Null)");
+        Debug.Assert(connection != null, "Invalid connection (Null)");
         Debug.Assert(delay >= 0, string.Format("Invalid delay {0}", delay));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -855,10 +855,21 @@ public class MessageManager : MonoBehaviour
             message.side = globalAuthority;
             message.isPublic = true;
             message.displayDelay = delay;
-            message.data0 = destinationNodeID;
-            message.data1 = connectionID;
+            message.data0 = destinationNode.nodeID;
+            message.data1 = connection.connID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Resistance Leader detected using CONNECTION";
+            data.topText = "Connection Activity";
+            data.bottomText = GameManager.instance.itemDataScript.GetAIConnectionActivityDetails(destinationNode, delay);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.MAIL;
+            data.side = message.side;
+            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1134,7 +1145,6 @@ public class MessageManager : MonoBehaviour
             data.itemText = "Resistance HACKS AI";
             data.topText = "Hacking Detected";
             data.bottomText = GameManager.instance.itemDataScript.GetAIHackedDetails(isDetected, attemptsDetected, attemptsTotal);
-            data.priority = ItemPriority.Low;
             if (isDetected == true) { data.priority = ItemPriority.Medium; }
             else { data.priority = ItemPriority.Low; }
             data.sprite = GameManager.instance.guiScript.alarmSprite;
@@ -1211,7 +1221,7 @@ public class MessageManager : MonoBehaviour
             data.itemText = text;
             data.topText = "Countermeasures";
             data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;

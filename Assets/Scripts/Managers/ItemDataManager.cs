@@ -725,6 +725,22 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// AI detects resistance activity on a Connection
+    /// </summary>
+    /// <param name="destinationNode"></param>
+    /// <param name="connection"></param>
+    /// <returns></returns>
+    public string GetAIConnectionActivityDetails(Node destinationNode, int delay)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}Resistance Leader{2}{3}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>DETECTED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("On Connection travelling to{0}{1}{2}, {3}{4}{5}{6}", "\n", colourNeutral, destinationNode.nodeName, destinationNode.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}Detected {1}{2}<b>{3}{4}</b>{5} turns ago{6}", colourAlert, colourEnd, colourNeutral, delay, colourEnd, colourAlert, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Resistance leader invis < zero with immediate detection
     /// </summary>
     /// <param name="reason"></param>
