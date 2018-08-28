@@ -428,6 +428,14 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Recruit Authority"))
+            {
+                Debug.Log("[Dbg] Button -> Authority Recruit Actor");
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                { GameManager.instance.actorScript.RecruitActor(2); }
+            }
+
+            /*//second button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), optionPlayerSide))
             {
                 Debug.Log("[Dbg] Button -> Toggle Player Side");
@@ -437,7 +445,7 @@ public class DebugGUI : MonoBehaviour
                 //both -> change to resistance
                 else if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                 { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideResistance; optionPlayerSide = "RESISTANCE"; }
-            }
+            }*/
 
             //third button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Remove Tracer"))
@@ -596,14 +604,6 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Give Player a Random Secret");
                 GameManager.instance.playerScript.DebugAddRandomSecret();
-            }
-
-            //fourteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Recruit Authority"))
-            {
-                Debug.Log("[Dbg] Button -> Authority Recruit Actor");
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-                { GameManager.instance.actorScript.RecruitActor(2); }
             }
 
 

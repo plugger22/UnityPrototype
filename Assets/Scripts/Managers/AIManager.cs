@@ -3485,7 +3485,7 @@ public class AIManager : MonoBehaviour
         { timerTraceBack = aiCounterMeasureTimer * 2; }
         else { timerTraceBack = aiCounterMeasureTimer; }
         //Message
-        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack), timerTraceBack);
+        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack), "TraceBack", timerTraceBack);
         return isTraceBack;
     }
 
@@ -3501,7 +3501,7 @@ public class AIManager : MonoBehaviour
         { timerScreamer = aiCounterMeasureTimer * 2; }
         else { timerScreamer = aiCounterMeasureTimer; }
         //Message
-        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer), timerScreamer);
+        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer), "Screamer", timerScreamer);
         return isScreamer;
     }
 
@@ -3517,7 +3517,7 @@ public class AIManager : MonoBehaviour
         { timerOffline = aiCounterMeasureTimer * 2; }
         else { timerOffline = aiCounterMeasureTimer; }
         //Message
-        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline), timerOffline);
+        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline), "AI Offline", timerOffline);
         return isOffline;
     }
 
@@ -3531,7 +3531,7 @@ public class AIManager : MonoBehaviour
         aiSecurityProtocolLevel++;
         //Message
         string msgText = string.Format("AI increases SECURITY PROTOCOL to level {0}", aiSecurityProtocolLevel);
-        GameManager.instance.messageScript.AICounterMeasure(msgText, -1, aiSecurityProtocolLevel);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, "Security Protocol",  -1, aiSecurityProtocolLevel);
         return true;
     }
 

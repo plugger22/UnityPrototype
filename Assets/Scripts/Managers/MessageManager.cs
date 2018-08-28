@@ -1089,7 +1089,6 @@ public class MessageManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
-
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.capturedSprite;
             data.tab = ItemTab.MAIL;
@@ -1243,7 +1242,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="timer"></param>
     /// <param name="protocolLevel"></param>
     /// <returns></returns>
-    public Message AICounterMeasure(string text, int timerStartValue = -1, int protocolLevelNew = -1)
+    public Message AICounterMeasure(string text, string itemText, int timerStartValue = -1, int protocolLevelNew = -1)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1257,8 +1256,8 @@ public class MessageManager : MonoBehaviour
             message.data1 = protocolLevelNew;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Countermeasures";
+            data.itemText = itemText;
+            data.topText = "AI Countermeasures";
             data.bottomText = text;
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
