@@ -119,7 +119,6 @@ public class MessageManager : MonoBehaviour
                 ItemData data = listOfDelayedItemData[index];
                 //decrement delay
                 data.delay--;
-                Debug.LogFormat("[Tst] MessageManager -> StartTurnEarly: {0} delay {1}{2}", data.itemText, data.delay, "\n");
                 //ready for prime time?
                 if (data.delay <= 0)
                 {
@@ -930,7 +929,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Resistance activity detected in DISTRICT";
             data.topText = "Resistance Activity";
-            data.bottomText = GameManager.instance.itemDataScript.GetAINodeActivityDetails(node, actorID, delay);
+            data.bottomText = GameManager.instance.itemDataScript.GetAINodeActivityDetails(node, delay);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.MAIL;

@@ -747,10 +747,13 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="delay"></param>
     /// <returns></returns>
-    public string GetAINodeActivityDetails(Node node, int actorID, int delay)
+    public string GetAINodeActivityDetails(Node node, int delay)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat();
+        builder.AppendFormat("Resistance activity {0}", "\n");
+        builder.AppendFormat("{0}<b>DETECTED</b>{1} at{2}", colourGood, colourEnd, "\n");
+        builder.AppendFormat("{0}{1}, {2}{3}{4}{5}", colourNeutral, node.nodeName, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}Detected {1}{2}<b>{3}{4}</b>{5} turns ago{6}", colourAlert, colourEnd, colourNeutral, delay, colourEnd, colourAlert, colourEnd);
         return builder.ToString();
     }
 
