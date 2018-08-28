@@ -121,6 +121,7 @@ public class DataManager : MonoBehaviour
     //ItemData
     private MainInfoData currentInfoData = new MainInfoData();                                      //rolling current turn MainInfoData package
     private List<ItemData>[,] arrayOfItemDataByPriority = new List<ItemData>[(int)ItemTab.Count, 3];
+    private List<ItemData> listOfDelayedItemData = new List<ItemData>();
 
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
@@ -299,8 +300,15 @@ public class DataManager : MonoBehaviour
             Debug.Assert(data.side != null, "Invalid ItemData side (Null)");
             GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
             //only take those from the same side or those aimed at both sides
-            if (data.side.level == playerSide.level || data.side.level == GameManager.instance.globalScript.sideBoth.level)
+            /*if (data.side.level == playerSide.level || data.side.level == GameManager.instance.globalScript.sideBoth.level)
+            {
+                if (data.delay == 0)
+                { arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data); }
+                else { listOfDelayedItemData.Add(data); }
+            }*/
+            if (data.delay == 0)
             { arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data); }
+            else { listOfDelayedItemData.Add(data); }
             /*else { Debug.LogFormat("[Tst] ItemData NOT retained -> {0}", data.itemText); }*/
         }
         else { Debug.LogWarning("Invalid ItemData (Null)"); }
@@ -371,6 +379,10 @@ public class DataManager : MonoBehaviour
         //return data set
         return data;
     }
+
+
+    public List<ItemData> GetListOfDelayItemData()
+    { return listOfDelayedItemData; }
 
     //
     // - - - NodeArcs - - -

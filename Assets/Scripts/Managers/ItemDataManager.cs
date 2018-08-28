@@ -741,6 +741,20 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// AI detects resistance activity at a district
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="actorID"></param>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    public string GetAINodeActivityDetails(Node node, int actorID, int delay)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat();
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Resistance leader invis < zero with immediate detection
     /// </summary>
     /// <param name="reason"></param>

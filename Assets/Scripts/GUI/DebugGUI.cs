@@ -51,6 +51,7 @@ public class DebugGUI : MonoBehaviour
     private string optionAITraceback;
     private string optionAIScreamer;
     private string optionRenownUI;
+    private string optionPlayerSide;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public class DebugGUI : MonoBehaviour
         optionAITraceback = "AITraceback ON";
         optionAIScreamer = "AIScreamer ON";
         optionRenownUI = "Renown UI OFF";
+        optionPlayerSide = "RESISTANCE";
     }
 
     // Update is called once per frame
@@ -426,11 +428,15 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Recruit Authority"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), optionPlayerSide))
             {
-                Debug.Log("[Dbg] Button -> Authority Recruit Actor");
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-                { GameManager.instance.actorScript.RecruitActor(2); }
+                Debug.Log("[Dbg] Button -> Toggle Player Side");
+                //resistance -> change to authority
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideAuthority; optionPlayerSide = "AUTHORITY"; }
+                //both -> change to resistance
+                else if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideResistance; optionPlayerSide = "RESISTANCE"; }
             }
 
             //third button
@@ -590,6 +596,14 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Give Player a Random Secret");
                 GameManager.instance.playerScript.DebugAddRandomSecret();
+            }
+
+            //fourteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Recruit Authority"))
+            {
+                Debug.Log("[Dbg] Button -> Authority Recruit Actor");
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                { GameManager.instance.actorScript.RecruitActor(2); }
             }
 
 

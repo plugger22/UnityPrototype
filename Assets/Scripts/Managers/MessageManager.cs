@@ -76,6 +76,9 @@ public class MessageManager : MonoBehaviour
     /// </summary>
     private void StartTurnEarly()
     {
+        //
+        // - - - Messages - - -
+        //
         Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>(GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending));
         if (dictOfPendingMessages != null)
         {
@@ -105,6 +108,29 @@ public class MessageManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
+        //
+        // - - - ItemData - - -
+        //
+        List<ItemData> listOfDelayedItemData = GameManager.instance.dataScript.GetListOfDelayItemData();
+        if (listOfDelayedItemData != null)
+        {
+            for (int index = listOfDelayedItemData.Count - 1; index >= 0; index-- )
+            {
+                ItemData data = listOfDelayedItemData[index];
+                //decrement delay
+                data.delay--;
+                Debug.LogFormat("[Tst] MessageManager -> StartTurnEarly: {0} delay {1}{2}", data.itemText, data.delay, "\n");
+                //ready for prime time?
+                if (data.delay <= 0)
+                {
+                    //add to display list
+                    GameManager.instance.dataScript.AddItemData(data);
+                    //remove from delay list
+                    listOfDelayedItemData.RemoveAt(index);
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfDelayItemData (Null)"); }
     }
 
     /// <summary>
@@ -867,6 +893,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.MAIL;
             data.side = message.side;
             data.help = 1;
+            data.delay = delay;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -883,9 +910,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="delay"></param>
     /// <returns></returns>
-    public Message AINodeActivity(string text, int nodeID, int actorID, int delay)
+    public Message AINodeActivity(string text, Node node, int actorID, int delay)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid NodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         Debug.Assert(delay >= 0, string.Format("Invalid delay {0}", delay));
         if (string.IsNullOrEmpty(text) == false)
@@ -897,10 +924,22 @@ public class MessageManager : MonoBehaviour
             message.side = globalAuthority;
             message.isPublic = true;
             message.displayDelay = delay;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Resistance activity detected in DISTRICT";
+            data.topText = "Resistance Activity";
+            data.bottomText = GameManager.instance.itemDataScript.GetAINodeActivityDetails(node, actorID, delay);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.MAIL;
+            data.side = message.side;
+            data.help = 1;
+            data.delay = delay;
             //add
             GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -941,6 +980,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.MAIL;
             data.side = message.side;
             data.help = 1;
+            data.delay = delay;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

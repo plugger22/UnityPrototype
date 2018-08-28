@@ -1253,7 +1253,7 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
                                         GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
-                                            dataInput.originText), node.nodeID, GameManager.instance.playerScript.actorID, delay);
+                                            dataInput.originText), node, GameManager.instance.playerScript.actorID, delay);
                                         //AI Immediate message
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
@@ -1325,7 +1325,7 @@ public class EffectManager : MonoBehaviour
                                         if (node.isSpider == true) { delay = delayYesSpider; }
                                         else { delay = delayNoSpider; }
                                         GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
-                                            dataInput.originText, actor.arc.name), node.nodeID, actor.actorID, delay);
+                                            dataInput.originText, actor.arc.name), node, actor.actorID, delay);
                                         //AI Immediate message
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {

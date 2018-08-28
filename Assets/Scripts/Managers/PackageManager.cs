@@ -266,6 +266,7 @@ namespace packageAPI
         public ItemTab tab;
         public GlobalSide side;
         public int help = -1;                       //key to dictOfHelp for info button down at bottom (can ignore) -> wil. display help button if present
+        public int delay = 0;                       //allows for a delay in itemData showing, delay is in turns, default zero
         public int buttonData;                      //data to send when button pressed (can ignore) -> Must have both buttonData AND buttonEvent for a button to display
         public EventType buttonEvent;               //event to trigger when button pressed (can ignore) -> Must have both buttonData AND buttonEvent for a button to display
 
