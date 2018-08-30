@@ -890,6 +890,23 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// AI implements countermeasures to counter hacking
+    /// </summary>
+    /// <param name="warning"></param>
+    /// <param name="protocolLevelNew"></param>
+    /// <returns></returns>
+    public string GetAICounterMeasureDetails(string warning, int protocolLevelNew)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(warning) == false)
+        { builder.AppendFormat("{0}{1}{2}", warning); }
+        if (protocolLevelNew > 0)
+        { builder.AppendFormat("{0}{1}{2} AI Security Protocol now {3}{4}", "\n", "\n", colourNeutral, protocolLevelNew, colourEnd);  }
+
+        return builder.ToString();
+    }
+
     //
     // - - - Decisions - - -
     //

@@ -1242,7 +1242,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="timer"></param>
     /// <param name="protocolLevel"></param>
     /// <returns></returns>
-    public Message AICounterMeasure(string text, string itemText, int timerStartValue = -1, int protocolLevelNew = -1)
+    public Message AICounterMeasure(string text, string itemText, string warning, int timerStartValue = -1, int protocolLevelNew = -1)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1258,7 +1258,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "AI Countermeasures";
-            data.bottomText = text;
+            data.bottomText = GetAICounterMeasureDetails(warning, protocolLevelNew);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
             data.tab = ItemTab.MAIL;
