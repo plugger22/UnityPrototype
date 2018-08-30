@@ -79,8 +79,6 @@
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Captured}                        //actor sprite shows a relevant tooltip if other than 'None'
 
-
-
     //
     // - - - AI - - -
     //

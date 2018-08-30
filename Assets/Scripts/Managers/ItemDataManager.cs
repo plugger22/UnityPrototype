@@ -900,13 +900,17 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="descriptor"></param>
     /// <param name="warning"></param>
     /// <returns></returns>
-    public string GetDecisionGlobalDetails(string descriptor, string warning)
+    public string GetDecisionGlobalDetails(string itemText, int duration, int loyaltyAdjust, int crisisAdjust)
     {
         StringBuilder builder = new StringBuilder();
-        if (string.IsNullOrEmpty(descriptor) == false)
-        { builder.AppendFormat("<b>{0}</b>{1}{2}{3}{4}", GameManager.instance.cityScript.GetCityName(), "\n", descriptor, "\n", "\n"); }
-        if (string.IsNullOrEmpty(warning) == false)
-        { builder.AppendFormat("{0}<b>{1}</b>{2}", colourBad, warning, colourEnd); }
+        if (string.IsNullOrEmpty(itemText) == false)
+        { builder.AppendFormat("{0}", itemText); }
+        if (duration > 0)
+        { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
+        if (loyaltyAdjust != 0)
+        { builder.AppendFormat("{0}{1}City Loyalty {2}{3}", "\n", "\n", loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust); }
+        if (crisisAdjust != 0)
+        { builder.AppendFormat("{0}{1}District Crisis {2}% less likely", "\n", "\n", crisisAdjust); }
         return builder.ToString();
     }
 

@@ -1300,7 +1300,7 @@ public class MessageManager : MonoBehaviour
     }
 
     //
-    // - - - Decisions - - -
+    // - - - Decisions & Policies - - -
     //
 
     /// <summary>
@@ -1311,7 +1311,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message DecisionGlobal(string text, string warning, int decID, GlobalSide side, bool isPublic = false)
+    public Message DecisionGlobal(string text, string itemText, int decID, int duration = 0, int loyaltyAdjust = 0, int crisisAdjust = 0)
     {
         Debug.Assert(decID >= 0, string.Format("Invalid decID {0}", decID));
         if (string.IsNullOrEmpty(text) == false)
@@ -1320,14 +1320,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.DECISION;
             message.subType = MessageSubType.Decision_Global;
-            message.side = side;
-            message.isPublic = isPublic;
+            message.side = GameManager.instance.globalScript.sideBoth;
+            message.isPublic = true;
             message.data0 = decID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = itemText;
             data.topText = "City Wide Decision";
-            data.bottomText = GameManager.instance.itemDataScript.GetDecisionGlobalDetails(text, warning);
+            data.bottomText = GameManager.instance.itemDataScript.GetDecisionGlobalDetails(itemText, duration, loyaltyAdjust, crisisAdjust);
             data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
             data.tab = ItemTab.MAIL;
@@ -1340,6 +1340,7 @@ public class MessageManager : MonoBehaviour
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
+
 
     /// <summary>
     /// Either side (Player/AI) changes security level on a connection. Returns null if text invalid

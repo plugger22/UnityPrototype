@@ -3278,8 +3278,8 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
         }
         //admin
-        string msgText = string.Format("Authority implements {0} policy city wide", policyName);
-        GameManager.instance.messageScript.AICounterMeasure(msgText);
+        string msgText = string.Format("Authority implements {0} policy", policyName);
+        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, task.data2, timerPolicy, loyaltyChange, nodeCrisisModifier);
         msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyName);
         GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         return true;
@@ -3340,7 +3340,7 @@ public class AIManager : MonoBehaviour
         }
         //admin
         string msgText = string.Format("Authority implements {0} policy city wide", task.name0);
-        GameManager.instance.messageScript.AICounterMeasure(msgText);
+        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, task.data2, 0, loyaltyChange);
         msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.name, loyaltyChange, task.name0);
         GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
         return true;
@@ -4437,7 +4437,7 @@ public class AIManager : MonoBehaviour
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         //admin
         string msgText = string.Format("{0} policy is no longer in effect", policyName);
-        GameManager.instance.messageScript.AICounterMeasure(msgText);
+        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, -1, 0, policyEffectLoyalty);
         msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.name, policyEffectLoyalty, policyName);
         GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
         //reset vars
