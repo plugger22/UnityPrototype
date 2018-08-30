@@ -1258,7 +1258,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "AI Countermeasures";
-            data.bottomText = GetAICounterMeasureDetails(warning, protocolLevelNew);
+            data.bottomText = GameManager.instance.itemDataScript.GetAICounterMeasureDetails(warning, timerStartValue, protocolLevelNew);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
             data.tab = ItemTab.MAIL;

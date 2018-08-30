@@ -896,14 +896,15 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="warning"></param>
     /// <param name="protocolLevelNew"></param>
     /// <returns></returns>
-    public string GetAICounterMeasureDetails(string warning, int protocolLevelNew)
+    public string GetAICounterMeasureDetails(string warning, int duration, int protocolLevelNew)
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(warning) == false)
         { builder.AppendFormat("{0}{1}{2}", warning); }
+        if (duration > 0)
+        { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (protocolLevelNew > 0)
         { builder.AppendFormat("{0}{1}{2} AI Security Protocol now {3}{4}", "\n", "\n", colourNeutral, protocolLevelNew, colourEnd);  }
-
         return builder.ToString();
     }
 

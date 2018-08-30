@@ -3485,8 +3485,10 @@ public class AIManager : MonoBehaviour
         { timerTraceBack = aiCounterMeasureTimer * 2; }
         else { timerTraceBack = aiCounterMeasureTimer; }
         //Message
+        string msgText = string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack);
         string itemText = "AI TRACEBACK countermeasures implemented";
-        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack), itemText, timerTraceBack);
+        string warning = "Hacker's Location revealed if detected";
+        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerTraceBack);
         return isTraceBack;
     }
 
@@ -3502,8 +3504,10 @@ public class AIManager : MonoBehaviour
         { timerScreamer = aiCounterMeasureTimer * 2; }
         else { timerScreamer = aiCounterMeasureTimer; }
         //Message
+        string msgText = string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer);
         string itemText = "AI SCREAMER countermeasures implemented";
-        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer), itemText, timerScreamer);
+        string warning = "Hacker, if detected, becomes STRESSED";
+        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerScreamer);
         return isScreamer;
     }
 
@@ -3519,8 +3523,10 @@ public class AIManager : MonoBehaviour
         { timerOffline = aiCounterMeasureTimer * 2; }
         else { timerOffline = aiCounterMeasureTimer; }
         //Message
+        string msgText = string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline);
         string itemText = "AI OFFLINE countermeasures implemented";
-        GameManager.instance.messageScript.AICounterMeasure(string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline), itemText, timerOffline);
+        string warning = "AI cannot be hacked";
+        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerOffline);
         return isOffline;
     }
 
@@ -3534,7 +3540,8 @@ public class AIManager : MonoBehaviour
         aiSecurityProtocolLevel++;
         //Message
         string msgText = string.Format("AI increases SECURITY PROTOCOL to level {0}", aiSecurityProtocolLevel);
-        GameManager.instance.messageScript.AICounterMeasure(msgText, "Security Protocol",  -1, aiSecurityProtocolLevel);
+        string warning = "Increased chance of hacking being detected";
+        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, warning, -1, aiSecurityProtocolLevel);
         return true;
     }
 
@@ -4394,7 +4401,7 @@ public class AIManager : MonoBehaviour
         timerTraceBack = -1;
         //message
         string msgText = "AI TRACEBACK countermeasure Cancelled";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "Countermeasure cancelled");
     }
 
     /// <summary>
@@ -4407,7 +4414,7 @@ public class AIManager : MonoBehaviour
         timerScreamer = -1;
         //message
         string msgText = "AI SCREAMER countermeasure Cancelled";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "Countermeasure cancelled");
     }
 
     /// <summary>
@@ -4420,7 +4427,7 @@ public class AIManager : MonoBehaviour
         timerOffline = -1;
         //message
         string msgText = "AI OFFLINE countermeasure Cancelled";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "Countermeasure cancelled");
     }
 
     /// <summary>

@@ -51,7 +51,6 @@ public class DebugGUI : MonoBehaviour
     private string optionAITraceback;
     private string optionAIScreamer;
     private string optionRenownUI;
-    private string optionPlayerSide;
 
     private void Awake()
     {
@@ -69,7 +68,6 @@ public class DebugGUI : MonoBehaviour
         optionAITraceback = "AITraceback ON";
         optionAIScreamer = "AIScreamer ON";
         optionRenownUI = "Renown UI OFF";
-        optionPlayerSide = "RESISTANCE";
     }
 
     // Update is called once per frame
