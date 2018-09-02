@@ -918,18 +918,43 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="descriptor"></param>
     /// <param name="warning"></param>
     /// <returns></returns>
-    public string GetDecisionGlobalDetails(string itemText, int duration, int loyaltyAdjust, int crisisAdjust)
+    public string GetDecisionGlobalDetails(string description, int duration, int loyaltyAdjust, int crisisAdjust)
     {
         StringBuilder builder = new StringBuilder();
-        if (string.IsNullOrEmpty(itemText) == false)
-        { builder.AppendFormat("{0}", itemText); }
+        //side specific colours
+        string colourStart = colourGood;
+        string colourFinish = colourBad;
+        string colourCrisis = colourBad;
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { colourStart = colourBad; colourFinish = colourGood; colourCrisis = colourGood; }
+        //text
+        if (string.IsNullOrEmpty(description) == false)
+        { builder.AppendFormat("{0}", description); }
         if (duration > 0)
         { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (loyaltyAdjust != 0)
-        { builder.AppendFormat("{0}{1}City Loyalty {2}{3}", "\n", "\n", loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust); }
+        { builder.AppendFormat("{0}{1}{2}City Loyalty {3}{4}{5}", "\n", "\n", duration > 0 ? colourStart : colourEnd, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
         if (crisisAdjust != 0)
-        { builder.AppendFormat("{0}{1}District Crisis {2}% less likely", "\n", "\n", crisisAdjust); }
+        { builder.AppendFormat("{0}{1}{2}District Crisis {3}% less likely{4}", "\n", "\n", colourCrisis, crisisAdjust, colourEnd); }
         return builder.ToString();
     }
 
+
+    /// <summary>
+    /// connection security changes
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <param name="secLevel"></param>
+    /// <returns></returns>
+    public string GetDecisionConnectionDetails(Connection connection, ConnectionType secLevel)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("Connection between {0){1}{2} and {3}{4}{5} districts", colourNeutral, connection.node1.nodeName, colourEnd, colourNeutral, connection.node2.nodeName, colourEnd);
+        builder.AppendLine(); builder.AppendLine();
+        string colourSecurity = colourBad;
+        if (secLevel == ConnectionType.MEDIUM) { colourSecurity = colourNeutral; }
+        else if (secLevel == ConnectionType.LOW) { colourSecurity = colourGood; }
+        builder.AppendFormat("Security level now {0}<b>{1}</b>{2}", colourSecurity, secLevel, colourEnd);
+        return builder.ToString();
+    }
 }

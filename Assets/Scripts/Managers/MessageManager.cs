@@ -1311,7 +1311,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message DecisionGlobal(string text, string itemText, int decID, int duration = 0, int loyaltyAdjust = 0, int crisisAdjust = 0)
+    public Message DecisionGlobal(string text, string itemText, string description, int decID, int duration = 0, int loyaltyAdjust = 0, int crisisAdjust = 0)
     {
         Debug.Assert(decID >= 0, string.Format("Invalid decID {0}", decID));
         if (string.IsNullOrEmpty(text) == false)
@@ -1327,7 +1327,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "City Wide Decision";
-            data.bottomText = GameManager.instance.itemDataScript.GetDecisionGlobalDetails(itemText, duration, loyaltyAdjust, crisisAdjust);
+            data.bottomText = GameManager.instance.itemDataScript.GetDecisionGlobalDetails(description, duration, loyaltyAdjust, crisisAdjust);
             data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
             data.tab = ItemTab.MAIL;
@@ -1349,9 +1349,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="connID"></param>
     /// <param name="secLevel"></param>
     /// <returns></returns>
-    public Message DecisionConnection(string text, int connID, int secLevel)
+    public Message DecisionConnection(string text, Connection connection, ConnectionType secLevel)
     {
-        Debug.Assert(connID >= 0, string.Format("Invalid connID {0}", connID));
+        Debug.Assert(connection != null, "Invalid connection (Null)");
         Debug.Assert(secLevel >= 0, string.Format("Invalid secLevel {0}", secLevel));
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1361,14 +1361,14 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Decision_Connection;
             message.side = globalBoth;
             message.isPublic = true;
-            message.data0 = connID;
-            message.data1 = secLevel;
+            message.data0 = connection.connID;
+            message.data1 = (int)secLevel;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = "Connection Security changed";
             data.topText = "Connection Security";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetDecisionConnectionDetails(connection, secLevel);
+            data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;

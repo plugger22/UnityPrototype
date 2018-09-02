@@ -30,6 +30,7 @@ public class AuthorityManager : MonoBehaviour
     public bool SetAuthoritySecurityState(string descriptor, string warning, AuthoritySecurityState state = AuthoritySecurityState.Normal)
     {
         bool isDone = false;
+        string itemText = "Unknown";
         if (string.IsNullOrEmpty(descriptor) == false)
         {
             //set state
@@ -41,12 +42,14 @@ public class AuthorityManager : MonoBehaviour
                 case AuthoritySecurityState.SecurityAlert:
                 case AuthoritySecurityState.SurveillanceCrackdown:
                     isDone = true;
+                    itemText = string.Format("Authority implements a {0}", state);
                     break;
                 default:
+                    itemText = "Authority reverts SECURITY back to Normal";
                     break;
             }
             //message
-            GameManager.instance.messageScript.DecisionGlobal(descriptor, warning, -1);
+            GameManager.instance.messageScript.DecisionGlobal(descriptor, itemText, warning, -1);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
         return isDone;
