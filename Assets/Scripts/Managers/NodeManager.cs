@@ -2153,7 +2153,8 @@ public class NodeManager : MonoBehaviour
                                         msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.nodeName, node.Arc.name, node.crisis.tag);
                                         GameManager.instance.messageScript.NodeCrisis(msgText, node, crisisCityLoyalty);
                                         msgText = string.Format("{0} Loyalty falls by -{1} to {2} ({3} crisis)", city.name, crisisCityLoyalty, loyalty, node.crisis.tag);
-                                        GameManager.instance.messageScript.CityLoyalty(msgText, loyalty, crisisCityLoyalty * -1);
+                                        string reasonText = string.Format("{0} district crisis", node.crisis.tag);
+                                        GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, loyalty, crisisCityLoyalty * -1);
                                         //set variables
                                         node.waitTimer = nodeWaitTimer;
                                         node.crisis = null;

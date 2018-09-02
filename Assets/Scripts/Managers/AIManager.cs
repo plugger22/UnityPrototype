@@ -3286,7 +3286,8 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("Authority implements {0} policy", policyName);
         GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.data2, timerPolicy, loyaltyChange, nodeCrisisModifier);
         msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyName);
-        GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
+        string reasonText = string.Format("{0} policy", policyName);
+        GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
         return true;
     }
 
@@ -3352,7 +3353,8 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("Authority implements {0} policy", task.name0);
         GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, handoutDescription, task.data2, 0, loyaltyChange);
         msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.name, loyaltyChange, task.name0);
-        GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, loyaltyChange);
+        string reasonText = string.Format("{0} policy", task.name0);
+        GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
         return true;
     }
 
@@ -4457,7 +4459,8 @@ public class AIManager : MonoBehaviour
         string cancelText = string.Format("{0} policy has been cancelled", policyName);
         GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, cancelText, -1, 0, policyEffectLoyalty);
         msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.name, policyEffectLoyalty, policyName);
-        GameManager.instance.messageScript.CityLoyalty(msgText, cityLoyalty, policyEffectLoyalty);
+        string reasonText = string.Format("{0} policy being cancelled", policyName);
+        GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, policyEffectLoyalty);
         //reset vars
         isPolicy = false;
         timerPolicy = -1;

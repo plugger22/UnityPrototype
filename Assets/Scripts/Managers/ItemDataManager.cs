@@ -900,7 +900,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(warning) == false)
-        { builder.AppendFormat("{0}{1}{2}", warning); }
+        { builder.Append(warning); }
         if (duration > 0)
         { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (protocolLevelNew > 0)
@@ -933,7 +933,7 @@ public class ItemDataManager : MonoBehaviour
         if (duration > 0)
         { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (loyaltyAdjust != 0)
-        { builder.AppendFormat("{0}{1}{2}City Loyalty {3}{4}{5}", "\n", "\n", duration > 0 ? colourStart : colourEnd, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}City Loyalty {3}{4}{5}", "\n", "\n", duration > 0 ? colourStart : colourFinish, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
         if (crisisAdjust != 0)
         { builder.AppendFormat("{0}{1}{2}District Crisis {3}% less likely{4}", "\n", "\n", colourCrisis, crisisAdjust, colourEnd); }
         return builder.ToString();
@@ -949,12 +949,50 @@ public class ItemDataManager : MonoBehaviour
     public string GetDecisionConnectionDetails(Connection connection, ConnectionType secLevel)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("Connection between {0){1}{2} and {3}{4}{5} districts", colourNeutral, connection.node1.nodeName, colourEnd, colourNeutral, connection.node2.nodeName, colourEnd);
+        builder.AppendFormat("Connection between {0}{1}{2} and {3}{4}{5} districts", colourNeutral, connection.node1.nodeName, colourEnd, colourNeutral, connection.node2.nodeName, colourEnd);
         builder.AppendLine(); builder.AppendLine();
         string colourSecurity = colourBad;
         if (secLevel == ConnectionType.MEDIUM) { colourSecurity = colourNeutral; }
         else if (secLevel == ConnectionType.LOW) { colourSecurity = colourGood; }
         builder.AppendFormat("Security level now {0}<b>{1}</b>{2}", colourSecurity, secLevel, colourEnd);
+        return builder.ToString();
+    }
+
+    //
+    // - - - City - - -
+    //
+
+    /// <summary>
+    /// city loyalty changes
+    /// </summary>
+    /// <param name="newCityLoyalty"></param>
+    /// <param name="changeInLoyalty"></param>
+    /// <returns></returns>
+    public string GetCityLoyaltyDetails(string reason, int newCityLoyalty, int changeInLoyalty)
+    {
+        StringBuilder builder = new StringBuilder();
+        string colourSideGood = colourGood;
+        string colourSideBad = colourBad;
+        //default colours from POV of authority, reverse for resistance
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        { colourSideGood = colourBad; colourSideBad = colourGood; }
+        if (changeInLoyalty > 0)
+        {
+            //loyalty increases
+            builder.AppendFormat("{0}{1}{2}Loyalty now {3}{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideGood, newCityLoyalty, colourEnd, "\n", "\n");
+            //change
+            builder.AppendFormat("Loyalty increased by {0}<b>+{1}</b>{2}", colourSideGood, changeInLoyalty, colourEnd);
+        }
+        else
+        {
+            //loyalty decresed
+            builder.AppendFormat("{0}{1}{2}Loyalty now {3}{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
+            //change
+            builder.AppendFormat("Loyalty decreased by {0}<b>+{1}</b>{2}", colourSideBad, changeInLoyalty, colourEnd);
+        }
+        //reason
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{0}{1}due to {2}{3}{4}", "\n", "\n", colourNeutral, reason, colourEnd); }
         return builder.ToString();
     }
 }

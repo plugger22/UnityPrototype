@@ -2271,7 +2271,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="newCityLoyalty"></param>
     /// <param name="changeInLoyalty"></param>
     /// <returns></returns>
-    public Message CityLoyalty(string text, int newCityLoyalty, int changeInLoyalty)
+    public Message CityLoyalty(string text, string reason, int newCityLoyalty, int changeInLoyalty)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -2285,10 +2285,11 @@ public class MessageManager : MonoBehaviour
             message.data1 = changeInLoyalty;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            if (changeInLoyalty < 0) { data.itemText = string.Format("City Loyalty DECREASES"); }
+            else { data.itemText = string.Format("City Loyalty INCREASES"); }
             data.topText = "City Loyalty";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetCityLoyaltyDetails(reason, newCityLoyalty, changeInLoyalty);
+            data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.cityLoyaltySprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;
