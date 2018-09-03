@@ -2137,7 +2137,7 @@ public class NodeManager : MonoBehaviour
                                             node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
                                         itemText = string.Format("Crisis continues in {0}, {1}", node.nodeName, node.Arc.name);
                                         string reason = string.Format("{0} crisis will shortly go CRITICAL", node.crisis.tag);
-                                        string warning = string.Format("{0} turn{1} left to resolve Crisis", node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
+                                        string warning = string.Format("{0} turn{1} left for Authority to resolve Crisis", node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
                                         //good for Resistance, bad for Authority
                                         bool isBad = false;
                                         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }

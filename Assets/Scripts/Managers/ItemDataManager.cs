@@ -993,7 +993,7 @@ public class ItemDataManager : MonoBehaviour
             //loyalty decresed
             builder.AppendFormat("{0}{1}{2}<b>Loyalty now {3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
             //change
-            builder.AppendFormat("Loyalty decreased by {0}<b>+{1}</b>{2}", colourSideBad, changeInLoyalty, colourEnd);
+            builder.AppendFormat("Loyalty decreased by {0}<b>{1}</b>{2}", colourSideBad, changeInLoyalty, colourEnd);
         }
         //reason
         if (string.IsNullOrEmpty(reason) == false)
@@ -1014,19 +1014,34 @@ public class ItemDataManager : MonoBehaviour
     public string GetNodeCrisisDetails(Node node, int reductionInCityLoyalty)
     {
         StringBuilder builder = new StringBuilder();
+        //default POV Resistance side
+        string colourSideGood = colourGood;
+        string colourSideBad = colourBad;
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        { colourSideGood = colourBad; colourSideBad = colourGood; }
+        builder.AppendFormat("{0}, {1}, district{2}", node.nodeName, node.Arc.name, "\n");
         if (node.crisisTimer > 0)
         {
             //crisis commences
+            builder.AppendFormat("{0}<b>Crisis STARTS</b>{1}{2}{3}", colourSideGood, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1}{2}{3}{4}", colourNeutral, node.crisis.description, colourEnd, "\n", "\n");
+            builder.AppendFormat("Crisis Explodes in {0}<b>{1} turn{2}</b>{3}{4}", colourNeutral, node.crisisTimer, node.crisisTimer != 1 ? "s" : "", colourEnd, "\n");
+            builder.AppendFormat("{0}<b>City Loyalty -{1} if explodes</b>{2}", colourSideGood, GameManager.instance.nodeScript.crisisCityLoyalty, colourEnd);
         }
         else
         {
             if (node.crisis == null)
             {
                 //crisis averted
+                builder.AppendFormat("{0}<b>Crisis AVERTED</b>{1}{2}{3}", colourSideBad, colourEnd, "\n", "\n");
+                builder.AppendFormat("District immune to crisis for {0}<b>{1} turn{2}</b>{3}", colourNeutral, node.waitTimer, node.waitTimer != 1 ? "s" : "", colourEnd);
             }
             else
             {
                 //crisis explodes
+                builder.AppendFormat("{0}<b>Crisis EXPLODES</b>{1}{2}{3}", colourSideGood, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}{1} crisis has spun out of control{2}{3}{4}", colourAlert, node.crisis.tag, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}<b>City Loyalty -{1}</b>{2}", colourSideGood, reductionInCityLoyalty, colourEnd);
             }
         }
         return builder.ToString();
