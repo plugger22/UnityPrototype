@@ -2223,15 +2223,15 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Node undergoes a crisis (commences, averted, finishes)
+    /// Node undergoes a crisis (commences, averted, finishes). 'reductionInCityLoyalty' is for when crisis explodes and loyalty drops
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public Message NodeCrisis(string text, Node node, int reductionInCityLoyalty = -1)
+    public Message NodeCrisis(string text, string itemText, Node node, int reductionInCityLoyalty = -1)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
-        
+        Debug.Assert(string.IsNullOrEmpty(itemText) == false, "Invalid msgText (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -2244,10 +2244,10 @@ public class MessageManager : MonoBehaviour
             message.data1 = reductionInCityLoyalty;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = itemText;
             data.topText = "District Crisis";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetNodeCrisisDetails(node, reductionInCityLoyalty);
+            data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.nodeCrisisSprite;
             data.tab = ItemTab.MAIL;
             data.side = message.side;

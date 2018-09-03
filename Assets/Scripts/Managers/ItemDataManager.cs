@@ -900,11 +900,16 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(warning) == false)
-        { builder.Append(warning); }
+        {
+            string colourSide = colourBad;
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            { colourSide = colourGood; }
+            builder.AppendFormat("{0}<b>{1}</b>{2}", colourSide, warning, colourEnd);
+        }
         if (duration > 0)
         { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (protocolLevelNew > 0)
-        { builder.AppendFormat("{0}{1}{2} AI Security Protocol now {3}{4}", "\n", "\n", colourNeutral, protocolLevelNew, colourEnd);  }
+        { builder.AppendFormat("{0}{1}{2} AI Security Protocol now <b>Level {3}</b>{4}", "\n", "\n", colourNeutral, protocolLevelNew, colourEnd);  }
         return builder.ToString();
     }
 
@@ -931,9 +936,9 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(description) == false)
         { builder.AppendFormat("{0}", description); }
         if (duration > 0)
-        { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}Duration {3} turn{4}{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (loyaltyAdjust != 0)
-        { builder.AppendFormat("{0}{1}{2}City Loyalty {3}{4}{5}", "\n", "\n", duration > 0 ? colourStart : colourFinish, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}<b>City Loyalty {3}{4}</b>{5}", "\n", "\n", duration > 0 ? colourStart : colourFinish, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
         if (crisisAdjust != 0)
         { builder.AppendFormat("{0}{1}{2}District Crisis {3}% less likely{4}", "\n", "\n", colourCrisis, crisisAdjust, colourEnd); }
         return builder.ToString();
@@ -979,14 +984,14 @@ public class ItemDataManager : MonoBehaviour
         if (changeInLoyalty > 0)
         {
             //loyalty increases
-            builder.AppendFormat("{0}{1}{2}Loyalty now {3}{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideGood, newCityLoyalty, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1}{2}<b>Loyalty now {3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideGood, newCityLoyalty, colourEnd, "\n", "\n");
             //change
             builder.AppendFormat("Loyalty increased by {0}<b>+{1}</b>{2}", colourSideGood, changeInLoyalty, colourEnd);
         }
         else
         {
             //loyalty decresed
-            builder.AppendFormat("{0}{1}{2}Loyalty now {3}{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1}{2}<b>Loyalty now {3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
             //change
             builder.AppendFormat("Loyalty decreased by {0}<b>+{1}</b>{2}", colourSideBad, changeInLoyalty, colourEnd);
         }
@@ -995,4 +1000,36 @@ public class ItemDataManager : MonoBehaviour
         { builder.AppendFormat("{0}{1}due to {2}{3}{4}", "\n", "\n", colourNeutral, reason, colourEnd); }
         return builder.ToString();
     }
+
+    //
+    // - - - Districts - - -
+    //
+
+    /// <summary>
+    /// Node crisis starts, explodes, averted
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="reductionInCityLoyalty"></param>
+    /// <returns></returns>
+    public string GetNodeCrisisDetails(Node node, int reductionInCityLoyalty)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (node.crisisTimer > 0)
+        {
+            //crisis commences
+        }
+        else
+        {
+            if (node.crisis == null)
+            {
+                //crisis averted
+            }
+            else
+            {
+                //crisis explodes
+            }
+        }
+        return builder.ToString();
+    }
+
 }

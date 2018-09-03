@@ -2082,7 +2082,7 @@ public class NodeManager : MonoBehaviour
                     int numOfDangerSigns;
                     int chance;
                     int rnd;
-                    string msgText;
+                    string msgText, itemText;
                     //wait timer
                     int nodeWaitTimer = crisisWaitTimer;
                     //wait timer -> traits
@@ -2120,7 +2120,8 @@ public class NodeManager : MonoBehaviour
                                     node.launcher.StopSmoke();
                                     //admin
                                     msgText = string.Format("{0}, {1}, ID {2} crisis AVERTED", node.nodeName, node.Arc.name, node.nodeID);
-                                    GameManager.instance.messageScript.NodeCrisis(msgText, node);
+                                    itemText = string.Format("{0}, {1}, district crisis AVERTED", node.nodeName, node.Arc.name);
+                                    GameManager.instance.messageScript.NodeCrisis(msgText, itemText, node);
                                 }
                                 else
                                 {
@@ -2134,7 +2135,7 @@ public class NodeManager : MonoBehaviour
                                         //warning message
                                         msgText = string.Format("{0} crisis in {1}, {2}, ({3} turn{4} left to Resolve)", node.crisis.tag, node.nodeName, node.Arc.name,
                                             node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
-                                        string itemText = string.Format("Crisis continues in {0}, {1}", node.nodeName, node.Arc.name);
+                                        itemText = string.Format("Crisis continues in {0}, {1}", node.nodeName, node.Arc.name);
                                         string reason = string.Format("{0} crisis will shortly go CRITICAL", node.crisis.tag);
                                         string warning = string.Format("{0} turn{1} left to resolve Crisis", node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
                                         //good for Resistance, bad for Authority
@@ -2150,8 +2151,9 @@ public class NodeManager : MonoBehaviour
                                         loyalty = Mathf.Max(0, loyalty);
                                         GameManager.instance.cityScript.CityLoyalty = loyalty;
                                         //admin                                
-                                        msgText = string.Format("{0}, {1} crisis ({2}), has EXPLODED", node.nodeName, node.Arc.name, node.crisis.tag);
-                                        GameManager.instance.messageScript.NodeCrisis(msgText, node, crisisCityLoyalty);
+                                        msgText = string.Format("{0}, {1}, crisis ({2}) has EXPLODED", node.nodeName, node.Arc.name, node.crisis.tag);
+                                        itemText = string.Format("{0}, {1}, crisis has EXPLODED", node.nodeName, node.Arc.name);
+                                        GameManager.instance.messageScript.NodeCrisis(msgText, itemText, node, crisisCityLoyalty);
                                         msgText = string.Format("{0} Loyalty falls by -{1} to {2} ({3} crisis)", city.name, crisisCityLoyalty, loyalty, node.crisis.tag);
                                         string reasonText = string.Format("{0} district crisis", node.crisis.tag);
                                         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, loyalty, crisisCityLoyalty * -1);
@@ -2223,9 +2225,10 @@ public class NodeManager : MonoBehaviour
                                         Debug.LogFormat("[Rnd] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, CRISIS need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);
                                         msgText = string.Format("{0}, {1}, ID {2} crisis COMMENCES ({3})", node.nodeName, node.Arc.name, node.nodeID, node.crisis.tag);
-                                        GameManager.instance.messageScript.NodeCrisis(msgText, node);
+                                        itemText = string.Format("{0}, {1}, district crisis COMMENCES", node.nodeName, node.Arc.name);
+                                        GameManager.instance.messageScript.NodeCrisis(msgText, itemText, node);
                                         //random
-                                        msgText = string.Format("{0} ID {1}, CRISIS erupts", node.Arc.name, node.nodeID);
+                                        msgText = string.Format("{0}, {1}, district CRISIS succeeds", node.nodeName, node.Arc.name);
                                         GameManager.instance.messageScript.GeneralRandom(msgText, "District Crisis", chance, rnd, true);
                                     }
                                     else
@@ -2234,6 +2237,9 @@ public class NodeManager : MonoBehaviour
                                         node.launcher.StopSmoke();
                                         /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, Failed need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);*/
+                                        //random
+                                        msgText = string.Format("{0}, {1}, district CRISIS fails", node.nodeName, node.Arc.name);
+                                        GameManager.instance.messageScript.GeneralRandom(msgText, "District Crisis", chance, rnd, true);
                                     }
                                 }
                             }

@@ -3518,7 +3518,7 @@ public class AIManager : MonoBehaviour
         //Message
         string msgText = string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer);
         string itemText = "AI SCREAMER countermeasures implemented";
-        string warning = "Hacker, if detected, becomes STRESSED";
+        string warning = "Hacker, if detected, becomes <b>STRESSED</b>";
         GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerScreamer);
         return isScreamer;
     }
@@ -3552,8 +3552,9 @@ public class AIManager : MonoBehaviour
         aiSecurityProtocolLevel++;
         //Message
         string msgText = string.Format("AI increases SECURITY PROTOCOL to level {0}", aiSecurityProtocolLevel);
+        string itemText = "AI increases SECURITY PROTOCOL";
         string warning = "Increased chance of hacking being detected";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, warning, -1, aiSecurityProtocolLevel);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, -1, aiSecurityProtocolLevel);
         return true;
     }
 
@@ -4412,8 +4413,8 @@ public class AIManager : MonoBehaviour
         isTraceBack = false;
         timerTraceBack = -1;
         //message
-        string msgText = "AI TRACEBACK countermeasure Cancelled";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "Countermeasure cancelled");
+        string msgText = "AI TRACEBACK countermeasure expired";
+        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
     }
 
     /// <summary>
@@ -4425,8 +4426,8 @@ public class AIManager : MonoBehaviour
         isScreamer = false;
         timerScreamer = -1;
         //message
-        string msgText = "AI SCREAMER countermeasure Cancelled";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "Countermeasure cancelled");
+        string msgText = "AI SCREAMER countermeasure expired";
+        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
     }
 
     /// <summary>
@@ -4438,8 +4439,8 @@ public class AIManager : MonoBehaviour
         isOffline = false;
         timerOffline = -1;
         //message
-        string msgText = "AI OFFLINE countermeasure Cancelled";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "Countermeasure cancelled");
+        string msgText = "AI OFFLINE countermeasure expired";
+        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
     }
 
     /// <summary>
