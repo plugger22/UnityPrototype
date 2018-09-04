@@ -2240,7 +2240,7 @@ public class ActionManager : MonoBehaviour
                         node.targetID = -1;
                     }
                     text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
-                    GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target);
+                    GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                     //random roll
                     Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
                     text = string.Format("Target {0} attempt SUCCESS", target.name);
@@ -2301,7 +2301,7 @@ public class ActionManager : MonoBehaviour
                     else
                     { builderBottom.AppendFormat("{0}Authorities are aware of the attempt (due to Zero Invisibility){1}", colourBad, colourEnd); }
                     text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
-                    GameManager.instance.messageScript.TargetAttempt(text, node.nodeID, actorID, target);
+                    GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                 }
                 //Process effects
                 EffectDataReturn effectReturn = new EffectDataReturn();

@@ -438,7 +438,7 @@ public class AIManager : MonoBehaviour
         decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
         decisionSecAlert = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Survelliance Crackdown");
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
         decisionCrackdown = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
         decisionResources = GameManager.instance.dataScript.GetAIDecision(aiDecID);

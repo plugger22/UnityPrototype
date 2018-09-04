@@ -79,8 +79,8 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
-        /*CityLoyalty = city.baseLoyalty;*/ 
-        CityLoyalty = 1;
+        CityLoyalty = city.baseLoyalty;
+        /*CityLoyalty = 1;*/
         //initialise number of districts
         city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
         //Placeholder

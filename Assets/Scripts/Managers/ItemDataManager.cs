@@ -926,9 +926,9 @@ public class ItemDataManager : MonoBehaviour
     public string GetDecisionGlobalDetails(string description, int duration, int loyaltyAdjust, int crisisAdjust)
     {
         StringBuilder builder = new StringBuilder();
-        //side specific colours
-        string colourStart = colourGood;
-        string colourFinish = colourBad;
+        //side specific colours, default POV Resistance
+        string colourStart = colourBad;
+        string colourFinish = colourGood;
         string colourCrisis = colourBad;
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourStart = colourBad; colourFinish = colourGood; colourCrisis = colourGood; }
@@ -936,11 +936,11 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(description) == false)
         { builder.AppendFormat("{0}", description); }
         if (duration > 0)
-        { builder.AppendFormat("{0}{1}{2}Duration {3} turn{4}{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (loyaltyAdjust != 0)
         { builder.AppendFormat("{0}{1}{2}<b>City Loyalty {3}{4}</b>{5}", "\n", "\n", duration > 0 ? colourStart : colourFinish, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
         if (crisisAdjust != 0)
-        { builder.AppendFormat("{0}{1}{2}District Crisis {3}% less likely{4}", "\n", "\n", colourCrisis, crisisAdjust, colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}<b>District Crisis {3}% less likely</b>{4}", "\n", "\n", colourCrisis, crisisAdjust, colourEnd); }
         return builder.ToString();
     }
 
@@ -1017,13 +1017,13 @@ public class ItemDataManager : MonoBehaviour
         //default POV Resistance side
         string colourSideGood = colourGood;
         string colourSideBad = colourBad;
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSideGood = colourBad; colourSideBad = colourGood; }
-        builder.AppendFormat("{0}, {1}, district{2}", node.nodeName, node.Arc.name, "\n");
+        builder.AppendFormat("{0}, {1}{2}", node.nodeName, node.Arc.name, "\n");
         if (node.crisisTimer > 0)
         {
             //crisis commences
-            builder.AppendFormat("{0}<b>Crisis STARTS</b>{1}{2}{3}", colourSideGood, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>Crisis BEGINS</b>{1}{2}{3}", colourSideGood, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}{1}{2}{3}{4}", colourNeutral, node.crisis.description, colourEnd, "\n", "\n");
             builder.AppendFormat("Crisis Explodes in {0}<b>{1} turn{2}</b>{3}{4}", colourNeutral, node.crisisTimer, node.crisisTimer != 1 ? "s" : "", colourEnd, "\n");
             builder.AppendFormat("{0}<b>City Loyalty -{1} if explodes</b>{2}", colourSideGood, GameManager.instance.nodeScript.crisisCityLoyalty, colourEnd);
@@ -1033,6 +1033,7 @@ public class ItemDataManager : MonoBehaviour
             if (node.crisis == null)
             {
                 //crisis averted
+                builder.AppendFormat("{0}Authority has contained the situation{1}{2}", colourAlert, colourEnd, "\n");
                 builder.AppendFormat("{0}<b>Crisis AVERTED</b>{1}{2}{3}", colourSideBad, colourEnd, "\n", "\n");
                 builder.AppendFormat("District immune to crisis for {0}<b>{1} turn{2}</b>{3}", colourNeutral, node.waitTimer, node.waitTimer != 1 ? "s" : "", colourEnd);
             }
@@ -1045,6 +1046,34 @@ public class ItemDataManager : MonoBehaviour
             }
         }
         return builder.ToString();
+    }
+
+    //
+    // - - - Targets - - -
+    //
+
+    /// <summary>
+    /// Target attempt, successful or not, player or actor, Resistance message only
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="actorID"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public string GetTargetAttemptDetails(Node node, int actorID, Target target)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, target.name, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}{2}", node.nodeName, node.Arc.name, "\n");
+        if (target.targetStatus == Status.Live)
+        { builder.AppendFormat("{0}<b>Target attempt FAILED</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("{0}<b>Target attempt SUCCEEDED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n"); }
+        //who did it?
+        if (actorID == 999)
+        {
+
+        }
+        return builder.ToString();
+
     }
 
 }

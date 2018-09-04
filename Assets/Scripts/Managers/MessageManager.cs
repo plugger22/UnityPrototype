@@ -1313,7 +1313,6 @@ public class MessageManager : MonoBehaviour
     /// <returns></returns>
     public Message DecisionGlobal(string text, string itemText, string description, int decID, int duration = 0, int loyaltyAdjust = 0, int crisisAdjust = 0)
     {
-        Debug.Assert(decID >= 0, string.Format("Invalid decID {0}", decID));
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1963,9 +1962,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public Message TargetAttempt(string text, int nodeID, int actorID, Target target)
+    public Message TargetAttempt(string text, Node node, int actorID, Target target)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         Debug.Assert(target != null, "Invalid target (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -1975,22 +1974,33 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Attempt;
             message.side = globalResistance;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = actorID;
             message.data2 = target.targetID;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Attempt Target";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
-            data.sprite = target.sprite;
-            data.tab = ItemTab.MAIL;
-            data.side = message.side;
-            data.help = 1;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            //ItemData, resistance only
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+            {
+                ItemData data = new ItemData();
+                if (target.targetStatus == Status.Live)
+                {
+                    data.itemText = "TARGET attempt Failed";
+                    data.priority = ItemPriority.Low;
+                }
+                else
+                {
+                    data.itemText = "TARGET attempt SUCCEEDED";
+                    data.priority = ItemPriority.Medium;
+                }
+                data.topText = "Target attempt";
+                data.bottomText = GameManager.instance.itemDataScript.GetTargetAttemptDetails(node, actorID, target);
+                data.sprite = target.sprite;
+                data.tab = ItemTab.MAIL;
+                data.side = message.side;
+                data.help = 1;
+                //add
+                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.dataScript.AddItemData(data);
+            }
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;

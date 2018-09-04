@@ -634,7 +634,7 @@ public class TurnManager : MonoBehaviour
                     case "sur":
                     case "SUR":
                         //surveillance crackdown
-                        text = "Authorities declare a city wide Survelliance Crackdown";
+                        text = "Authorities declare a city wide Surveillance Crackdown";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
                         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
@@ -676,7 +676,7 @@ public class TurnManager : MonoBehaviour
                 text = "The city wide Security Alert has been cancelled";
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
-                text = "The city wide Survelliance Crackdown has been cancelled";
+                text = "The city wide Surveillance Crackdown has been cancelled";
                 break;
         }
         if (string.IsNullOrEmpty(text) == false)

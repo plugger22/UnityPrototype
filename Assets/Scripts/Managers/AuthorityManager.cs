@@ -11,6 +11,9 @@ public class AuthorityManager : MonoBehaviour
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalBoth;
+    private int securityAPB;
+    private int securityAlert;
+    private int securityCrackdown;
 
     public void Initialise()
     {
@@ -19,6 +22,13 @@ public class AuthorityManager : MonoBehaviour
         globalBoth = GameManager.instance.globalScript.sideBoth;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
+        //decisions
+        securityAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
+        securityAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
+        securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
+        Debug.Assert(securityAPB > -1, "Invalid securityAPB (-1)");
+        Debug.Assert(securityAlert > -1, "Invalid securityAlert (-1)");
+        Debug.Assert(securityCrackdown > -1, "Invalid securityCrackdown (-1)");
     }
 
     /// <summary>
@@ -30,6 +40,7 @@ public class AuthorityManager : MonoBehaviour
     public bool SetAuthoritySecurityState(string descriptor, string warning, AuthoritySecurityState state = AuthoritySecurityState.Normal)
     {
         bool isDone = false;
+        int decID = -1;
         string itemText = "Unknown";
         if (string.IsNullOrEmpty(descriptor) == false)
         {
@@ -39,17 +50,26 @@ public class AuthorityManager : MonoBehaviour
             switch (state)
             {
                 case AuthoritySecurityState.APB:
+                    isDone = true;
+                    itemText = string.Format("Authority implements a {0}", state);
+                    decID = securityAPB;
+                    break;
                 case AuthoritySecurityState.SecurityAlert:
+                    isDone = true;
+                    itemText = string.Format("Authority implements a {0}", state);
+                    decID = securityAlert;
+                    break;
                 case AuthoritySecurityState.SurveillanceCrackdown:
                     isDone = true;
                     itemText = string.Format("Authority implements a {0}", state);
+                    decID = securityCrackdown;
                     break;
                 default:
                     itemText = "Authority reverts SECURITY back to Normal";
                     break;
             }
             //message
-            GameManager.instance.messageScript.DecisionGlobal(descriptor, itemText, warning, -1);
+            GameManager.instance.messageScript.DecisionGlobal(descriptor, itemText, warning, decID);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
         return isDone;
