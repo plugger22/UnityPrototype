@@ -1218,7 +1218,7 @@ public class TeamManager : MonoBehaviour
                             GameManager.instance.targetScript.ContainTarget(target);
                             //message
                             string text = string.Format("Target \"{0}\" Contained by {1} {2}", target.name, team.arc.name, team.teamName);
-                            GameManager.instance.messageScript.TargetContained(text, node.nodeID, team.teamID, target);
+                            GameManager.instance.messageScript.TargetContained(text, node, team, target);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Target (Null) for targetID {0}", node.targetID)); }

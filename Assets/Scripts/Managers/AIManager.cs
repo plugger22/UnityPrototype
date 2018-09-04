@@ -1977,7 +1977,7 @@ public class AIManager : MonoBehaviour
                 for (int i = 0; i < priorityMediumWeight; i++)
                 { listOfDecisionTasksNonCritical.Add(taskConnSec); }
             }
-            else { Debug.LogWarning("Invalid connID (-1). Connection Decision Deleted"); }
+            else { Debug.LogWarning("Invalid connID (-1). Connection Decision Deleted. No valid connection found"); }
         }
         //
         // - - - Logistics - - -

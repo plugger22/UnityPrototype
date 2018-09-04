@@ -1090,4 +1090,24 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    /// <summary>
+    /// Authority contains a target and cancels any ongoing effects
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public string GetTargetContainedDetails(Node node, Team team, Target target)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, target.name, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        { builder.AppendFormat("<b>Authority has sealed off the situation{0}{1}Ongoing effects cancelled</b>{2}", "\n", colourBad, colourEnd); }
+        else
+        { builder.AppendFormat("{0}<b>{1}, {2}{3}, has sealed off the situation{4}{5}Ongoing effects cancelled</b>{6}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", colourBad, colourEnd); }
+        return builder.ToString();
+    }
+
 }

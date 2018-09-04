@@ -2264,14 +2264,16 @@ public class ActionManager : MonoBehaviour
                         {
                             node.isTargetKnown = true;
                             Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt KNOWN need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
+                            /*//only authority player should know this
                             text = string.Format("Target {0} attempt KNOWN", target.name);
-                            GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);
+                            GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);*/
                         }
                         else
                         {
                             Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
+                            /*//only authority player should know this
                             text = string.Format("Target {0} attempt UNDETECTED", target.name);
-                            GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);
+                            GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);*/
                         }
                     }
                     //if zero invisibility then target auto known to authorities

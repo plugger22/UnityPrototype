@@ -2014,10 +2014,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public Message TargetContained(string text, int nodeID, int teamID, Target target)
+    public Message TargetContained(string text, Node node, Team team, Target target)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(team != null, "Invalid team (Null)");
         Debug.Assert(target != null, "Invalid target (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -2026,15 +2026,15 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Contained;
             message.side = globalBoth;
-            message.data0 = nodeID;
-            message.data1 = teamID;
+            message.data0 = node.nodeID;
+            message.data1 = team.teamID;
             message.data2 = target.targetID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} target CONTAINED", target.name);
             data.topText = "Target Contained";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetTargetContainedDetails(node, team, target);
+            data.priority = ItemPriority.Medium;
             data.sprite = target.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
