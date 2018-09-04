@@ -1062,18 +1062,32 @@ public class ItemDataManager : MonoBehaviour
     public string GetTargetAttemptDetails(Node node, int actorID, Target target)
     {
         StringBuilder builder = new StringBuilder();
+        string actorName = "Unknown";
         builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, target.name, colourEnd, "\n");
         builder.AppendFormat("{0}, {1}{2}", node.nodeName, node.Arc.name, "\n");
-        if (target.targetStatus == Status.Live)
-        { builder.AppendFormat("{0}<b>Target attempt FAILED</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n"); }
-        else { builder.AppendFormat("{0}<b>Target attempt SUCCEEDED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n"); }
         //who did it?
         if (actorID == 999)
+        { actorName = "Player"; }
+        else
         {
-
+            Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+            if (actor != null)
+            { actorName = actor.actorName; }
+            else { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", actorID); }
+        }
+        if (target.targetStatus == Status.Live)
+        {
+            //failed
+            builder.AppendFormat("{0}{1}{2}<b>{3} attempt FAILED</b>{4}", "\n", "\n", colourBad, actorName, colourEnd);
+        }
+        else
+        {
+            //success
+            builder.AppendFormat("<b>{0} attempt SUCCEEDED</b>{1}{2}", actorName, "\n", "\n");
+            //effects
+            builder.AppendFormat(GameManager.instance.targetScript.GetTargetEffects(target.targetID));
         }
         return builder.ToString();
-
     }
 
 }

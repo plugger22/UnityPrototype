@@ -537,7 +537,7 @@ public class TargetManager : MonoBehaviour
         {
             //good effects
             Effect effect = null;
-            tempList.Add(string.Format("{0}Target Success Effects{1}", colourTarget, colourEnd));
+            tempList.Add("Target Effects");
             if (target.listOfGoodEffects.Count > 0)
             {
                 //add header

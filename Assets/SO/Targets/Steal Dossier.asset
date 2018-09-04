@@ -30,7 +30,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
   - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
+  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfOngoingEffects: []
   listOfFailEffects:

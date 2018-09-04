@@ -956,8 +956,8 @@ public class MainInfoUI : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         switch ((ItemTab)tabIndex)
         {
-            case ItemTab.MAIL:
-                textTop = "Incoming Mail";
+            case ItemTab.ALERTS:
+                textTop = "Incoming Messages";
                 builder.AppendFormat("{0}<b>Click</b>{1} on an {2}<b>Item</b>{3}{4}for more information", colourHighlight, colourEnd, colourHighlight, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
                 builder.Append("Items are ordered by priority");

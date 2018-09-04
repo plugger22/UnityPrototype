@@ -27,7 +27,7 @@ MonoBehaviour:
   timer: -1
   nodeID: -1
   listOfGoodEffects:
-  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
+  - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: c8af3711ce8ab464f8752d6331168bbf, type: 2}
   listOfBadEffects:

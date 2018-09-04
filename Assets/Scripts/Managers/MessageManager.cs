@@ -185,7 +185,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetGeneralInfoDetails(reason, explanation, isBad);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.alertInformationSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -227,7 +227,7 @@ public class MessageManager : MonoBehaviour
             { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
             data.sprite = GameManager.instance.guiScript.alertWarningSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -314,7 +314,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoveDetails(node, changeInvisibility, aiDelay);
             data.priority = ItemPriority.Low;
             data.sprite = node.Arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -353,7 +353,7 @@ public class MessageManager : MonoBehaviour
             { data.itemText = "Player loses a Secret"; }
             data.priority = ItemPriority.Low;
             data.sprite = playerSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -423,7 +423,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Status Change";
             
             data.priority = ItemPriority.Low;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //data depends on whether an actor or player
@@ -479,7 +479,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Complaint Lodged";
             data.bottomText = GameManager.instance.itemDataScript.GetActorComplainsDetails(actor, reason, warning);
             data.priority = ItemPriority.Medium;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             data.sprite = actor.arc.sprite;
@@ -518,7 +518,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "You've had words";
             data.bottomText = GameManager.instance.itemDataScript.GetActorSpokenTooDetails(actor, reason, benefit);
             data.priority = ItemPriority.Low;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             data.sprite = actor.arc.sprite;
@@ -587,7 +587,7 @@ public class MessageManager : MonoBehaviour
                 else { data.priority = ItemPriority.Low; }
             }
             else { data.priority = ItemPriority.Medium; }
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //data depends on whether an actor or player
@@ -640,7 +640,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetActorBlackmailDetails(actor, secretID, isThreatDropped, reason);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -682,7 +682,7 @@ public class MessageManager : MonoBehaviour
             {  data.itemText = string.Format("{0} forgets one of your Secrets", actor.arc.name);  }
             data.priority = ItemPriority.Low;
             data.sprite = actor.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -722,7 +722,7 @@ public class MessageManager : MonoBehaviour
             data.itemText = string.Format("{0} reveals your SECRET", actor.arc.name);
             data.priority = ItemPriority.High;
             data.sprite = actor.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -764,7 +764,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetActorRecruitedDetails(actor, unhappyTimer);
             data.priority = ItemPriority.Low;
             data.sprite = actor.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -802,7 +802,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetActorConflictDetails(actor, conflictID, reasonNoConflict);
             data.priority = ItemPriority.High;
             data.sprite = actor.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -889,7 +889,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetAIConnectionActivityDetails(destinationNode, delay);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             data.delay = delay;
@@ -932,7 +932,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetAINodeActivityDetails(node, delay);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             data.delay = delay;
@@ -976,7 +976,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetAIDetectedDetails(nodeID, delay);
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             data.delay = delay;
@@ -1033,7 +1033,7 @@ public class MessageManager : MonoBehaviour
             }
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1091,7 +1091,7 @@ public class MessageManager : MonoBehaviour
             }
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.capturedSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1147,7 +1147,7 @@ public class MessageManager : MonoBehaviour
             }
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.releasedSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1186,7 +1186,7 @@ public class MessageManager : MonoBehaviour
             if (isDetected == true) { data.priority = ItemPriority.Medium; }
             else { data.priority = ItemPriority.Low; }
             data.sprite = GameManager.instance.guiScript.alarmSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1224,7 +1224,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetAIRebootDetails(rebootTimer, currentRenownCost);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiRebootSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1261,7 +1261,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetAICounterMeasureDetails(warning, timerStartValue, protocolLevelNew);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1329,7 +1329,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetDecisionGlobalDetails(description, duration, loyaltyAdjust, crisisAdjust);
             data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1369,7 +1369,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetDecisionConnectionDetails(connection, secLevel);
             data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1407,7 +1407,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = mayor.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1443,7 +1443,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = mayor.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1482,7 +1482,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1523,7 +1523,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1567,7 +1567,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1607,7 +1607,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1647,7 +1647,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1690,7 +1690,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1743,7 +1743,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, motivation, isGiven);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1783,7 +1783,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetGearCompromisedDetails(gear, renownUsed);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1820,7 +1820,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetGearUsedDetails(gear);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1859,7 +1859,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetGearLostDetails(gear, actor, isGivenToHQ);
             data.priority = ItemPriority.Medium;
             data.sprite = gear.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1898,7 +1898,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetGearAvailableDetails(gear, actor);
             data.priority = ItemPriority.Medium;
             data.sprite = gear.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1938,7 +1938,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetGearObtainedDetails(gear, node, actorID);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -1994,7 +1994,7 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Target attempt";
                 data.bottomText = GameManager.instance.itemDataScript.GetTargetAttemptDetails(node, actorID, target);
                 data.sprite = target.sprite;
-                data.tab = ItemTab.MAIL;
+                data.tab = ItemTab.ALERTS;
                 data.side = message.side;
                 data.help = 1;
                 //add
@@ -2036,7 +2036,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = target.sprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -2077,7 +2077,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -2113,7 +2113,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = text;
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -2170,7 +2170,7 @@ public class MessageManager : MonoBehaviour
             //high priority if given
             if (supportGiven > 0) { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.sprite = faction.sprite;
             data.help = 1; //debug
@@ -2216,7 +2216,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Approval Changes";
             data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, change, newLevel);
             data.priority = ItemPriority.Medium;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.sprite = faction.sprite;
             data.help = 1; //debug
@@ -2259,7 +2259,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetNodeCrisisDetails(node, reductionInCityLoyalty);
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.nodeCrisisSprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add
@@ -2301,7 +2301,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetCityLoyaltyDetails(reason, newCityLoyalty, changeInLoyalty);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.cityLoyaltySprite;
-            data.tab = ItemTab.MAIL;
+            data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
             //add

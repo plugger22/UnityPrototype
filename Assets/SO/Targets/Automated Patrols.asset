@@ -19,16 +19,16 @@ MonoBehaviour:
   actorArc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
   gear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
-  targetStatus: 2
+  targetStatus: 1
   infoLevel: 1
   targetID: 0
   ongoingID: -1
   isKnownByAI: 0
   timer: -1
-  nodeID: 1
+  nodeID: 12
   listOfGoodEffects:
-  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfOngoingEffects:

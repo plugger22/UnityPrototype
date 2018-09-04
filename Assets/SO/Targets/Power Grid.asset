@@ -28,8 +28,8 @@ MonoBehaviour:
   nodeID: -1
   listOfGoodEffects:
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
-  listOfBadEffects:
   - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
+  listOfBadEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfOngoingEffects:
   - {fileID: 11400000, guid: 973e6ac5ed05bbb42a82b68ce083832a, type: 2}
