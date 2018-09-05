@@ -1101,7 +1101,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetTargetContainedDetails(Node node, Team team, Target target)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, target.name, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.name, colourEnd, "\n");
         builder.AppendFormat("{0}, {1}{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
         { builder.AppendFormat("<b>Authority has sealed off the situation{0}{1}Ongoing effects cancelled</b>{2}", "\n", colourBad, colourEnd); }
