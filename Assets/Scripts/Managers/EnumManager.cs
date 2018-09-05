@@ -156,6 +156,7 @@
         //Effect
         Ongoing_Created,
         Ongoing_Expired,
+        Active_Effect,
         //Node
         Node_Crisis,
         //City

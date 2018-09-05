@@ -2070,19 +2070,8 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Ongoing_Created;
             message.side = globalBoth;
             message.data0 = nodeID;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Ongoing Effect";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
-            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
-            data.tab = ItemTab.ALERTS;
-            data.side = message.side;
-            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2106,14 +2095,42 @@ public class MessageManager : MonoBehaviour
             message.side = globalBoth;
             message.isPublic = true;
             message.data0 = nodeID;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Special message used for InfoApp active 'Effects' tab
+    /// </summary>
+    /// <param name="itemData"></param>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Message ActiveEffect(string text, string detailsTop, string detailsBottom, Actor actor = null, Node node = null)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.EFFECT;
+            message.subType = MessageSubType.Active_Effect;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            if (node != null) { message.data0 = node.nodeID; }
+            if (actor != null) { message.data1 = actor.actorID; }
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
-            data.topText = "Ongoing Effect Finished";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
-            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
-            data.tab = ItemTab.ALERTS;
+            data.topText = "";
+            data.bottomText = GameManager.instance.itemDataScript.GetNodeCrisisDetails(node, reductionInCityLoyalty);
+            data.priority = ItemPriority.;
+            data.sprite = ff;
+            data.tab = ItemTab.Effects;
             data.side = message.side;
             data.help = 1;
             //add
