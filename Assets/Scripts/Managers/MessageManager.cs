@@ -2103,7 +2103,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Special message used for InfoApp active 'Effects' tab
+    /// Special message used for InfoApp active 'Effects' tab. Usually either actor (actorID 999 for player) OR node based.
     /// </summary>
     /// <param name="itemData"></param>
     /// <param name="detailsTop"></param>
@@ -2111,8 +2111,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="actor"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message ActiveEffect(string text, string detailsTop, string detailsBottom, Actor actor = null, Node node = null)
+    public Message ActiveEffect(string text, string detailsTop, string detailsBottom, Sprite sprite, int actorID = -1, Node node = null)
     {
+        Debug.Assert(sprite != null, "Invalid spirte (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -2122,14 +2123,14 @@ public class MessageManager : MonoBehaviour
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
             if (node != null) { message.data0 = node.nodeID; }
-            if (actor != null) { message.data1 = actor.actorID; }
+            if (actorID > -1) { message.data1 = actorID; }
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "";
-            data.bottomText = GameManager.instance.itemDataScript.GetNodeCrisisDetails(node, reductionInCityLoyalty);
-            data.priority = ItemPriority.;
-            data.sprite = ff;
+            data.bottomText = GameManager.instance.itemDataScript.GetActiveEffectDetails(detailsTop, detailsBottom, actorID, node);
+            data.priority = ItemPriority.Low;
+            data.sprite = sprite;
             data.tab = ItemTab.Effects;
             data.side = message.side;
             data.help = 1;

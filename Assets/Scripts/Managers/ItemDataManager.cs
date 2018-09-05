@@ -1110,4 +1110,53 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    //
+    // - - - Effects - - -
+    //
+
+    /// <summary>
+    /// Active effects for the InfoTab 'Effect' tab. Actor or Node or neither
+    /// </summary>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="actorID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string GetActiveEffectDetails(string detailsTop, string detailsBottom, int actorID, Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (actorID > -1)
+        {
+            //actor
+            if (actorID == 999)
+            {
+                //player
+                builder.AppendFormat("{0}, Player{1}{2}", GameManager.instance.playerScript.PlayerName, "\n", "\n");
+            }
+            else
+            {
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    //actor
+                    builder.AppendFormat("{0}, {1}{2}{3}", actor.actorName, actor.arc.name, "\n", "\n");
+                }
+                else { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", actorID); }
+            }
+
+        }
+        else if (node != null)
+        {
+            //node
+            builder.AppendFormat("{0}, {1}, district{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
+        }
+        //details
+        if (string.IsNullOrEmpty(detailsTop) == false)
+        { builder.Append(detailsTop); }
+        if (string.IsNullOrEmpty(detailsBottom) == false)
+        { builder.AppendFormat("{0}{1}{2}", "\n", "\n", detailsBottom); }
+        return builder.ToString();
+    }
+
 }
