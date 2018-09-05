@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TestManager testScript;                  //Test Manager
+    [HideInInspector] public ValidationManager validateScript;        //Validation Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;           //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;     //connection tooltip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;         //actor tooltip static instance
@@ -89,6 +90,8 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("Switch ON to get a performance log of initialisation ")]
     public bool isPerformanceLog;
+    [Tooltip("Runs ValidationManager.cs to check data at game start")]
+    public bool isValidate;
 
     [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
     
@@ -145,6 +148,7 @@ public class GameManager : MonoBehaviour
         connScript = GetComponent<ConnectionManager>();
         colourScript = GetComponent<ColourManager>();
         testScript = GetComponent<TestManager>();
+        validateScript = GetComponent<ValidationManager>();
         tooltipScript = GetComponent<TooltipManager>();
         newsScript = GetComponent<NewsManager>();
         sideScript = GetComponent<SideManager>();
@@ -388,6 +392,13 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.widgetTopScript.Initialise;
         startMethod.className = "WidgetTopUI";
         listOfStartMethods.Add(startMethod);
+        //data Validation (Last / Optional)
+        if (isValidate == true)
+        {
+            startMethod.handler = GameManager.instance.validateScript.Initialise;
+            startMethod.className = "ValidationManager";
+            listOfStartMethods.Add(startMethod);
+        }
     }
 
 

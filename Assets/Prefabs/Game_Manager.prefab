@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 114762690547149900}
   - component: {fileID: 114656342642216484}
   - component: {fileID: 114639168605164212}
+  - component: {fileID: 114983986480103908}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -960,6 +961,7 @@ MonoBehaviour:
   connScript: {fileID: 0}
   colourScript: {fileID: 0}
   testScript: {fileID: 0}
+  validateScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}
@@ -979,8 +981,9 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 44910
+  seed: 0
   isPerformanceLog: 1
+  isValidate: 0
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
@@ -1066,5 +1069,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f492132b2b83b04eb0ee699f638ac4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114983986480103908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50776a0a4a468b4094ab1b4499ab52a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

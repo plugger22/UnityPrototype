@@ -2309,7 +2309,7 @@ public class ActionManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = "Target";
+                dataInput.originText = "Target Attempt";
                 //handle any Ongoing effects of target completed -> only if target Successful
                 if (isSuccessful == true && target.listOfOngoingEffects.Count > 0)
                 {
