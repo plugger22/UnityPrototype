@@ -13,4 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor's loyalty is in question
   resignTag: questionable Loyalty
+  itemTag: is
+  topText: possesses a loyalty of dubious reliability
+  bottomText: Can be DISPOSED OF at no cost (Manage menu)
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}

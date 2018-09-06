@@ -280,6 +280,7 @@ public class ActorManager : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Pre turn processing
     /// </summary>
@@ -3633,6 +3634,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveResistanceActors()
     {
+        string text, topText, bottomText;
         //no checks are made if player is not Active
         if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
@@ -3715,6 +3717,44 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (actor.datapoint1 == 0)
                                 { ProcessMotivationWarning(actor); }
+                                //
+                                // - - - Info App conditions (any)
+                                //
+                                if (actor.CheckNumOfConditions() > 0)
+                                {
+                                    List<Condition> listOfConditions = actor.GetListOfConditions();
+                                    foreach(Condition condition in listOfConditions)
+                                    {
+                                        if (condition != null)
+                                        {
+                                            text = string.Format("{0}, {1} has {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                            switch(condition.type.level)
+                                            {
+                                                case 0:
+                                                    //bad
+                                                    topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd);
+                                                    bottomText = string.Format("{0}{1}{2}", colourBad, condition.bottomText, colourEnd);
+                                                    break;
+                                                case 1:
+                                                    //neutral
+                                                    topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd);
+                                                    bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomText, colourEnd);
+                                                    break;
+                                                case 2:
+                                                    //good
+                                                    topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd);
+                                                    bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomText, colourEnd);
+                                                    break;
+                                                default:
+                                                    topText = "Unknown";
+                                                    bottomText = "Unknown";
+                                                    break;
+                                            }
+                                            GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                                        }
+                                        else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                                    }
+                                }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }

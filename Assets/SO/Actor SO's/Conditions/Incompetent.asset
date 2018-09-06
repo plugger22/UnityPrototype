@@ -13,4 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor can't do their job properly
   resignTag: Incompetence
+  itemTag: is
+  topText: is generally regarded as useless
+  bottomText: Can be DISMISSED at no cost (Manage menu)
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}

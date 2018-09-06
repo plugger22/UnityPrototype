@@ -13,4 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor is a Star!
   resignTag: 
+  itemTag: is a
+  topText: is a proven top performer
+  bottomText: Can be PROMOTED at no cost (Manage menu)
   type: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}

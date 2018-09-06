@@ -13,4 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor is blackmailing Player (threatening to reveal secrets)
   resignTag: 
+  itemTag: is a
+  topText: is threatening to reveal one of your secrets
+  bottomText: Will reveal secret unless Motivation increased to MAX before timer runs
+    out
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
