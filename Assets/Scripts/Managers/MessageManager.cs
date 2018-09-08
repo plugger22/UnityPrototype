@@ -404,7 +404,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorStatus(string text, string itemText, string reason, int actorID, GlobalSide side, bool isPublic = false)
+    public Message ActorStatus(string text, string itemTextTag, string reason, int actorID, GlobalSide side, string details = null)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID ({0})", actorID));
         Debug.Assert(side != null, "Invalid side (Null)");
@@ -415,7 +415,7 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Actor_Status;
             message.side = side;
-            message.isPublic = isPublic;
+            message.isPublic = true;
             message.data0 = actorID;
             //ItemData
             ItemData data = new ItemData();
@@ -429,9 +429,9 @@ public class MessageManager : MonoBehaviour
             //data depends on whether an actor or player
             if (actorID == playerActorID)
             {
-                data.itemText = string.Format("Player {0}", itemText);
+                data.itemText = string.Format("{0}, Player, {1}", GameManager.instance.playerScript.PlayerName, itemTextTag);
                 data.sprite = playerSprite;
-                data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, null);
+                data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, details, null);
             }
             else
             {
@@ -439,9 +439,9 @@ public class MessageManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
-                    data.itemText = string.Format("{0} {1}", actor.arc.name, itemText);
+                    data.itemText = string.Format("{0}, {1}, {2}", actor.actorName, actor.arc.name, itemTextTag);
                     data.sprite = actor.arc.sprite;
-                    data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, actor);
+                    data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, details, actor);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
@@ -550,8 +550,6 @@ public class MessageManager : MonoBehaviour
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
             message.data0 = actorID;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
             //ItemData
             ItemData data = new ItemData();
             string genericActorName = "Unknown";
@@ -574,8 +572,8 @@ public class MessageManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             if (isGained == true)
-            { data.itemText = string.Format("{0} is now {1}", genericActorArc, condition.name); }
-            else { data.itemText = string.Format("{0} is no longer {1}", genericActorArc, condition.name); }
+            { data.itemText = string.Format("{0}, {1}, is now {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.name); }
+            else { data.itemText = string.Format("{0}, {1}, is no longer {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.name); }
             data.topText = "Condition Change";
             if (condition != null)
             { data.bottomText = GameManager.instance.itemDataScript.GetActorConditionDetails(genericActorName, genericActorArc, condition, isGained, reason); }
@@ -606,6 +604,8 @@ public class MessageManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor is stressed and liable to break down
   resignTag: 
-  itemTag: is
   topText: is suffering mental stress and strain
   bottomText: Chance of having a nervous BREAKDOWN each turn
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  bottomTextType: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  isNowA: 0

@@ -191,24 +191,25 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="reason"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    public string GetActorStatusDetails(string reason, Actor actor)
+    public string GetActorStatusDetails(string reason, string details, Actor actor)
     {
         StringBuilder builder = new StringBuilder();
         if (actor == null)
         {
             //Player
-            builder.AppendFormat("{0}Player{1}, {2}, status now {3}<b>{4}</b>{5}{6}{7}", colourAlert, colourEnd, GameManager.instance.playerScript.PlayerName,
-                colourNeutral, GameManager.instance.playerScript.status, colourEnd, "\n", "\n");
             if (string.IsNullOrEmpty(reason) == false)
-            { builder.AppendFormat("{0}Player{1}{2}{3}", colourAlert, colourEnd, "\n", reason); }
+            { builder.AppendFormat("{0}{1}, Player{2}{3}{4}{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
+            builder.AppendFormat("{0}Player{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, GameManager.instance.playerScript.status, colourEnd);
         }
         else
         {
             //Actor
-            builder.AppendFormat("{0}, {1}{2}{3}, status now {4}<b>{5}</b>{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, colourNeutral, actor.Status, colourEnd, "\n", "\n");
             if (string.IsNullOrEmpty(reason) == false)
-            { builder.AppendFormat("{0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", reason); }
+            { builder.AppendFormat("{0}, {1}{2}{3}{4}{5}{6}{7}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", reason, "\n", "\n"); }
+            builder.AppendFormat("{0}{1}{2} status now {3}<b>{4}</b>{5}", colourAlert, actor.arc.name, colourEnd, colourNeutral, actor.Status, colourEnd);
         }
+        if (string.IsNullOrEmpty(details) == false)
+        { builder.AppendFormat("{0}{1}{2}", "\n", "\n", details); }
         return builder.ToString();
     }
 
