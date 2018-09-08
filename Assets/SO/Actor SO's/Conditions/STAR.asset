@@ -14,7 +14,10 @@ MonoBehaviour:
   descriptor: Actor is a Star!
   resignTag: 
   topText: is a proven top performer
-  bottomText: Can be PROMOTED at no cost (Manage menu)
+  bottomTextActor: Can be PROMOTED at no cost (Manage Menu)
+  bottomTextPlayer: 
   type: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
-  bottomTextType: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  bottomTextTypeActor: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3,
+    type: 2}
+  bottomTextTypePlayer: {fileID: 0}
   isNowA: 1

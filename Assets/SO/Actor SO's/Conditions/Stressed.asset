@@ -14,7 +14,11 @@ MonoBehaviour:
   descriptor: Actor is stressed and liable to break down
   resignTag: 
   topText: is suffering mental stress and strain
-  bottomText: Chance of having a nervous BREAKDOWN each turn
+  bottomTextActor: Chance of suffering a BREAKDOWN each turn
+  bottomTextPlayer: Chance of suffering a BREAKDOWN each turn
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
-  bottomTextType: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  bottomTextTypeActor: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
+    type: 2}
+  bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
+    type: 2}
   isNowA: 0

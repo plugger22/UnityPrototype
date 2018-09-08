@@ -3727,7 +3727,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (condition != null)
                                         {
-                                            text = string.Format("{0}, {1} has {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                            text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
                                             switch(condition.type.level)
                                             {
                                                 case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
@@ -3735,11 +3735,11 @@ public class ActorManager : MonoBehaviour
                                                 case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
                                                 default: topText = "Unknown"; break;
                                             }
-                                            switch (condition.bottomTextType.level)
+                                            switch (condition.bottomTextTypeActor.level)
                                             {
-                                                case 0:  bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomText, colourEnd); break;
-                                                case 1:  bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomText, colourEnd); break;
-                                                case 2:  bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomText, colourEnd); break;
+                                                case 0:  bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
+                                                case 1:  bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
+                                                case 2:  bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                 default: bottomText = "Unknown"; break;
                                             }
                                             GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
@@ -3847,7 +3847,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (condition != null)
                                         {
-                                            text = string.Format("{0}, {1} has {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                            text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
                                             switch (condition.type.level)
                                             {
                                                 case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
@@ -3855,11 +3855,11 @@ public class ActorManager : MonoBehaviour
                                                 case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
                                                 default: topText = "Unknown"; break;
                                             }
-                                            switch (condition.bottomTextType.level)
+                                            switch (condition.bottomTextTypeActor.level)
                                             {
-                                                case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomText, colourEnd); break;
-                                                case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomText, colourEnd); break;
-                                                case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomText, colourEnd); break;
+                                                case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
+                                                case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
+                                                case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                 default: bottomText = "Unknown"; break;
                                             }
                                             GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
@@ -4295,6 +4295,7 @@ public class ActorManager : MonoBehaviour
     private void CheckPlayerStartLate()
     {
         int rnd;
+        string text, topText, bottomText;
         string playerName = GameManager.instance.playerScript.PlayerName;
         //check for Stress Nervous breakdown -> both sides
         switch (GameManager.instance.playerScript.status)
@@ -4329,7 +4330,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             //message -> status change
-                            string text = string.Format("{0} has automatically reactivated", playerName);
+                            text = string.Format("{0} has automatically reactivated", playerName);
                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", GameManager.instance.playerScript.actorID, globalResistance);
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
@@ -4368,7 +4369,7 @@ public class ActorManager : MonoBehaviour
                                 //change alpha of actor to indicate inactive status
                                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                 //message (public)
-                                string text = "Player has suffered a Breakdown (Stressed)";
+                                text = "Player has suffered a Breakdown (Stressed)";
                                 string itemText = "has suffered a BREAKDOWN";
                                 string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
@@ -4391,6 +4392,36 @@ public class ActorManager : MonoBehaviour
                 }
                 break;
                 //NO Default case here, only check for what you are interested in
+        }
+        //
+        // - - - Info App conditions (any)
+        //
+        if (GameManager.instance.playerScript.CheckNumOfConditions() > 0)
+        {
+            List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions();
+            foreach (Condition condition in listOfConditions)
+            {
+                if (condition != null)
+                {
+                    text = string.Format("{0}, PLAYER, has the {1} condition", playerName, condition.name);
+                    switch (condition.type.level)
+                    {
+                        case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, playerName, condition.topText, colourEnd); break;
+                        case 1: topText = string.Format("{0}{1} {2}{3}", colourNeutral, playerName, condition.topText, colourEnd); break;
+                        case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, playerName, condition.topText, colourEnd); break;
+                        default: topText = "Unknown"; break;
+                    }
+                    switch (condition.bottomTextTypePlayer.level)
+                    {
+                        case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextPlayer, colourEnd); break;
+                        case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextPlayer, colourEnd); break;
+                        case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextPlayer, colourEnd); break;
+                        default: bottomText = "Unknown"; break;
+                    }
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID);
+                }
+                else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, Player, ID {1}", playerName,  GameManager.instance.playerScript.actorID); }
+            }
         }
     }
 

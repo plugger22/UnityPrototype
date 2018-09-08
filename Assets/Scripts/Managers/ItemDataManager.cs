@@ -198,8 +198,8 @@ public class ItemDataManager : MonoBehaviour
         {
             //Player
             if (string.IsNullOrEmpty(reason) == false)
-            { builder.AppendFormat("{0}{1}, Player{2}{3}{4}{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
-            builder.AppendFormat("{0}Player{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, GameManager.instance.playerScript.status, colourEnd);
+            { builder.AppendFormat("{0}{1}, PLAYER{2}{3}{4}{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
+            builder.AppendFormat("{0}PLAYER{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, GameManager.instance.playerScript.status, colourEnd);
         }
         else
         {
@@ -540,7 +540,7 @@ public class ItemDataManager : MonoBehaviour
         else
         {
             //player got gear
-            builder.AppendFormat("Sourced by {0}, {1}Player{2}{3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
+            builder.AppendFormat("Sourced by {0}, {1}PLAYER{2}{3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
             builder.AppendFormat("at {0}, a {1}{2}{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         }
         return builder.ToString();
@@ -1133,7 +1133,7 @@ public class ItemDataManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player
-                builder.AppendFormat("{0}, Player{1}{2}", GameManager.instance.playerScript.PlayerName, "\n", "\n");
+                builder.AppendFormat("{0}, PLAYER{1}{2}", GameManager.instance.playerScript.PlayerName, "\n", "\n");
             }
             else
             {

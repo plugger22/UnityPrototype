@@ -14,7 +14,11 @@ MonoBehaviour:
   descriptor: Actor is corrupt
   resignTag: Corruption
   topText: has been caught with their fingers in the honey jar
-  bottomText: Can be DISPOSED OF at no cost (Manage menu)
+  bottomTextActor: Can be DISPOSED OF at no cost (Manage Menu)
+  bottomTextPlayer: Your Subordinates may RESIGN in disgust at your behaviour
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
-  bottomTextType: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
+  bottomTextTypeActor: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f,
+    type: 2}
+  bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
+    type: 2}
   isNowA: 0
