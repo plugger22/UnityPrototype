@@ -4359,6 +4359,16 @@ public class ActorManager : MonoBehaviour
                         {  GameManager.instance.playerScript.Invisibility = invis; }
                         break;
                 }
+                //
+                // - - - Lie Low Info App - - -
+                //
+                if (GameManager.instance.playerScript.inactiveStatus == ActorInactive.LieLow)
+                {
+                    text = string.Format("{0}, PLAYER, is LYING LOW", playerName);
+                    topText = string.Format("{0}You are deliberately keeping a low profile{1}", colourAlert, colourEnd);
+                    bottomText = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourBad, colourEnd);
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID);
+                }
                 break;
             case ActorStatus.Active:
                 {

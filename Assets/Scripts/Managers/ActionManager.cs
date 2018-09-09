@@ -1112,7 +1112,8 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                GameManager.instance.messageScript.ActorStatus(text, "Lying Low", "is Lying Low", actor.actorID, details.side);
+                string reason = string.Format("is currently Lying Low and {0}<b>cut off from all communications</b>{1}", colourBad, colourEnd);
+                GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, details.side);
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1168,7 +1169,8 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
             //message
             string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
-            GameManager.instance.messageScript.ActorStatus(text, "Lying Low", "is Lying Low", GameManager.instance.playerScript.actorID, details.side);
+            string reason = string.Format("is currently Lying Low and {0}<b>cut off from all communications</b>{1}", colourBad, colourEnd);
+            GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, details.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 

@@ -419,9 +419,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            
             data.topText = "Status Change";
-            
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
