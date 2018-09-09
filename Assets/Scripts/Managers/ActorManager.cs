@@ -3621,6 +3621,16 @@ public class ActorManager : MonoBehaviour
                                     break;
                             }
                         }
+                        //
+                        // - - - Lie Low Info App - - -
+                        //
+                        if (actor.inactiveStatus == ActorInactive.LieLow)
+                        {
+                            string text = string.Format("{0}, {1}, is LYING LOW", actor.actorName, actor.arc.name);
+                            string topText = string.Format("{0}{1} is deliberately keeping a low profile{2}", colourAlert, actor.actorName, colourEnd);
+                            string bottomText = string.Format("{0}<b>{1} can't take actions or access their connections</b>{2}", colourBad, actor.arc.name, colourEnd);
+                            GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                        }
                     }
                     else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
                 }

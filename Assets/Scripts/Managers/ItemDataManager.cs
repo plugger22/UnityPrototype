@@ -596,7 +596,7 @@ public class ItemDataManager : MonoBehaviour
         {
             if (change > 0)
             { builder.AppendFormat("{0}{1}{2}", colourGood, reason, colourEnd); }
-            else { builder.AppendFormat("{0}{1}{2}", colourBad, reason, colourEnd); }
+            else { builder.AppendFormat("{0}<b>{1}</b>{2}", colourBad, reason, colourEnd); }
         }
         return builder.ToString();
     }
