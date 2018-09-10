@@ -151,7 +151,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();             //Key -> msgID, Value -> Message
-    private Dictionary<int, string> dictOfOngoingID = new Dictionary<int, string>();                //Key -> ongoingID, Value -> text string of details
+    private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();  //Key -> ongoingID, Value -> Ongoing effect details
     private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
     private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
     private Dictionary<int, CityArc> dictOfCityArcs = new Dictionary<int, CityArc>();               //Key -> cityArcID, Value -> CityArc
@@ -3091,16 +3091,16 @@ public class DataManager : MonoBehaviour
             //add new ongoing effect only if no other instance of it exists, ignore otherwise
             if (dictOfOngoingID.ContainsKey(ongoing.ongoingID) == false)
             {
-                string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);
+                /*string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);*/
                 //add to dictionary
                 try
                 {
-                    dictOfOngoingID.Add(ongoing.ongoingID, text);
+                    dictOfOngoingID.Add(ongoing.ongoingID, ongoing);
                     //generate message
-                    GameManager.instance.messageScript.OngoingEffectCreated(text, nodeID);
+                    GameManager.instance.messageScript.OngoingEffectCreated(ongoing.text, nodeID);
                 }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoing.ongoingID, text)); }
+                { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoing.ongoingID, ongoing.text)); }
             }
         }
         else { Debug.LogError("Invalid Ongoing effect (Null)"); }
