@@ -571,7 +571,8 @@ public class MainInfoUI : MonoBehaviour
             UpdateNavigationStatus();
             // GUI
             mainInfoCanvas.gameObject.SetActive(true);
-            
+            //Reset scrollRect to prevent previous position carrying over
+            scrollRect.verticalNormalizedPosition = 1.0f;
             //flashers -> Request & Meeting tabs
             SetTabFlashers();
             /*//flares -> moving inwards towards App
