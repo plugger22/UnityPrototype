@@ -852,12 +852,14 @@ public class Node : MonoBehaviour
             EffectDataOngoing effect = new EffectDataOngoing();
             effect.ongoingID = ongoing.ongoingID;
             effect.text = ongoing.text;
+            effect.reason = ongoing.reason;
             effect.value = ongoing.value;
             effect.timer = ongoing.timer;
             effect.outcome = ongoing.outcome;
             effect.type = ongoing.type;
             effect.apply = ongoing.apply;
             effect.side = ongoing.side;
+            effect.node = ongoing.node;
             //add new ongoing effect
             listOfOngoingEffects.Add(effect);
             //add to register & create message

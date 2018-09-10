@@ -1774,7 +1774,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect
                 node.ProcessNodeEffect(effectProcess);
                 break;
@@ -1860,7 +1860,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
@@ -1954,7 +1954,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all nodes
@@ -2052,7 +2052,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all neighbouring nodes
@@ -2153,7 +2153,7 @@ public class EffectManager : MonoBehaviour
                 effectProcess.value = value;
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
-                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value); }
+                { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Connection effect for current node
                 node.ProcessConnectionEffect(effectProcess);
                 break;
@@ -2190,7 +2190,7 @@ public class EffectManager : MonoBehaviour
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
                 {
-                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
+                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value);
                     /*//DEBUG -> remove when finished with testing
                     effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();*/
                 }
@@ -2241,7 +2241,7 @@ public class EffectManager : MonoBehaviour
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
                 {
-                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
+                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value);
                     /*//DEBUG -> remove when finished with testing
                     effectProcess.effectOngoing.ongoingID = GetOngoingEffectID();
                     GameManager.instance.dataScript.AddOngoingIDToDict(effectProcess.effectOngoing.ongoingID, "Connection Security");*/
@@ -2296,7 +2296,7 @@ public class EffectManager : MonoBehaviour
                 //Ongoing effect
                 if (effect.duration.name.Equals("Ongoing"))
                 {
-                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, value);
+                    ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value);
                 }
                 //Process Connection effect
                 List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
@@ -2964,7 +2964,7 @@ public class EffectManager : MonoBehaviour
     /// <summary>
     /// subMethod to handle Ongoing effects
     /// </summary>
-    private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, int value)
+    private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, Node node, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;
@@ -2973,6 +2973,8 @@ public class EffectManager : MonoBehaviour
         effectOngoing.type = effect.typeOfEffect;
         effectOngoing.apply = effect.apply;
         effectOngoing.side = effectInput.side;
+        effectOngoing.reason = effectInput.ongoingText;
+        effectOngoing.node = node;
         //descriptor
         switch (effect.outcome.name)
         {

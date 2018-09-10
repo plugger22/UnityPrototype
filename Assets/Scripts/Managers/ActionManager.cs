@@ -282,7 +282,7 @@ public class ActionManager : MonoBehaviour
                                     //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
                                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
                                 }
-                                else { dataInput.ongoingID = -1; dataInput.ongoingText = ""; }
+                                else { dataInput.ongoingID = -1; dataInput.ongoingText = action.name; }
                                 effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                 if (effectReturn != null)
                                 {
@@ -416,7 +416,7 @@ public class ActionManager : MonoBehaviour
                         StringBuilder builderBottom = new StringBuilder();
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
-                        dataInput.originText = "Node Gear";
+                        dataInput.originText = "District Gear";
                         //
                         // - - - Process effects
                         //
@@ -424,7 +424,7 @@ public class ActionManager : MonoBehaviour
                         {
                             //no ongoing effect allowed for nodeGear actions
                             dataInput.ongoingID = -1;
-                            dataInput.ongoingText = "";
+                            dataInput.ongoingText = "District Gear";
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
@@ -1592,7 +1592,7 @@ public class ActionManager : MonoBehaviour
                         {
                             //no ongoing effect allowed for use gear actions
                             dataInput.ongoingID = -1;
-                            dataInput.ongoingText = "";
+                            dataInput.ongoingText = string.Format("{0) gear", gear.name);
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
@@ -2316,7 +2316,7 @@ public class ActionManager : MonoBehaviour
                 if (isSuccessful == true && target.listOfOngoingEffects.Count > 0)
                 {
                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
-                    dataInput.ongoingText = "Target";
+                    dataInput.ongoingText = string.Format("{0} target", target.name);
                     //add to target so it can link to effects
                     target.ongoingID = dataInput.ongoingID;
                 }

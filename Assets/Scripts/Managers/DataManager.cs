@@ -3079,6 +3079,9 @@ public class DataManager : MonoBehaviour
     // - - - Ongoing Effects - - - 
     //
 
+    public Dictionary<int, EffectDataOngoing> GetDictOfOngoingEffects()
+    { return dictOfOngoingID; }
+
     /// <summary>
     /// Add an ongoingID to the register (dict). No programming necessity for this other than tracking and debugging
     /// </summary>
