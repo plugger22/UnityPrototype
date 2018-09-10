@@ -919,7 +919,7 @@ public class Node : MonoBehaviour
             {
                 //decrement timer
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
-                Debug.Log(string.Format("Node ID {0}, Timer before {1}{2}", nodeID, ongoing.timer, "\n"));
+                Debug.Log(string.Format("Node ID {0}, \"{1}\", Timer before {2}{3}", nodeID, ongoing.text, ongoing.timer, "\n"));
                 ongoing.timer--;
                 if (ongoing.timer <= 0)
                 {

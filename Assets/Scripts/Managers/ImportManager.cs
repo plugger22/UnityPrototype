@@ -536,7 +536,7 @@ public class ImportManager : MonoBehaviour
                 //if a hide/reveal need to add level, eg. +1, onto end (do dynamically to prevent errors in SO's)
                 switch (effect.outcome.name)
                 {
-                    case "StatusSpiders":
+                    /*case "StatusSpiders":
                     case "StatusTracers":
                     case "StatusContacts":
                     case "StatusTeams":
@@ -553,7 +553,7 @@ public class ImportManager : MonoBehaviour
                                 effect.textTag = "Unknown";
                                 break;
                         }
-                        break;
+                        break;*/
                     //all other effects
                     default:
                         effect.textTag = effect.description;

@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 public class EffectManager : MonoBehaviour
 {
     [Tooltip("How long do ongoing effects last for? Global setting")]
-    [Range(3,20)] public int ongoingEffectTimer = 3;
+    [Range(3,20)] public int ongoingEffectTimer = 10;
 
     //fast access -> spiders
     private int delayNoSpider;

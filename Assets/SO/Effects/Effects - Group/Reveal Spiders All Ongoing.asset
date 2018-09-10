@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: Reveal Spiders All Ongoing
   m_EditorClassIdentifier: 
-  effectID: 95
+  effectID: 135
   description: Reveal All Spiders
-  textTag: Reveal All Spiders +1
+  textTag: Reveal All Spiders
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: a3d16415671095a4cb2ea93051bd2bd1, type: 2}
