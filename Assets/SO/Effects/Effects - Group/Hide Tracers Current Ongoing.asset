@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 67
   description: Hide Tracers at district
-  textTag: Hide Tracers at Node -1
+  ongoingTooltip: Tracers Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 0ce650b70298e3a4baf31d13d2ac7b4e, type: 2}
   outcome: {fileID: 11400000, guid: b2ac9163f6f08f0479eb8cd8bc15d8fc, type: 2}

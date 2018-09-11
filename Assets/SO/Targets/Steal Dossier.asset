@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Steal Dossier
   m_EditorClassIdentifier: 
   description: Classified Info cache
+  reason: stealing a secret dossier
   metaLevel: {fileID: 0}
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetLevel: 2

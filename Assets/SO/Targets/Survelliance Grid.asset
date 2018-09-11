@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Survelliance Grid
   m_EditorClassIdentifier: 
   description: Penetrate Survelliance Grid
+  reason: Surveillance Grid being hacked
   metaLevel: {fileID: 0}
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetLevel: 1
@@ -34,5 +35,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfOngoingEffects:
   - {fileID: 11400000, guid: 502f00bd350a7094d82b0b36533bd4e7, type: 2}
+  OngoingEffect: {fileID: 11400000, guid: 502f00bd350a7094d82b0b36533bd4e7, type: 2}
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}

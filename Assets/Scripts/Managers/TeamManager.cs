@@ -1170,7 +1170,7 @@ public class TeamManager : MonoBehaviour
                     {
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         isError = effectReturn.errorFlag;
-                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, effect.textTag, node.nodeName, node.nodeID);
+                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, effect.description, node.nodeName, node.nodeID);
                         GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team);
                     }
                 }

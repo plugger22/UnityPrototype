@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 47
   description: Hide Contacts at Similar districts
-  textTag: Hide Contacts at Similar Nodes -1
+  ongoingTooltip: Contacts Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   outcome: {fileID: 11400000, guid: db98293a2ffd2064d9cf8d042c3fb1f8, type: 2}

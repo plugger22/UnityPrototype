@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: Hide Teams All Ongoing
   m_EditorClassIdentifier: 
-  effectID: 19
+  effectID: 57
   description: Hide All Teams
-  textTag: Hide All Teams -1
+  ongoingTooltip: Teams Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: 0bb18a59c3a3f584d94d91e65c083bcf, type: 2}

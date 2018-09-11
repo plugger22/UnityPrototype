@@ -12,11 +12,14 @@ public class Effect : ScriptableObject
     [HideInInspector] public int effectID;                      //dynamically set by DataManager.cs
     [Tooltip("Keep short as used for the tooltip. Status effects: keep to text only as '+1' added dynamically during import, all other Effects should be complete")]
     public string description;                                  //tooltip, eg. "Stability"
-    [HideInInspector] public string textTag;                    //text that is used in game. Dynamically assigned at time of import (DataManager.cs)
-    //criteria 
+    [Tooltip("Short descriptor for Node tooltips for ONGOING effects only")]
+    public string ongoingTooltip;
+
+    [Header("Criteria")]
     [Tooltip("Criteria that must be satisfied (ALL) before the effect can be applied")]
     public List<Criteria> listOfCriteria;                       //list of effect criteria that must be true for an effect to occur
-    //result of effect
+
+    [Header("Result of Effect")]
     [Tooltip("Applies to the current node, the current plus all neighbouring nodes, all nodes or nodes of the same type as the current one")]
     public EffectApply apply;                                   //who does the effect apply to?
     [Tooltip("What the effect applies to. If none use the 'No Outcome' outcome as a default 'None' will generate a Null error on import")]

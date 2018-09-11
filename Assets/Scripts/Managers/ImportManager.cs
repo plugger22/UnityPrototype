@@ -533,32 +533,6 @@ public class ImportManager : MonoBehaviour
                 //assign a zero based Unique ID number
                 Effect effect = effectObject as Effect;
                 effect.effectID = counter++;
-                //if a hide/reveal need to add level, eg. +1, onto end (do dynamically to prevent errors in SO's)
-                switch (effect.outcome.name)
-                {
-                    /*case "StatusSpiders":
-                    case "StatusTracers":
-                    case "StatusContacts":
-                    case "StatusTeams":
-                        switch (effect.operand.name)
-                        {
-                            case "Add":
-                                effect.textTag = string.Format("{0} +{1}", effect.description, effect.value);
-                                break;
-                            case "Subtract":
-                                effect.textTag = string.Format("{0} -{1}", effect.description, effect.value);
-                                break;
-                            default:
-                                Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
-                                effect.textTag = "Unknown";
-                                break;
-                        }
-                        break;*/
-                    //all other effects
-                    default:
-                        effect.textTag = effect.description;
-                        break;
-                }
                 //add to dictionary
                 try
                 { dictOfEffects.Add(effect.effectID, effect); }

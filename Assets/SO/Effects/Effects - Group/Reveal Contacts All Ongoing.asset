@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: Reveal Contacts All Ongoing
   m_EditorClassIdentifier: 
-  effectID: 87
+  effectID: 127
   description: Reveal All Contacts
-  textTag: Reveal All Contacts +1
+  ongoingTooltip: Reveal Contacts
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: db98293a2ffd2064d9cf8d042c3fb1f8, type: 2}

@@ -9,8 +9,10 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Target")]
 public class Target : ScriptableObject
 {
-    [Tooltip("Keep short, eg. 'Rolling Blackouts'")]
-    public string description;                       //eg. "Rolling Blackouts" (keep short)
+    [Tooltip("Keep short, eg. 'Rolling Blackouts', keep short")]
+    public string description;
+    [Tooltip("In format '[due to]...', keep short")]
+    public string reason;
     [Tooltip("Only select an option here if the Target is restricted to a particular metaLevel, otherwise leave as None (null)")]
     public GlobalMeta metaLevel;
     [Tooltip("Chance of going live each turn, if active")]
@@ -39,8 +41,8 @@ public class Target : ScriptableObject
     public List<Effect> listOfGoodEffects;
     [Tooltip("All BAD effects (SO's) that happen as a result of target successfully being resolved")]
     public List<Effect> listOfBadEffects;
-    [Tooltip("All ONGOING effects (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained.")]
-    public List<Effect> listOfOngoingEffects;
     [Tooltip("All effects (SO's) that happen when a target is attempted and the attempt Fails")]
     public List<Effect> listOfFailEffects;
+    [Tooltip("ONGOING effect (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained. Currently MAX of ONE effect allowed")]
+    public Effect OngoingEffect;
 }

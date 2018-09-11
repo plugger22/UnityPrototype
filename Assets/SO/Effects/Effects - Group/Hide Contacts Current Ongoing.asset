@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 43
   description: Hide Contacts at District
-  textTag: Hide Contacts at Node -1
+  ongoingTooltip: Contacts Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 0ce650b70298e3a4baf31d13d2ac7b4e, type: 2}
   outcome: {fileID: 11400000, guid: db98293a2ffd2064d9cf8d042c3fb1f8, type: 2}

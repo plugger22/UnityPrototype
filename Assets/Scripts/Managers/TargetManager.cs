@@ -465,11 +465,11 @@ public class TargetManager : MonoBehaviour
         {
             case Status.Active:
                 tempList.Add(string.Format("{0}<b>{1} Target</b>{2}", colourNormal, target.targetStatus, colourEnd));
-                tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.name, colourEnd));
-                tempList.Add(string.Format("{0}Level {1}{2}", colourDefault, target.targetLevel, colourEnd));
+                tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.name, colourEnd));
+                tempList.Add(string.Format("{0}<b>Level {1}</b>{2}", colourDefault, target.targetLevel, colourEnd));
                 break;
             case Status.Live:
-                tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.name, colourEnd));
+                tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.name, colourEnd));
                 tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
                 //good effects
                 Effect effect = null;
@@ -477,7 +477,7 @@ public class TargetManager : MonoBehaviour
                 {
                     effect = target.listOfGoodEffects[i];
                     if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
+                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
                     else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
                 //bad effects
@@ -485,17 +485,12 @@ public class TargetManager : MonoBehaviour
                 {
                     effect = target.listOfBadEffects[i];
                     if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd)); }
+                    { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.description, colourEnd)); }
                     else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
                 //ongoing effects
-                for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
-                {
-                    effect = target.listOfOngoingEffects[i];
-                    if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-                }
+                if (target.OngoingEffect != null)
+                { tempList.Add(string.Format("{0}{1}{2}", colourGood, target.OngoingEffect.description, colourEnd)); }
                 //info level data colour graded
                 tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd,
                     GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
@@ -506,17 +501,10 @@ public class TargetManager : MonoBehaviour
                 //put tooltip together
                 tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.name, colourEnd));
                 //ongoing effects
-                if (target.listOfOngoingEffects.Count > 0)
+                if (target.OngoingEffect != null)
                 {
                     tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDefault, colourEnd));
-                    Effect effectCompleted = null;
-                    for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
-                    {
-                        effectCompleted = target.listOfOngoingEffects[i];
-                        if (effectCompleted != null)
-                        { tempList.Add(string.Format("{0}{1}{2}", colourGood, effectCompleted.textTag, colourEnd)); }
-                        else { Debug.LogError(string.Format("Invalid effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-                    }
+                    tempList.Add(string.Format("{0}{1}{2}", colourGood, target.OngoingEffect.description, colourEnd));
                 }
                 break;
         }
@@ -545,7 +533,7 @@ public class TargetManager : MonoBehaviour
                 {
                     effect = target.listOfGoodEffects[i];
                     if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.textTag, colourEnd)); }
+                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
                     else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
             }
@@ -557,22 +545,13 @@ public class TargetManager : MonoBehaviour
                 {
                     effect = target.listOfBadEffects[i];
                     if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.textTag, colourEnd)); }
+                    { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.description, colourEnd)); }
                     else { Debug.LogError(string.Format("Invalid Bad effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
                 }
             }
-            //Ongoing effects
-            if (target.listOfOngoingEffects.Count > 0)
-            {
-                //add header
-                for (int i = 0; i < target.listOfOngoingEffects.Count; i++)
-                {
-                    effect = target.listOfOngoingEffects[i];
-                    if (effect != null)
-                    { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, effect.textTag, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid Ongoing effect (null) for \"{0}\", ID {1}{2}", target.name, target.targetID, "\n")); }
-                }
-            }
+            //Ongoing effects -> add header
+            if (target.OngoingEffect != null)
+            { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, effect.description, colourEnd)); }
         }
         else
         {

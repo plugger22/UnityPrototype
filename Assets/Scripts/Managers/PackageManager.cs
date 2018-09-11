@@ -158,6 +158,7 @@ namespace packageAPI
         public int ongoingID = -1;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
         public string text;
         public string description;                                        //description of effect (used for InfoApp)
+        public string nodeTooltip;                                        //descriptor used for node tooltip
         public string reason;                                             //reason why (used for InfoApp)
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public int timer;                                                 //how long does the effect last for?

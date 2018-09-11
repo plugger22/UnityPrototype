@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 135
   description: Reveal All Spiders
-  textTag: Reveal All Spiders
+  ongoingTooltip: Reveal Spider
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: a3d16415671095a4cb2ea93051bd2bd1, type: 2}

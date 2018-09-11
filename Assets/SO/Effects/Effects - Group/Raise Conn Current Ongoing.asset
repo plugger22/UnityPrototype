@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: Raise Conn Current Ongoing
   m_EditorClassIdentifier: 
-  effectID: 63
+  effectID: 102
   description: Neighbouring Connection Security +1
-  textTag: Neighbouring Connection Security +1
+  ongoingTooltip: Connection Security +1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 11523c578f127b9479b84f7acb26216e, type: 2}
   outcome: {fileID: 11400000, guid: e22d0b1a68c10184a8584b2e5e01f7ed, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 111
   description: District and Neighbours Security +1
-  textTag: Node and Neighbours Security +1
+  ongoingTooltip: Security +1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: ea4162d04bdf345419d8618ed297b5af, type: 2}
   outcome: {fileID: 11400000, guid: 4d1c81b2e596a1d4f8908148c7b6fa6f, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 51
   description: Hide Spiders at district
-  textTag: Hide Spiders at Node -1
+  ongoingTooltip: Spiders Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 0ce650b70298e3a4baf31d13d2ac7b4e, type: 2}
   outcome: {fileID: 11400000, guid: a3d16415671095a4cb2ea93051bd2bd1, type: 2}

@@ -625,8 +625,7 @@ public class Node : MonoBehaviour
             foreach (var ongoingEffect in listOfOngoingEffects)
             {
                 EffectDataTooltip data = new EffectDataTooltip();
-                //data.text = string.Format("{0} {1}{2}", ongoingEffect.text, ongoingEffect.value > 0 ? "+" : "", ongoingEffect.value);
-                data.text = ongoingEffect.text;
+                data.text = string.Format("{0}{1}<size=90%><b>{2}</b> turn{3} remaining</size>", ongoingEffect.nodeTooltip, "\n", ongoingEffect.timer, ongoingEffect.timer != 1 ? "s" : "");
                 data.type = ongoingEffect.type;
                 tempList.Add(data);
             }
@@ -854,6 +853,7 @@ public class Node : MonoBehaviour
             effect.text = ongoing.text;
             effect.description = ongoing.description;
             effect.reason = ongoing.reason;
+            effect.nodeTooltip = ongoing.nodeTooltip;
             effect.value = ongoing.value;
             effect.timer = ongoing.timer;
             effect.outcome = ongoing.outcome;

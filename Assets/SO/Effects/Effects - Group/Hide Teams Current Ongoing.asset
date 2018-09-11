@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 59
   description: Hide Teams at district
-  textTag: Hide Teams at Node -1
+  ongoingTooltip: Teams Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 0ce650b70298e3a4baf31d13d2ac7b4e, type: 2}
   outcome: {fileID: 11400000, guid: 0bb18a59c3a3f584d94d91e65c083bcf, type: 2}

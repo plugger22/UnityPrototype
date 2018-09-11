@@ -2231,7 +2231,7 @@ public class ActionManager : MonoBehaviour
                     target.targetStatus = Status.Completed;
                     GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
                     //if ongoing effects then target moved to completed pool
-                    if (target.listOfOngoingEffects.Count > 0)
+                    if (target.OngoingEffect != null)
                     { GameManager.instance.dataScript.AddTargetToPool(target, Status.Completed); }
                     //no ongoing effects -> target contained and done with. 
                     else
@@ -2293,7 +2293,7 @@ public class ActionManager : MonoBehaviour
                     //combine all effects into one list for processing
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
-                    listOfEffects.AddRange(target.listOfOngoingEffects);
+                    listOfEffects.Add(target.OngoingEffect);
                 }
                 else
                 {
@@ -2313,10 +2313,10 @@ public class ActionManager : MonoBehaviour
                 EffectDataInput dataInput = new EffectDataInput();
                 dataInput.originText = "Target Attempt";
                 //handle any Ongoing effects of target completed -> only if target Successful
-                if (isSuccessful == true && target.listOfOngoingEffects.Count > 0)
+                if (isSuccessful == true && target.OngoingEffect != null)
                 {
                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
-                    dataInput.ongoingText = string.Format("{0} target", target.name);
+                    dataInput.ongoingText = target.reason;
                     //add to target so it can link to effects
                     target.ongoingID = dataInput.ongoingID;
                 }

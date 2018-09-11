@@ -716,7 +716,7 @@ public class ActorManager : MonoBehaviour
                                                     //Effect criteria O.K -> tool tip text
                                                     if (builder.Length > 0) { builder.AppendLine(); }
                                                     if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
-                                                    { builder.AppendFormat("{0}{1}{2}", colourEffect, effect.textTag, colourEnd); }
+                                                    { builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd); }
                                                     else
                                                     {
                                                         //handle renown & invisibility situations - players or actors?
@@ -724,16 +724,16 @@ public class ActorManager : MonoBehaviour
                                                         {
                                                             //player affected (good for renown, bad for invisibility)
                                                             if (effect.outcome.name.Equals("Renown"))
-                                                            { builder.AppendFormat("{0}Player {1}{2}", colourGood, effect.textTag, colourEnd); }
+                                                            { builder.AppendFormat("{0}Player {1}{2}", colourGood, effect.description, colourEnd); }
                                                             else
                                                             {
-                                                                builder.AppendFormat("{0}Player {1}{2}", colourBad, effect.textTag, colourEnd);
+                                                                builder.AppendFormat("{0}Player {1}{2}", colourBad, effect.description, colourEnd);
                                                             }
                                                         }
                                                         else
                                                         {
                                                             //actor affected
-                                                            builder.AppendFormat("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.textTag, colourEnd);
+                                                            builder.AppendFormat("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd);
                                                         }
                                                     }
                                                 }
@@ -953,23 +953,23 @@ public class ActorManager : MonoBehaviour
                                                     switch (effect.typeOfEffect.name)
                                                     {
                                                         case "Good":
-                                                            builder.AppendFormat("{0}{1}{2}", colourBad, effect.textTag, colourEnd);
+                                                            builder.AppendFormat("{0}{1}{2}", colourBad, effect.description, colourEnd);
                                                             break;
                                                         case "Neutral":
-                                                            builder.AppendFormat("{0}{1}{2}", colourNeutral, effect.textTag, colourEnd);
+                                                            builder.AppendFormat("{0}{1}{2}", colourNeutral, effect.description, colourEnd);
                                                             break;
                                                         case "Bad":
-                                                            builder.AppendFormat("{0}{1}{2}", colourGood, effect.textTag, colourEnd);
+                                                            builder.AppendFormat("{0}{1}{2}", colourGood, effect.description, colourEnd);
                                                             break;
                                                         default:
-                                                            builder.AppendFormat("{0}{1}{2}", colourDefault, effect.textTag, colourEnd);
+                                                            builder.AppendFormat("{0}{1}{2}", colourDefault, effect.description, colourEnd);
                                                             Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
                                                             break;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    builder.Append(effect.textTag);
+                                                    builder.Append(effect.description);
                                                     Debug.LogWarning(string.Format("Invalid effect.typeOfEffect (Null) for \"{0}\"", effect.name));
                                                 }
                                                 //if an ANY TEAM action then display available teams
@@ -984,7 +984,7 @@ public class ActorManager : MonoBehaviour
                                             }
                                             //actor automatically accumulates renown for their faction
                                             else
-                                            { builder.AppendFormat("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.textTag, colourEnd); }
+                                            { builder.AppendFormat("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.description, colourEnd); }
 
                                         }
                                         else
@@ -1573,7 +1573,7 @@ public class ActorManager : MonoBehaviour
                                                     {
                                                         //Effect criteria O.K -> tool tip text
                                                         if (builder.Length > 0) { builder.AppendLine(); }
-                                                        builder.AppendFormat("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
+                                                        builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                                                         //chance of compromise
                                                         int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                                                         builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
@@ -1784,7 +1784,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //Effect criteria O.K -> tool tip text
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.AppendFormat("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
+                            builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                             //chance of compromise
                             int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
                             builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd, 

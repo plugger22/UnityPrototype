@@ -1007,12 +1007,12 @@ public class EffectManager : MonoBehaviour
                                 case "ActorCurrent":
                                     actor.datapoint1 += effect.value;
                                     actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
-                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                     break;
                                 case "ActorAll":
                                     //all actors have their motivation raised
                                     ResolveGroupActorEffect(effect, actor);
-                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                                     break;
                                 default:
                                     Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
@@ -1025,12 +1025,12 @@ public class EffectManager : MonoBehaviour
                                 case "ActorCurrent":
                                     actor.datapoint1 -= effect.value;
                                     actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                     break;
                                 case "ActorAll":
                                     //all actors have their motivation lowered
                                     ResolveGroupActorEffect(effect, actor);
-                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                                     break;
                                 default:
                                     Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
@@ -1192,7 +1192,7 @@ public class EffectManager : MonoBehaviour
                                         invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
                                         GameManager.instance.playerScript.Invisibility = invis;
                                     }
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd);
                                     break;
                                 case "Subtract":
                                     //does player have any invisibility type gear?
@@ -1232,12 +1232,12 @@ public class EffectManager : MonoBehaviour
                                         {
                                             invisibility -= 1;
                                             if (invisibility >= 0)
-                                            { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.textTag, colourEnd); }
+                                            { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd); }
                                             else
                                             {
                                                 //immediate notification. AI flag set. Applies if player invis was 0 before action taken
                                                 effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
-                                                    colourAlert, effect.textTag, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                    colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
 
@@ -1285,7 +1285,7 @@ public class EffectManager : MonoBehaviour
                                             Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.arc.name, actor.arc.name,
                                                 dataBefore, invisibility, "\n");
                                         }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                         break;
                                     case "Subtract":
                                         //double effect if spider is present
@@ -1298,7 +1298,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
                                                 effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                    colourEffect, actor.arc.name, effect.textTag, "\n", "\n", colourEnd);
+                                                    colourEffect, actor.arc.name, effect.description, "\n", "\n", colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
                                         }
@@ -1306,12 +1306,12 @@ public class EffectManager : MonoBehaviour
                                         {
                                             invisibility -= 1;
                                             if (invisibility >= 0)
-                                            { effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.textTag, colourEnd); }
+                                            { effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd); }
                                             else
                                             {
                                                 //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
                                                 effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                    colourEffect, actor.arc.name, effect.textTag, "\n", "\n", colourEnd);
+                                                    colourEffect, actor.arc.name, effect.description, "\n", "\n", colourEnd);
                                                 GameManager.instance.aiScript.immediateFlagResistance = true;
                                             }
                                         }
@@ -1385,12 +1385,12 @@ public class EffectManager : MonoBehaviour
                             {
                                 case "Add":
                                     playerRenown += effect.value;
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
                                     break;
                                 case "Subtract":
                                     playerRenown -= effect.value;
                                     playerRenown = Mathf.Max(0, playerRenown);
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.textTag, colourEnd);
+                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
                                     break;
                             }
                             GameManager.instance.playerScript.Renown = playerRenown;
@@ -1418,13 +1418,13 @@ public class EffectManager : MonoBehaviour
                                         else
                                         {
                                             //no trait
-                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.textTag, colourEnd);
+                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.description, colourEnd);
                                         }
                                         break;
                                     case "Subtract":
                                         actor.Renown -= effect.value;
                                         actor.Renown = Mathf.Max(0, actor.Renown);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.textTag, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
                                         break;
                                 }
                                 Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.arc.name, actor.arc.name, dataBefore, actor.Renown, "\n");
@@ -2073,7 +2073,7 @@ public class EffectManager : MonoBehaviour
                 break;
         }
         //bottom text
-        effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.textTag, colourEnd);
+        effectResolve.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
         //return data to calling method (ProcessEffect)
         return effectResolve;
     }
@@ -2977,6 +2977,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.description = effect.description;
         effectOngoing.node = node;
         effectOngoing.text = string.Format("{0} ({1} turn{2})", effect.description, effectOngoing.timer, effectOngoing.timer != 1 ? "s" : "");
+        effectOngoing.nodeTooltip = effect.ongoingTooltip;
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
     }

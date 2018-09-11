@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Disrupt Delivery Bots
   m_EditorClassIdentifier: 
   description: Shut down supply
+  reason: Delivery bots being disabled
   metaLevel: {fileID: 0}
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetLevel: 2
@@ -33,5 +34,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfOngoingEffects:
   - {fileID: 11400000, guid: 3f4567a032ff64344a058fc6d262347b, type: 2}
+  OngoingEffect: {fileID: 11400000, guid: 3f4567a032ff64344a058fc6d262347b, type: 2}
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}

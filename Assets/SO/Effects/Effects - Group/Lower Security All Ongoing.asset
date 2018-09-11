@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 82
   description: All district Security levels -1
-  textTag: All Node Security levels -1
+  ongoingTooltip: Security -1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: 4d1c81b2e596a1d4f8908148c7b6fa6f, type: 2}

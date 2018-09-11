@@ -692,7 +692,7 @@ public class ItemDataManager : MonoBehaviour
             if (listOfEffects.Count > 0)
             {
                 foreach (Effect effect in listOfEffects)
-                { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, effect.textTag, colourEnd); }
+                { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, effect.description, colourEnd); }
             }
             else { builder.AppendFormat("{0}No effect", "\n"); }
         }
@@ -1146,7 +1146,6 @@ public class ItemDataManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", actorID); }
             }
-
         }
         else if (node != null)
         {
@@ -1183,7 +1182,7 @@ public class ItemDataManager : MonoBehaviour
                 case 2: colourEffect = colourGood; break;
                 default: colourEffect = colourNeutral; Debug.LogWarningFormat("Invalid ongoing.type.level \"{0}\" for \"{1}\"", ongoing.type.level, ongoing.text); break;
             }
-            builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourEffect, ongoing.description, colourEnd);
+            builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourEffect, ongoing.description, colourEnd);
             if (ongoing.timer > 0)
             { builder.AppendFormat("{0}{1}{2}<b>{3} turn{4}</b>{5} remaining", "\n", "\n", colourNeutral, ongoing.timer, ongoing.timer != 1 ? "s" : "", colourEnd); }
             else { Debug.LogWarningFormat("Invalid ongoing.timer (less than 1) for \"{0}\"", ongoing.text); }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 94
   description: All district Support levels -1
-  textTag: All Node Support levels -1
+  ongoingTooltip: Support -1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: 15e769a8dda06284e84442844149341c, type: 2}

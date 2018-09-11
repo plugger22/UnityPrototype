@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 88
   description: All district Stability levels -1
-  textTag: All Node Stability levels -1
+  ongoingTooltip: Stability -1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: 0e42f35bffe2bb244b8c9067a0489127, type: 2}

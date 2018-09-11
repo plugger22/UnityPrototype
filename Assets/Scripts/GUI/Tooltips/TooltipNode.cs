@@ -394,7 +394,7 @@ public class TooltipNode : MonoBehaviour
             ongoingEffects.gameObject.SetActive(true);
             dividerStats.gameObject.SetActive(true);
             StringBuilder effectBuilder = new StringBuilder();
-            effectBuilder.AppendFormat("{0}Ongoing Effects{1}", colourDefault, colourEnd);
+            effectBuilder.AppendFormat("{0}<size=90%>Ongoing Effects</size>{1}", colourDefault, colourEnd);
             for (int i = 0; i < data.listOfEffects.Count; i++)
             {
                 switch(data.listOfEffects[i].type.name)
@@ -463,8 +463,12 @@ public class TooltipNode : MonoBehaviour
                 //foreach (string target in listOfTarget)
                 for (int i = 0; i < data.listOfTargets.Count; i++)
                 {
-                    if (i > 0) { builder.AppendLine(); }
-                    builder.Append(data.listOfTargets[i]);
+                    if (i > 0)
+                    {
+                        builder.AppendLine();
+                        builder.AppendFormat("<size=90%>{0}</size>", data.listOfTargets[i]);
+                    }
+                    else { builder.Append(data.listOfTargets[i]); }
                 }
                 builder.Append(colourEnd);
             }

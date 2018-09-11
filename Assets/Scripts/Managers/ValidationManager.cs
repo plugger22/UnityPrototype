@@ -83,18 +83,11 @@ public class ValidationManager : MonoBehaviour
                     }
                 }
                 //Ongoing effects
-                if (target.listOfOngoingEffects.Count > 0)
+                if (target.OngoingEffect != null)
                 {
-                    foreach (Effect effect in target.listOfOngoingEffects)
-                    {
-                        if (effect != null)
-                        {
-                            //should be duration 'Ongoing'
-                            if (effect.duration.name.Equals("Ongoing") == false)
-                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" ongoing effect \"{1}\" NOT Ongoing", target.name, effect.name); }
-                        }
-                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Ongoing effect (Null)", target.name); }
-                    }
+                    //should be duration 'Ongoing'
+                    if (target.OngoingEffect.duration.name.Equals("Ongoing") == false)
+                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" ongoing effect \"{1}\" NOT Ongoing", target.name, target.OngoingEffect.name); }
                 }
             }
             else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", index); }

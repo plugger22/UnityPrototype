@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: Hide Tracers All Ongoing
   m_EditorClassIdentifier: 
-  effectID: 27
+  effectID: 65
   description: Hide All Tracers
-  textTag: Hide All Tracers -1
+  ongoingTooltip: Tracers Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9c886d578bcc1db48b53207ab729d85c, type: 2}
   outcome: {fileID: 11400000, guid: b2ac9163f6f08f0479eb8cd8bc15d8fc, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectID: 117
   description: District and Neighbours Stability +1
-  textTag: Node and Neighbours Stability +1
+  ongoingTooltip: Stability +1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: ea4162d04bdf345419d8618ed297b5af, type: 2}
   outcome: {fileID: 11400000, guid: 0e42f35bffe2bb244b8c9067a0489127, type: 2}

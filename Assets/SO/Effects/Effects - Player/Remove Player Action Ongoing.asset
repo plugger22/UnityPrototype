@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: Remove Player Action Ongoing
   m_EditorClassIdentifier: 
-  effectID: 0
+  effectID: 179
   description: Player loses an Action for a time
-  textTag: 
+  ongoingTooltip: Action -1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}
   outcome: {fileID: 11400000, guid: 432cdc0a6410c4c44a72fc8140dd8a80, type: 2}
