@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d306d96e8b4ea046a690308f0493599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ongoingEffectTimer: 3
+  ongoingEffectTimer: 10
 --- !u!114 &114271324079928462
 MonoBehaviour:
   m_ObjectHideFlags: 1

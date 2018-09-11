@@ -2974,26 +2974,9 @@ public class EffectManager : MonoBehaviour
         effectOngoing.apply = effect.apply;
         effectOngoing.side = effectInput.side;
         effectOngoing.reason = effectInput.ongoingText;
+        effectOngoing.description = effect.description;
         effectOngoing.node = node;
-        //descriptor
-        switch (effect.outcome.name)
-        {
-            case "NodeSecurity":
-            case "NodeStability":
-            case "NodeSupport":
-                effectOngoing.text = string.Format("{0} {1}{2} ({3})", effect.outcome.name, value, value > 0 ? "+" : "", effectInput.ongoingText);
-                break;
-            case "StatusTracers":
-            case "StatusSpiders":
-            case "StatusTeams":
-            case "StatusContacts":
-            case "ConnectionSecurity":
-                effectOngoing.text = string.Format("{0}", effect.textTag);
-                break;
-            default:
-                effectOngoing.text = string.Format("{0} ({1})", effect.outcome.name, effectInput.ongoingText);
-                break;
-        }
+        effectOngoing.text = string.Format("{0} ({1} turn{2})", effect.description, effectOngoing.timer, effectOngoing.timer != 1 ? "s" : "");
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
     }

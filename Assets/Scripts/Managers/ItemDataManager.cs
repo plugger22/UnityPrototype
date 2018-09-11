@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// holds all methods required for generating ItemData.bottomText's (called by MessageManager.cs methods)
@@ -1113,7 +1114,7 @@ public class ItemDataManager : MonoBehaviour
 
 
     //
-    // - - - Effects - - -
+    // - - - Effects (Active & Ongoing) - - -
     //
 
     /// <summary>
@@ -1157,6 +1158,37 @@ public class ItemDataManager : MonoBehaviour
         { builder.Append(detailsTop); }
         if (string.IsNullOrEmpty(detailsBottom) == false)
         { builder.AppendFormat("{0}{1}{2}", "\n", "\n", detailsBottom); }
+        return builder.ToString();
+    }
+
+
+    /// <summary>
+    /// Current Ongoing effect (summary of all effects originating from a specific node)
+    /// </summary>
+    /// <param name="ongoing"></param>
+    /// <returns></returns>
+    public string GetOngoingEffectDetails(EffectDataOngoing ongoing)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}", ongoing.node.nodeName, colourAlert, ongoing.node.Arc.name, colourEnd);
+        if (string.IsNullOrEmpty(ongoing.reason) == false)
+        { builder.AppendFormat("{0}due to {1}", "\n", ongoing.reason); }
+        if (string.IsNullOrEmpty(ongoing.description) == false)
+        {
+            string colourEffect;
+            switch(ongoing.type.level)
+            {
+                case 0: colourEffect = colourBad; break;
+                case 1: colourEffect = colourNeutral; break;
+                case 2: colourEffect = colourGood; break;
+                default: colourEffect = colourNeutral; Debug.LogWarningFormat("Invalid ongoing.type.level \"{0}\" for \"{1}\"", ongoing.type.level, ongoing.text); break;
+            }
+            builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourEffect, ongoing.description, colourEnd);
+            if (ongoing.timer > 0)
+            { builder.AppendFormat("{0}{1}{2}<b>{3} turn{4}</b>{5} remaining", "\n", "\n", colourNeutral, ongoing.timer, ongoing.timer != 1 ? "s" : "", colourEnd); }
+            else { Debug.LogWarningFormat("Invalid ongoing.timer (less than 1) for \"{0}\"", ongoing.text); }
+        }
+        else { Debug.LogWarningFormat("Invalid ongoing.description (Null or Empty) for \"{0}\"", ongoing.text); }
         return builder.ToString();
     }
 

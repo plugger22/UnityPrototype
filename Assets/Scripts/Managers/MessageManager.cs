@@ -2047,7 +2047,7 @@ public class MessageManager : MonoBehaviour
 
 
     //
-    // - - - Effects - - -
+    // - - - Effects (Ongoing & Active) - - -
     //
 
     /// <summary>
@@ -2064,12 +2064,48 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.EFFECT;
+            message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Created;
             message.side = globalBoth;
             message.data0 = nodeID;
             //add
             GameManager.instance.dataScript.AddMessage(message);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// current ongoing effect -> InfoApp 'Effect' tab
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="ongoing"></param>
+    public Message MessageOngoingEffectCurrent(EffectDataOngoing ongoing)
+    {
+        Debug.Assert(ongoing != null, "Invalid EffectDataOngoing (Null)");
+        Debug.Assert(ongoing.node != null, "Invalid Ongoing.node (Null)");
+        if (string.IsNullOrEmpty(ongoing.text) == false)
+        {
+            Message message = new Message();
+            message.text = ongoing.text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Current;
+            message.side = globalBoth;
+            message.data0 = ongoing.node.nodeID;
+            message.data1 = ongoing.timer;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0}, {1} district, ONGOING EFFECT", ongoing.node.nodeName, ongoing.node.Arc.name);
+            data.topText = "Ongoing Effect";
+            data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
+            data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
+            data.tab = ItemTab.Effects;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2088,7 +2124,7 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.EFFECT;
+            message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Expired;
             message.side = globalBoth;
             message.isPublic = true;
@@ -2116,7 +2152,7 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.EFFECT;
+            message.type = MessageType.ACTIVE;
             message.subType = MessageSubType.Active_Effect;
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;

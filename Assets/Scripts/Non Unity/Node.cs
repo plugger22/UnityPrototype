@@ -852,6 +852,7 @@ public class Node : MonoBehaviour
             EffectDataOngoing effect = new EffectDataOngoing();
             effect.ongoingID = ongoing.ongoingID;
             effect.text = ongoing.text;
+            effect.description = ongoing.description;
             effect.reason = ongoing.reason;
             effect.value = ongoing.value;
             effect.timer = ongoing.timer;

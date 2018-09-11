@@ -341,7 +341,8 @@ public class NodeManager : MonoBehaviour
             case EventType.StartTurnLate:
                 ProcessNodeTimers();
                 ProcessNodeCrisis();
-                ProcessOngoingEffects();
+                //Must be AFTER ProcessNodeTimers
+                CheckOngoingEffects();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1949,7 +1950,7 @@ public class NodeManager : MonoBehaviour
     /// <summary>
     /// Generates messages for 'Effect' tab in InfoApp
     /// </summary>
-    private void ProcessOngoingEffects()
+    private void CheckOngoingEffects()
     {
         Dictionary<int, EffectDataOngoing> dictOfOngoingEffects = GameManager.instance.dataScript.GetDictOfOngoingEffects();
         if (dictOfOngoingEffects != null)
@@ -1960,6 +1961,7 @@ public class NodeManager : MonoBehaviour
                 foreach(var ongoing in dictOfOngoingEffects)
                 {
                     //message
+                    GameManager.instance.messageScript.MessageOngoingEffectCurrent(ongoing.Value);
                 }
             }
         }

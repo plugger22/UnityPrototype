@@ -3118,7 +3118,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" OngoingID Register{0}", "\n"));
         foreach(var ongoing in dictOfOngoingID)
-        { builder.Append(string.Format("{0} {1}", "\n", ongoing.Value)); }
+        { builder.Append(string.Format("{0} {1}", "\n", ongoing.Value.description)); }
         return builder.ToString();
     }
 
