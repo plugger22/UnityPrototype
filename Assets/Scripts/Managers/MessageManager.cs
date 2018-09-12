@@ -2076,11 +2076,11 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// current ongoing effect -> InfoApp 'Effect' tab
+    /// current ongoing effect District -> InfoApp 'Effect' tab
     /// </summary>
     /// <param name="text"></param>
     /// <param name="ongoing"></param>
-    public Message MessageOngoingEffectCurrent(EffectDataOngoing ongoing)
+    public Message MessageOngoingEffectCurrentNode(EffectDataOngoing ongoing)
     {
         Debug.Assert(ongoing != null, "Invalid EffectDataOngoing (Null)");
         Debug.Assert(ongoing.node != null, "Invalid Ongoing.node (Null)");
@@ -2110,6 +2110,43 @@ public class MessageManager : MonoBehaviour
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
+
+    /// <summary>
+    /// current ongoing effect Gear -> InfoApp 'Effect' tab
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="ongoing"></param>
+    public Message MessageOngoingEffectCurrentGear(EffectDataOngoing ongoing)
+    {
+        Debug.Assert(ongoing != null, "Invalid EffectDataOngoing (Null)");
+        Debug.Assert(ongoing.node != null, "Invalid Ongoing.node (Null)");
+        if (string.IsNullOrEmpty(ongoing.text) == false)
+        {
+            Message message = new Message();
+            message.text = ongoing.text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Current;
+            message.side = globalBoth;
+            message.data0 = ongoing.node.nodeID;
+            message.data1 = ongoing.timer;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0}, {1} district, ONGOING EFFECT", ongoing.node.nodeName, ongoing.node.Arc.name);
+            data.topText = "Ongoing Effect";
+            data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
+            data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
+            data.tab = ItemTab.Effects;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
 
     /// <summary>
     /// Ongoing effect that timed out (expired) automatically or has been shut down

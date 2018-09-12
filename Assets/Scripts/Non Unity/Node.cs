@@ -861,6 +861,7 @@ public class Node : MonoBehaviour
             effect.apply = ongoing.apply;
             effect.side = ongoing.side;
             effect.node = ongoing.node;
+            effect.gearName = ongoing.gearName;
             //add new ongoing effect
             listOfOngoingEffects.Add(effect);
             //add to register & create message

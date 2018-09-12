@@ -1592,7 +1592,7 @@ public class ActionManager : MonoBehaviour
                         {
                             //no ongoing effect allowed for use gear actions
                             dataInput.ongoingID = -1;
-                            dataInput.ongoingText = string.Format("{0) gear", gear.name);
+                            dataInput.ongoingText = string.Format("{0} gear", gear.name);
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {

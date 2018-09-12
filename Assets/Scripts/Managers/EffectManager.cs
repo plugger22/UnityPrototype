@@ -2956,8 +2956,6 @@ public class EffectManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name));}
-
-
         return effectResolve;
     }
 

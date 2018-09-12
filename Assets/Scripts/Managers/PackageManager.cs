@@ -160,9 +160,10 @@ namespace packageAPI
         public string description;                                        //description of effect (used for InfoApp)
         public string nodeTooltip;                                        //descriptor used for node tooltip
         public string reason;                                             //reason why (used for InfoApp)
+        public string gearName;                                           //originating gear (used for InfoApp, use only if effect is gear based)
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public int timer;                                                 //how long does the effect last for?
-        public Node node;                                                //originating node (used for InfoApp)
+        public Node node;                                                 //originating node (used for InfoApp, use only if effect is node based)
         public EffectOutcome outcome;
         public GlobalType type;                                           //benefit, or otherwise, of effect from POV of Resistance
         public EffectApply apply;
