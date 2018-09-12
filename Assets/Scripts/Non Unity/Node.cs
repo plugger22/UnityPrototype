@@ -858,6 +858,7 @@ public class Node : MonoBehaviour
             effect.timer = ongoing.timer;
             effect.outcome = ongoing.outcome;
             effect.type = ongoing.type;
+            effect.gearID = ongoing.gearID;
             effect.apply = ongoing.apply;
             effect.side = ongoing.side;
             effect.node = ongoing.node;

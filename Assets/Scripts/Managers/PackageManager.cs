@@ -105,6 +105,7 @@ namespace packageAPI
         public int ongoingID;                                                //used only if there are going to be ongoing effects, ignore otherwise
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
         public string originText;                                            //name of thing that caused the effect, eg. gear name
+        public int data;                                                     //multipurpose datapoint, eg. gearID
 
 
         public EffectDataInput()
@@ -163,6 +164,7 @@ namespace packageAPI
         public string gearName;                                           //originating gear (used for InfoApp, use only if effect is gear based)
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public int timer;                                                 //how long does the effect last for?
+        public int gearID;                                                //gearID (used for InfoApp, use only if effect is gear based), default -1
         public Node node;                                                 //originating node (used for InfoApp, use only if effect is node based)
         public EffectOutcome outcome;
         public GlobalType type;                                           //benefit, or otherwise, of effect from POV of Resistance
@@ -170,7 +172,10 @@ namespace packageAPI
         public GlobalSide side;
 
         public EffectDataOngoing()
-        { timer = GameManager.instance.effectScript.ongoingEffectTimer; }
+        {
+            gearID = -1;
+            timer = GameManager.instance.effectScript.ongoingEffectTimer;
+        }
     }
 
 
@@ -207,6 +212,10 @@ namespace packageAPI
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
         public int turnStart;                                           //turn number where effect commences (added automatically, used for actions tooltip). Ignore.
+        public int ongoingID;                                           //Ongoing effects only, ignore otherwise, default -1
+
+        public ActionAdjustment()
+        { ongoingID = -1; }
     }
 
 

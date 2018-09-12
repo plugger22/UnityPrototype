@@ -2119,7 +2119,6 @@ public class MessageManager : MonoBehaviour
     public Message MessageOngoingEffectCurrentGear(EffectDataOngoing ongoing)
     {
         Debug.Assert(ongoing != null, "Invalid EffectDataOngoing (Null)");
-        Debug.Assert(ongoing.node != null, "Invalid Ongoing.node (Null)");
         if (string.IsNullOrEmpty(ongoing.text) == false)
         {
             Message message = new Message();
@@ -2127,11 +2126,11 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Current;
             message.side = globalBoth;
-            message.data0 = ongoing.node.nodeID;
+            message.data0 = ongoing.gearID;
             message.data1 = ongoing.timer;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} gear, ONGOING EFFECT", ongoing.gearName);
+            data.itemText = string.Format("{0}, ONGOING EFFECT", ongoing.gearName);
             data.topText = "Gear Ongoing Effect";
             data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
             data.priority = ItemPriority.Low;

@@ -1590,8 +1590,9 @@ public class ActionManager : MonoBehaviour
                         //
                         foreach (Effect effect in listOfEffects)
                         {
-                            //no ongoing effect allowed for use gear actions
-                            dataInput.ongoingID = -1;
+                            //ongoing effect for gear ONLY player actions +/- (handled differently to other ongoing effects)
+                            dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID(); ;
+                            dataInput.data = gear.gearID;
                             dataInput.ongoingText = string.Format("{0} gear", gear.name);
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)

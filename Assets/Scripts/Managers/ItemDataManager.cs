@@ -1171,7 +1171,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (ongoing.node != null)
         { builder.AppendFormat("{0}, {1}{2}{3}", ongoing.node.nodeName, colourAlert, ongoing.node.Arc.name, colourEnd); }
-        else { builder.AppendFormat("{0}, {1}PLAYER{2}{3}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}, {1}PLAYER{2}, {3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, ongoing.gearName, "\n"); }
         if (string.IsNullOrEmpty(ongoing.reason) == false)
         { builder.AppendFormat("{0}due to {1}", "\n", ongoing.reason); }
         if (string.IsNullOrEmpty(ongoing.description) == false)

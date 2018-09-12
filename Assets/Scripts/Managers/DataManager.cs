@@ -3123,7 +3123,7 @@ public class DataManager : MonoBehaviour
             if (ongoing.Value.node != null)
             { builder.Append(string.Format("{0} NodeID {1}, {2}, {3} turn{4} remaining", "\n", ongoing.Value.node.nodeID, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
             else
-            { builder.Append(string.Format("{0} {1} gear, {2}, {3} turn{4} remaining", "\n", ongoing.Value.gearName, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
+            { builder.Append(string.Format("{0} {1}, {2}, {3} turn{4} remaining", "\n", ongoing.Value.gearName, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
         }
         return builder.ToString();
     }
@@ -3147,6 +3147,28 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
+    }
+
+    /// <summary>
+    /// Remove an effect from the dictionary and, if present, generate a message for the relevant side. dataID could be NodeID or ConnID for connections
+    /// </summary>
+    /// <param name="ongoing"></param>
+    public void RemoveOngoingEffect(int ongoingID)
+    {
+            //if entry has already been deleted, eg. for an ongoing 'NodeAll' effect then ignore. Message is generated for the first instance only.
+            if (dictOfOngoingID.ContainsKey(ongoingID))
+            {
+            EffectDataOngoing ongoing = dictOfOngoingID[ongoingID];
+            if (ongoing != null)
+            {
+                //generate message
+                string text = string.Format("id {0}, {1}", ongoingID, ongoing.text);
+                GameManager.instance.messageScript.OngoingEffectExpired(text, -1);
+                //remove entry
+                dictOfOngoingID.Remove(ongoingID);
+            }
+            else { Debug.LogWarningFormat("Invalid EffectDataOngoing (Null) for ongoingID {0}", ongoingID); }
+        }
     }
 
     /// <summary>
@@ -3602,7 +3624,14 @@ public class DataManager : MonoBehaviour
                 {
                     actionAdjustment.timer--;
                     if (actionAdjustment.timer <= 0)
-                    { listOfActionAdjustments.RemoveAt(i); }
+                    {
+
+                        //Ongoing effect
+                        if (actionAdjustment.ongoingID > -1)
+                        { RemoveOngoingEffect(actionAdjustment.ongoingID); }
+                        //delete adjustment
+                        listOfActionAdjustments.RemoveAt(i);
+                    }
                 }
             }
         }

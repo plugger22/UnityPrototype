@@ -2928,6 +2928,7 @@ public class EffectManager : MonoBehaviour
                             {
                                 case "Add":
                                     actionAdjustment.value = effect.value;
+                                    actionAdjustment.ongoingID = dataInput.ongoingID;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}", 
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
@@ -2936,6 +2937,7 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
+                                    actionAdjustment.ongoingID = dataInput.ongoingID;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
@@ -2976,6 +2978,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.side = effectInput.side;
         effectOngoing.value = effect.value;
         effectOngoing.gearName = effectInput.ongoingText;
+        effectOngoing.gearID = effectInput.data;
         effectOngoing.reason = effectInput.ongoingText;
         effectOngoing.description = effect.description;
         effectOngoing.text = string.Format("{0} ({1} turn{2})", effect.description, effectOngoing.timer, effectOngoing.timer != 1 ? "s" : "");
