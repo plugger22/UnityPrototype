@@ -2096,7 +2096,7 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0}, {1} district, ONGOING EFFECT", ongoing.node.nodeName, ongoing.node.Arc.name);
-            data.topText = "Ongoing Effect";
+            data.topText = "District Ongoing Effect";
             data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
@@ -2131,8 +2131,8 @@ public class MessageManager : MonoBehaviour
             message.data1 = ongoing.timer;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0}, {1} district, ONGOING EFFECT", ongoing.node.nodeName, ongoing.node.Arc.name);
-            data.topText = "Ongoing Effect";
+            data.itemText = string.Format("{0} gear, ONGOING EFFECT", ongoing.gearName);
+            data.topText = "Gear Ongoing Effect";
             data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;

@@ -1961,7 +1961,9 @@ public class NodeManager : MonoBehaviour
                 foreach(var ongoing in dictOfOngoingEffects)
                 {
                     //message
-                    GameManager.instance.messageScript.MessageOngoingEffectCurrentNode(ongoing.Value);
+                    if (ongoing.Value.node != null)
+                    { GameManager.instance.messageScript.MessageOngoingEffectCurrentNode(ongoing.Value); }
+                    else { GameManager.instance.messageScript.MessageOngoingEffectCurrentGear(ongoing.Value); }
                 }
             }
         }

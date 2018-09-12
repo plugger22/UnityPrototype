@@ -3087,7 +3087,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="ongoingID"></param>
     /// <param name="details"></param>
-    public void AddOngoingEffectToDict(EffectDataOngoing ongoing, int nodeID)
+    public void AddOngoingEffectToDict(EffectDataOngoing ongoing, int nodeID = -1)
     {
         if (ongoing != null)
         {
@@ -3099,8 +3099,9 @@ public class DataManager : MonoBehaviour
                 try
                 {
                     dictOfOngoingID.Add(ongoing.ongoingID, ongoing);
-                    //generate message
-                    GameManager.instance.messageScript.OngoingEffectCreated(ongoing.text, nodeID);
+                    //generate message (node effect only)
+                    if (nodeID > -1)
+                    { GameManager.instance.messageScript.OngoingEffectCreated(ongoing.text, nodeID); }
                 }
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoing.ongoingID, ongoing.text)); }
@@ -3118,7 +3119,12 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" OngoingID Register{0}", "\n"));
         foreach(var ongoing in dictOfOngoingID)
-        { builder.Append(string.Format("{0} NodeID {1}, {2}, {3} turn{4} remaining", "\n", ongoing.Value.node.nodeID, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
+        {
+            if (ongoing.Value.node != null)
+            { builder.Append(string.Format("{0} NodeID {1}, {2}, {3} turn{4} remaining", "\n", ongoing.Value.node.nodeID, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
+            else
+            { builder.Append(string.Format("{0} {1} gear, {2}, {3} turn{4} remaining", "\n", ongoing.Value.gearName, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
+        }
         return builder.ToString();
     }
 

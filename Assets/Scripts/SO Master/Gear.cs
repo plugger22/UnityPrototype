@@ -22,7 +22,7 @@ public class Gear : ScriptableObject
     public Sprite sprite;
 
     [Header("Special Cases")]
-    [Tooltip("Any effects for when gear is Used by the player within Inventory. Ignore if none")]
+    [Tooltip("Any effects for when gear is Used by the player within Inventory. Ignore if none. Max ONE Ongoing effect")]
     public List<Effect> listOfPersonalEffects;
     [Tooltip("Any effect for when gear is used by the Player while hacking AI. Ignore if none")]
     public Effect aiHackingEffect;

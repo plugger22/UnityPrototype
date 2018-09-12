@@ -2907,7 +2907,7 @@ public class EffectManager : MonoBehaviour
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} {7}{8}NEXT TURN{9}", colourEffect, colourEnd,
-                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
+                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);                                    
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
@@ -2932,6 +2932,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}", 
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
+                                    AddOngoingEffectToDict(effect, dataInput, effect.value);
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
@@ -2939,6 +2940,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
+                                    AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name));
@@ -2960,7 +2962,31 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod to handle Ongoing effects
+    /// subMethod to handle Ongoing Effects for Gear (Personal Use -> Actions +/-)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    private void AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
+    {
+        EffectDataOngoing effectOngoing = new EffectDataOngoing();
+        effectOngoing.outcome = effect.outcome;
+        effectOngoing.ongoingID = effectInput.ongoingID;
+        effectOngoing.type = effect.typeOfEffect;
+        effectOngoing.apply = effect.apply;
+        effectOngoing.side = effectInput.side;
+        effectOngoing.value = effect.value;
+        effectOngoing.gearName = effectInput.ongoingText;
+        effectOngoing.reason = effectInput.ongoingText;
+        effectOngoing.description = effect.description;
+        effectOngoing.text = string.Format("{0} ({1} turn{2})", effect.description, effectOngoing.timer, effectOngoing.timer != 1 ? "s" : "");
+        effectOngoing.nodeTooltip = effect.ongoingTooltip;
+        //add to register & create message
+        GameManager.instance.dataScript.AddOngoingEffectToDict(effectOngoing);
+
+    }
+
+    /// <summary>
+    /// subMethod to handle Ongoing effects for Nodes
     /// </summary>
     private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, Node node, int value)
     {
@@ -2979,6 +3005,7 @@ public class EffectManager : MonoBehaviour
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
     }
+
 
     /// <summary>
     /// gets a unique ID for ongoing effects. All

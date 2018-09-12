@@ -1169,7 +1169,9 @@ public class ItemDataManager : MonoBehaviour
     public string GetOngoingEffectDetails(EffectDataOngoing ongoing)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3}", ongoing.node.nodeName, colourAlert, ongoing.node.Arc.name, colourEnd);
+        if (ongoing.node != null)
+        { builder.AppendFormat("{0}, {1}{2}{3}", ongoing.node.nodeName, colourAlert, ongoing.node.Arc.name, colourEnd); }
+        else { builder.AppendFormat("{0}, {1}PLAYER{2}{3}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n"); }
         if (string.IsNullOrEmpty(ongoing.reason) == false)
         { builder.AppendFormat("{0}due to {1}", "\n", ongoing.reason); }
         if (string.IsNullOrEmpty(ongoing.description) == false)
