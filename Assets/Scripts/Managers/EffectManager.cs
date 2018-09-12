@@ -2927,22 +2927,22 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Add":
+                                    actionAdjustment.ongoing = AddOngoingEffectToDict(effect, dataInput, effect.value);
                                     actionAdjustment.value = effect.value;
-                                    actionAdjustment.ongoingID = dataInput.ongoingID;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}", 
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
-                                    AddOngoingEffectToDict(effect, dataInput, effect.value);
+                                    
                                     break;
                                 case "Subtract":
+                                    actionAdjustment.ongoing = AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
                                     actionAdjustment.value = effect.value * -1;
-                                    actionAdjustment.ongoingID = dataInput.ongoingID;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
-                                    AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
+                                    
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name));
@@ -2968,7 +2968,7 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
-    private void AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
+    private EffectDataOngoing AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;
@@ -2985,7 +2985,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.nodeTooltip = effect.ongoingTooltip;
         //add to register & create message
         GameManager.instance.dataScript.AddOngoingEffectToDict(effectOngoing);
-
+        return effectOngoing;
     }
 
     /// <summary>

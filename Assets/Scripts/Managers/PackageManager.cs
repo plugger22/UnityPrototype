@@ -212,10 +212,7 @@ namespace packageAPI
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
         public int turnStart;                                           //turn number where effect commences (added automatically, used for actions tooltip). Ignore.
-        public int ongoingID;                                           //Ongoing effects only, ignore otherwise, default -1
-
-        public ActionAdjustment()
-        { ongoingID = -1; }
+        public EffectDataOngoing ongoing;                               //Ongoing effects only, ignore otherwise
     }
 
 

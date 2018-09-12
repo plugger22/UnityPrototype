@@ -3149,27 +3149,6 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
 
-    /// <summary>
-    /// Remove an effect from the dictionary and, if present, generate a message for the relevant side. dataID could be NodeID or ConnID for connections
-    /// </summary>
-    /// <param name="ongoing"></param>
-    public void RemoveOngoingEffect(int ongoingID)
-    {
-            //if entry has already been deleted, eg. for an ongoing 'NodeAll' effect then ignore. Message is generated for the first instance only.
-            if (dictOfOngoingID.ContainsKey(ongoingID))
-            {
-            EffectDataOngoing ongoing = dictOfOngoingID[ongoingID];
-            if (ongoing != null)
-            {
-                //generate message
-                string text = string.Format("id {0}, {1}", ongoingID, ongoing.text);
-                GameManager.instance.messageScript.OngoingEffectExpired(text, -1);
-                //remove entry
-                dictOfOngoingID.Remove(ongoingID);
-            }
-            else { Debug.LogWarningFormat("Invalid EffectDataOngoing (Null) for ongoingID {0}", ongoingID); }
-        }
-    }
 
     /// <summary>
     /// Debug method to remove all connection security effects for all entries in the register
@@ -3625,12 +3604,17 @@ public class DataManager : MonoBehaviour
                     actionAdjustment.timer--;
                     if (actionAdjustment.timer <= 0)
                     {
-
                         //Ongoing effect
-                        if (actionAdjustment.ongoingID > -1)
-                        { RemoveOngoingEffect(actionAdjustment.ongoingID); }
+                        if (actionAdjustment.ongoing != null)
+                        { RemoveOngoingEffect(actionAdjustment.ongoing, actionAdjustment.ongoing.gearID); }
                         //delete adjustment
                         listOfActionAdjustments.RemoveAt(i);
+                    }
+                    else
+                    {
+                        //update ongoing timer, if present
+                        if (actionAdjustment.ongoing != null)
+                        { actionAdjustment.ongoing.timer = actionAdjustment.timer; }
                     }
                 }
             }

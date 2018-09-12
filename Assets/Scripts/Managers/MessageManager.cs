@@ -1,9 +1,7 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using UnityEngine;
-using gameAPI;
-using packageAPI;
-using System.Text;
 
 /// <summary>
 /// handles all message matters
@@ -2148,14 +2146,14 @@ public class MessageManager : MonoBehaviour
 
 
     /// <summary>
-    /// Ongoing effect that timed out (expired) automatically or has been shut down
+    /// Ongoing effect that timed out (expired) automatically or has been shut down. DataID could be node / conn / gearID
     /// </summary>
     /// <param name="text"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message OngoingEffectExpired(string text, int nodeID)
+    public Message OngoingEffectExpired(string text, int dataID)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID/connID {0}", nodeID));
+        Debug.Assert(dataID > -1, "Invalid dataID (less than Zero)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -2164,7 +2162,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Ongoing_Expired;
             message.side = globalBoth;
             message.isPublic = true;
-            message.data0 = nodeID;
+            message.data0 = dataID;
             //add
             GameManager.instance.dataScript.AddMessage(message);
         }
