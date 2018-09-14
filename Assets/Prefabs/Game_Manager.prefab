@@ -983,7 +983,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seed: 11140
   isPerformanceLog: 1
-  isValidate: 0
+  isValidate: 1
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

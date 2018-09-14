@@ -14,6 +14,7 @@ public class ValidationManager : MonoBehaviour
     public void Initialise()
     {
         ValidateTargets();
+        ValidateGear();
     }
 
     /// <summary>
@@ -91,6 +92,46 @@ public class ValidationManager : MonoBehaviour
                 }
             }
             else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", index); }
+        }
+    }
+
+    /// <summary>
+    /// Checks Gear
+    /// </summary>
+    private void ValidateGear()
+    {
+        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        if (dictOfGear != null)
+        {
+            foreach (var gear in dictOfGear)
+            {
+                if (gear.Value != null)
+                {
+                    //check any effect
+                    if (gear.Value.listOfPersonalEffects.Count > 0)
+                    {
+                        //personal effects
+                        foreach(var effect in gear.Value.listOfPersonalEffects)
+                        {
+                            if (effect != null)
+                            {
+                                //Can't be ONGOING
+                                if (effect.duration.name.Equals("Ongoing") == true)
+                                { Debug.LogFormat("[Val] ValidateGear: Gear \"{0}\"  invalid Personal effect (ONGOING)", gear.Value.name); }
+                            }
+                            else { Debug.LogFormat("[Val] ValidateGear: Gear \"{0}\"  invalid effect (Null)", gear.Value.name); }
+                        }
+                        //AI hacking effects
+                        if (gear.Value.aiHackingEffect != null)
+                        {
+                            //Can't be ONGOING
+                            if (gear.Value.aiHackingEffect.duration.name.Equals("Ongoing") == true)
+                            { Debug.LogFormat("[Val] ValidateGear: Gear \"{0}\"  invalid aiHacking effect (ONGOING)", gear.Value.name); }
+                        }
+                    }
+                }
+                else{ Debug.LogFormat("[Val] ValidateGar: Invalid Gear (Null) for gearID {0}", gear.Key); }
+            }
         }
     }
 
