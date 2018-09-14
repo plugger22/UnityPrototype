@@ -152,7 +152,7 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalWho has {0} entries{1}", dictOfGlobalWho.Count, "\n"));
             Debug.Assert(dictOfGlobalWho.Count > 0, "No GlobalWho in dictOfGlobalWho");
         }
-        else { Debug.LogError("Invalid dictOfGlobalWho (Null) -> Import failed"); }*/
+        else { Debug.LogError("Invalid dictOfGlobalWho (Null) -> Import failed"); }
 
         //
         // - - - Conditions - - -
@@ -180,12 +180,12 @@ public class ImportManager : MonoBehaviour
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
         }
-        else { Debug.LogError("Invalid dictOfConditions (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfConditions (Null) -> Import failed"); }*/
         //
         // - - - TraitCategories - - -
         //
         Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.instance.dataScript.GetDictOfTraitCategories();
-        if (dictOfTraitCategories != null)
+        /*if (dictOfTraitCategories != null)
         {
             var categoryGUID = AssetDatabase.FindAssets("t:TraitCategory", new[] { "Assets/SO" });
             foreach (var guid in categoryGUID)
@@ -207,11 +207,11 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", dictOfTraitCategories.Count, "\n"));
             Debug.Assert(dictOfTraitCategories.Count > 0, "No Trait categories in dictOfTraitCategories");
         }
-        else { Debug.LogError("Invalid dictOfTraitCategories (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfTraitCategories (Null) -> Import failed"); }*/
         //
         // - - - TraitEffects - - -
         //
-        Dictionary<int, TraitEffect> dictOfTraitEffects = GameManager.instance.dataScript.GetDictOfTraitEffects();
+        /*Dictionary<int, TraitEffect> dictOfTraitEffects = GameManager.instance.dataScript.GetDictOfTraitEffects();
         Dictionary<string, int> dictOfLookUpTraitEffects = GameManager.instance.dataScript.GetDictOfLookUpTraitEffects();
         if (dictOfTraitCategories != null)
         {
@@ -306,7 +306,7 @@ public class ImportManager : MonoBehaviour
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", dictOfSecretStatus.Count, "\n");
             Debug.Assert(dictOfSecretStatus.Count > 0, "No SecretStatus in dictOfSecretStatus");
         }
-        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }*/
         //
         // - - - Node Datapoints - - -
         //

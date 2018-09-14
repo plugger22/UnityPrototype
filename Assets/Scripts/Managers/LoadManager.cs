@@ -25,7 +25,7 @@ public class LoadManager : MonoBehaviour
 
     public void InitialiseStart()
     {
-        int numArray, numDict;
+        int numArray, numDict, counter;
         //
         // - - - GlobalMeta - - -
         //
@@ -162,22 +162,17 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
-        
         //
         // - - - Conditions - - -
         //
-        /*Dictionary<string, Condition> dictOfConditions = GameManager.instance.dataScript.GetDictOfConditions();
-        if (dictOfConditions != null)
+        numArray = arrayOfConditions.Length;
+        if (numArray > 0)
         {
-            var conditionGUID = AssetDatabase.FindAssets("t:Condition", new[] { "Assets/SO" });
-            foreach (var guid in conditionGUID)
+            Dictionary<string, Condition> dictOfConditions = GameManager.instance.dataScript.GetDictOfConditions();
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object conditionObject = AssetDatabase.LoadAssetAtPath(path, typeof(Condition));
                 //assign a zero based unique ID number
-                Condition condition = conditionObject as Condition;
+                Condition condition = arrayOfConditions[i];
                 //add to dictionary
                 try
                 { dictOfConditions.Add(condition.name, condition); }
@@ -185,27 +180,23 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError("Invalid Condition (Null)"); }
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.name)); }
-                Debug.Assert(dictOfGlobalMeta.Count > 0, "No conditions in dictOfConditions");
             }
-            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
+            numDict = dictOfConditions.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on Condition Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfConditions (Null) -> Import failed"); }
-        
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Conditions present"); }
         //
         // - - - TraitCategories - - -
         //
+        numArray = arrayOfTraitCategories.Length;
         Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.instance.dataScript.GetDictOfTraitCategories();
-        if (dictOfTraitCategories != null)
+        if (numArray > 0)
         {
-            var categoryGUID = AssetDatabase.FindAssets("t:TraitCategory", new[] { "Assets/SO" });
-            foreach (var guid in categoryGUID)
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object categoryObject = AssetDatabase.LoadAssetAtPath(path, typeof(TraitCategory));
                 //assign a zero based unique ID number
-                TraitCategory category = categoryObject as TraitCategory;
+                TraitCategory category = arrayOfTraitCategories[i];
                 //add to dictionary
                 try
                 { dictOfTraitCategories.Add(category.name, category); }
@@ -214,10 +205,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid trait category (duplicate) \"{0}\"", category.name)); }
             }
-            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", dictOfTraitCategories.Count, "\n"));
-            Debug.Assert(dictOfTraitCategories.Count > 0, "No Trait categories in dictOfTraitCategories");
+            numDict = dictOfTraitCategories.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on TraitCategory Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfTraitCategories (Null) -> Import failed"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TraitCategories present"); }
         //
         // - - - TraitEffects - - -
         //
@@ -228,37 +220,38 @@ public class LoadManager : MonoBehaviour
             if (dictOfLookUpTraitEffects != null)
             {
                 counter = 0;
-                var traitEffectGUID = AssetDatabase.FindAssets("t:TraitEffect", new[] { "Assets/SO" });
-                foreach (var guid in traitEffectGUID)
+                numArray = arrayOfTraitEffects.Length;
+                if (numArray > 0)
                 {
-                    //get path
-                    path = AssetDatabase.GUIDToAssetPath(guid);
-                    //get SO
-                    UnityEngine.Object traitEffectObject = AssetDatabase.LoadAssetAtPath(path, typeof(TraitEffect));
-                    //assign a zero based unique ID number
-                    TraitEffect traitEffect = traitEffectObject as TraitEffect;
-                    traitEffect.teffID = counter;
-                    counter++;
-                    //add to dictionaries
-                    try
-                    { dictOfTraitEffects.Add(traitEffect.teffID, traitEffect); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid trait Effect (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogErrorFormat("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name); }
-                    try
-                    { dictOfLookUpTraitEffects.Add(traitEffect.name, traitEffect.teffID); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid traitEffect.name (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogErrorFormat("Invalid traitEffect.name (duplicate) \"{0}\"", traitEffect.name); }
+                    for (int i = 0; i < numArray; i++)
+                    {
+                        //assign a zero based unique ID number
+                        TraitEffect traitEffect = arrayOfTraitEffects[i];
+                        traitEffect.teffID = counter;
+                        counter++;
+                        //add to dictionaries
+                        try
+                        { dictOfTraitEffects.Add(traitEffect.teffID, traitEffect); }
+                        catch (ArgumentNullException)
+                        { Debug.LogError("Invalid trait Effect (Null)"); }
+                        catch (ArgumentException)
+                        { Debug.LogErrorFormat("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name); }
+                        try
+                        { dictOfLookUpTraitEffects.Add(traitEffect.name, traitEffect.teffID); }
+                        catch (ArgumentNullException)
+                        { Debug.LogError("Invalid traitEffect.name (Null)"); }
+                        catch (ArgumentException)
+                        { Debug.LogErrorFormat("Invalid traitEffect.name (duplicate) \"{0}\"", traitEffect.name); }
+                    }
                 }
-                Debug.LogFormat("[Imp] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", dictOfTraitEffects.Count, "\n");
+                numDict = dictOfTraitEffects.Count;
+                Debug.LogFormat("[Imp] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", numDict, "\n");
                 Debug.LogFormat("[Imp] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
                 Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfLookUpTraitEffects.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfTraitEffects.Count > 0, "No Trait Effects imported to dictionary");
                 Debug.Assert(dictOfLookUpTraitEffects.Count > 0, "No Trait Effects in Lookup dictionary");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch in TraitEffect count, array {0}, dict {1}", numArray, numDict));
             }
             else { Debug.LogError("Invalid dictOfLookUpTraitEffects (Null) -> Import failed"); }
         }
@@ -269,31 +262,31 @@ public class LoadManager : MonoBehaviour
         Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
         if (dictOfSecretTypes != null)
         {
-            var secretTypeGUID = AssetDatabase.FindAssets("t:SecretType", new[] { "Assets/SO" });
-            foreach (var guid in secretTypeGUID)
+            numArray = arrayOfSecretTypes.Length;
+            if (numArray > 0)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object secretTypeObject = AssetDatabase.LoadAssetAtPath(path, typeof(SecretType));
-                //assign a zero based unique ID number
-                SecretType secretType = secretTypeObject as SecretType;
-                //add to dictionary
-                try
-                { dictOfSecretTypes.Add(secretType.name, secretType); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Secret Type (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid SecretType (duplicate) \"{0}\"", secretType.name); }
+                for (int i = 0; i < numArray; i++)
+                {
+                    SecretType secretType = arrayOfSecretTypes[i];
+                    //add to dictionary
+                    try
+                    { dictOfSecretTypes.Add(secretType.name, secretType); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Secret Type (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid SecretType (duplicate) \"{0}\"", secretType.name); }
+                }
             }
-            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretTypes has {0} entries{1}", dictOfSecretTypes.Count, "\n");
-            Debug.Assert(dictOfSecretTypes.Count > 0, "No SecretTypes in dictOfSecretTypes");
+            numDict = dictOfSecretTypes.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretTypes has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict > 0, "No SecretTypes in dictOfSecretTypes");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on SecretType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfecretTypes (Null) -> Import failed"); }
         //
         // - - - Secret Status - - -
         //
-        Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
+        /*Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
         if (dictOfSecretStatus != null)
         {
             var secretStatusGUID = AssetDatabase.FindAssets("t:SecretStatus", new[] { "Assets/SO" });
@@ -316,7 +309,34 @@ public class LoadManager : MonoBehaviour
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", dictOfSecretStatus.Count, "\n");
             Debug.Assert(dictOfSecretStatus.Count > 0, "No SecretStatus in dictOfSecretStatus");
         }
+        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }*/
+
+        Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
+        if (dictOfSecretStatus != null)
+        {
+            numArray = arrayOfSecretStatus.Length;
+            if (numArray > 0)
+            {
+                for (int i = 0; i < numArray; i++)
+                {
+                    SecretStatus secretStatus = arrayOfSecretStatus[i];
+                    //add to dictionary
+                    try
+                    { dictOfSecretStatus.Add(secretStatus.name, secretStatus); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Secret Status (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid SecretStatus (duplicate) \"{0}\"", secretStatus.name); }
+                }
+            }
+            numDict = dictOfSecretStatus.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict > 0, "No SecretStatus in dictOfSecretStatus");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on SecretStatus count, array {0}, dict {1}", numArray, numDict));
+        }
         else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }
+
+        /*
         //
         // - - - Node Datapoints - - -
         //
@@ -344,7 +364,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(dictOfNodeDatapoints.Count > 0, "No datapoints in dictOfNodeDatapoints");
         }
         else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }
-        */
+     */
     }
 
 }
