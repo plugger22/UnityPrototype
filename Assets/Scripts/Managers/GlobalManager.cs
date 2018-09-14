@@ -39,10 +39,11 @@ public class GlobalManager : MonoBehaviour
 
     public void Initialise()
     {
+        int num;
         //
         // - - - GlobalMeta - - -
         //
-        Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
+        /*Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
         if (dictOfGlobalMeta != null)
         {
             foreach (var meta in dictOfGlobalMeta)
@@ -72,37 +73,73 @@ public class GlobalManager : MonoBehaviour
             if (metaBottom == null) { Debug.LogError("Invalid metaBottom (Null)"); }
             if (metaMiddle == null) { Debug.LogError("Invalid metaMiddle (Null)"); }
             if (metaTop == null) { Debug.LogError("Invalid metaTop (Null)"); }
+        }*/
+
+        GlobalMeta[] arrayOfGlobalMeta = GameManager.instance.loadScript.arrayOfGlobalMeta;
+        num = arrayOfGlobalMeta.Length;
+        if (num > 0)
+        {
+            for (int i = 0; i < num; i++)
+            {
+                GlobalMeta assetSO = arrayOfGlobalMeta[i];
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //Also dynamically assign GlobalMeta.level values (0/1/2). 
+                switch (assetSO.name)
+                {
+                    case "Local":
+                        metaBottom = assetSO;
+                        assetSO.level = 0;
+                        break;
+                    case "State":
+                        metaMiddle = assetSO;
+                        assetSO.level = 1;
+                        break;
+                    case "National":
+                        metaTop = assetSO;
+                        assetSO.level = 2;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid meta \"{0}\"", assetSO.name);
+                        break;
+                }
+            }
+            //error check
+            if (metaBottom == null) { Debug.LogError("Invalid metaBottom (Null)"); }
+            if (metaMiddle == null) { Debug.LogError("Invalid metaMiddle (Null)"); }
+            if (metaTop == null) { Debug.LogError("Invalid metaTop (Null)"); }
         }
         //
         // - - - GlobalChance - - -
         //
-        Dictionary<string, GlobalChance> dictOfGlobalChance = GameManager.instance.dataScript.GetDictOfGlobalChance();
-        if (dictOfGlobalChance != null)
+        GlobalChance[] arrayOfGlobalChance = GameManager.instance.loadScript.arrayOfGlobalChance;
+        num = arrayOfGlobalChance.Length;
+        if (num > 0)
         {
-            foreach (var chance in dictOfGlobalChance)
+            for (int i = 0; i < num; i++)
             {
+                GlobalChance assetSO = arrayOfGlobalChance[i];
                 //pick out and assign the ones required for fast acess, ignore the rest. 
                 //Also dynamically assign GlobalChance.level values (0/1/2). 
-                switch (chance.Key)
+                switch (assetSO.name)
                 {
                     case "Low":
-                        chanceLow = chance.Value;
-                        chance.Value.level = 0;
+                        chanceLow = assetSO;
+                        assetSO.level = 0;
                         break;
                     case "Medium":
-                        chanceMedium = chance.Value;
-                        chance.Value.level = 1;
+                        chanceMedium = assetSO;
+                        assetSO.level = 1;
                         break;
                     case "High":
-                        chanceHigh = chance.Value;
-                        chance.Value.level = 2;
+                        chanceHigh = assetSO;
+                        assetSO.level = 2;
                         break;
                     case "Extreme":
-                        chanceExtreme = chance.Value;
-                        chance.Value.level = 3;
+                        chanceExtreme = assetSO;
+                        assetSO.level = 3;
                         break;
                     default:
-                        Debug.LogWarningFormat("Invalid chance \"{0}\"", chance.Key);
+                        Debug.LogWarningFormat("Invalid chance \"{0}\"", assetSO.name);
                         break;
                 }
             }
@@ -115,25 +152,27 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - GlobalWho - - -
         //
-        Dictionary<string, GlobalWho> dictOfGlobalWho = GameManager.instance.dataScript.GetDictOfGlobalWho();
-        if (dictOfGlobalWho != null)
+        GlobalWho[] arrayOfGlobalWho = GameManager.instance.loadScript.arrayOfGlobalWho;
+        num = arrayOfGlobalWho.Length;
+        if (num > 0)
         {
-            foreach (var who in dictOfGlobalWho)
+            for (int i = 0; i < num; i++)
             {
+                GlobalWho assetSO = arrayOfGlobalWho[i];
                 //pick out and assign the ones required for fast acess, ignore the rest. 
-                //Also dynamically assign GlobalWho.level values (0/1). 
-                switch (who.Key)
+                //Also dynamically assign GlobalWho.level values (0/1/2). 
+                switch (assetSO.name)
                 {
                     case "Player":
-                        whoPlayer = who.Value;
-                        who.Value.level = 0;
+                        whoPlayer = assetSO;
+                        assetSO.level = 0;
                         break;
                     case "Actor":
-                        whoActor = who.Value;
-                        who.Value.level = 1;
+                        whoActor = assetSO;
+                        assetSO.level = 1;
                         break;
                     default:
-                        Debug.LogWarningFormat("Invalid GlobalWho \"{0}\"", who.Key);
+                        Debug.LogWarningFormat("Invalid GlobalWho \"{0}\"", assetSO.name);
                         break;
                 }
             }
@@ -144,29 +183,31 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - GlobalType - - -
         //
-        Dictionary<string, GlobalType> dictOfGlobalType = GameManager.instance.dataScript.GetDictOfGlobalType();
-        if (dictOfGlobalType != null)
+        GlobalType[] arrayOfGlobalType = GameManager.instance.loadScript.arrayOfGlobalType;
+        num = arrayOfGlobalType.Length;
+        if (num > 0)
         {
-            foreach (var type in dictOfGlobalType)
+            for (int i = 0; i < num; i++)
             {
+                GlobalType assetSO = arrayOfGlobalType[i];
                 //pick out and assign the ones required for fast acess, ignore the rest. 
                 //Also dynamically assign GlobalType.level values (0/1/2). 
-                switch (type.Key)
+                switch (assetSO.name)
                 {
                     case "Bad":
-                        typeBad = type.Value;
-                        type.Value.level = 0;
+                        typeBad = assetSO;
+                        assetSO.level = 0;
                         break;
                     case "Neutral":
-                        typeNeutral = type.Value;
-                        type.Value.level = 1;
+                        typeNeutral = assetSO;
+                        assetSO.level = 1;
                         break;
                     case "Good":
-                        typeGood = type.Value;
-                        type.Value.level = 2;
+                        typeGood = assetSO;
+                        assetSO.level = 2;
                         break;
                     default:
-                        Debug.LogWarningFormat("Invalid type \"{0}\"", type.Key);
+                        Debug.LogWarningFormat("Invalid type \"{0}\"", assetSO.name);
                         break;
                 }
             }
@@ -178,33 +219,35 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - GlobalSide - - -
         //
-        Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.instance.dataScript.GetDictOfGlobalSide();
-        if (dictOfGlobalSide != null)
+        GlobalSide[] arrayOfGlobalSide = GameManager.instance.loadScript.arrayOfGlobalSide;
+        num = arrayOfGlobalSide.Length;
+        if (num > 0)
         {
-            foreach (var side in dictOfGlobalSide)
+            for (int i = 0; i < num; i++)
             {
+                GlobalSide assetSO = arrayOfGlobalSide[i];
                 //pick out and assign the ones required for fast acess, ignore the rest. 
-                //Also dynamically assign GlobalSide.level values (0/1). 
-                switch (side.Key)
+                //Also dynamically assign GlobalSide.level values (0/1/2). 
+                switch (assetSO.name)
                 {
                     case "AI":
-                        sideAI = side.Value;
-                        side.Value.level = 0;
+                        sideAI = assetSO;
+                        assetSO.level = 0;
                         break;
                     case "Authority":
-                        sideAuthority = side.Value;
-                        side.Value.level = 1;
+                        sideAuthority = assetSO;
+                        assetSO.level = 1;
                         break;
                     case "Resistance":
-                        sideResistance = side.Value;
-                        side.Value.level = 2;
+                        sideResistance = assetSO;
+                        assetSO.level = 2;
                         break;
                     case "Both":
-                        sideBoth = side.Value;
-                        side.Value.level = 3;
+                        sideBoth = assetSO;
+                        assetSO.level = 3;
                         break;
                     default:
-                        Debug.LogWarningFormat("Invalid side \"{0}\"", side.Key);
+                        Debug.LogWarningFormat("Invalid side \"{0}\"", assetSO.name);
                         break;
                 }
             }

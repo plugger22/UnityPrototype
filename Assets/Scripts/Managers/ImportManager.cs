@@ -17,6 +17,7 @@ public class ImportManager : MonoBehaviour
     {
         int counter;
         string path;
+
         /*//
         // - - - GlobalMeta - - -
         //
@@ -43,7 +44,7 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
             Debug.Assert(dictOfGlobalMeta.Count > 0, "No GlobalMeta in dictOfGlobaMeta");
         }
-        else { Debug.LogError("Invalid dictOfGlobalMeta (Null) -> Import failed"); }*/
+        else { Debug.LogError("Invalid dictOfGlobalMeta (Null) -> Import failed"); }
         //
         // - - - GlobalChance - - -
         //
@@ -151,7 +152,8 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalWho has {0} entries{1}", dictOfGlobalWho.Count, "\n"));
             Debug.Assert(dictOfGlobalWho.Count > 0, "No GlobalWho in dictOfGlobalWho");
         }
-        else { Debug.LogError("Invalid dictOfGlobalWho (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfGlobalWho (Null) -> Import failed"); }*/
+
         //
         // - - - Conditions - - -
         //

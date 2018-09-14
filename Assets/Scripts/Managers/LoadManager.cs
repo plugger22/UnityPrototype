@@ -8,12 +8,20 @@ using UnityEngine;
 /// </summary>
 public class LoadManager : MonoBehaviour
 {
-    [Header("Initialise Start")]
+    [Header("Initialise Start -> Globals")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
     public GlobalType[] arrayOfGlobalType;
     public GlobalSide[] arrayOfGlobalSide;
     public GlobalWho[] arrayOfGlobalWho;
+
+    [Header("InitialiseStart -> Others")]
+    public Condition[] arrayOfConditions;
+    public TraitCategory[] arrayOfTraitCategories;
+    public TraitEffect[] arrayOfTraitEffects;
+    public SecretType[] arrayOfSecretTypes;
+    public SecretStatus[] arrayOfSecretStatus;
+    public NodeDatapoint[] arrayOfNodeDatapoints;
 
     public void InitialiseStart()
     {
@@ -21,7 +29,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - GlobalMeta - - -
         //
-        numArray = arrayOfGlobalMeta.Length;
+        /*numArray = arrayOfGlobalMeta.Length;
         if (numArray > 0)
         {
             Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
@@ -37,14 +45,19 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", assetSO.name)); }
             }
             numDict = dictOfGlobalMeta.Count;
-            Debug.LogFormat("[Imp] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalMeta has {0} entries{1}", numArray, "\n");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on GlobalMeta Load -> array {0}, dict {1}", numArray, numDict));
         }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }*/
+
+        numArray = arrayOfGlobalMeta.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalMeta has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }
         //
         // - - - GlobalChance - - -
         //
-        numArray = arrayOfGlobalChance.Length;
+        /*numArray = arrayOfGlobalChance.Length;
         if (numArray > 0)
         {
             Dictionary<string, GlobalChance> dictOfGlobalChance = GameManager.instance.dataScript.GetDictOfGlobalChance();
@@ -63,24 +76,97 @@ public class LoadManager : MonoBehaviour
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfGlobalChance has {0} entries{1}", numDict, "\n");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on GlobalChance Load -> array {0}, dict {1}", numArray, numDict));
         }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }*/
+        numArray = arrayOfGlobalChance.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalChance has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
         //
         // - - - GlobalType - - -
         //
-
+        /*numArray = arrayOfGlobalType.Length;
+        if (numArray > 0)
+        {
+            Dictionary<string, GlobalType> dictOfGlobalType = GameManager.instance.dataScript.GetDictOfGlobalType();
+            for (int i = 0; i < numArray; i++)
+            {
+                GlobalType assetSO = arrayOfGlobalType[i];
+                //add to dictionary
+                try
+                { dictOfGlobalType.Add(assetSO.name, assetSO); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid GlobalType (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid GlobalType (duplicate) \"{0}\"", assetSO.name)); }
+            }
+            numDict = dictOfGlobalType.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfGlobalType has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on GlobalType Load -> array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalType present"); }*/
+        numArray = arrayOfGlobalType.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
         //
         // - - - GlobalSide - - -
         //
-
+        /*numArray = arrayOfGlobalSide.Length;
+        if (numArray > 0)
+        {
+            Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.instance.dataScript.GetDictOfGlobalSide();
+            for (int i = 0; i < numArray; i++)
+            {
+                GlobalSide assetSO = arrayOfGlobalSide[i];
+                //add to dictionary
+                try
+                { dictOfGlobalSide.Add(assetSO.name, assetSO); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid GlobalSide (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid GlobalSide (duplicate) \"{0}\"", assetSO.name)); }
+            }
+            numDict = dictOfGlobalSide.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfGlobalSide has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on GlobalSide Load -> array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }*/
+        numArray = arrayOfGlobalSide.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
         //
         // - - - GlobalWho - - -
         //
-
-        /*
+        /*numArray = arrayOfGlobalWho.Length;
+        if (numArray > 0)
+        {
+            Dictionary<string, GlobalWho> dictOfGlobalWho = GameManager.instance.dataScript.GetDictOfGlobalWho();
+            for (int i = 0; i < numArray; i++)
+            {
+                GlobalWho assetSO = arrayOfGlobalWho[i];
+                //add to dictionary
+                try
+                { dictOfGlobalWho.Add(assetSO.name, assetSO); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid GlobalWho (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid GlobalWho (duplicate) \"{0}\"", assetSO.name)); }
+            }
+            numDict = dictOfGlobalWho.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfGlobalWho has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on GlobalWho Load -> array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }*/
+        numArray = arrayOfGlobalWho.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
+        
         //
         // - - - Conditions - - -
         //
-        Dictionary<string, Condition> dictOfConditions = GameManager.instance.dataScript.GetDictOfConditions();
+        /*Dictionary<string, Condition> dictOfConditions = GameManager.instance.dataScript.GetDictOfConditions();
         if (dictOfConditions != null)
         {
             var conditionGUID = AssetDatabase.FindAssets("t:Condition", new[] { "Assets/SO" });
@@ -104,6 +190,7 @@ public class LoadManager : MonoBehaviour
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
         }
         else { Debug.LogError("Invalid dictOfConditions (Null) -> Import failed"); }
+        
         //
         // - - - TraitCategories - - -
         //
