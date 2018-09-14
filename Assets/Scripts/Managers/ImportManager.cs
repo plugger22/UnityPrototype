@@ -306,7 +306,7 @@ public class ImportManager : MonoBehaviour
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", dictOfSecretStatus.Count, "\n");
             Debug.Assert(dictOfSecretStatus.Count > 0, "No SecretStatus in dictOfSecretStatus");
         }
-        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }*/
+        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }
         //
         // - - - Node Datapoints - - -
         //
@@ -333,7 +333,7 @@ public class ImportManager : MonoBehaviour
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfNodeDatapoints has {0} entries{1}", dictOfNodeDatapoints.Count, "\n");
             Debug.Assert(dictOfNodeDatapoints.Count > 0, "No datapoints in dictOfNodeDatapoints");
         }
-        else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }*/
     }
 
 

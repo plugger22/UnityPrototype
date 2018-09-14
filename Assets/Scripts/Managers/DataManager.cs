@@ -176,7 +176,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, GlobalWho> dictOfGlobalWho = new Dictionary<string, GlobalWho>();            //Key -> GlobaWho.name, Value -> GlobalWho*/
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
-    private Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = new Dictionary<string, NodeDatapoint>();   //Key -> NodeDatapoint.name, Value -> NodeDatapoint
+    /*private Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = new Dictionary<string, NodeDatapoint>();   //Key -> NodeDatapoint.name, Value -> NodeDatapoint*/
 
 
     /// <summary>
@@ -449,8 +449,8 @@ public class DataManager : MonoBehaviour
     { return dictOfLookUpNodeArcs; }
 
 
-    public Dictionary<string, NodeDatapoint> GetDictOfNodeDatapoints()
-    { return dictOfNodeDatapoints; }
+    /*public Dictionary<string, NodeDatapoint> GetDictOfNodeDatapoints()
+    { return dictOfNodeDatapoints; }*/
 
 
     /// <summary>

@@ -260,7 +260,7 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - NodeDatapoint - - -
         //
-        Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
+        /*Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
         if (dictOfNodeDatapoints != null)
         {
             foreach (var side in dictOfNodeDatapoints)
@@ -290,6 +290,40 @@ public class GlobalManager : MonoBehaviour
             Debug.Assert(sideAuthority != null, "Invalid sideAuthority (Null)");
             Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
             Debug.Assert(sideBoth != null, "Invalid sideBoth (Null)");
+        }*/
+
+        NodeDatapoint[] arrayOfNodeDatapoints = GameManager.instance.loadScript.arrayOfNodeDatapoints;
+        num = arrayOfNodeDatapoints.Length;
+        if (num > 0)
+        {
+            for (int i = 0; i < num; i++)
+            {
+                NodeDatapoint assetSO = arrayOfNodeDatapoints[i];
+                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //Also dynamically assign NodeDatapoint.level values (0/1/2). 
+                switch (assetSO.name)
+                {
+                    case "Stability":
+                        nodeStability = assetSO;
+                        assetSO.level = 0;
+                        break;
+                    case "Support":
+                        nodeSupport = assetSO;
+                        assetSO.level = 1;
+                        break;
+                    case "Security":
+                        nodeSecurity = assetSO;
+                        assetSO.level = 2;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid NodeDatapoint \"{0}\"", assetSO.name);
+                        break;
+                }
+            }
+            //error check
+            Debug.Assert(nodeStability != null, "Invalid nodeStability (Null)");
+            Debug.Assert(nodeSupport != null, "Invalid nodeSupport (Null)");
+            Debug.Assert(nodeSecurity != null, "Invalid nodeSecurity (Null)");
         }
         //
         // - - - Trait Categories - - -

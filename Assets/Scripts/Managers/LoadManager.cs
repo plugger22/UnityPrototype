@@ -286,31 +286,6 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Secret Status - - -
         //
-        /*Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
-        if (dictOfSecretStatus != null)
-        {
-            var secretStatusGUID = AssetDatabase.FindAssets("t:SecretStatus", new[] { "Assets/SO" });
-            foreach (var guid in secretStatusGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object secretStatusObject = AssetDatabase.LoadAssetAtPath(path, typeof(SecretStatus));
-                //assign a zero based unique ID number
-                SecretStatus secretStatus = secretStatusObject as SecretStatus;
-                //add to dictionary
-                try
-                { dictOfSecretStatus.Add(secretStatus.name, secretStatus); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Secret Status (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid SecretStatus (duplicate) \"{0}\"", secretStatus.name); }
-            }
-            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", dictOfSecretStatus.Count, "\n");
-            Debug.Assert(dictOfSecretStatus.Count > 0, "No SecretStatus in dictOfSecretStatus");
-        }
-        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }*/
-
         Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
         if (dictOfSecretStatus != null)
         {
@@ -336,35 +311,40 @@ public class LoadManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }
 
-        /*
+        
         //
         // - - - Node Datapoints - - -
         //
-        Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
+
+        /*Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
         if (dictOfNodeDatapoints != null)
         {
-            var datapointGUID = AssetDatabase.FindAssets("t:NodeDatapoint", new[] { "Assets/SO" });
-            foreach (var guid in datapointGUID)
+            numArray = arrayOfSecretStatus.Length;
+            if (numArray > 0)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object datapointObject = AssetDatabase.LoadAssetAtPath(path, typeof(NodeDatapoint));
-                //assign a zero based unique ID number
-                NodeDatapoint datapoint = datapointObject as NodeDatapoint;
-                //add to dictionary
-                try
-                { dictOfNodeDatapoints.Add(datapoint.name, datapoint); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Node Datapoint (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid Node Datapoint (duplicate) \"{0}\"", datapoint.name); }
+                for (int i = 0; i < numArray; i++)
+                {
+
+                    //assign a zero based unique ID number
+                    NodeDatapoint datapoint = datapointObject as NodeDatapoint;
+                    //add to dictionary
+                    try
+                    { dictOfNodeDatapoints.Add(datapoint.name, datapoint); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Node Datapoint (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid Node Datapoint (duplicate) \"{0}\"", datapoint.name); }
+                }
             }
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfNodeDatapoints has {0} entries{1}", dictOfNodeDatapoints.Count, "\n");
             Debug.Assert(dictOfNodeDatapoints.Count > 0, "No datapoints in dictOfNodeDatapoints");
         }
-        else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }
-     */
+        else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }*/
+
+        numArray = arrayOfNodeDatapoints.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNodeDatapoints has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
     }
 
 }
