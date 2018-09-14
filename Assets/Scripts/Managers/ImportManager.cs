@@ -17,7 +17,7 @@ public class ImportManager : MonoBehaviour
     {
         int counter;
         string path;
-        //
+        /*//
         // - - - GlobalMeta - - -
         //
         Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
@@ -43,7 +43,7 @@ public class ImportManager : MonoBehaviour
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
             Debug.Assert(dictOfGlobalMeta.Count > 0, "No GlobalMeta in dictOfGlobaMeta");
         }
-        else { Debug.LogError("Invalid dictOfGlobalMeta (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfGlobalMeta (Null) -> Import failed"); }*/
         //
         // - - - GlobalChance - - -
         //
@@ -174,7 +174,7 @@ public class ImportManager : MonoBehaviour
                 { Debug.LogError("Invalid Condition (Null)"); }
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.name)); }
-                Debug.Assert(dictOfGlobalMeta.Count > 0, "No conditions in dictOfConditions");
+                Debug.Assert(dictOfConditions.Count > 0, "No conditions in dictOfConditions");
             }
             Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", dictOfConditions.Count, "\n"));
         }

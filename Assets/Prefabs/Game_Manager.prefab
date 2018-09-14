@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 114656342642216484}
   - component: {fileID: 114639168605164212}
   - component: {fileID: 114983986480103908}
+  - component: {fileID: 114379107075524332}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -559,6 +560,38 @@ MonoBehaviour:
   activityState: 0
   _nodeShowFlag: 0
   _nodeRedraw: 0
+--- !u!114 &114379107075524332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6b57b1b8cbe654e83bddaa167ba464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrayOfGlobalMeta:
+  - {fileID: 11400000, guid: ce73b5182cb30844fa26812212374e8b, type: 2}
+  - {fileID: 11400000, guid: 247e1a2258b9737479ddc805829d7eb9, type: 2}
+  - {fileID: 11400000, guid: 9e959aeb06a0ddb4bbb20df3b414264d, type: 2}
+  arrayOfGlobalChance:
+  - {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
+  - {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  - {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  - {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  arrayOfGlobalType:
+  - {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  - {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  - {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
+  arrayOfGlobalSide:
+  - {fileID: 11400000, guid: 6985f57e84bb2d245a3c47cfa2d22e51, type: 2}
+  - {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  - {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
+  - {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  arrayOfGlobalWho:
+  - {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
+  - {fileID: 11400000, guid: da55b9e40b5c07c428ca573827bf6d72, type: 2}
 --- !u!114 &114414509910123350
 MonoBehaviour:
   m_ObjectHideFlags: 1

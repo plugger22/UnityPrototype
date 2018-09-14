@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,145 +8,75 @@ using UnityEngine;
 /// </summary>
 public class LoadManager : MonoBehaviour
 {
+    [Header("Initialise Start")]
+    public GlobalMeta[] arrayOfGlobalMeta;
+    public GlobalChance[] arrayOfGlobalChance;
+    public GlobalType[] arrayOfGlobalType;
+    public GlobalSide[] arrayOfGlobalSide;
+    public GlobalWho[] arrayOfGlobalWho;
+
     public void InitialiseStart()
     {
-        int counter;
-        string path;
+        int numArray, numDict;
         //
         // - - - GlobalMeta - - -
         //
-        Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
-        if (dictOfGlobalMeta != null)
+        numArray = arrayOfGlobalMeta.Length;
+        if (numArray > 0)
         {
-            var metaGUID = AssetDatabase.FindAssets("t:GlobalMeta", new[] { "Assets/SO" });
-            foreach (var guid in metaGUID)
+            Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalMeta));
-                //assign a zero based unique ID number
-                GlobalMeta meta = metaObject as GlobalMeta;
+                GlobalMeta assetSO = arrayOfGlobalMeta[i];
                 //add to dictionary
                 try
-                { dictOfGlobalMeta.Add(meta.name, meta); }
+                { dictOfGlobalMeta.Add(assetSO.name, assetSO); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid GlobalMeta (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", meta.name)); }
+                { Debug.LogError(string.Format("Invalid GlobalMeta (duplicate) \"{0}\"", assetSO.name)); }
             }
-            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", dictOfGlobalMeta.Count, "\n"));
-            Debug.Assert(dictOfGlobalMeta.Count > 0, "No GlobalMeta in dictOfGlobaMeta");
+            numDict = dictOfGlobalMeta.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfGlobalMeta has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on GlobalMeta Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfGlobalMeta (Null) -> Import failed"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }
         //
         // - - - GlobalChance - - -
         //
-        Dictionary<string, GlobalChance> dictOfGlobalChance = GameManager.instance.dataScript.GetDictOfGlobalChance();
-        if (dictOfGlobalChance != null)
+        numArray = arrayOfGlobalChance.Length;
+        if (numArray > 0)
         {
-            var chanceGUID = AssetDatabase.FindAssets("t:GlobalChance", new[] { "Assets/SO" });
-            foreach (var guid in chanceGUID)
+            Dictionary<string, GlobalChance> dictOfGlobalChance = GameManager.instance.dataScript.GetDictOfGlobalChance();
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object chanceObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalChance));
-                //assign a zero based unique ID number
-                GlobalChance chance = chanceObject as GlobalChance;
+                GlobalChance assetSO = arrayOfGlobalChance[i];
                 //add to dictionary
                 try
-                { dictOfGlobalChance.Add(chance.name, chance); }
+                { dictOfGlobalChance.Add(assetSO.name, assetSO); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid GlobalChance (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", chance.name)); }
+                { Debug.LogError(string.Format("Invalid GlobalChance (duplicate) \"{0}\"", assetSO.name)); }
             }
-            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalChance has {0} entries{1}", dictOfGlobalChance.Count, "\n"));
-            Debug.Assert(dictOfGlobalChance.Count > 0, "No GlobalChance in dictOfGlobalChance");
+            numDict = dictOfGlobalChance.Count;
+            Debug.LogFormat("[Imp] InitialiseStart -> dictOfGlobalChance has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on GlobalChance Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfGlobalChance (Null) -> Import failed"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
         //
         // - - - GlobalType - - -
         //
-        Dictionary<string, GlobalType> dictOfGlobalType = GameManager.instance.dataScript.GetDictOfGlobalType();
-        if (dictOfGlobalType != null)
-        {
-            var typeGUID = AssetDatabase.FindAssets("t:GlobalType", new[] { "Assets/SO" });
-            foreach (var guid in typeGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object typeObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalType));
-                //assign a zero based unique ID number
-                GlobalType type = typeObject as GlobalType;
-                //add to dictionary
-                try
-                { dictOfGlobalType.Add(type.name, type); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid GlobalType (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid GlobalType (duplicate) \"{0}\"", type.name)); }
-                Debug.Assert(dictOfGlobalType.Count > 0, "No GlobalType in dictOfGlobalType");
-            }
-            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalType has {0} entries{1}", dictOfGlobalType.Count, "\n"));
-        }
-        else { Debug.LogError("Invalid dictOfGlobalType (Null) -> Import failed"); }
+
         //
         // - - - GlobalSide - - -
         //
-        Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.instance.dataScript.GetDictOfGlobalSide();
-        if (dictOfGlobalSide != null)
-        {
-            var sideGUID = AssetDatabase.FindAssets("t:GlobalSide", new[] { "Assets/SO" });
-            foreach (var guid in sideGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object sideObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalSide));
-                //assign a zero based unique ID number
-                GlobalSide side = sideObject as GlobalSide;
-                //add to dictionary
-                try
-                { dictOfGlobalSide.Add(side.name, side); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid GlobalSide (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid GlobalSide (duplicate) \"{0}\"", side.name)); }
-            }
-            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalSide has {0} entries{1}", dictOfGlobalSide.Count, "\n"));
-            Debug.Assert(dictOfGlobalSide.Count > 0, "No GlobalSide in dictOfGlobalSide");
-        }
-        else { Debug.LogError("Invalid dictOfGlobalSide (Null) -> Import failed"); }
+
         //
         // - - - GlobalWho - - -
         //
-        Dictionary<string, GlobalWho> dictOfGlobalWho = GameManager.instance.dataScript.GetDictOfGlobalWho();
-        if (dictOfGlobalWho != null)
-        {
-            var whoGUID = AssetDatabase.FindAssets("t:GlobalWho", new[] { "Assets/SO" });
-            foreach (var guid in whoGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object whoObject = AssetDatabase.LoadAssetAtPath(path, typeof(GlobalWho));
-                //assign a zero based unique ID number
-                GlobalWho who = whoObject as GlobalWho;
-                //add to dictionary
-                try
-                { dictOfGlobalWho.Add(who.name, who); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid GlobalWho (Null)"); }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid GlobalWho (duplicate) \"{0}\"", who.name)); }
-            }
-            Debug.Log(string.Format("[Imp] InitialiseStart -> dictOfGlobalWho has {0} entries{1}", dictOfGlobalWho.Count, "\n"));
-            Debug.Assert(dictOfGlobalWho.Count > 0, "No GlobalWho in dictOfGlobalWho");
-        }
-        else { Debug.LogError("Invalid dictOfGlobalWho (Null) -> Import failed"); }
+
+        /*
         //
         // - - - Conditions - - -
         //
@@ -326,6 +257,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(dictOfNodeDatapoints.Count > 0, "No datapoints in dictOfNodeDatapoints");
         }
         else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }
+        */
     }
 
 }

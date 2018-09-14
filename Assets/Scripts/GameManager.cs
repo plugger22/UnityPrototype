@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public StartManager startScript;                //Start Manager
     [HideInInspector] public LevelManager levelScript;                //Level Manager
     [HideInInspector] public ImportManager importScript;              //Import Manager
+    [HideInInspector] public LoadManager loadScript;                  //Load Manager
     [HideInInspector] public MetaManager metaScript;                  //Meta Manager
     [HideInInspector] public DataManager dataScript;                  //Data Manager
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
         startScript = GetComponent<StartManager>();
         levelScript = GetComponent<LevelManager>();
         importScript = GetComponent<ImportManager>();
+        loadScript = GetComponent<LoadManager>();
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
@@ -215,6 +217,10 @@ public class GameManager : MonoBehaviour
         //Import Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.importScript.InitialiseStart;
         startMethod.className = "ImportManager";
+        listOfStartMethods.Add(startMethod);
+        //Load Manager -> InitialiseStart
+        startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
+        startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
         //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
         startMethod.handler = GameManager.instance.globalScript.Initialise;
