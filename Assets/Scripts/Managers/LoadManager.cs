@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gameAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,13 @@ public class LoadManager : MonoBehaviour
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
     public ActorArc[] arrayOfActorArcs;
+    public Effect[] arrayOfEffects;
+    public Target[] arrayOfTargets;
+    public Action[] arrayOfActions;
+    public TeamArc[] arrayOfTeamArcs;
+    public Gear[] arrayOfGear;
+    public GearRarity[] arrayOfGearRarity;
+    public GearType[] arrayOfGearType;
 
     public void InitialiseStart()
     {
@@ -325,8 +333,8 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Node Crisis - - -
         //
-        /*
-        Dictionary<int, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
+
+        /*Dictionary<int, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
         if (dictOfNodeCrisis != null)
         {
             counter = 0;
@@ -353,11 +361,42 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(dictOfNodeCrisis.Count == counter, "Mismatch on Count");
             Debug.Assert(dictOfNodeCrisis.Count > 0, "No Node Crisis have been imported");
         }
+        else { Debug.LogError("Invalid dictOfNodeCrisis (Null) -> Import failed"); }*/
+
+        Dictionary<int, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
+        if (dictOfNodeCrisis != null)
+        {
+            counter = 0;
+            numArray = arrayOfNodeCrisis.Length;
+            if (numArray > 0)
+            {
+                for (int i = 0; i < numArray; i++)
+                {
+                    //assign a zero based unique ID number
+                    NodeCrisis nodeCrisis = arrayOfNodeCrisis[i];
+                    nodeCrisis.nodeCrisisID = counter++;
+                    //add to dictionary
+                    try
+                    { dictOfNodeCrisis.Add(nodeCrisis.nodeCrisisID, nodeCrisis); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid NodeCrisis (Null)"); counter--; }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid NodeCrisis (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeCrisis.name)); counter--; }
+                }
+            }
+            numDict = dictOfNodeCrisis.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfNodeCrisis has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Node Crisis have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on NodeCrisis count, array {0}, dict {1}", numArray, numDict));
+        }
         else { Debug.LogError("Invalid dictOfNodeCrisis (Null) -> Import failed"); }
+
+
         //
         // - - - Traits - - -
         //
-        Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
+        /*Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
         List<Trait> listOfAllTraits = GameManager.instance.dataScript.GetListOfAllTraits();
         if (dictOfTraits != null)
         {
@@ -393,10 +432,48 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid listOfAllTraits (Null) -> Import failed"); }
         }
+        else { Debug.LogError("Invalid dictOfTraits (Null) -> Import failed"); }*/
+
+        Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
+        List<Trait> listOfAllTraits = GameManager.instance.dataScript.GetListOfAllTraits();
+        if (dictOfTraits != null)
+        {
+            if (listOfAllTraits != null)
+            {
+                counter = 0;
+                numArray = arrayOfTraits.Length;
+                for (int i = 0; i < numArray; i++)
+                {
+                    //assign a zero based unique ID number
+                    Trait trait = arrayOfTraits[i];
+                    trait.traitID = counter++;
+                    //add to dictionary
+                    try
+                    {
+                        dictOfTraits.Add(trait.traitID, trait);
+                        //add to list
+                        listOfAllTraits.Add(trait);
+                    }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Trait (Null)"); counter--; }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); counter--; }
+                }
+                numDict = dictOfTraits.Count;
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTraits has {0} entries{1}", numDict, "\n");
+                Debug.Assert( numDict == counter, "Mismatch on count");
+                Debug.Assert(numDict > 0, "No Traits have been imported");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch in Trait count, array {0}, dict {1}", numArray, numDict));
+            }
+            else { Debug.LogError("Invalid listOfAllTraits (Null) -> Import failed"); }
+        }
         else { Debug.LogError("Invalid dictOfTraits (Null) -> Import failed"); }
+
+
         //
         // - - - Actor Arcs - - 
         //
+        /*
         Dictionary<int, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
         List<ActorArc> authorityActorArcs = GameManager.instance.dataScript.GetListOfAuthorityActorArcs();
         List<ActorArc> resistanceActorArcs = GameManager.instance.dataScript.GetListOfResistanceActorArcs();
@@ -446,11 +523,58 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid authorityActorArcs (Null) -> Import failed"); }
         }
+        else { Debug.LogError("Invalid dictOfActorArcs (Null) -> Import failed"); } */
+
+        Dictionary<int, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
+        List<ActorArc> authorityActorArcs = GameManager.instance.dataScript.GetListOfAuthorityActorArcs();
+        List<ActorArc> resistanceActorArcs = GameManager.instance.dataScript.GetListOfResistanceActorArcs();
+        if (dictOfActorArcs != null)
+        {
+            if (authorityActorArcs != null)
+            {
+                if (resistanceActorArcs != null)
+                {
+                    counter = 0;
+                    numArray = arrayOfActorArcs.Length;
+                    for (int i = 0; i < numArray; i++)
+                    {
+                        //assign a zero based unique ID number
+                        ActorArc arc = arrayOfActorArcs[i];
+                        arc.ActorArcID = counter++;
+                        //add to dictionary
+                        try
+                        {
+                            dictOfActorArcs.Add(arc.ActorArcID, arc);
+                            //add to list
+                            if (arc.side.level == globalAuthority.level) { authorityActorArcs.Add(arc); }
+                            else if (arc.side.level == globalResistance.level) { resistanceActorArcs.Add(arc); }
+                            else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.side.name, arc.name)); }
+                        }
+                        catch (ArgumentNullException)
+                        { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }
+                        catch (ArgumentException)
+                        { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); counter--; }
+                    }
+                    numDict = dictOfActorArcs.Count;
+                    Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", numDict, "\n");
+                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
+                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
+                    Debug.Assert( numDict == counter, "Mismatch on count");
+                    Debug.Assert(numDict > 0, "No Actor Arcs have been imported");
+                    Debug.Assert(numArray == numDict, string.Format("Mismatch on ActorArcs count, array {0}, dict {1}", numArray, numDict));
+                }
+                else { Debug.LogError("Invalid resistanceActorArcs (Null) -> Import failed"); }
+            }
+            else { Debug.LogError("Invalid authorityActorArcs (Null) -> Import failed"); }
+        }
         else { Debug.LogError("Invalid dictOfActorArcs (Null) -> Import failed"); }
+
+
+
         //
         // - - - Effects - - -
         //
-        Dictionary<int, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
+        /*Dictionary<int, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
         if (dictOfEffects != null)
         {
             counter = 0;
@@ -477,11 +601,38 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(dictOfEffects.Count == counter, "Mismatch on count");
             Debug.Assert(dictOfEffects.Count > 0, "No Effects have been imported");
         }
+        else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }*/
+
+        Dictionary<int, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
+        if (dictOfEffects != null)
+        {
+            counter = 0;
+            numArray = arrayOfEffects.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                //assign a zero based Unique ID number
+                Effect effect = arrayOfEffects[i];
+                effect.effectID = counter++;
+                //add to dictionary
+                try
+                { dictOfEffects.Add(effect.effectID, effect); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Effect (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); counter--; }
+            }
+            numDict = dictOfEffects.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfEffects has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No Effects have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on Effects count, array {0}, dict {1}", numArray, numDict));
+        }
         else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }
+
         //
         // - - - Targets - - -
         //
-        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        /*Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             counter = 0;
@@ -515,11 +666,46 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(dictOfTargets.Count == counter, "Mismatch on count");
             Debug.Assert(dictOfTargets.Count > 0, "No Targets have been imported");
         }
+        else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }*/
+
+        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        if (dictOfTargets != null)
+        {
+            counter = 0;
+            numArray = arrayOfTargets.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                //assign a zero based unique ID number
+                Target target = arrayOfTargets[i];
+                //set data
+                target.targetID = counter++;
+                target.targetStatus = Status.Dormant;
+                target.timer = -1;
+                target.infoLevel = 1;
+                target.isKnownByAI = false;
+                target.nodeID = -1;
+                target.ongoingID = -1;
+                //add to dictionary
+                try
+                { dictOfTargets.Add(target.targetID, target); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Target (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); counter--; }
+            }
+            numDict = dictOfTargets.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTargets has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No Targets have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Targets count, array {0}, dict {1}", numArray, numDict));
+        }
         else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }
+
         //
         // - - - Actions - - -
         //
-        Dictionary<int, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
+
+        /*Dictionary<int, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
         Dictionary<string, int> dictOfLookUpActions = GameManager.instance.dataScript.GetDictOfLookUpActions();
         if (dictOfActions != null)
         {
@@ -562,11 +748,55 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid dictOfLookUpActions (Null) -> Import failed"); }
         }
+        else { Debug.LogError("Invalid dictOfActions (Null) -> Import failed"); }*/
+
+        Dictionary<int, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
+        Dictionary<string, int> dictOfLookUpActions = GameManager.instance.dataScript.GetDictOfLookUpActions();
+        if (dictOfActions != null)
+        {
+            if (dictOfLookUpActions != null)
+            {
+                counter = 0;
+                numArray = arrayOfActions.Length;
+                for (int i = 0; i < numArray; i++)
+                {
+                    //assign a zero based unique ID number
+                    Action action = arrayOfActions[i];
+                    //set data
+                    action.ActionID = counter++;
+                    //add to dictionary
+                    try
+                    { dictOfActions.Add(action.ActionID, action); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Action Arc (Null)"); counter--; }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); counter--; }
+                    //add to lookup dictionary
+                    try
+                    { dictOfLookUpActions.Add(action.name, action.ActionID); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Lookup Actions (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid Lookup Actions (duplicate) ID \"{0}\" for \"{1}\"", counter, action.name)); }
+                }
+                numDict = dictOfActions.Count;
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActions has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
+                Debug.Assert(numDict == counter, "Mismatch on count");
+                Debug.Assert(dictOfLookUpActions.Count == counter, "Mismatch on count");
+                Debug.Assert(numDict > 0, "No Actions have been imported");
+                Debug.Assert(dictOfLookUpActions.Count > 0, "No Actions in lookup dictionary");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch in Action count, array {0}, dict {1}", numArray, numDict));
+            }
+            else { Debug.LogError("Invalid dictOfLookUpActions (Null) -> Import failed"); }
+        }
         else { Debug.LogError("Invalid dictOfActions (Null) -> Import failed"); }
+
+
         //
         // - - - Team Arcs - - -
         //
-        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
+        /*Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
         Dictionary<string, int> dictOfLookUpTeamArcs = GameManager.instance.dataScript.GetDictOfLookUpTeamArcs();
         if (dictOfTeamArcs != null)
         {
@@ -611,11 +841,56 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid dictOfLookUpTeamArcs (Null) -> Import failed"); }
         }
+        else { Debug.LogError("Invalid dictOfTeamArcs (Null) -> Import failed"); }*/
+
+        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
+        Dictionary<string, int> dictOfLookUpTeamArcs = GameManager.instance.dataScript.GetDictOfLookUpTeamArcs();
+        if (dictOfTeamArcs != null)
+        {
+            if (dictOfLookUpTeamArcs != null)
+            {
+                counter = 0;
+                numArray = arrayOfTeamArcs.Length;
+                for (int i = 0; i < numArray; i++)
+                {
+                    //assign a zero based unique ID number
+                    TeamArc teamArc = arrayOfTeamArcs[i];
+                    //set data
+                    teamArc.TeamArcID = counter++;
+                    //add to dictionary
+                    try
+                    { dictOfTeamArcs.Add(teamArc.TeamArcID, teamArc); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid TeamArc (Null)"); counter--; }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); counter--; }
+                    //add to lookup dictionary
+                    try
+                    { dictOfLookUpTeamArcs.Add(teamArc.name, teamArc.TeamArcID); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Lookup TeamArc (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid Lookup TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
+                }
+                numDict = dictOfTeamArcs.Count;
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTeamArcs has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpTeamArcs has {0} entries{1}", dictOfLookUpTeamArcs.Count, "\n");
+                Debug.Assert(numDict == counter, "Mismatch on Count");
+                Debug.Assert(dictOfLookUpTeamArcs.Count == counter, "Mismatch on Count");
+                Debug.Assert(numDict > 0, "No Team Arcs have been imported");
+                Debug.Assert(dictOfLookUpTeamArcs.Count > 0, "No Team Arcs in Lookup dictionary");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch in TeamArc count, array {0}, dict {1}", numArray, numDict));
+                //arrayOfTeams
+                GameManager.instance.dataScript.InitialiseArrayOfTeams(counter, (int)TeamInfo.Count);
+            }
+            else { Debug.LogError("Invalid dictOfLookUpTeamArcs (Null) -> Import failed"); }
+        }
         else { Debug.LogError("Invalid dictOfTeamArcs (Null) -> Import failed"); }
+
         //
         // - - - Gear - - -
         //
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        /*Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             counter = 0;
@@ -643,11 +918,38 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(dictOfGear.Count == counter, "Mismatch on Count");
             Debug.Assert(dictOfGear.Count > 0, "No Gear has been imported");
         }
+        else { Debug.LogError("Invalid dictOfGear (Null) -> Import failed"); }*/
+
+        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        if (dictOfGear != null)
+        {
+            counter = 0;
+            numArray = arrayOfGear.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                //assign a zero based unique ID number
+                Gear gear = arrayOfGear[i];
+                //set data
+                gear.gearID = counter++;
+                //add to dictionary
+                try
+                { dictOfGear.Add(gear.gearID, gear); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Gear (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
+            }
+            numDict = dictOfGear.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfGear has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Gear has been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Gear count, array {0}, dict {1}", numArray, numDict));
+        }
         else { Debug.LogError("Invalid dictOfGear (Null) -> Import failed"); }
         //
         // - - - Gear Rarity - - -
         //
-        List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
+        /*List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
         if (listOfGearRarity != null)
         {
             var gearRarityGUID = AssetDatabase.FindAssets("t:GearRarity", new[] { "Assets/SO" });
@@ -665,11 +967,30 @@ public class LoadManager : MonoBehaviour
             }
             Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearRarity has {0} entries{1}", listOfGearRarity.Count, "\n"));
         }
+        else { Debug.LogError("Invalid listOfGearRarity (Null) -> Import failed"); }*/
+
+        List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
+        if (listOfGearRarity != null)
+        {
+            numArray = arrayOfGearRarity.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                GearRarity gearRarity = arrayOfGearRarity[i];
+                //add to list
+                if (gearRarity != null)
+                { listOfGearRarity.Add(gearRarity); }
+                else { Debug.LogError("Invalid gearRarity (Null)"); }
+            }
+            numDict = listOfGearRarity.Count;
+            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearRarity has {0} entries{1}", numDict, "\n"));
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in GearRarity count, array {0}, dict {1}", numArray, numDict));
+        }
         else { Debug.LogError("Invalid listOfGearRarity (Null) -> Import failed"); }
+
         //
         // - - - Gear Type - - -
         //
-        List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
+        /*List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
         if (listOfGearType != null)
         {
             var gearTypeGUID = AssetDatabase.FindAssets("t:GearType", new[] { "Assets/SO" });
@@ -687,11 +1008,30 @@ public class LoadManager : MonoBehaviour
             }
             Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
         }
+        else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }*/
+
+        List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
+        if (listOfGearType != null)
+        {
+            numArray = arrayOfGearType.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                GearType gearType = arrayOfGearType[i];
+                //add to list
+                if (gearType != null)
+                { listOfGearType.Add(gearType); }
+                else { Debug.LogError("Invalid gearType (Null)"); }
+            }
+            numDict = listOfGearType.Count;
+            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearType has {0} entries{1}", numDict, "\n"));
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in GearType count, array {0}, dict {1}", numArray, numDict));
+        }
         else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }
+
         //
         // - - - Manage Actions - - -
         //
-        Dictionary<string, ManageAction> dictOfManageActions = GameManager.instance.dataScript.GetDictOfManageActions();
+        /*Dictionary<string, ManageAction> dictOfManageActions = GameManager.instance.dataScript.GetDictOfManageActions();
         List<ManageAction> listOfActorHandle = new List<ManageAction>();
         List<ManageAction> listOfActorReserve = new List<ManageAction>();
         List<ManageAction> listOfActorDismiss = new List<ManageAction>();

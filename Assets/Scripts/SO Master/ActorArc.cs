@@ -9,7 +9,6 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Actor / ActorArc")]
 public class ActorArc : ScriptableObject
 {
-    public string ActorTag { get; set; }              //4 letter tag, UPPERCASE eg. 'FIXE', 'HACK' -> assigned automatically by DataManager.Initialise
     public int ActorArcID { get; set; }               //unique #, zero based -> assigned automatically by DataManager.Initialise
     public GlobalSide side;
     public string description;

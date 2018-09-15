@@ -218,10 +218,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
-        //Import Manager -> InitialiseStart
+
+        /*//Import Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.importScript.InitialiseStart;
         startMethod.className = "ImportManager";
-        listOfStartMethods.Add(startMethod);
+        listOfStartMethods.Add(startMethod);*/
+
         //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
         startMethod.handler = GameManager.instance.globalScript.Initialise;
         startMethod.className = "GlobalManager";
@@ -249,6 +251,10 @@ public class GameManager : MonoBehaviour
         //Actor Manager -> PreInitialise
         startMethod.handler = GameManager.instance.actorScript.PreInitialiseActors;
         startMethod.className = "ActorManager";
+        listOfStartMethods.Add(startMethod);
+        //Load Manager -> InitialiseEarly
+        startMethod.handler = GameManager.instance.loadScript.InitialiseEarly;
+        startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
         //Import Manager -> InitialiseEarly
         startMethod.handler = GameManager.instance.importScript.InitialiseEarly;

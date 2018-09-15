@@ -15,10 +15,10 @@ public class ImportManager : MonoBehaviour
 
     public void InitialiseStart()
     {
-        int counter;
+        /*int counter;
         string path;
 
-        /*//
+        //
         // - - - GlobalMeta - - -
         //
         Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
@@ -343,14 +343,14 @@ public class ImportManager : MonoBehaviour
     public void InitialiseEarly()
     {
         int counter = 0;
-        int length;
+        /*int length;*/
         string path;
         GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
         GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //
         // - - - Node Arcs - - -
         //
-        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
+        /*Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
         Dictionary<string, int> dictOfLookUpNodeArcs = GameManager.instance.dataScript.GetDictOfLookUpNodeArcs();
         if (dictOfNodeArcs != null)
         {
@@ -757,7 +757,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
         }
-        else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }*/
         //
         // - - - Manage Actions - - -
         //
