@@ -214,13 +214,13 @@ public class GameManager : MonoBehaviour
     private void InitialiseStartSequence()
     {
         StartMethod startMethod = new StartMethod();
-        //Import Manager -> InitialiseStart
-        startMethod.handler = GameManager.instance.importScript.InitialiseStart;
-        startMethod.className = "ImportManager";
-        listOfStartMethods.Add(startMethod);
         //Load Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
+        listOfStartMethods.Add(startMethod);
+        //Import Manager -> InitialiseStart
+        startMethod.handler = GameManager.instance.importScript.InitialiseStart;
+        startMethod.className = "ImportManager";
         listOfStartMethods.Add(startMethod);
         //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
         startMethod.handler = GameManager.instance.globalScript.Initialise;
