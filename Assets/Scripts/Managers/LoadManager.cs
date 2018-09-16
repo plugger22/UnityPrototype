@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -24,7 +25,7 @@ public class LoadManager : MonoBehaviour
     public SecretStatus[] arrayOfSecretStatus;
     public NodeDatapoint[] arrayOfNodeDatapoints;
 
-    [Header("InitialiseEarly")]
+    [Header("InitialiseEarly -> First Half")]
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
@@ -36,6 +37,20 @@ public class LoadManager : MonoBehaviour
     public Gear[] arrayOfGear;
     public GearRarity[] arrayOfGearRarity;
     public GearType[] arrayOfGearType;
+
+    [Header("InitialiseEarly -> Second Half")]
+    public ManageActor[] arrayOfManageActors;
+    public ManageAction[] arrayOfManageActions;
+    public ActorConflict[] arrayOfActorConflicts;
+    public Secret[] arrayOfSecrets;
+    public Faction[] arrayOfFactions;
+    public CityArc[] arrayOfCityArcs;
+    public City[] arrayOfCities;
+    public Objective[] arrayOfObjectives;
+    public Organisation[] arrayOfOrganisations;
+    public Mayor[] arrayOfMayors;
+    public DecisionAI[] arrayOfDecisionAI;
+
 
     public void InitialiseStart()
     {
@@ -245,51 +260,6 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Node Arcs - - -
         //
-        /*
-        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
-        Dictionary<string, int> dictOfLookUpNodeArcs = GameManager.instance.dataScript.GetDictOfLookUpNodeArcs();
-        if (dictOfNodeArcs != null)
-        {
-            if (dictOfLookUpNodeArcs != null)
-            {
-                counter = 0;
-                //get GUID of all SO Node Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var nodeArcGUID = AssetDatabase.FindAssets("t:NodeArc", new[] { "Assets/SO" });
-                foreach (var guid in nodeArcGUID)
-                {
-                    //get path
-                    path = AssetDatabase.GUIDToAssetPath(guid);
-                    //get SO
-                    UnityEngine.Object nodeArcObject = AssetDatabase.LoadAssetAtPath(path, typeof(NodeArc));
-                    //assign a zero based unique ID number
-                    NodeArc nodeArc = nodeArcObject as NodeArc;
-                    nodeArc.nodeArcID = counter++;
-                    //add to dictionary
-                    try
-                    { dictOfNodeArcs.Add(nodeArc.nodeArcID, nodeArc); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid NodeArc (Null)"); counter--; }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid NodeArc (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeArc.name)); counter--; }
-                    //add to lookup dictionary
-                    try
-                    { dictOfLookUpNodeArcs.Add(nodeArc.name, nodeArc.nodeArcID); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid NodeArc (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid NodeArc (duplicate) Name \"{0}\" for ID \"{1}\"", nodeArc.name, nodeArc.nodeArcID)); }
-                }
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfNodeArcs has {0} entries{1}", dictOfNodeArcs.Count, "\n");
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpNodeArcs has {0} entries{1}", dictOfLookUpNodeArcs.Count, "\n");
-                Debug.Assert(dictOfNodeArcs.Count == counter, "Mismatch on Count");
-                Debug.Assert(dictOfLookUpNodeArcs.Count == counter, "Mismatch on Count");
-                Debug.Assert(dictOfNodeArcs.Count > 0, "No Node Arcs have been imported");
-                Debug.Assert(dictOfLookUpNodeArcs.Count > 0, "No Node Arcs in Lookup dictionary");
-            }
-            else { Debug.LogError("Invalid dictOfLookUpNodeArcs (Null) -> Import failed"); }
-        }
-        else { Debug.LogError("Invalid dictOfNodeArcs (Null) -> Import failed"); }
-        */
         Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
         Dictionary<string, int> dictOfLookUpNodeArcs = GameManager.instance.dataScript.GetDictOfLookUpNodeArcs();
         if (dictOfNodeArcs != null)
@@ -329,40 +299,9 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch on NodeArcs count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfNodeArcs (Null) -> Import failed"); }
-
         //
         // - - - Node Crisis - - -
         //
-
-        /*Dictionary<int, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
-        if (dictOfNodeCrisis != null)
-        {
-            counter = 0;
-            //get GUID of all SO Node Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var nodeCrisisGUID = AssetDatabase.FindAssets("t:NodeCrisis", new[] { "Assets/SO" });
-            foreach (var guid in nodeCrisisGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object nodeCrisisObject = AssetDatabase.LoadAssetAtPath(path, typeof(NodeCrisis));
-                //assign a zero based unique ID number
-                NodeCrisis nodeCrisis = nodeCrisisObject as NodeCrisis;
-                nodeCrisis.nodeCrisisID = counter++;
-                //add to dictionary
-                try
-                { dictOfNodeCrisis.Add(nodeCrisis.nodeCrisisID, nodeCrisis); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid NodeCrisis (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid NodeCrisis (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeCrisis.name)); counter--; }
-            }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfNodeCrisis has {0} entries{1}", dictOfNodeCrisis.Count, "\n");
-            Debug.Assert(dictOfNodeCrisis.Count == counter, "Mismatch on Count");
-            Debug.Assert(dictOfNodeCrisis.Count > 0, "No Node Crisis have been imported");
-        }
-        else { Debug.LogError("Invalid dictOfNodeCrisis (Null) -> Import failed"); }*/
-
         Dictionary<int, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
         if (dictOfNodeCrisis != null)
         {
@@ -391,49 +330,9 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch on NodeCrisis count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfNodeCrisis (Null) -> Import failed"); }
-
-
         //
         // - - - Traits - - -
         //
-        /*Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
-        List<Trait> listOfAllTraits = GameManager.instance.dataScript.GetListOfAllTraits();
-        if (dictOfTraits != null)
-        {
-            if (listOfAllTraits != null)
-            {
-                counter = 0;
-                //get GUID of all SO Trait Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var traitGUID = AssetDatabase.FindAssets("t:Trait", new[] { "Assets/SO" });
-                foreach (var guid in traitGUID)
-                {
-                    //get path
-                    path = AssetDatabase.GUIDToAssetPath(guid);
-                    //get SO
-                    UnityEngine.Object traitObject = AssetDatabase.LoadAssetAtPath(path, typeof(Trait));
-                    //assign a zero based unique ID number
-                    Trait trait = traitObject as Trait;
-                    trait.traitID = counter++;
-                    //add to dictionary
-                    try
-                    {
-                        dictOfTraits.Add(trait.traitID, trait);
-                        //add to list
-                        listOfAllTraits.Add(trait);
-                    }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Trait (Null)"); counter--; }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); counter--; }
-                }
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTraits has {0} entries{1}", dictOfTraits.Count, "\n");
-                Debug.Assert(dictOfTraits.Count == counter, "Mismatch on count");
-                Debug.Assert(dictOfTraits.Count > 0, "No Traits have been imported");
-            }
-            else { Debug.LogError("Invalid listOfAllTraits (Null) -> Import failed"); }
-        }
-        else { Debug.LogError("Invalid dictOfTraits (Null) -> Import failed"); }*/
-
         Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
         List<Trait> listOfAllTraits = GameManager.instance.dataScript.GetListOfAllTraits();
         if (dictOfTraits != null)
@@ -468,63 +367,9 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfAllTraits (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfTraits (Null) -> Import failed"); }
-
-
         //
         // - - - Actor Arcs - - 
         //
-        /*
-        Dictionary<int, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
-        List<ActorArc> authorityActorArcs = GameManager.instance.dataScript.GetListOfAuthorityActorArcs();
-        List<ActorArc> resistanceActorArcs = GameManager.instance.dataScript.GetListOfResistanceActorArcs();
-        if (dictOfActorArcs != null)
-        {
-            if (authorityActorArcs != null)
-            {
-                if (resistanceActorArcs != null)
-                {
-                    counter = 0;
-                    //get GUID of all SO ActorArc Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                    var arcGUID = AssetDatabase.FindAssets("t:ActorArc", new[] { "Assets/SO" });
-                    foreach (var guid in arcGUID)
-                    {
-                        //get path
-                        path = AssetDatabase.GUIDToAssetPath(guid);
-                        //get SO
-                        UnityEngine.Object arcObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActorArc));
-                        //assign a zero based unique ID number
-                        ActorArc arc = arcObject as ActorArc;
-                        arc.ActorArcID = counter++;
-                        //generate a four letter (first 4 of name in CAPS) as a short form tag
-                        length = arc.actorName.Length;
-                        length = length >= 4 ? 4 : length;
-                        arc.ActorTag = arc.actorName.Substring(0, length);
-                        //add to dictionary
-                        try
-                        {
-                            dictOfActorArcs.Add(arc.ActorArcID, arc);
-                            //add to list
-                            if (arc.side.level == globalAuthority.level) { authorityActorArcs.Add(arc); }
-                            else if (arc.side.level == globalResistance.level) { resistanceActorArcs.Add(arc); }
-                            else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.side.name, arc.name)); }
-                        }
-                        catch (ArgumentNullException)
-                        { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }
-                        catch (ArgumentException)
-                        { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); counter--; }
-                    }
-                    Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", dictOfActorArcs.Count, "\n");
-                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
-                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
-                    Debug.Assert(dictOfActorArcs.Count == counter, "Mismatch on count");
-                    Debug.Assert(dictOfActorArcs.Count > 0, "No Actor Arcs have been imported");
-                }
-                else { Debug.LogError("Invalid resistanceActorArcs (Null) -> Import failed"); }
-            }
-            else { Debug.LogError("Invalid authorityActorArcs (Null) -> Import failed"); }
-        }
-        else { Debug.LogError("Invalid dictOfActorArcs (Null) -> Import failed"); } */
-
         Dictionary<int, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
         List<ActorArc> authorityActorArcs = GameManager.instance.dataScript.GetListOfAuthorityActorArcs();
         List<ActorArc> resistanceActorArcs = GameManager.instance.dataScript.GetListOfResistanceActorArcs();
@@ -568,41 +413,9 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid authorityActorArcs (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfActorArcs (Null) -> Import failed"); }
-
-
-
         //
         // - - - Effects - - -
         //
-        /*Dictionary<int, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
-        if (dictOfEffects != null)
-        {
-            counter = 0;
-            //get GUID of all SO Effect Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var effectsGUID = AssetDatabase.FindAssets("t:Effect", new[] { "Assets/SO" });
-            foreach (var guid in effectsGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object effectObject = AssetDatabase.LoadAssetAtPath(path, typeof(Effect));
-                //assign a zero based Unique ID number
-                Effect effect = effectObject as Effect;
-                effect.effectID = counter++;
-                //add to dictionary
-                try
-                { dictOfEffects.Add(effect.effectID, effect); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Effect (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); counter--; }
-            }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfEffects has {0} entries{1}", dictOfEffects.Count, "\n");
-            Debug.Assert(dictOfEffects.Count == counter, "Mismatch on count");
-            Debug.Assert(dictOfEffects.Count > 0, "No Effects have been imported");
-        }
-        else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }*/
-
         Dictionary<int, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
         if (dictOfEffects != null)
         {
@@ -628,46 +441,9 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Effects count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }
-
         //
         // - - - Targets - - -
         //
-        /*Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
-        if (dictOfTargets != null)
-        {
-            counter = 0;
-            //get GUID of all SO Target Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var targetGUID = AssetDatabase.FindAssets("t:Target", new[] { "Assets/SO" });
-            foreach (var guid in targetGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object targetObject = AssetDatabase.LoadAssetAtPath(path, typeof(Target));
-                //assign a zero based unique ID number
-                Target target = targetObject as Target;
-                //set data
-                target.targetID = counter++;
-                target.targetStatus = Status.Dormant;
-                target.timer = -1;
-                target.infoLevel = 1;
-                target.isKnownByAI = false;
-                target.nodeID = -1;
-                target.ongoingID = -1;
-                //add to dictionary
-                try
-                { dictOfTargets.Add(target.targetID, target); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Target (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); counter--; }
-            }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTargets has {0} entries{1}", dictOfTargets.Count, "\n");
-            Debug.Assert(dictOfTargets.Count == counter, "Mismatch on count");
-            Debug.Assert(dictOfTargets.Count > 0, "No Targets have been imported");
-        }
-        else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }*/
-
         Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
@@ -700,56 +476,9 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Targets count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }
-
         //
         // - - - Actions - - -
         //
-
-        /*Dictionary<int, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
-        Dictionary<string, int> dictOfLookUpActions = GameManager.instance.dataScript.GetDictOfLookUpActions();
-        if (dictOfActions != null)
-        {
-            if (dictOfLookUpActions != null)
-            {
-                counter = 0;
-                //get GUID of all SO Action Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var actionGUID = AssetDatabase.FindAssets("t:Action", new[] { "Assets/SO" });
-                foreach (var guid in actionGUID)
-                {
-                    //get path
-                    path = AssetDatabase.GUIDToAssetPath(guid);
-                    //get SO
-                    UnityEngine.Object actionObject = AssetDatabase.LoadAssetAtPath(path, typeof(Action));
-                    //assign a zero based unique ID number
-                    Action action = actionObject as Action;
-                    //set data
-                    action.ActionID = counter++;
-                    //add to dictionary
-                    try
-                    { dictOfActions.Add(action.ActionID, action); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Action Arc (Null)"); counter--; }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); counter--; }
-                    //add to lookup dictionary
-                    try
-                    { dictOfLookUpActions.Add(action.name, action.ActionID); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Lookup Actions (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Lookup Actions (duplicate) ID \"{0}\" for \"{1}\"", counter, action.name)); }
-                }
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActions has {0} entries{1}", dictOfActions.Count, "\n");
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
-                Debug.Assert(dictOfActions.Count == counter, "Mismatch on count");
-                Debug.Assert(dictOfLookUpActions.Count == counter, "Mismatch on count");
-                Debug.Assert(dictOfActions.Count > 0, "No Actions have been imported");
-                Debug.Assert(dictOfLookUpActions.Count > 0, "No Actions in lookup dictionary");
-            }
-            else { Debug.LogError("Invalid dictOfLookUpActions (Null) -> Import failed"); }
-        }
-        else { Debug.LogError("Invalid dictOfActions (Null) -> Import failed"); }*/
-
         Dictionary<int, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
         Dictionary<string, int> dictOfLookUpActions = GameManager.instance.dataScript.GetDictOfLookUpActions();
         if (dictOfActions != null)
@@ -791,58 +520,9 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfLookUpActions (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfActions (Null) -> Import failed"); }
-
-
         //
         // - - - Team Arcs - - -
         //
-        /*Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
-        Dictionary<string, int> dictOfLookUpTeamArcs = GameManager.instance.dataScript.GetDictOfLookUpTeamArcs();
-        if (dictOfTeamArcs != null)
-        {
-            if (dictOfLookUpTeamArcs != null)
-            {
-                counter = 0;
-                //get GUID of all SO Team Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var teamGUID = AssetDatabase.FindAssets("t:TeamArc", new[] { "Assets/SO" });
-                foreach (var guid in teamGUID)
-                {
-                    //get path
-                    path = AssetDatabase.GUIDToAssetPath(guid);
-                    //get SO
-                    UnityEngine.Object teamObject = AssetDatabase.LoadAssetAtPath(path, typeof(TeamArc));
-                    //assign a zero based unique ID number
-                    TeamArc teamArc = teamObject as TeamArc;
-                    //set data
-                    teamArc.TeamArcID = counter++;
-                    //add to dictionary
-                    try
-                    { dictOfTeamArcs.Add(teamArc.TeamArcID, teamArc); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid TeamArc (Null)"); counter--; }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); counter--; }
-                    //add to lookup dictionary
-                    try
-                    { dictOfLookUpTeamArcs.Add(teamArc.name, teamArc.TeamArcID); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Lookup TeamArc (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Lookup TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
-                }
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTeamArcs has {0} entries{1}", dictOfTeamArcs.Count, "\n");
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpTeamArcs has {0} entries{1}", dictOfLookUpTeamArcs.Count, "\n");
-                Debug.Assert(dictOfTeamArcs.Count == counter, "Mismatch on Count");
-                Debug.Assert(dictOfLookUpTeamArcs.Count == counter, "Mismatch on Count");
-                Debug.Assert(dictOfTeamArcs.Count > 0, "No Team Arcs have been imported");
-                Debug.Assert(dictOfLookUpTeamArcs.Count > 0, "No Team Arcs in Lookup dictionary");
-                //arrayOfTeams
-                GameManager.instance.dataScript.InitialiseArrayOfTeams(counter, (int)TeamInfo.Count);
-            }
-            else { Debug.LogError("Invalid dictOfLookUpTeamArcs (Null) -> Import failed"); }
-        }
-        else { Debug.LogError("Invalid dictOfTeamArcs (Null) -> Import failed"); }*/
-
         Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
         Dictionary<string, int> dictOfLookUpTeamArcs = GameManager.instance.dataScript.GetDictOfLookUpTeamArcs();
         if (dictOfTeamArcs != null)
@@ -886,40 +566,9 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfLookUpTeamArcs (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfTeamArcs (Null) -> Import failed"); }
-
         //
         // - - - Gear - - -
         //
-        /*Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
-        if (dictOfGear != null)
-        {
-            counter = 0;
-            //get GUID of all SO Gear Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var gearGUID = AssetDatabase.FindAssets("t:Gear", new[] { "Assets/SO" });
-            foreach (var guid in gearGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object gearObject = AssetDatabase.LoadAssetAtPath(path, typeof(Gear));
-                //assign a zero based unique ID number
-                Gear gear = gearObject as Gear;
-                //set data
-                gear.gearID = counter++;
-                //add to dictionary
-                try
-                { dictOfGear.Add(gear.gearID, gear); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Gear (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
-            }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfGear has {0} entries{1}", dictOfGear.Count, "\n");
-            Debug.Assert(dictOfGear.Count == counter, "Mismatch on Count");
-            Debug.Assert(dictOfGear.Count > 0, "No Gear has been imported");
-        }
-        else { Debug.LogError("Invalid dictOfGear (Null) -> Import failed"); }*/
-
         Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
@@ -949,26 +598,6 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Gear Rarity - - -
         //
-        /*List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
-        if (listOfGearRarity != null)
-        {
-            var gearRarityGUID = AssetDatabase.FindAssets("t:GearRarity", new[] { "Assets/SO" });
-            foreach (var guid in gearRarityGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object gearRarityObject = AssetDatabase.LoadAssetAtPath(path, typeof(GearRarity));
-                GearRarity gearRarity = gearRarityObject as GearRarity;
-                //add to list
-                if (gearRarity != null)
-                { listOfGearRarity.Add(gearRarity); }
-                else { Debug.LogError("Invalid gearRarity (Null)"); }
-            }
-            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearRarity has {0} entries{1}", listOfGearRarity.Count, "\n"));
-        }
-        else { Debug.LogError("Invalid listOfGearRarity (Null) -> Import failed"); }*/
-
         List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
         if (listOfGearRarity != null)
         {
@@ -986,30 +615,9 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in GearRarity count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid listOfGearRarity (Null) -> Import failed"); }
-
         //
         // - - - Gear Type - - -
         //
-        /*List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
-        if (listOfGearType != null)
-        {
-            var gearTypeGUID = AssetDatabase.FindAssets("t:GearType", new[] { "Assets/SO" });
-            foreach (var guid in gearTypeGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object gearTypeObject = AssetDatabase.LoadAssetAtPath(path, typeof(GearType));
-                GearType gearType = gearTypeObject as GearType;
-                //add to list
-                if (gearType != null)
-                { listOfGearType.Add(gearType); }
-                else { Debug.LogError("Invalid gearType (Null)"); }
-            }
-            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
-        }
-        else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }*/
-
         List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
         if (listOfGearType != null)
         {
@@ -1027,25 +635,27 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in GearType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }
-
+        //
+        // - - - Manage Actors - - -
+        //
+        numArray = arrayOfManageActors.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfManageActors has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ManageActors present"); }
         //
         // - - - Manage Actions - - -
         //
-        /*Dictionary<string, ManageAction> dictOfManageActions = GameManager.instance.dataScript.GetDictOfManageActions();
+        Dictionary<string, ManageAction> dictOfManageActions = GameManager.instance.dataScript.GetDictOfManageActions();
         List<ManageAction> listOfActorHandle = new List<ManageAction>();
         List<ManageAction> listOfActorReserve = new List<ManageAction>();
         List<ManageAction> listOfActorDismiss = new List<ManageAction>();
         List<ManageAction> listOfActorDispose = new List<ManageAction>();
         if (dictOfManageActions != null)
         {
-            var manageGUID = AssetDatabase.FindAssets("t:ManageAction", new[] { "Assets/SO" });
-            foreach (var guid in manageGUID)
+            numArray = arrayOfManageActions.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object manageObject = AssetDatabase.LoadAssetAtPath(path, typeof(ManageAction));
-                ManageAction manageAction = manageObject as ManageAction;
+                ManageAction manageAction = arrayOfManageActions[i];
                 //add to dictionary
                 try
                 {
@@ -1112,6 +722,8 @@ public class LoadManager : MonoBehaviour
                 Debug.Assert(listOfActorDispose.Count > 0, "Invalid count (empty) for listOfActorDispose");
             }
             else { Debug.LogError("There are no entries in listOfActorDispose"); }
+            numDict = dictOfManageActions.Count;
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in ManageAction count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfManageActions (Null) -> Import failed"); }
         //
@@ -1171,16 +783,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfActorConflicts != null)
         {
             counter = 0;
-            //get GUID of all SO ActorConflict Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var actorConflictGUID = AssetDatabase.FindAssets("t:ActorConflict", new[] { "Assets/SO" });
-            foreach (var guid in actorConflictGUID)
+            numArray = arrayOfActorConflicts.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object actorConflictObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActorConflict));
                 //assign a zero based unique ID number
-                ActorConflict conflict = actorConflictObject as ActorConflict;
+                ActorConflict conflict = arrayOfActorConflicts[i];
                 //set data
                 conflict.conflictID = counter++;
                 //add to dictionary
@@ -1191,11 +798,14 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid ActorConflict (duplicate) ID \"{0}\" for \"{1}\"", counter, conflict.conflictID)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorConflicts has {0} entries{1}", dictOfActorConflicts.Count, "\n");
-            Debug.Assert(dictOfActorConflicts.Count == counter, "Mismatch in count");
-            Debug.Assert(dictOfActorConflicts.Count > 0, "No ActorConflicts imported");
+            numDict = dictOfActorConflicts.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorConflicts has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch in count");
+            Debug.Assert(numDict > 0, "No ActorConflicts imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in ActorConflict count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfActorConflicts (Null) -> Import failed"); }
+
         //
         // - - - Secrets - - -
         //
@@ -1203,16 +813,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfSecrets != null)
         {
             counter = 0;
-            //get GUID of all SO Secret Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var secretGUID = AssetDatabase.FindAssets("t:Secret", new[] { "Assets/SO" });
-            foreach (var guid in secretGUID)
+            numArray = arrayOfSecrets.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object secretObject = AssetDatabase.LoadAssetAtPath(path, typeof(Secret));
                 //assign a zero based unique ID number
-                Secret secret = secretObject as Secret;
+                Secret secret = arrayOfSecrets[i];
                 //set data
                 secret.secretID = counter++;
                 //add to dictionary
@@ -1223,9 +828,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Secret (duplicate) ID \"{0}\" for \"{1}\"", counter, secret.secretID)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfSecrets has {0} entries{1}", dictOfSecrets.Count, "\n");
-            Debug.Assert(dictOfSecrets.Count == counter, "Mismatch in count");
-            Debug.Assert(dictOfSecrets.Count > 0, "No Secrets imported");
+            numDict = dictOfSecrets.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfSecrets has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch in count");
+            Debug.Assert(numDict > 0, "No Secrets imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Secrets count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfSecrets (Null) -> Import failed"); }
         //
@@ -1235,16 +842,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfFactions != null)
         {
             counter = 0;
-            //get GUID of all SO Faction Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var factionGUID = AssetDatabase.FindAssets("t:Faction", new[] { "Assets/SO" });
-            foreach (var guid in factionGUID)
+            numArray = arrayOfFactions.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object factionObject = AssetDatabase.LoadAssetAtPath(path, typeof(Faction));
                 //assign a zero based unique ID number
-                Faction faction = factionObject as Faction;
+                Faction faction = arrayOfFactions[i];
                 //set data
                 faction.factionID = counter++;
                 //add to dictionary
@@ -1255,9 +857,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Faction (duplicate) ID \"{0}\" for \"{1}\"", counter, faction.name)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfFactions has {0} entries{1}", dictOfFactions.Count, "\n");
-            Debug.Assert(dictOfFactions.Count == counter, "Mismatch on count");
-            Debug.Assert(dictOfFactions.Count > 0, "No Factions have been imported");
+            numDict = dictOfFactions.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfFactions has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No Factions have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Faction count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfFactions (Null) -> Import failed"); }
         //
@@ -1267,16 +871,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfCityArcs != null)
         {
             counter = 0;
-            //get GUID of all SO CityArc Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var cityArcGUID = AssetDatabase.FindAssets("t:CityArc", new[] { "Assets/SO" });
-            foreach (var guid in cityArcGUID)
+            numArray = arrayOfCityArcs.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object cityArcObject = AssetDatabase.LoadAssetAtPath(path, typeof(CityArc));
                 //assign a zero based unique ID number
-                CityArc cityArc = cityArcObject as CityArc;
+                CityArc cityArc = arrayOfCityArcs[i];
                 //set data
                 cityArc.cityArcID = counter++;
                 //add to dictionary
@@ -1287,9 +886,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid CityArc (duplicate) ID \"{0}\" for \"{1}\"", counter, cityArc.name)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", dictOfCityArcs.Count, "\n");
-            Debug.Assert(dictOfCityArcs.Count == counter, "Mismatch on count");
-            Debug.Assert(dictOfCityArcs.Count > 0, "No City Arcs have been imported");
+            numDict = dictOfCityArcs.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No City Arcs have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in CityArc count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfCityArcs (Null) -> Import failed"); }
         //
@@ -1299,16 +900,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfCities != null)
         {
             counter = 0;
-            //get GUID of all SO City Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var cityGUID = AssetDatabase.FindAssets("t:City", new[] { "Assets/SO" });
-            foreach (var guid in cityGUID)
+            numArray = arrayOfCities.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object cityObject = AssetDatabase.LoadAssetAtPath(path, typeof(City));
                 //assign a zero based unique ID number
-                City city = cityObject as City;
+                City city = arrayOfCities[i];
                 //set data
                 city.cityID = counter++;
                 //add to dictionary
@@ -1319,9 +915,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid City (duplicate) ID \"{0}\" for \"{1}\"", counter, city.name)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCities has {0} entries{1}", dictOfCities.Count, "\n");
-            Debug.Assert(dictOfCities.Count == counter, "Mismatch on Count");
-            Debug.Assert(dictOfCities.Count > 0, "No cities have been imported");
+            numDict = dictOfCities.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCities has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No cities have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in City count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfCities (Null) -> Import failed"); }
         //
@@ -1331,16 +929,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfObjectives != null)
         {
             counter = 0;
-            //get GUID of all SO Objective Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var objectiveGUID = AssetDatabase.FindAssets("t:Objective", new[] { "Assets/SO" });
-            foreach (var guid in objectiveGUID)
+            numArray = arrayOfObjectives.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object objectiveObject = AssetDatabase.LoadAssetAtPath(path, typeof(Objective));
                 //assign a zero based unique ID number
-                Objective objective = objectiveObject as Objective;
+                Objective objective = arrayOfObjectives[i];
                 //set data
                 objective.objectiveID = counter++;
                 //add to dictionary
@@ -1351,9 +944,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Objective (duplicate) ID \"{0}\" for \"{1}\"", counter, objective.name)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfObjectives has {0} entries{1}", dictOfObjectives.Count, "\n");
-            Debug.Assert(dictOfObjectives.Count == counter, "Mismatch on Count");
-            Debug.Assert(dictOfObjectives.Count > 0, "No Objectives have been imported");
+            numDict = dictOfObjectives.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfObjectives has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Objectives have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Objective count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfObjectives (Null) -> Import failed"); }
         //
@@ -1363,16 +958,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfOrganisations != null)
         {
             counter = 0;
-            //get GUID of all SO Organisation Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var organisationGUID = AssetDatabase.FindAssets("t:Organisation", new[] { "Assets/SO" });
-            foreach (var guid in organisationGUID)
+            numArray = arrayOfOrganisations.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object organisationObject = AssetDatabase.LoadAssetAtPath(path, typeof(Organisation));
                 //assign a zero based unique ID number
-                Organisation organisation = organisationObject as Organisation;
+                Organisation organisation = arrayOfOrganisations[i];
                 //set data
                 organisation.orgID = counter++;
                 //add to dictionary
@@ -1383,9 +973,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Organisation (duplicate) ID \"{0}\" for \"{1}\"", counter, organisation.name)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", dictOfOrganisations.Count, "\n");
-            Debug.Assert(dictOfOrganisations.Count == counter, "Mismatch on Count");
-            Debug.Assert(dictOfOrganisations.Count > 0, "No Organisations have been imported");
+            numDict = dictOfOrganisations.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Organisations have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Organisation count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfOrganisations (Null) -> Import failed"); }
         //
@@ -1395,16 +987,11 @@ public class LoadManager : MonoBehaviour
         if (dictOfMayors != null)
         {
             counter = 0;
-            //get GUID of all SO Mayor Objects -> Note that I'm searching the entire database here so it's not folder dependant
-            var mayorGUID = AssetDatabase.FindAssets("t:Mayor", new[] { "Assets/SO" });
-            foreach (var guid in mayorGUID)
+            numArray = arrayOfMayors.Length;
+            for (int i = 0; i < numArray; i++)
             {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object mayorObject = AssetDatabase.LoadAssetAtPath(path, typeof(Mayor));
                 //assign a zero based unique ID number
-                Mayor mayor = mayorObject as Mayor;
+                Mayor mayor = arrayOfMayors[i];
                 //set data
                 mayor.mayorID = counter++;
                 //add to dictionary
@@ -1420,9 +1007,11 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.name)); counter--; }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfMayors has {0} entries{1}", dictOfMayors.Count, "\n");
-            Debug.Assert(dictOfMayors.Count == counter, "Mismatch in count");
-            Debug.Assert(dictOfMayors.Count > 0, "No Mayors have been imported");
+            numDict = dictOfMayors.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfMayors has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch in count");
+            Debug.Assert(numDict > 0, "No Mayors have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Mayor count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfMayors (Null) -> Import failed"); }
         //
@@ -1435,16 +1024,11 @@ public class LoadManager : MonoBehaviour
             if (dictOfLookUpAIDecisions != null)
             {
                 counter = 0;
-                //get GUID of all SO DecisionAI Objects -> Note that I'm searching the entire database here so it's not folder dependant
-                var decisionAIGUID = AssetDatabase.FindAssets("t:DecisionAI", new[] { "Assets/SO" });
-                foreach (var guid in decisionAIGUID)
+                numArray = arrayOfDecisionAI.Length;
+                for (int i = 0; i < numArray; i++)
                 {
-                    //get path
-                    path = AssetDatabase.GUIDToAssetPath(guid);
-                    //get SO
-                    UnityEngine.Object decisionAIObject = AssetDatabase.LoadAssetAtPath(path, typeof(DecisionAI));
                     //assign a zero based unique ID number
-                    DecisionAI decisionAI = decisionAIObject as DecisionAI;
+                    DecisionAI decisionAI = arrayOfDecisionAI[i];
                     //set data
                     decisionAI.aiDecID = counter++;
                     //add to main dictionary
@@ -1462,17 +1046,67 @@ public class LoadManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid decisionAI.name (duplicate) \"{0}\" for aiDecID \"{1}\"", decisionAI.name, counter)); counter--; }
                 }
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", dictOfAIDecisions.Count, "\n");
+                numDict = dictOfAIDecisions.Count;
+                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", numDict, "\n");
                 Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
-                Debug.Assert(dictOfAIDecisions.Count == counter, "Mismatch in count");
+                Debug.Assert(numDict == counter, "Mismatch in count");
                 Debug.Assert(dictOfLookUpAIDecisions.Count == counter, "Mismatch in count");
-                Debug.Assert(dictOfAIDecisions.Count > 0, "No AI Decisions have been imported");
+                Debug.Assert(numDict > 0, "No AI Decisions have been imported");
                 Debug.Assert(dictOfLookUpAIDecisions.Count > 0, "No AI Decisions in lookup dictionary");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch in DecisionAI count, array {0}, dict {1}", numArray, numDict));
             }
             else { Debug.LogError("Invalid dictOfLookUpAIDecision (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
-        */
+    }
+
+
+    /// <summary>
+    /// Stuff that is done after LevelManager.SetUp
+    /// Note: DataManager.cs InitialiseLate runs immediately prior to this and sets up node arrays and lists
+    /// </summary>
+    public void InitialiseLate()
+    {
+        //
+        // - - - Nodes - - -
+        //
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (dictOfNodes != null)
+        {
+            int counter = 0;
+            List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
+            if (tempNodeList != null)
+            {
+                foreach (Node node in tempNodeList)
+                {
+                    //add to dictionary
+                    try
+                    { dictOfNodes.Add(node.nodeID, node); counter++; }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Node (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name); }
+                }
+                Debug.LogFormat("[Imp] InitialiseLate -> dictOfNodes has {0} entries{1}", dictOfNodes.Count, "\n");
+                Debug.Assert(dictOfNodes.Count == counter, "Mismatch in Count");
+                Debug.Assert(dictOfNodes.Count > 0, "No Nodes have been imported");
+                //create List Of Nodes for iteration purposes
+                if (listOfNodes != null)
+                {
+                    listOfNodes.Clear();
+                    listOfNodes.AddRange(dictOfNodes.Values.ToList());
+                    Debug.LogFormat("[Imp] InitialiseLate -> listOfNodes has {0} entries{1}", listOfNodes.Count, "\n");
+                    Debug.Assert(dictOfNodes.Count == listOfNodes.Count, "Mismatch on count between dictOfNodes and listOfNodes");
+                }
+                else { Debug.LogError("Invalid listOfNodes (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
+            //Actor Nodes
+            GameManager.instance.dataScript.UpdateActorNodes();
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null) -> Import failed"); }
+
     }
 
 }

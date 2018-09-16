@@ -256,10 +256,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.loadScript.InitialiseEarly;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
-        //Import Manager -> InitialiseEarly
+        
+        /*//Import Manager -> InitialiseEarly
         startMethod.handler = GameManager.instance.importScript.InitialiseEarly;
         startMethod.className = "ImportManager";
-        listOfStartMethods.Add(startMethod);
+        listOfStartMethods.Add(startMethod);*/
+
         //GUI Manager -> before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
         startMethod.handler = GameManager.instance.guiScript.Initialise;
         startMethod.className = "GUIManager";
@@ -288,10 +290,16 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfStartMethods.Add(startMethod);
-        //Import Manager -> InitialiseLate -> immediately after levelScript.Initialise
+        //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise
+        startMethod.handler = GameManager.instance.loadScript.InitialiseLate;
+        startMethod.className = "LoadManager";
+        listOfStartMethods.Add(startMethod);
+
+        /*//Import Manager -> InitialiseLate -> immediately after levelScript.Initialise
         startMethod.handler = GameManager.instance.importScript.InitialiseLate;
         startMethod.className = "ImportManager";
-        listOfStartMethods.Add(startMethod);
+        listOfStartMethods.Add(startMethod);*/
+
         //City Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
         startMethod.className = "CityManager";

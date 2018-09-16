@@ -757,7 +757,7 @@ public class ImportManager : MonoBehaviour
             }
             Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearType has {0} entries{1}", listOfGearType.Count, "\n"));
         }
-        else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }*/
+        else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }
         //
         // - - - Manage Actions - - -
         //
@@ -1202,10 +1202,10 @@ public class ImportManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfLookUpAIDecision (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
-    }
+    }*/
 
 
-    /// <summary>
+    /*/// <summary>
     /// Stuff that is done after LevelManager.SetUp
     /// Note: DataManager.cs InitialiseLate runs immediately prior to this and sets up node arrays and lists
     /// </summary>
@@ -1250,7 +1250,7 @@ public class ImportManager : MonoBehaviour
             GameManager.instance.dataScript.UpdateActorNodes();
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) -> Import failed"); }
-
+        */
     }
 
 
