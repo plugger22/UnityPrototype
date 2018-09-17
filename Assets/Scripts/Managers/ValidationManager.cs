@@ -583,6 +583,191 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Trait SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - ActorArc - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:ActorArc", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfActorArcs.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on ActorArc SO, array {0}, assets {1} records", numArray, numAssets);
+            ActorArc[] arrayTemp = GameManager.instance.loadScript.arrayOfActorArcs;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(ActorArc));
+                //get object
+                ActorArc meta = metaObject as ActorArc;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING ActorArc \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ActorArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - Effect - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Effect", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfEffects.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Effect SO, array {0}, assets {1} records", numArray, numAssets);
+            Effect[] arrayTemp = GameManager.instance.loadScript.arrayOfEffects;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Effect));
+                //get object
+                Effect meta = metaObject as Effect;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Effect \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Effect SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - Target - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Target", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfTargets.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Target SO, array {0}, assets {1} records", numArray, numAssets);
+            Target[] arrayTemp = GameManager.instance.loadScript.arrayOfTargets;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Target));
+                //get object
+                Target meta = metaObject as Target;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Target \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Target SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - Action - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Action", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfActions.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Action SO, array {0}, assets {1} records", numArray, numAssets);
+            Action[] arrayTemp = GameManager.instance.loadScript.arrayOfActions;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Action));
+                //get object
+                Action meta = metaObject as Action;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Action \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Action SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - TeamArc - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:TeamArc", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfTeamArcs.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on TeamArc SO, array {0}, assets {1} records", numArray, numAssets);
+            TeamArc[] arrayTemp = GameManager.instance.loadScript.arrayOfTeamArcs;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(TeamArc));
+                //get object
+                TeamArc meta = metaObject as TeamArc;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING TeamArc \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TeamArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - Gear - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Gear", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfGear.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Gear SO, array {0}, assets {1} records", numArray, numAssets);
+            Gear[] arrayTemp = GameManager.instance.loadScript.arrayOfGear;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Gear));
+                //get object
+                Gear meta = metaObject as Gear;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Gear \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Gear SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - GearRarity - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:GearRarity", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfGearRarity.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on GearRarity SO, array {0}, assets {1} records", numArray, numAssets);
+            GearRarity[] arrayTemp = GameManager.instance.loadScript.arrayOfGearRarity;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(GearRarity));
+                //get object
+                GearRarity meta = metaObject as GearRarity;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING GearRarity \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GearRarity SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - GearType - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:GearType", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfGearType.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on GearType SO, array {0}, assets {1} records", numArray, numAssets);
+            GearType[] arrayTemp = GameManager.instance.loadScript.arrayOfGearType;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(GearType));
+                //get object
+                GearType meta = metaObject as GearType;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING GearType \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GearType SO, array {0}, assets {1} records", numArray, numAssets); }
+
     }
 
 
