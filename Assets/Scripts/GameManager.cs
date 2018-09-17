@@ -278,7 +278,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.actorPanelScript.Initialise;
         startMethod.className = "ActorPanelUI";
         listOfStartMethods.Add(startMethod);
-        //Actor Manager
+        //Actor Manager -> before DataManager.cs
         startMethod.handler = GameManager.instance.actorScript.Initialise;
         startMethod.className = "ActorManager";
         listOfStartMethods.Add(startMethod);
@@ -290,7 +290,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfStartMethods.Add(startMethod);
-        //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise
+        //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise & DataManager.Initialise
         startMethod.handler = GameManager.instance.loadScript.InitialiseLate;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);

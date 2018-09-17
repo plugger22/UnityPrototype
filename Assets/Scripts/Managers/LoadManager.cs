@@ -10,14 +10,20 @@ using UnityEngine;
 /// </summary>
 public class LoadManager : MonoBehaviour
 {
-    [Header("Initialise Start -> Globals")]
+    [Header("Initialise Start -> enums")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
     public GlobalType[] arrayOfGlobalType;
     public GlobalSide[] arrayOfGlobalSide;
     public GlobalWho[] arrayOfGlobalWho;
+    public EffectApply[] arrayOfEffectApply;
+    public EffectCriteria[] arrayOfEffectCriteria;
+    public EffectDuration[] arrayOfEffectDuration;
+    public EffectOperator[] arrayOfEffectOperator;
+    public EffectOutcome[] arrayOfEffectOutcome;
+    public Quality[] arrayOfQualities;
 
-    [Header("InitialiseStart -> Others")]
+    [Header("InitialiseStart -> Second Half")]
     public Condition[] arrayOfConditions;
     public TraitCategory[] arrayOfTraitCategories;
     public TraitEffect[] arrayOfTraitEffects;
@@ -90,6 +96,89 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
+        //
+        // - - - EffectApply
+        //
+        numArray = arrayOfEffectApply.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
+        //
+        // - - - EffectCriteria
+        //
+        numArray = arrayOfEffectCriteria.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectCriteria has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectCriteria present"); }
+        //
+        // - - - EffectDuration
+        //
+        numArray = arrayOfEffectDuration.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectDuration has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectDuration present"); }
+        //
+        // - - - EffectOperator
+        //
+        numArray = arrayOfEffectOperator.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectOperator has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectOperator present"); }
+        //
+        // - - - EffectOutcome
+        //
+        numArray = arrayOfEffectOutcome.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
+        //
+        // - - - Quality
+        //
+        numArray = arrayOfQualities.Length;
+        if (numArray > 0)
+        {
+            Debug.LogFormat("[Imp] InitialiseStart -> arrayOfQualities has {0} entries{1}", numArray, "\n");
+            //copy across to DataManager.cs arrays
+            List<Quality> listResistance = new List<Quality>();
+            List<Quality> listAuthority = new List<Quality>();
+            for (int i = 0; i < numArray; i++)
+            {
+                Quality quality = arrayOfQualities[i];
+                switch (quality.side.level)
+                {
+                    case 1:
+                        //authority
+                        listAuthority.Add(quality);
+                        break;
+                    case 2:
+                        //resistance
+                        listResistance.Add(quality);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid quality  \"{0}\", side \"{1}\", level {2}", quality.name, quality.side.name, quality.side.level);
+                        break;
+                }
+            }
+            //hard coded
+            int numQualities = 3;
+            //resistance
+            if (listResistance.Count == numQualities)
+            {
+                //order list then pass to dataManager.array
+                IEnumerable<Quality> sortedList = listResistance.OrderBy(o => o.order);
+                GameManager.instance.dataScript.InitialiseResistanceQualities(sortedList);
+            }
+            else { Debug.LogWarning("Invalid listResistance (size different to numOfQualities)"); }
+            //authority
+            if (listAuthority.Count == numQualities)
+            {
+                //order list then pass to dataManager.array
+                IEnumerable<Quality> sortedList = listAuthority.OrderBy(o => o.order);
+                GameManager.instance.dataScript.InitialiseAuthorityQualities(sortedList);
+            }
+            else { Debug.LogWarning("Invalid listAuthority (size different to numOfQualities)"); }
+        }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Qualities present"); }
         //
         // - - - Conditions - - -
         //
@@ -1106,7 +1195,6 @@ public class LoadManager : MonoBehaviour
             GameManager.instance.dataScript.UpdateActorNodes();
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) -> Import failed"); }
-
     }
 
 }

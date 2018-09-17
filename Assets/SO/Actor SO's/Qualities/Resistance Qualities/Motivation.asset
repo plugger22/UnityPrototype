@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: How dedicated and committed they are to the cause
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  order: 1

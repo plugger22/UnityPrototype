@@ -13,9 +13,9 @@ public class ImportManager : MonoBehaviour
 {
 
 
-    public void InitialiseStart()
+    /*public void InitialiseStart()
     {
-        /*int counter;
+        int counter;
         string path;
 
         //
@@ -184,8 +184,8 @@ public class ImportManager : MonoBehaviour
         //
         // - - - TraitCategories - - -
         //
-        Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.instance.dataScript.GetDictOfTraitCategories();
-        /*if (dictOfTraitCategories != null)
+        /*Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.instance.dataScript.GetDictOfTraitCategories();
+        if (dictOfTraitCategories != null)
         {
             var categoryGUID = AssetDatabase.FindAssets("t:TraitCategory", new[] { "Assets/SO" });
             foreach (var guid in categoryGUID)
@@ -333,7 +333,7 @@ public class ImportManager : MonoBehaviour
             Debug.LogFormat("[Imp] InitialiseStart -> dictOfNodeDatapoints has {0} entries{1}", dictOfNodeDatapoints.Count, "\n");
             Debug.Assert(dictOfNodeDatapoints.Count > 0, "No datapoints in dictOfNodeDatapoints");
         }
-        else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }*/
+        else { Debug.LogError("Invalid dictOfNodeDatapoints (Null) -> Import failed"); }
     }
 
 
@@ -343,14 +343,14 @@ public class ImportManager : MonoBehaviour
     public void InitialiseEarly()
     {
         int counter = 0;
-        /*int length;*/
+        int length;
         string path;
         GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
         GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //
         // - - - Node Arcs - - -
         //
-        /*Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
+        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
         Dictionary<string, int> dictOfLookUpNodeArcs = GameManager.instance.dataScript.GetDictOfLookUpNodeArcs();
         if (dictOfNodeArcs != null)
         {
@@ -1202,10 +1202,10 @@ public class ImportManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfLookUpAIDecision (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
-    }*/
+    }
 
 
-    /*/// <summary>
+    /// <summary>
     /// Stuff that is done after LevelManager.SetUp
     /// Note: DataManager.cs InitialiseLate runs immediately prior to this and sets up node arrays and lists
     /// </summary>
@@ -1250,8 +1250,8 @@ public class ImportManager : MonoBehaviour
             GameManager.instance.dataScript.UpdateActorNodes();
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) -> Import failed"); }
-        */
-    }
+        
+    }*/
 
 
     //new methods above here

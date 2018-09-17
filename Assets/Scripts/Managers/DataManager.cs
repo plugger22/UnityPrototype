@@ -42,8 +42,8 @@ public class DataManager : MonoBehaviour
     private List<Image> listOfActorPortraits = new List<Image>();                               //actors (not player)
 
     //actor quality input arrays (used to populate arrayOfQualities)
-    public Quality[] authorityQualities = new Quality[3];
-    public Quality[] resistanceQualities = new Quality[3];
+    private Quality[] authorityQualities;
+    private Quality[] resistanceQualities;
 
     //team pools
     private List<int> teamPoolReserve = new List<int>();
@@ -2379,6 +2379,27 @@ public class DataManager : MonoBehaviour
         return arrayOfStatTags[side.level, qualityNum];
     }
 
+    /// <summary>
+    /// set up resistance array at game start
+    /// </summary>
+    /// <param name="listOfQualities"></param>
+    public void InitialiseResistanceQualities(IEnumerable<Quality> listOfQualities)
+    {
+        if (listOfQualities != null)
+        { resistanceQualities = listOfQualities.ToArray(); }
+        else { Debug.LogError("Invalid listOfQualities for Resistance (Null)"); }
+    }
+
+    /// <summary>
+    /// set up authority array at game start
+    /// </summary>
+    /// <param name="listOfQualities"></param>
+    public void InitialiseAuthorityQualities(IEnumerable<Quality> listOfQualities)
+    {
+        if (listOfQualities != null)
+        { authorityQualities = listOfQualities.ToArray(); }
+        else { Debug.LogError("Invalid listOfQualities for Resistance (Null)"); }
+    }
 
     public Quality[] GetArrayOfAuthorityQualities()
     { return authorityQualities; }

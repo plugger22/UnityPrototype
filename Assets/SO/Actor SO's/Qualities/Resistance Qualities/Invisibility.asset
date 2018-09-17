@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Keep a low profile and stay out of sight
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  order: 2

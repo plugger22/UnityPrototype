@@ -139,42 +139,44 @@ public class NodeManager : MonoBehaviour
     {
         SetNodeActorFlags();
         //find specific SO's and assign to outcome fields
-        string path;
-        var outcomeGUID = AssetDatabase.FindAssets("t:EffectOutcome");
-        foreach (var guid in outcomeGUID)
+        EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
+        if (arrayOfEffectOutcome != null)
         {
-            path = AssetDatabase.GUIDToAssetPath(guid);
-            //get SO
-            EffectOutcome outcomeObject = (EffectOutcome)AssetDatabase.LoadAssetAtPath(path, typeof(EffectOutcome));
-            if (outcomeObject != null)
+            for (int i = 0; i < arrayOfEffectOutcome.Length; i++)
             {
-                //pick out and assign the ones required for node fast acess, ignore the rest
-                switch (outcomeObject.name)
+                //get SO
+                EffectOutcome outcomeObject = arrayOfEffectOutcome[i];
+                if (outcomeObject != null)
                 {
-                    case "NodeSecurity":
-                        outcomeNodeSecurity = outcomeObject;
-                        break;
-                    case "NodeStability":
-                        outcomeNodeStability = outcomeObject;
-                        break;
-                    case "NodeSupport":
-                        outcomeNodeSupport = outcomeObject;
-                        break;
-                    case "StatusSpiders":
-                        outcomeStatusSpiders = outcomeObject;
-                        break;
-                    case "StatusTracers":
-                        outcomeStatusTracers = outcomeObject;
-                        break;
-                    case "StatusContacts":
-                        outcomeStatusContacts = outcomeObject;
-                        break;
-                    case "StatusTeams":
-                        outcomeStatusTeams = outcomeObject;
-                        break;
+                    //pick out and assign the ones required for node fast acess, ignore the rest
+                    switch (outcomeObject.name)
+                    {
+                        case "NodeSecurity":
+                            outcomeNodeSecurity = outcomeObject;
+                            break;
+                        case "NodeStability":
+                            outcomeNodeStability = outcomeObject;
+                            break;
+                        case "NodeSupport":
+                            outcomeNodeSupport = outcomeObject;
+                            break;
+                        case "StatusSpiders":
+                            outcomeStatusSpiders = outcomeObject;
+                            break;
+                        case "StatusTracers":
+                            outcomeStatusTracers = outcomeObject;
+                            break;
+                        case "StatusContacts":
+                            outcomeStatusContacts = outcomeObject;
+                            break;
+                        case "StatusTeams":
+                            outcomeStatusTeams = outcomeObject;
+                            break;
+                    }
                 }
             }
         }
+        else { Debug.LogWarning("Invalid arrayOfEffectOutcome (Null)"); }
         //check all found and assigned
         if (outcomeNodeSecurity == null) { Debug.LogError("Invalid outcomeNodeSecurity (Null)"); }
         if (outcomeNodeStability == null) { Debug.LogError("Invalid outcomeNodeStability (Null)"); }

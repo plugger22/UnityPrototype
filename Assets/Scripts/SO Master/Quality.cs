@@ -11,4 +11,6 @@ public class Quality: ScriptableObject
 {
     public string description;
     public GlobalSide side;
+    [Tooltip("Ordered by side first and by order second (ascending order)")]
+    public int order;
 }
