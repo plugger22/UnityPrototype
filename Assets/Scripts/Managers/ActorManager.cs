@@ -19,13 +19,12 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Maxium number of actors (Active or Inactive) that can be onMap (eg. 'Onscreen') at any one time")]
     [Range(1, 4)] public int maxNumOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
     [Tooltip("Maximum number of actors that can be in the replacement pool (applies to both sides)")]
-    [Range(1, 6)] public int maxNumOfReserveActors = 4;    //
-    [Tooltip("The maximum number of stats (Qualities) that an actor can have")]
-    [Range(2,4)] public int numOfQualities = 3;        //number of qualities actors have (different for each side), eg. "Connections, Invisibility" etc. Map to DataPoint0 -> DataPoint'x'
+    [Range(1, 6)] public int maxNumOfReserveActors = 4;  
     [Tooltip("Maximum value of an actor datapoint stat")]
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
     [Range(2, 4)] public int minStatValue = 0;
+    [HideInInspector] public int numOfQualities;            //initialised in LoadManager.cs -> numOfQualities (need to do this for sequencing reasons)
 
     [Header("Management")]
     [Tooltip("OnMap actor sent to Reserves. Their unhappy timer will be set to the this number of turns")]
@@ -148,6 +147,7 @@ public class ActorManager : MonoBehaviour
 
     public void Initialise()
     {
+        numOfQualities = GameManager.instance.loadScript.numOfQualities;
         //recruit actors cached fields
         resistancePlayerTurn = -1;
         resistanceActorTurn = -1;
@@ -172,7 +172,7 @@ public class ActorManager : MonoBehaviour
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
-
+        Debug.Assert(numOfQualities > 0, "Invalid numOfQualities (zero or less)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");

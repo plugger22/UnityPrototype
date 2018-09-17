@@ -10,6 +10,11 @@ using UnityEngine;
 /// </summary>
 public class LoadManager : MonoBehaviour
 {
+    //place fields here that need to be initialised at game start, actual fields in the correct manager can access them later
+    [Header("ActorManager.cs")]
+    [Tooltip("The maximum number of stats (Qualities) that an actor can have")]
+    [Range(2, 4)] public int numOfQualities = 3;
+
     [Header("Initialise Start -> enums")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
@@ -160,9 +165,8 @@ public class LoadManager : MonoBehaviour
                 }
             }
             //hard coded
-            int numQualities = 3;
             //resistance
-            if (listResistance.Count == numQualities)
+            if (listResistance.Count == numOfQualities)
             {
                 //order list then pass to dataManager.array
                 IEnumerable<Quality> sortedList = listResistance.OrderBy(o => o.order);
@@ -170,7 +174,7 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogWarning("Invalid listResistance (size different to numOfQualities)"); }
             //authority
-            if (listAuthority.Count == numQualities)
+            if (listAuthority.Count == numOfQualities)
             {
                 //order list then pass to dataManager.array
                 IEnumerable<Quality> sortedList = listAuthority.OrderBy(o => o.order);

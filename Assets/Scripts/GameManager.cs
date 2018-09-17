@@ -93,6 +93,8 @@ public class GameManager : MonoBehaviour
     public bool isPerformanceLog;
     [Tooltip("Runs ValidationManager.cs to check data at game start")]
     public bool isValidate;
+    [Tooltip("Runs SO checker to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
+    public bool isCheckSO;
 
     [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
     
@@ -218,6 +220,13 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
+        //SO Checker (After LoadManager.cs / Optional)
+        if (isCheckSO == true)
+        {
+            startMethod.handler = GameManager.instance.validateScript.ValidateSO;
+            startMethod.className = "ValidationManager (SO)";
+            listOfStartMethods.Add(startMethod);
+        }
 
         /*//Import Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.importScript.InitialiseStart;
@@ -416,7 +425,7 @@ public class GameManager : MonoBehaviour
         if (isValidate == true)
         {
             startMethod.handler = GameManager.instance.validateScript.Initialise;
-            startMethod.className = "ValidationManager";
+            startMethod.className = "ValidationManager (Content)";
             listOfStartMethods.Add(startMethod);
         }
     }

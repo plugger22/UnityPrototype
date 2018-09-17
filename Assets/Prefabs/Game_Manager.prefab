@@ -571,6 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6b57b1b8cbe654e83bddaa167ba464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numOfQualities: 3
   arrayOfGlobalMeta:
   - {fileID: 11400000, guid: ce73b5182cb30844fa26812212374e8b, type: 2}
   - {fileID: 11400000, guid: 247e1a2258b9737479ddc805829d7eb9, type: 2}
@@ -1470,9 +1471,9 @@ MonoBehaviour:
   numOfActiveActors: 0
   maxNumOfOnMapActors: 4
   maxNumOfReserveActors: 4
-  numOfQualities: 3
   maxStatValue: 3
   minStatValue: 0
+  numOfQualities: 3
   currentReserveTimer: 10
   recruitedReserveTimer: 5
   renownCostThreaten: 1
@@ -1552,14 +1553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b1e84bbbf686b4dad954314d6f15c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  authorityQualities:
-  - {fileID: 11400000, guid: 9410d882baed50b4b9c5129422340952, type: 2}
-  - {fileID: 11400000, guid: 95b39101d6fd3cf4b8e496d6399d047c, type: 2}
-  - {fileID: 11400000, guid: 5ad75c9a57dd5974ca71471b002beb6a, type: 2}
-  resistanceQualities:
-  - {fileID: 11400000, guid: 312784eb6d7cba541a5ca329cd0cc7c6, type: 2}
-  - {fileID: 11400000, guid: 76e9aac95a8e31b4ea7f781c5eef9de8, type: 2}
-  - {fileID: 11400000, guid: dc72603fb4fece94fb2f8e65f3710b09, type: 2}
   listOfOneConnArcsDefault:
   - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
   - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
@@ -1705,6 +1698,7 @@ MonoBehaviour:
   seed: 0
   isPerformanceLog: 1
   isValidate: 0
+  isCheckSO: 1
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
