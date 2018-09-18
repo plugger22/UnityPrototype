@@ -584,7 +584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6b57b1b8cbe654e83bddaa167ba464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfQualities: 3
   arrayOfGlobalMeta:
   - {fileID: 11400000, guid: ce73b5182cb30844fa26812212374e8b, type: 2}
   - {fileID: 11400000, guid: 247e1a2258b9737479ddc805829d7eb9, type: 2}
@@ -1709,10 +1708,10 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 51171
   isPerformanceLog: 1
   isValidate: 0
-  isCheckSO: 1
+  isCheckSO: 0
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
