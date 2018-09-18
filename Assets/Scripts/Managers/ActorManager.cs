@@ -147,7 +147,7 @@ public class ActorManager : MonoBehaviour
 
     public void Initialise()
     {
-        numOfQualities = GameManager.instance.loadScript.numOfQualities;
+        numOfQualities = GameManager.instance.preloadScript.numOfQualities;
         //recruit actors cached fields
         resistancePlayerTurn = -1;
         resistanceActorTurn = -1;

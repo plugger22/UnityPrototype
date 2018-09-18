@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4565720453740776}
   - component: {fileID: 114736970613289560}
+  - component: {fileID: 114339811107641630}
+  - component: {fileID: 114379107075524332}
   - component: {fileID: 114256465635010494}
   - component: {fileID: 114709307672004698}
   - component: {fileID: 114200138194279740}
@@ -59,7 +61,6 @@ GameObject:
   - component: {fileID: 114656342642216484}
   - component: {fileID: 114639168605164212}
   - component: {fileID: 114983986480103908}
-  - component: {fileID: 114379107075524332}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -494,6 +495,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseCityChance: 20
   perNodeChance: 5
+--- !u!114 &114339811107641630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5260972e0298b8b4996b2b8212375d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfQualities: 3
 --- !u!114 &114364785414329898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1640,6 +1653,7 @@ MonoBehaviour:
   startScript: {fileID: 0}
   levelScript: {fileID: 114256465635010494}
   importScript: {fileID: 0}
+  preloadScript: {fileID: 0}
   loadScript: {fileID: 0}
   metaScript: {fileID: 0}
   dataScript: {fileID: 0}

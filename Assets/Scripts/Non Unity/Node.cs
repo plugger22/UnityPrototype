@@ -396,8 +396,9 @@ public class Node : MonoBehaviour
                     if (GameManager.instance.optionScript.debugData == true)
                     {
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
-                        textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
-                            Convert.ToInt32(isChokepointNode));
+                        /*textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
+                            Convert.ToInt32(isChokepointNode));*/
+                        textName = string.Format("isSpiderKnown {0}", isSpiderKnown);
                     }
                     else
                     {
@@ -408,11 +409,12 @@ public class Node : MonoBehaviour
                     bool showSpider = false;
                     if (isSpider == true)
                     {
-                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level 
+                            || GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideBoth.level)
                         {
                             if (GameManager.instance.optionScript.fogOfWar == true)
                             {
-                                if (_isSpiderKnown == true) { showSpider = true; }
+                                if (isSpiderKnown == true) { showSpider = true; }
                             }
                             else { showSpider = true; }
                         }

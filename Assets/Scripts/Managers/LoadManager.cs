@@ -10,10 +10,6 @@ using UnityEngine;
 /// </summary>
 public class LoadManager : MonoBehaviour
 {
-    //place fields here that need to be initialised at game start, actual fields in the correct manager can access them later
-    [Header("ActorManager.cs")]
-    [Tooltip("The maximum number of stats (Qualities) that an actor can have")]
-    [Range(2, 4)] public int numOfQualities = 3;
 
     [Header("Initialise Start -> enums")]
     public GlobalMeta[] arrayOfGlobalMeta;
@@ -149,14 +145,12 @@ public class LoadManager : MonoBehaviour
             for (int i = 0; i < numArray; i++)
             {
                 Quality quality = arrayOfQualities[i];
-                switch (quality.side.level)
+                switch (quality.side.name)
                 {
-                    case 1:
-                        //authority
+                    case "Authority":
                         listAuthority.Add(quality);
                         break;
-                    case 2:
-                        //resistance
+                    case "Resistance":
                         listResistance.Add(quality);
                         break;
                     default:
@@ -164,7 +158,7 @@ public class LoadManager : MonoBehaviour
                         break;
                 }
             }
-            //hard coded
+            int numOfQualities = GameManager.instance.preloadScript.numOfQualities;
             //resistance
             if (listResistance.Count == numOfQualities)
             {

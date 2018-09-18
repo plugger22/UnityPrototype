@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public StartManager startScript;                //Start Manager
     [HideInInspector] public LevelManager levelScript;                //Level Manager
     [HideInInspector] public ImportManager importScript;              //Import Manager
+    [HideInInspector] public PreLoadManager preloadScript;            //PreLoad Manager
     [HideInInspector] public LoadManager loadScript;                  //Load Manager
     [HideInInspector] public MetaManager metaScript;                  //Meta Manager
     [HideInInspector] public DataManager dataScript;                  //Data Manager
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour
     public bool isPerformanceLog;
     [Tooltip("Runs ValidationManager.cs to check data at game start")]
     public bool isValidate;
-    [Tooltip("Runs SO checker to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
+    [Tooltip("Runs SO Validator to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
     public bool isCheckSO;
 
     [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
@@ -127,6 +128,7 @@ public class GameManager : MonoBehaviour
         startScript = GetComponent<StartManager>();
         levelScript = GetComponent<LevelManager>();
         importScript = GetComponent<ImportManager>();
+        preloadScript = GetComponent<PreLoadManager>();
         loadScript = GetComponent<LoadManager>();
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
@@ -216,6 +218,10 @@ public class GameManager : MonoBehaviour
     private void InitialiseStartSequence()
     {
         StartMethod startMethod = new StartMethod();
+        //PreLoad Manager 
+        startMethod.handler = GameManager.instance.preloadScript.Initialise;
+        startMethod.className = "PreLoadManager";
+        listOfStartMethods.Add(startMethod);
         //Load Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
