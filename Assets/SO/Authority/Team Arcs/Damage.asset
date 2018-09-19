@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708abd26e45e38479c9781a10ac9f30, type: 3}
   m_Name: DAMAGE
   m_EditorClassIdentifier: 
-  description: Minimise the effect of damage to Nodes
+  description: Minimise the effect of damage to districts
   sprite: {fileID: 21300000, guid: a9f6f2b3fcef4d345a733bd5d1042ad7, type: 3}
   listOfEffects: []

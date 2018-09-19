@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708abd26e45e38479c9781a10ac9f30, type: 3}
   m_Name: CONTROL
   m_EditorClassIdentifier: 
-  description: Improve node Security
+  description: Improve district Security
   sprite: {fileID: 21300000, guid: a5751f70a9309954fa4b67736b01d946, type: 3}
   listOfEffects:
   - {fileID: 11400000, guid: 2a6dac2d5c163004b906aed905d5a310, type: 2}

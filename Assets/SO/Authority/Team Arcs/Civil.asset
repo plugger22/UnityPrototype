@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708abd26e45e38479c9781a10ac9f30, type: 3}
   m_Name: CIVIL
   m_EditorClassIdentifier: 
-  description: Enhance node Stability through a firm hand
+  description: Enhance district Stability through a firm hand
   sprite: {fileID: 21300000, guid: c167c4867d1f77544a08128398df10fe, type: 3}
   listOfEffects:
   - {fileID: 11400000, guid: 97a96e10175fc0c4ca5d0e7b84385219, type: 2}

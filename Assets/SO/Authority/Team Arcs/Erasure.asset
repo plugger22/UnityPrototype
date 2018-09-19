@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708abd26e45e38479c9781a10ac9f30, type: 3}
   m_Name: ERASURE
   m_EditorClassIdentifier: 
-  description: A Kill Team
+  description: A Kill & Capture Team
   sprite: {fileID: 21300000, guid: 6262a248c0bf9184690a822fd0b095ab, type: 3}
   listOfEffects: []

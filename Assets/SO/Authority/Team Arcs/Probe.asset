@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1708abd26e45e38479c9781a10ac9f30, type: 3}
   m_Name: PROBE
   m_EditorClassIdentifier: 
-  description: Dig deep and find the facts
+  description: Investigate districts in depth
   sprite: {fileID: 21300000, guid: 8d28e5f6fdb32d94498931c54ec84968, type: 3}
   listOfEffects: []
