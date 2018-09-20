@@ -459,7 +459,7 @@ public class TeamManager : MonoBehaviour
                                                     destinationPool, node.nodeID);
                                                 Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                                                 //message
-                                                GameManager.instance.messageScript.TeamDeploy(text, node.nodeID, team, actor.actorID);
+                                                GameManager.instance.messageScript.TeamDeploy(text, node, team, actor);
                                             }
                                             else
                                             {
@@ -631,9 +631,8 @@ public class TeamManager : MonoBehaviour
                                 //confirmation
                                 string text = string.Format("{0} {1}, ID {2}, deployed to {3}, Node ID {4}", team.arc.name, team.teamName, team.teamID,
                                     destinationPool, node.nodeID);
-                                /*Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));*/
-                                //message
-                                GameManager.instance.messageScript.TeamDeploy(text, node.nodeID, team, actorID);
+                                //message (internal only)
+                                GameManager.instance.messageScript.TeamDeploy(text, node, team);
                             }
                             else
                             {

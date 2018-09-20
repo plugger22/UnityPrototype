@@ -1193,4 +1193,39 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    //
+    // - - - Teams - - -
+    //
+
+    /// <summary>
+    /// Authority actor recalled from reserves for active duty and brings a team with him
+    /// </summary>
+    /// <param name="team"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public string GetAddTeamDetails(Team team, string reason)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}{1}{2} {3} added to Reserves", colourAlert, team.arc.name, colourEnd, team.teamName);
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{0}{1}{2}", "\n", "\n", reason); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Team deployed OnMap
+    /// </summary>
+    /// <param name="team"></param>
+    /// <param name="node"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public string GetTeamDeployDetails(Team team, Node node, Actor actor)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1} {2}{3} Deployed{4}{5}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", "\n");
+        builder.AppendFormat("by {0} {1}, {2}{3}{4}", GameManager.instance.metaScript.GetAuthorityTitle(), actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        return builder.ToString();
+    }
+
 }

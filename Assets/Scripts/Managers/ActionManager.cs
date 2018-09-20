@@ -2094,7 +2094,9 @@ public class ActionManager : MonoBehaviour
                                     GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Total, +1);
                                     //message
                                     string msgText = string.Format("{0} {1} added to Reserves", team.arc.name, team.teamName);
-                                    GameManager.instance.messageScript.TeamAdd(msgText, team, true);
+                                    string reason = string.Format("Due to {0} {1}, {2}{3}{4}, being recalled for active duty", GameManager.instance.metaScript.GetAuthorityTitle(), 
+                                        actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                    GameManager.instance.messageScript.TeamAdd(msgText, reason, team);
                                     builder.AppendFormat(string.Format("{0}{1}{2}{3}{4}", "\n", "\n", colourGood, msgText, colourEnd));
                                 }
                                 else { Debug.LogWarningFormat("Invalid teamArcID {0} for {1}", teamArc.TeamArcID, teamArc.name); }
