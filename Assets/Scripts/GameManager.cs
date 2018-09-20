@@ -89,7 +89,8 @@ public class GameManager : MonoBehaviour
                                                                    
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
-
+    [Tooltip("If true Player side set to Authority")]               //DEBUG
+    public bool isAuthority;
     [Tooltip("Switch ON to get a performance log of initialisation ")]
     public bool isPerformanceLog;
     [Tooltip("Runs ValidationManager.cs to check data at game start")]

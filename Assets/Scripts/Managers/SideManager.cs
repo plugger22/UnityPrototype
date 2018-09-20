@@ -96,10 +96,24 @@ public class SideManager : MonoBehaviour
 
     public void Initialise()
     {
-        //set default player as Resistance
-        PlayerSide = GameManager.instance.globalScript.sideResistance;
-        resistanceOverall = SideState.Player;
-        authorityOverall = SideState.AI;
+        //set default player 
+        if (GameManager.instance.isAuthority == false)
+        {
+            //Resistance player
+            PlayerSide = GameManager.instance.globalScript.sideResistance;
+            Debug.Log("[Start] Player set to RESISTANCE side");
+            resistanceOverall = SideState.Player;
+            authorityOverall = SideState.AI;
+        }
+        else
+        {
+            //Authority player
+            PlayerSide = GameManager.instance.globalScript.sideAuthority;
+            Debug.Log("[Start] Player set to AUTHORITY side");
+            resistanceOverall = SideState.AI;
+            authorityOverall = SideState.Player;
+        }
+
     }
 
     /// <summary>

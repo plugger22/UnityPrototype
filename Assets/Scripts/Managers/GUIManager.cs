@@ -312,7 +312,7 @@ public class GUIManager : MonoBehaviour
                         switch (GameManager.instance.playerScript.inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
-                                details.textTop = string.Format("This action can't be taken because the Player is undergoing a {0}Breakdown{1} (Stress)", 
+                                details.textTop = string.Format("This action can't be taken because the Player is undergoing a {0}Breakdown{1} (Stress)",
                                     colourBad, colourEnd);
                                 break;
                             default:
@@ -329,12 +329,24 @@ public class GUIManager : MonoBehaviour
                 details.textTop = string.Format("{0}This action is unavailable as the AI controls this side{1}", colourAlert, colourEnd);
                 break;
             case AlertType.DebugAI:
-                details.textTop = "The AI has been switched OFF" ;
+                details.textTop = "The AI has been switched OFF";
                 details.textBottom = string.Format("The Player now has {0}<b>Manual control</b>{1} of both sides", colourNeutral, colourEnd);
                 break;
             case AlertType.DebugPlayer:
-                details.textTop = "The AI has been switched back ON (Authority)";
-                details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the Resistance side only", colourNeutral, colourEnd);
+                switch (GameManager.instance.sideScript.PlayerSide.level)
+                {
+                    case 1:
+                        //authority
+                        details.textTop = "The AI has been switched back ON (Resistance)";
+                        details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the AUTHORITY side only", colourNeutral, colourEnd);
+                        break;
+                    case 2:
+                        //resistance
+                        details.textTop = "The AI has been switched back ON (Authority)";
+                        details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the RESISTANCE side only", colourNeutral, colourEnd);
+                        break;
+                }
+
                 break;
             case AlertType.HackingInitialising:
                 details.textTop = "Jacking into Authority AI. Initialising Icebreakers.";

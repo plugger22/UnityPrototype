@@ -361,35 +361,67 @@ public class DebugGUI : MonoBehaviour
                     //option only available on first turn
                     if (GameManager.instance.turnScript.Turn == 0)
                     {
-                        //switch AI Off -> Manual player control for both sides
-                        if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+
+                        switch (GameManager.instance.sideScript.PlayerSide.level)
                         {
-                            optionNoAI = "NO AI OFF";
-                            GameManager.instance.optionScript.noAI = true;
-                            GameManager.instance.sideScript.authorityCurrent = SideState.Player;
-                            GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
-                            GameManager.instance.sideScript.authorityOverall = SideState.Player;
-                            GameManager.instance.sideScript.resistanceOverall = SideState.Player;
-                            //notification
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
-                        }
-                        //reverts back to Resistance Player, Authority AI
-                        else if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
-                        {
-                            optionNoAI = "NO AI ON";
-                            GameManager.instance.optionScript.noAI = false;
-                            GameManager.instance.sideScript.authorityCurrent = SideState.AI;
-                            GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
-                            GameManager.instance.sideScript.authorityOverall = SideState.AI;
-                            GameManager.instance.sideScript.resistanceOverall = SideState.Player;
-                            //notification
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                            //authority player
+                            case 1:
+                                //switch AI Off -> Manual player control for both sides
+                                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
+                                {
+                                    optionNoAI = "NO AI OFF";
+                                    GameManager.instance.optionScript.noAI = true;
+                                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.authorityOverall = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                                    //notification
+                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
+                                }
+                                //reverts back to Authority Player, Resistance AI
+                                else if (GameManager.instance.sideScript.resistanceOverall == SideState.Player)
+                                {
+                                    optionNoAI = "NO AI ON";
+                                    GameManager.instance.optionScript.noAI = false;
+                                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceCurrent = SideState.AI;
+                                    GameManager.instance.sideScript.authorityOverall = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceOverall = SideState.AI;
+                                    //notification
+                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                                }
+                                break;
+                            //resistance player
+                            case 2:
+                                //switch AI Off -> Manual player control for both sides
+                                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                                {
+                                    optionNoAI = "NO AI OFF";
+                                    GameManager.instance.optionScript.noAI = true;
+                                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.authorityOverall = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                                    //notification
+                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
+                                }
+                                //reverts back to Resistance Player, Authority AI
+                                else if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+                                {
+                                    optionNoAI = "NO AI ON";
+                                    GameManager.instance.optionScript.noAI = false;
+                                    GameManager.instance.sideScript.authorityCurrent = SideState.AI;
+                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.authorityOverall = SideState.AI;
+                                    GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                                    //notification
+                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                                }
+                                break;
                         }
                     }
                 }
             }
-
-            
 
             //tenth button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionRenownUI))
