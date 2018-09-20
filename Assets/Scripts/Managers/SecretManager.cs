@@ -119,23 +119,28 @@ public class SecretManager : MonoBehaviour
         //
         Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
         if (dictOfSecrets != null)
         {
             if (listOfPlayerSecrets != null)
             {
+                //add to appropriate lists
                 foreach (var secret in dictOfSecrets)
                 {
                     if (secret.Value != null)
                     {
                         //set all key secret data to default settings (otherwise will carry over data between sessions)
                         secret.Value.Initialise();
-                        //add to appropriate lists
-                        switch (secret.Value.type.level)
+                        //Only add those of the same side as the player)
+                        if (secret.Value.side.level == playerLevel)
                         {
-                            case 0:
-                                //Player secrets
-                                listOfPlayerSecrets.Add(secret.Value);
-                                break;
+                            switch (secret.Value.type.level)
+                            {
+                                case 0:
+                                    //Player secrets
+                                    listOfPlayerSecrets.Add(secret.Value);
+                                    break;
+                            }
                         }
                     }
                     else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
