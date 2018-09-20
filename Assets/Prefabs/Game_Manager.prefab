@@ -1206,6 +1206,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4246d7f5aa157a44a7bf87fc02dcc06, type: 2}
   - {fileID: 11400000, guid: 7a10539a44e230540b1aa07788159c35, type: 2}
   - {fileID: 11400000, guid: 393e717d538c90743ab029faffc63bbd, type: 2}
+  - {fileID: 11400000, guid: 9a46c226ee2b1dc49bfaa1a81c4505b0, type: 2}
   arrayOfFactions:
   - {fileID: 11400000, guid: ec3367a7c7ea31142874adb8b75c1ab0, type: 2}
   - {fileID: 11400000, guid: 066d73a3ca4d3304490a9b91243d46e8, type: 2}
@@ -1709,6 +1710,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 0
+  isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 0
