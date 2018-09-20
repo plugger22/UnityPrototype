@@ -914,6 +914,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError("Invalid Secret (Null)"); counter--; }
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid Secret (duplicate) ID \"{0}\" for \"{1}\"", counter, secret.secretID)); counter--; }
+                //add to list
             }
             numDict = dictOfSecrets.Count;
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfSecrets has {0} entries{1}", numDict, "\n");

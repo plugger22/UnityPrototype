@@ -2433,6 +2433,11 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, SecretStatus> GetDictOfSecretStatus()
     { return dictOfSecretStatus; }
 
+    /// <summary>
+    /// returns player secrets (only those relevant to player side are loaded at game start)
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
     public List<Secret> GetListOfPlayerSecrets()
     { return listOfPlayerSecrets; }
 

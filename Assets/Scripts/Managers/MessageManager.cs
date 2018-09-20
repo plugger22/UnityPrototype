@@ -1501,36 +1501,36 @@ public class MessageManager : MonoBehaviour
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid teamID {Null}");
         if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.TEAM;
-            message.subType = MessageSubType.Team_Deploy;
-            message.side = globalAuthority;
-            message.data0 = node.nodeID;
-            message.data1 = team.teamID;
-            message.data2 = actor.actorID;
-            //ItemData (not if actor = null because this would be an AI action)
-            if (actor != null)
+            if (string.IsNullOrEmpty(text) == false)
             {
-                ItemData data = new ItemData();
-                data.itemText = string.Format("{0} team Deployed", team.arc.name);
-                data.topText = "Team Deployed";
-                data.bottomText = GameManager.instance.itemDataScript.GetTeamDeployDetails(team, node, actor);
-                data.priority = ItemPriority.Low;
-                data.sprite = team.arc.sprite;
-                data.tab = ItemTab.ALERTS;
-                data.side = message.side;
-                data.help = 1;
+                Message message = new Message();
+                message.text = text;
+                message.type = MessageType.TEAM;
+                message.subType = MessageSubType.Team_Deploy;
+                message.side = globalAuthority;
+                message.data0 = node.nodeID;
+                message.data1 = team.teamID;
+                if (actor != null)
+                {
+                    message.data2 = actor.actorID;
+                    //ItemData (not if actor = null because this would be an AI action)
+                    ItemData data = new ItemData();
+                    data.itemText = string.Format("{0} team Deployed", team.arc.name);
+                    data.topText = "Team Deployed";
+                    data.bottomText = GameManager.instance.itemDataScript.GetTeamDeployDetails(team, node, actor);
+                    data.priority = ItemPriority.Low;
+                    data.sprite = team.arc.sprite;
+                    data.tab = ItemTab.ALERTS;
+                    data.side = message.side;
+                    data.help = 1;
+                    //add
+                    GameManager.instance.dataScript.AddItemData(data);
+                }
                 //add
-                GameManager.instance.dataScript.AddItemData(data);
+                GameManager.instance.dataScript.AddMessage(message);
+
             }
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+            else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
 
@@ -1542,39 +1542,41 @@ public class MessageManager : MonoBehaviour
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message TeamAutoRecall(string text, int nodeID, Team team, int actorID)
+    public Message TeamAutoRecall(string text, Node node, Team team, Actor actor = null)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid team (Null)");
         if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
-        { Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID)); }
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.TEAM;
-            message.subType = MessageSubType.Team_AutoRecall;
-            message.side = globalAuthority;
-            message.isPublic = true;
-            message.displayDelay = 0;
-            message.data0 = nodeID;
-            message.data1 = team.teamID;
-            message.data2 = actorID;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Team Autorecalled";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
-            data.sprite = team.arc.sprite;
-            data.tab = ItemTab.ALERTS;
-            data.side = message.side;
-            data.help = 1;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+            if (string.IsNullOrEmpty(text) == false)
+            {
+                Message message = new Message();
+                message.text = text;
+                message.type = MessageType.TEAM;
+                message.subType = MessageSubType.Team_AutoRecall;
+                message.side = globalAuthority;
+                message.isPublic = true;
+                message.displayDelay = 0;
+                message.data0 = node.nodeID;
+                message.data1 = team.teamID;
+                if (actor != null)
+                {
+                    message.data2 = actor.actorID;
+                    //ItemData (not if actor = null as this would be an AI action)
+                    ItemData data = new ItemData();
+                    data.itemText = string.Format("{0} team AutoRecalled", team.arc.name);
+                    data.topText = "Team Autorecalled";
+                    data.bottomText = GameManager.instance.itemDataScript.GetTeamAutoRecallDetails(node, team, actor);
+                    data.priority = ItemPriority.Low;
+                    data.sprite = team.arc.sprite;
+                    data.tab = ItemTab.ALERTS;
+                    data.side = message.side;
+                    data.help = 1;
+                    GameManager.instance.dataScript.AddItemData(data);
+                }
+                //add
+                GameManager.instance.dataScript.AddMessage(message);
+            }
+            else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
 

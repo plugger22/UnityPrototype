@@ -212,7 +212,7 @@ public class TeamManager : MonoBehaviour
                                     ProcessTeamEffect(team, node, actor);
                                     //message
                                     string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, node.nodeName, node.nodeID);
-                                    GameManager.instance.messageScript.TeamAutoRecall(text, node.nodeID, team, actor.actorID);
+                                    GameManager.instance.messageScript.TeamAutoRecall(text, node, team, actor);
                                 }
                                 else
                                 {
@@ -229,7 +229,7 @@ public class TeamManager : MonoBehaviour
                                 ProcessTeamEffect(team, node, null);
                                 //message
                                 string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, node.nodeName, node.nodeID);
-                                GameManager.instance.messageScript.TeamAutoRecall(text, node.nodeID, team, -1);
+                                GameManager.instance.messageScript.TeamAutoRecall(text, node, team);
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.nodeID)); }

@@ -1228,4 +1228,14 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    public string GetTeamAutoRecallDetails(Node node, Team team, Actor actor)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1} {2}{3} AutoRecalled{4}{5}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", "\n");
+        builder.AppendFormat("by {0} {1}, {2}{3}{4} has recalled the team back to the Reserves", GameManager.instance.metaScript.GetAuthorityTitle(), actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        return builder.ToString();
+    }
+
 }

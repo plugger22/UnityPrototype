@@ -251,37 +251,27 @@ public class TooltipPlayer : MonoBehaviour
                 break;
         }
         //
-        // - - - MultiPurpose 2 - - - 
+        // - - - MultiPurpose 2 (Secrets) - - - 
         //
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+        if (listOfSecrets != null && listOfSecrets.Count > 0)
         {
-            case 1:
-                //Authority
-                playerMulti_2.text = "Placeholder";
-                break;
-            case 2:
-                //Resistance -> Secrets
-                List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
-                if (listOfSecrets != null && listOfSecrets.Count > 0)
+            StringBuilder builderSecrets = new StringBuilder();
+            builderSecrets.AppendFormat("{0}Secrets{1}", colourAlert, colourEnd);
+            //lo0p secrets
+            foreach (Secret secret in listOfSecrets)
+            {
+                //secrets shown as Red if known by other actors, green otherwise
+                if (secret != null)
                 {
-                    StringBuilder builderSecrets = new StringBuilder();
-                    builderSecrets.AppendFormat("{0}Secrets{1}", colourAlert, colourEnd);
-                    //lo0p secrets
-                    foreach (Secret secret in listOfSecrets)
-                    {
-                        //secrets shown as Red if known by other actors, green otherwise
-                        if (secret != null)
-                        {
-                            if (secret.CheckNumOfActorsWhoKnow() > 0)
-                            { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourBad, secret.tag, colourEnd); }
-                            else { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourGood, secret.tag, colourEnd); }
-                        }
-                    }
-                    playerMulti_2.text = builderSecrets.ToString();
+                    if (secret.CheckNumOfActorsWhoKnow() > 0)
+                    { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourBad, secret.tag, colourEnd); }
+                    else { builderSecrets.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourGood, secret.tag, colourEnd); }
                 }
-                else { playerMulti_2.text = string.Format("{0}<size=95%>No Secrets</size>{1}", colourGrey, colourEnd); }
-                break;
+            }
+            playerMulti_2.text = builderSecrets.ToString();
         }
+        else { playerMulti_2.text = string.Format("{0}<size=95%>No Secrets</size>{1}", colourGrey, colourEnd); }
         //Coordinates -> You need to send World (object.transform) coordinates
         Vector3 worldPos = pos;
         //update required to get dimensions as tooltip is dynamic
