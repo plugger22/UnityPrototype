@@ -1228,13 +1228,72 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
-
+    /// <summary>
+    /// Team has been autorecalled
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
     public string GetTeamAutoRecallDetails(Node node, Team team, Actor actor)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
         builder.AppendFormat("{0}{1} {2}{3} AutoRecalled{4}{5}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", "\n");
-        builder.AppendFormat("by {0} {1}, {2}{3}{4} has recalled the team back to the Reserves", GameManager.instance.metaScript.GetAuthorityTitle(), actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        builder.AppendFormat("{0} {1}, {2}{3}{4} has recalled the team, which has completed their task, back to the Reserves", GameManager.instance.metaScript.GetAuthorityTitle(), 
+            actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Team has been withdrawn early
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <param name="team"></param>
+    /// <param name="node"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public string GetTeamWithdrawDetails(string reason, Team team, Node node, Actor actor)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1} {2}{3} Withdrawn{4}{5}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0} {1}, {2}{3}{4} has recalled the team EARLY", GameManager.instance.metaScript.GetAuthorityTitle(), actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourNeutral, reason, colourEnd); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Team carries out effect OnMap
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public string GetTeamEffectDetails(string effectText, Node node, Team team)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd);
+        if (string.IsNullOrEmpty(effectText) == false)
+        { builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourGood, effectText, colourEnd); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Team neutralised by Resistance
+    /// </summary>
+    /// <param name=""></param>
+    /// <param name=""></param>
+    /// <param name=""></param>
+    /// <returns></returns>
+    public string GetTeamNeutraliseDetails(Node node, Team team)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd);
+        builder.AppendFormat("{0}{1}{2}<b>Neutralised by Resistance and withdrawn</b>{3}", "\n", "\n", colourBad, colourEnd);
         return builder.ToString();
     }
 

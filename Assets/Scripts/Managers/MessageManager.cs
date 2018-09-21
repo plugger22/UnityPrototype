@@ -1581,17 +1581,17 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Team is withdrawn early by player. Returns null if text invalid.
+    /// Team is withdrawn early by player. Returns null if text invalid. 'Reason' is self contained
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <param name="teamID"></param>
     /// <returns></returns>
-    public Message TeamWithdraw(string text, int nodeID, Team team, int actorID)
+    public Message TeamWithdraw(string text, string reason, Node node, Team team, Actor actor)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid team (Null)");
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1599,14 +1599,14 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Withdraw;
             message.side = globalAuthority;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = team.teamID;
-            message.data2 = actorID;
+            message.data2 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} team Withdrawn", team.arc.name);
             data.topText = "Team Withdrawn";
-            data.bottomText = text;
+            data.bottomText = GameManager.instance.itemDataScript.GetTeamWithdrawDetails(reason, team, node, actor);
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
             data.tab = ItemTab.ALERTS;
@@ -1621,16 +1621,16 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Team carries out it's permanent effect when auto withdrawn from node
+    /// Team carries out it's permanent effect when auto withdrawn from node. 'EffectText' is assumed to be Good news (displayed colourGood)
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message TeamEffect(string text, int nodeID, Team team)
+    public Message TeamEffect(string text, string itemText, string effectText, Node node, Team team)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid team (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1640,14 +1640,14 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Team_Effect;
             message.side = globalAuthority;
             message.isPublic = true;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = team.teamID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = itemText;
             data.topText = "Team Outcome";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetTeamEffectDetails(effectText, node, team);
+            data.priority = ItemPriority.Medium;
             data.sprite = team.arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
@@ -1668,29 +1668,29 @@ public class MessageManager : MonoBehaviour
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message TeamNeutralise(string text, int nodeID, Team team, int actorID)
+    public Message TeamNeutralise(string text, Node node, Team team, Actor actor)
     {
-        Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID));
+        Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid team (Null)");
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Neutralise;
-            message.side = globalAuthority;
+            message.side = globalBoth;
             message.isPublic = true;
             message.displayDelay = 0;
-            message.data0 = nodeID;
+            message.data0 = node.nodeID;
             message.data1 = team.teamID;
-            message.data2 = actorID;
+            message.data2 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = text;
+            data.itemText = string.Format("{0} team NEUTRALISED by Resistance", team.arc.name);
             data.topText = "Team Neutralised";
-            data.bottomText = text;
-            data.priority = ItemPriority.Low;
+            data.bottomText = GameManager.instance.itemDataScript.GetTeamNeutraliseDetails(node, team);
+            data.priority = ItemPriority.High;
             data.sprite = team.arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;

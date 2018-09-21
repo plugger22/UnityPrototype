@@ -1004,16 +1004,16 @@ public class TeamManager : MonoBehaviour
                         //need to do prior to move team as data will be reset
                         textTop = GameManager.instance.effectScript.SetTopTeamText(team.teamID, false);
                         textBottom = "The team will spend one turn in Transit and be available thereafter";
-                        int actorID = -1;
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
-                        if (actor != null) { actorID = actor.actorID; }
-                        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", team.actorSlotID)); }
+                        if (actor == null)
+                        { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", team.actorSlotID)); }
                         if (MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node) == true)
                         {
                             //message
                             string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, 
                                 node.nodeName, node.nodeID);
-                            GameManager.instance.messageScript.TeamWithdraw(text, data.nodeID, team, actorID);
+                            string reason = string.Format("{0} has done so on your orders", actor.actorName);
+                            GameManager.instance.messageScript.TeamWithdraw(text, reason, node, team, actor);
                             Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                         }
                         else
@@ -1082,7 +1082,7 @@ public class TeamManager : MonoBehaviour
                                 //message (notification to Authority Side)
                                 string text = string.Format("{0} {1}, ID {2}, neutralised at {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                     node.nodeName, node.nodeID);
-                                GameManager.instance.messageScript.TeamNeutralise(text, data.nodeID, team, actor.actorID);
+                                GameManager.instance.messageScript.TeamNeutralise(text, node, team, actor);
                                 Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
                                 //team successfully removed
                                 builderTop.Append(string.Format("{0}Operatives have succeeded!{1}", colourNormal, colourEnd));
@@ -1154,6 +1154,7 @@ public class TeamManager : MonoBehaviour
     private void ProcessTeamEffect(Team team, Node node, Actor actor)
     {
         bool isError = false;
+        string text, itemText, effectText;
         List<Effect> listOfEffects = team.arc.listOfEffects;
         EffectDataReturn effectReturn = new EffectDataReturn();
         switch(team.arc.name)
@@ -1169,8 +1170,10 @@ public class TeamManager : MonoBehaviour
                     {
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         isError = effectReturn.errorFlag;
-                        string text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, effect.description, node.nodeName, node.nodeID);
-                        GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team);
+                        text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, effect.description, node.nodeName, node.nodeID);
+                        itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                        effectText = effect.description;
+                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
                     }
                 }
                 break;
@@ -1180,8 +1183,10 @@ public class TeamManager : MonoBehaviour
                 {
                     node.RemoveTracer();
                     //message
-                    string text = string.Format("{0} {1}: Tracer destroyed at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
-                    GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team);
+                    text = string.Format("{0} {1}: Tracer destroyed at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
+                    itemText = string.Format("{0} Team DESTROYS Tracer", team.arc.name);
+                    effectText = "Resistance TRACER neutralised";
+                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 break;
             case "SPIDER":
@@ -1195,8 +1200,10 @@ public class TeamManager : MonoBehaviour
                     { node.isSpiderKnown = true; }
                     else { node.isSpiderKnown = false; }
                     //message
-                    string text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
-                    GameManager.instance.messageScript.TeamEffect(text, node.nodeID, team);
+                    text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
+                    itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                    effectText = "Spider installed to monitor Resistance activity";
+                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 break;
             case "ERASURE":
@@ -1216,7 +1223,7 @@ public class TeamManager : MonoBehaviour
                             //contain target and shut down all ongoing node effects
                             GameManager.instance.targetScript.ContainTarget(target);
                             //message
-                            string text = string.Format("Target \"{0}\" Contained by {1} {2}", target.name, team.arc.name, team.teamName);
+                            text = string.Format("Target \"{0}\" Contained by {1} {2}", target.name, team.arc.name, team.teamName);
                             GameManager.instance.messageScript.TargetContained(text, node, team, target);
                         }
                     }
@@ -1284,7 +1291,8 @@ public class TeamManager : MonoBehaviour
                         //message
                         string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                             node.nodeName, node.nodeID);
-                        GameManager.instance.messageScript.TeamWithdraw(text, node.nodeID, team, actor.actorID);
+                        string reason = string.Format("{0} had to do so due to them leaving ACTIVE duty", actor.actorName);
+                        GameManager.instance.messageScript.TeamWithdraw(text, reason, node, team, actor);
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}, actor {1}, ID {2}", listOfTeams[i], actor.arc.name, actor.actorID)); }
                 }
