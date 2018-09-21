@@ -1621,7 +1621,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Team carries out it's permanent effect when auto withdrawn from node. 'EffectText' is assumed to be Good news (displayed colourGood)
+    /// Team carries out it's permanent effect when auto withdrawn from node. 'EffectText' is assumed to be colour Formatted depending on good/neutral/bad by originating method
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>

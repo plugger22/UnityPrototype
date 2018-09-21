@@ -12,6 +12,7 @@ public class TeamArc : ScriptableObject
     public int TeamArcID { get; set; }
     public string description;
     public Sprite sprite;
-    public List<Effect> listOfEffects;
+    [Tooltip("Active effect that team has on District at completion of their time OnMap. Can be ignored")]
+    public Effect activeEffect;
 
 }

@@ -40,6 +40,7 @@ public class TeamManager : MonoBehaviour
     private string colourEffect;
     private string colourTeam;
     private string colourNormal;
+    private string colourNeutral;
     private string colourGood;
     private string colourActor;
     private string colourBad;
@@ -124,6 +125,7 @@ public class TeamManager : MonoBehaviour
     {
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
@@ -1155,26 +1157,27 @@ public class TeamManager : MonoBehaviour
     {
         bool isError = false;
         string text, itemText, effectText;
-        List<Effect> listOfEffects = team.arc.listOfEffects;
+        Effect teamEffect = team.arc.activeEffect;
         EffectDataReturn effectReturn = new EffectDataReturn();
         switch(team.arc.name)
         {
             case "CONTROL":
             case "CIVIL":
             case "MEDIA":
-                if (listOfEffects != null)
+                if (teamEffect != null)
                 {
                     EffectDataInput dataInput = new EffectDataInput();
                     dataInput.originText = team.arc.name;
-                    foreach(Effect effect in listOfEffects)
+                    effectReturn = GameManager.instance.effectScript.ProcessEffect(teamEffect, node, dataInput, actor);
+                    isError = effectReturn.errorFlag;
+                    if (isError == false)
                     {
-                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
-                        isError = effectReturn.errorFlag;
-                        text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, effect.description, node.nodeName, node.nodeID);
+                        text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, teamEffect.description, node.nodeName, node.nodeID);
                         itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
-                        effectText = effect.description;
+                        effectText = string.Format("{0}{1}{2}", colourGood, teamEffect.description, colourEnd);
                         GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
                     }
+                    else { Debug.LogWarningFormat("{0} effectReturn.errorFlag TRUE", team.arc.name); }
                 }
                 break;
             case "PROBE":
@@ -1185,7 +1188,15 @@ public class TeamManager : MonoBehaviour
                     //message
                     text = string.Format("{0} {1}: Tracer destroyed at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team DESTROYS Tracer", team.arc.name);
-                    effectText = "Resistance TRACER neutralised";
+                    effectText = string.Format("{0}Resistance TRACER neutralised{1}", colourGood, colourEnd);
+                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                }
+                else
+                {
+                    //no tracer present
+                    text = string.Format("{0} {1}: Tracer not found at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
+                    itemText = string.Format("{0} Team doesn't find Tracer", team.arc.name);
+                    effectText = string.Format("{0}No Resistance TRACER present{1}", colourNeutral, colourEnd);
                     GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 break;
@@ -1202,7 +1213,17 @@ public class TeamManager : MonoBehaviour
                     //message
                     text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
-                    effectText = "Spider installed to monitor Resistance activity";
+                    effectText = string.Format("{0}Spider installed to monitor Resistance activity{1}", colourGood, colourEnd);
+                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                }
+                else
+                {
+                    //spider already present -> reset timer
+                    node.spiderTimer = GameManager.instance.nodeScript.observerTimer;
+                    //message
+                    text = string.Format("{0} {1}: Spider NOT inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
+                    itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                    effectText = string.Format("{0}Spider already present in District, timer updated{1}", colourGood, colourEnd);
                     GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 break;

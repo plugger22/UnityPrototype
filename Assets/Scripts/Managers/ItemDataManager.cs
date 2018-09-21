@@ -1277,7 +1277,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
         builder.AppendFormat("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd);
         if (string.IsNullOrEmpty(effectText) == false)
-        { builder.AppendFormat("{0}{1}{2}{3}{4}", "\n", "\n", colourGood, effectText, colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}", "\n", "\n", effectText); }
         return builder.ToString();
     }
 
