@@ -11,9 +11,9 @@ public class Country : ScriptableObject
     [Tooltip("Descriptor only")]
     public string colourName;
     [Tooltip("RGB colour that the city name and country are displayed as")]
-    [Range(0, 255)] public float colour_red;
+    [Range(0, 255)] public byte colour_red;
     [Tooltip("RGB colour that the city name and country are displayed as")]
-    [Range(0, 255)] public float colour_green;
+    [Range(0, 255)] public byte colour_green;
     [Tooltip("RGB colour that the city name and country are displayed as")]
-    [Range(0, 255)] public float colour_blue;
+    [Range(0, 255)] public byte colour_blue;
 }

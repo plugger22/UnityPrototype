@@ -95,6 +95,8 @@ public class CityManager : MonoBehaviour
         else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
         //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);
+        //set up base panel UI
+        GameManager.instance.basePanelScript.SetNames(city.name, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.instance.guiScript.alphaBaseText);
         
         
     }

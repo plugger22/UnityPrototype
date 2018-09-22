@@ -33,4 +33,19 @@ public class BasePanelUI : MonoBehaviour
         Debug.Assert(cityName != null, "Invalid cityName (Null)");
         Debug.Assert(countryName != null, "Invalid countryName (Null)");
     }
+
+
+    public void SetNames(string nameOfCity, string nameOfCountry, byte r, byte g, byte b, byte a)
+    {
+        if (string.IsNullOrEmpty(nameOfCity) == false)
+        {
+            cityName.text = nameOfCity;
+            cityName.color = new Color32(r, g, b, a);
+        }
+        if (string.IsNullOrEmpty(nameOfCountry) == false)
+        {
+            countryName.text = nameOfCountry;
+            countryName.color = new Color32(r, g, b, a);
+        }
+    }
 }

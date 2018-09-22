@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: France
   m_EditorClassIdentifier: 
   colourName: White
-  colour_red: 255
-  colour_green: 255
-  colour_blue: 255
+  colour_red: 224
+  colour_green: 224
+  colour_blue: 224

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: America
   m_EditorClassIdentifier: 
   colourName: Cyan
-  colour_red: 13
-  colour_green: 182
-  colour_blue: 253
+  colour_red: 0
+  colour_green: 255
+  colour_blue: 255
