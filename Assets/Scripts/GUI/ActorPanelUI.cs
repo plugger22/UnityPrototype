@@ -6,9 +6,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Actor Display at bottom of UI
+/// </summary>
 public class ActorPanelUI : MonoBehaviour
 {
-
     //Actor display at bottom
     public GameObject ActorGroup;
     public GameObject Actor0;

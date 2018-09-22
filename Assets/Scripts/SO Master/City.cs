@@ -17,6 +17,7 @@ public class City : ScriptableObject
 
     [Tooltip("City Arc determines the size, layout and node type frequencies of the city")]
     public CityArc Arc;
+    public Country country;
 
     
     [HideInInspector] public int cityID;         //dynamically assigned by ImportManager.cs

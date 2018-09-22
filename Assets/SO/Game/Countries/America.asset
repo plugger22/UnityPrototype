@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a504a81166ad548a7acdd6c804222d, type: 3}
+  m_Name: America
+  m_EditorClassIdentifier: 
+  colourName: Cyan
+  colour_red: 13
+  colour_green: 182
+  colour_blue: 253

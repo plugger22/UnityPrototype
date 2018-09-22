@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public AIDisplayUI aiDisplayScript;             //AI Display UI
     [HideInInspector] public AISideTabUI aiSideTabScript;             //AI SideTab UI
     [HideInInspector] public ActorPanelUI actorPanelScript;           //Actor Panel UI
+    [HideInInspector] public BasePanelUI basePanelScript;             //Base Panel UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
     
 
@@ -186,6 +187,7 @@ public class GameManager : MonoBehaviour
         aiSideTabScript = AISideTabUI.Instance();
         alertScript = AlertUI.Instance();
         actorPanelScript = ActorPanelUI.Instance();
+        basePanelScript = BasePanelUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
         //set up list of delegates
         InitialiseStartSequence();
@@ -411,6 +413,10 @@ public class GameManager : MonoBehaviour
         //City Info UI
         startMethod.handler = GameManager.instance.cityInfoScript.Initialise;
         startMethod.className = "CityInfoUI";
+        listOfStartMethods.Add(startMethod);
+        //Base Panel UI -> after CityInfo
+        startMethod.handler = GameManager.instance.basePanelScript.Initialise;
+        startMethod.className = "BasePanelUI";
         listOfStartMethods.Add(startMethod);
         //Main Info UI
         startMethod.handler = GameManager.instance.mainInfoScript.Initialise;

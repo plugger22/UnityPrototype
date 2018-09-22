@@ -1709,7 +1709,7 @@ MonoBehaviour:
   aiSideTabScript: {fileID: 0}
   actorPanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 58973
   isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0

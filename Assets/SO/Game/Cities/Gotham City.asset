@@ -15,6 +15,7 @@ MonoBehaviour:
   baseLoyalty: 5
   connectionSecurityChance: 25
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
-  cityID: 1
-  mayor: {fileID: 0}
-  faction: {fileID: 0}
+  country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
+  cityID: 4
+  mayor: {fileID: 11400000, guid: d1858bef418cc7b49bd4d7f1cf133dbc, type: 2}
+  faction: {fileID: 11400000, guid: bceab10738a333d448540192a04a2c60, type: 2}
