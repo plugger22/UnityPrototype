@@ -42,6 +42,8 @@ public class AIDisplayUI : MonoBehaviour
     public TextMeshProUGUI subBottomChance;
     public TextMeshProUGUI decisionText;
     public TextMeshProUGUI gearText;
+    //is Active
+    [HideInInspector] public bool isActive;                 //true if in use (Resistance Player, Authority AI), false otherwise
 
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
     private GlobalSide aiSide;                             //side the AI controls (opposite to player)
@@ -51,6 +53,7 @@ public class AIDisplayUI : MonoBehaviour
     private Coroutine myCoroutine;                          //used for flashing red alert if hacking attempt detected
     private bool isFading;
     private float flashRedTime;
+    
 
     private GenericTooltipUI topTabTooltip;
     private GenericTooltipUI bottomTabTooltip;
@@ -107,27 +110,11 @@ public class AIDisplayUI : MonoBehaviour
     }
 
 
-
-    public void Initialise()
-    {
-        //ai controlled side
-        aiSide = GameManager.instance.sideScript.GetAISide();
-        Debug.Assert(aiSide != null, "Invalid AI side (Null)");
-        //tooltip data
-        InitialiseTooltips();
-        flashRedTime = GameManager.instance.guiScript.flashRedTime;
-        Debug.Assert(flashRedTime > 0, "Invalid flashRedTime ( <= 0 )");
-        //set all sub compoponents to Active
-        SetAllToActive();
-        Debug.Assert(string.IsNullOrEmpty(hackingDetected) == false, "Invalid hackingDetected (Null or Empty)");
-        //set button sprites
-        cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-        proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-    }
-
+    /// <summary>
+    /// Start runs BEFORE Initialise
+    /// </summary>
     public void Start()
     {
-        
         //event listener
         EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
         EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
@@ -136,6 +123,41 @@ public class AIDisplayUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.AIDisplayPanelOpen, OnEvent, "AIDisplayUI");
     }
 
+
+    public void Initialise()
+    {
+        //only initialise if player is Resistance
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        {
+            //ai controlled side
+            aiSide = GameManager.instance.sideScript.GetAISide();
+            Debug.Assert(aiSide != null, "Invalid AI side (Null)");
+            //tooltip data
+            InitialiseTooltips();
+            flashRedTime = GameManager.instance.guiScript.flashRedTime;
+            Debug.Assert(flashRedTime > 0, "Invalid flashRedTime ( <= 0 )");
+
+            Debug.Assert(string.IsNullOrEmpty(hackingDetected) == false, "Invalid hackingDetected (Null or Empty)");
+            //set button sprites
+            cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+            proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+            //active
+            isActive = true;
+        }
+        else
+        {
+            //ai display not needed
+            isActive = false;
+            //remove listeners
+            EventManager.instance.RemoveEvent(EventType.AIDisplayOpen);
+            EventManager.instance.RemoveEvent(EventType.AIDisplayClose);
+            EventManager.instance.RemoveEvent(EventType.AISendDisplayData);
+            EventManager.instance.RemoveEvent(EventType.AISendHackingData);
+            EventManager.instance.RemoveEvent(EventType.AIDisplayPanelOpen);
+        }
+        //set all sub compoponents
+        SetAllStatus(isActive);
+    }
 
     /// <summary>
     /// Event handler
@@ -176,25 +198,26 @@ public class AIDisplayUI : MonoBehaviour
     /// <summary>
     /// set all UI components (apart from main) to active. Run at level start to ensure no problems (something hasn't been switched off in the editor)
     /// </summary>
-    private void SetAllToActive()
+    private void SetAllStatus(bool status)
     {
-        aiDisplayObject.gameObject.SetActive(true);
-        mainPanel.gameObject.SetActive(true);
-        backgroundImage.gameObject.SetActive(true);
-        innerPanel.gameObject.SetActive(true);
-        subTopPanel.gameObject.SetActive(true);
-        subMiddlePanel.gameObject.SetActive(true);
-        subBottomPanel.gameObject.SetActive(true);
-        tabCloseText.gameObject.SetActive(true);
-        tabSideMouse.gameObject.SetActive(true);
-        tabTopMouse.gameObject.SetActive(true);
-        tabBottomMouse.gameObject.SetActive(true);
-        renownPanel.gameObject.SetActive(true);
-        decisionText.gameObject.SetActive(true);
-        gearText.gameObject.SetActive(true);
-        cancelButton.gameObject.SetActive(true);
-        proceedButton.gameObject.SetActive(true);
-        buttonPanel.gameObject.SetActive(true);
+        //switch gui elements on/off
+        aiDisplayObject.gameObject.SetActive(status);
+        mainPanel.gameObject.SetActive(status);
+        backgroundImage.gameObject.SetActive(status);
+        innerPanel.gameObject.SetActive(status);
+        subTopPanel.gameObject.SetActive(status);
+        subMiddlePanel.gameObject.SetActive(status);
+        subBottomPanel.gameObject.SetActive(status);
+        tabCloseText.gameObject.SetActive(status);
+        tabSideMouse.gameObject.SetActive(status);
+        tabTopMouse.gameObject.SetActive(status);
+        tabBottomMouse.gameObject.SetActive(status);
+        renownPanel.gameObject.SetActive(status);
+        decisionText.gameObject.SetActive(status);
+        gearText.gameObject.SetActive(status);
+        cancelButton.gameObject.SetActive(status);
+        proceedButton.gameObject.SetActive(status);
+        buttonPanel.gameObject.SetActive(status);
         //switch off flashers
         detectedFlasher.gameObject.SetActive(false);
     }

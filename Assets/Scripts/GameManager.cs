@@ -422,11 +422,11 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.mainInfoScript.Initialise;
         startMethod.className = "MainInfoUI";
         listOfStartMethods.Add(startMethod);
-        //AI Display UI
+        //AI Display UI 
         startMethod.handler = GameManager.instance.aiDisplayScript.Initialise;
         startMethod.className = "AIDisplayUI";
         listOfStartMethods.Add(startMethod);
-        //AI Side Tab UI
+        //AI SideTab UI -> after AI Display UI
         startMethod.handler = GameManager.instance.aiSideTabScript.Initialise;
         startMethod.className = "AISideTabUI";
         listOfStartMethods.Add(startMethod);

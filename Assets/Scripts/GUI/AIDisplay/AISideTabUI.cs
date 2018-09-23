@@ -23,7 +23,8 @@ public class AISideTabUI : MonoBehaviour
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipDetails;
 
-    [HideInInspector] public HackingStatus hackingStatus;             //data passed in from AIManager.cs -> UpdateSideTabData
+    [HideInInspector] public HackingStatus hackingStatus;               //data passed in from AIManager.cs -> UpdateSideTabData
+    [HideInInspector] public bool isActive;                             //true if in use (Resistance Player, Authority AI), false otherwise
 
     private static AISideTabUI aiSideTabUI;
 
@@ -48,33 +49,9 @@ public class AISideTabUI : MonoBehaviour
         return aiSideTabUI;
     }
 
-    public void Initialise()
-    {
-        //tooltip
-        tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
-        Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
-        tooltip.isIgnoreClick = true;
-        /*tooltip.x_offset = 20;*/
-        tooltip.testTag = "AISideTabUI";
-        tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
-        tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
-        //flashing alert
-        flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
-        Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
-        //data
-        topText.text = "AI";
-        bottomText.text = "-";
-        hackingStatus = HackingStatus.Initialising;
-        myCoroutine = null;
-        isFading = false;
-        //set alert flasher to zero opacity
-        tempColour = alertFlasher.color;
-        tempColour.a = 0.0f;
-        alertFlasher.color = tempColour;
-        //set all sub compoponents to Active
-        SetAllToActive();
-    }
-
+    /// <summary>
+    /// Start runs BEFORE Initialise
+    /// </summary>
     public void Start()
     {
         //event listener
@@ -83,6 +60,49 @@ public class AISideTabUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.AISendSideData, OnEvent, "AISideTabUI");
     }
 
+    /// <summary>
+    /// called from AIDisplayUI.cs -> Initialise, not GameManager
+    /// </summary>
+    public void Initialise()
+    {
+        if (GameManager.instance.aiDisplayScript.isActive == true)
+        {
+            //tooltip
+            tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
+            Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
+            tooltip.isIgnoreClick = true;
+            /*tooltip.x_offset = 20;*/
+            tooltip.testTag = "AISideTabUI";
+            tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
+            tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
+            //flashing alert
+            flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
+            Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
+            //data
+            topText.text = "AI";
+            bottomText.text = "-";
+            hackingStatus = HackingStatus.Initialising;
+            myCoroutine = null;
+            isFading = false;
+            //set alert flasher to zero opacity
+            tempColour = alertFlasher.color;
+            tempColour.a = 0.0f;
+            alertFlasher.color = tempColour;
+            //set to Active
+            isActive = true;
+        }
+        else
+        {
+            //AI side tab not needed
+            isActive = false;
+            //remove listeners
+            EventManager.instance.RemoveEvent(EventType.AISideTabOpen);
+            EventManager.instance.RemoveEvent(EventType.AISideTabClose);
+            EventManager.instance.RemoveEvent(EventType.AISendSideData);
+        }
+        //Set all components 
+        SetAllStatus(isActive);
+    }
 
     /// <summary>
     /// Event handler
@@ -114,14 +134,12 @@ public class AISideTabUI : MonoBehaviour
     /// <summary>
     /// set all UI components (apart from main) to active. Run at level start to ensure no problems (something hasn't been switched off in the editor)
     /// </summary>
-    private void SetAllToActive()
+    private void SetAllStatus(bool status)
     {
-        sideTabImage.gameObject.SetActive(true);
-        topText.gameObject.SetActive(true);
-        bottomText.gameObject.SetActive(true);
+        sideTabImage.gameObject.SetActive(status);
+        topText.gameObject.SetActive(status);
+        bottomText.gameObject.SetActive(status);
     }
-
-
 
     /// <summary>
     /// make side tab visibile
