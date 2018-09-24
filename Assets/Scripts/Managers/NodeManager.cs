@@ -842,7 +842,7 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Show all active nodes for a particular actor. Use actor.slotID (0 to numOfActors)
+    /// Show all active nodes (Contacts) for a particular actor. Use actor.slotID (0 to numOfActors)
     /// </summary>
     /// <param name="slotID"></param>
     public void ShowActiveNodes(int slotID)
@@ -1999,9 +1999,14 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarningFormat("Invalid tempList (Null) for nodeID {0}", node.nodeID); }
                         }
-                        else { Debug.LogWarningFormat("Key not found in dictOfNodeContacts, nodeID {0}", node.nodeID); }
+                        else
+                        {
+                            //No contacts at node
+                            node.isContact = false;
+                        }
                     }
-                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodes[i]); }
+                    else
+                    { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodes[i]); }
                 }
             }
             else { Debug.LogError("Invalid listOfNodes (Null)"); }

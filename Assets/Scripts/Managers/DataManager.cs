@@ -797,21 +797,21 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// return a list of all Nodes where an actor has contacts, null if none
+    /// return a list of all Nodes where an actor has contacts, returns empty list if none
     /// </summary>
     /// <param name="actorID"></param>
     /// <returns></returns>
     public List<Node> GetListOfActorContacts(int slotID)
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        List<Node> listOfNodes = null;
+        List<Node> listOfNodes = new List<Node>();
         //get actor
         Actor actor = GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
         if (actor != null)
         {
             if (dictOfActorContacts.ContainsKey(actor.actorID) == true)
             {
-                List<int> listOfNodeID = dictOfActorContacts[actor.actorID];
+                List<int> listOfNodeID = new List<int>(dictOfActorContacts[actor.actorID]);
                 if (listOfNodeID != null)
                 {
                     //loop through list and convert nodeID's to Nodes
