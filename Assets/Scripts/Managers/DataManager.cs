@@ -731,6 +731,66 @@ public class DataManager : MonoBehaviour
         return teffID;
     }
 
+    //
+    // - - - Contacts
+    //
+
+    public Dictionary<int, List<int>> GetDictOfNodeContacts()
+    { return dictOfNodeContacts; }
+
+    public Dictionary<int, List<int>> GetDictOfActorContacts()
+    { return dictOfActorContacts; }
+
+    /// <summary>
+    /// adds entry to contact dictionaries. ListOfContactNodes holds nodeID's where actor has a contact
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <param name="listOfContactNodes"></param>
+    public bool AddContacts(int actorID, List<int> listOfContactNodes)
+    {
+        Debug.Assert(actorID > -1, "Invalid actorID (-1)");
+        bool successFlag = true;
+        int numOfContacts;
+        List<int> listOfActorID = new List<int>();
+        if (listOfContactNodes != null)
+        {
+            numOfContacts = listOfContactNodes.Count;
+            if (numOfContacts > 0)
+            {
+                //add to dictOfActorContacts
+                try
+                { dictOfActorContacts.Add(actorID, listOfContactNodes); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid entry in dictOfActorContacts for actorID {0}", actorID); successFlag = false; }
+                //add to dictOfNodeContacts
+                for(int i = 0; i < numOfContacts; i++)
+                {
+                    if (dictOfNodeContacts.ContainsKey(listOfContactNodes[i]) == true)
+                    {
+                        //existing entry, check actorID not already present
+                        listOfActorID = dictOfNodeContacts[i];
+                        if (listOfActorID.Exists(id => id == actorID) == true)
+                        {
+                            //already present, warning message
+                            Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, listOfContactNodes[i]);
+                        }
+                        else
+                        {
+                            //not present, add to list
+                            dictOfNodeContacts[i].Add(actorID);
+                        }
+                    }
+                    else
+                    {
+                        //create a new entry
+                    }
+                }
+            }
+            else { Debug.LogError("No contacts in listOfContactNodes"); successFlag = false; }
+        }
+        else { Debug.LogError("Invalid listOfContactNodes (Null)"); successFlag = false; }
+        return successFlag;
+    }
 
     //
     // - - - Nodes - - -

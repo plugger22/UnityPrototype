@@ -1912,21 +1912,92 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Initialises contacts for a new actor
+    /// </summary>
+    /// <param name="actor"></param>
+    public void SetNodeContacts(Actor actor)
+    {
+        int index, nodeID, numOfNodes, numOfContacts;
+        if (actor != null)
+        {
+            int contactLevel = actor.datapoint0;
+            int contactsPerLevel = 2;
+            int totalContacts = contactLevel * contactsPerLevel;
+            List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+            List<int> listOfContactNodes = new List<int>();
+            if (listOfNodes != null)
+            {
+                //create a templist of nodes
+                List<Node> tempListOfNodes = new List<Node>(listOfNodes);
+                //randomly select nodes up to total contacts
+                
+                for(int i = 0; i < totalContacts; i++)
+                {
+                    //check minimum number of nodes left to select from
+                    numOfNodes = tempListOfNodes.Count;
+                    if (numOfNodes > 0)
+                    {
+                        index = Random.Range(0, tempListOfNodes.Count);
+                        nodeID = tempListOfNodes[index].nodeID;
+                        listOfContactNodes.Add(nodeID);
+                        //remove chosen node to prevent duplicates
+                        tempListOfNodes.RemoveAt(index);
+                    }
+                    else { break; }
+                }
+                //Contact nodes determined, now add to dictionaries
+                numOfContacts = listOfContactNodes.Count;
+                if (numOfContacts > 0)
+                {
+                    //add to dictOfActorContacts & dictOfNodeContacts
+                    GameManager.instance.dataScript.AddContacts(actor.actorID, listOfContactNodes);
+                }
+                else { Debug.LogWarningFormat("Actor {0}, {1} has no contacts", actor.actorName, actor.arc.name); }
+            }
+            else { Debug.LogError("Invalid listOfNodes (Null)"); }
+        }
+        else { Debug.LogError("Invalid actor (Null)"); }
+    }
+
+    /// <summary>
     /// Update all node contacts across the map whenever there is a change
     /// </summary>
-    public void SetNodeContacts()
+    public void UpdateNodeContacts()
     {
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-        if (listOfNodes != null)
+        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.instance.dataScript.GetDictOfNodeContacts();
+        if (dictOfNodeContacts != null)
         {
-            //set all to false
-            foreach (Node node in listOfNodes)
+            if (listOfNodes != null)
             {
-                
-                node.isContact = false;
+                //loop all nodes
+                for (int i = 0; i < listOfNodes.Count; i++)
+                {
+                    Node node = listOfNodes[i];
+                    if (node != null)
+                    {
+                        //find entry in dictionary
+                        if (dictOfNodeContacts.ContainsKey(node.nodeID) == true)
+                        {
+                            //get list of contacts for node
+                            List<int> tempList = dictOfNodeContacts[node.nodeID];
+                            if (tempList != null)
+                            {
+                                //Check if contacts present at node or not
+                                if (tempList.Count > 0)
+                                { node.isContact = true; }
+                                else { node.isContact = false; }
+                            }
+                            else { Debug.LogWarningFormat("Invalid tempList (Null) for nodeID {0}", node.nodeID); }
+                        }
+                        else { Debug.LogWarningFormat("Key not found in dictOfNodeContacts, nodeID {0}", node.nodeID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodes[i]); }
+                }
             }
+            else { Debug.LogError("Invalid listOfNodes (Null)"); }
         }
-        else { Debug.LogError("Invalid listOfNodes (Null)"); }
+        else { Debug.LogError("Invalid dictOfNodeContacts (Null)"); }
     }
 
 
