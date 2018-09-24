@@ -74,8 +74,8 @@ public class LevelManager : MonoBehaviour
         AssignNodeArcs();
         AssignSecurityLevels();
         InitialiseArrayOfActiveNodes();
-        AssignActorsToNodes(GameManager.instance.globalScript.sideAuthority);
-        AssignActorsToNodes(GameManager.instance.globalScript.sideResistance);
+        /*AssignActorsToNodes(GameManager.instance.globalScript.sideAuthority);
+        AssignActorsToNodes(GameManager.instance.globalScript.sideResistance);*/
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
     }
 
@@ -830,7 +830,7 @@ public class LevelManager : MonoBehaviour
         arrayOfActiveNodes = new bool[listOfNodeObjects.Count, GameManager.instance.dataScript.GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
     }
 
-    /// <summary>
+    /*/// <summary>
     /// sets up nodes to be active, or not, for each of the selected actors
     /// </summary>
     /// <param name="arrayOfActors"></param>
@@ -967,7 +967,7 @@ public class LevelManager : MonoBehaviour
             else { Debug.LogError(string.Format("No Actors within arrayOfActors -> Nodes not initialised for Actor use, side {0}", side.name)); }
         }
         else { Debug.LogError(string.Format("Invalid arrayOfActors (Null) -> Nodes not initialised for Actor use, side {0}", side.name)); }
-    }
+    }*/
 
     #endregion
 

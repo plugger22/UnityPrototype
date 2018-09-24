@@ -186,8 +186,6 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
-        
-        
         //cached TraitEffects
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
@@ -236,7 +234,13 @@ public class ActorManager : MonoBehaviour
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         //create pool actors
         InitialisePoolActors();
+    }
 
+    public void InitialiseLate()
+    {
+        //initialise actor contacts
+        InitialiseActorContacts(globalAuthority);
+        InitialiseActorContacts(globalResistance);
     }
 
     /// <summary>
@@ -357,14 +361,32 @@ public class ActorManager : MonoBehaviour
                 if (actor != null)
                 {
                     Debug.Log(string.Format("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
-                        GameManager.instance.dataScript.GetQuality(side, 0), actor.datapoint0, 
-                        GameManager.instance.dataScript.GetQuality(side, 1), actor.datapoint1, 
+                        GameManager.instance.dataScript.GetQuality(side, 0), actor.datapoint0,
+                        GameManager.instance.dataScript.GetQuality(side, 1), actor.datapoint1,
                         GameManager.instance.dataScript.GetQuality(side, 2), actor.datapoint2, actor.level, "\n"));
                 }
                 else { Debug.LogWarning("Actor not created"); }
             }
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
+    }
+
+    /// <summary>
+    /// Initialise actor contacts for both sides at game start
+    /// </summary>
+    public void InitialiseActorContacts(GlobalSide side)
+    {
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                Actor actor = arrayOfActors[i];
+                if (actor != null)
+                { GameManager.instance.nodeScript.SetActorContacts(actor); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
 
     /// <summary>

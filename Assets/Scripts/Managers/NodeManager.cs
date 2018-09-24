@@ -136,7 +136,8 @@ public class NodeManager : MonoBehaviour
 
     public void Initialise()
     {
-        SetNodeContactFlags();
+        /*SetNodeContactFlags();*/
+        UpdateNodeContacts();
         //find specific SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
         if (arrayOfEffectOutcome != null)
@@ -849,13 +850,21 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
         //set all nodes to default colour first
         ResetNodes();
-        //change material for selected nodes
-        List<GameObject> tempList = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
+
+        /*List<GameObject> tempList = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
         foreach (GameObject obj in tempList)
         {
             Node nodeTemp = obj.GetComponent<Node>();
             nodeTemp.SetMaterial(materialActive);
+        }*/
+
+        List<Node> tempNodeList = GameManager.instance.dataScript.GetListOfActorContacts(slotID);
+        foreach(Node node in tempNodeList)
+        {
+            //change material for selected nodes
+            node.SetMaterial(materialActive);
         }
+
         //Get Actor
         Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
         string displayText;
@@ -869,7 +878,7 @@ public class NodeManager : MonoBehaviour
             displayText = string.Format("{0}\"{1}\"{2} {3}{4}{5}{6}{7}{8} {9}{10} district{11}{12}", colourHighlight, actor.actorName, colourEnd,
                 colourDefault, minionTitle, colourEnd,
                 colourHighlight, actor.arc.name, colourEnd,
-                colourDefault, tempList.Count, tempList.Count != 1 ? "s" : "", colourEnd);
+                colourDefault, tempNodeList.Count, tempNodeList.Count != 1 ? "s" : "", colourEnd);
             GameManager.instance.alertScript.SetAlertUI(displayText);
             NodeShowFlag = 1;
         }
@@ -1866,7 +1875,7 @@ public class NodeManager : MonoBehaviour
     /// <summary>
     /// Sets the node.isContact flag (true if any resisitance actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
     /// </summary>
-    public void SetNodeContactFlags()
+    /*public void SetNodeContactFlags()
     {
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         GlobalSide side = GameManager.instance.globalScript.sideResistance;
@@ -1909,13 +1918,13 @@ public class NodeManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
-    }
+    }*/
 
     /// <summary>
     /// Initialises contacts for a new actor
     /// </summary>
     /// <param name="actor"></param>
-    public void SetNodeContacts(Actor actor)
+    public void SetActorContacts(Actor actor)
     {
         int index, nodeID, numOfNodes, numOfContacts;
         if (actor != null)

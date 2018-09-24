@@ -742,7 +742,7 @@ public class DataManager : MonoBehaviour
     { return dictOfActorContacts; }
 
     /// <summary>
-    /// adds entry to contact dictionaries. ListOfContactNodes holds nodeID's where actor has a contact
+    /// adds mew set of Actor contacts to dictionaries. ListOfContactNodes holds nodeID's where actor has a contact
     /// </summary>
     /// <param name="actorID"></param>
     /// <param name="listOfContactNodes"></param>
@@ -750,7 +750,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(actorID > -1, "Invalid actorID (-1)");
         bool successFlag = true;
-        int numOfContacts;
+        int numOfContacts, nodeID;
         List<int> listOfActorID = new List<int>();
         if (listOfContactNodes != null)
         {
@@ -765,24 +765,28 @@ public class DataManager : MonoBehaviour
                 //add to dictOfNodeContacts
                 for(int i = 0; i < numOfContacts; i++)
                 {
-                    if (dictOfNodeContacts.ContainsKey(listOfContactNodes[i]) == true)
+                    nodeID = listOfContactNodes[i];
+                    if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                     {
                         //existing entry, check actorID not already present
-                        listOfActorID = dictOfNodeContacts[i];
+                        listOfActorID = dictOfNodeContacts[nodeID];
                         if (listOfActorID.Exists(id => id == actorID) == true)
                         {
                             //already present, warning message
-                            Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, listOfContactNodes[i]);
+                            Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, nodeID);
                         }
                         else
                         {
                             //not present, add to list
-                            dictOfNodeContacts[i].Add(actorID);
+                            dictOfNodeContacts[nodeID].Add(actorID);
                         }
                     }
                     else
                     {
                         //create a new entry
+                        List<int> newList = new List<int>();
+                        newList.Add(actorID);
+                        dictOfNodeContacts.Add(nodeID, newList);
                     }
                 }
             }
@@ -790,6 +794,43 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfContactNodes (Null)"); successFlag = false; }
         return successFlag;
+    }
+
+    /// <summary>
+    /// return a list of all Nodes where an actor has contacts, null if none
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public List<Node> GetListOfActorContacts(int slotID)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
+        List<Node> listOfNodes = null;
+        //get actor
+        Actor actor = GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
+        if (actor != null)
+        {
+            if (dictOfActorContacts.ContainsKey(actor.actorID) == true)
+            {
+                List<int> listOfNodeID = dictOfActorContacts[actor.actorID];
+                if (listOfNodeID != null)
+                {
+                    //loop through list and convert nodeID's to Nodes
+                    for (int i = 0; i < listOfNodeID.Count; i++)
+                    {
+                        Node node = GetNode(listOfNodeID[i]);
+                        if (node != null)
+                        {
+                            //add node to return list
+                            listOfNodes.Add(node);
+                        }
+                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodeID[i]); }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfNodeID (null) for actor {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
+        return listOfNodes;
     }
 
     //
