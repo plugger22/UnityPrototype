@@ -3026,7 +3026,7 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
                         //sprite of recruited actor
                         sprite = actorRecruited.arc.sprite;
-                        //initiliase unhappy timer
+                        //initialise unhappy timer
                         actorRecruited.unhappyTimer = unhappyTimer;
                         actorRecruited.isNewRecruit = true;
                         //message

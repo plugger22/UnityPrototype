@@ -329,6 +329,7 @@ public class LevelManager : MonoBehaviour
         else { Debug.LogError(string.Format("Invalid Connection, ID {0} -> Not added to collections", connectionTemp.connID)); }
     }
     #endregion
+
     #region ChangeAllConnections
     /// <summary>
     /// debug function to change all connection security levels (called from DebugGUI menu)
@@ -343,6 +344,7 @@ public class LevelManager : MonoBehaviour
         }
     }
     #endregion
+
     #region RemoveInvalidNodes
     /// <summary>
     /// loops listOfSortedNodes and removes any node connections that are invalid due to collisions
@@ -834,18 +836,17 @@ public class LevelManager : MonoBehaviour
     /// <param name="arrayOfActors"></param>
     private void AssignActorsToNodes(GlobalSide side)
     {
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);           //the four, or less, available actors for the level
-        int[] arrayOfArcs = new int[GameManager.instance.dataScript.CheckNumOfNodeArcs()];    //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
-        List<NodeArc> listOfNodeArcs = new List<NodeArc>();                 //temp list of NodeArcs used for an Actors primary and exclude nodeArc preference
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);             //the four, or less, available actors for the level
+        int[] arrayOfArcs = new int[GameManager.instance.dataScript.CheckNumOfNodeArcs()];          //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
+        List<NodeArc> listOfNodeArcs = new List<NodeArc>();                                         //temp list of NodeArcs used for an Actors primary and exclude nodeArc preference
 
-        int primary = GameManager.instance.nodeScript.nodePrimaryChance;               //% chance, times actor.Ability, of node being active for this actor -> Primary Node
-        int secondary = primary / 2;                                        //% chance, times actor.Ability, of node being active for this actor -> Secondary Node
-        int minimumNumOfNodes = GameManager.instance.nodeScript.nodeActiveMinimum;     //minimum number of active nodes that should be on map for any given actor type
-        int chance;                                                         //% chance, primary, or secondary, times actor ability
-        int counter;                                                        //counts number of active nodes for this actor
+        int primary = GameManager.instance.nodeScript.nodePrimaryChance;                            //% chance, times actor.Ability, of node being active for this actor -> Primary Node
+        int secondary = primary / 2;                                                                //% chance, times actor.Ability, of node being active for this actor -> Secondary Node
+        int minimumNumOfNodes = GameManager.instance.nodeScript.nodeActiveMinimum;                  //minimum number of active nodes that should be on map for any given actor type
+        int chance;                                                                                 //% chance, primary, or secondary, times actor ability
+        int counter;                                                                                //counts number of active nodes for this actor
         int nodeIndex, actorIndex;
         int length = arrayOfActors.Length;
-        
 
         if (arrayOfActors != null)
         {

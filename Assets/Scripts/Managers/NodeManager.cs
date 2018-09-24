@@ -136,7 +136,7 @@ public class NodeManager : MonoBehaviour
 
     public void Initialise()
     {
-        SetNodeActorFlags();
+        SetNodeContactFlags();
         //find specific SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
         if (arrayOfEffectOutcome != null)
@@ -1864,9 +1864,9 @@ public class NodeManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sets the node.isContact flag (true if any Resistance actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
+    /// Sets the node.isContact flag (true if any resisitance actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
     /// </summary>
-    public void SetNodeActorFlags()
+    public void SetNodeContactFlags()
     {
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         GlobalSide side = GameManager.instance.globalScript.sideResistance;
@@ -1875,10 +1875,10 @@ public class NodeManager : MonoBehaviour
             //set all to false
             foreach (Node node in listOfNodes)
             { node.isContact = false; }
-            //loop Resistance actors
+            //loop actors
             for (int slotID = 0; slotID < GameManager.instance.actorScript.maxNumOfOnMapActors; slotID++)
             {
-                //check there an actor present in the slot
+                //check there a resistance actor present in the slot
                 if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, side) == true)
                 {
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, side);
@@ -1910,6 +1910,26 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
+
+    /// <summary>
+    /// Update all node contacts across the map whenever there is a change
+    /// </summary>
+    public void SetNodeContacts()
+    {
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
+        {
+            //set all to false
+            foreach (Node node in listOfNodes)
+            {
+                
+                node.isContact = false;
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
+    }
+
+
 
     /// <summary>
     /// loops all nodes and removes any ongoing effects that match the specified ID

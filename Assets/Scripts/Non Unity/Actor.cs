@@ -68,7 +68,7 @@ namespace gameAPI
                 //NOTE: not using an event here as it's a non-unity class and the PostNotification call requires a unity class to work
                 //NOTE: don't want this to fire on first turn while everything being set-up (fires in NodeManager.Initialise at the appropriate point)
                 if (GameManager.instance.turnScript.Turn > 0)
-                { GameManager.instance.nodeScript.SetNodeActorFlags(); }
+                { GameManager.instance.nodeScript.SetNodeContactFlags(); }
                 //remove gear
                 if (_status != ActorStatus.Active && _status != ActorStatus.Inactive)
                 { RemoveGear(); }

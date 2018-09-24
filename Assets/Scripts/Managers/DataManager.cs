@@ -166,6 +166,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, SecretStatus> dictOfSecretStatus = new Dictionary<string, SecretStatus>(); //Key -> SecretStatus.name, Value -> SecretStatus
     private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();        //Key -> nodeCrisisID, Value -> NodeCrisis
     private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();       //Key -> turn, Value -> MainInfoData set for turn
+    private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();       //Key -> ActorID, Value -> list of nodeID's where actor has contacts
+    private Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();        //Key -> NodeID, Value -> list of actorID's who have a contact at node
     
 
     //global SO's (enum equivalents)
