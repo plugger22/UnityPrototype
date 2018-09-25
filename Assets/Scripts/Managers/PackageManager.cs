@@ -35,7 +35,7 @@ namespace packageAPI
         public int tracerTimer;
         public int[] arrayOfStats;
         public List<string> listOfCrisis;
-        public List<string> listOfActive;
+        public List<string> listOfContacts;
         public List<EffectDataTooltip> listOfEffects;
         public List<string> listOfTeams;
         public List<string> listOfTargets;

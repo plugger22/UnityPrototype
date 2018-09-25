@@ -328,7 +328,7 @@ public class TooltipNode : MonoBehaviour
         builderActor.Append(colourActive);
         //ascertain whether actors shown or not
         proceedFlag = false;
-        numRecords = data.listOfActive.Count;
+        numRecords = data.listOfContacts.Count;
         if (playerSide.level == globalResistance.level) { proceedFlag = true; }
         else if (playerSide.level == globalAuthority.level)
         {
@@ -338,7 +338,7 @@ public class TooltipNode : MonoBehaviour
                 for (int i = 0; i < numRecords; i++)
                 {
                     if (i > 0) { builderActor.AppendLine(); }
-                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd);
+                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContacts[i], colourEnd);
                 }
                 builderActor.AppendLine();
             }
@@ -360,7 +360,7 @@ public class TooltipNode : MonoBehaviour
                     for (int i = 0; i < numRecords; i++)
                     {
                         if (i > 0) { builderActor.AppendLine(); }
-                        builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfActive[i], colourEnd);
+                        builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContacts[i], colourEnd);
                     }
                 }
                 else if (playerSide.level == globalAuthority.level)

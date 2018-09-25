@@ -849,13 +849,14 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a list of ActorArc names for all contacts at node. Returns empty string if none.
+    /// Returns a list of ActorArc names (Player side) for all contacts at node. Returns empty string if none.
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
     public List<string> GetListOfNodeContacts(int nodeID)
     {
         List<string> listOfNodeContacts = new List<string>();
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //find node in dict
         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
         {
@@ -872,8 +873,9 @@ public class DataManager : MonoBehaviour
                         Actor actor = GetActor(actorID);
                         if (actor != null)
                         {
-                            //add to list
-                            listOfNodeContacts.Add(actor.arc.name);
+                            //add to list if actor same side as Player
+                            if (actor.side.level == side.level)
+                            { listOfNodeContacts.Add(actor.arc.name); }
                         }
                         else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}, nodeID {1}", actorID, nodeID); }
                     }

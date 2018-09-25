@@ -1921,7 +1921,7 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Update Node contact status across the map whenever there is a change
+    /// Update Node contact status across the map whenever there is a change. Contact state updated for Player side only. (changing sides calls this method)
     /// </summary>
     public void UpdateNodeContacts()
     {

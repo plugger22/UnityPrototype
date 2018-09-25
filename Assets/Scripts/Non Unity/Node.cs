@@ -366,7 +366,7 @@ public class Node : MonoBehaviour
                 //do once
                 while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
                 {
-                    List<string> activeList = GetNodeActors();
+                    List<string> contactList = GetNodeActors();
                     List<EffectDataTooltip> effectsList = GetOngoingEffects();
                     List<string> teamList = new List<string>();
                     if (listOfTeams.Count > 0)
@@ -437,7 +437,7 @@ public class Node : MonoBehaviour
                         tracerTimer = tracerTimer,
                         arrayOfStats = GetStats(),
                         listOfCrisis = crisisList,
-                        listOfActive = activeList,
+                        listOfContacts = contactList,
                         listOfEffects = effectsList,
                         listOfTeams = teamList,
                         listOfTargets = targetList,
@@ -597,26 +597,7 @@ public class Node : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public List<string> GetNodeActors()
-    {
-        /*List<string> tempList = new List<string>();
-        int limit = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        for (int i = 0; i < limit; i++)
-        {
-            //actor present at node (not vacant)
-            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
-            {
-                if (GameManager.instance.levelScript.CheckNodeActive(nodeID, side, i) == true)
-                {
-                    tempList.Add(GameManager.instance.dataScript.GetCurrentActorType(i, side));
-                }
-
-
-            }
-        }
-        return tempList;*/
-        return GameManager.instance.dataScript.GetListOfNodeContacts(nodeID);
-    }
+    { return GameManager.instance.dataScript.GetListOfNodeContacts(nodeID); }
 
     /// <summary>
     /// returns a list of ongoing effects currently impacting the node, returns empty list if none
