@@ -55,8 +55,8 @@ public class LevelManager : MonoBehaviour
     private List<List<int>> listOfSortedNodes = new List<List<int>>();              //each node has a sorted (closest to furthest) list of nodeID's of neighouring nodes
     private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units    
      
-    private List<List<GameObject>> listOfActorNodesAuthority = new List<List<GameObject>>();        //list containing sublists, one each of all the active nodes for each actor in the level
-    private List<List<GameObject>> listOfActorNodesResistance = new List<List<GameObject>>();       //need a separate list for each side   
+    /*private List<List<GameObject>> listOfActorNodesAuthority = new List<List<GameObject>>();        //list containing sublists, one each of all the active nodes for each actor in the level
+    private List<List<GameObject>> listOfActorNodesResistance = new List<List<GameObject>>();       //need a separate list for each side  */ 
 
     private int[] arrayOfNodeTypeTotals;            //array of how many of each node type there is on the map, index = node.Arc.nodeArcID
     private bool[,,] arrayOfActiveNodes;            //[total nodes, side, total actors] true if node active for that actor
@@ -506,42 +506,6 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a string made up of Actors data
-    /// </summary>
-    /// <returns></returns>
-    public string GetActorAnalysis(GlobalSide side)
-    {
-        Debug.Assert(side != null, "Invalid side (Null)");
-        StringBuilder builder = new StringBuilder();
-        builder.Append("Actor Analysis" + "\n\n");
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
-        //loop actors
-        foreach (Actor actor in arrayOfActors)
-        {
-            //ignore invalid actors or slots where there is no actor (Vacant)
-            if (actor != null)
-            {
-                builder.Append(string.Format("{0}, ID {1},  Renown: {2}{3}", actor.arc.actorName, actor.actorID, actor.Renown, "\n"));
-                switch (side.name)
-                {
-                    case "Authority":
-                        builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
-                            listOfActorNodesAuthority[actor.actorSlotID].Count, "\n\n"));
-                        break;
-                    case "Resistance":
-                        builder.Append(string.Format("P: {0}  E: {1}  A: {2}{3}", actor.arc.listPrefPrimary[0].name, actor.arc.listPrefExclude[0].name,
-                            listOfActorNodesResistance[actor.actorSlotID].Count, "\n\n"));
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
-                        break;
-                }
-            }
-        }
-        return builder.ToString();
-    }
-
-    /// <summary>
     /// Test Search that determines if the graph is connected or not
     /// </summary>
     /// <returns></returns>
@@ -830,144 +794,7 @@ public class LevelManager : MonoBehaviour
         arrayOfActiveNodes = new bool[listOfNodeObjects.Count, GameManager.instance.dataScript.GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
     }
 
-    /*/// <summary>
-    /// sets up nodes to be active, or not, for each of the selected actors
-    /// </summary>
-    /// <param name="arrayOfActors"></param>
-    private void AssignActorsToNodes(GlobalSide side)
-    {
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);             //the four, or less, available actors for the level
-        int[] arrayOfArcs = new int[GameManager.instance.dataScript.CheckNumOfNodeArcs()];          //array of int's, one for each possible NodeArcID, used to contain % chance of node being active for each node type
-        List<NodeArc> listOfNodeArcs = new List<NodeArc>();                                         //temp list of NodeArcs used for an Actors primary and exclude nodeArc preference
-
-        int primary = GameManager.instance.nodeScript.nodePrimaryChance;                            //% chance, times actor.Ability, of node being active for this actor -> Primary Node
-        int secondary = primary / 2;                                                                //% chance, times actor.Ability, of node being active for this actor -> Secondary Node
-        int minimumNumOfNodes = GameManager.instance.nodeScript.nodeActiveMinimum;                  //minimum number of active nodes that should be on map for any given actor type
-        int chance;                                                                                 //% chance, primary, or secondary, times actor ability
-        int counter;                                                                                //counts number of active nodes for this actor
-        int nodeIndex, actorIndex;
-        int length = arrayOfActors.Length;
-
-        if (arrayOfActors != null)
-        {
-            if (length > 0)
-            {
-                //initialise array of Node lists
-                List<GameObject>[] arrayOfNodeLists = new List<GameObject>[length];
-                for (int i = 0; i < length; i++)
-                { arrayOfNodeLists[i] = new List<GameObject>(); }
-
-                //loop Actors
-                for (actorIndex = 0; actorIndex < arrayOfActors.Length; actorIndex++)
-                {
-                    Actor actor = arrayOfActors[actorIndex];
-                    //populate arrayOfArcs with default secondary chance of being active
-                    chance = secondary * actor.datapoint0;
-                    for (int j = 0; j < arrayOfArcs.Length; j++)
-                    { arrayOfArcs[j] = chance; }
-                    //get actors Primary NodeArc preferences
-                    listOfNodeArcs.Clear();
-                    listOfNodeArcs.AddRange(actor.arc.listPrefPrimary);
-                    foreach(NodeArc arc in listOfNodeArcs)
-                    {
-                        chance = primary * actor.datapoint0;
-                        arrayOfArcs[arc.nodeArcID] = chance;
-                        Debug.Log(string.Format("{0}  primary NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.nodeArcID, side.name, "\n"));
-                    }
-                    //get actors Exclusion NodeArc preferences
-                    listOfNodeArcs.Clear();
-                    listOfNodeArcs.AddRange(actor.arc.listPrefExclude);
-                    foreach (NodeArc arc in listOfNodeArcs)
-                    {
-                        arrayOfArcs[arc.nodeArcID] = 0;
-                        Debug.Log(string.Format("{0}  Exclusion NodeArc \"{1}\" -> nodeArcID {2}, side {3}{4}", actor.arc.actorName, arc.name, arc.nodeArcID, side.name, "\n"));
-                    }
-                    //debug summary
-                    Debug.Log(string.Format("{0} {1} - {2} - {3} - {4} - {5} - {6}, side {7}{8}", actor.arc.actorName, arrayOfArcs[0], arrayOfArcs[1], arrayOfArcs[2], 
-                        arrayOfArcs[3], arrayOfArcs[4], arrayOfArcs[5], side.name, "\n"));
-
-                    //loop nodes and check if any are active
-                    counter = 0;
-                    for(nodeIndex = 0; nodeIndex < listOfNodeObjects.Count; nodeIndex++)
-                    {
-                        Node node = listOfNodeObjects[nodeIndex].GetComponent<Node>();
-                        //node active?
-                        if (Random.Range(0, 100) < arrayOfArcs[node.Arc.nodeArcID])
-                        {
-                            counter++;
-                            arrayOfActiveNodes[nodeIndex, side.level, actorIndex] = true;
-                            //add to list of Active nodes for that actor
-                            arrayOfNodeLists[actorIndex].Add(listOfNodeObjects[nodeIndex]);
-                        }
-                    }
-                    Debug.Log(string.Format("First Pass -> {0} is active in {1} nodes, side {2}{3}", actor.arc.actorName, counter, side.name, "\n"));
-                    bool checkFlag;
-                    int modifier = 0;
-                    //check minimum number of active nodes has been achieved
-                    if (counter < minimumNumOfNodes)
-                    {
-                        //need to add more active nodes -> keep looping until minimum obtained
-                        do
-                        {
-                            //prevents endless loop situation where there are no viable nodes to test
-                            checkFlag = false;
-                            for (nodeIndex = 0; nodeIndex < listOfNodeObjects.Count; nodeIndex++)
-                            {
-                                Node node = listOfNodeObjects[nodeIndex].GetComponent<Node>();
-                                //check node not already active
-                                if (arrayOfActiveNodes[nodeIndex, side.level, actorIndex] == false)
-                                {
-                                    //chance of node being active (increase the odds of this happening)
-                                    if ((Random.Range(0, 100) - modifier) < arrayOfArcs[node.Arc.nodeArcID])
-                                    {
-                                        counter++;
-                                        arrayOfActiveNodes[nodeIndex, side.level, actorIndex] = true;
-                                        //add to list of Active ndoes for that actor
-                                        arrayOfNodeLists[actorIndex].Add(listOfNodeObjects[nodeIndex]);
-                                    }
-                                    else
-                                    {
-                                        //failed test but there was at least one viable node
-                                        checkFlag = true;
-                                        //gradually increase the odds of a positive outcome
-                                        modifier += 2;
-                                    }
-                                }
-                                //reached the minimum?
-                                if (counter >= minimumNumOfNodes) { break; }
-                            }
-
-                            //message once per complete node loop
-                            if (counter < minimumNumOfNodes)
-                            { Debug.LogWarning(string.Format("One complete loop of Nodes completed trying to attain the minimum numer of Nodes, modifier {0}, side {1}{2}", 
-                                modifier, side.name, "\n")); }
-                        }
-                        while (counter < minimumNumOfNodes && checkFlag == true);
-
-                        Debug.Log(string.Format("Later Passes -> {0} is active in {1} nodes, side {2}{3}", actor.arc.actorName, counter, side.name, "\n"));
-                    }
-                }
-                //transfer lists of nodes across
-                for (int i = 0; i < length; i++)
-                {
-                    switch (side.name)
-                    {
-                        case "Authority":
-                            listOfActorNodesAuthority.Add(new List<GameObject>(arrayOfNodeLists[i]));
-                            break;
-                        case "Resistance":
-                            listOfActorNodesResistance.Add(new List<GameObject>(arrayOfNodeLists[i]));
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
-                            break;
-                    }
-                }
-            }
-            else { Debug.LogError(string.Format("No Actors within arrayOfActors -> Nodes not initialised for Actor use, side {0}", side.name)); }
-        }
-        else { Debug.LogError(string.Format("Invalid arrayOfActors (Null) -> Nodes not initialised for Actor use, side {0}", side.name)); }
-    }*/
+    
 
     #endregion
 
@@ -1036,29 +863,5 @@ public class LevelManager : MonoBehaviour
 
     public List<Node> GetListOfNodes()
     { return listOfNodes; }
-
-    /// <summary>
-    /// returns an empty list if an incorrect side is provided
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public List<List<GameObject>> GetListOfActorNodes(GlobalSide side)
-    {
-        Debug.Assert(side != null, "Invalid side (Null)");
-        List<List<GameObject>> tempList = new List<List<GameObject>>();
-        switch (side.name)
-        {
-            case "Authority":
-                tempList = listOfActorNodesAuthority;
-                break;
-            case "Resistance":
-                tempList = listOfActorNodesResistance;
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
-                break;
-        }
-        return tempList;
-    }
 
 }

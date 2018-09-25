@@ -1873,54 +1873,6 @@ public class NodeManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sets the node.isContact flag (true if any resisitance actor has a connection at node). Run everytime an actor changes status to keep flags up to date.
-    /// </summary>
-    /*public void SetNodeContactFlags()
-    {
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-        GlobalSide side = GameManager.instance.globalScript.sideResistance;
-        if (listOfNodes != null)
-        {
-            //set all to false
-            foreach (Node node in listOfNodes)
-            { node.isContact = false; }
-            //loop actors
-            for (int slotID = 0; slotID < GameManager.instance.actorScript.maxNumOfOnMapActors; slotID++)
-            {
-                //check there a resistance actor present in the slot
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, side) == true)
-                {
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, side);
-                    if (actor != null)
-                    {
-                        //only consider actor if Active
-                        if (actor.Status == ActorStatus.Active)
-                        {
-                            List<GameObject> listOfActorNodes = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
-                            if (listOfActorNodes != null)
-                            {
-                                //loop nodes where actor has a connection
-                                for (int i = 0; i < listOfActorNodes.Count; i++)
-                                {
-                                    //set flag to true
-                                    Node node = listOfActorNodes[i].GetComponent<Node>();
-                                    if (node != null)
-                                    { node.isContact = true; }
-                                    else { Debug.LogError(string.Format("Invalid node (Null) for slotID {0}", slotID)); }
-                                }
-
-                            }
-                            else { Debug.LogError(string.Format("Invalid listOfActorNodes (Null) for slotID {0}", slotID)); }
-                        }
-                    }
-                    else { Debug.LogError(string.Format("Invalid Actor (null) for slotID {0}", slotID)); }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid listOfNodes (Null)"); }
-    }*/
-
-    /// <summary>
     /// Initialises contacts for a new actor
     /// </summary>
     /// <param name="actor"></param>

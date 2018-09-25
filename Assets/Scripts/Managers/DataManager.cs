@@ -81,7 +81,6 @@ public class DataManager : MonoBehaviour
     private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
     private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
 
-    private List<List<GameObject>> listOfActorNodes = new List<List<GameObject>>();         //sublists, one each of all the active nodes for each actor (current side)
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
@@ -226,8 +225,8 @@ public class DataManager : MonoBehaviour
             for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
             {  arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
         }
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "DataManager");
+        /*//event listener
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "DataManager");*/
     }
 
     /// <summary>
@@ -261,7 +260,7 @@ public class DataManager : MonoBehaviour
         Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));
     }
 
-    /// <summary>
+    /*/// <summary>
     /// handles events
     /// </summary>
     /// <param name="eventType"></param>
@@ -279,13 +278,13 @@ public class DataManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }
+    }*/
 
-    /// <summary>
+    /*/// <summary>
     /// sets up list of active nodes for each actor slot
     /// </summary>
     public void UpdateActorNodes()
-    { listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.sideScript.PlayerSide);}
+    { listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.sideScript.PlayerSide);}*/
 
     //
     // - - - Info Flow (Notifications)- - - 
@@ -2440,17 +2439,6 @@ public class DataManager : MonoBehaviour
     //
     // - - - Actor Nodes & Qualities - - -
     //
-
-    /// <summary>
-    /// return a list of all nodes where an actor (slotID) is active
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public List<GameObject> GetListOfActorNodes(int slotID)
-    {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        return listOfActorNodes[slotID];
-    }
 
     /// <summary>
     /// returns and array of strings for actor quality tags, eg. "Connections, Invisibility" etc.
