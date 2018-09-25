@@ -598,7 +598,7 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<string> GetNodeActors()
     {
-        List<string> tempList = new List<string>();
+        /*List<string> tempList = new List<string>();
         int limit = GameManager.instance.actorScript.maxNumOfOnMapActors;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         for (int i = 0; i < limit; i++)
@@ -610,9 +610,12 @@ public class Node : MonoBehaviour
                 {
                     tempList.Add(GameManager.instance.dataScript.GetCurrentActorType(i, side));
                 }
+
+
             }
         }
-        return tempList;
+        return tempList;*/
+        return GameManager.instance.dataScript.GetListOfNodeContacts(nodeID);
     }
 
     /// <summary>

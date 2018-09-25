@@ -225,8 +225,6 @@ public class DataManager : MonoBehaviour
             for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
             {  arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
         }
-        /*//event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "DataManager");*/
     }
 
     /// <summary>
@@ -259,32 +257,6 @@ public class DataManager : MonoBehaviour
         }
         Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));
     }
-
-    /*/// <summary>
-    /// handles events
-    /// </summary>
-    /// <param name="eventType"></param>
-    /// <param name="Sender"></param>
-    /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object Param = null)
-    {
-        //Detect event type
-        switch (eventType)
-        {
-            case EventType.ChangeSide:
-                UpdateActorNodes();
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
-                break;
-        }
-    }*/
-
-    /*/// <summary>
-    /// sets up list of active nodes for each actor slot
-    /// </summary>
-    public void UpdateActorNodes()
-    { listOfActorNodes = GameManager.instance.levelScript.GetListOfActorNodes(GameManager.instance.sideScript.PlayerSide);}*/
 
     //
     // - - - Info Flow (Notifications)- - - 
@@ -731,7 +703,7 @@ public class DataManager : MonoBehaviour
     }
 
     //
-    // - - - Contacts
+    // - - - Contacts - - - 
     //
 
     public Dictionary<int, List<int>> GetDictOfNodeContacts()
@@ -796,6 +768,50 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Removes all contacts from a specific actor from dictOfNodeContacts (record remains in dictOfActorContacts in case the actor returns)
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public bool RemoveContacts(int actorID)
+    {
+        Debug.Assert(actorID > -1, "Invalid actorID (-1)");
+        bool successFlag = true;
+        //find record in dictOfActorContacts and get listOfNodeID's
+        if (dictOfActorContacts.ContainsKey(actorID) == true)
+        {
+            //delete actorID from all relevant entries in dictOfNodeContacts
+            List<int> listOfNodes = new List<int>(dictOfActorContacts[actorID]);
+            int numOfNodes = listOfNodes.Count;
+            int nodeID;
+            if (numOfNodes > 0)
+            {
+                //loop nodes and remove actorID from each node contact list
+                for (int i = 0; i < numOfNodes; i++)
+                {
+                    nodeID = listOfNodes[i];
+                    //find node entry in dictOfNodeContacts
+                    if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+                    {
+                        List<int> tempList = dictOfNodeContacts[nodeID];
+                        if (tempList != null)
+                        {
+                            //remove actor from list
+                            if (tempList.Remove(actorID) == false)
+                            { Debug.LogWarningFormat("ActorID failed to be removed from list of NodeID {0}", nodeID); successFlag = false; }
+                            else { Debug.LogFormat("[Tst] NodeManager.cs -> RemoveContacts: actorID {0} removed from nodeID {1} list{2}", actorID, nodeID, "\n"); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid list<actorID> (Null) for nodeID {0}", nodeID); successFlag = false; }
+                    }
+                    else { Debug.LogWarningFormat("Node not found in dictOfContacts, nodeID {0}", nodeID); successFlag = false; }
+                }
+            }
+            else { Debug.LogWarningFormat("invalid listOfNodes (Empty) for actorID {0}", actorID); successFlag = false; }
+        }
+        else { Debug.LogErrorFormat("ActorID {0} not found in dictOfActorContacts", actorID); successFlag = false; }
+        return successFlag;
+    }
+
+    /// <summary>
     /// return a list of all Nodes where an actor has contacts, returns empty list if none
     /// </summary>
     /// <param name="actorID"></param>
@@ -830,6 +846,44 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
         return listOfNodes;
+    }
+
+    /// <summary>
+    /// Returns a list of ActorArc names for all contacts at node. Returns empty string if none.
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public List<string> GetListOfNodeContacts(int nodeID)
+    {
+        List<string> listOfNodeContacts = new List<string>();
+        //find node in dict
+        if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+        {
+            List<int> listOfActors = dictOfNodeContacts[nodeID];
+            if (listOfActors != null)
+            {
+                int numOfActors = listOfActors.Count;
+                int actorID;
+                if (numOfActors > 0)
+                {
+                    for (int i = 0; i < numOfActors; i++)
+                    {
+                        actorID = listOfActors[i];
+                        Actor actor = GetActor(actorID);
+                        if (actor != null)
+                        {
+                            //add to list
+                            listOfNodeContacts.Add(actor.arc.name);
+                        }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}, nodeID {1}", actorID, nodeID); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfActors (Empty) for nodeID {0}", nodeID); }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", nodeID); }
+        }
+        else { Debug.LogWarningFormat("No entry found in dictOfNodeContacts for nodeID {0}", nodeID); }
+        return listOfNodeContacts;
     }
 
     //
@@ -1810,6 +1864,8 @@ public class DataManager : MonoBehaviour
         arrayOfActors[side.level, actor.actorSlotID] = null;
         arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
         actor.Status = status;
+        //update node contacts
+        RemoveContacts(actor.actorID);
         //handle special cases
         switch (status)
         {
@@ -1830,6 +1886,8 @@ public class DataManager : MonoBehaviour
         }
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
+        //update node contacts
+        GameManager.instance.nodeScript.UpdateNodeContacts();
     }
 
     /// <summary>

@@ -1921,7 +1921,7 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Update all node contacts across the map whenever there is a change
+    /// Update Node contact status across the map whenever there is a change
     /// </summary>
     public void UpdateNodeContacts()
     {
