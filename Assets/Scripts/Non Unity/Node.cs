@@ -19,7 +19,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracer;             //has resistance tracer?
     [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;             //has authority spider?
-    [HideInInspector] public bool isContact;            //true if any Resistance ActorStatus.Active actor has a connection at the node
+    [HideInInspector] public bool isContact;            //true if any Resistance Actor has a connection at the node
     [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
     [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
     [HideInInspector] public bool isCentreNode;              //true if node is in the geographic centre region of the map (used by AI)
@@ -366,7 +366,7 @@ public class Node : MonoBehaviour
                 //do once
                 while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
                 {
-                    List<string> contactList = GetNodeActors();
+                    List<string> contactList = GetNodeContacts();
                     List<EffectDataTooltip> effectsList = GetOngoingEffects();
                     List<string> teamList = new List<string>();
                     if (listOfTeams.Count > 0)
@@ -593,10 +593,10 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a list of actors for whom this node is active
+    /// returns a list of actors who have a contact at this node
     /// </summary>
     /// <returns></returns>
-    public List<string> GetNodeActors()
+    public List<string> GetNodeContacts()
     { return GameManager.instance.dataScript.GetListOfNodeContacts(nodeID); }
 
     /// <summary>

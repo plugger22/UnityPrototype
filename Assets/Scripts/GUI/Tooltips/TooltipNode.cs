@@ -350,7 +350,7 @@ public class TooltipNode : MonoBehaviour
             else { proceedFlag = true; }
         }
         //Resistance contacts are present
-        if (data.isContact == true)
+        if (numRecords > 0)
         {
             //FOW off or Resistance side
             if (proceedFlag == true)

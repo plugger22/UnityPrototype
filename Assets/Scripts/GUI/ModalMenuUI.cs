@@ -121,7 +121,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     //do once
                     while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
                     {
-                        List<string> activeList = node.GetNodeActors();
+                        List<string> activeList = node.GetNodeContacts();
                         List<EffectDataTooltip> effectsList = node.GetOngoingEffects();
                         List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.targetID, node.isTargetKnown);
                         List<string> teamList = new List<string>();

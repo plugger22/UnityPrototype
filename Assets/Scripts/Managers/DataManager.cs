@@ -166,8 +166,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();        //Key -> nodeCrisisID, Value -> NodeCrisis
     private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();       //Key -> turn, Value -> MainInfoData set for turn
     private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();       //Key -> ActorID, Value -> list of nodeID's where actor has contacts
-    private Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();        //Key -> NodeID, Value -> list of actorID's who have a contact at node
-    
+    private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();   //Key -> NodeID, Value -> list of actorID's who have a contact at node
+    private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();    //Key -> NodeID, Value -> list of actorID's who have a contact at node
 
     //global SO's (enum equivalents)
     /*private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
@@ -706,8 +706,16 @@ public class DataManager : MonoBehaviour
     // - - - Contacts - - - 
     //
 
+    /// <summary>
+    /// returns the appropraite dict based on player side
+    /// </summary>
+    /// <returns></returns>
     public Dictionary<int, List<int>> GetDictOfNodeContacts()
-    { return dictOfNodeContacts; }
+    {
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        { return dictOfNodeContactsAuthority; }
+        else { return dictOfNodeContactsResistance; }
+    }
 
     public Dictionary<int, List<int>> GetDictOfActorContacts()
     { return dictOfActorContacts; }
@@ -734,6 +742,7 @@ public class DataManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogErrorFormat("Invalid entry in dictOfActorContacts for actorID {0}", actorID); successFlag = false; }
                 //add to dictOfNodeContacts
+                Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
                 for(int i = 0; i < numOfContacts; i++)
                 {
                     nodeID = listOfContactNodes[i];
@@ -783,6 +792,7 @@ public class DataManager : MonoBehaviour
             List<int> listOfNodes = new List<int>(dictOfActorContacts[actorID]);
             int numOfNodes = listOfNodes.Count;
             int nodeID;
+            Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
             if (numOfNodes > 0)
             {
                 //loop nodes and remove actorID from each node contact list
@@ -858,6 +868,7 @@ public class DataManager : MonoBehaviour
         List<string> listOfNodeContacts = new List<string>();
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //find node in dict
+        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
         {
             List<int> listOfActors = dictOfNodeContacts[nodeID];
