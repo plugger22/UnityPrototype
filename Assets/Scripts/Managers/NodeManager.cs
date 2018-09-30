@@ -136,7 +136,7 @@ public class NodeManager : MonoBehaviour
 
     public void Initialise()
     {
-        /*SetNodeContactFlags();*/
+        //Set node contact flags (player side)
         UpdateNodeContacts();
         //find specific SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
@@ -1931,6 +1931,10 @@ public class NodeManager : MonoBehaviour
         {
             if (listOfNodes != null)
             {
+                //player side
+                bool isResistance = true;
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                { isResistance = false; }
                 //loop all nodes
                 for (int i = 0; i < listOfNodes.Count; i++)
                 {
@@ -1946,15 +1950,33 @@ public class NodeManager : MonoBehaviour
                             {
                                 //Check if contacts present at node or not
                                 if (tempList.Count > 0)
-                                { node.isContact = true; }
-                                else { node.isContact = false; }
+                                {
+                                    if (isResistance == true)
+                                    { node.isContactResistance = true; }
+                                    else { node.isContactAuthority = true; }
+                                }
+                                else
+                                {
+                                    if (isResistance == true)
+                                    { node.isContactResistance = false; }
+                                    else { node.isContactAuthority = false; }
+                                }
                             }
-                            else { Debug.LogWarningFormat("Invalid tempList (Null) for nodeID {0}", node.nodeID); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid tempList (Null) for nodeID {0}", node.nodeID);
+                                //no contacts (default)
+                                if (isResistance == true)
+                                { node.isContactResistance = false; }
+                                else { node.isContactAuthority = false; }
+                            }
                         }
                         else
                         {
                             //No contacts at node
-                            node.isContact = false;
+                            if (isResistance == true)
+                            { node.isContactResistance = false; }
+                            else { node.isContactAuthority = false; }
                         }
                     }
                     else

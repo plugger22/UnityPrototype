@@ -742,33 +742,45 @@ public class DataManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogErrorFormat("Invalid entry in dictOfActorContacts for actorID {0}", actorID); successFlag = false; }
                 //add to dictOfNodeContacts
-                Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
-                for(int i = 0; i < numOfContacts; i++)
+                Actor actor = GetActor(actorID);
+                if (actor != null)
                 {
-                    nodeID = listOfContactNodes[i];
-                    if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+                    //only add node contacts for player side actors
+                    if (actor.side.level == GameManager.instance.sideScript.PlayerSide.level)
                     {
-                        //existing entry, check actorID not already present
-                        listOfActorID = dictOfNodeContacts[nodeID];
-                        if (listOfActorID.Exists(id => id == actorID) == true)
+                        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
+                        for (int i = 0; i < numOfContacts; i++)
                         {
-                            //already present, warning message
-                            Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, nodeID);
+                            nodeID = listOfContactNodes[i];
+                            if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+                            {
+                                //existing entry, check actorID not already present
+                                listOfActorID = dictOfNodeContacts[nodeID];
+                                if (listOfActorID.Exists(id => id == actorID) == true)
+                                {
+                                    //already present, warning message
+                                    Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, nodeID);
+                                }
+                                else
+                                {
+                                    //not present, add to list
+                                    dictOfNodeContacts[nodeID].Add(actorID);
+                                }
+                            }
+                            else
+                            {
+                                //create a new entry
+                                List<int> newList = new List<int>();
+                                newList.Add(actorID);
+                                try
+                                { dictOfNodeContacts.Add(nodeID, newList);}
+                                catch (ArgumentException)
+                                { Debug.LogErrorFormat("Invalid entry in dictOfNodeContacts for nodeID {0}", nodeID); successFlag = false; }
+                            }
                         }
-                        else
-                        {
-                            //not present, add to list
-                            dictOfNodeContacts[nodeID].Add(actorID);
-                        }
-                    }
-                    else
-                    {
-                        //create a new entry
-                        List<int> newList = new List<int>();
-                        newList.Add(actorID);
-                        dictOfNodeContacts.Add(nodeID, newList);
                     }
                 }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             else { Debug.LogError("No contacts in listOfContactNodes"); successFlag = false; }
         }
@@ -895,7 +907,6 @@ public class DataManager : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", nodeID); }
         }
-        else { Debug.LogWarningFormat("No entry found in dictOfNodeContacts for nodeID {0}", nodeID); }
         return listOfNodeContacts;
     }
 

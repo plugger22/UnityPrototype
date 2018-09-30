@@ -24,7 +24,7 @@ namespace packageAPI
         public string nodeName;
         public string type;
         public bool isTargetKnown;
-        public bool isContact;
+        public bool isContact;                                          //specific for player side
         public bool isContactKnown;
         public bool isTracer;
         public bool isTracerActive;

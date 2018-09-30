@@ -19,7 +19,8 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracer;             //has resistance tracer?
     [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
     [HideInInspector] public bool isSpider;             //has authority spider?
-    [HideInInspector] public bool isContact;            //true if any Resistance Actor has a connection at the node
+    [HideInInspector] public bool isContactResistance;  //true if any Resistance Actor has a connection at the node
+    [HideInInspector] public bool isContactAuthority;   //true if any Authority Actor has a connection at the nodes
     [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
     [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
     [HideInInspector] public bool isCentreNode;              //true if node is in the geographic centre region of the map (used by AI)
@@ -398,7 +399,9 @@ public class Node : MonoBehaviour
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
                         /*textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
                             Convert.ToInt32(isChokepointNode));*/
-                        textName = string.Format("isSpiderKnown {0}", isSpiderKnown);
+                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                        { textName = string.Format("isContact {0}", isContactResistance); }
+                        else { textName = string.Format("isContact {0}", isContactAuthority); }
                     }
                     else
                     {
@@ -429,7 +432,6 @@ public class Node : MonoBehaviour
                         isTracer = isTracer,
                         isTracerActive = isTracerActive,
                         isTracerKnown = isTracerKnown,
-                        isContact = isContact,
                         isContactKnown = isContactKnown,
                         isTeamKnown = isTeamKnown,
                         isSpiderKnown = showSpider,
@@ -444,6 +446,10 @@ public class Node : MonoBehaviour
                         listOfActivity = activityList,
                         tooltipPos = transform.position
                     };
+                    //isContact side dependant
+                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                    { dataTooltip.isContact = isContactResistance; }
+                    else { dataTooltip.isContact = isContactAuthority; }
 
                     GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
                     yield return null;
