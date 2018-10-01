@@ -138,6 +138,8 @@ public class NodeManager : MonoBehaviour
     {
         //Set node contact flags (player side)
         UpdateNodeContacts();
+        //Set node contacts flags (non-player side)
+        UpdateNodeContacts(false);
         //find specific SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
         if (arrayOfEffectOutcome != null)
@@ -632,7 +634,7 @@ public class NodeManager : MonoBehaviour
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
                                 else
                                 {
-                                    if (node.isTeamKnown || node.isTracerActive || node.isContactKnown)
+                                    if (node.isTeamKnown || node.isTracerActive || node.isResistanceContactKnown)
                                     {
                                         node.SetMaterial(materialActive);
                                         count++;
@@ -1921,20 +1923,32 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Update Node contact status across the map whenever there is a change. Contact state updated for Player side only. (changing sides calls this method)
+    /// Update Node contact status across the map whenever there is a change. Contact state updated for, default, Player side only
     /// </summary>
-    public void UpdateNodeContacts()
+    public void UpdateNodeContacts(bool isPlayerSide = true)
     {
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.instance.dataScript.GetDictOfNodeContacts();
+        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.instance.dataScript.GetDictOfNodeContacts(isPlayerSide);
         if (dictOfNodeContacts != null)
         {
             if (listOfNodes != null)
             {
                 //player side
-                bool isResistance = true;
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-                { isResistance = false; }
+                bool isResistance;
+                if (isPlayerSide == true)
+                {
+                    //player side
+                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                    { isResistance = false; }
+                    else { isResistance = true; }
+                }
+                else
+                {
+                    //non player side
+                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                    { isResistance = true; }
+                    else { isResistance = false; }
+                }
                 //loop all nodes
                 for (int i = 0; i < listOfNodes.Count; i++)
                 {

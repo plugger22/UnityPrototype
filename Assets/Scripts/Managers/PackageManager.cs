@@ -24,8 +24,8 @@ namespace packageAPI
         public string nodeName;
         public string type;
         public bool isTargetKnown;
-        public bool isContact;                                          //specific for player side
-        public bool isContactKnown;
+        public bool isContact;                                   //specific for current side
+        public bool isContactKnown;                                     //resistance contact known to authority?
         public bool isTracer;
         public bool isTracerActive;
         public bool isTracerKnown;
@@ -35,7 +35,8 @@ namespace packageAPI
         public int tracerTimer;
         public int[] arrayOfStats;
         public List<string> listOfCrisis;
-        public List<string> listOfContacts;
+        public List<string> listOfContactsCurrent;                      //current side
+        public List<string> listOfContactsOther;                        //non-current side
         public List<EffectDataTooltip> listOfEffects;
         public List<string> listOfTeams;
         public List<string> listOfTargets;

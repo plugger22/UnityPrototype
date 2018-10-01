@@ -707,14 +707,25 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// returns the appropraite dict based on player side
+    /// returns the appropraite dict based on, default, current side (unless 'false')
     /// </summary>
     /// <returns></returns>
-    public Dictionary<int, List<int>> GetDictOfNodeContacts()
+    public Dictionary<int, List<int>> GetDictOfNodeContacts(bool isCurrentSide = true)
     {
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-        { return dictOfNodeContactsAuthority; }
-        else { return dictOfNodeContactsResistance; }
+        if (isCurrentSide == true)
+        {
+            //Current side
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            { return dictOfNodeContactsAuthority; }
+            else { return dictOfNodeContactsResistance; }
+        }
+        else
+        {
+            //Non current side
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            { return dictOfNodeContactsResistance; }
+            else { return dictOfNodeContactsAuthority; }
+        }
     }
 
     public Dictionary<int, List<int>> GetDictOfActorContacts()
@@ -871,16 +882,26 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a list of ActorArc names (Player side) for all contacts at node. Returns empty string if none.
+    /// Returns a list of ActorArc names (default Current side to enable both sides tooltips to work correctly while debugging) for all contacts at node. Returns empty string if none.
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public List<string> GetListOfNodeContacts(int nodeID)
+    public List<string> GetListOfNodeContacts(int nodeID, bool isCurrentSide = true)
     {
         List<string> listOfNodeContacts = new List<string>();
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        /*GlobalSide side = GameManager.instance.sideScript.PlayerSide;*/
+        GlobalSide side = GameManager.instance.turnScript.currentSide;
+        //If other side, flip sides to opposite side
+        if (isCurrentSide == false)
+        {
+            if (side.level == 1) { side = GameManager.instance.globalScript.sideResistance; }
+            else if (side.level == 2) { side = GameManager.instance.globalScript.sideAuthority; }
+        }
         //find node in dict
-        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
+        Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();
+        if (side.level == GameManager.instance.sideScript.PlayerSide.level)
+        { dictOfNodeContacts = GetDictOfNodeContacts(); }
+        else { dictOfNodeContacts = GetDictOfNodeContacts(false); }
         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
         {
             List<int> listOfActors = dictOfNodeContacts[nodeID];
@@ -896,7 +917,11 @@ public class DataManager : MonoBehaviour
                         Actor actor = GetActor(actorID);
                         if (actor != null)
                         {
-                            //add to list if actor same side as Player
+                            /*//add to list if actor same side as Player
+                            if (actor.side.level == side.level)
+                            { listOfNodeContacts.Add(actor.arc.name); }*/
+
+                            //add to list if actor same side as Current side
                             if (actor.side.level == side.level)
                             { listOfNodeContacts.Add(actor.arc.name); }
                         }

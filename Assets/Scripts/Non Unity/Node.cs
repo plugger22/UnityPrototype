@@ -133,7 +133,7 @@ public class Node : MonoBehaviour
         set { _isSpiderKnown = value; }
     }
 
-    public bool isContactKnown
+    public bool isResistanceContactKnown
     {
         get
         {
@@ -367,7 +367,8 @@ public class Node : MonoBehaviour
                 //do once
                 while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
                 {
-                    List<string> contactList = GetNodeContacts();
+                    List<string> contactListCurrent = GetNodeContacts();
+                    List<string> contactListOther = GetNodeContacts(false);
                     List<EffectDataTooltip> effectsList = GetOngoingEffects();
                     List<string> teamList = new List<string>();
                     if (listOfTeams.Count > 0)
@@ -400,8 +401,8 @@ public class Node : MonoBehaviour
                         /*textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
                             Convert.ToInt32(isChokepointNode));*/
                         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-                        { textName = string.Format("isContact {0}", isContactResistance); }
-                        else { textName = string.Format("isContact {0}", isContactAuthority); }
+                        { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactResistance, isResistanceContactKnown); }
+                        else { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactAuthority, isResistanceContactKnown); }
                     }
                     else
                     {
@@ -432,14 +433,15 @@ public class Node : MonoBehaviour
                         isTracer = isTracer,
                         isTracerActive = isTracerActive,
                         isTracerKnown = isTracerKnown,
-                        isContactKnown = isContactKnown,
+                        isContactKnown = isResistanceContactKnown,
                         isTeamKnown = isTeamKnown,
                         isSpiderKnown = showSpider,
                         spiderTimer = spiderTimer,
                         tracerTimer = tracerTimer,
                         arrayOfStats = GetStats(),
                         listOfCrisis = crisisList,
-                        listOfContacts = contactList,
+                        listOfContactsCurrent = contactListCurrent,
+                        listOfContactsOther = contactListOther,
                         listOfEffects = effectsList,
                         listOfTeams = teamList,
                         listOfTargets = targetList,
@@ -602,8 +604,8 @@ public class Node : MonoBehaviour
     /// returns a list of actors who have a contact at this node
     /// </summary>
     /// <returns></returns>
-    public List<string> GetNodeContacts()
-    { return GameManager.instance.dataScript.GetListOfNodeContacts(nodeID); }
+    public List<string> GetNodeContacts(bool isCurrentSide = true)
+    { return GameManager.instance.dataScript.GetListOfNodeContacts(nodeID, isCurrentSide); }
 
     /// <summary>
     /// returns a list of ongoing effects currently impacting the node, returns empty list if none
@@ -1035,12 +1037,12 @@ public class Node : MonoBehaviour
                     case "StatusContacts":
                         if (process.value <= 0)
                         {
-                            isContactKnown = false;
+                            isResistanceContactKnown = false;
                             Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info no longer available{3}", nodeName, Arc.name, nodeID, "\n");
                         }
                         else
                         {
-                            isContactKnown = true;
+                            isResistanceContactKnown = true;
                             Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info is available{3}", nodeName, Arc.name, nodeID, "\n");
                         }
                         break;

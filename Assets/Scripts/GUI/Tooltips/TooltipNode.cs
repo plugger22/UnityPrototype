@@ -164,8 +164,9 @@ public class TooltipNode : MonoBehaviour
     public void SetTooltip(NodeTooltipData data)
     {
         bool proceedFlag;
-        int numRecords;
+        int numRecordsCurrent, numRecordsOther;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide currentSide = GameManager.instance.turnScript.currentSide;
         //open panel at start
         tooltipNodeObject.SetActive(true);
         //set opacity to zero (invisible)
@@ -318,7 +319,7 @@ public class TooltipNode : MonoBehaviour
             crisis.gameObject.SetActive(false);
         }
         //
-        // - - - Actor Contacts - - -
+        // - - - Contacts - - -
         //
         //set tooltip elements to show
         nodeActive.gameObject.SetActive(true);
@@ -328,63 +329,132 @@ public class TooltipNode : MonoBehaviour
         builderActor.Append(colourActive);
         //ascertain whether actors shown or not
         proceedFlag = false;
-        numRecords = data.listOfContacts.Count;
-        if (playerSide.level == globalResistance.level) { proceedFlag = true; }
-        else if (playerSide.level == globalAuthority.level)
+        numRecordsCurrent = data.listOfContactsCurrent.Count;
+        numRecordsOther = data.listOfContactsOther.Count;
+
+        if (currentSide.level == globalResistance.level)
         {
-            //authority contacts displayed, prior to resistance contact status
-            if (numRecords > 0)
+            //Resistance
+            if (numRecordsCurrent > 0)
             {
-                for (int i = 0; i < numRecords; i++)
+                //contacts present
+                for (int i = 0; i < numRecordsCurrent; i++)
                 {
                     if (i > 0) { builderActor.AppendLine(); }
-                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContacts[i], colourEnd);
+                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
                 }
-                builderActor.AppendLine();
             }
+            else
+            {
+                //no contacts present
+                builderActor.AppendFormat("{0}<size=90%>No Contacts</size>{1}", colourDefault, colourEnd);
+            }
+        }
+        else if (currentSide.level == globalAuthority.level)
+        {
+            //Authority
+            if (numRecordsCurrent > 0)
+            {
+                //contacts present
+                for (int i = 0; i < numRecordsCurrent; i++)
+                {
+                    if (i > 0) { builderActor.AppendLine(); }
+                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
+                }
+            }
+            else
+            {
+                //no contacts present
+                builderActor.AppendFormat("{0}<size=90%>No Contacts</size>{1}", colourDefault, colourEnd);
+            }
+            builderActor.AppendLine();
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
-                if (data.isContactKnown == true)
-                { proceedFlag = true; }
-            }
-            else { proceedFlag = true; }
-        }
-        //Resistance contacts are present
-        if (numRecords > 0)
-        {
-            //FOW off or Resistance side
-            if (proceedFlag == true)
-            {
-                if (playerSide.level == globalResistance.level)
+                //FOW ON
+                if (numRecordsOther > 0)
                 {
-                    for (int i = 0; i < numRecords; i++)
+                    //other contacts present
+                    builderActor.AppendFormat("{0}{1} Resistance Contact{2}{3}", colourBadSide, numRecordsOther, numRecordsOther != 1 ? "s" : "", colourEnd);
+                }
+                else
+                {
+                    //no other contacts preset
+                    builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd);
+                }
+            }
+            else
+            {
+                //FOW OFF
+                if (numRecordsOther > 0)
+                {
+                    //other contacts present
+                    builderActor.AppendFormat("{0}{1} Resistance Contact{2}{3}", colourBadSide, numRecordsOther, numRecordsOther != 1 ? "s" : "", colourEnd);
+                }
+                else
+                {
+                    //no other contacts present
+                    builderActor.AppendFormat("{0}<size=90%>No Resistance Contacts</size>{1}", colourDefault, colourEnd);
+                }
+            }
+        }
+
+            /*if (playerSide.level == globalResistance.level) { proceedFlag = true; }
+            else if (playerSide.level == globalAuthority.level)
+            {
+                //authority contacts displayed, prior to resistance contact status
+                if (numRecordsCurrent > 0)
+                {
+                    for (int i = 0; i < numRecordsCurrent; i++)
                     {
                         if (i > 0) { builderActor.AppendLine(); }
-                        builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContacts[i], colourEnd);
+                        builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
                     }
+                    builderActor.AppendLine();
                 }
-                else if (playerSide.level == globalAuthority.level)
-                { builderActor.AppendFormat("{0}Resistance Contacts present{1}", colourBadSide, colourEnd); }
+                if (GameManager.instance.optionScript.fogOfWar == true)
+                {
+                    if (data.isContactKnown == true)
+                    { proceedFlag = true; }
+                    else { proceedFlag = false; }
+                }
+                else { proceedFlag = true; }
             }
-            //FOW On and Authority player has no knowledge of actor contacts at node
-            else
-            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd); }
-        }
-        else
-        {
-            //no actor contacts present at node -> FOW off or Resistance side
-            if (proceedFlag == true)
+            //Resistance contacts are present
+            if (numRecordsCurrent > 0)
             {
-                if (playerSide.level == globalResistance.level)
-                { builderActor.AppendFormat("{0}<size=90%>No Actors have Contacts</size>{1}", colourDefault, colourEnd); }
-                else if (playerSide.level == globalAuthority.level)
-                { builderActor.AppendFormat("{0}<size=90%>No Resistance Contacts present</size>{1}", colourDefault, colourEnd); }
+                //FOW off or Resistance side
+                if (proceedFlag == true)
+                {
+                    if (playerSide.level == globalResistance.level)
+                    {
+                        for (int i = 0; i < numRecordsCurrent; i++)
+                        {
+                            if (i > 0) { builderActor.AppendLine(); }
+                            builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
+                        }
+                    }
+                    else if (playerSide.level == globalAuthority.level)
+                    { builderActor.AppendFormat("{0}Resistance Contacts present{1}", colourBadSide, colourEnd); }
+                }
+                //FOW On and Authority player has no knowledge of actor contacts at node
+                else
+                { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd); }
             }
-            //FOW On and Authority player has no knowledge of actor contacts at node
             else
-            { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd); }
-        }
-        nodeActive.text = builderActor.ToString();
+            {
+                //no actor contacts present at node -> FOW off or Resistance side
+                if (proceedFlag == true)
+                {
+                    if (playerSide.level == globalResistance.level)
+                    { builderActor.AppendFormat("{0}<size=90%>No Actors have Contacts</size>{1}", colourDefault, colourEnd); }
+                    else if (playerSide.level == globalAuthority.level)
+                    { builderActor.AppendFormat("{0}<size=90%>No Resistance Contacts present</size>{1}", colourDefault, colourEnd); }
+                }
+                //FOW On and Authority player has no knowledge of actor contacts at node
+                else
+                { builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd); }
+            }*/
+            nodeActive.text = builderActor.ToString();
         //
         // - - - Ongoing effects - - - 
         //

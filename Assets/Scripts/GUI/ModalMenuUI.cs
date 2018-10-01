@@ -142,7 +142,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             nodeName = node.nodeName,
                             type = string.Format("{0} ID {1}", node.Arc.name, nodeID),
                             arrayOfStats = new int[] { node.Stability, node.Support, node.Security },
-                            listOfContacts = activeList,
+                            listOfContactsCurrent = activeList,
                             listOfEffects = effectsList,
                             listOfTeams = teamList,
                             listOfTargets = targetList,
