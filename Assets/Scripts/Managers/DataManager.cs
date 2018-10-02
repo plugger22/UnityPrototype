@@ -733,10 +733,11 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// adds mew set of Actor contacts to dictionaries. ListOfContactNodes holds nodeID's where actor has a contact. Updates node flags
+    /// 'isActorsAndNodes' updates dictOfNodeContacts (Resistance/Authority) and  dictOfActorContacts. If false then only dictOfNodeContacts (eg. recalling an actor with previous contacts)
     /// </summary>
     /// <param name="actorID"></param>
     /// <param name="listOfContactNodes"></param>
-    public bool AddContacts(int actorID, List<int> listOfContactNodes)
+    public bool AddContacts(int actorID, List<int> listOfContactNodes, bool isActorsAndNodes = true)
     {
         Debug.Assert(actorID > -1, "Invalid actorID (-1)");
         bool successFlag = true;
@@ -748,10 +749,13 @@ public class DataManager : MonoBehaviour
             if (numOfContacts > 0)
             {
                 //add to dictOfActorContacts
-                try
-                { dictOfActorContacts.Add(actorID, listOfContactNodes); }
-                catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid entry in dictOfActorContacts for actorID {0}", actorID); successFlag = false; }
+                if (isActorsAndNodes == true)
+                {
+                    try
+                    { dictOfActorContacts.Add(actorID, listOfContactNodes); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid entry in dictOfActorContacts for actorID {0}", actorID); successFlag = false; }
+                }
                 //add to dictOfNodeContacts
                 Actor actor = GetActor(actorID);
                 if (actor != null)
@@ -2045,8 +2049,9 @@ public class DataManager : MonoBehaviour
             actor.actorSlotID = slotID;
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
-            //update contacts
-            GameManager.instance.nodeScript.SetActorContacts(actor);
+            //update contacts (not for game start -> sequencing issues)
+            if (GameManager.instance.turnScript.Turn > 0)
+            { GameManager.instance.nodeScript.SetActorContacts(actor); }
             //update actor GUI display
             GameManager.instance.actorPanelScript.UpdateActorPanel();
         }

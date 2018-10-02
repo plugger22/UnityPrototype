@@ -1892,8 +1892,8 @@ public class NodeManager : MonoBehaviour
                     List<int> listOfNodes = dictOfActorContacts[actor.actorID];
                     if (listOfNodes != null)
                     {
-                        //add to dictOfActorContacts & dictOfNodeContacts
-                        GameManager.instance.dataScript.AddContacts(actor.actorID, listOfNodes);
+                        //add to dictOfNodeContacts only (already an entry present in dictOfActorContacts)
+                        GameManager.instance.dataScript.AddContacts(actor.actorID, listOfNodes, false);
                     }
                     else { Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actor.actorID); }
                 }
