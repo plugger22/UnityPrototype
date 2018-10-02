@@ -732,6 +732,32 @@ public class DataManager : MonoBehaviour
     { return dictOfActorContacts; }
 
     /// <summary>
+    /// returns true if actor has a contact at the node, false otherwise. For current side.
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public bool CheckActorContact(int actorID, int nodeID)
+    {
+        if (dictOfActorContacts.ContainsKey(actorID) == true)
+        {
+            List<int> listOfNodes = dictOfActorContacts[actorID];
+            if (listOfNodes != null)
+            {
+                if (listOfNodes.Exists(x => x == nodeID) == true)
+                { return true; }
+                else { return false; }
+            }
+            else
+            {
+                Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actorID);
+                return false;
+            }
+        }
+        else { return false; }
+    }
+
+    /// <summary>
     /// adds mew set of Actor contacts to dictionaries. ListOfContactNodes holds nodeID's where actor has a contact. Updates node flags
     /// 'isActorsAndNodes' updates dictOfNodeContacts (Resistance/Authority) and  dictOfActorContacts. If false then only dictOfNodeContacts (eg. recalling an actor with previous contacts)
     /// </summary>

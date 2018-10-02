@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour
     private List<List<GameObject>> listOfActorNodesResistance = new List<List<GameObject>>();       //need a separate list for each side  */ 
 
     private int[] arrayOfNodeTypeTotals;            //array of how many of each node type there is on the map, index = node.Arc.nodeArcID
-    private bool[,,] arrayOfActiveNodes;            //[total nodes, side, total actors] true if node active for that actor
+    /*private bool[,,] arrayOfActiveNodes;            //[total nodes, side, total actors] true if node active for that actor*/
     
     /// <summary>
     /// Master method that drives a level
@@ -73,8 +73,8 @@ public class LevelManager : MonoBehaviour
         InitialiseGraph();
         AssignNodeArcs();
         AssignSecurityLevels();
-        InitialiseArrayOfActiveNodes();
-        /*AssignActorsToNodes(GameManager.instance.globalScript.sideAuthority);
+        /*InitialiseArrayOfActiveNodes();
+        AssignActorsToNodes(GameManager.instance.globalScript.sideAuthority);
         AssignActorsToNodes(GameManager.instance.globalScript.sideResistance);*/
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
     }
@@ -785,14 +785,14 @@ public class LevelManager : MonoBehaviour
         return tempArc;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// sets up array prior to use (needed because AssignActorsToNodes is called for each side and each instance would overwrite the previous sides data)
     /// </summary>
     private void InitialiseArrayOfActiveNodes()
     {
         //initialise arrayOfActiveNodes prior to use
         arrayOfActiveNodes = new bool[listOfNodeObjects.Count, GameManager.instance.dataScript.GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
-    }
+    }*/
 
     
 
@@ -844,7 +844,7 @@ public class LevelManager : MonoBehaviour
 
 
 
-    /// <summary>
+    /*/// <summary>
     /// returns true if a given nodeID is active for the specified actor slotID (0 to 3)
     /// </summary>
     /// <param name="nodeID"></param>
@@ -856,7 +856,7 @@ public class LevelManager : MonoBehaviour
         Debug.Assert(nodeID > -1 && nodeID < numOfNodes, "Invalid nodeID input");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         return arrayOfActiveNodes[nodeID, side.level, slotID];
-    }
+    }*/
 
     public int[] GetNodeTypeTotals()
     { return arrayOfNodeTypeTotals; }
