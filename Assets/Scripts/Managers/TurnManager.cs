@@ -345,6 +345,7 @@ public class TurnManager : MonoBehaviour
     public void ChangeSide(GlobalSide side)
     {
         UpdateActionsLimit(side);
+        currentSide = side;
     }
 
     /// <summary>

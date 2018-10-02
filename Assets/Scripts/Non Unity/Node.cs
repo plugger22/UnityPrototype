@@ -133,7 +133,10 @@ public class Node : MonoBehaviour
         set { _isSpiderKnown = value; }
     }
 
-    public bool isResistanceContactKnown
+    /// <summary>
+    /// is Resistance contacts at node known by Authority?
+    /// </summary>
+    public bool isContactKnown
     {
         get
         {
@@ -367,8 +370,19 @@ public class Node : MonoBehaviour
                 //do once
                 while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
                 {
-                    List<string> contactListCurrent = GetNodeContacts();
-                    List<string> contactListOther = GetNodeContacts(false);
+                    List<string> contactListCurrent = new List<string>();
+                    List<string> contactListOther = new List<string>();
+                    //node contacts vary depending on whether viewing player side or debug viewing other side
+                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.turnScript.currentSide.level)
+                    {
+                        contactListCurrent = GetNodeContacts();
+                        contactListOther = GetNodeContacts(false);
+                    }
+                    else
+                    {
+                        contactListCurrent = GetNodeContacts(false);
+                        contactListOther = GetNodeContacts();
+                    }
                     List<EffectDataTooltip> effectsList = GetOngoingEffects();
                     List<string> teamList = new List<string>();
                     if (listOfTeams.Count > 0)
@@ -401,8 +415,8 @@ public class Node : MonoBehaviour
                         /*textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
                             Convert.ToInt32(isChokepointNode));*/
                         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-                        { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactResistance, isResistanceContactKnown); }
-                        else { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactAuthority, isResistanceContactKnown); }
+                        { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactResistance, isContactKnown); }
+                        else { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactAuthority, isContactKnown); }
                     }
                     else
                     {
@@ -433,7 +447,7 @@ public class Node : MonoBehaviour
                         isTracer = isTracer,
                         isTracerActive = isTracerActive,
                         isTracerKnown = isTracerKnown,
-                        isContactKnown = isResistanceContactKnown,
+                        isContactKnown = isContactKnown,
                         isTeamKnown = isTeamKnown,
                         isSpiderKnown = showSpider,
                         spiderTimer = spiderTimer,
@@ -1037,12 +1051,12 @@ public class Node : MonoBehaviour
                     case "StatusContacts":
                         if (process.value <= 0)
                         {
-                            isResistanceContactKnown = false;
+                            isContactKnown = false;
                             Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info no longer available{3}", nodeName, Arc.name, nodeID, "\n");
                         }
                         else
                         {
-                            isResistanceContactKnown = true;
+                            isContactKnown = true;
                             Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info is available{3}", nodeName, Arc.name, nodeID, "\n");
                         }
                         break;

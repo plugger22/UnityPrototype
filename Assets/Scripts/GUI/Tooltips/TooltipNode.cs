@@ -368,19 +368,24 @@ public class TooltipNode : MonoBehaviour
                 builderActor.AppendFormat("{0}<size=90%>No Contacts</size>{1}", colourDefault, colourEnd);
             }
             builderActor.AppendLine();
+            //Authority comment on resistance contacts
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
                 //FOW ON
-                if (numRecordsOther > 0)
+                if (data.isContactKnown == true)
                 {
-                    //other contacts present
-                    builderActor.AppendFormat("{0}{1} Resistance Contact{2}{3}", colourBadSide, numRecordsOther, numRecordsOther != 1 ? "s" : "", colourEnd);
+                    if (numRecordsOther > 0)
+                    {
+                        //other contacts present
+                        builderActor.AppendFormat("{0}<b>Resistance Contact</b>{1}{2}", colourAlert, numRecordsOther != 1 ? "s" : "", colourEnd);
+                    }
+                    else
+                    {
+                        //no other contacts present
+                        builderActor.AppendFormat("{0}<size=90%>No Resistance Contacts</size>{1}", colourNormal, colourEnd);
+                    }
                 }
-                else
-                {
-                    //no other contacts preset
-                    builderActor.AppendFormat("{0}Resistance Contacts unknown{1}", colourAlert, colourEnd);
-                }
+                else { builderActor.AppendFormat("{0}<size=90%>Resistance Contacts unknown</size>{1}", colourNormal, colourEnd); }
             }
             else
             {
@@ -388,7 +393,7 @@ public class TooltipNode : MonoBehaviour
                 if (numRecordsOther > 0)
                 {
                     //other contacts present
-                    builderActor.AppendFormat("{0}{1} Resistance Contact{2}{3}", colourBadSide, numRecordsOther, numRecordsOther != 1 ? "s" : "", colourEnd);
+                    builderActor.AppendFormat("{0}<b>Resistance Contact</b>{1}{2}", colourAlert, numRecordsOther != 1 ? "s" : "", colourEnd);
                 }
                 else
                 {

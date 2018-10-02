@@ -756,38 +756,38 @@ public class DataManager : MonoBehaviour
                 Actor actor = GetActor(actorID);
                 if (actor != null)
                 {
-                    //only add node contacts for player side actors
+                    //Add node contacts to correct dict depending on current / non-current actor side
+                    Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();
                     if (actor.side.level == GameManager.instance.sideScript.PlayerSide.level)
+                    { dictOfNodeContacts = GetDictOfNodeContacts(); }
+                    else { dictOfNodeContacts = GetDictOfNodeContacts(false); }
+                    for (int i = 0; i < numOfContacts; i++)
                     {
-                        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
-                        for (int i = 0; i < numOfContacts; i++)
+                        nodeID = listOfContactNodes[i];
+                        if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                         {
-                            nodeID = listOfContactNodes[i];
-                            if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+                            //existing entry, check actorID not already present
+                            listOfActorID = dictOfNodeContacts[nodeID];
+                            if (listOfActorID.Exists(id => id == actorID) == true)
                             {
-                                //existing entry, check actorID not already present
-                                listOfActorID = dictOfNodeContacts[nodeID];
-                                if (listOfActorID.Exists(id => id == actorID) == true)
-                                {
-                                    //already present, warning message
-                                    Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, nodeID);
-                                }
-                                else
-                                {
-                                    //not present, add to list
-                                    dictOfNodeContacts[nodeID].Add(actorID);
-                                }
+                                //already present, warning message
+                                Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, nodeID);
                             }
                             else
                             {
-                                //create a new entry
-                                List<int> newList = new List<int>();
-                                newList.Add(actorID);
-                                try
-                                { dictOfNodeContacts.Add(nodeID, newList);}
-                                catch (ArgumentException)
-                                { Debug.LogErrorFormat("Invalid entry in dictOfNodeContacts for nodeID {0}", nodeID); successFlag = false; }
+                                //not present, add to list
+                                dictOfNodeContacts[nodeID].Add(actorID);
                             }
+                        }
+                        else
+                        {
+                            //create a new entry
+                            List<int> newList = new List<int>();
+                            newList.Add(actorID);
+                            try
+                            { dictOfNodeContacts.Add(nodeID, newList); }
+                            catch (ArgumentException)
+                            { Debug.LogErrorFormat("Invalid entry in dictOfNodeContacts for nodeID {0}", nodeID); successFlag = false; }
                         }
                     }
                 }

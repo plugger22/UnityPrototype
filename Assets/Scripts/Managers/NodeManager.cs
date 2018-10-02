@@ -634,7 +634,7 @@ public class NodeManager : MonoBehaviour
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
                                 else
                                 {
-                                    if (node.isTeamKnown || node.isTracerActive || node.isResistanceContactKnown)
+                                    if (node.isTeamKnown || node.isTracerActive || node.isContactKnown)
                                     {
                                         node.SetMaterial(materialActive);
                                         count++;
